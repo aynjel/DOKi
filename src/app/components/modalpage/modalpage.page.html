@@ -1,0 +1,41 @@
+<!--ion-header>
+  <ion-toolbar>
+    <ion-title>modalpage</ion-title>
+  </ion-toolbar>
+</ion-header-->
+
+<ion-content>
+
+
+  
+  <div class="ion-text-right">
+      <ion-icon name="close-outline"  (click)="closeModal()" ></ion-icon>
+  </div>
+  <ion-card-header>
+    <ion-card-title>{{ this.receiveddata.last_name }}, {{this.receiveddata.first_name}}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    Address: {{this.receiveddata.address}}<br />
+    Contact Number :{{this.receiveddata.contact_number}}<br />
+    Date of Birth : {{this.receiveddata.birth_Date}}<br />
+  </ion-card-content>
+
+<!-- Skeleton screen -->
+
+
+
+
+<!--d!iv *ngIf="!items.length >0">
+  <div class="ion-padding custom-skeleton">
+    <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+    <ion-skeleton-text animated></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+  </div>
+
+
+</div-->
+
+</ion-content>

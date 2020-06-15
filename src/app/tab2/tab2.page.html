@@ -1,0 +1,82 @@
+
+
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <ion-icon name="man-outline"></ion-icon> Appointments
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <app-hospital (hospital)="locationAction($event)"></app-hospital>
+  <app-dateselector [passedDate]="selectedDate" (dateSelector)="dateChanged($event)"></app-dateselector>
+  <!--ion-segment   value="chhc">
+    <ion-segment-button value="chhc" (click)="locationAction('C') ">Cebu City</ion-segment-button>
+    <ion-segment-button value="chhm" (click)="locationAction('M') ">Mandaue City</ion-segment-button>
+  </ion-segment>
+  <div >
+    <ion-segment value="2">
+      <ion-segment-button value="1" (click)="adjustDate('-1')" > <ion-icon name="arrow-back-outline"></ion-icon> </ion-segment-button>
+      <ion-datetime [pickerOptions]="customPickerOptions" displayFormat="YYYY-MM-DD" min="2020-05-01" (ngModelChange)="dateChanged($event.value)" max="2020-12-31" [value]="selectedDate"></ion-datetime>
+      <ion-segment-button value="3" (click)="adjustDate('1')" ><ion-icon name="arrow-forward-outline"></ion-icon></ion-segment-button>
+    </ion-segment>     
+  </div-->
+<!--app-hospitals (hospitals)="hospitals($event)"></app-hospitals>
+<app-hospital (hospital)="hospital($event)"></app-hospital-->
+  <div *ngFor="let x of jsonObj5">
+      <div *ngFor="let y of x.data">
+        <div *ngIf="y.appt_id != '0';else noReservation" >
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{y.patientName}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            {{y.time}}<br />
+            <ng-template [ngIf]="y.status== 'Complete'"  [ngIfElse]="Reserved">
+              <ion-button color='success' size="small"   ng-disabled="all"   fill="outline" slot="start">{{y.status}}</ion-button>
+            </ng-template>
+            <ng-template #Reserved>
+              <ion-button color='warning' size="small"   ng-disabled="all"  fill="outline" slot="start">{{y.status}}</ion-button>
+            </ng-template>
+            <ion-button  class="ion-text-right" size="small" slot="end"  (click)="presentModal(y.appt_id)" >details</ion-button>
+          </ion-card-content>
+        </ion-card>
+      </div>
+      </div>
+    <ng-template #noReservation>
+      <ion-card>
+        <ion-card-title>No Reservation</ion-card-title>
+      </ion-card>
+    </ng-template>
+  </div>
+
+
+
+  <!--div class="spinner-container">
+    <ion-spinner *ngIf="jsonObj5.length > 0"></ion-spinner>
+  </div-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ion-content>

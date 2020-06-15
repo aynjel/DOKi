@@ -1,0 +1,84 @@
+
+<ion-content padding>
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>
+      In-Patients
+    </ion-title>
+    
+  </ion-toolbar>
+
+
+  <ion-segment [(ngModel)]="segment"  value="all">
+    
+    <ion-segment-button value="all" >
+      All
+    </ion-segment-button>
+    <ion-segment-button value="chhc">
+      Cebu City
+    </ion-segment-button>
+    <ion-segment-button value="chhm">
+      Mandaue City
+    </ion-segment-button>
+
+  </ion-segment>
+</ion-header>
+
+
+
+  <div [ngSwitch]="segment">
+    <ion-card *ngSwitchCase="'all'">
+
+      <ion-card-content>
+
+
+        <ion-item  *ngFor="let act of accounts" [routerLink]="['./', act.id]">
+
+          <ion-label>{{ act.name}} <br />
+            {{ act.dateAdmitted}}<br />
+            {{ act.room}}</ion-label>
+          
+        </ion-item>
+        <!--app-inpatients *ngFor="let act of accounts"  
+        [accountItem]="act">
+
+        </app-inpatients-->
+
+
+        <!--ion-list>
+          <app-recipe-item 
+            *ngFor="let recipe of recipes" 
+            [recipeItem]="recipe">
+           </app-recipe-item>
+
+
+           
+        </ion-list-->
+
+
+
+
+
+        
+      </ion-card-content>
+    </ion-card>
+  
+    <ion-card *ngSwitchCase="'chhc'">
+      <ion-card-header>
+        Card Info
+      </ion-card-header>
+      <ion-card-content>
+        Your card info content here
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngSwitchCase="'chhm'">
+      <ion-card-header>
+        Change Password
+      </ion-card-header>
+      <ion-card-content>
+        Your change password form here
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

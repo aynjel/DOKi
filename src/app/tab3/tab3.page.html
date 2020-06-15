@@ -1,0 +1,38 @@
+
+<ion-content padding>
+  <ion-header [translucent]="true">
+    <ion-toolbar color="primary">
+      <ion-title>
+        Settings
+
+      </ion-title>
+      <div class="ion-text-right " slot="end" >
+        <ion-button  color="danger"  (click)="logout()"> Log out
+          <ion-icon name="power-outline"></ion-icon>
+        </ion-button>
+      </div>
+      
+    </ion-toolbar>
+  
+
+  </ion-header>
+  
+  
+  
+
+  <ion-card>
+
+      <ion-card-header><p>{{ displayUserData.first_name }} {{ displayUserData.last_name }}
+      </p>
+      </ion-card-header>
+      
+      <ion-item>
+        <ion-button fill="solid">Change Password</ion-button>
+
+      </ion-item>
+
+  </ion-card>
+
+
+  
+  </ion-content>
