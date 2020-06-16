@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-
+import { IonicModule } from '@ionic/angular';
 @Component({
   selector: 'app-hospital',
   templateUrl: './hospital.component.html',

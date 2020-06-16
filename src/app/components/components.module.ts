@@ -6,12 +6,13 @@ import { StartComponent } from './start/start.component';
 import { HospitalComponent } from './hospital/hospital.component';
 import { HospitalsComponent } from './hospitals/hospitals.component';
 import { DateselectorComponent } from './dateselector/dateselector.component';
-
+import { IonicModule } from '@ionic/angular';
 @NgModule({
   declarations: [LogoComponent,SlidesComponent,StartComponent,HospitalComponent,HospitalsComponent,DateselectorComponent],
   exports:[LogoComponent,SlidesComponent,StartComponent,HospitalComponent,HospitalsComponent,DateselectorComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    IonicModule
   ]
 })
 export class ComponentsModule { }

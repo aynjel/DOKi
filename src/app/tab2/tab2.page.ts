@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { PatientService } from '../services/patient.service';
 import { ModalController } from '@ionic/angular';
-import { ModalpagePage } from '../components/modalpage/modalpage.page';
+
+
 import { AuthService } from 'src/app/services/auth.service';
 import { DoctorService } from '../services/doctor.service';
 import { HostListener  } from "@angular/core";
-
+import { PatientdetailsPage } from '../components/patientdetailss/patientdetails.page';
 
 @Component({
   selector: 'app-tab2',
@@ -66,7 +67,7 @@ hospital(data1:any) {
   async presentModal(data:any) {
 
    const modal = await this.modalController.create({
-     component: ModalpagePage,
+     component: PatientdetailsPage,
      cssClass: 'my-custom-modal-css',
      componentProps: { 
       appt_id: data

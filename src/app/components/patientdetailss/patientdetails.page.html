@@ -6,21 +6,33 @@
 
 <ion-content>
 
-
-  
+  <div *ngFor="let x of cardData">
+    <div class="ion-text-right">
+      <ion-icon name="close-outline"  (click)="closeModal()" ></ion-icon>
+    </div>
+    <ion-card-header>
+      <ion-card-title>{{ x.last_name }}, {{x.first_name}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Address: {{x.address}}<br />
+      Contact Number :{{x.contact_number}}<br />
+      Date of Birth : {{x.birth_Date}}<br />
+    </ion-card-content>
+  </div>
+  <!--div *ngFor="let x of receiveddata">
   <div class="ion-text-right">
       <ion-icon name="close-outline"  (click)="closeModal()" ></ion-icon>
   </div>
   <ion-card-header>
-    <ion-card-title>{{ this.receiveddata.last_name }}, {{this.receiveddata.first_name}}</ion-card-title>
+    <ion-card-title>{{ x.last_name }}, {{x.first_name}}</ion-card-title>
   </ion-card-header>
 
   <ion-card-content>
-    Address: {{this.receiveddata.address}}<br />
-    Contact Number :{{this.receiveddata.contact_number}}<br />
-    Date of Birth : {{this.receiveddata.birth_Date}}<br />
+    Address: {{x.address}}<br />
+    Contact Number :{{x.contact_number}}<br />
+    Date of Birth : {{x.birth_Date}}<br />
   </ion-card-content>
-
+</div-->
 <!-- Skeleton screen -->
 
 

@@ -17,6 +17,10 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./page/index/index.module').then( m => m.IndexPageModule)
   },/*  {
+    path: 'patientdetails',
+    loadChildren: () => import('./components/patientdetails/patientdetails.module').then( m => m.PatientdetailsPageModule)
+  },
+  {
     path: 'modalpage',
     loadChildren: () => import('./components/modalpage/modalpage.module').then( m => m.ModalpagePageModule)
   }
