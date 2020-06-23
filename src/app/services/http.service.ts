@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpUrlEncodingCodec } from '@angular/common/http';
 import { environment } from '../../environments/environment'; 
 
 @Injectable({
@@ -24,4 +24,27 @@ export class HttpService {
     console.log("testurl -> " +url);
     return this.http.post(url, options);
   }
+
+  /* for doctors portal */
+  get(serviceName: string, data1: any,data2: any) {
+    data2 = encodeURIComponent(data2);
+    console.log(data2);
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiUrlDoctorsPortal + serviceName+'drcode='+data1+'&birthday='+data2;
+    console.log(url);
+  
+    return this.http.get(url);
+  }
+
+
+  getInpatient(serviceName: string, data1: any) {
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiUrlDoctorsPortal + serviceName+data1;
+    console.log(url);
+  
+    return this.http.get(url);
+  }
+  /*for doctors portal */
 }

@@ -1,30 +1,37 @@
 
-<ion-content padding>
-  <ion-header [translucent]="true">
-    <ion-toolbar color="primary">
+<ion-content [fullscreen]="true">
+  <!--ion-header [translucent]="true">
+    <ion-toolbar color="mango">
       <ion-title>
         Settings
-
+        <div class="ion-text-right " slot="end" >
+          <ion-button  color="danger"  (click)="logout()"> Log out
+            <ion-icon name="power-outline"></ion-icon>
+          </ion-button>
+        </div>
       </ion-title>
-      <div class="ion-text-right " slot="end" >
-        <ion-button  color="danger"  (click)="logout()"> Log out
-          <ion-icon name="power-outline"></ion-icon>
-        </ion-button>
-      </div>
-      
     </ion-toolbar>
+  </ion-header-->
   
 
+  <ion-header translucent="" role="banner" class="ios header-ios header-translucent header-collapse-none header-translucent-ios hydrated"><!----><div class="header-background"></div>
+    <ion-toolbar class="in-toolbar ios toolbar-title-default hydrated"  color="mango">
+      <ion-title class="ios title-default hydrated">Settings</ion-title>
+      <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated" >
+        <ion-button (click)="logout()" class="ios button button-clear ion-activatable ion-focusable hydrated">Log out&nbsp; <ion-icon name="power-outline"></ion-icon></ion-button>
+      </ion-buttons>
+    </ion-toolbar>
   </ion-header>
-  
-  
-  
 
-  <ion-card>
 
-      <ion-card-header><p>{{ displayUserData.first_name }} {{ displayUserData.last_name }}
-      </p>
-      </ion-card-header>
+  
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+
+  <ion-card *ngFor="let x of displayUserData">
+
+      <ion-card-header><p>{{ x.first_name }} {{ x.last_name }}</ion-card-header>
       
       <ion-item>
         <ion-button fill="solid">Change Password</ion-button>
@@ -32,7 +39,9 @@
       </ion-item>
 
   </ion-card>
-
+</ion-col>
+</ion-row>
+</ion-grid>
 
   
   </ion-content>

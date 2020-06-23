@@ -8,7 +8,7 @@ import { StorageService } from './../../services/storage.service';
 import { ToastService } from '../../services/toast.service';
 
 import { BehaviorSubject } from 'rxjs';
-
+import {Account} from '../../models/account';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +17,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 
 export class LoginPage implements OnInit {
-
+//account:Account[];
 
 
 
@@ -52,8 +52,24 @@ export class LoginPage implements OnInit {
     }
     
     loginAction() {
-      
-      
+      /*For Doctors Portal */
+      this.authService.doctorsPortalLogin(this.postData.username, this.postData.password).subscribe(
+        (res: any) => {
+          console.log(res);
+          if(res != ""){
+            res.forEach(element => {
+              localStorage.setItem('dr_code',element.dr_code);
+            });
+            
+            this.storageService.store(AuthConstants.AUTH, res);
+            this.router.navigate(['/menu/tab1']);
+          }else{
+            this.toast.presentToast('Incorrect Authentication Details.');
+          }
+
+        });
+        /*For Doctors Portal */
+      /*
       if (this.validateInputs()) {
 
         this.authService.logintest(this.postData.username, this.postData.password).subscribe(
@@ -69,22 +85,14 @@ export class LoginPage implements OnInit {
                   );
                 }
               );
-              // Storing the User data.
-              //this.storageService.store(AuthConstants.AUTH, res.userData);
-              //this.router.navigate(['home/feed']);
-              //localStorage.setItem('isLoggedin','true');
             } else {
               this.toast.presentToast('incorrect password.');
             }
           },(error: any) => {
-            //localStorage.setItem('isLoggedin','false');
-            //this.toastService.presentToast('Network Issue.');
           }
         );
       } else {
-        //localStorage.setItem('isLoggedin','false');
-        //this.toastService.presentToast('Please enter email/username or password.');
-      }
+      }*/
     }
 
  

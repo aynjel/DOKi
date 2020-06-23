@@ -1,0 +1,39 @@
+<!--ion-header>
+  <ion-toolbar>
+    <button ion-button round  outline (click)="closeModal()" >Close <ion-icon name="close-outline"  ></ion-icon></button>
+    <div>Close <ion-icon name="close-outline"  ></ion-icon></div>
+  </ion-toolbar>
+</ion-header-->
+<ion-header translucent="" role="banner" class="ios header-ios header-translucent header-collapse-none header-translucent-ios hydrated"><!----><div class="header-background"></div>
+  <ion-toolbar class="in-toolbar ios toolbar-title-default hydrated" color="mango">
+    <ion-title class="ios title-default hydrated">Patient Detail</ion-title>
+    <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
+      <ion-button (click)="closeModal()" class="ios button button-clear ion-activatable ion-focusable hydrated">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+ 
+
+
+
+ <ion-card>
+  <ion-card-header>
+    <ion-card-title>{{data.last_name}}, {{data.first_name}} {{data.middle_name}}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    Admission Date : {{data.admission_date}}<br />
+    Admission Status : {{data.admission_status}}<br />
+    Location : {{data.site}}<br />
+    Room No. : {{data.room_no}}<br />
+    Doctor's Fee :  {{data.doctor_prof_fee}}<br />
+    <ion-button color="primary" (click)='detail(data.admission_no)'  (professionalFee)="dateChanged($event)">Fee</ion-button>
+
+  </ion-card-content>
+</ion-card>
+
+
+
+</ion-content>

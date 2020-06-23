@@ -8,7 +8,7 @@ import { HttpService } from './http.service';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment'; 
-
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Injectable({
@@ -21,6 +21,7 @@ export class DoctorService {
     private httpService:HttpService,
     private storageService: StorageService,
     private router: Router,
+    private authService:AuthService,
     private http: HttpClient
   ) {}
 
@@ -41,4 +42,25 @@ export class DoctorService {
       return res;
     });
   }
+
+  /* for doctors Portal */
+  getDrCode(){
+    let data="";
+    this.authService.userData$.subscribe((res:any) => {
+      let doctorsDetails = JSON.parse(JSON.stringify(res));
+      doctorsDetails.forEach(el => {
+        return data = el.dr_code;
+        console.log(el.dr_code);
+      });
+    });
+    console.log("-->"+data);
+    //return data;
+  }
+
+  getInPatient(postData1: any){
+    return this.httpService.getInpatient('Inpatient/Get/', postData1);
+  }
+
+
+  /* for doctors Portal */
 }

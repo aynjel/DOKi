@@ -25,25 +25,31 @@
 </ion-tabs>
  
 <div *ngIf="isDesktop" class="desktop">
-  <ion-header mode="ios">
+
+
+
+  <ion-header mode="md"  class="ion-no-border custom-border-bottom" > 
     <ion-toolbar >
       <ion-row class="ion-align-items-center">
         <ion-col size="2">
-          <img src="./assets/logo.png" class="logo ion-text-left">
+ 
         </ion-col>
-        <ion-col size="10">
-          <div class="navbar" class="ion-text-center">
+        <ion-col size="3">
+          <app-logo-sm></app-logo-sm>
+        </ion-col>
+        <ion-col size="7">
+          <div class="navbar" class="ion-text-center chh-bg">
             <ion-button fill="clear" routerLink="/menu/tab1" routerDirection="root" routerLinkActive="active-link"
               class="link">
-              Tab 1
+              In-Patients
             </ion-button>
             <ion-button fill="clear" routerLink="/menu/tab2" routerDirection="root" routerLinkActive="active-link"
               class="link">
-              Tab 2
+              Appointments
             </ion-button>
             <ion-button fill="clear" routerLink="/menu/tab3" routerDirection="root" routerLinkActive="active-link"
               class="link">
-              Tab 3
+              Settings
             </ion-button>
           </div>
         </ion-col>
@@ -54,7 +60,10 @@
   <ion-router-outlet class="desktop-wrapper"></ion-router-outlet>
  
   <div class="footer">
-    <span>Ionic Academy 2019</span>
+    <span>Chong Hua Hospital</span>
   </div>
  
+
+
+  
 </div>

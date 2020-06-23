@@ -5,13 +5,12 @@ const { Storage } = Plugins;
   providedIn: 'root'
 })
 export class StorageService {
-
+drCode:any ;
   constructor() { }
 
   // Store the value
   async store(storageKey: string, value: any) {
     const encryptedValue = btoa(escape(JSON.stringify(value)));
-    
     await Storage.set({
       key: storageKey,
       value: encryptedValue

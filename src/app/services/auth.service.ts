@@ -5,21 +5,23 @@ import { StorageService } from './storage.service';
 import { AuthConstants } from '../config/auth-constants';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpService } from './http.service';
-
+import {Account} from '../models/account';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  userData$ = new BehaviorSubject<any>([]);
+account:Account;
+  userData$ = new BehaviorSubject<Account>(null);
 
 
   constructor(
     private httpService:HttpService,
     private storageService: StorageService,
-    private router: Router
+    private router: Router,
+    
   ) {}
 
-  
+
   getUserData() {
     this.storageService.get(AuthConstants.AUTH).then(res => {
       this.userData$.next(res);
@@ -36,7 +38,7 @@ export class AuthService {
 
   logout() {
     this.storageService.removeStorageItem(AuthConstants.AUTH).then(res => {
-      this.userData$.next('');
+      this.userData$.next(null);
       this.router.navigate(['/login']);
     });
   }
@@ -45,7 +47,11 @@ export class AuthService {
     return this.httpService.posttest('Userlogin', postData1, postData2);
   }
 
-
+  /*For Doctors Portal */
+  doctorsPortalLogin(postData1: any,postData2: any,): Observable<any> {
+    return this.httpService.get('Login/Get?', postData1, postData2);
+  }
+  /*For Doctors Portal */
 
 
 }

@@ -2,7 +2,24 @@
     --ion-safe-area-top: 25px;
     --ion-safe-area-bottom: 27px;
     }
-    ion-slide {
+    .ion-slide {
     height: calc(110vh - 135px);
     } 
-    
+    .chh-bg{
+        --background: #275228 !important;
+      }
+
+
+
+      .stickem{
+        --background:red; 
+        z-index: 99999;
+
+      }
+
+ion-list-header{
+  
+  position:sticky;
+   top:0px;
+   z-index: 10px ;
+}

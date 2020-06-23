@@ -25,7 +25,9 @@ export class Tab3Page {
     
   }
   logout() {
+    
     this.storageService.removeStorageItem(AuthConstants.AUTH).then(res => {
+      localStorage.clear();
       this.router.navigate(['/login']);
     });
   }

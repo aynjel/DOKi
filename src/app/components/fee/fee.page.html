@@ -1,0 +1,33 @@
+
+
+  <ion-card>
+    <ion-card-content >  
+
+
+
+
+      <form >
+        <ion-item>
+            <ion-label position="floating">Professional Fee</ion-label>
+            <ion-input type="text" id="input-professionalFee" ngModel="postData.professionalFee"></ion-input>
+            <pre>{{postData.professionalFee}}</pre>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Remarks</ion-label>
+            <ion-textarea [(ngModel)]="postData.remarks" id="input-remarks"></ion-textarea>
+            <pre>{{postData.remarks}}</pre>
+        </ion-item>
+        <div class="ion-margin-vertical ion-text-right">
+            <ion-button id="btn-confirm" (click)="save()">
+              Save
+            </ion-button>
+
+            <ion-button id="btn-confirm" (click)="ClosePopover()">
+              Cancel
+            </ion-button>
+        </div>
+        </form> 
+    </ion-card-content>
+</ion-card>
+
+

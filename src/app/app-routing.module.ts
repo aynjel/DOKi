@@ -16,19 +16,28 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./page/index/index.module').then( m => m.IndexPageModule)
-  },/*  {
+  },/*   {
+    path: 'fee',
+    loadChildren: () => import('./modals/fee/fee.module').then( m => m.FeePageModule)
+  }, {
     path: 'patientdetails',
     loadChildren: () => import('./components/patientdetails/patientdetails.module').then( m => m.PatientdetailsPageModule)
   },
   {
     path: 'modalpage',
     loadChildren: () => import('./components/modalpage/modalpage.module').then( m => m.ModalpagePageModule)
-  }
+  }{
+    path: 'logo-sm',
+    loadChildren: () => import('./components/logo-sm/logo-sm.module').then( m => m.LogoSmPageModule)
+  },
 *,
   {
     path: 'inpatientdetial',
     loadChildren: () => import('./page/inpatientdetial/inpatientdetial.module').then( m => m.InpatientdetialPageModule)
-  }*/
+  },{
+    path: 'inpatientmodal',
+    loadChildren: () => import('./components/inpatientmodal/inpatientmodal.module').then( m => m.InpatientmodalPageModule)
+  },*/
 ];
 @NgModule({
   imports: [

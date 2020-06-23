@@ -7,13 +7,14 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DoctorService } from '../services/doctor.service';
 import { HostListener  } from "@angular/core";
 import { PatientdetailsPage } from '../components/patientdetailss/patientdetails.page';
-
+import { ScreensizeService } from '../services/screensize.service';
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
+  isDesktop: boolean;
   displayUserData:any;
   displaydata = "chhc";
   segment = "chhc";
@@ -27,7 +28,8 @@ export class Tab2Page {
       private patientService:PatientService,
       private modalController: ModalController,
       private authService:AuthService,
-      private doctorService:DoctorService
+      private doctorService:DoctorService,
+      private screensizeService: ScreensizeService
     ) {  
 
       this.customPickerOptions = {
@@ -47,7 +49,10 @@ export class Tab2Page {
             }
           }
       ]
-      }
+      };
+      this.screensizeService.isDesktopView().subscribe(isDesktop => {
+        if (this.isDesktop && !isDesktop) {window.location.reload();}this.isDesktop = isDesktop;
+      });
     
 
 }
@@ -70,7 +75,8 @@ hospital(data1:any) {
      component: PatientdetailsPage,
      cssClass: 'my-custom-modal-css',
      componentProps: { 
-      appt_id: data
+      appt_id: data,
+      backdropDismiss: true
     }
    });
     return await modal.present();
@@ -99,10 +105,7 @@ hospital(data1:any) {
   }
   getDate(data1:any,data2:any){
     this.jsonObj5=[];
-    this.authService.userData$.subscribe((res:any) => {
-      if(res.dr_code != null){
-
-        this.displayUserData = res;
+        this.displayUserData = localStorage.getItem('dr_code');
         var myObject = {};var jsonObj2 = [];var item1 = {}
         this.patientService.retrieveSchedTime(""+this.displayUserData.dr_code,data1,data2).subscribe(
           (patientService:any)=>{
@@ -119,23 +122,14 @@ hospital(data1:any) {
               this.jsonObj5.push(item1);
           }
         );
-
-       
-    }
-    });
  
+
+   
   }
   ngOnInit() {
     this.selectedDate = this.yyyymmdd();
     this.selectedLocation = "C";
     this.getDate(this.selectedDate,this.selectedLocation);
-    this.getDate(this.selectedDate,this.selectedLocation);   
-   
-
-
-
-
-
 
 
 /*

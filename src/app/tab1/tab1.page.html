@@ -1,66 +1,122 @@
 
-<ion-content padding>
-<ion-header [translucent]="true">
-  <ion-toolbar color="primary">
-    <ion-title>
-      In-Patients
-    </ion-title>
-    
-  </ion-toolbar>
 
 
-  <ion-segment [(ngModel)]="segment"  value="all">
-    
-    <ion-segment-button value="all" >
-      All
-    </ion-segment-button>
-    <ion-segment-button value="chhc">
-      Cebu City
-    </ion-segment-button>
-    <ion-segment-button value="chhm">
-      Mandaue City
-    </ion-segment-button>
 
-  </ion-segment>
+  
+<ion-header [translucent]="true" mode="md" class="ion-no-border">
+  <div *ngIf="!isDesktop">
+    <ion-toolbar  color="mango" >
+      <ion-title>
+        <ion-icon name="person-circle-outline"></ion-icon>In-Patients
+      </ion-title>
+      <!--div *ngIf="isDesktop" class="desktop">
+      <ion-row class="ion-align-items-center">
+      <ion-col size="2"></ion-col>
+      <ion-col size="2"><ion-icon name="person-circle-outline"></ion-icon>In-Patients</ion-col>
+      <ion-col size="8"></ion-col>
+      </ion-row>
+      </div-->
+    </ion-toolbar>
+  </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3" class="custom-border-bottom">
+        
+        <ion-segment [(ngModel)]="segment"  value="all" color="mango">
+          <ion-segment-button value="all" >All</ion-segment-button>
+          <ion-segment-button value="chhc">Cebu City</ion-segment-button>
+          <ion-segment-button value="chhm">Mandaue City</ion-segment-button>
+        </ion-segment>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-header>
 
 
+<ion-content>
+<ion-grid>
+  <ion-row>
+    <ion-col size-md="6" offset-md="3">
 
   <div [ngSwitch]="segment">
-    <ion-card *ngSwitchCase="'all'">
 
-      <ion-card-content>
-
+    <div *ngSwitchCase="'all'">
+      <div  *ngFor="let x of inPatients">
+        
+      <ion-card class="ion-activatable" (click)='detail(x)'> 
         <ion-card-header>
-         CHH 
+          <ion-card-title>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          Your card info content here
+         <div *ngIf="x.site == 'C'">
+           Chong Hua Hospital (Cebu City)<br />
+           Room {{x.room_no}}<br />
+           {{x.admission_status}}
+         </div>
+         <div *ngIf="x.site == 'M'">
+          Chong Hua Hospital Mandaue<br />
+          Room {{x.room_no}}
+        </div>      
         </ion-card-content>
         
+      </ion-card>
+    </div>
+    </div>
 
-
-
-        
-      </ion-card-content>
-    </ion-card>
   
-    <ion-card *ngSwitchCase="'chhc'">
-      <ion-card-header>
-        Card Info
-      </ion-card-header>
-      <ion-card-content>
-        Your card info content here
-      </ion-card-content>
-    </ion-card>
+    <div *ngSwitchCase="'chhc'">
+      <div  *ngFor="let x of inPatients">
+        <div *ngIf="x.site == 'C'" >
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+           <div *ngIf="x.site == 'C'">
+             Chong Hua Hospital (Cebu City)<br />
+             Room {{x.room_no}}
+           </div>
+           <div *ngIf="x.site == 'M'">
+            Chong Hua Hospital Mandaue<br />
+            Room {{x.room_no}}
+          </div>      
+          </ion-card-content>
+        </ion-card>
+      </div>
+      </div>
+    </div>
 
-    <ion-card *ngSwitchCase="'chhm'">
-      <ion-card-header>
-        Change Password
-      </ion-card-header>
-      <ion-card-content>
-        Your change password form here
-      </ion-card-content>
-    </ion-card>
+  
+    <div *ngSwitchCase="'chhm'">
+      <div  *ngFor="let x of inPatients">
+        <div *ngIf="x.site == 'M'" >
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+           <div *ngIf="x.site == 'C'">
+             Chong Hua Hospital (Cebu City)<br />
+             Room {{x.room_no}}
+           </div>
+           <div *ngIf="x.site == 'M'">
+            Chong Hua Hospital Mandaue<br />
+            Room {{x.room_no}}
+          </div>      
+          </ion-card-content>
+        </ion-card>
+      </div>
+      </div>
+    </div>
   </div>
+</ion-col>
+</ion-row>
+</ion-grid>
+
+
+
+
+
 </ion-content>

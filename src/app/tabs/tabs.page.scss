@@ -1,33 +1,39 @@
 .desktop {
     ion-router-outlet {
-      margin-top: 56px;
-      margin-bottom: 56px;
+      margin-top: 6.8%;
+      margin-bottom: 35px;
     }
    
     .logo {
-      max-height: 40px;
+      max-height: 100%;
     }
    
     ion-toolbar {
-      --background: #374168;
+      --background: #ffffff;
     }
    
     .link {
-      --color: var(--ion-color-light);
+      --color: #275228;
     }
    
     .active-link {
-      --color: var(--ion-color-primary);
+      --color: #528d53;
+      border-bottom: 3px solid #275228;
+      font-weight: bold;
     }
+  
   }
-   
+  .chh-bg{
+    --background: #275228 !important;
+    --color: #fff;
+  }
   .footer {
     width: 100%;
     color: #fff;
     font-weight: bold;
-    background: #374168;
-    height: 56px;
-    line-height: 56px;
+    background: #275228;
+    height: 35px;
+    line-height: 35px;
     text-align: center;
     position: fixed;
     bottom: 0px;
