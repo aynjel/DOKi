@@ -55,9 +55,10 @@ export class LoginPage implements OnInit {
       /*For Doctors Portal */
       this.authService.doctorsPortalLogin(this.postData.username, this.postData.password).subscribe(
         (res: any) => {
-          console.log(res);
+          console.log("doctors portal -->"+res);
           if(res != ""){
             res.forEach(element => {
+              console.log('dr_code -> '+element.dr_code);
               localStorage.setItem('dr_code',element.dr_code);
             });
             

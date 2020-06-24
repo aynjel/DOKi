@@ -49,6 +49,7 @@ account:Account;
 
   /*For Doctors Portal */
   doctorsPortalLogin(postData1: any,postData2: any,): Observable<any> {
+    console.log("DoctorsPortalLogin -> " + postData1 + " - "+postData2);
     return this.httpService.get('Login/Get?', postData1, postData2);
   }
   /*For Doctors Portal */

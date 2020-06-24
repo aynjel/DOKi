@@ -7,7 +7,7 @@
   <div *ngIf="!isDesktop">
     <ion-toolbar  color="mango" >
       <ion-title>
-        <ion-icon name="person-circle-outline"></ion-icon>In-Patients
+        <ion-icon name="person-circle-outline"></ion-icon> In-Patients
       </ion-title>
       <!--div *ngIf="isDesktop" class="desktop">
       <ion-row class="ion-align-items-center">
@@ -66,10 +66,10 @@
     </div>
 
   
-    <div *ngSwitchCase="'chhc'">
+    <div *ngSwitchCase="'chhc'" >
       <div  *ngFor="let x of inPatients">
         <div *ngIf="x.site == 'C'" >
-        <ion-card>
+        <ion-card class="ion-activatable" (click)='detail(x)'>
           <ion-card-header>
             <ion-card-title>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</ion-card-title>
           </ion-card-header>
@@ -89,10 +89,10 @@
     </div>
 
   
-    <div *ngSwitchCase="'chhm'">
+    <div *ngSwitchCase="'chhm'" >
       <div  *ngFor="let x of inPatients">
         <div *ngIf="x.site == 'M'" >
-        <ion-card>
+        <ion-card class="ion-activatable" (click)='detail(x)'>
           <ion-card-header>
             <ion-card-title>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</ion-card-title>
           </ion-card-header>

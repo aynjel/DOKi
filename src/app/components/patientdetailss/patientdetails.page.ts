@@ -1,5 +1,5 @@
 import { Component, OnInit, Input} from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
 import { PatientService } from 'src/app/services/patient.service';
 
 
@@ -14,7 +14,7 @@ export class PatientdetailsPage implements OnInit {
  receiveddata:any[] = [];
   public items:string[]=[];
   @Input() appt_id: any;
-  constructor(private modalController: ModalController, private patientService:PatientService) { }
+  constructor(private modalController: ModalController, private patientService:PatientService, private popover:PopoverController) { }
   
   ngOnInit() {
 
@@ -27,11 +27,14 @@ export class PatientdetailsPage implements OnInit {
       }
     );
 
-    setTimeout(() => {
-      this.items = ['One','Two'];
-    }, 1500)
 
 
+  }
+
+  ClosePopover()
+  {
+
+   this.popover.dismiss();
   }
   async closeModal() {
     await this.modalController.dismiss();

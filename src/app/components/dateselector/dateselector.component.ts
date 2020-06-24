@@ -37,7 +37,10 @@ export class DateselectorComponent implements OnInit {
   ngOnInit() {
     this.selectedDate = this.yyyymmdd();
   }
-
+  forceModal(){
+    console.log("123");
+  
+  }
   adjustDate(data1:any){
     this.selectedDate = this.incrementDate(this.selectedDate,data1);
     console.log(this.selectedDate);

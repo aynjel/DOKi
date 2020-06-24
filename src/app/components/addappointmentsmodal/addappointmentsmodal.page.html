@@ -1,0 +1,35 @@
+
+<ion-header translucent="" role="banner" class="ios header-ios header-translucent header-collapse-none header-translucent-ios hydrated"><!----><div class="header-background"></div>
+  <ion-toolbar class="in-toolbar ios toolbar-title-default hydrated" color="mango">
+    <ion-title>
+      <ion-icon name="man-outline"></ion-icon>Add Appointments
+    </ion-title>
+    <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
+      <ion-button routerLink='/menu/tab2' routerDirection="back" class="ios button button-clear ion-activatable ion-focusable hydrated">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form >
+    <ion-item>
+        <ion-label position="floating">Professional Fee</ion-label>
+        <ion-input type="text" id="input-professionalFee" ></ion-input>
+   
+    </ion-item>
+    <ion-item>
+        <ion-label position="floating">Remarks</ion-label>
+        <ion-textarea  id="input-remarks"></ion-textarea>
+
+    </ion-item>
+    <div class="ion-margin-vertical ion-text-right">
+        <ion-button id="btn-confirm" (click)="save()">
+          Save
+        </ion-button>
+
+        <ion-button id="btn-confirm" (click)="ClosePopover()">
+          Cancel
+        </ion-button>
+    </div>
+    </form>
+</ion-content>

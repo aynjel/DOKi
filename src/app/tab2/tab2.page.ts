@@ -8,6 +8,9 @@ import { DoctorService } from '../services/doctor.service';
 import { HostListener  } from "@angular/core";
 import { PatientdetailsPage } from '../components/patientdetailss/patientdetails.page';
 import { ScreensizeService } from '../services/screensize.service';
+import { ActionSheetController } from '@ionic/angular';
+
+import { PopoverController } from '@ionic/angular'; 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -29,7 +32,9 @@ export class Tab2Page {
       private modalController: ModalController,
       private authService:AuthService,
       private doctorService:DoctorService,
-      private screensizeService: ScreensizeService
+      private screensizeService: ScreensizeService,
+      private popover:PopoverController,
+      public actionSheetController: ActionSheetController
     ) {  
 
       this.customPickerOptions = {
@@ -58,30 +63,70 @@ export class Tab2Page {
 }
 
 
-hospitals(data1:any) {
-  console.log(data1);
-}
+  hospitals(data1:any) {
+    console.log(data1);
+  }
 
-hospital(data1:any) {
-  console.log(data1);
-}
+  hospital(data1:any) {
+    console.log(data1);
+  }
+
+  addappointment(){
+    console.log('1');
+  }
 
 
-
-
+  async presentActionSheet(data1:any) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Options',
+      cssClass: 'my-custom-class',
+      buttons: [{
+        text: 'Delete',
+        role: 'destructive',
+        icon: 'trash',
+        handler: () => {
+          console.log('Delete clicked');
+        }
+      }, {
+        text: 'View',
+        icon: 'eye',
+        handler: () => {
+          console.log('View clicked');
+          this.presentModal(data1);
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+          
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
   async presentModal(data:any) {
-
+    const popover = await this.popover.create({
+      component: PatientdetailsPage,
+      showBackdrop:true,
+      translucent: true,
+      componentProps: { 
+        appt_id: data,
+        backdropDismiss: true
+      }
+    });
+    popover.present();
+    /*
    const modal = await this.modalController.create({
      component: PatientdetailsPage,
-     cssClass: 'my-custom-modal-css',
      componentProps: { 
       appt_id: data,
       backdropDismiss: true
     }
    });
-    return await modal.present();
+    return await modal.present();*/
   }
-
   dismiss() {
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data
@@ -106,9 +151,11 @@ hospital(data1:any) {
   getDate(data1:any,data2:any){
     this.jsonObj5=[];
         this.displayUserData = localStorage.getItem('dr_code');
+        console.log("drcode : "+this.displayUserData);
         var myObject = {};var jsonObj2 = [];var item1 = {}
-        this.patientService.retrieveSchedTime(""+this.displayUserData.dr_code,data1,data2).subscribe(
+        this.patientService.retrieveSchedTime(""+this.displayUserData,data1,data2).subscribe(
           (patientService:any)=>{
+            console.log("retrieve response --> "+patientService);
               let parseddata = JSON.parse(JSON.stringify(patientService));
               item1 ["date"] =data1;
               parseddata.forEach(element => {

@@ -40,7 +40,13 @@
     position: absolute; 
     display: block;  
  }
-
+ .my-custom-modal-appointment-css .modal-wrapper {
+   height: 50%;
+   width: 50%;
+   top: 15;
+   position: absolute; 
+   display: block;  
+}
 
  .my-custom-modal-css .modal-wrapper {
    height: 45%;

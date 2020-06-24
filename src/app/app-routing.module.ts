@@ -16,6 +16,9 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./page/index/index.module').then( m => m.IndexPageModule)
+  },{
+    path: 'addappointmentsmodal',
+    loadChildren: () => import('./components/addappointmentsmodal/addappointmentsmodal.module').then( m => m.AddappointmentsmodalPageModule)
   },/*   {
     path: 'fee',
     loadChildren: () => import('./modals/fee/fee.module').then( m => m.FeePageModule)
