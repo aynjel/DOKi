@@ -29,12 +29,14 @@ export class DoctorService {
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     const url = environment.apiUrl + "retrieveuserdetails?username="+postData1 ;
+    console.log("retrieveUserDetails --> "+url);
     return this.http.post(url, options);
   }
   getDoctorName(postData1: any): Observable<any> {
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     const url = environment.apiUrl + "getDoctorName?doctorcode="+postData1 ;
+    console.log("getDoctorName --> "+url);
     return this.http.post(url, options);
   }
   getUserData() {

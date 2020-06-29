@@ -1,7 +1,21 @@
 
 
 
-<ion-segment   value="chhc"  mode="ios">
-  <ion-segment-button value="chhc" (click)="onSubmit('C') " >Cebu City</ion-segment-button>
-  <ion-segment-button value="chhm" (click)="onSubmit('M') ">Mandaue City</ion-segment-button>
-</ion-segment>
+<!--ion-segment   value="chhc" >
+  <ion-segment-button value="chhc" (click)="onSubmit('C')" >Cebu City</ion-segment-button>
+  <ion-segment-button value="chhm" (click)="onSubmit('M')" >Mandaue City</ion-segment-button>
+</ion-segment-->
+
+<div class="navbar" class="ion-text-center chh-bg">
+  <ion-button fill="clear" (click)="onSubmit('C',active)" 
+  [ngClass]="{'active':active, 'notactive':!active}" 
+    class="link">
+    Cebu City
+  </ion-button>
+  <ion-button fill="clear" (click)="onSubmit('M',active1)" 
+  [ngClass]="{'active':active1, 'notactive':!active1}" 
+    class="link">
+    Mandaue City
+  </ion-button>
+
+</div>

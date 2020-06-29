@@ -1,35 +1,71 @@
 
-<ion-header translucent="" role="banner" class="ios header-ios header-translucent header-collapse-none header-translucent-ios hydrated"><!----><div class="header-background"></div>
+<ion-header mode="md" class="ion-no-border">
   <ion-toolbar class="in-toolbar ios toolbar-title-default hydrated" color="mango">
     <ion-title>
       <ion-icon name="man-outline"></ion-icon>Add Appointments
     </ion-title>
     <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
-      <ion-button routerLink='/menu/tab2' routerDirection="back" class="ios button button-clear ion-activatable ion-focusable hydrated">Close</ion-button>
+      <ion-button (click)="closeModal('0')" routerDirection="back" class="ios button button-clear ion-activatable ion-focusable hydrated">Close</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <form >
-    <ion-item>
-        <ion-label position="floating">Professional Fee</ion-label>
-        <ion-input type="text" id="input-professionalFee" ></ion-input>
-   
-    </ion-item>
-    <ion-item>
-        <ion-label position="floating">Remarks</ion-label>
-        <ion-textarea  id="input-remarks"></ion-textarea>
+  <ion-content >
+    <ion-grid>
+      <ion-row>
+        <ion-col size-md="6" offset-md="3" color="mango">
 
-    </ion-item>
-    <div class="ion-margin-vertical ion-text-right">
-        <ion-button id="btn-confirm" (click)="save()">
-          Save
-        </ion-button>
 
-        <ion-button id="btn-confirm" (click)="ClosePopover()">
-          Cancel
-        </ion-button>
-    </div>
-    </form>
-</ion-content>
+
+            <ion-item>
+              <ion-label position="fixed" style="z-index:10">Date</ion-label>
+              <li-ionic4-datepicker [(ngModel)]="mydate1" [inputDateConfig]="datePickerObj" ></li-ionic4-datepicker>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Time</ion-label>
+              <ion-select  [(ngModel)]="time" value="brown" okText="Ok" cancelText="Cancel" (click)="pickDate()">
+                <div *ngFor="let x of doctorSchedule" >
+                  <ion-select-option >{{x.time_desc}}</ion-select-option>
+                </div>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">First Name</ion-label>
+              <ion-input [(ngModel)]="fname" id="input-remarks"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Middle Name</ion-label>
+              <ion-input  [(ngModel)]="mname" id="input-remarks"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Last Name</ion-label>
+              <ion-input [(ngModel)]="lname" id="input-remarks"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="fixed"  style="z-index:10">Birthdate</ion-label>
+              <li-ionic4-datepicker [(ngModel)]="mydate2" [inputDateConfig]="datePickerObj2" ></li-ionic4-datepicker>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Gender</ion-label>
+              <ion-select placeholder="Select"  [(ngModel)]="gender">
+                <ion-select-option value="f">Female</ion-select-option>
+                <ion-select-option value="m">Male</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+            <ion-label position="floating">Address</ion-label>
+            <ion-textarea id="input-remarks"  [(ngModel)]="adrress"></ion-textarea>
+            </ion-item>
+            <ion-item>
+            <ion-label position="floating">Contact Number</ion-label>
+            <ion-input id="input-remarks"  [(ngModel)]="contact"></ion-input>
+            </ion-item>
+            <div class="ion-margin-vertical ion-text-right">
+              <ion-button id="btn-confirm" (click)="save()" color="mango">Save</ion-button>
+
+            </div>
+     
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>

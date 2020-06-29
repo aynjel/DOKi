@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { PatientService } from '../services/patient.service';
 import { ModalController } from '@ionic/angular';
-
-
 import { AuthService } from 'src/app/services/auth.service';
 import { DoctorService } from '../services/doctor.service';
 import { HostListener  } from "@angular/core";
 import { PatientdetailsPage } from '../components/patientdetailss/patientdetails.page';
 import { ScreensizeService } from '../services/screensize.service';
 import { ActionSheetController } from '@ionic/angular';
-
 import { PopoverController } from '@ionic/angular'; 
+import { AlertController } from '@ionic/angular';
+import { AddappointmentsmodalPage } from '../components/addappointmentsmodal/addappointmentsmodal.page';
+
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -34,7 +34,8 @@ export class Tab2Page {
       private doctorService:DoctorService,
       private screensizeService: ScreensizeService,
       private popover:PopoverController,
-      public actionSheetController: ActionSheetController
+      public actionSheetController: ActionSheetController,
+      public alertController: AlertController
     ) {  
 
       this.customPickerOptions = {
@@ -75,37 +76,72 @@ export class Tab2Page {
     console.log('1');
   }
 
-
-  async presentActionSheet(data1:any) {
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Options',
-      cssClass: 'my-custom-class',
-      buttons: [{
-        text: 'Delete',
-        role: 'destructive',
-        icon: 'trash',
-        handler: () => {
-          console.log('Delete clicked');
-        }
-      }, {
-        text: 'View',
-        icon: 'eye',
-        handler: () => {
-          console.log('View clicked');
-          this.presentModal(data1);
-        }
-      }, {
-        text: 'Cancel',
-        icon: 'close',
-        role: 'cancel',
-        handler: () => {
-          console.log('Cancel clicked');
-          
-        }
-      }]
-    });
-    await actionSheet.present();
+  //present View & Delete
+  async presentActionSheet(data1:any,data2:any,data3:any) {
+    if(data2 == "Reserved"){
+      const actionSheet = await this.actionSheetController.create({
+        cssClass: 'my-custom-class',
+        buttons: [{
+          text: 'Delete',role: 'destructive',icon: 'trash',handler: () => {
+            console.log('Delete clicked : '+data1);
+            this.presentAlertConfirm(data3,data1);
+          }
+        }, {
+          text: 'View',icon: 'eye',
+          handler: () => {
+            console.log('View clicked');
+            this.presentModal(data1);
+          }
+        }, {text: 'Cancel',icon: 'close',role: 'cancel'
+        }]
+      });
+      await actionSheet.present();
+    }else{
+      const actionSheet = await this.actionSheetController.create({
+        cssClass: 'my-custom-class',
+        buttons: [{
+          text: 'View',
+          icon: 'eye',
+          handler: () => {
+            console.log('View clicked');
+            this.presentModal(data1);
+          }
+        }, {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+            
+          }
+        }]
+      });
+      await actionSheet.present();
+    }
   }
+  //Affirm Delete
+  async presentAlertConfirm(data1:any,data2:any) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      message: 'Are you sure you want to delete <strong>'+data1+'</strong> ?',
+      buttons: [{text: 'Cancel',role: 'cancel',cssClass: 'secondary'},
+      {
+          text: 'Sure',
+          handler: () => {
+            console.log('Confirm Okay : '+data2);
+            this.patientService.deletePatients(data2).subscribe(
+              (patientService:any)=>{
+                console.log(patientService);
+              }
+            );
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+  //present View Detail
   async presentModal(data:any) {
     const popover = await this.popover.create({
       component: PatientdetailsPage,
@@ -127,12 +163,31 @@ export class Tab2Page {
    });
     return await modal.present();*/
   }
+
+
+
   dismiss() {
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data
     this.modalController.dismiss({
       'dismissed': true
     });
+  }
+
+  //present addPatient
+  async showaddmodal(){
+   const modal = await this.modalController.create({
+     component: AddappointmentsmodalPage,
+     componentProps: { 
+      appt_id: this.selectedLocation,
+      backdropDismiss: true
+    }
+   });
+   modal.onDidDismiss()
+   .then((data) => {
+     console.log(data);
+ });
+    return await modal.present();
   }
 
   locationAction(data:any){
@@ -155,7 +210,7 @@ export class Tab2Page {
         var myObject = {};var jsonObj2 = [];var item1 = {}
         this.patientService.retrieveSchedTime(""+this.displayUserData,data1,data2).subscribe(
           (patientService:any)=>{
-            console.log("retrieve response --> "+patientService);
+            console.log("retrieve response --> "+JSON.stringify(patientService));
               let parseddata = JSON.parse(JSON.stringify(patientService));
               item1 ["date"] =data1;
               parseddata.forEach(element => {
@@ -199,12 +254,10 @@ var x=0;
           
           ); 
       }
-      
     );
     item1 ["data"] = jsonObj2;
     this.jsonObj5.push(item1);
     console.log(this.jsonObj5);
-
  */
   }
 
@@ -237,5 +290,12 @@ var x=0;
     }
     return parts.join("-");
   }
-
+   doRefresh(event) {
+    console.log('Begin async operation');
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      this.getDate(this.selectedDate,this.selectedLocation);
+      event.target.complete();
+    }, 1000);
+  }
 }

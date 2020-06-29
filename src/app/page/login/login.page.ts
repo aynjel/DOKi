@@ -52,11 +52,14 @@ export class LoginPage implements OnInit {
     }
     
     loginAction() {
-      /*For Doctors Portal */
+      console.log("1");
+      /**Working COPY DO NOT DELETE */
+      /*For Doctors Portal
       this.authService.doctorsPortalLogin(this.postData.username, this.postData.password).subscribe(
         (res: any) => {
           console.log("doctors portal -->"+res);
           if(res != ""){
+              console.log("doctors portal -->"+res);
             res.forEach(element => {
               console.log('dr_code -> '+element.dr_code);
               localStorage.setItem('dr_code',element.dr_code);
@@ -70,16 +73,22 @@ export class LoginPage implements OnInit {
 
         });
         /*For Doctors Portal */
-      /*
-      if (this.validateInputs()) {
 
+
+
+
+      
+      if (this.validateInputs()) {
         this.authService.logintest(this.postData.username, this.postData.password).subscribe(
           (res: any) => {
             if (res == "true:D") {
               this.doctorService.retrieveUserDetails(this.postData.username).subscribe(
                 (result:any)=>{
+                  console.log("result.last_name --> "+result.last_name);
+                  localStorage.setItem('dr_code',result.last_name);
                   this.doctorService.getDoctorName(result.last_name).subscribe(
                     (doctordetail:any)=>{
+                      console.log("doctordetail --> "+JSON.stringify(doctordetail));
                         this.storageService.store(AuthConstants.AUTH, doctordetail);
                         this.router.navigate(['/menu/tab1']);
                     }
@@ -93,7 +102,8 @@ export class LoginPage implements OnInit {
           }
         );
       } else {
-      }*/
+      }
+      
     }
 
  

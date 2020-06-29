@@ -28,15 +28,19 @@ export class HttpService {
   /* for doctors portal */
   get(serviceName: string, data1: any,data2: any) {
     data2 = encodeURIComponent(data2);
-    console.log(data2);
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     const url = environment.apiUrlDoctorsPortal + serviceName+'drcode='+data1+'&birthday='+data2;
-    console.log(url);
-  
     return this.http.get(url);
   }
-
+  getAppointments(serviceName: string, data1: any,data2: any) {
+    data2 = encodeURIComponent(data2);
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiUrl + serviceName+'drcode='+data1+'&birthday='+data2;
+    console.log(url);
+    return this.http.get(url);
+  }
 
   getInpatient(serviceName: string, data1: any) {
     const headers = new HttpHeaders();

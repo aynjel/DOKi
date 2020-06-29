@@ -2,13 +2,7 @@
 
 <ion-header mode="md" class="ion-no-border">
   <div *ngIf="!isDesktop">
-    <ion-content>
-      <ion-fab vertical="top" horizontal="end" slot="fixed" color="mango">
-        <ion-fab-button  routerLink='/addappointmentsmodal'>
-          <ion-icon name="add"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
-    </ion-content>
+
     <ion-toolbar  color="mango" >
       <ion-title>
         <ion-icon name="man-outline"></ion-icon> Appointments
@@ -38,11 +32,43 @@
 
 
 
-
-
-
 <ion-content [fullscreen]="true">
 
+
+
+<!--ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher-content 
+  pullingIcon="arrow-dropdown"
+  pullingText="Pull to refresh"
+  refreshingSpinner="circles"
+  refreshingText="Refreshing...">
+
+  </ion-refresher-content>
+</ion-refresher-->
+
+  <ion-refresher slot="fixed" id="refresher" class="refresher-native" (ionRefresh)="doRefresh($event)" pullFactor="0.5" pullMin="100" pullMax="200">
+    <ion-refresher-content 
+    pullingIcon="chevron-down-circle-outline"
+    refreshingSpinner="circles"
+  >
+
+      
+
+      </ion-refresher-content>
+  </ion-refresher>
+
+
+
+
+
+
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" color="mangolight">
+      <!--ion-fab-button  routerLink='/addappointmentsmodal' (click)="showaddmodal()"-->
+      <ion-fab-button  (click)="showaddmodal()" color="mangolight">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
 
 
 
@@ -71,18 +97,58 @@
 <app-hospital (hospital)="hospital($event)"></app-hospital-->
   <ion-grid>
     <ion-row>
-      <ion-col size-md="6" offset-md="3">
+      <ion-col size-md="4" offset-md="4">
 
 
       
-      
+        <ion-list>
+
+          <ion-list-header >
+            Patient List
+          </ion-list-header>
+
         <!--ion-list-header class="ios hydrated">Patient List</ion-list-header-->
   <div *ngFor="let x of jsonObj5">
       <div *ngFor="let y of x.data">
-        <ion-list class="ios list-ios hydrated">
-          <ion-item class="item ios in-list ion-focusable item-label hydrated" (click)='presentActionSheet(y.appt_id)'>
+
+        <ion-item class=" ion-activatable" (click)='presentActionSheet(y.appt_id,y.status,y.patientName)'  >
+
+          <ion-avatar slot="start" class="md hydrated" >
+            <img src="../../assets/avatar.svg">
+          </ion-avatar>
+          <ion-label >
+            <h3>{{y.patientName}}</h3>
+            <p>{{y.time}}</p>
+            <div [ngSwitch]="y.status">
+              <ion-badge color="success" *ngSwitchCase="'Complete'">{{y.status}}</ion-badge>
+              <ion-badge color="secondary" *ngSwitchCase="'Serving'">{{y.status}}</ion-badge>
+              <ion-badge color="warning" *ngSwitchCase="'Reserved'">{{y.status}}</ion-badge>
+              <li *ngSwitchDefault>{{y.status}}</li>
+            </div>
+          </ion-label>
+        </ion-item>
+        
+        <!--ion-item class="item md in-list ion-focusable item-label hydrated ion-activatable" (click)='presentActionSheet(y.appt_id,y.status,y.patientName)' >
+          <ion-avatar slot="start" class="md hydrated" >
+            <img src="../../assets/avatar.svg">
+          </ion-avatar>
+          <ion-label class="sc-ion-label-md-h sc-ion-label-md-s md hydrated">
+            <h3>{{y.patientName}}</h3>
+            <p>{{y.time}}</p>
+            <div [ngSwitch]="y.status">
+              <ion-badge color="success" *ngSwitchCase="'Complete'">{{y.status}}</ion-badge>
+              <ion-badge color="secondary" *ngSwitchCase="'Serving'">{{y.status}}</ion-badge>
+              <ion-badge color="warning" *ngSwitchCase="'Reserved'">{{y.status}}</ion-badge>
+              <li *ngSwitchDefault>{{y.status}}</li>
+            </div>
+          </ion-label>
+        </ion-item-->
+
+          <!--ion-item   (click)='presentActionSheet(y.appt_id,y.status,y.patientName)' 
+          class="{{y.status}}" lines="none" class="ion-activatable" >
             <ion-avatar slot="start" class="ios hydrated">
               <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg">
+              <img src="../../assets/avatar.svg">
             </ion-avatar>
             <ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated">
               <h3>{{y.patientName}}</h3>
@@ -94,8 +160,8 @@
                 <li *ngSwitchDefault>{{y.status}}</li>
               </div>
             </ion-label>
-          </ion-item>
-        </ion-list>
+          </ion-item-->
+      
       
         <!--ion-card class="ion-activatable" (click)='presentModal(y.appt_id)'>
           <ion-card-header>
@@ -114,6 +180,7 @@
       </div>
 
   </div>
+</ion-list>
   </ion-col>
   </ion-row>
   </ion-grid>

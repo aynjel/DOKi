@@ -12,10 +12,11 @@
 
   <div *ngFor="let x of cardData">
  
-    <ion-card-header>
-      <ion-card-title>{{ x.last_name }}, {{x.first_name}}</ion-card-title>
-    </ion-card-header>
+
+     
+
     <ion-card-content>
+      <h3><b>{{ x.last_name }}, {{x.first_name}}</b></h3>
       Address: {{x.address}}<br />
       Contact Number :{{x.contact_number}}<br />
       Date of Birth : {{x.birth_Date}}<br />

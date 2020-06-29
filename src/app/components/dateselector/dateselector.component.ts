@@ -10,6 +10,11 @@ export class DateselectorComponent implements OnInit {
   @Output() dateSelector: EventEmitter<any> = new EventEmitter();
   selectedDate:any;
   customPickerOptions: any;
+  
+  myDate;
+  active1:boolean = false;
+  active2:boolean = true;
+  active3:boolean = false;
   constructor() {
 
     this.customPickerOptions = {
@@ -23,10 +28,10 @@ export class DateselectorComponent implements OnInit {
         {
           text: 'Ok',
           handler: (res:any) => {
-  let parseddata = JSON.stringify(res);
-  var obj = JSON.parse(parseddata);
-  this.selectedDate = obj.year.value+'-'+obj.month.value+'-'+obj.day.value;
-  this.dateSelector.emit(obj.year.value+'-'+obj.month.value+'-'+obj.day.value);
+            let parseddata = JSON.stringify(res);
+            var obj = JSON.parse(parseddata);
+            this.selectedDate = obj.year.value+'-'+obj.month.value+'-'+obj.day.value;
+            this.dateSelector.emit(obj.year.value+'-'+obj.month.value+'-'+obj.day.value);
           }
         }
     ]
@@ -42,6 +47,21 @@ export class DateselectorComponent implements OnInit {
   
   }
   adjustDate(data1:any){
+    if(data1 == "-1"){
+      this.active1 = true;
+      this.active2 = false;
+      this.active3 = false;
+    }
+    if(data1 == "0"){
+      this.active1 = false;
+      this.active2 = true;
+      this.active3 = false;
+    }
+    if(data1 == "1"){
+      this.active1 = false;
+      this.active2 = false;
+      this.active3 = true;
+    }
     this.selectedDate = this.incrementDate(this.selectedDate,data1);
     console.log(this.selectedDate);
     this.dateSelector.emit(this.selectedDate);

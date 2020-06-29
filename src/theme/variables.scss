@@ -80,7 +80,7 @@
   --ion-color-mango-rgb: 255,204,102;
   --ion-color-mango-contrast: #ffffff;
   --ion-color-mango-contrast-rgb: 0,0,0;
-  --ion-color-mango-shade: #5d7c5d;
+  --ion-color-mango-shade: #009444;
   --ion-color-mango-tint: #275228;
   ion-tab-button.tab-selected {
     ion-icon, ion-label {
@@ -88,6 +88,15 @@
     --ion-color-base: var(--ion-color-mango) !important;
     }
     }
+
+    --ion-color-mangolight: #1183487e;
+    --ion-color-mangolight-rgb: 255,204,102;
+    --ion-color-mangolight-contrast: #ffffff;
+    --ion-color-mangolight-contrast-rgb: 0,0,0;
+    --ion-color-mangolight-shade: #275228;
+    --ion-color-mangolight-tint: #275228;
+
+
 }
 .ion-color-mango {
   --ion-color-base: var(--ion-color-mango);
@@ -97,7 +106,14 @@
   --ion-color-shade: var(--ion-color-mango-shade);
   --ion-color-tint: var(--ion-color-mango-tint);
 }
-
+.ion-color-mangolight {
+  --ion-color-base: var(--ion-color-mangolight);
+  --ion-color-base-rgb: var(--ion-color-mangolight-rgb);
+  --ion-color-contrast: var(--ion-color-mangolight-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-mangolight-contrast-rgb);
+  --ion-color-shade: var(--ion-color-mangolight-shade);
+  --ion-color-tint: var(--ion-color-mangolight-tint);
+}
 .toolbar-ios, .toolbar-md, .toolbar-wp
 {
 min-height: 20px;

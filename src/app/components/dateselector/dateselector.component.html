@@ -1,11 +1,35 @@
 
-  <ion-segment value="2"  mode="ios">
+  <!--ion-segment value="2"  >
     <ion-segment-button value="1" (click)="adjustDate('-1')" > <ion-icon name="arrow-back-outline"></ion-icon> </ion-segment-button>
 
-    <ion-segment-button value="2" (click)="forceModal()">
-    <ion-datetime [pickerOptions]="customPickerOptions" displayFormat="YYYY-MM-DD" min="2020-05-01"  max="2020-12-31" [value]="selectedDate" ></ion-datetime>
-  </ion-segment-button>
+
+
   <ion-datetime [pickerOptions]="customPickerOptions" displayFormat="YYYY-MM-DD" min="2020-05-01"  max="2020-12-31" [value]="selectedDate" ></ion-datetime>
+
+
   
     <ion-segment-button value="3" (click)="adjustDate('1')" ><ion-icon name="arrow-forward-outline"></ion-icon></ion-segment-button>
-  </ion-segment>   
+  </ion-segment-->   
+
+
+  <div class="navbar" class="ion-text-center chh-bg">
+    <ion-button fill="clear" (click)="adjustDate('-1')" 
+    [ngClass]="{'active':active1, 'notactive':!active1}" 
+      class="link">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </ion-button>
+    <ion-button fill="clear" (click)="adjustDate('0')" 
+    [ngClass]="{'active':active2, 'notactive':!active2}" 
+      class="link">
+      <ion-datetime [pickerOptions]="customPickerOptions" displayFormat="YYYY-MM-DD" min="2020-05-01"  max="2020-12-31" [value]="selectedDate" ></ion-datetime>
+    </ion-button>
+
+    <ion-button fill="clear" (click)="adjustDate('1')" 
+    [ngClass]="{'active':active3, 'notactive':!active3}" 
+      class="link">
+      <ion-icon name="arrow-forward-outline"></ion-icon>
+    </ion-button>
+  
+  </div>
+
+  

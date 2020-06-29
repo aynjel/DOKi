@@ -65,7 +65,7 @@ allData: any;
       //console.log(JSON.stringify(res));
       this.inPatients = res;
     });
-        /*
+    
     this.authService.userData$.subscribe((res:any) => {
       console.log(res);
         this.displayUserData = res;
@@ -79,7 +79,7 @@ allData: any;
         this.doctorService.getInPatient(this.drCode).subscribe((res:any)=>{
           this.inPatients = res;
         });
-      });    });*/
+      });    });
 
 
 
