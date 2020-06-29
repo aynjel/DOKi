@@ -20,7 +20,7 @@ export class LoginPage implements OnInit {
 //account:Account[];
 
 
-
+    radio:any="vm";
     constructor(
       private router: Router,
       private authService: AuthService,
@@ -52,57 +52,63 @@ export class LoginPage implements OnInit {
     }
     
     loginAction() {
-      console.log("1");
+      console.log(this.radio);
+
+      if(this.radio == 'vm'){
+        this.authService.doctorsPortalLogin(this.postData.username, this.postData.password).subscribe(
+          (res: any) => {
+            console.log("doctors portal -->"+res);
+            if(res != ""){
+                console.log("doctors portal -->"+res);
+              res.forEach(element => {
+                console.log('dr_code -> '+element.dr_code);
+                localStorage.setItem('dr_code',element.dr_code);
+              });
+              
+              this.storageService.store(AuthConstants.AUTH, res);
+              this.router.navigate(['/menu/tab1']);
+            }else{
+              this.toast.presentToast('Incorrect Authentication Details.');
+            }
+  
+          });
+      }else{
+        if (this.validateInputs()) {
+          this.authService.logintest(this.postData.username, this.postData.password).subscribe(
+            (res: any) => {
+              if (res == "true:D") {
+                this.doctorService.retrieveUserDetails(this.postData.username).subscribe(
+                  (result:any)=>{
+                    console.log("result.last_name --> "+result.last_name);
+                    localStorage.setItem('dr_code',result.last_name);
+                    this.doctorService.getDoctorName(result.last_name).subscribe(
+                      (doctordetail:any)=>{
+                        console.log("doctordetail --> "+JSON.stringify(doctordetail));
+                          this.storageService.store(AuthConstants.AUTH, doctordetail);
+                          this.router.navigate(['/menu/tab1']);
+                      }
+                    );
+                  }
+                );
+              } else {
+                this.toast.presentToast('incorrect password.');
+              }
+            },(error: any) => {
+            }
+          );
+        } else {
+        }
+      }
       /**Working COPY DO NOT DELETE */
       /*For Doctors Portal
-      this.authService.doctorsPortalLogin(this.postData.username, this.postData.password).subscribe(
-        (res: any) => {
-          console.log("doctors portal -->"+res);
-          if(res != ""){
-              console.log("doctors portal -->"+res);
-            res.forEach(element => {
-              console.log('dr_code -> '+element.dr_code);
-              localStorage.setItem('dr_code',element.dr_code);
-            });
-            
-            this.storageService.store(AuthConstants.AUTH, res);
-            this.router.navigate(['/menu/tab1']);
-          }else{
-            this.toast.presentToast('Incorrect Authentication Details.');
-          }
 
-        });
         /*For Doctors Portal */
 
 
 
 
       
-      if (this.validateInputs()) {
-        this.authService.logintest(this.postData.username, this.postData.password).subscribe(
-          (res: any) => {
-            if (res == "true:D") {
-              this.doctorService.retrieveUserDetails(this.postData.username).subscribe(
-                (result:any)=>{
-                  console.log("result.last_name --> "+result.last_name);
-                  localStorage.setItem('dr_code',result.last_name);
-                  this.doctorService.getDoctorName(result.last_name).subscribe(
-                    (doctordetail:any)=>{
-                      console.log("doctordetail --> "+JSON.stringify(doctordetail));
-                        this.storageService.store(AuthConstants.AUTH, doctordetail);
-                        this.router.navigate(['/menu/tab1']);
-                    }
-                  );
-                }
-              );
-            } else {
-              this.toast.presentToast('incorrect password.');
-            }
-          },(error: any) => {
-          }
-        );
-      } else {
-      }
+
       
     }
 

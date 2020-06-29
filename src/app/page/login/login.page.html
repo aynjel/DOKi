@@ -22,6 +22,25 @@
                       <ion-label position="floating">Password</ion-label>
                       <ion-input type="password" id="input-password" [(ngModel)]="postData.password"></ion-input>
                   </ion-item>
+                  <ion-list>
+                    <ion-radio-group value="vm"  [(ngModel)]='radio'>
+                      <ion-list-header>
+                        <ion-label>Login Via</ion-label>
+                      </ion-list-header>
+                  
+                      <ion-item>
+                        <ion-label>Sir Kris's VM Server</ion-label>
+                        <ion-radio slot="start" value="vm"></ion-radio>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label>Appointments(desktop mode only) <br /><a href="https://chrome.google.com/webstore/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino?hl=en" target="_BLANK">(may need CORS unblock)</a>
+                        </ion-label>
+                   
+                        <ion-radio slot="start" value="as" ></ion-radio>
+                      </ion-item>
+
+                    </ion-radio-group>
+                  </ion-list>
                   <div class="ion-margin-vertical ion-text-right">
                       <ion-button id="btn-confirm" (click)="loginAction() " color="mango">
                         Login
