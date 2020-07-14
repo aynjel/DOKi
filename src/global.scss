@@ -33,12 +33,23 @@
     display: block;  
  }
 */
+
+.desktop-wrapper {
+   ion-toolbar {
+     text-align: center;
+   }
+   
+   ion-header {
+     &.header-md:after {
+       background: none;
+     }
+   }
+ }
  .my-custom-modal-inpatient-css .modal-wrapper {
-    height: 80%;
-    width: 90%;
-    top: 15;
-    position: absolute; 
-    display: block;  
+  
+  --background: transparent !important;
+
+
  }
  .my-custom-modal-appointment-css .modal-wrapper {
    height: 50%;
@@ -146,3 +157,57 @@ li-ionic4-datepicker {
   // border-bottom: 1px solid #ccc;
 }
 
+body{
+  // --ion-background-color:rgb(233, 235, 238);
+}
+
+.my-backbround{
+   --ion-background-color:#ffffff !important;
+}
+
+.custom-bgwhite{
+   background-color: white !important;
+}
+ion-toolbar{
+  // --min-height:40px;
+}
+
+/****/
+.desktop {
+   ion-router-outlet {
+     margin-top: 4.5%;
+     margin-bottom: 35px;
+   }
+  
+   .logo {
+     max-height: 100%;
+   }
+  
+   ion-toolbar {
+     --background: #ffffff;
+   }
+  
+   .link {
+     --color: #528d53;
+   }
+  
+   .active-link {
+     --color: #275228;
+     border-bottom: 1px solid #275228;
+     font-weight: bold;
+   }
+ 
+ }
+
+ .link {
+   --color: #528d53;
+ }
+
+ .active-link {
+   --color: #275228;
+   border-bottom: 2px solid #275228;
+   font-weight: bold;
+ }
+
+
+ 

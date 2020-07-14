@@ -15,6 +15,7 @@ export class DateselectorComponent implements OnInit {
   active1:boolean = false;
   active2:boolean = true;
   active3:boolean = false;
+  @Input() readonlyComp: boolean;
   constructor() {
 
     this.customPickerOptions = {

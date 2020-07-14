@@ -18,11 +18,19 @@ const routes: Routes = [
   },
   {
     path: '',
+    canActivate:[IndexGuard], 
     loadChildren: () => import('./page/index/index.module').then( m => m.IndexPageModule)
   },{
     path: 'addappointmentsmodal',
     loadChildren: () => import('./components/addappointmentsmodal/addappointmentsmodal.module').then( m => m.AddappointmentsmodalPageModule)
-  },/*   {
+  },{
+    path: 'inpatientdetial',
+    loadChildren: () => import('./components/inpatientmodal/inpatientmodal.module').then( m => m.InpatientmodalPageModule)
+  },/*  {
+    path: 'hospital-selector-with-all',
+    loadChildren: () => import('./pages/hospital-selector-with-all/hospital-selector-with-all.module').then( m => m.HospitalSelectorWithAllPageModule)
+  },
+   {
     path: 'fee',
     loadChildren: () => import('./modals/fee/fee.module').then( m => m.FeePageModule)
   }, {

@@ -5,7 +5,7 @@
 
 
 
-  <ion-grid>
+  <ion-grid class="my-backbround">
     <ion-row>
       <ion-col size-md="4" offset-md="4">
           <ion-card>
@@ -13,6 +13,7 @@
                 <div class="center">
                   <app-logo></app-logo>
                   <h1>Doctor's Portal - Login</h1>
+                  
                 </div>
                   <ion-item>
                       <ion-label position="floating">Username</ion-label>
@@ -23,7 +24,7 @@
                       <ion-input type="password" id="input-password" [(ngModel)]="postData.password"></ion-input>
                   </ion-item>
                   <ion-list>
-                    <ion-radio-group value="vm"  [(ngModel)]='radio'>
+                    <!--ion-radio-group value="vm"  [(ngModel)]='radio'>
                       <ion-list-header>
                         <ion-label>Login Via</ion-label>
                       </ion-list-header>
@@ -39,7 +40,7 @@
                         <ion-radio slot="start" value="as" ></ion-radio>
                       </ion-item>
 
-                    </ion-radio-group>
+                    </ion-radio-group-->
                   </ion-list>
                   <div class="ion-margin-vertical ion-text-right">
                       <ion-button id="btn-confirm" (click)="loginAction() " color="mango">

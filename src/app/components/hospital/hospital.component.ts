@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 @Component({
   selector: 'app-hospital',
@@ -9,6 +9,7 @@ export class HospitalComponent implements OnInit {
   active:boolean = true;
   active1:boolean = false;
   @Output() hospital: EventEmitter<any> = new EventEmitter();
+  @Input() readonlyComp: boolean;
   constructor() { }
 
   ngOnInit() {}
@@ -21,8 +22,6 @@ export class HospitalComponent implements OnInit {
       this.active = false;
       this.active1 = true;
     }
-    
-    console.log('submit clicked');
     this.hospital.emit(data1);
   }
 }

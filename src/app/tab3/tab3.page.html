@@ -17,69 +17,34 @@
   
   
 </ion-header>
-  <!--ion-header [translucent]="true">
-    <ion-toolbar color="mango">
-      <ion-title>
-        Settings
-        <div class="ion-text-right " slot="end" >
-          <ion-button  color="danger"  (click)="logout()"> Log out
-            <ion-icon name="power-outline"></ion-icon>
-          </ion-button>
-        </div>
-      </ion-title>
-    </ion-toolbar>
-  </ion-header-->
-  
 
 
-
-  <ion-content [fullscreen]="true">
-
-    <ion-refresher slot="fixed" id="refresher" class="md refresher-md hydrated refresher-native">
-      <ion-refresher-content class="md hydrated">
-        <div class="refresher-pulling">
-          <div class="refresher-pulling-icon" style="--ion-pulling-refresher-translate:80.7407px;">
-            <div class="spinner-arrow-container">
-              <ion-spinner class="md spinner-circular spinner-paused hydrated" role="progressbar" style="animation-duration: 1400ms;">
-              </ion-spinner>
-              <div class="arrow-container">
-                <ion-icon role="img" class="md hydrated" aria-label="caret back sharp"></ion-icon></div>
-              </div>
-            </div>
-          </div>
-          <div class="refresher-refreshing">
-            <div class="refresher-refreshing-icon">
-              <ion-spinner class="md spinner-circular hydrated" role="progressbar" style="animation-duration: 1400ms; animation-delay: -655ms;">
-              </ion-spinner>
-            </div>
-          </div>
-        </ion-refresher-content>
-    </ion-refresher>
-
-
-
-
-
-
-
-
-  <ion-grid>
+<ion-content >
+  <ion-grid class="my-backbround ion-no-padding">
     <ion-row>
-      <ion-col size-md="6" offset-md="3">
-
-  <ion-card >
-
-      <ion-card-header><p>{{ displayUserData.first_name }} {{ displayUserData.last_name }}</ion-card-header>
-      
-      <ion-item>
-        <ion-button fill="solid">Change Password</ion-button>
-
-      </ion-item>
-
-  </ion-card>
-</ion-col>
-</ion-row>
-</ion-grid>
-
-  
-  </ion-content>
+      <ion-col
+        size-md="8"
+        offset-md="2"
+        size-lg="4"
+        offset-lg="4"
+        >
+        <!--ion-card *ngFor="let x of displayUserData">
+          <ion-card-header><p>{{ x.first_name }} {{ x.last_name }}</ion-card-header>
+          <ion-item>
+            <ion-button fill="solid">Change Password</ion-button>
+          </ion-item->
+        </ion-card-->
+        
+        <div  *ngFor="let x of account">
+          <ion-list>
+            <ion-item>
+              <br />
+              <p>Hi, Dr. {{ x.first_name }} {{ x.last_name }}<br /><br />
+              For inquiries please contact Chong Hua Hospital It Department (<b><a href="tel: +63322558000">+63 32 255 8000</a></b>)</p>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

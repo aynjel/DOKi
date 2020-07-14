@@ -82,6 +82,7 @@
   --ion-color-mango-contrast-rgb: 0,0,0;
   --ion-color-mango-shade: #009444;
   --ion-color-mango-tint: #275228;
+  
   ion-tab-button.tab-selected {
     ion-icon, ion-label {
     color: var(--ion-color-mango) !important;
@@ -106,6 +107,11 @@
   --ion-color-shade: var(--ion-color-mango-shade);
   --ion-color-tint: var(--ion-color-mango-tint);
 }
+
+
+
+
+
 .ion-color-mangolight {
   --ion-color-base: var(--ion-color-mangolight);
   --ion-color-base-rgb: var(--ion-color-mangolight-rgb);
@@ -231,6 +237,8 @@ min-height: 20px;
    * Material Design Dark Theme
    * -------------------------------------------
    */
+
+   
 
   .md body {
     --ion-background-color: #121212;

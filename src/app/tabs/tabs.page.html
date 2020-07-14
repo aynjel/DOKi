@@ -1,28 +1,19 @@
-<ion-tabs *ngIf="!isDesktop">
-  <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="tab1">
-      <ion-icon name="person-circle-outline"></ion-icon>
-      <ion-label>In-Patients</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button tab="tab2">
-      <ion-icon name="man-outline"></ion-icon>
-      <ion-label>Appointments</ion-label>
-    </ion-tab-button>
- 
-    <ion-tab-button tab="tab3">
-      <ion-icon name="settings-outline"></ion-icon>
-      <ion-label>Settings</ion-label>
-    </ion-tab-button>
-
-    <!--ion-tab-button tab="tab4">
-      <ion-icon name="settings-outline"></ion-icon>
-      <ion-label>Settings</ion-label>
-    </ion-tab-button-->  
-
-    
-  </ion-tab-bar>
-</ion-tabs>
+  <ion-tabs *ngIf="!isDesktop" >
+    <ion-tab-bar slot="bottom" >
+      <ion-tab-button tab="in-patients" >
+        <ion-icon name="person-circle-outline"></ion-icon>
+        <ion-label>In-Patients</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="appointments" >
+        <ion-icon name="calendar-outline"></ion-icon>
+        <ion-label>Appointments</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="settings" >
+        <ion-icon name="settings-outline"></ion-icon>
+        <ion-label>Settings</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
  
 <div *ngIf="isDesktop" class="desktop">
 
@@ -31,26 +22,30 @@
   <ion-header mode="md"  class="ion-no-border custom-border-bottom" > 
     <ion-toolbar >
       <ion-row class="ion-align-items-center">
-        <ion-col size="2">
+        <ion-col size="1">
  
         </ion-col>
-        <ion-col size="3">
+        <ion-col size="2">
           <app-logo-sm></app-logo-sm>
         </ion-col>
         <ion-col size="7">
           <div class="navbar" class="ion-text-center chh-bg">
-            <ion-button fill="clear" routerLink="/menu/tab1" routerDirection="root" routerLinkActive="active-link"
+            <ion-button fill="clear" routerLink="/menu/in-patients" routerDirection="root" routerLinkActive="active-link"
               class="link">
               In-Patients
             </ion-button>
-            <ion-button fill="clear" routerLink="/menu/tab2" routerDirection="root" routerLinkActive="active-link"
+            <ion-button fill="clear" routerLink="/menu/appointments" routerDirection="root" routerLinkActive="active-link"
               class="link">
               Appointments
             </ion-button>
-            <ion-button fill="clear" routerLink="/menu/tab3" routerDirection="root" routerLinkActive="active-link"
+            <ion-button fill="clear" routerLink="/menu/settings" routerDirection="root" routerLinkActive="active-link"
               class="link">
               Settings
             </ion-button>
+            <ion-button fill="clear" routerDirection="root" routerLinkActive="active-link"
+            class="link" (click)='logout()'>
+            Log Out
+          </ion-button>
           </div>
         </ion-col>
       </ion-row>

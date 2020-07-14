@@ -12,14 +12,17 @@
     
   </div>
   
-  <ion-grid 	style="background:white;">
+  <ion-grid class=" ion-no-padding" >
     <ion-row >
-      <ion-col size-md="6" offset-md="3" size-sm="6"  > 
-        
-        <ion-toolbar  class="ion-no-border" >
-          <app-hospital (hospital)="locationAction($event)" ></app-hospital>
-          <app-dateselector [passedDate]="selectedDate" (dateSelector)="dateChanged($event)"></app-dateselector>
-      </ion-toolbar>
+      <!--ion-col size-md="6" offset-md="3" size-sm="6"  --> 
+      <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3" class="custom-border-bottom">
+     
+          <app-hospital (hospital)="locationAction($event)" [readonlyComp]="buttonDisablerHospSelector"></app-hospital>
+          <app-dateselector 
+            [passedDate]="selectedDate"
+            (dateSelector)="dateChanged($event)"
+            [readonlyComp]="buttonDisablerDateSelector"
+             ></app-dateselector>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -32,30 +35,25 @@
 
 
 
-<ion-content [fullscreen]="true">
+<ion-content >
 
 
 
-<!--ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-  <ion-refresher-content 
-  pullingIcon="arrow-dropdown"
-  pullingText="Pull to refresh"
-  refreshingSpinner="circles"
-  refreshingText="Refreshing...">
-
-  </ion-refresher-content>
-</ion-refresher-->
-
-  <ion-refresher slot="fixed" id="refresher" class="refresher-native" (ionRefresh)="doRefresh($event)" pullFactor="0.5" pullMin="100" pullMax="200">
+  <ion-refresher 
+  slot="fixed"
+  id="refresher"
+  class="refresher-native"
+  (ionRefresh)="doRefresh($event)"
+  pullFactor="1"
+  pullMin="100"
+  pullMax="200"
+  *ngIf="!isDesktop">
     <ion-refresher-content 
-    pullingIcon="chevron-down-circle-outline"
-    refreshingSpinner="circles"
-  >
 
-      
-
-      </ion-refresher-content>
-  </ion-refresher>
+      pullingIcon="refresh-outline"
+      refreshingSpinner="dots">
+    </ion-refresher-content>
+</ion-refresher>
 
 
 
@@ -63,7 +61,7 @@
 
 
 
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed" color="mangolight">
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" color="mangolight" >
       <!--ion-fab-button  routerLink='/addappointmentsmodal' (click)="showaddmodal()"-->
       <ion-fab-button  (click)="showaddmodal()" color="mangolight">
         <ion-icon name="add"></ion-icon>
@@ -73,48 +71,60 @@
 
 
 
-  <!-- fab placed to the bottom end -->
 
 
 
 
 
-
-
-
-  <!--ion-segment   value="chhc">
-    <ion-segment-button value="chhc" (click)="locationAction('C') ">Cebu City</ion-segment-button>
-    <ion-segment-button value="chhm" (click)="locationAction('M') ">Mandaue City</ion-segment-button>
-  </ion-segment>
-  <div >
-    <ion-segment value="2">
-      <ion-segment-button value="1" (click)="adjustDate('-1')" > <ion-icon name="arrow-back-outline"></ion-icon> </ion-segment-button>
-      <ion-datetime [pickerOptions]="customPickerOptions" displayFormat="YYYY-MM-DD" min="2020-05-01" (ngModelChange)="dateChanged($event.value)" max="2020-12-31" [value]="selectedDate"></ion-datetime>
-      <ion-segment-button value="3" (click)="adjustDate('1')" ><ion-icon name="arrow-forward-outline"></ion-icon></ion-segment-button>
-    </ion-segment>     
-  </div-->
-<!--app-hospitals (hospitals)="hospitals($event)"></app-hospitals>
-<app-hospital (hospital)="hospital($event)"></app-hospital-->
-  <ion-grid>
+  <ion-grid class="my-backbround ion-no-padding">
     <ion-row>
       <ion-col size-md="4" offset-md="4">
-
-
-      
         <ion-list>
-
-          <ion-list-header >
-            Patient List
-          </ion-list-header>
-
-        <!--ion-list-header class="ios hydrated">Patient List</ion-list-header-->
+<div *ngIf="objecthandler">
+  <ion-list-header >
+    Patient List
+  </ion-list-header>
   <div *ngFor="let x of jsonObj5">
       <div *ngFor="let y of x.data">
 
-        <ion-item class=" ion-activatable" (click)='presentActionSheet(y.appt_id,y.status,y.patientName)'  >
+
+
+        <ion-card (click)='presentActionSheet(y.appt_id,y.status,y.patientName)' mode="ios">
+          <ion-item lines="none">
+            <ion-avatar slot="start">
+              <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg">
+            </ion-avatar>
+            <ion-label>
+              <ion-item class="ion-no-padding">
+                <h3 class="ion-text-wrap ">{{y.patientName}}</h3>
+                <!--ion-badge color="success" slot="end" *ngIf="y.status == 'Complete'">{{y.status}}</ion-badge>
+                <ion-badge color="secondary" *ngIf="y.status == 'Serving'" slot="end" >{{y.status}}</ion-badge>
+                <ion-badge color="warning" *ngIf="y.status == 'Reserved'" slot="end" >{{y.status}}</ion-badge-->
+              </ion-item>
+              <ion-row class="ion-no-padding" lines="none">
+                <!-- Default Progressbar with 50 percent -->
+
+                <div>
+                  <p>
+                    <ion-icon name="time-outline" slot="start"></ion-icon>
+                    {{y.time}}
+
+                  </p>
+                  <ion-badge color="success" slot="end" *ngIf="y.status == 'Complete'">{{y.status}}</ion-badge>
+                  <ion-badge color="secondary" *ngIf="y.status == 'Serving'" slot="end" >{{y.status}}</ion-badge>
+                  <ion-badge color="warning" *ngIf="y.status == 'Reserved'" slot="end" >{{y.status}}</ion-badge>
+                </div>
+ 
+                <br />
+
+              </ion-row> 
+            </ion-label>
+          </ion-item>
+        </ion-card>
+        <!--ion-item class=" ion-activatable" (click)='presentActionSheet(y.appt_id,y.status,y.patientName)'  >
 
           <ion-avatar slot="start" class="md hydrated" >
-            <!--img src="../../assets/avatar.svg"-->
+  
             <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg">
           </ion-avatar>
           <ion-label >
@@ -127,7 +137,7 @@
               <li *ngSwitchDefault>{{y.status}}</li>
             </div>
           </ion-label>
-        </ion-item>
+        </ion-item-->
         
         <!--ion-item class="item md in-list ion-focusable item-label hydrated ion-activatable" (click)='presentActionSheet(y.appt_id,y.status,y.patientName)' >
           <ion-avatar slot="start" class="md hydrated" >
@@ -181,6 +191,19 @@
       </div>
 
   </div>
+
+</div>
+<div *ngIf="!objecthandler">
+  <ion-list-header slot="center">
+    No Data Available
+  </ion-list-header>
+</div>
+
+
+
+
+
+
 </ion-list>
   </ion-col>
   </ion-row>

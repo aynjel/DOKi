@@ -60,9 +60,29 @@ export class DoctorService {
   }
 
   getInPatient(postData1: any){
-    return this.httpService.getInpatient('Inpatient/Get/', postData1);
+    return this.httpService.get('Inpatient/Get/', postData1);
   }
 
-
+  insertPF(data1:any){
+    console.log("data1 : "+data1);
+    return this.httpService.postJSON('ProfFee/Insert',data1);
+    /*
+    console.log(JSON.stringify(data1));
+    if(data2 == "POST"){
+      console.log("post method");
+      return this.httpService.postJSON('ProfFee/Insert',data1);
+    }else if(data2 == "PUT"){
+      return this.httpService.putJSON('ProfFee/Update',data1);
+    }else if(data2 == "DELETE"){
+      return this.httpService.deleteJson('ProfFee/Delete',data1);
+    }*/
+  }
+  updatePF(data1:any){
+    return this.httpService.putJSON('ProfFee/Update',data1);   
+  }
+  DeletePf(data1:any,data2:any){
+    let x = "?accountno="+data1+"&drstatuscode="+data2;
+    return this.httpService.delete('ProfFee/Delete',x);   
+  }
   /* for doctors Portal */
 }

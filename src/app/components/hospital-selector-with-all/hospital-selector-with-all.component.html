@@ -6,16 +6,21 @@
   <ion-segment-button value="chhm" (click)="onSubmit('M')" >Mandaue City</ion-segment-button>
 </ion-segment-->
 
-<div class="navbar" class="ion-text-center chh-bg">
+<div class="navbar" class="ion-text-center chh-bg" >
+  <ion-button fill="clear" (click)="onSubmit('A',active3)" 
+  [ngClass]="{'active-link':active3, 'notactive':!active3}" 
+    class="link" size="small">
+    All
+  </ion-button>
   <ion-button fill="clear" (click)="onSubmit('C',active)" 
   [ngClass]="{'active-link':active, 'notactive':!active}" 
-    class="link" size="small" disabled="{{readonlyComp}}">
-    Cebu City
+    class="link" size="small">
+    Cebu
   </ion-button>
   <ion-button fill="clear" (click)="onSubmit('M',active1)" 
   [ngClass]="{'active-link':active1, 'notactive':!active1}" 
-    class="link" size="small" disabled="{{readonlyComp}}">
-    Mandaue City
+    class="link" size="small">
+    Mandaue
   </ion-button>
 
 </div>

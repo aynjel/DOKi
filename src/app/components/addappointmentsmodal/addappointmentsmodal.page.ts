@@ -34,6 +34,8 @@ Weekdays = new Array();
   time:any;
   adrress:any;
   contact:any;
+  location:any;
+  btnSave:boolean = false;
   // mydate1 = '11 Dec 2018';
   // mydate2 = '12 Dec 2018';
   // mydate3 = '13 Dec 2018';
@@ -42,8 +44,76 @@ Weekdays = new Array();
 
   jsonObj2 = [];
   ngOnInit() {
-    this.patientService.retrieveMTWTFSS(this.drCode,this.appt_id).subscribe((res:any)=>{
-      let parseddata = JSON.parse(JSON.stringify(res));
+    this.location = this.appt_id;
+    this.retriveMTWThFSS(this.drCode,this.appt_id);
+    this.setDatepicker();
+  }
+  pickLocation(){
+    this.retriveMTWThFSS(this.drCode,this.location);
+    this.setDatepicker();
+  }
+  setDatepicker(){
+        // EXAMPLE OBJECT
+        this.datePickerObj2 = {
+          closeOnSelect: true,
+          todayLabel: '',
+          titleLabel: "Select Birthdate",
+          dateFormat: 'YYYY-MM-DD',
+          btnProperties: {
+            expand: "block", // "block" | "full"
+            fill: "clear", // "clear" | "default" | "outline" | "solid"
+            size: "small", // "default" | "large" | "small"
+            disabled: "", // boolean (default false)
+            strong: true, // boolean (default false)
+            color: ""
+          }
+        };
+        // EXAMPLE OBJECT
+        this.datePickerObj = {
+          // inputDate: new Date('12'), // If you want to set month in date-picker
+          // inputDate: new Date('2018'), // If you want to set year in date-picker
+          // inputDate: new Date('2018-12'), // If you want to set year & month in date-picker
+          // inputDate: new Date('2018-12-01'), // If you want to set date in date-picker
+    
+          //fromDate: this.yyyymmdd(), // need this in order to have toDate
+          // toDate: new Date('2019-12-25'),
+          // showTodayButton: false,
+          closeOnSelect: true,
+          disableWeekDays: this.disableWeekDays1,
+         
+          // mondayFirst: true,
+          // setLabel: 'Select a Date',
+          todayLabel: '',
+          // closeLabel: 'Close',
+          // disabledDates: [],
+          titleLabel: "Select Date of Appointment",
+          // monthsList: ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
+          // weeksList: ['S', 'S', 'M', 'T', 'W', 'T', 'F'],
+          dateFormat: 'YYYY-MM-DD',
+          // clearButton: false,
+          // momentLocale: 'pt-BR',
+          // yearInAscending: true,
+          // btnCloseSetInReverse: false,
+    
+          btnProperties: {
+            expand: "block", // "block" | "full"
+            fill: "clear", // "clear" | "default" | "outline" | "solid"
+            size: "small", // "default" | "large" | "small"
+            disabled: "", // boolean (default false)
+            strong: true, // boolean (default false)
+            color: ""
+            // "primary", "secondary", "tertiary", "success", "warning", "danger", "light", "medium", "dark" , and give color in string
+          }
+        };
+  }
+  retriveMTWThFSS(data1:any, data2:any){
+    this.disableWeekDays1 = new Array();
+    this.Weekdays = new Array();
+    this.patientService.retrieveMTWTFSS(data1,data2).subscribe(
+      
+      (res:any)=>{
+      let parseddata = JSON.parse((res));
+     // console.log(JSON.stringify(res));
       parseddata.forEach(element => {
           if(element.sched_day == "SUNDAY"){this.Weekdays.push(0);}
           else if(element.sched_day == "MONDAY"){this.Weekdays.push(1);}
@@ -59,66 +129,26 @@ Weekdays = new Array();
         for(var j=0;j<=this.Weekdays.length-1;j++){if(this.total[i] == this.Weekdays[j]){x=1;}}
          if(!x){this.disableWeekDays1.push(i);}
         }
-    });
+    },error => {
+      console.log("error : "+error);
 
-    // EXAMPLE OBJECT
-    this.datePickerObj2 = {
-      closeOnSelect: true,
-      todayLabel: '',
-      titleLabel: "Select Birthdate",
-      dateFormat: 'YYYY-MM-DD',
-      btnProperties: {
-        expand: "block", // "block" | "full"
-        fill: "clear", // "clear" | "default" | "outline" | "solid"
-        size: "small", // "default" | "large" | "small"
-        disabled: "", // boolean (default false)
-        strong: true, // boolean (default false)
-        color: ""
+    },() => {
+      if(this.disableWeekDays1.length >= 7){
+          this.btnSave=true;
       }
-    };
-    // EXAMPLE OBJECT
-    this.datePickerObj = {
-      // inputDate: new Date('12'), // If you want to set month in date-picker
-      // inputDate: new Date('2018'), // If you want to set year in date-picker
-      // inputDate: new Date('2018-12'), // If you want to set year & month in date-picker
-      // inputDate: new Date('2018-12-01'), // If you want to set date in date-picker
-
-      //fromDate: this.yyyymmdd(), // need this in order to have toDate
-      // toDate: new Date('2019-12-25'),
-      // showTodayButton: false,
-      closeOnSelect: true,
-      disableWeekDays: this.disableWeekDays1,
-     
-      // mondayFirst: true,
-      // setLabel: 'Select a Date',
-      todayLabel: '',
-      // closeLabel: 'Close',
-      // disabledDates: [],
-      titleLabel: "Select Date of Appointment",
-      // monthsList: ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
-      // weeksList: ['S', 'S', 'M', 'T', 'W', 'T', 'F'],
-      dateFormat: 'YYYY-MM-DD',
-      // clearButton: false,
-      // momentLocale: 'pt-BR',
-      // yearInAscending: true,
-      // btnCloseSetInReverse: false,
-
-      btnProperties: {
-        expand: "block", // "block" | "full"
-        fill: "clear", // "clear" | "default" | "outline" | "solid"
-        size: "small", // "default" | "large" | "small"
-        disabled: "", // boolean (default false)
-        strong: true, // boolean (default false)
-        color: ""
-        // "primary", "secondary", "tertiary", "success", "warning", "danger", "light", "medium", "dark" , and give color in string
-      }
-    };
+      console.log(this.disableWeekDays1.length);
+      console.log("Completed");
+    }
+    
+    
+    );
   }
   pickDate(){
-    console.log(this.mydate1+" | "+this.drCode );
-    this.patientService.retrieveTime(this.drCode,this.mydate1,this.appt_id).subscribe((res:any)=>{
-        this.doctorSchedule = res;
-        console.log(res);
+    //console.log(this.mydate1+" | "+this.drCode );
+    this.doctorSchedule=[];
+    this.patientService.retrieveTime(this.drCode,this.mydate1,this.location).subscribe((res:any)=>{
+      console.log(res);
+       this.doctorSchedule = JSON.parse(res);
     });
   }
   async closeModal(data:any) {

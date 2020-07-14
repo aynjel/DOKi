@@ -8,7 +8,6 @@ export class UserDataResolver {
 constructor(private authService: AuthService) {}
 
     resolve() {
-        console.log('Resolver Accessed');
         return this.authService.getUserData();
     }
 }

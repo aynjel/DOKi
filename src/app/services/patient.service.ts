@@ -23,25 +23,23 @@ export class PatientService {
   retrieveSchedTime(postData1: any,postData2: any,postData3: any): Observable<any> {
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
-    //
-    const url = environment.apiUrl + "retrieveSchedTime?dr_code="+postData1+"&apptdate="+postData2+"&site="+postData3+"&0=j&1=s&2=o&3=n&4=p&_=1591686341293" ;
-    return this.http.post(url, options);
+    const url = environment.apiUrl + "Schedules?Drcode="+postData1+"&ApptDate="+postData2+"&Site="+postData3;
+    return this.http.get(url, options);
   }
   retrieveMTWTFSS(postData1: any,postData2: any,): Observable<any> {
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
-    const url = environment.apiUrl + "retrieveSchedule?dr_code="+postData1+"&site="+postData2;
-    console.log(url);
-    return this.http.post(url, options);
+    const url = environment.apiUrl + "DoctorSchedMaster/DocSchedMaster/"+postData1+"/"+postData2;
+    return this.http.get(url, options);
   }
   retrieveTime(postData1: any,postData2: any,postData3: any): Observable<any> {
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
-    const url = environment.apiUrl + "retrieveSchedTime?dr_code="+postData1+"&apptdate="+postData2+"&site="+postData3;
-    console.log(url);
-    return this.http.post(url, options);
+    
+    const url = environment.apiUrl + "Schedules?Drcode="+postData1+"&ApptDate="+postData2+"&Site="+postData3;
+    console.log("URL : "+url);
+    return this.http.get(url, options);
   }
-
 
   addAppointments(postData1: any,
     postData2: any,

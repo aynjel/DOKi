@@ -12,7 +12,7 @@ export class IndexGuard implements CanActivate {
     return new Promise(resolve => {this.storageService.get(AuthConstants.AUTH).then(res => {
 
       if (res) {
-        this.router.navigate(['/menu/tab1']);
+        this.router.navigate(['/menu/in-patients']);
       resolve(false);
       } else {resolve(true);}
     }).catch(err => {resolve(true);});

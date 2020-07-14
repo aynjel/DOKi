@@ -11,21 +11,29 @@
 </ion-header>
 
   <ion-content >
-    <ion-grid>
+    <ion-grid class="my-backbround ion-no-padding">
       <ion-row>
-        <ion-col size-md="6" offset-md="3" color="mango">
+        <ion-col >
 
 
-
+          <ion-item>
+            <ion-label position="floating">Location</ion-label>
+            <ion-select  [(ngModel)]="location" value = 'M' okText="Ok" cancelText="Cancel" (ionChange)="pickLocation()">
+            
+                <ion-select-option value = "C">Chong Hua Hospital (Cebu City)</ion-select-option>
+                <ion-select-option value = "M">Chong Hua Hospital Mandaue</ion-select-option>
+       
+            </ion-select>
+          </ion-item>
             <ion-item>
               <ion-label position="fixed" style="z-index:10">Date</ion-label>
               <li-ionic4-datepicker [(ngModel)]="mydate1" [inputDateConfig]="datePickerObj" ></li-ionic4-datepicker>
             </ion-item>
             <ion-item>
               <ion-label position="floating">Time</ion-label>
-              <ion-select  [(ngModel)]="time" value="brown" okText="Ok" cancelText="Cancel" (click)="pickDate()">
+              <ion-select  [(ngModel)]="time" okText="Ok" cancelText="Cancel" (click)="pickDate()">
                 <div *ngFor="let x of doctorSchedule" >
-                  <ion-select-option >{{x.time_desc}}</ion-select-option>
+                  <ion-select-option >{{x.time_in}} - {{x.time_out}}</ion-select-option>
                 </div>
               </ion-select>
             </ion-item>
@@ -60,11 +68,12 @@
             <ion-label position="floating">Contact Number</ion-label>
             <ion-input id="input-remarks"  [(ngModel)]="contact"></ion-input>
             </ion-item>
-            <div class="ion-margin-vertical ion-text-right">
-              <ion-button id="btn-confirm" (click)="save()" color="mango">Save</ion-button>
+            <ion-item>
+    
+              <ion-button slot="end"  id="btn-confirm" (click)="save()" [disabled]="btnSave" color="mango">Save</ion-button>
 
-            </div>
-     
+      
+          </ion-item>
         </ion-col>
       </ion-row>
     </ion-grid>

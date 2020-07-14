@@ -52,27 +52,25 @@ export class LoginPage implements OnInit {
     }
     
     loginAction() {
-      console.log(this.radio);
 
-      if(this.radio == 'vm'){
         this.authService.doctorsPortalLogin(this.postData.username, this.postData.password).subscribe(
           (res: any) => {
-            console.log("doctors portal -->"+res);
+            console.log(JSON.stringify(res));
             if(res != ""){
-                console.log("doctors portal -->"+res);
               res.forEach(element => {
-                console.log('dr_code -> '+element.dr_code);
                 localStorage.setItem('dr_code',element.dr_code);
               });
               
               this.storageService.store(AuthConstants.AUTH, res);
-              this.router.navigate(['/menu/tab1']);
+              this.router.navigate(['/menu/in-patients']);
             }else{
               this.toast.presentToast('Incorrect Authentication Details.');
             }
   
+          },error =>{
+            this.toast.presentToast('Server Error');
           });
-      }else{
+/*
         if (this.validateInputs()) {
           this.authService.logintest(this.postData.username, this.postData.password).subscribe(
             (res: any) => {
@@ -98,7 +96,7 @@ export class LoginPage implements OnInit {
           );
         } else {
         }
-      }
+      */
       /**Working COPY DO NOT DELETE */
       /*For Doctors Portal
 

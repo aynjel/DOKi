@@ -1,33 +1,25 @@
 
 
-  <ion-card>
-    <ion-card-content >  
 
+<ion-content>
+  
+  <ion-item>
+    <ion-label position="fixed">Fee</ion-label>
+    <ion-input type="number" id="input-professionalFee" ngModel="postData.professionalFee" placeholder="0.00" value="{{professionalFee}}" autocomplete  (ionChange)="test()" ></ion-input>
 
+</ion-item>
 
+<ion-item>
+  <ion-label position="fixed">Remarks</ion-label>
+  <ion-input  type="text" id="input-remarks" value="{{remarks}}"></ion-input>
+</ion-item>
+<ion-item>
+  <ion-button id="btn-confirm" (click)="save()" color="mango">
+    Save
+  </ion-button>
+  <ion-button id="btn-confirm" (click)="ClosePopover()" color="danger">
+    Cancel
+  </ion-button>
+</ion-item>
 
-      <form >
-        <ion-item>
-            <ion-label position="floating">Professional Fee</ion-label>
-            <ion-input type="text" id="input-professionalFee" ngModel="postData.professionalFee"></ion-input>
-            <pre>{{postData.professionalFee}}</pre>
-        </ion-item>
-        <ion-item>
-            <ion-label position="floating">Remarks</ion-label>
-            <ion-textarea [(ngModel)]="postData.remarks" id="input-remarks"></ion-textarea>
-            <pre>{{postData.remarks}}</pre>
-        </ion-item>
-        <div class="ion-margin-vertical ion-text-right">
-            <ion-button id="btn-confirm" (click)="save()">
-              Save
-            </ion-button>
-
-            <ion-button id="btn-confirm" (click)="ClosePopover()">
-              Cancel
-            </ion-button>
-        </div>
-        </form> 
-    </ion-card-content>
-</ion-card>
-
-
+</ion-content>

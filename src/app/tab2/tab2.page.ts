@@ -10,7 +10,8 @@ import { ActionSheetController } from '@ionic/angular';
 import { PopoverController } from '@ionic/angular'; 
 import { AlertController } from '@ionic/angular';
 import { AddappointmentsmodalPage } from '../components/addappointmentsmodal/addappointmentsmodal.page';
-
+import { ToastService } from '../services/toast.service';
+import { LoadingController } from '@ionic/angular';
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -25,8 +26,12 @@ export class Tab2Page {
   selectedDate:any;
   selectedLocation:any;
   jsonObj5 = [];
+  objecthandler:boolean=false;
   customPickerOptions: any;
+  isDisabled:boolean = false;
   public items:string[]=[];
+  buttonDisablerHospSelector:boolean = false;
+  buttonDisablerDateSelector:boolean = false;
   constructor(
       private patientService:PatientService,
       private modalController: ModalController,
@@ -35,118 +40,73 @@ export class Tab2Page {
       private screensizeService: ScreensizeService,
       private popover:PopoverController,
       public actionSheetController: ActionSheetController,
-      public alertController: AlertController
+      public alertController: AlertController,
+      private toast:ToastService,
+      public loadingController: LoadingController
     ) {  
 
       this.customPickerOptions = {
         buttons: [
-          {
-            text: 'Cancel',
-            handler: (res:any) => {
-        
-            }
-          },
-          {
-            text: 'Ok',
+          {text: 'Cancel',handler: (res:any) => {}},
+          {text: 'Ok',
             handler: (res:any) => {
               let parseddata = JSON.stringify(res);
               var obj = JSON.parse(parseddata);
               this.dateChanged(obj.year.value+'-'+obj.month.value+'-'+obj.day.value);
-            }
-          }
+          }}
       ]
       };
       this.screensizeService.isDesktopView().subscribe(isDesktop => {
         if (this.isDesktop && !isDesktop) {window.location.reload();}this.isDesktop = isDesktop;
       });
-    
 
-}
-
-
-  hospitals(data1:any) {
-    console.log(data1);
   }
 
-  hospital(data1:any) {
-    console.log(data1);
-  }
 
-  addappointment(){
-    console.log('1');
-  }
 
   //present View & Delete
   async presentActionSheet(data1:any,data2:any,data3:any) {
+ 
+
     if(data2 == "Reserved"){
       const actionSheet = await this.actionSheetController.create({
         cssClass: 'my-custom-class',
-        buttons: [{
-          text: 'Delete',role: 'destructive',icon: 'trash',handler: () => {
-            console.log('Delete clicked : '+data1);
-            this.presentAlertConfirm(data3,data1);
-          }
-        }, {
-          text: 'View',icon: 'eye',
-          handler: () => {
-            console.log('View clicked');
-            this.presentModal(data1);
-          }
-        }, {text: 'Cancel',icon: 'close',role: 'cancel'
-        }]
+        buttons: [
+          {text: 'Delete',role: 'destructive',icon: 'trash',handler: () => {console.log('Delete clicked : '+data1);this.presentAlertConfirm(data3,data1);}},
+          {text: 'View',icon: 'eye',handler: () => {console.log('View clicked');this.presentModal(data1);}},
+          {text: 'Cancel',icon: 'close',role: 'cancel'}
+        ]
       });
       await actionSheet.present();
     }else{
       const actionSheet = await this.actionSheetController.create({
         cssClass: 'my-custom-class',
-        buttons: [{
-          text: 'View',
-          icon: 'eye',
-          handler: () => {
-            console.log('View clicked');
-            this.presentModal(data1);
-          }
-        }, {
-          text: 'Cancel',
-          icon: 'close',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-            
-          }
-        }]
+        buttons: [
+          {text: 'View',icon: 'eye',handler: () => {console.log('View clicked');this.presentModal(data1);}},
+          {text: 'Cancel',icon: 'close',role: 'cancel',handler: () => {console.log('Cancel clicked');}}
+        ]
       });
       await actionSheet.present();
     }
+
+
   }
   //Affirm Delete
   async presentAlertConfirm(data1:any,data2:any) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       message: 'Are you sure you want to delete <strong>'+data1+'</strong> ?',
-      buttons: [{text: 'Cancel',role: 'cancel',cssClass: 'secondary'},
-      {
-          text: 'Sure',
-          handler: () => {
-            console.log('Confirm Okay : '+data2);
-            this.patientService.deletePatients(data2).subscribe(
-              (patientService:any)=>{
-                console.log(patientService);
-              }
-            );
-          }
-        }
+      buttons: [
+        {text: 'Cancel',role: 'cancel',cssClass: 'secondary'},
+        {text: 'Sure',handler: () => {this.patientService.deletePatients(data2).subscribe((patientService:any)=>{console.log(patientService);});}}
       ]
     });
-
     await alert.present();
   }
   //present View Detail
   async presentModal(data:any) {
     const popover = await this.popover.create({
-      component: PatientdetailsPage,
-      showBackdrop:true,
-      translucent: true,
+      component: PatientdetailsPage,showBackdrop:true,translucent: true,
       componentProps: { 
         appt_id: data,
         backdropDismiss: true
@@ -180,7 +140,7 @@ export class Tab2Page {
      component: AddappointmentsmodalPage,
      componentProps: { 
       appt_id: this.selectedLocation,
-      backdropDismiss: true
+      backdropDismiss: true,
     }
    });
    modal.onDidDismiss()
@@ -191,76 +151,80 @@ export class Tab2Page {
   }
 
   locationAction(data:any){
-    this.selectedLocation = data;
-    this.getDate(this.selectedDate,data);
+    if(this.selectedLocation != data){
+      this.buttonDisablerHospSelector = true;
+      this.selectedLocation = data;
+      this.getDate(this.selectedDate,data);
+    }
   }
   adjustDate(data1:any){
     this.selectedDate = this.incrementDate(this.selectedDate,data1);
     this.getDate(this.selectedDate,this.selectedLocation);
   }
   dateChanged(data1:any){
+    this.buttonDisablerDateSelector = true;
     console.log("changed data: "+data1);
-   this.selectedDate = data1;
-  this.getDate(this.selectedDate,this.selectedLocation);
-  }
-  getDate(data1:any,data2:any){
-    this.jsonObj5=[];
-        this.displayUserData = localStorage.getItem('dr_code');
-        console.log("drcode : "+this.displayUserData);
-        var myObject = {};var jsonObj2 = [];var item1 = {}
-        this.patientService.retrieveSchedTime(""+this.displayUserData,data1,data2).subscribe(
-          (patientService:any)=>{
-            console.log("retrieve response --> "+JSON.stringify(patientService));
-              let parseddata = JSON.parse(JSON.stringify(patientService));
-              item1 ["date"] =data1;
-              parseddata.forEach(element => {
-    
-               if(element.appt_id != null){    
-                 jsonObj2.push({"appt_id":element.appt_id,"patientName":element.appt_last_name+", "+element.appt_first_name,"time":element.time_desc,"status":element.remarks});
-               }
-              }
-              ); 
-              item1 ["data"] = jsonObj2;
-              this.jsonObj5.push(item1);
-          }
-        );
- 
+    this.selectedDate = data1;
+    this.getDate(this.selectedDate,this.selectedLocation);
 
+  }
+
+  getDate(data1:any,data2:any){
+
+    this.jsonObj5=[];
+    this.displayUserData = localStorage.getItem('dr_code');
+ 
+    var myObject = {};var jsonObj2 = [];var item1 = {}
+    this.patientService.retrieveSchedTime(""+this.displayUserData,data1,data2).subscribe(
+      (patientService:any) => {
+        // Handle result
+        let parseddata = JSON.parse((patientService));
+          item1 ["date"] =data1;
+          parseddata.forEach(element => {
+            if(element.appt_id != null){    
+              jsonObj2.push({"appt_id":element.appt_id,"patientName":element.appt_last_name+", "+element.appt_first_name,"time":element.time_desc,"status":element.remarks});
+            }
+          }
+          ); 
+          item1 ["data"] = jsonObj2;
+          this.jsonObj5.push(item1);
+          let varhandler = JSON.stringify(this.jsonObj5);
+          if(varhandler.includes("appt_id")){
+            this.objecthandler = true;
+          }else{
+            this.objecthandler =false;
+          }
+      },
+      error => {
+        console.log("error : "+error);
+        this.buttonDisablerHospSelector = false;
+        this.buttonDisablerDateSelector = false;
+      },
+      () => {
+        console.log("Completed");
+        this.buttonDisablerHospSelector = false;
+        this.buttonDisablerDateSelector = false;
+      }
+
+
+    );
+ 
+          
    
   }
   ngOnInit() {
+
     this.selectedDate = this.yyyymmdd();
     this.selectedLocation = "C";
     this.getDate(this.selectedDate,this.selectedLocation);
 
-
-/*
-
-    var today = new Date();
-    var currentDate = new Date();
-  console.log("Date:" + today + "DATE"+currentDate);
-var x=0;
-    this.patientService.retrieveSchedTime(""+this.displayUserData.dr_code,"2020-06-13","C").subscribe(
-      (patientService:any)=>{
-          let parseddata = JSON.parse(JSON.stringify(patientService));
-
-          item1 ["date"] ="2020-06-10";
-          parseddata.forEach(element => {
-           if(element.appt_id != null){
-
-             jsonObj2.push({"appt_id":element.appt_id,"patientName":element.appt_last_name+", "+element.appt_first_name,"time":element.time_desc,"status":element.remarks});
-           }
-          }
-          
-          ); 
-      }
-    );
-    item1 ["data"] = jsonObj2;
-    this.jsonObj5.push(item1);
-    console.log(this.jsonObj5);
- */
   }
-
+  ionViewWillEnter(){
+    console.log("ionViewWillEnter");
+    this.selectedDate = this.yyyymmdd();
+    this.selectedLocation = "C";
+    this.getDate(this.selectedDate,this.selectedLocation);
+  }
 
   yyyymmdd() {
     var now = new Date();
@@ -298,4 +262,11 @@ var x=0;
       event.target.complete();
     }, 1000);
   }
+  isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
 }

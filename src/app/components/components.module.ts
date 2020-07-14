@@ -7,13 +7,15 @@ import { HospitalComponent } from './hospital/hospital.component';
 import { DateselectorComponent } from './dateselector/dateselector.component';
 import { IonicModule } from '@ionic/angular';
 import {LogoSmComponent} from './logo-sm/logo-sm.component'
+import { HospitalSelectorWithAllComponent } from './hospital-selector-with-all/hospital-selector-with-all.component';
+
 @NgModule({
   declarations: [
     LogoComponent,
     SlidesComponent,
     StartComponent,
     HospitalComponent,
-
+    HospitalSelectorWithAllComponent,
     DateselectorComponent,
     LogoSmComponent
   ],
@@ -22,7 +24,7 @@ import {LogoSmComponent} from './logo-sm/logo-sm.component'
       SlidesComponent,
       StartComponent,
       HospitalComponent,
-
+      HospitalSelectorWithAllComponent,
       DateselectorComponent,
       LogoSmComponent
     ],

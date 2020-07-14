@@ -1,28 +1,4 @@
-.desktop {
-    ion-router-outlet {
-      margin-top: 6%;
-      margin-bottom: 35px;
-    }
-   
-    .logo {
-      max-height: 100%;
-    }
-   
-    ion-toolbar {
-      --background: #ffffff;
-    }
-   
-    .link {
-      --color: #275228;
-    }
-   
-    .active-link {
-      --color: #528d53;
-      border-bottom: 3px solid #275228;
-      font-weight: bold;
-    }
-  
-  }
+
   .chh-bg{
     --background: #275228 !important;
     --color: #fff;
@@ -38,3 +14,18 @@
     position: fixed;
     bottom: 0px;
   }
+
+
+  ion-button {
+    ion-badge {
+      position: absolute;
+      opacity: 0.9;
+          top: 0.1rem;
+          right: 0.2rem;
+      & ~ ion-icon {
+        margin-right: 1.2rem;
+      }
+    }
+  }
+
+

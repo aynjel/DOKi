@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Tab1Page } from './tab1.page';
 
-
+import { ComponentsModule } from '../components/components.module';
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { InpatientsComponent } from '../components/inpatients/inpatients.component';
 
@@ -14,7 +14,7 @@ import { InpatientsComponent } from '../components/inpatients/inpatients.compone
     IonicModule,
     CommonModule,
     FormsModule,
-    Tab1PageRoutingModule
+    Tab1PageRoutingModule,ComponentsModule
 
   ],
   declarations: [Tab1Page, InpatientsComponent]

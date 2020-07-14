@@ -1,16 +1,14 @@
 export class Account {
-    _dr_code:string;
-    birthdate:string;
-    first_name:string;
+    dr_code:string;
     last_name:string;
+    first_name:string;
     middle_name:string;
+    birthdate:string;
+    status:any;
     site:string;
 
-  set dr_code(data:string){
-    this._dr_code=data;
-  }
-  get dr_code(){
-    return this._dr_code;
-  }
+    license_no:string;
+
+
 }
 
