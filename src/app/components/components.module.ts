@@ -8,7 +8,7 @@ import { DateselectorComponent } from './dateselector/dateselector.component';
 import { IonicModule } from '@ionic/angular';
 import {LogoSmComponent} from './logo-sm/logo-sm.component'
 import { HospitalSelectorWithAllComponent } from './hospital-selector-with-all/hospital-selector-with-all.component';
-
+import { TextAvatarModule } from './text-avatar/text-avatar.module';
 @NgModule({
   declarations: [
     LogoComponent,
@@ -30,7 +30,8 @@ import { HospitalSelectorWithAllComponent } from './hospital-selector-with-all/h
     ],
   imports: [
     CommonModule,
-    IonicModule
+    IonicModule,
+    TextAvatarModule
   ]
 })
 export class ComponentsModule { }

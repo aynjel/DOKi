@@ -4,15 +4,17 @@ import { Router } from '@angular/router';
 import { StorageService } from '../services/storage.service';
 import { AuthConstants } from '../config/auth-constants';
 import { ScreensizeService } from '../services/screensize.service';
-import { Account } from '../models/account';
-
+import {LoginData} from '../models/logindata.model';
+import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
-  account:Account[];
+  userData$ = new BehaviorSubject<any>([]);
+  public logindata:LoginData;
+  account:LoginData;
   isDesktop: boolean;
   displayUserData : any;
   constructor(
@@ -29,26 +31,21 @@ export class Tab3Page {
     this.authService.userData$.subscribe(
       (res:any) => {
         console.log(res);
-        this.account = res;
+        this.account = <LoginData>res;
       }
     );
-    console.log(JSON.stringify(this.account));
-    
+   
   }
   logout() {
     
     this.storageService.removeStorageItem(AuthConstants.AUTH).then(res => {
+      //clear behavior subject
+      this.userData$.next('');
+      //clear local storage
       localStorage.clear();
       window.location.reload();
       //this.router.navigate(['/login']);
     });
   }
-  doRefresh(event) {
-    console.log('Begin async operation');
 
-    setTimeout(() => {
-      console.log('Async operation has ended');
-      event.target.complete();
-    }, 2000);
-  }
 }

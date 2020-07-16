@@ -10,7 +10,7 @@ import { PatientService } from 'src/app/services/patient.service';
 })
 export class PatientdetailsPage implements OnInit {
   segment = "chhc";
-   cardData: any = [];
+   cardData: any;
  receiveddata:any[] = [];
   public items:string[]=[];
   @Input() appt_id: any;
@@ -22,7 +22,14 @@ export class PatientdetailsPage implements OnInit {
 
     this.patientService.getPatientDetails(this.appt_id).subscribe(
       (patientService:any)=>{
-        this.cardData.push(patientService);
+        console.log(patientService);
+        console.log(JSON.stringify(patientService));
+        console.log(JSON.parse(patientService));
+
+
+        this.cardData = JSON.parse(patientService);
+        //console.log(JSON.parse(patientService));
+        //this.cardData.push(patientService);
         
       }
     );

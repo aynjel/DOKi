@@ -7,13 +7,14 @@ import { Tab1Page } from './tab1.page';
 import { ComponentsModule } from '../components/components.module';
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { InpatientsComponent } from '../components/inpatients/inpatients.component';
-
+import { TextAvatarModule } from '../components/text-avatar/text-avatar.module';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
+    TextAvatarModule,
     Tab1PageRoutingModule,ComponentsModule
 
   ],

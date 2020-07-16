@@ -12,6 +12,7 @@ import { AlertController } from '@ionic/angular';
 import { AddappointmentsmodalPage } from '../components/addappointmentsmodal/addappointmentsmodal.page';
 import { ToastService } from '../services/toast.service';
 import { LoadingController } from '@ionic/angular';
+import {LoginData} from '../models/logindata.model';
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -19,7 +20,6 @@ import { LoadingController } from '@ionic/angular';
 })
 export class Tab2Page {
   isDesktop: boolean;
-  displayUserData:any;
   displaydata = "chhc";
   segment = "chhc";
   sidesegment = "today";
@@ -32,6 +32,8 @@ export class Tab2Page {
   public items:string[]=[];
   buttonDisablerHospSelector:boolean = false;
   buttonDisablerDateSelector:boolean = false;
+  dr_code = "";
+  public logindata:LoginData;
   constructor(
       private patientService:PatientService,
       private modalController: ModalController,
@@ -44,7 +46,7 @@ export class Tab2Page {
       private toast:ToastService,
       public loadingController: LoadingController
     ) {  
-
+/*
       this.customPickerOptions = {
         buttons: [
           {text: 'Cancel',handler: (res:any) => {}},
@@ -55,7 +57,7 @@ export class Tab2Page {
               this.dateChanged(obj.year.value+'-'+obj.month.value+'-'+obj.day.value);
           }}
       ]
-      };
+      };*/
       this.screensizeService.isDesktopView().subscribe(isDesktop => {
         if (this.isDesktop && !isDesktop) {window.location.reload();}this.isDesktop = isDesktop;
       });
@@ -66,14 +68,12 @@ export class Tab2Page {
 
   //present View & Delete
   async presentActionSheet(data1:any,data2:any,data3:any) {
- 
-
     if(data2 == "Reserved"){
       const actionSheet = await this.actionSheetController.create({
         cssClass: 'my-custom-class',
         buttons: [
-          {text: 'Delete',role: 'destructive',icon: 'trash',handler: () => {console.log('Delete clicked : '+data1);this.presentAlertConfirm(data3,data1);}},
-          {text: 'View',icon: 'eye',handler: () => {console.log('View clicked');this.presentModal(data1);}},
+          {text: 'Delete',role: 'destructive',icon: 'trash',handler: () => {this.presentAlertConfirm(data3,data1);}},
+          {text: 'View',icon: 'eye',handler: () => {this.presentModal(data1);}},
           {text: 'Cancel',icon: 'close',role: 'cancel'}
         ]
       });
@@ -82,8 +82,8 @@ export class Tab2Page {
       const actionSheet = await this.actionSheetController.create({
         cssClass: 'my-custom-class',
         buttons: [
-          {text: 'View',icon: 'eye',handler: () => {console.log('View clicked');this.presentModal(data1);}},
-          {text: 'Cancel',icon: 'close',role: 'cancel',handler: () => {console.log('Cancel clicked');}}
+          {text: 'View',icon: 'eye',handler: () => {this.presentModal(data1);}},
+          {text: 'Cancel',icon: 'close',role: 'cancel',handler: () => {}}
         ]
       });
       await actionSheet.present();
@@ -98,7 +98,7 @@ export class Tab2Page {
       message: 'Are you sure you want to delete <strong>'+data1+'</strong> ?',
       buttons: [
         {text: 'Cancel',role: 'cancel',cssClass: 'secondary'},
-        {text: 'Sure',handler: () => {this.patientService.deletePatients(data2).subscribe((patientService:any)=>{console.log(patientService);});}}
+        {text: 'Sure',handler: () => {this.patientService.deletePatients(data2).subscribe();}}
       ]
     });
     await alert.present();
@@ -150,6 +150,7 @@ export class Tab2Page {
     return await modal.present();
   }
 
+  //change location
   locationAction(data:any){
     if(this.selectedLocation != data){
       this.buttonDisablerHospSelector = true;
@@ -157,27 +158,24 @@ export class Tab2Page {
       this.getDate(this.selectedDate,data);
     }
   }
+  //change date + -
   adjustDate(data1:any){
     this.selectedDate = this.incrementDate(this.selectedDate,data1);
     this.getDate(this.selectedDate,this.selectedLocation);
   }
+  //change date modal date
   dateChanged(data1:any){
     this.buttonDisablerDateSelector = true;
-    console.log("changed data: "+data1);
     this.selectedDate = data1;
     this.getDate(this.selectedDate,this.selectedLocation);
 
   }
 
   getDate(data1:any,data2:any){
-
     this.jsonObj5=[];
-    this.displayUserData = localStorage.getItem('dr_code');
- 
     var myObject = {};var jsonObj2 = [];var item1 = {}
-    this.patientService.retrieveSchedTime(""+this.displayUserData,data1,data2).subscribe(
+    this.patientService.retrieveSchedTime(""+this.dr_code,data1,data2).subscribe(
       (patientService:any) => {
-        // Handle result
         let parseddata = JSON.parse((patientService));
           item1 ["date"] =data1;
           parseddata.forEach(element => {
@@ -188,6 +186,7 @@ export class Tab2Page {
           ); 
           item1 ["data"] = jsonObj2;
           this.jsonObj5.push(item1);
+          //check if subscribed item has value
           let varhandler = JSON.stringify(this.jsonObj5);
           if(varhandler.includes("appt_id")){
             this.objecthandler = true;
@@ -196,12 +195,10 @@ export class Tab2Page {
           }
       },
       error => {
-        console.log("error : "+error);
         this.buttonDisablerHospSelector = false;
         this.buttonDisablerDateSelector = false;
       },
       () => {
-        console.log("Completed");
         this.buttonDisablerHospSelector = false;
         this.buttonDisablerDateSelector = false;
       }
@@ -213,19 +210,23 @@ export class Tab2Page {
    
   }
   ngOnInit() {
-
-    this.selectedDate = this.yyyymmdd();
-    this.selectedLocation = "C";
-    this.getDate(this.selectedDate,this.selectedLocation);
+    //this.selectedDate = this.yyyymmdd();
+    //this.selectedLocation = "C";
+    //this.getDate(this.selectedDate,this.selectedLocation);
 
   }
   ionViewWillEnter(){
-    console.log("ionViewWillEnter");
+
+    if(!this.dr_code){
+      this.logindata = <LoginData>this.authService.userData$.getValue();
+      this.dr_code = this.logindata[0].dr_code;
+    }
+    
     this.selectedDate = this.yyyymmdd();
     this.selectedLocation = "C";
     this.getDate(this.selectedDate,this.selectedLocation);
   }
-
+  //generate date
   yyyymmdd() {
     var now = new Date();
     var y = now.getFullYear();
@@ -254,19 +255,12 @@ export class Tab2Page {
     }
     return parts.join("-");
   }
+  //swipe action
    doRefresh(event) {
-    console.log('Begin async operation');
     setTimeout(() => {
-      console.log('Async operation has ended');
       this.getDate(this.selectedDate,this.selectedLocation);
       event.target.complete();
     }, 1000);
   }
-  isEmpty(obj) {
-    for(var key in obj) {
-        if(obj.hasOwnProperty(key))
-            return false;
-    }
-    return true;
-}
+
 }

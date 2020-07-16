@@ -93,9 +93,8 @@ export class PatientService {
   getPatientDetails(postData1: any): Observable<any> {
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
-    //
-    const url = environment.apiUrl + "getpatientdetails?apptid=" + postData1 ;
-    return this.http.post(url, options);
+    const url = environment.apiUrl + "CMAAppointmentMaster/GetCMAAppointmentMaster/" + postData1 ;
+    return this.http.get(url, options);
   }
  
 

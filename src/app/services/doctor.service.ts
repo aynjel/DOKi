@@ -62,7 +62,9 @@ export class DoctorService {
   getInPatient(postData1: any){
     return this.httpService.get('Inpatient/Get/', postData1);
   }
-
+  getCoDoctors(postData1: any){
+    return this.httpService.get('Inpatient/CoDoctors/', postData1);
+  }
   insertPF(data1:any){
     console.log("data1 : "+data1);
     return this.httpService.postJSON('ProfFee/Insert',data1);

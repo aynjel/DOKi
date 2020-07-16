@@ -1,4 +1,4 @@
-export class Aasdccount {
+export interface LoginData{
     dr_code:string;
     last_name:string;
     first_name:string;
@@ -7,7 +7,4 @@ export class Aasdccount {
     status:any;
     site:string;
     license_no:string;
-
-
 }
-
