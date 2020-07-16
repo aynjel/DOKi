@@ -91,8 +91,11 @@
 
         <ion-card (click)='presentActionSheet(y.appt_id,y.status,y.patientName)' mode="ios">
           <ion-item lines="none">
-            <ion-avatar slot="start">
+            <!--ion-avatar slot="start">
               <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg">
+            </ion-avatar-->
+            <ion-avatar slot="start">
+              <text-avatar [text]="y.patientName" [color]=""></text-avatar>
             </ion-avatar>
             <ion-label>
               <ion-item class="ion-no-padding">

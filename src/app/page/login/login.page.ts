@@ -8,8 +8,8 @@ import { StorageService } from './../../services/storage.service';
 import { ToastService } from '../../services/toast.service';
 
 import { BehaviorSubject } from 'rxjs';
-import {Account} from '../../models/account';
-
+import {DoctorInfoGlobal} from '../../common/doctorinfo-global';
+import {LoginData} from '../../models/logindata.model';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -17,9 +17,8 @@ import {Account} from '../../models/account';
 })
 
 export class LoginPage implements OnInit {
-//account:Account[];
 
-
+  public logindata:LoginData;
     radio:any="vm";
     constructor(
       private router: Router,
@@ -55,13 +54,22 @@ export class LoginPage implements OnInit {
 
         this.authService.doctorsPortalLogin(this.postData.username, this.postData.password).subscribe(
           (res: any) => {
-            console.log(JSON.stringify(res));
             if(res != ""){
+              console.log("->");
+              console.log(res);
+              this.logindata = <LoginData>res;
+              //store to floating data
+              /*DoctorInfoGlobal.dr_code = this.logindata[0].dr_code;
+              DoctorInfoGlobal.last_name = this.logindata[0].last_name;
+              DoctorInfoGlobal.first_name = this.logindata[0].first_name;
+              DoctorInfoGlobal.middle_name = this.logindata[0].middle_name;
+              DoctorInfoGlobal.birthdate = this.logindata[0].birthdate;*/
+              /*console.log("-->"+this.logindata[0].dr_code);
               res.forEach(element => {
                 localStorage.setItem('dr_code',element.dr_code);
-              });
-              
-              this.storageService.store(AuthConstants.AUTH, res);
+              });*/
+              //store to local database
+              this.storageService.store(AuthConstants.AUTH, this.logindata);
               this.router.navigate(['/menu/in-patients']);
             }else{
               this.toast.presentToast('Incorrect Authentication Details.');

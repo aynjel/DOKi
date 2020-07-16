@@ -17,6 +17,7 @@ export class InpatientmodalPage implements OnInit {
   professionalFee:any;
   remarks:any;
   method:any;
+  coDoctors:any;
   constructor(private modalController: ModalController,
     private popover:PopoverController, private doctorService:DoctorService) { 
 
@@ -31,10 +32,19 @@ export class InpatientmodalPage implements OnInit {
       "CreatedBy": "string",
       "Remarks": "string"
     };
+    coDoctorData = {
+      "first_name": "string",
+      "last_name": "string",
+      "status": "string",
+      "mobile_no": "string",
+      "dept_short_desc": "string",
+
+    }
+
   ngOnInit() {
-    console.log("this.data : "+JSON.stringify(this.data));
     if(this.data.site == 'C'){this.site = 'CHHC';}
     else{this.site = 'CHHM';}
+    
     this.professionalFee = this.data.doctor_prof_fee;
     this.remarks = this.data.remarks;
        
@@ -44,7 +54,13 @@ export class InpatientmodalPage implements OnInit {
     this.postData.DoctorStatusCode = this.getDoctorStatusCode(this.data.Doctor_Status);
     this.postData.site = this.data.site; 
     this.postData.CreatedBy = this.data.dr_code; 
-
+    this.doctorService.getCoDoctors(this.data.admission_no).subscribe(
+      (res:any)=>{
+        this.coDoctors = res;
+        console.log(res)
+  
+    }
+    );
  
   }
 
@@ -52,6 +68,7 @@ export class InpatientmodalPage implements OnInit {
   //  console.log("changed data: "+data1);
 
   }
+  //popup for fee
   async detail(data:any) {
 
     console.log("Detail : "+this.method);

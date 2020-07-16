@@ -5,13 +5,13 @@ import { StorageService } from './storage.service';
 import { AuthConstants } from '../config/auth-constants';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpService } from './http.service';
-import {Account} from '../models/account';
+import {LoginData} from '../models/logindata.model';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-account:Account;
-  userData$ = new BehaviorSubject<Account>(null);
+
+  userData$ = new BehaviorSubject<LoginData>(null);
 
 
   constructor(
@@ -24,6 +24,7 @@ account:Account;
 
   getUserData() {
     this.storageService.get(AuthConstants.AUTH).then(res => {
+      console.log("BehaviorSubject");
       this.userData$.next(res);
     });
   }

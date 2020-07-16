@@ -3,8 +3,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { StorageService } from '../services/storage.service';
 import { AuthConstants } from '../config/auth-constants';
-import {Account} from '../models/account';
-
 import { DoctorService } from '../services/doctor.service';
 import { ModalController } from '@ionic/angular';
 import { PatientdetailsPage } from '../components/patientdetailss/patientdetails.page';
@@ -12,6 +10,9 @@ import { ScreensizeService } from '../services/screensize.service';
 import { PopoverController } from '@ionic/angular';  
 import {InpatientmodalPage} from '../components/inpatientmodal/inpatientmodal.page';
 import { timeStamp } from 'console';
+import {DoctorInfoGlobal} from '../common/doctorinfo-global';
+import {LoginData} from '../models/logindata.model';
+import {InpatientData} from '../models/inpatient.model';
 
 @Component({
   selector: 'app-tab1',
@@ -19,16 +20,13 @@ import { timeStamp } from 'console';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
+  public logindata:LoginData;
+  public inPatientData:InpatientData;
   isDesktop: boolean;
-  segment = "all";
-  displayUserData : any;
-  drCode = "";
+  dr_code = "";
   inPatients:any;
   inPatientsDraft:any;
   inPatientsDraft1:any;
-  items: any;
-  result: JSON;
-  allData: any;
   site:any = 'A';
   searchBar:any;
   name:any;
@@ -44,37 +42,12 @@ export class Tab1Page {
       this.screensizeService.isDesktopView().subscribe(isDesktop => {
         if (this.isDesktop && !isDesktop) {window.location.reload();}this.isDesktop = isDesktop;
       });
-      this.drCode = localStorage.getItem('dr_code');
-
     }
   ngOnInit() {
 
-    //this.callPatient();
-
-    /*
-    this.authService.userData$.subscribe((res:any) => {
-      console.log(res);
-        this.displayUserData = res;
-      });
-
-          this.authService.userData$.subscribe((res:any) => {
-      console.log("res -> "+res);
-      let doctorsDetails = JSON.parse(JSON.stringify(res));
-      res.forEach(el => {
-        console.log(this.drCode);
-        this.drCode = el.dr_code;
-        this.doctorService.getInPatient(this.drCode).subscribe((res:any)=>{
-          this.inPatients = res;
-        });
-      });    });
-
-*/
-
-    
   }
+  //filter : check searchbar if not empty and check location
   filterList(){
-      console.log(this.site);
-
     if(this.site == 'A'){
       this.inPatients=[];
       this.inPatients = this.inPatientsDraft;
@@ -85,10 +58,8 @@ export class Tab1Page {
         else if(this.site == "M"){if(element.site == "M"){this.inPatients.push(element);}}
       });
     }
-  
     this.inPatientsDraft1 = this.inPatients;
     if(this.searchBar){
-      console.log("if searchbar");
       this.inPatients=[];
       this.inPatientsDraft1.forEach(e => {
         this.name = e.last_name +', '+e.first_name+' '+e.middle_name+' '+e.first_name+' '+e.middle_name+' '+e.last_name;
@@ -96,54 +67,27 @@ export class Tab1Page {
             this.inPatients.push(e);
           }
       });
-
-
-
-    }else{
-     // console.log("else searchbar");
-      //this.inPatients = this.inPatientsDraft;
     }
-
   }
+  //Fired when the component routing to is about to animate into view.
   ionViewWillEnter(){
-    this.callPatient(this.site);
-  }
-
-  callPatient(data:any){
-    this.doctorService.getInPatient(this.drCode).subscribe(
-      (res:any)=>{
-        console.log(JSON.stringify(res));
-        this.inPatientsDraft = res;
-
-        //this.inPatients = res;
-        this.filterList();
-
-/*
-        if(data == "A"){this.inPatients = this.inPatientsDraft;}
-        else {
-          this.inPatients=[];
-          this.inPatientsDraft.forEach(element => {
-            console.log("name:  "+this.name);
-            if(data == "C"){if(element.site == "C"){this.inPatients.push(element);}}
-            else if(data == "M"){if(element.site == "M"){this.inPatients.push(element);}}
-          });
-        }
-*/
-
-
-      
-    },error => {
-      console.log("error : "+error);
-
-    },() => {
-      console.log("Completed");
+    if(!this.dr_code){
+      this.logindata = <LoginData>this.authService.userData$.getValue();
+      this.dr_code = this.logindata[0].dr_code;
+      this.callPatient(this.site);
     }
-    
-    
-    
+  }
+  //Get using Doctors API
+  callPatient(data:any){
+    this.doctorService.getInPatient(this.dr_code).subscribe(
+      (res:any)=>{
+        console.log(res)
+        this.inPatientsDraft = res;
+        this.filterList();
+    }
     );
   }
-
+  //swipe down refresh
   doRefresh(event) {
     setTimeout(() => {
       this.callPatient(this.site);
@@ -153,8 +97,6 @@ export class Tab1Page {
   }
 
   async detail(data:any) {
-
-    console.log("isDesktop : " + this.isDesktop);
     const modal = await this.modalController.create({
       component: InpatientmodalPage,
       componentProps: {data: data,},
@@ -163,24 +105,9 @@ export class Tab1Page {
      modal.present();
      return await modal.onDidDismiss().then((data: any) => {this.callPatient(this.site);});
    }
+   //location is changed
    locationAction(data:any){
       this.site = data;
-      //this.callPatient(this.site);
-      
-   /*
-      if(data != "A"){
-        console.log(data);
-        this.inPatientsDraft1 = this.inPatientsDraft;
-        this.inPatients=[];
-        this.inPatientsDraft1.forEach(element => {
-          if(data == "C"){if(element.site == "C"){this.inPatients.push(element);}}
-          else if(data == "M"){if(element.site == "M"){this.inPatients.push(element);}}
-        });
-      }else{
-        this.inPatients = this.inPatientsDraft;
-      }
-*/
       this.filterList();
-
    }
 }

@@ -22,6 +22,7 @@ import { Ionic4DatepickerModule } from "@logisticinfotech/ionic4-datepicker";
     AppRoutingModule,
     HttpClientModule,
     Ionic4DatepickerModule,
+    
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production },)],
   providers: [
     StatusBar,
