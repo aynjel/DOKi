@@ -24,7 +24,7 @@
 
   <ion-toolbar  color="mango" >
     <ion-title>
-       Patient Detail
+       Patient Information
     </ion-title>
     <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated" >
       <ion-button (click)="closeModal()" class="ios button button-clear ion-activatable ion-focusable hydrated" color="danger">Close&nbsp; <ion-icon name="close-outline"></ion-icon></ion-button>
@@ -92,7 +92,7 @@
 
 
 
-<ion-card>
+<ion-card mode="ios">
 <ion-list>
   <ion-item lines="none">
     <!--ion-avatar slot="start">
@@ -118,7 +118,7 @@
       <div class="ion-text-wrap" style="padding-top:5px">
         <div *ngIf="data.site == 'C'">
           <ion-icon name="location-outline" slot="start"></ion-icon>
-          Chong Hua Hospital (Cebu)
+          Chong Hua Hospital
         </div>
         <div  *ngIf="data.site == 'M'">
           <ion-icon name="location-outline" slot="start"></ion-icon>
@@ -160,7 +160,7 @@
 
 
 
-  <ion-card *ngIf="data.admission_status == 'DN'">
+  <ion-card mode="ios" *ngIf="data.admission_status == 'DN'">
     <ion-list>
       <ion-item style="padding-top: 10px;">
         <div class="ion-text-wrap">
@@ -179,17 +179,21 @@
 
 
 
-<ion-card>
+<ion-card mode="ios">
   <ion-list>
 
     <ion-item lines="none" *ngFor="let dr of coDoctors">
       <ion-avatar slot="start">
-        <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg">
+        <!-- <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg"> -->
+        <img src="https://api.adorable.io/avatars/60/abott-123@adorable.io.png">
       </ion-avatar>
       <ion-label>
         <ion-item class="ion-no-padding">
           <h3 class="ion-text-wrap "><a href="tel: {{dr.mobile_no}}">Dr. {{dr.first_name}} {{dr.last_name}}</a></h3>
         </ion-item>
+        <ion-badge
+        color="medium">
+        {{dr.status}}</ion-badge>
         <div class="ion-text-wrap" style="padding-top:5px"><p>{{dr.status}}</p></div>
         </ion-label>
     </ion-item>
