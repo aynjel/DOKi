@@ -40,7 +40,7 @@
                 "input": "src/global.scss"
               }
             ],
-            "scripts": [z]
+            "scripts": []
           },
           "configurations": {
             "production": {
