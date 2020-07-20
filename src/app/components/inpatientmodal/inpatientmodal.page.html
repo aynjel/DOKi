@@ -180,9 +180,9 @@
           <ion-text>Remarks : {{remarks}}</ion-text>
         </div>
       </ion-item>
-      <ion-item lines="none">
-        <ion-button slot="end" (click)='detail(data.admission_no)' color="mango" *ngIf="data.is_posted == 0 || data.is_posted == null">Update</ion-button>
-      </ion-item>
+      <!-- <ion-item lines="none"> -->
+        <ion-button expand="block" (click)='detail(data.admission_no)' color="mango" *ngIf="data.is_posted == 0 || data.is_posted == null">UPDATE</ion-button>
+      <!-- </ion-item> -->
     </ion-list>
   </ion-card>
 
