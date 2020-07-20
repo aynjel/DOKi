@@ -134,8 +134,19 @@
   </ion-item>
   <ion-item lines="none" style="padding-bottom: 10px;">
   <div class="ion-text-wrap">
-    <ion-text *ngIf="data.admission_status == 'AC'">Status : Admitted<br /></ion-text>
-    <ion-text *ngIf="data.admission_status == 'DN'">Status : For Discharge<br /></ion-text>
+    <!-- <ion-text *ngIf="data.admission_status == 'AC'">Status : Admitted </ion-text>  -->
+    <ion-badge *ngIf="data.admission_status == 'AC'"
+    color="warning"
+    slot="end">
+    Status: Admitted
+  </ion-badge>
+  <ion-badge *ngIf="data.admission_status == 'DN'"
+    color="success"
+    slot="end">
+    Status: For Discharge
+  </ion-badge>
+  <br />
+    <!-- <ion-text *ngIf="data.admission_status == 'DN'">Status : For Discharge<br /></ion-text> -->
     <ion-text>Admission Date : {{data.admission_date}}</ion-text>
   </div>
   </ion-item>
@@ -185,7 +196,8 @@
     <ion-item lines="none" *ngFor="let dr of coDoctors">
       <ion-avatar slot="start">
         <!-- <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg"> -->
-        <img src="https://api.adorable.io/avatars/60/abott-123@adorable.io.png">
+        <!-- <img src="https://api.adorable.io/avatars/60/abott-123@adorable.io.png"> -->
+        <text-avatar [text]="dr.last_name" [color]=""></text-avatar>
       </ion-avatar>
       <ion-label>
         <ion-item class="ion-no-padding">
@@ -194,7 +206,7 @@
         <ion-badge
         color="medium">
         {{dr.status}}</ion-badge>
-        <div class="ion-text-wrap" style="padding-top:5px"><p>{{dr.status}}</p></div>
+        <!-- <div class="ion-text-wrap" style="padding-top:5px"><p>{{dr.status}}</p></div> -->
         </ion-label>
     </ion-item>
 
