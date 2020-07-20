@@ -14,6 +14,8 @@ export class Tab4Page implements OnInit {
   displayUserData : any;
   isDesktop: boolean;
   dr_code = "";
+  lineChartxAxis:any;
+  lineChartyAxis:any;
   public logindata:LoginData;
   constructor(
     private authService:AuthService,
@@ -25,27 +27,23 @@ export class Tab4Page implements OnInit {
     });
   }
   ionViewDidEnter() {
-    this.barChartPopulation();
-    this.pieChartBrowser();
-    this.lineChartPopulation();
+
   }
   lineChartPopulation(){
+
     HighCharts.chart('lineChart',{
       chart: {
-        type: 'line'
+        type: 'column'
     },
     title: {
-        text: 'Monthly Average Temperature'
-    },
-    subtitle: {
-        text: 'Source: WorldClimate.com'
+        text: 'Average'
     },
     xAxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        categories: this.lineChartxAxis
     },
     yAxis: {
         title: {
-            text: 'Temperature (°C)'
+            text: 'Total Patient'
         }
     },
     plotOptions: {
@@ -58,12 +56,8 @@ export class Tab4Page implements OnInit {
     },
     series: [{
         type: undefined,
-        name: 'Tokyo',
-        data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-    }, {
-        type: undefined,
-        name: 'London',
-        data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+        name: 'Total Patients',
+        data: this.lineChartyAxis
     }],
 
     responsive: {
@@ -79,8 +73,11 @@ export class Tab4Page implements OnInit {
                 }
             }
         }]
+    },
+    credits: {
+      enabled: false
     }
-    })
+    });
               
   }
   barChartPopulation() {
@@ -88,6 +85,7 @@ export class Tab4Page implements OnInit {
       chart: {
         type: 'line'
       },
+
       title: {
         text: 'Historic World Population by Region'
       },
@@ -153,6 +151,9 @@ export class Tab4Page implements OnInit {
                 }
             }
         }]
+    },
+    credits: {
+      enabled: false
     }
     });
   }
@@ -235,16 +236,26 @@ export class Tab4Page implements OnInit {
       this.logindata = <LoginData>this.authService.userData$.getValue();
       this.dr_code = this.logindata[0].dr_code;
     }
-    this.doctorService.totalCount(this.dr_code).subscribe(
-      (res:any)=>{
-          console.log(res);
-      },
-      error => {
-        console.log(error);
+    let catego=[];
+    let totalPatient=[];
+    this.doctorService.getYearHistoryGraph(this.dr_code).subscribe(
+ 
+      (res: any) => {
+        console.log(res);
+        res.forEach(e => {
+          catego.push(e.date_created);
+          totalPatient.push(e.total_patient);
+        });
+      },error =>{
+       
       },
       () => {
+        this.lineChartxAxis = catego;
+        this.lineChartyAxis = totalPatient;
         console.log();
-      }
-    );
+       // this.barChartPopulation();
+        //this.pieChartBrowser();
+        this.lineChartPopulation();
+      });
   }
 }

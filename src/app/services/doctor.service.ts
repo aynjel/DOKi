@@ -65,6 +65,9 @@ export class DoctorService {
   getCoDoctors(postData1: any){
     return this.httpService.get('Inpatient/CoDoctors/', postData1);
   }
+  getYearHistoryGraph(postData1: any){
+    return this.httpService.get('Inpatient/YearHistoryGraph/', postData1);
+  }
   insertPF(data1:any){
     console.log("data1 : "+data1);
     return this.httpService.postJSON('ProfFee/Insert',data1);
