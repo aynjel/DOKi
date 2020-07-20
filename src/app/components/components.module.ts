@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LogoComponent } from './logo/logo.component';
 import { SlidesComponent } from './slides/slides.component';
+import { SliderPage } from './slider/slider.page';
 import { StartComponent } from './start/start.component';
 import { HospitalComponent } from './hospital/hospital.component';
 import { DateselectorComponent } from './dateselector/dateselector.component';
@@ -17,7 +18,8 @@ import { TextAvatarModule } from './text-avatar/text-avatar.module';
     HospitalComponent,
     HospitalSelectorWithAllComponent,
     DateselectorComponent,
-    LogoSmComponent
+    LogoSmComponent,
+    SliderPage
   ],
   exports:[
       LogoComponent,
@@ -26,7 +28,8 @@ import { TextAvatarModule } from './text-avatar/text-avatar.module';
       HospitalComponent,
       HospitalSelectorWithAllComponent,
       DateselectorComponent,
-      LogoSmComponent
+      LogoSmComponent,
+      SliderPage
     ],
   imports: [
     CommonModule,

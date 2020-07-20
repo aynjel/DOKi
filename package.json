@@ -28,6 +28,7 @@
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^5.0.0",
     "@logisticinfotech/ionic4-datepicker": "^1.4.3",
+    "@lottiefiles/lottie-player": "^0.5.1",
     "@synapsium/ngx-lottie": "^8.2.9",
     "capacitor-datepicker": "0.0.2",
     "highcharts": "^8.1.2",

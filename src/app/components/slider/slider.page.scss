@@ -1,0 +1,35 @@
+ion-slide {
+    padding: 5%;
+    display: block;
+    img {
+        width: 100px;
+    }
+    h2 {
+        font-size: 36px;
+        font-weight: bold;
+    }
+}
+
+/* add start */
+
+ion-slides {
+    /*--bullet-background: green;*/
+    --bullet-background-active: #009444;
+}
+
+.swiper-pagination {
+    bottom: 3px !important;    
+}
+
+/* didn't work
+.swiper-pagination-bullet {
+  background: green;
+  opacity: 0.2;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 0.9;
+  background: green;
+} */
+
+/* add end */
