@@ -1,30 +1,35 @@
 
-<ion-content padding>
-  <ion-header [translucent]="true">
-    <ion-toolbar color="primary">
+<ion-header mode="md" class="ion-no-border" >
+  <div *ngIf="!isDesktop">
+    <ion-toolbar  color="mango" >
       <ion-title>
-        Settings
+        <ion-icon name="stats-chart-outline"></ion-icon> Statistics
       </ion-title>
-      
     </ion-toolbar>
-  
+  </div>
+</ion-header>
 
-  </ion-header>
-  
-  
-  
 
-  <ion-card>
-
-    <ion-card-content>
-      <ion-card-header><p>{{ displayUserData.first_name }} {{ displayUserData.last_name }}
-      </p>
+<ion-content>
+  <div id="lineChart" ></div>
+  <div class="ion-padding">
+    <div id="barChart" ></div>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Bar Chart - Population </ion-card-title>
       </ion-card-header>
-      
-      <ion-item>
-        <ion-button fill="solid">Change Password</ion-button>
+      <ion-card-content>
+        
+      </ion-card-content>
+    </ion-card>
 
-      </ion-item>
-    </ion-card-content>
-  </ion-card>
-  </ion-content>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Pie Chart - Browser market</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div id="pieChart" style="width:100%; height:400px;"></div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
