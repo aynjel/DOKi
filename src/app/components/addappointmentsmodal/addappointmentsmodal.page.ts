@@ -225,8 +225,9 @@ uxTimeSelector = true;
   pickTime(){
     //console.log(this.mydate1+" | "+this.dr_code );
     this.doctorSchedule=[];
+  
     this.patientService.retrieveTime(this.dr_code,this.mydate1,this.location).subscribe((res:any)=>{
-      console.log(JSON.parse(res));
+      console.log((res));
       res = JSON.parse(res);
       res.forEach(element => {
           if(element.appt_id == null){

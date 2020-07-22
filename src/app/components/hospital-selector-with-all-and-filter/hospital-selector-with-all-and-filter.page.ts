@@ -28,9 +28,9 @@ export class HospitalSelectorWithAllAndFilterPage implements OnInit {
       router.events.subscribe(val => {
         if (location.path() == "/menu/in-patients") {
       this.admittedOrDischarge = "ALL";
-    }else if(location.path() == "/menu/in-patientsAC"){
+    }else if(location.path() == "/menu/in-patients/AC"){
       this.admittedOrDischarge = "AC";
-    }else if(location.path() == "/menu/in-patientsDN"){
+    }else if(location.path() == "/menu/in-patients/DN"){
       this.admittedOrDischarge = "DN";
     }
 
@@ -63,22 +63,22 @@ export class HospitalSelectorWithAllAndFilterPage implements OnInit {
         this.router.navigate(['/menu/in-patients']);
       }
     }else if(data1 == "AC"){
-      this.router.navigate(['/menu/in-patientsAC']);
+      this.router.navigate(['/menu/in-patients/AC']);
     }else if(data1 == "DN"){
-      this.router.navigate(['/menu/in-patientsDN']);
+      this.router.navigate(['/menu/in-patients/DN']);
     }
     this.hospital.emit(data1);
   }
-  changeRedirect(){
+  changeRedirect(event:any){
 
     if(this.admittedOrDischarge == "ALL"){
 
         this.router.navigate(['/menu/in-patients']);
       
     }else if(this.admittedOrDischarge == "AC"){
-      this.router.navigate(['/menu/in-patientsAC']);
+      this.router.navigate(['/menu/in-patients/AC']);
     }else if(this.admittedOrDischarge == "DN"){
-      this.router.navigate(['/menu/in-patientsDN']);
+      this.router.navigate(['/menu/in-patients/DN']);
     }
   }
 

@@ -18,11 +18,11 @@ const routes: Routes = [
         loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
       },
       {
-        path: 'in-patientsDN',
+        path: 'in-patients/DN',
         loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
       },
       {
-        path: 'in-patientsAC',
+        path: 'in-patients/AC',
         loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
       },
       {

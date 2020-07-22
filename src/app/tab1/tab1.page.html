@@ -3,14 +3,17 @@
   <div *ngIf="!isDesktop">
     <ion-toolbar  color="mango" >
       <ion-title>
-        <ion-icon name="person-circle-outline"></ion-icon> In-Patients
+        <ion-icon name="person-circle-outline"></ion-icon> In-Patients    
+        <ion-text style="font-size:12px">
+          {{admittedOrDischargeLabel}}
+        </ion-text>  
       </ion-title>
+
     </ion-toolbar>
   </div>
   <ion-grid class="ion-no-padding" >
     <ion-row >
       <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4" class="custom-border-bottom ion-no-border ">
-        <!--app-hospital-selector-with-all (hospital)="locationAction($event)" ></app-hospital-selector-with-all-->
         <app-hospital-selector-with-all-and-filter  (hospital)="locationAction($event)"></app-hospital-selector-with-all-and-filter>
       </ion-col>
     </ion-row>
@@ -18,30 +21,12 @@
       <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4" class=" ion-no-border ">
           <ion-searchbar [(ngModel)]="searchBar" (ionChange)="filterList()" mode="ios"></ion-searchbar>
       </ion-col>
-      <!--ion-fab horizontal="center" vertical="center" slot="fixed" *ngIf="isDesktop">
-        <ion-fab-button color="light" class="">
-          <ion-icon name="options-outline"></ion-icon>
-        </ion-fab-button>
-        <ion-fab-list side="bottom">
-          <ion-fab-button color="light"   data-desc="All" >
-            <ion-icon name="person-outline"></ion-icon>
-          </ion-fab-button>
-          <ion-fab-button color="light"   data-desc="Admitted">
-            <ion-icon name="person-add-outline"></ion-icon>
-          </ion-fab-button>
-          <ion-fab-button color="light"  data-desc="For Discharge">
-            <ion-icon name="person-remove-outline"></ion-icon>
-          </ion-fab-button>
-        </ion-fab-list>
-      </ion-fab-->
     </ion-row>
   </ion-grid>
 </ion-header>
 
 
 <ion-content >
-
-
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
     <ion-refresher-content ></ion-refresher-content>
   </ion-refresher>
@@ -53,16 +38,9 @@
         size-lg="4"
         offset-lg="4"
         >
-  
-        
          <div  *ngFor="let x of inPatients">
-          
-
           <ion-card (click)='detail(x)' mode="ios">
             <ion-item lines="none">
-              <!--ion-avatar slot="start">
-                <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg">
-              </ion-avatar-->
               <ion-avatar slot="start">
                 <text-avatar [text]="x.last_name" [color]=""></text-avatar>
               </ion-avatar>
@@ -96,9 +74,6 @@
                 <!--Patient For Discharge-->
                 <ion-progress-bar value="1" color="mango"></ion-progress-bar>
                 </div>
-              
-              
-              
               <ion-row class="ion-no-padding" lines="none" style="padding-top:10px !important;">
                 <p>
                   <span *ngIf="x.site == 'C'">
@@ -116,6 +91,11 @@
             </ion-item>
           </ion-card>
 
+        </div>
+        <div *ngIf="!objecthandler">
+          <ion-list-header slot="center">
+            No Data Available
+          </ion-list-header>
         </div>
       </ion-col>
     </ion-row>

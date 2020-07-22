@@ -31,8 +31,9 @@ export class Tab1Page {
   searchBar:any;
   name:any;
   admittedOrDischarge="ALL";
+  admittedOrDischargeLabel="";
   route: string;
-
+  objecthandler:boolean=false;
 
   constructor(private authService:AuthService,
     private router:Router,
@@ -47,20 +48,16 @@ export class Tab1Page {
       this.screensizeService.isDesktopView().subscribe(isDesktop => {
         if (this.isDesktop && !isDesktop) {window.location.reload();}this.isDesktop = isDesktop;
       });
-      /*if (location.path() == "/menu/in-patients") {
-        this.admittedOrDischarge = "ALL";
-      }else if(location.path() == "/menu/in-patientsAC"){
-        this.admittedOrDischarge = "AC";
-      }else if(location.path() == "/menu/in-patientsDN"){
-        this.admittedOrDischarge = "DN";
-      }*/
       router.events.subscribe(val => {
         if (location.path() == "/menu/in-patients") {
           this.admittedOrDischarge = "ALL";
-        }else if(location.path() == "/menu/in-patientsAC"){
+          this.admittedOrDischargeLabel = "";
+        }else if(location.path() == "/menu/in-patients/AC"){
           this.admittedOrDischarge = "AC";
-        }else if(location.path() == "/menu/in-patientsDN"){
+          this.admittedOrDischargeLabel = "(Admitted)";
+        }else if(location.path() == "/menu/in-patients/DN"){
           this.admittedOrDischarge = "DN";
+          this.admittedOrDischargeLabel = "(for Discharge)";
         }
       });
     }
@@ -68,7 +65,6 @@ export class Tab1Page {
    
   }
   
-  //filter : check searchbar if not empty and check location
 
   filterList(){
 
@@ -128,8 +124,11 @@ export class Tab1Page {
   callPatient(data:any){
     this.doctorService.getInPatient(this.dr_code).subscribe(
       (res:any)=>{
-        //this.inPatientsDraft = res;
-        //this.filterList();
+        if(res.length){
+          this.objecthandler = true;
+        }else{
+          this.objecthandler =false;
+        }
         this.inPatientsDraft=[];
         res.forEach(element => {
           element.last_name = element.last_name.toUpperCase();
@@ -138,7 +137,6 @@ export class Tab1Page {
      
           this.inPatientsDraft.push(element);
         });
-        //this.inPatientsDraft = res;
         this.filterList();
     }
     );

@@ -27,6 +27,8 @@ export class Tab4Page implements OnInit {
   admitted = "A";
   discharge = "D";
   getTotalCount = {Admitted: "0", ForDischarge: "0", Total: "0"};
+
+
   public logindata:LoginData;
   constructor(
     private authService:AuthService,
@@ -40,6 +42,12 @@ export class Tab4Page implements OnInit {
     
   }
 
+  doRefresh(event) {
+    setTimeout(() => {
+      this.ionViewWillEnter();
+      event.target.complete();
+    }, 1000);
+  }
   lineChartPopulationForYear(){
 
     HighCharts.chart('lineChartForYear',{
@@ -90,13 +98,7 @@ export class Tab4Page implements OnInit {
   }
 
   ngOnInit() {
-    /*this.authService.userData$.subscribe(
-      (res:any) => {
-        this.logindata = <LoginData>res;
-      }
-    );*/
 
-    
   }
   goto(data){
     this.router.navigate(['/menu/in-patients'+data]);
@@ -112,6 +114,7 @@ export class Tab4Page implements OnInit {
     let totalPatient=[];
     this.doctorService.getYearHistoryGraph(this.dr_code).subscribe(
       (res: any) => {
+
         var count = Object.keys(res).length / 2;
         let month:any;
         let monthValue:any;
@@ -132,6 +135,7 @@ export class Tab4Page implements OnInit {
       let DayValue=[];
       this.doctorService.MonthHistoryGraph(this.dr_code).subscribe(
         (res: any) => {
+          
           let x = JSON.stringify(res);
           x = x.replace("[", "").replace("]", "");
           //x = x.replace("]", "");
@@ -144,7 +148,6 @@ export class Tab4Page implements OnInit {
           for(let i=1; i<=count;i++){
             month = "Day"+i;
             monthValue = "Day"+i+"Value";
-            console.log(x[month]+' - '+x[monthValue]);
             Day.push(x[month]);
             DayValue.push(Number(x[monthValue]));
           }
@@ -156,7 +159,7 @@ export class Tab4Page implements OnInit {
           this.lineChartPopulationForMonth();
         });
       this.doctorService.getTotalCount(this.dr_code).subscribe(
-        (res: any) => {if(res){this.getTotalCount = res;}},
+        (res: any) => {console.log(JSON.stringify(res));if(res){this.getTotalCount = res;}},
         error =>{},() => {});
 
 

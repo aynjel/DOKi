@@ -15,7 +15,6 @@ import { SliderPage } from './slider.page';
     FormsModule,
     IonicModule,
     SliderPageRoutingModule
-  ],
-  declarations: [SliderPage]
+  ]
 })
 export class SliderPageModule {}

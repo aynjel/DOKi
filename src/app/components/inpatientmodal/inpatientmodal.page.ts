@@ -58,7 +58,7 @@ export class InpatientmodalPage implements OnInit {
     this.doctorService.getCoDoctors(this.data.admission_no).subscribe(
       (res:any)=>{
         this.coDoctors = res;
-        console.log(res)
+        console.log(JSON.stringify(res))
   
     }
     );

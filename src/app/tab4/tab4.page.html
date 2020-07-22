@@ -11,7 +11,9 @@
 
 
 <ion-content>
-
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
+    <ion-refresher-content ></ion-refresher-content>
+  </ion-refresher>
   <ion-grid class="ion-no-padding" >
     <ion-row >
       <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3" class="custom-border-bottom ion-no-border ">
@@ -22,7 +24,7 @@
     <ion-row>
       <ion-col size-xs="6" >
 
-          <ion-item lines="none">
+          <ion-item lines="none" routerLink='/menu/in-patients/AC' routerDirection="back">
             <ion-avatar slot="start">
               <text-avatar [text]='admitted' [color]=""></text-avatar>
             </ion-avatar>

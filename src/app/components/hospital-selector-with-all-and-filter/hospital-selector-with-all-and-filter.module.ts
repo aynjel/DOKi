@@ -15,6 +15,6 @@ import { HospitalSelectorWithAllAndFilterPage } from './hospital-selector-with-a
     IonicModule,
     HospitalSelectorWithAllAndFilterPageRoutingModule
   ],
-  declarations: [HospitalSelectorWithAllAndFilterPage]
+
 })
 export class HospitalSelectorWithAllAndFilterPageModule {}
