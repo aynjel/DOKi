@@ -9,15 +9,21 @@ import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { InpatientsComponent } from '../components/inpatients/inpatients.component';
 import { TextAvatarModule } from '../components/text-avatar/text-avatar.module';
 
+import {HospitalSelectorWithAllAndFilterPage} 
+from '../components/hospital-selector-with-all-and-filter/hospital-selector-with-all-and-filter.page';
+
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
     TextAvatarModule,
-    Tab1PageRoutingModule,ComponentsModule
+    Tab1PageRoutingModule,
+    ComponentsModule,
+
+
 
   ],
-  declarations: [Tab1Page, InpatientsComponent]
+  declarations: [Tab1Page, InpatientsComponent,HospitalSelectorWithAllAndFilterPage]
 })
 export class Tab1PageModule {}

@@ -40,9 +40,7 @@
                 "input": "src/global.scss"
               }
             ],
-            "scripts": [
-              "./node_modules/@lottiefiles/lottie-player/dist/lottie-player.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -134,7 +132,9 @@
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "e2e": {

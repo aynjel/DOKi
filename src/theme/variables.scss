@@ -86,6 +86,10 @@
   --ion-color-mango-shade: #009444;
   --ion-color-mango-tint: #275228;
   
+
+  --ion-color-chh-css-primary2: #E0BA5B;
+
+
   ion-tab-button.tab-selected {
     ion-icon, ion-label {
     color: var(--ion-color-mango) !important;
@@ -111,7 +115,9 @@
   --ion-color-tint: var(--ion-color-mango-tint);
 }
 
-
+.ion-color-chh-css-primary2 {
+  --ion-color-base: var(--ion-color-chh-css-primary2);
+}
 
 
 

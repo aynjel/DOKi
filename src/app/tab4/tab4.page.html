@@ -1,9 +1,9 @@
 
-<ion-header mode="md" class="ion-no-border" >
-  <div *ngIf="!isDesktop">
+<ion-header mode="md" class="ion-no-border" *ngIf="!isDesktop">
+  <div >
     <ion-toolbar  color="mango" >
       <ion-title>
-        <ion-icon name="stats-chart-outline"></ion-icon> Statistics
+        <ion-icon name="stats-chart-outline"></ion-icon> Dashboard
       </ion-title>
     </ion-toolbar>
   </div>
@@ -11,25 +11,46 @@
 
 
 <ion-content>
-  <div id="lineChart" ></div>
-  <!--div class="ion-padding">
-    <div id="barChart" ></div>
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Bar Chart - Population </ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        
-      </ion-card-content>
-    </ion-card>
 
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Pie Chart - Browser market</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <div id="pieChart" style="width:100%; height:400px;"></div>
-      </ion-card-content>
-    </ion-card>
-  </div-->
+  <ion-grid class="ion-no-padding" >
+    <ion-row >
+      <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3" class="custom-border-bottom ion-no-border ">
+        <ion-item lines="none"><h2 class="ion-no-padding">Welcome, Doc {{first_name}}</h2></ion-item>
+        
+ 
+  <ion-grid>
+    <ion-row>
+      <ion-col size-xs="6" >
+
+          <ion-item lines="none">
+            <ion-avatar slot="start">
+              <text-avatar [text]='admitted' [color]=""></text-avatar>
+            </ion-avatar>
+            
+            <ion-label>
+              <h1><b>{{getTotalCount.Admitted}}</b></h1>
+              <p>Admitted</p>
+            </ion-label>
+          </ion-item>
+      </ion-col>
+      <ion-col size-xs="6" >
+          <ion-item lines="none">
+            <ion-avatar slot="start">
+              <text-avatar [text]='discharge' [color]=""></text-avatar>
+            </ion-avatar>
+            <ion-label>
+              <h1><b>{{getTotalCount.ForDischarge}}</b></h1>
+              <p class="ion-text-wrap" >For Discharge</p>
+            </ion-label>
+          </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div id="lineChartForYear" ></div>
+  <div id="lineChartForMonth" ></div>
+
+</ion-col>
+</ion-row>
+</ion-grid>
+
 </ion-content>

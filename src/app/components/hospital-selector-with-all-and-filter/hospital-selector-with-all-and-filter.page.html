@@ -1,0 +1,45 @@
+
+<div class="navbar" class="ion-text-center" >
+  <ion-button fill="clear" (click)="onSubmit('A',active3)" 
+  [ngClass]="{'active-link':active3, 'notactive':!active3}" 
+    class="link" size="small">
+    Both
+  </ion-button>
+  <ion-button fill="clear" (click)="onSubmit('C',active)" 
+  [ngClass]="{'active-link':active, 'notactive':!active}" 
+    class="link" size="small">
+    Cebu
+  </ion-button>
+  <ion-button fill="clear" (click)="onSubmit('M',active1)" 
+  [ngClass]="{'active-link':active1, 'notactive':!active1}" 
+    class="link" size="small">
+    Mandaue
+  </ion-button>
+  <ion-button fill="clear"  *ngIf="isDesktop"
+  [ngClass]="{'active-link':active2, 'notactive':!active2}" 
+    class="link" size="small">
+    <ion-select [(ngModel)]="admittedOrDischarge" placeholder="Filter" (ionChange)="changeRedirect($event)" >
+      <ion-select-option  value="ALL">All</ion-select-option>
+      <ion-select-option  value="AC">Admitted</ion-select-option>
+      <ion-select-option value="DN">For Discharge</ion-select-option>
+    </ion-select>
+  </ion-button>
+
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed" *ngIf="!isDesktop">
+    <ion-fab-button color="light" class="">
+      <ion-icon name="options-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="bottom">
+      <ion-fab-button color="light" (click)="onSubmit('ALL',true)"   data-desc="All" >
+        <ion-icon name="person-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light" (click)="onSubmit('AC',true)"  data-desc="Admitted">
+        <ion-icon name="person-add-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light" (click)="onSubmit('DN',true)" data-desc="For Discharge">
+        <ion-icon name="person-remove-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+</div>

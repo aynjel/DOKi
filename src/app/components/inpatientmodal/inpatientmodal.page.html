@@ -27,7 +27,7 @@
        Patient Information
     </ion-title>
     <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated" >
-      <ion-button (click)="closeModal()" class="ios button button-clear ion-activatable ion-focusable hydrated" color="danger">Close&nbsp; <ion-icon name="close-outline"></ion-icon></ion-button>
+      <ion-button (click)="closeModal()" color="chh-css-primary2">Close&nbsp; <ion-icon name="close-outline"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 
@@ -102,12 +102,12 @@
       <text-avatar [text]="data.last_name" [color]=""></text-avatar>
     </ion-avatar>
     <ion-label>
-      <ion-item class="ion-no-padding">
-        <h3 class="ion-text-wrap ">{{data.last_name}}, {{data.first_name}} {{data.middle_name}}</h3>
+      <ion-item class="ion-no-padding" >
+        <h3 class="ion-text-wrap " style="padding-top:20px">{{data.last_name}}, {{data.first_name}} {{data.middle_name}}</h3>
         <ion-badge
         color="warning"
         slot="end"
-        *ngIf="data.admission_status == 'DN' && data.doctor_prof_fee == null && data.is_posted ==null">
+        *ngIf="data.admission_status == 'DN' && data.doctor_prof_fee == null && data.is_posted ==null" >
         PF</ion-badge>
       <ion-badge
         color="success"
@@ -128,6 +128,16 @@
           <ion-icon name="bed-outline" slot="start"></ion-icon>
           Room {{data.room_no}}
         </div>
+        <ion-badge *ngIf="data.admission_status == 'AC'"
+        color="mango"
+        slot="end">
+        Admitted
+      </ion-badge>
+      <ion-badge *ngIf="data.admission_status == 'DN'"
+        color="mango"
+        slot="end">
+        For Discharge
+      </ion-badge>
     </div>
 
     </ion-label>
@@ -135,16 +145,7 @@
   <ion-item lines="none" style="padding-bottom: 10px;">
   <div class="ion-text-wrap">
     <!-- <ion-text *ngIf="data.admission_status == 'AC'">Status : Admitted </ion-text>  -->
-    <ion-badge *ngIf="data.admission_status == 'AC'"
-    color="warning"
-    slot="end">
-    Status: Admitted
-  </ion-badge>
-  <ion-badge *ngIf="data.admission_status == 'DN'"
-    color="success"
-    slot="end">
-    Status: For Discharge
-  </ion-badge>
+
   <br />
     <!-- <ion-text *ngIf="data.admission_status == 'DN'">Status : For Discharge<br /></ion-text> -->
     <ion-text>Admission Date : {{data.admission_date}}</ion-text>
@@ -173,15 +174,20 @@
 
   <ion-card mode="ios" *ngIf="data.admission_status == 'DN'">
     <ion-list>
+      
       <ion-item style="padding-top: 10px;">
         <div class="ion-text-wrap">
           <b>Professional Fee</b><br />
+        </div>
+      </ion-item>
+      <ion-item style="padding-top: 10px;" lines="none">
+        <div class="ion-text-wrap">
           <ion-text style="padding-top: 15px;">Amount : {{professionalFee}}<br /></ion-text>
           <ion-text>Remarks : {{remarks}}</ion-text>
         </div>
       </ion-item>
       <!-- <ion-item lines="none"> -->
-        <ion-button expand="block" (click)='detail(data.admission_no)' color="mango" *ngIf="data.is_posted == 0 || data.is_posted == null">UPDATE</ion-button>
+        <ion-button expand="block" shape="round" (click)='detail(data.admission_no)' color="mango" *ngIf="data.is_posted == 0 || data.is_posted == null">UPDATE</ion-button>
       <!-- </ion-item> -->
     </ion-list>
   </ion-card>
@@ -192,19 +198,25 @@
 
 <ion-card mode="ios">
   <ion-list>
-
+    <ion-item style="padding-top: 10px;">
+      <div class="ion-text-wrap">
+        <b>Doctors</b><br />
+      </div>
+    </ion-item>
     <ion-item lines="none" *ngFor="let dr of coDoctors">
       <ion-avatar slot="start">
         <!-- <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg"> -->
         <!-- <img src="https://api.adorable.io/avatars/60/abott-123@adorable.io.png"> -->
         <text-avatar [text]="dr.last_name" [color]=""></text-avatar>
       </ion-avatar>
-      <ion-label>
-        <ion-item class="ion-no-padding">
-          <h3 class="ion-text-wrap "><a href="tel: {{dr.mobile_no}}">Dr. {{dr.first_name}} {{dr.last_name}}</a></h3>
+      <ion-label style="margin-top:-10px">
+        <ion-item class="ion-no-padding" style="padding-bottom:5px">
+          <!--h3 class="ion-text-wrap "><a href="tel: {{dr.mobile_no}}">Dr. {{dr.first_name}} {{dr.last_name}}</a></h3-->
+
+          <h3 class="ion-text-wrap" style="padding-top:20px">Dr. {{dr.first_name}} {{dr.last_name}}</h3>
         </ion-item>
         <ion-badge
-        color="medium">
+        color="medium" >
         {{dr.status}}</ion-badge>
         <!-- <div class="ion-text-wrap" style="padding-top:5px"><p>{{dr.status}}</p></div> -->
         </ion-label>

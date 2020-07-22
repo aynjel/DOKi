@@ -7,13 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { Tab4PageRoutingModule } from './tab4-routing.module';
 
 import { Tab4Page } from './tab4.page';
-
+import { TextAvatarModule } from '../components/text-avatar/text-avatar.module';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    Tab4PageRoutingModule
+    Tab4PageRoutingModule,
+    TextAvatarModule
   ],
   declarations: [Tab4Page]
 })

@@ -10,9 +10,20 @@ export class HospitalComponent implements OnInit {
   active1:boolean = false;
   @Output() hospital: EventEmitter<any> = new EventEmitter();
   @Input() readonlyComp: boolean;
-  constructor() { }
+  @Input() Activator: any;
+  constructor() { console.log("Activator 1"+this.Activator); }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log("Activator "+this.Activator);
+    if(this.Activator == "C"){
+      this.active = true;
+      this.active1 = false;
+    }
+    if(this.Activator == "M"){
+      this.active = false;
+      this.active1 = true;
+    }
+  }
   onSubmit(data1:any,data2:boolean) {
     if(data1 == "C"){
       this.active = true;

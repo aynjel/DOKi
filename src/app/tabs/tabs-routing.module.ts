@@ -12,18 +12,18 @@ const routes: Routes = [
       userData: UserDataResolver
     },
     children: [
+
       {
         path: 'in-patients',
-        children: [{
-          path:'',
-          loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
-        },
-        {
-          path: ':patientId',
-          loadChildren: () => import('../page/inpatientdetial/inpatientdetial.module').then( m => m.InpatientdetialPageModule)
-        }
-      ]
-        
+        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+      },
+      {
+        path: 'in-patientsDN',
+        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+      },
+      {
+        path: 'in-patientsAC',
+        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
       },
       {
         path: 'appointments',
@@ -33,12 +33,12 @@ const routes: Routes = [
         path: 'settings',
         loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
       },{
-        path: 'statistics',
+        path: 'dashboard',
         loadChildren: () => import('../tab4/tab4.module').then(m => m.Tab4PageModule)
       },
       {
         path: '',
-        redirectTo: '/menu/statistics',
+        redirectTo: '/menu/dashboard',
         pathMatch: 'full'
       }
     ]

@@ -32,6 +32,7 @@ export class Tab2Page {
   public items:string[]=[];
   buttonDisablerHospSelector:boolean = false;
   buttonDisablerDateSelector:boolean = false;
+  hospitalActivator:any;
   dr_code = "";
   public logindata:LoginData;
   constructor(
@@ -73,17 +74,7 @@ export class Tab2Page {
         cssClass: 'my-custom-class',
         buttons: [
           {text: 'Delete',role: 'destructive',icon: 'trash',handler: () => {this.presentAlertConfirm(data3,data1);}},
-          {text: 'View',icon: 'eye',handler: () => {this.presentModal(data1);}},
           {text: 'Cancel',icon: 'close',role: 'cancel'}
-        ]
-      });
-      await actionSheet.present();
-    }else{
-      const actionSheet = await this.actionSheetController.create({
-        cssClass: 'my-custom-class',
-        buttons: [
-          {text: 'View',icon: 'eye',handler: () => {this.presentModal(data1);}},
-          {text: 'Cancel',icon: 'close',role: 'cancel',handler: () => {}}
         ]
       });
       await actionSheet.present();
@@ -145,7 +136,10 @@ export class Tab2Page {
    });
    modal.onDidDismiss()
    .then((data) => {
-     console.log(data);
+     console.log(data.role);
+     this.selectedDate = data.data;
+     this.selectedLocation = this.hospitalActivator = data.role;
+     this.getDate(this.selectedDate,this.selectedLocation);
  });
     return await modal.present();
   }
@@ -180,6 +174,8 @@ export class Tab2Page {
           item1 ["date"] =data1;
           parseddata.forEach(element => {
             if(element.appt_id != null){    
+              element.appt_last_name = element.appt_last_name.toUpperCase();
+              element.appt_first_name = this.camelCase(element.appt_first_name);
               jsonObj2.push({"appt_id":element.appt_id,"patientName":element.appt_last_name+", "+element.appt_first_name,"time":element.time_desc,"status":element.remarks});
             }
           }
@@ -262,5 +258,11 @@ export class Tab2Page {
       event.target.complete();
     }, 1000);
   }
-
+  camelCase(str) {
+    var splitStr = str.toLowerCase().split(' ');
+    for (var i = 0; i < splitStr.length; i++) {
+        splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+    }
+    return splitStr.join(' '); 
+ }
 }

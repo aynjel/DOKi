@@ -9,7 +9,7 @@ import { SliderPageRoutingModule } from './slider-routing.module';
 import { SliderPage } from './slider.page';
 
 @NgModule({
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA ],
   imports: [
     CommonModule,
     FormsModule,

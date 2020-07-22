@@ -70,7 +70,7 @@ export class LoginPage implements OnInit {
               });*/
               //store to local database
               this.storageService.store(AuthConstants.AUTH, this.logindata);
-              this.router.navigate(['/menu/statistics']);
+              this.router.navigate(['/menu/dashboard']);
             }else{
               this.toast.presentToast('Incorrect Authentication Details.');
             }

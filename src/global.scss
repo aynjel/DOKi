@@ -164,13 +164,6 @@ body{
   // --ion-background-color:rgb(233, 235, 238);
 }
 
-.my-backbround{
-   --ion-background-color:#ffffff !important;
-}
-
-.custom-bgwhite{
-   background-color: white !important;
-}
 ion-toolbar{
   // --min-height:40px;
 }
@@ -186,9 +179,7 @@ ion-toolbar{
      max-height: 100%;
    }
   
-   ion-toolbar {
-     --background: #ffffff;
-   }
+ 
   
    .link {
      --color: #528d53;
@@ -213,4 +204,3 @@ ion-toolbar{
  }
 
 
- 

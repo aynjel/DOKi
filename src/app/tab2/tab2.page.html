@@ -5,7 +5,7 @@
 
     <ion-toolbar  color="mango" >
       <ion-title>
-        <ion-icon name="man-outline"></ion-icon> Appointments
+        <ion-icon name="calendar-outline"></ion-icon> Appointments
       </ion-title>
     </ion-toolbar>
 
@@ -17,7 +17,11 @@
       <!--ion-col size-md="6" offset-md="3" size-sm="6"  --> 
       <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3" class="custom-border-bottom">
      
-          <app-hospital (hospital)="locationAction($event)" [readonlyComp]="buttonDisablerHospSelector"></app-hospital>
+          <app-hospital 
+            (hospital)="locationAction($event)"
+            [readonlyComp]="buttonDisablerHospSelector"
+            [Activator]="hospitalActivator"
+            ></app-hospital>
           <app-dateselector 
             [passedDate]="selectedDate"
             (dateSelector)="dateChanged($event)"
@@ -26,19 +30,8 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-
- 
-  
-  
 </ion-header>
-
-
-
-
 <ion-content >
-
-
-
   <ion-refresher 
   slot="fixed"
   id="refresher"
@@ -91,25 +84,19 @@
 
         <ion-card (click)='presentActionSheet(y.appt_id,y.status,y.patientName)' mode="ios">
           <ion-item lines="none">
-            <!--ion-avatar slot="start">
-              <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg">
-            </ion-avatar-->
             <ion-avatar slot="start">
               <text-avatar [text]="y.patientName" [color]=""></text-avatar>
             </ion-avatar>
-            <ion-label>
+            <ion-label style="margin-top:-5px">
               <ion-item class="ion-no-padding">
-                <h3 class="ion-text-wrap ">{{y.patientName}}</h3>
-                <!--ion-badge color="success" slot="end" *ngIf="y.status == 'Complete'">{{y.status}}</ion-badge>
-                <ion-badge color="secondary" *ngIf="y.status == 'Serving'" slot="end" >{{y.status}}</ion-badge>
-                <ion-badge color="warning" *ngIf="y.status == 'Reserved'" slot="end" >{{y.status}}</ion-badge-->
+                <h3 class="ion-text-wrap" style="padding-top:20px">{{y.patientName}}</h3>
               </ion-item>
               <ion-row class="ion-no-padding" lines="none">
                 <!-- Default Progressbar with 50 percent -->
 
                 <div>
                   <p>
-                    <ion-icon name="time-outline" slot="start"></ion-icon>
+                    <ion-icon name="time-outline" slot="start"  style="padding-top:5px !important;"></ion-icon>
                     {{y.time}}
 
                   </p>

@@ -2,7 +2,11 @@
 
 
 <ion-content>
-  
+  <ion-item style="padding-top: 10px;">
+    <div class="ion-text-wrap">
+      <b>Professional Fee</b><br />
+    </div>
+  </ion-item>
   <ion-item>
     <ion-label position="fixed">Fee</ion-label>
     <ion-input type="number" id="input-professionalFee" ngModel="postData.professionalFee" placeholder="0.00" value="{{professionalFee}}" autocomplete  (ionChange)="test()" ></ion-input>
@@ -13,13 +17,22 @@
   <ion-label position="fixed">Remarks</ion-label>
   <ion-input  type="text" id="input-remarks" value="{{remarks}}"></ion-input>
 </ion-item>
-<ion-item>
-  <ion-button size ="small" slot="start" expand="block" id="btn-confirm" (click)="save()" color="mango">
-    Save
-  </ion-button>
-  <ion-button size ="small" slot="end" expand="block" id="btn-confirm" (click)="ClosePopover()" color="danger">
-    Cancel
-  </ion-button>
-</ion-item>
+
+
+
+  <ion-grid >
+    <ion-row >
+      <ion-col size-xs="6" >
+        <ion-button expand="block"shape="round"  id="btn-confirm" (click)="save()" color="mango">
+          Save
+        </ion-button>
+      </ion-col>
+      <ion-col size-xs="6" >
+        <ion-button expand="block" shape="round"  id="btn-confirm" (click)="ClosePopover()" color="danger">
+          Cancel
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

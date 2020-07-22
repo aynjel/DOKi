@@ -5,257 +5,170 @@ import { StorageService } from '../services/storage.service';
 import {LoginData} from '../models/logindata.model';
 import { DoctorService } from '../services/doctor.service';
 import * as HighCharts from 'highcharts';
+import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-tab4',
   templateUrl: './tab4.page.html',
   styleUrls: ['./tab4.page.scss'],
 })
 export class Tab4Page implements OnInit {
+  userData$ = new BehaviorSubject<any>([]);
   displayUserData : any;
   isDesktop: boolean;
   dr_code = "";
-  lineChartxAxis:any;
-  lineChartyAxis:any;
+  first_name = "";
+  lineChartxAxisForYear:any;
+  lineChartyAxisForYear:any;
+  lineChartxAxisForMonth:any;
+  lineChartyAxisForMonth:any;
+  totalAdmitted:any = 0;
+  totalForDischarge:any = 0;
+  admitted = "A";
+  discharge = "D";
+  getTotalCount = {Admitted: "0", ForDischarge: "0", Total: "0"};
   public logindata:LoginData;
   constructor(
     private authService:AuthService,
     private screensizeService: ScreensizeService,
     private storageService:StorageService,
-    private doctorService:DoctorService) {
+    private doctorService:DoctorService,
+    private router:Router) {
     this.screensizeService.isDesktopView().subscribe(isDesktop => {
       if (this.isDesktop && !isDesktop) {window.location.reload();}this.isDesktop = isDesktop;
     });
+    
   }
-  ionViewDidEnter() {
 
-  }
-  lineChartPopulation(){
+  lineChartPopulationForYear(){
 
-    HighCharts.chart('lineChart',{
-      chart: {
-        type: 'column'
-    },
-    title: {
-        text: 'Average'
-    },
-    xAxis: {
-        categories: this.lineChartxAxis
-    },
-    yAxis: {
-        title: {
-            text: 'Total Patient'
-        }
-    },
-    plotOptions: {
-        line: {
-            dataLabels: {
-                enabled: true
-            },
-            enableMouseTracking: false
-        }
-    },
-    series: [{
-        type: undefined,
-        name: 'Total Patients',
-        data: this.lineChartyAxis
-    }],
-
-    responsive: {
-        rules: [{
+    HighCharts.chart('lineChartForYear',{
+      chart: {height: 300,type: 'areaspline'},
+      title: {text: '1 Year Average'},
+      xAxis: {categories: this.lineChartxAxisForYear},
+      yAxis: {title: {text: ''}},
+      plotOptions: {line: {dataLabels: {enabled: true},enableMouseTracking: false}},
+      series: [{type: undefined,name: 'Total Patients',data: this.lineChartyAxisForYear}],
+      responsive: {
+        rules: [
+          {
             condition: {
-                minWidth: 300
+              minWidth: 300
             },
             chartOptions: {
-                legend: {
-                    layout: 'horizontal',
-                    align: 'center',
-                    verticalAlign: 'bottom'
+              legend: 
+                {
+                  layout: 'horizontal',
+                  align: 'center',
+                  verticalAlign: 'bottom'
                 }
             }
-        }]
-    },
-    credits: {
-      enabled: false
-    }
+        }]},
+      credits: {enabled: false}
     });
               
   }
-  barChartPopulation() {
-    HighCharts.chart('barChart', {
-      chart: {
-        type: 'line'
-      },
 
-      title: {
-        text: 'Historic World Population by Region'
-      },
-       xAxis:{
-         categories:["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-      },
-      yAxis: {
-        min: 0,
-        title: {
-          text: 'Population (millions)',
-          align: 'high'
-        },
-      },
-      tooltip: {
-        valueSuffix: ' millions'
-      },
-      plotOptions: {
-        bar: {
-          dataLabels: {
-            enabled: true
-          }
-        }
-      },
-      series: [{
-        type: undefined,
-        name: 'Year 1800',
-        data: [107, 31, 635, 203, 2]
-      }, {
-        type: undefined,
-        name: 'Year 1900',
-        data: [133, 156, 947, 408, 6]
-      }, {
-        type: undefined,
-        name: 'Year 2000',
-        data: [814, 841, 3714, 727, 31]
-      }, {
-        type: undefined,
-        name: 'Year 2016',
-        data: [1216, 1001, 4436, 738, 40]
-      }],
-      responsive: {
-        rules: [{
-            condition: {
-                minWidth: 200
-            },
-            // Make the labels less space demanding on mobile
-            chartOptions: {
-                xAxis: {
-                    labels: {
-               
-                    }
-                },
-                yAxis: {
-                    labels: {
-                        align: 'left',
-                        x: 0,
-                        y: -2
-                    },
-                    title: {
-                        text: ''
-                    }
-                }
-            }
-        }]
-    },
-    credits: {
-      enabled: false
-    }
-    });
-  }
-  
-  pieChartBrowser() {
-    HighCharts.chart('pieChart', {
-      chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
-      },
-      title: {
-        text: 'Browser market shares in October, 2019'
-      },
-      tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-      },
-      plotOptions: {
-        pie: {
-          allowPointSelect: true,
-          cursor: 'pointer',
-          dataLabels: {
-            enabled: true,
-            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-          }
-        }
-      },
-      series: [{
-        name: 'Brands',
-        colorByPoint: true,
-        type: undefined,
-        data: [{
-          name: 'Chrome',
-          y: 61.41,
-          sliced: true,
-          selected: true
-        }, {
-          name: 'Internet Explorer',
-          y: 11.84
-        }, {
-          name: 'Firefox',
-          y: 10.85
-        }, {
-          name: 'Edge',
-          y: 4.67
-        }, {
-          name: 'Safari',
-          y: 4.18
-        }, {
-          name: 'Sogou Explorer',
-          y: 1.64
-        }, {
-          name: 'Opera',
-          y: 1.6
-        }, {
-          name: 'QQ',
-          y: 1.2
-        }, {
-          name: 'Other',
-          y: 2.61
-        }]
-      }]
-    });
-  }
+  lineChartPopulationForMonth(){
 
+    HighCharts.chart('lineChartForMonth',{
+      chart: {height: 300,type: 'column'},
+      title: {text: '1 Month Average'},
+      xAxis: {categories: this.lineChartxAxisForMonth},
+      yAxis: {title: {text: ''}},
+      plotOptions: {
+        line: {dataLabels: {enabled: true},enableMouseTracking: false},
+        column: {
+          borderRadius: 5
+      }
+      },
+      series: [{type: undefined,name: 'Total Patients',data: this.lineChartyAxisForMonth}],
+      responsive: {rules: [{condition: {minWidth: 300},chartOptions: {legend: {layout: 'horizontal',align: 'center',verticalAlign: 'bottom'}}}]},
+      credits: {enabled: false}
+    });
+              
+  }
 
   ngOnInit() {
-    this.authService.userData$.subscribe(
+    /*this.authService.userData$.subscribe(
       (res:any) => {
-        console.log(res);
         this.logindata = <LoginData>res;
       }
-    );
+    );*/
 
+    
+  }
+  goto(data){
+    this.router.navigate(['/menu/in-patients'+data]);
     
   }
   ionViewWillEnter(){
     if(!this.dr_code){
       this.logindata = <LoginData>this.authService.userData$.getValue();
       this.dr_code = this.logindata[0].dr_code;
+      this.first_name = this.camelCase(this.logindata[0].first_name);
     }
     let catego=[];
     let totalPatient=[];
     this.doctorService.getYearHistoryGraph(this.dr_code).subscribe(
- 
       (res: any) => {
-        console.log(res);
-        res.forEach(e => {
-          catego.push(e.date_created);
-          totalPatient.push(e.total_patient);
-        });
+        var count = Object.keys(res).length / 2;
+        let month:any;
+        let monthValue:any;
+        for(let i=1; i<=count;i++){
+          month = "Month"+i;
+          monthValue = "Month"+i+"Value";
+          catego.push(res[month]);
+          totalPatient.push(Number(res[monthValue]));
+        }
       },error =>{
-       
       },
       () => {
-        this.lineChartxAxis = catego;
-        this.lineChartyAxis = totalPatient;
-        console.log();
-       // this.barChartPopulation();
-        //this.pieChartBrowser();
-        this.lineChartPopulation();
+        this.lineChartxAxisForYear = catego;
+        this.lineChartyAxisForYear = totalPatient;
+        this.lineChartPopulationForYear();
       });
+      let Day=[];
+      let DayValue=[];
+      this.doctorService.MonthHistoryGraph(this.dr_code).subscribe(
+        (res: any) => {
+          let x = JSON.stringify(res);
+          x = x.replace("[", "").replace("]", "");
+          //x = x.replace("]", "");
+          
+          x = JSON.parse(x);
+  
+          var count = Object.keys(x).length/2;
+          let month:any = "";
+          let monthValue:any ="";
+          for(let i=1; i<=count;i++){
+            month = "Day"+i;
+            monthValue = "Day"+i+"Value";
+            console.log(x[month]+' - '+x[monthValue]);
+            Day.push(x[month]);
+            DayValue.push(Number(x[monthValue]));
+          }
+        },error =>{
+        },
+        () => {
+          this.lineChartxAxisForMonth = Day;
+          this.lineChartyAxisForMonth = DayValue;
+          this.lineChartPopulationForMonth();
+        });
+      this.doctorService.getTotalCount(this.dr_code).subscribe(
+        (res: any) => {if(res){this.getTotalCount = res;}},
+        error =>{},() => {});
+
+
+  }
+  camelCase(str) {
+    var splitStr = str.toLowerCase().split(' ');
+    for (var i = 0; i < splitStr.length; i++) {
+        // You do not need to check if i is larger than splitStr length, as your for does that for you
+        // Assign it back to the array
+        splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+    }
+    // Directly return the joined string
+    return splitStr.join(' '); 
   }
 }

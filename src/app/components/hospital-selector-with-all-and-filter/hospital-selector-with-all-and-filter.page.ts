@@ -1,24 +1,42 @@
 import { Component, OnInit, EventEmitter, Output, Input} from '@angular/core';
-import { Router } from '@angular/router';
 import { ScreensizeService } from '../../services/screensize.service';
+import { Router } from '@angular/router';
+import { Location } from "@angular/common";
 @Component({
-  selector: 'app-hospital-selector-with-all',
-  templateUrl: './hospital-selector-with-all.component.html',
-  styleUrls: ['./hospital-selector-with-all.component.scss'],
+  selector: 'app-hospital-selector-with-all-and-filter',
+  templateUrl: './hospital-selector-with-all-and-filter.page.html',
+  styleUrls: ['./hospital-selector-with-all-and-filter.page.scss'],
 })
-export class HospitalSelectorWithAllComponent implements OnInit {
+export class HospitalSelectorWithAllAndFilterPage implements OnInit {
+
+  
   active:boolean = false;
   active1:boolean = false;
   active2:boolean = false;
   active3:boolean = true;
   currenturl:any;
   isDesktop: boolean;
-  filter:any="All";
+  admittedOrDischarge:any="All";
   @Output() hospital: EventEmitter<any> = new EventEmitter();
-  constructor(private router:Router,    private screensizeService: ScreensizeService) {
+  constructor(private router:Router,    private screensizeService: ScreensizeService,    private location: Location) {
     this.screensizeService.isDesktopView().subscribe(isDesktop => {
       if (this.isDesktop && !isDesktop) {window.location.reload();}this.isDesktop = isDesktop;
     });
+
+
+    if(this.isDesktop){
+      router.events.subscribe(val => {
+        if (location.path() == "/menu/in-patients") {
+      this.admittedOrDischarge = "ALL";
+    }else if(location.path() == "/menu/in-patientsAC"){
+      this.admittedOrDischarge = "AC";
+    }else if(location.path() == "/menu/in-patientsDN"){
+      this.admittedOrDischarge = "DN";
+    }
+
+    });
+    }
+
   }
 
   ngOnInit() {} 
@@ -39,7 +57,7 @@ export class HospitalSelectorWithAllComponent implements OnInit {
       this.active3 = true;
     }
     if(data1 == "ALL"){
-      console.log(this.currenturl);
+
       if(this.currenturl != data1){
         this.currenturl = data1;
         this.router.navigate(['/menu/in-patients']);
@@ -51,7 +69,17 @@ export class HospitalSelectorWithAllComponent implements OnInit {
     }
     this.hospital.emit(data1);
   }
-  redirect(){
+  changeRedirect(){
 
+    if(this.admittedOrDischarge == "ALL"){
+
+        this.router.navigate(['/menu/in-patients']);
+      
+    }else if(this.admittedOrDischarge == "AC"){
+      this.router.navigate(['/menu/in-patientsAC']);
+    }else if(this.admittedOrDischarge == "DN"){
+      this.router.navigate(['/menu/in-patientsDN']);
+    }
   }
+
 }

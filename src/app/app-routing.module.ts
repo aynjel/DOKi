@@ -26,7 +26,10 @@ const routes: Routes = [
   },{
     path: 'inpatientdetial',
     loadChildren: () => import('./components/inpatientmodal/inpatientmodal.module').then( m => m.InpatientmodalPageModule)
-  },/*
+  },/* {
+  path: 'hospital-selector-with-all-and-filter',
+  loadChildren: () => import('./components/hospital-selector-with-all-and-filter/hospital-selector-with-all-and-filter.module').then( m => m.HospitalSelectorWithAllAndFilterPageModule)
+},
 *    {
   path: 'slider',
   loadChildren: () => import('./components/slider/slider.module').then( m => m.SliderPageModule)

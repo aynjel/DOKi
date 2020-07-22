@@ -29,14 +29,14 @@ export class DoctorService {
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     const url = environment.apiUrl + "retrieveuserdetails?username="+postData1 ;
-    console.log("retrieveUserDetails --> "+url);
+
     return this.http.post(url, options);
   }
   getDoctorName(postData1: any): Observable<any> {
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     const url = environment.apiUrl + "getDoctorName?doctorcode="+postData1 ;
-    console.log("getDoctorName --> "+url);
+
     return this.http.post(url, options);
   }
   getUserData() {
@@ -52,10 +52,10 @@ export class DoctorService {
       let doctorsDetails = JSON.parse(JSON.stringify(res));
       doctorsDetails.forEach(el => {
         return data = el.dr_code;
-        console.log(el.dr_code);
+
       });
     });
-    console.log("-->"+data);
+
     //return data;
   }
 
@@ -68,8 +68,15 @@ export class DoctorService {
   getYearHistoryGraph(postData1: any){
     return this.httpService.get('Inpatient/YearHistoryGraph/', postData1);
   }
+  getTotalCount(postData1: any){
+    return this.httpService.get('Inpatient/TotalCount/', postData1);
+  }
+  MonthHistoryGraph(postData1: any){
+    return this.httpService.get('Inpatient/MonthHistoryGraph/', postData1);
+  }
+
   insertPF(data1:any){
-    console.log("data1 : "+data1);
+
     return this.httpService.postJSON('ProfFee/Insert',data1);
     /*
     console.log(JSON.stringify(data1));

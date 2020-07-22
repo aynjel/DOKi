@@ -1,8 +1,8 @@
   <ion-tabs *ngIf="!isDesktop" >
     <ion-tab-bar slot="bottom" >
-      <ion-tab-button tab="statistics" >
+      <ion-tab-button tab="dashboard" >
         <ion-icon name="stats-chart-outline"></ion-icon>
-        <ion-label>Statistics</ion-label>
+        <ion-label>Dashboard</ion-label>
       </ion-tab-button>
       <ion-tab-button tab="in-patients" >
         <ion-icon name="person-circle-outline"></ion-icon>
@@ -18,7 +18,7 @@
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
- 
+
 <div *ngIf="isDesktop" class="desktop">
 
 
@@ -26,14 +26,17 @@
   <ion-header mode="md"  class="ion-no-border custom-border-bottom" > 
     <ion-toolbar >
       <ion-row class="ion-align-items-center">
-        <ion-col size="1">
- 
-        </ion-col>
+
         <ion-col size="2">
-          <app-logo-sm></app-logo-sm>
+          <app-logo-sm style="padding-left:20px"></app-logo-sm>
+          
         </ion-col>
-        <ion-col size="7">
+        <ion-col size="10" >
           <div class="navbar" class="ion-text-center chh-bg">
+            <ion-button fill="clear" routerLink="/menu/dashboard" routerDirection="root" routerLinkActive="active-link"
+            class="link">
+            Dashboard
+          </ion-button>
             <ion-button fill="clear" routerLink="/menu/in-patients" routerDirection="root" routerLinkActive="active-link"
               class="link">
               In-Patients
@@ -56,7 +59,7 @@
     </ion-toolbar>
   </ion-header>
  
-  <ion-router-outlet class="desktop-wrapper"></ion-router-outlet>
+  <ion-router-outlet class=""></ion-router-outlet>
  
   <div class="footer">
     <span>Chong Hua Hospital</span>
