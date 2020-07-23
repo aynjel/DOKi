@@ -55,10 +55,28 @@ export class InpatientmodalPage implements OnInit {
     this.postData.DoctorStatusCode = this.getDoctorStatusCode(this.data.Doctor_Status);
     this.postData.site = this.data.site; 
     this.postData.CreatedBy = this.data.dr_code; 
+    let coDoctors1=[];
+    let coDoctors2=[];
+    let coDoctors3=[];
+    //"status": "Primary Attending Physician"
     this.doctorService.getCoDoctors(this.data.admission_no).subscribe(
       (res:any)=>{
-        this.coDoctors = res;
-        console.log(JSON.stringify(res))
+        console.log(res);
+        res.forEach(element => {
+          
+          if(element.status == 'Primary Attending Physician'){
+            coDoctors1.push(element);
+          }else if(element.status == 'Co-Manage'){
+            coDoctors2.push(element);
+          }else{
+            coDoctors3.push(element);
+          }
+        });
+
+        this.coDoctors = coDoctors1.concat(coDoctors2).concat(coDoctors3);
+
+        //this.coDoctors.push(coDoctors2);
+   
   
     }
     );

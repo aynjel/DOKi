@@ -51,7 +51,8 @@ export class Tab4Page implements OnInit {
   lineChartPopulationForYear(){
 
     HighCharts.chart('lineChartForYear',{
-      chart: {height: 300,type: 'column'},
+      chart: {height: 300,type: 'column',
+      styledMode: true},
       title: {text: '12-Month Trend'},
       xAxis: {categories: this.lineChartxAxisForYear,  labels: {
         enabled: false
@@ -84,8 +85,10 @@ export class Tab4Page implements OnInit {
   lineChartPopulationForMonth(){
 
     HighCharts.chart('lineChartForMonth',{
-      chart: {height: 300,type: 'column'},
-      title: {text: '1 Month Average'},
+      chart: {    
+      type: 'column',
+      styledMode: true},
+      title: {text: '30-Day Trend'},
       xAxis: {categories: this.lineChartxAxisForMonth,  labels: {
         enabled: false
       }},
@@ -99,6 +102,7 @@ export class Tab4Page implements OnInit {
     });
               
   }
+  
 
   ngOnInit() {
 

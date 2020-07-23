@@ -47,18 +47,6 @@ export class Tab2Page {
       private toast:ToastService,
       public loadingController: LoadingController
     ) {  
-/*
-      this.customPickerOptions = {
-        buttons: [
-          {text: 'Cancel',handler: (res:any) => {}},
-          {text: 'Ok',
-            handler: (res:any) => {
-              let parseddata = JSON.stringify(res);
-              var obj = JSON.parse(parseddata);
-              this.dateChanged(obj.year.value+'-'+obj.month.value+'-'+obj.day.value);
-          }}
-      ]
-      };*/
       this.screensizeService.isDesktopView().subscribe(isDesktop => {
         if (this.isDesktop && !isDesktop) {window.location.reload();}this.isDesktop = isDesktop;
       });
@@ -79,8 +67,6 @@ export class Tab2Page {
       });
       await actionSheet.present();
     }
-
-
   }
   //Affirm Delete
   async presentAlertConfirm(data1:any,data2:any) {
@@ -115,15 +101,6 @@ export class Tab2Page {
       }
     });
     popover.present();
-    /*
-   const modal = await this.modalController.create({
-     component: PatientdetailsPage,
-     componentProps: { 
-      appt_id: data,
-      backdropDismiss: true
-    }
-   });
-    return await modal.present();*/
   }
 
 
@@ -138,20 +115,16 @@ export class Tab2Page {
 
   //present addPatient
   async showaddmodal(){
-   const modal = await this.modalController.create({
-     component: AddappointmentsmodalPage,
-     componentProps: { 
-      appt_id: this.selectedLocation,
-      backdropDismiss: true,
-    }
-   });
-   modal.onDidDismiss()
-   .then((data) => {
-    this.getDate(this.selectedDate,this.selectedLocation);
-     //this.selectedDate = data.data;
-     //this.selectedLocation = this.hospitalActivator = data.role;
-     //this.getDate(this.selectedDate,this.selectedLocation);
- });
+    const modal = await this.modalController.create({
+      component: AddappointmentsmodalPage,
+      componentProps: { 
+        appt_id: this.selectedLocation,
+        backdropDismiss: true,
+      }
+    });
+    modal.onDidDismiss().then((data) => {
+      this.getDate(this.selectedDate,this.selectedLocation);
+    });
     return await modal.present();
   }
 
