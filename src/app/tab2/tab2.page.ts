@@ -89,7 +89,18 @@ export class Tab2Page {
       message: 'Are you sure you want to delete <strong>'+data1+'</strong> ?',
       buttons: [
         {text: 'Cancel',role: 'cancel',cssClass: 'secondary'},
-        {text: 'Sure',handler: () => {this.patientService.deletePatients(data2).subscribe();}}
+        {text: 'Sure',handler: () => {
+            this.patientService.deletePatients(data2).subscribe(
+              (res:any) => {
+                if(res == 'UPDATED'){
+                  this.toast.presentToast('Successfully Deleted '+data1);
+                }else{
+                  this.toast.presentToast('Error on Deleting '+data1);
+                }
+                this.getDate(this.selectedDate,this.selectedLocation);
+              }
+
+            );}}
       ]
     });
     await alert.present();
@@ -136,10 +147,10 @@ export class Tab2Page {
    });
    modal.onDidDismiss()
    .then((data) => {
-     console.log(data.role);
-     this.selectedDate = data.data;
-     this.selectedLocation = this.hospitalActivator = data.role;
-     this.getDate(this.selectedDate,this.selectedLocation);
+    this.getDate(this.selectedDate,this.selectedLocation);
+     //this.selectedDate = data.data;
+     //this.selectedLocation = this.hospitalActivator = data.role;
+     //this.getDate(this.selectedDate,this.selectedLocation);
  });
     return await modal.present();
   }
@@ -168,7 +179,7 @@ export class Tab2Page {
   getDate(data1:any,data2:any){
     this.jsonObj5=[];
     var myObject = {};var jsonObj2 = [];var item1 = {}
-    this.patientService.retrieveSchedTime(""+this.dr_code,data1,data2).subscribe(
+    this.patientService.retrieveSchedTime(this.dr_code,data1,data2).subscribe(
       (patientService:any) => {
         let parseddata = JSON.parse((patientService));
           item1 ["date"] =data1;

@@ -21,26 +21,37 @@ export class PatientService {
     private http: HttpClient
   ) {}
   retrieveSchedTime(postData1: any,postData2: any,postData3: any): Observable<any> {
-    const headers = new HttpHeaders();
+    /*const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     const url = environment.apiUrl + "Schedules?Drcode="+postData1+"&ApptDate="+postData2+"&Site="+postData3;
-    return this.http.get(url, options);
+    return this.http.get(url, options);*/
+    let data = "Drcode="+postData1+"&ApptDate="+postData2+"&Site="+postData3;
+    return this.httpService.AppointmentsGet('Schedules?', data);
+
   }
+
+
+
+
+
   retrieveMTWTFSS(postData1: any,postData2: any,): Observable<any> {
-    const headers = new HttpHeaders();
+   /* const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     const url = environment.apiUrl + "DoctorSchedMaster/DocSchedMaster/"+postData1+"/"+postData2;
     console.log(url);
     return this.http.get(url, options);
+*/
+    let data = "DocSchedMaster/"+postData1+"/"+postData2;
+    return this.httpService.AppointmentsGet('DoctorSchedMaster/', data);
   }
-  retrieveTime(postData1: any,postData2: any,postData3: any): Observable<any> {
+ /* retrieveTime(postData1: any,postData2: any,postData3: any): Observable<any> {
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     
     const url = environment.apiUrl + "Schedules?Drcode="+postData1+"&ApptDate="+postData2+"&Site="+postData3;
     console.log("URL : "+url);
     return this.http.get(url, options);
-  }
+  }*/
 
   addAppointments(postData1: any,
     postData2: any,
@@ -55,7 +66,7 @@ export class PatientService {
     postData11: any
     ): Observable<any> {
 
-console.log("postData10 : "+postData10);
+
     /*onst url = environment.apiUrl + "InsertCMAAppt?username=&drcode="+postData1+
     "&app_date="+postData2+
     "&timedesc="+postData3+
@@ -75,13 +86,14 @@ console.log("postData10 : "+postData10);
       if(!postData10){
         postData10 = "-";
       }
+      var res = postData3.split("|");
     let postData = 
         {
           "appt_id":0,
-          "patient_username":postData1,
+          "patient_username":"",
           "dr_code":postData1,
           "appt_date":postData2,
-          "time_desc":postData3,
+          "time_desc":res[0],
           "remarks":"Reserved",
           "status":1,
           "last_name":postData4,
@@ -95,14 +107,16 @@ console.log("postData10 : "+postData10);
           "ptype":"P",
           "datetime_created":null,
           "appt_by":"DoctorsPortal",
-          "slot_no":1
+          "slot_no":res[1]
         };
-console.log(JSON.stringify(postData));
+
+
+       /* console.log(JSON.stringify(postData));
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
         const options = { headers: headers, withCredintials: false };
         const url = environment.apiUrl + 'CMAAppointmentMaster';
-        return this.http.post(url, JSON.stringify(postData), options);
-
+        return this.http.post(url, JSON.stringify(postData), options);*/
+        return this.httpService.AppointmentsPostJSON('CMAAppointmentMaster',postData);
 
 
     //console.log(postData);

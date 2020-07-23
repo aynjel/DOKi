@@ -51,12 +51,16 @@ export class Tab4Page implements OnInit {
   lineChartPopulationForYear(){
 
     HighCharts.chart('lineChartForYear',{
-      chart: {height: 300,type: 'areaspline'},
-      title: {text: '1 Year Average'},
-      xAxis: {categories: this.lineChartxAxisForYear},
+      chart: {height: 300,type: 'column'},
+      title: {text: '12-Month Trend'},
+      xAxis: {categories: this.lineChartxAxisForYear,  labels: {
+        enabled: false
+      }},
       yAxis: {title: {text: ''}},
-      plotOptions: {line: {dataLabels: {enabled: true},enableMouseTracking: false}},
-      series: [{type: undefined,name: 'Total Patients',data: this.lineChartyAxisForYear}],
+      plotOptions: {line: {dataLabels: {enabled: true},enableMouseTracking: false},column: {
+        borderRadius: 5
+    }},
+      series: [{type: undefined,name: 'Patients',data: this.lineChartyAxisForYear}],
       responsive: {
         rules: [
           {
@@ -82,15 +86,14 @@ export class Tab4Page implements OnInit {
     HighCharts.chart('lineChartForMonth',{
       chart: {height: 300,type: 'column'},
       title: {text: '1 Month Average'},
-      xAxis: {categories: this.lineChartxAxisForMonth},
+      xAxis: {categories: this.lineChartxAxisForMonth,  labels: {
+        enabled: false
+      }},
       yAxis: {title: {text: ''}},
-      plotOptions: {
-        line: {dataLabels: {enabled: true},enableMouseTracking: false},
-        column: {
-          borderRadius: 5
-      }
-      },
-      series: [{type: undefined,name: 'Total Patients',data: this.lineChartyAxisForMonth}],
+      plotOptions: {line: {dataLabels: {enabled: true},enableMouseTracking: false},column: {
+        borderRadius: 5
+    }},
+      series: [{type: undefined,name: 'Patients',data: this.lineChartyAxisForMonth}],
       responsive: {rules: [{condition: {minWidth: 300},chartOptions: {legend: {layout: 'horizontal',align: 'center',verticalAlign: 'bottom'}}}]},
       credits: {enabled: false}
     });

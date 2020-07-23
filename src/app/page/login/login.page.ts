@@ -19,7 +19,7 @@ import {LoginData} from '../../models/logindata.model';
 export class LoginPage implements OnInit {
 
   public logindata:LoginData;
-    radio:any="vm";
+
     constructor(
       private router: Router,
       private authService: AuthService,
@@ -55,20 +55,7 @@ export class LoginPage implements OnInit {
         this.authService.doctorsPortalLogin(this.postData.username, this.postData.password).subscribe(
           (res: any) => {
             if(res != ""){
-              console.log("->");
-              console.log(res);
               this.logindata = <LoginData>res;
-              //store to floating data
-              /*DoctorInfoGlobal.dr_code = this.logindata[0].dr_code;
-              DoctorInfoGlobal.last_name = this.logindata[0].last_name;
-              DoctorInfoGlobal.first_name = this.logindata[0].first_name;
-              DoctorInfoGlobal.middle_name = this.logindata[0].middle_name;
-              DoctorInfoGlobal.birthdate = this.logindata[0].birthdate;*/
-              /*console.log("-->"+this.logindata[0].dr_code);
-              res.forEach(element => {
-                localStorage.setItem('dr_code',element.dr_code);
-              });*/
-              //store to local database
               this.storageService.store(AuthConstants.AUTH, this.logindata);
               this.router.navigate(['/menu/dashboard']);
             }else{

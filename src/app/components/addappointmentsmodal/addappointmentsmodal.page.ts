@@ -5,6 +5,7 @@ import { PatientService } from '../../services/patient.service';
 import {LoginData} from '../../models/logindata.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { Ionic4DatepickerModalComponent } from '@logisticinfotech/ionic4-datepicker';
+import { ToastService } from '../../services/toast.service';
 @Component({
   selector: 'app-addappointmentsmodal',
   templateUrl: './addappointmentsmodal.page.html',
@@ -45,16 +46,17 @@ datePickerObj123: any = {};
 /*new date picker*/
 
 /* for ux */
-uxTimeSelector = true;
-
-
+uxUserInfo = true;
+uxEndpart = true;
+uxSaveCancel = true;
 
   constructor(
       private screensizeService: ScreensizeService,
       private modalController:ModalController,
       private patientService:PatientService,
       private authService:AuthService,
-      public modalCtrl: ModalController){
+      public modalCtrl: ModalController,
+      private toast:ToastService){
         this.screensizeService.isDesktopView().subscribe(isDesktop => {
         if (this.isDesktop && !isDesktop) {
           window.location.reload();
@@ -96,11 +98,25 @@ uxTimeSelector = true;
 
   /*for ux*/
   uxTime(){
-    this.uxTimeSelector = false;
+    this.uxUserInfo = false;
+  }
+  userInfo(){
+    console.log(this.gender);
+    if(this.fname != null && this.lname != null && this.gender != null){
+      this.uxEndpart = false;
+    }else{
+      this.uxEndpart = true;
+    }
   }
 
-
-
+  address(){
+    console.log(this.adrress);
+    if(this.adrress != null){
+      this.uxSaveCancel = false;
+    }else{
+      this.uxSaveCancel = true;
+    }
+  }
 
 
 
@@ -226,19 +242,22 @@ uxTimeSelector = true;
     //console.log(this.mydate1+" | "+this.dr_code );
     this.doctorSchedule=[];
   
-    this.patientService.retrieveTime(this.dr_code,this.mydate1,this.location).subscribe((res:any)=>{
+    this.patientService.retrieveSchedTime(this.dr_code,this.mydate1,this.location).subscribe((res:any)=>{
       console.log((res));
       res = JSON.parse(res);
+      let x=0;
       res.forEach(element => {
+        x++;
           if(element.appt_id == null){
-            this.doctorSchedule.push(element);
+           // this.doctorSchedule.push(element);
+            this.doctorSchedule.push({"time_in":element.time_in,"time_out":element.time_out,"slot":x});
           }
       });
        //this.doctorSchedule = JSON.parse(res);
     });
   }
-  async closeModal(data:any) {
-    await this.modalController.dismiss(this.mydate1,this.location);
+  async closeModal() {
+    await this.modalController.dismiss();
   }
   yyyymmdd() {
     var now = new Date();
@@ -251,9 +270,13 @@ uxTimeSelector = true;
   }
   save(){
     this.patientService.addAppointments(this.dr_code,this.mydate1,this.time,this.lname,this.fname,this.mname,this.gender,this.mydate2,this.adrress,this.contact,this.appt_id).subscribe((res:any)=>{
-     // this.doctorSchedule = res;
-      
-    this.closeModal(this.mydate1);
+     //this.doctorSchedule = res;
+      if(res){
+        this.toast.presentToast('Successfully added ' +this.lname+', '+this.fname);
+      }else{
+        this.toast.presentToast('Error saving ' +this.lname+', '+this.fname);
+      }
+      this.closeModal();
   });
   }
 

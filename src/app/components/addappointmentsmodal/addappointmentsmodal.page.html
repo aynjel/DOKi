@@ -50,26 +50,26 @@
         <ion-label position="floating">Time</ion-label>
         <ion-select  [(ngModel)]="time" okText="Ok" cancelText="Cancel" (ionChange)="uxTime()">
         <div *ngFor="let x of doctorSchedule" >
-        <ion-select-option >{{x.time_in}} - {{x.time_out}}</ion-select-option>
+        <ion-select-option value="{{x.time_in}} - {{x.time_out}}|{{x.slot}}">{{x.time_in}} - {{x.time_out}}</ion-select-option>
         </div>
         </ion-select>
         </ion-item>
       </ion-card-content>
     </ion-card>
 
-    <ion-card disabled="{{uxTimeSelector}}">
+    <ion-card disabled="{{uxUserInfo}}">
       <ion-card-content> 
       <ion-item  class="ion-no-padding">
         <ion-label position="floating">First Name</ion-label>
-        <ion-input [(ngModel)]="fname" id="input-remarks"></ion-input>
+        <ion-input (click)="userInfo()" [(ngModel)]="fname" id="input-remarks"></ion-input>
       </ion-item>
       <ion-item  class="ion-no-padding">
         <ion-label position="floating">Middle Name</ion-label>
-        <ion-input  [(ngModel)]="mname" id="input-remarks"></ion-input>
+        <ion-input (click)="userInfo()" [(ngModel)]="mname" id="input-remarks"></ion-input>
       </ion-item>
       <ion-item  class="ion-no-padding">
         <ion-label position="floating">Last Name</ion-label>
-        <ion-input [(ngModel)]="lname" id="input-remarks"></ion-input>
+        <ion-input (click)="userInfo()" [(ngModel)]="lname" id="input-remarks"></ion-input>
       </ion-item>
       <ion-item class="ion-no-padding">
         <ion-label position="fixed"  style="z-index:10">Birthdate</ion-label>
@@ -77,7 +77,7 @@
       </ion-item>
       <ion-item class="ion-no-padding">
         <ion-label position="floating">Gender</ion-label>
-        <ion-select placeholder="Select"  [(ngModel)]="gender">
+        <ion-select placeholder="Select" (ionChange)="userInfo()"  [(ngModel)]="gender">
           <ion-select-option value="f">Female</ion-select-option>
           <ion-select-option value="m">Male</ion-select-option>
         </ion-select>
@@ -85,11 +85,11 @@
 </ion-card-content> 
     </ion-card>
 
-      <ion-card>
+      <ion-card disabled="{{uxEndpart}}">
         <ion-card-content> 
       <ion-item class="ion-no-padding">
       <ion-label position="floating">Address</ion-label>
-      <ion-textarea id="input-remarks"  [(ngModel)]="adrress"></ion-textarea>
+      <ion-textarea id="input-remarks" (ionChange)="address()"  [(ngModel)]="adrress"></ion-textarea>
       </ion-item>
       <ion-item class="ion-no-padding">
       <ion-label position="floating">Contact Number</ion-label>
@@ -99,7 +99,7 @@
 
 
     </ion-card-content>
-    <ion-item>
+    <ion-item disabled="{{uxSaveCancel}}">
       <ion-button  slot="end" expand="block" id="btn-confirm" (click)="save()" color="mango">
         Save
       </ion-button>
