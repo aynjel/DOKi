@@ -54,6 +54,7 @@ export class LoginPage implements OnInit {
 
         this.authService.doctorsPortalLogin(this.postData.username, this.postData.password).subscribe(
           (res: any) => {
+            console.log(res);
             if(res != ""){
               this.logindata = <LoginData>res;
               this.storageService.store(AuthConstants.AUTH, this.logindata);

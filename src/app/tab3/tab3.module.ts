@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Tab3Page } from './tab3.page';
 
-
+import { TextAvatarModule } from '../components/text-avatar/text-avatar.module';
 import { Tab3PageRoutingModule } from './tab3-routing.module'
 
 @NgModule({
@@ -15,6 +15,7 @@ import { Tab3PageRoutingModule } from './tab3-routing.module'
     FormsModule,
     RouterModule.forChild([{ path: '', component: Tab3Page }]),
     Tab3PageRoutingModule,
+    TextAvatarModule
   ],
   declarations: [Tab3Page],
   entryComponents:[]

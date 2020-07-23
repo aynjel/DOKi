@@ -12,7 +12,6 @@ const routes: Routes = [
       userData: UserDataResolver
     },
     children: [
-
       {
         path: 'in-patients',
         loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
@@ -47,7 +46,8 @@ const routes: Routes = [
     path: 'menu',
     redirectTo: '/menu/tab1',
     pathMatch: 'full'
-  }
+  },
+  
 ];
 
 @NgModule({

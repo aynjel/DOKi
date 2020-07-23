@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { IndexGuard } from './guards/index.guard';
-
+import {HomeGuard} from './guards/home.guard';
+import { Error404PageModule } from './components/error404/error404.module';
 const routes: Routes = [
   /*{
     path: '',
@@ -21,44 +22,13 @@ const routes: Routes = [
     canActivate:[IndexGuard], 
     loadChildren: () => import('./page/index/index.module').then( m => m.IndexPageModule)
   },{
-    path: 'addappointmentsmodal',
-    loadChildren: () => import('./components/addappointmentsmodal/addappointmentsmodal.module').then( m => m.AddappointmentsmodalPageModule)
+    path: 'error404',
+    loadChildren: () => import('./components/error404/error404.module').then( m => m.Error404PageModule)
   },{
-    path: 'inpatientdetial',
-    loadChildren: () => import('./components/inpatientmodal/inpatientmodal.module').then( m => m.InpatientmodalPageModule)
-  },/* {
-  path: 'hospital-selector-with-all-and-filter',
-  loadChildren: () => import('./components/hospital-selector-with-all-and-filter/hospital-selector-with-all-and-filter.module').then( m => m.HospitalSelectorWithAllAndFilterPageModule)
-},
-*    {
-  path: 'slider',
-  loadChildren: () => import('./components/slider/slider.module').then( m => m.SliderPageModule)
-},{
-    path: 'hospital-selector-with-all',
-    loadChildren: () => import('./pages/hospital-selector-with-all/hospital-selector-with-all.module').then( m => m.HospitalSelectorWithAllPageModule)
-  },
-   {
-    path: 'fee',
-    loadChildren: () => import('./modals/fee/fee.module').then( m => m.FeePageModule)
-  }, {
-    path: 'patientdetails',
-    loadChildren: () => import('./components/patientdetails/patientdetails.module').then( m => m.PatientdetailsPageModule)
-  },
-  {
-    path: 'modalpage',
-    loadChildren: () => import('./components/modalpage/modalpage.module').then( m => m.ModalpagePageModule)
-  }{
-    path: 'logo-sm',
-    loadChildren: () => import('./components/logo-sm/logo-sm.module').then( m => m.LogoSmPageModule)
-  },
-*,
-  {
-    path: 'inpatientdetial',
-    loadChildren: () => import('./page/inpatientdetial/inpatientdetial.module').then( m => m.InpatientdetialPageModule)
-  },{
-    path: 'inpatientmodal',
-    loadChildren: () => import('./components/inpatientmodal/inpatientmodal.module').then( m => m.InpatientmodalPageModule)
-  },*/
+    path        : '**',
+    pathMatch   : 'full',
+    loadChildren: () => import('./components/error404/error404.module').then( m => m.Error404PageModule)
+}
 ];
 @NgModule({
   imports: [

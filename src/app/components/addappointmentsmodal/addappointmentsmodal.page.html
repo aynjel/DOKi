@@ -5,7 +5,7 @@
       <ion-icon name="man-outline"></ion-icon>Add Appointments
     </ion-title>
     <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
-      <ion-button (click)="closeModal('0')" routerDirection="back" class="ios button button-clear ion-activatable ion-focusable hydrated">Close</ion-button>
+      <ion-button (click)="closeModal()" routerDirection="back" class="ios button button-clear ion-activatable ion-focusable hydrated">Close</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -103,7 +103,7 @@
       <ion-button  slot="end" expand="block" id="btn-confirm" (click)="save()" color="mango">
         Save
       </ion-button>
-      <ion-button  slot="end" expand="block" id="btn-confirm" (click)="closeModal('0')"color="danger">
+      <ion-button  slot="end" expand="block" id="btn-confirm" (click)="closeModal()"color="danger">
         Cancel
       </ion-button>
     </ion-item>

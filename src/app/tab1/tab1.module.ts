@@ -6,7 +6,7 @@ import { Tab1Page } from './tab1.page';
 
 import { ComponentsModule } from '../components/components.module';
 import { Tab1PageRoutingModule } from './tab1-routing.module';
-import { InpatientsComponent } from '../components/inpatients/inpatients.component';
+
 import { TextAvatarModule } from '../components/text-avatar/text-avatar.module';
 
 import {HospitalSelectorWithAllAndFilterPage} 
@@ -24,6 +24,6 @@ from '../components/hospital-selector-with-all-and-filter/hospital-selector-with
 
 
   ],
-  declarations: [Tab1Page, InpatientsComponent,HospitalSelectorWithAllAndFilterPage]
+  declarations: [Tab1Page,HospitalSelectorWithAllAndFilterPage]
 })
 export class Tab1PageModule {}

@@ -31,14 +31,68 @@
 
         
         <div  *ngFor="let x of account">
-          <ion-list>
-            <ion-item>
-              <br />
-              <p>Hi, Dr. {{ x.first_name }} {{ x.last_name }}<br /><br />
-              For inquiries please contact Chong Hua Hospital It Department (<b><a href="tel: +63322558000">+63 32 255 8000</a></b>)</p>
-            </ion-item>
-          </ion-list>
-        </div>
+
+
+
+
+
+
+
+        <ion-card  mode="ios">
+          <ion-item lines="none">
+            <ion-avatar slot="start">
+              <text-avatar [text]="x.last_name" [color]=""></text-avatar>
+            </ion-avatar>
+            <ion-label style="margin-top:-5px">
+              <ion-item class="ion-no-padding">
+                <h3 class="ion-text-wrap" style="padding-top:20px">{{ x.first_name }} {{ x.last_name }}</h3>
+              </ion-item>
+            </ion-label>
+          </ion-item>
+
+
+    
+          <ion-card-content class="ion-no-padding">
+    
+            <ion-list>
+              <ion-item>
+                <br />
+              </ion-item>
+              <ion-item>
+                <b>App Settings</b>
+              </ion-item>
+              <ion-item>
+                <ion-label class="ion-text-wrap">Notify me via SMS if my patient is admitted</ion-label>
+                <ion-toggle  disabled="true"></ion-toggle>
+              </ion-item>
+              <ion-item>
+                <ion-label class="ion-text-wrap">Notify me via SMS if my patient is about to be discharged</ion-label>
+                <ion-toggle  disabled="true"></ion-toggle>
+              </ion-item>
+              <ion-item>
+                <ion-label class="ion-text-wrap">Alert me through Push Notifications</ion-label>
+                <ion-toggle  disabled="true"></ion-toggle>
+              </ion-item>      
+              <ion-item>
+                <br />
+              </ion-item>
+                <ion-item lines="none">
+                  <p>For inquiries please contact Chong Hua Hospital It Department (<b><a href="tel: +63322558000">+63 32 255 8000</a></b>)</p>
+                </ion-item>
+
+            </ion-list>
+          </ion-card-content>
+
+        </ion-card>
+      </div>
+
+
+
+
+
+
+
+
       </ion-col>
     </ion-row>
   </ion-grid>
