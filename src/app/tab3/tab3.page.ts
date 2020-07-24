@@ -39,16 +39,11 @@ export class Tab3Page {
     });
   }
 
-  onDarkModeEnable(event: { detail: { checked: any; }; }) {
-    console.log(event.detail.checked);
+  onDarkModeEnable(event: { detail: { checked: any } }) {
     if (event.detail.checked) {
-      //console.log(event);
-      document.body.setAttribute('color-theme', 'dark');
-      //this.renderer.setAttribute(document.body, 'color-theme', 'dark');
-    } 
-    else {
-      document.body.setAttribute('color-theme', 'light');
-      //this.renderer.setAttribute(document.body, 'color-theme', 'light');
+      this.renderer.setAttribute(document.body, "color-theme", "dark");
+    } else {
+      this.renderer.setAttribute(document.body, "color-theme", "light");
     }
   }
 
