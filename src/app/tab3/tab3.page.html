@@ -1,16 +1,19 @@
 <ion-header mode="md" class="ion-no-border">
   <div *ngIf="!isDesktop">
     <ion-toolbar color="mango">
-      <ion-title> <ion-icon name="man-outline"></ion-icon> Settings </ion-title>
+      <ion-title>
+        <ion-icon name="settings-outline"></ion-icon> Settings
+      </ion-title>
       <ion-buttons
         slot="end"
         class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated"
       >
         <ion-button
           (click)="logout()"
+          color="chh-css-primary2"
           class="ios button button-clear ion-activatable ion-focusable hydrated"
-          >Log out&nbsp; <ion-icon name="power-outline"></ion-icon
-        ></ion-button>
+          >Log out&nbsp; <ion-icon name="log-out-outline"></ion-icon>
+        </ion-button>
       </ion-buttons>
     </ion-toolbar>
   </div>
@@ -22,15 +25,16 @@
       <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
         <div *ngFor="let x of account">
           <ion-card mode="ios">
+            <br />
             <ion-item lines="none">
               <ion-avatar slot="start">
                 <text-avatar [text]="x.last_name" [color]=""></text-avatar>
               </ion-avatar>
               <ion-label style="margin-top: -5px;">
                 <ion-item class="ion-no-padding">
-                  <h3 class="ion-text-wrap" style="padding-top: 20px;">
-                    {{ x.first_name }} {{ x.last_name }}
-                  </h3>
+                  <h1 class="ion-text-wrap" style="padding-top: 20px;">
+                    DR. {{ x.first_name }} {{ x.last_name }}
+                  </h1>
                 </ion-item>
               </ion-label>
             </ion-item>
