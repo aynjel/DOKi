@@ -4,8 +4,11 @@
     <ion-title>
       <ion-icon name="man-outline"></ion-icon>Add Appointments
     </ion-title>
-    <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
+    <!--ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
       <ion-button (click)="closeModal()" routerDirection="back" class="ios button button-clear ion-activatable ion-focusable hydrated">Close</ion-button>
+    </ion-buttons-->
+    <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated" >
+      <ion-button (click)="closeModal()" color="chh-css-primary2">Close&nbsp; <ion-icon name="close-outline"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -30,7 +33,7 @@
       
       <ion-item class="ion-no-padding">
         <ion-label position="floating">Location</ion-label>
-        <ion-select  [(ngModel)]="location" value = 'M' okText="Ok" cancelText="Cancel" (ionChange)="pickLocation()">
+        <ion-select  [(ngModel)]="location"  okText="Ok" cancelText="Cancel" (ionChange)="pickLocation()">
         <ion-select-option value = "C" class="ion-text-wrap" >Chong Hua Hospital</ion-select-option>
         <ion-select-option value = "M" class="ion-text-wrap" >Chong Hua Hospital Mandaue</ion-select-option>
         </ion-select>
@@ -42,9 +45,8 @@
     <ion-card>
       <ion-card-content>     
         <ion-item class="ion-no-padding" >
-        <ion-label position="fixed" style="z-index:10" (click)="openDatePicker123()">Date</ion-label>
-        <!--li-ionic4-datepicker [(ngModel)]="mydate1" [inputDateConfig]="datePickerObj" ></li-ionic4-datepicker-->
-        <ion-input readonly [(ngModel)]="mydate1" (click)="openDatePicker123()"></ion-input>
+        <ion-label position="fixed" style="z-index:10" (click)="openDatePickerForDateOfAppointment()">Date</ion-label>
+        <ion-input readonly [(ngModel)]="mydate1" value="{{mydate1}}" (click)="openDatePickerForDateOfAppointment()"></ion-input>
         </ion-item>
         <ion-item class="ion-no-padding">
         <ion-label position="floating">Time</ion-label>
@@ -61,19 +63,25 @@
       <ion-card-content> 
       <ion-item  class="ion-no-padding">
         <ion-label position="floating">First Name</ion-label>
-        <ion-input (click)="userInfo()" [(ngModel)]="fname" id="input-remarks"></ion-input>
+        <ion-input (ionChange)="userInfo()" [(ngModel)]="fname" id="input-remarks"></ion-input>
       </ion-item>
       <ion-item  class="ion-no-padding">
         <ion-label position="floating">Middle Name</ion-label>
-        <ion-input (click)="userInfo()" [(ngModel)]="mname" id="input-remarks"></ion-input>
+        <ion-input (ionChange)="userInfo()" [(ngModel)]="mname" id="input-remarks"></ion-input>
       </ion-item>
       <ion-item  class="ion-no-padding">
         <ion-label position="floating">Last Name</ion-label>
-        <ion-input (click)="userInfo()" [(ngModel)]="lname" id="input-remarks"></ion-input>
+        <ion-input (ionChange)="userInfo()" [(ngModel)]="lname" id="input-remarks"></ion-input>
       </ion-item>
       <ion-item class="ion-no-padding">
-        <ion-label position="fixed"  style="z-index:10">Birthdate</ion-label>
-        <li-ionic4-datepicker [(ngModel)]="mydate2" [inputDateConfig]="datePickerObj2" ></li-ionic4-datepicker>
+        <!--ion-label position="fixed"  style="z-index:10">Birthdate</ion-label>
+        <li-ionic4-datepicker [(ngModel)]="mydate2" [inputDateConfig]="datePickerObj2" ></li-ionic4-datepicker-->
+        <ion-item class="ion-no-padding" >
+          <ion-label position="fixed" style="z-index:10" (click)="openDatePickerForBirthdate()">Birthdate</ion-label>
+          <ion-input readonly [(ngModel)]="mydate2" value="{{mydate2}}" (click)="openDatePickerForBirthdate()"></ion-input>
+          </ion-item>
+
+
       </ion-item>
       <ion-item class="ion-no-padding">
         <ion-label position="floating">Gender</ion-label>
@@ -99,15 +107,28 @@
 
 
     </ion-card-content>
-    <ion-item disabled="{{uxSaveCancel}}">
+    <!--ion-item disabled="{{uxSaveCancel}}">
       <ion-button  slot="end" expand="block" id="btn-confirm" (click)="save()" color="mango">
         Save
       </ion-button>
       <ion-button  slot="end" expand="block" id="btn-confirm" (click)="closeModal()"color="danger">
         Cancel
       </ion-button>
-    </ion-item>
-
+    </ion-item-->
+    <ion-grid >
+      <ion-row >
+        <ion-col size-xs="6" >
+          <ion-button expand="block"shape="round"  id="btn-confirm" (click)="save()" color="mango" disabled="{{uxSaveCancel}}">
+            Save
+          </ion-button>
+        </ion-col>
+        <ion-col size-xs="6" >
+          <ion-button expand="block" shape="round"  id="btn-confirm" (click)="closeModal()" color="danger">
+            Cancel
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-card>
 
 

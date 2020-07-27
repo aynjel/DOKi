@@ -3,31 +3,47 @@
   <div *ngIf="!isDesktop">
     <ion-toolbar  color="mango" >
       <ion-title>
-        <ion-icon name="person-circle-outline"></ion-icon> In-Patients    
-        <ion-text style="font-size:12px">
-          {{admittedOrDischargeLabel}}
-        </ion-text>  
+        <ion-icon name="person-circle-outline"></ion-icon> In-Patients
       </ion-title>
-
     </ion-toolbar>
+    <ion-fab horizontal="end" vertical="top" slot="fixed" *ngIf="!isDesktop">
+      <ion-fab-button color="light" class="">
+        <ion-icon name="options-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-list side="bottom">
+        <ion-fab-button color="light" (click)="onSubmit('ALL',true)"   data-desc="All" >
+          <ion-icon name="person-outline"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="light" (click)="onSubmit('AC',true)"  data-desc="Admitted">
+          <ion-icon name="person-add-outline"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="light" (click)="onSubmit('DN',true)" data-desc="For Discharge">
+          <ion-icon name="person-remove-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>
   </div>
+  <ion-grid class="ion-no-padding chh-darkmode" >
+    <ion-row >
+      <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4" class="custom-border-bottom ion-no-border ">
+        <app-hospital-selector-with-all (hospital)="locationAction($event)" ></app-hospital-selector-with-all>
+      </ion-col>
+    </ion-row>
+    <ion-row class=""  >
+      <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4" class=" ion-no-border ">
+
+          <ion-searchbar [(ngModel)]="searchBar" (ionChange)="filterList()" mode="ios"></ion-searchbar>
+
+      </ion-col>
+    </ion-row>
+    
+  </ion-grid>
 
 </ion-header>
 
 
+
 <ion-content >
-  <ion-grid class="ion-no-padding" >
-    <ion-row >
-      <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4" class="custom-border-bottom ion-no-border ">
-        <app-hospital-selector-with-all-and-filter  (hospital)="locationAction($event)"></app-hospital-selector-with-all-and-filter>
-      </ion-col>
-    </ion-row>
-    <ion-row >
-      <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4" class=" ion-no-border ">
-          <ion-searchbar [(ngModel)]="searchBar" (ionChange)="filterList()" mode="ios"></ion-searchbar>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
     <ion-refresher-content ></ion-refresher-content>
   </ion-refresher>
@@ -47,7 +63,7 @@
               </ion-avatar>
               <ion-label style="margin-top:-5px">
                 <ion-item   slot="start" lines="none"  class="ion-no-padding"  style="padding-bottom:5px">
-                  <h3 class="ion-text-wrap " style="padding-top:20px">{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</h3>
+                  <h2 class="ion-text-wrap " style="padding-top:20px">{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</h2>
                   <ion-badge
                     color="warning"
                     slot="end"

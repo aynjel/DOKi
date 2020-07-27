@@ -103,7 +103,7 @@
     </ion-avatar>
     <ion-label>
       <ion-item class="ion-no-padding" >
-        <h3 class="ion-text-wrap " style="padding-top:20px">{{data.last_name}}, {{data.first_name}} {{data.middle_name}}</h3>
+        <h2 class="ion-text-wrap " style="padding-top:20px">{{data.last_name}}, {{data.first_name}} {{data.middle_name}}</h2>
         <ion-badge
         color="warning"
         slot="end"
@@ -127,17 +127,18 @@
         <div>
           <ion-icon name="bed-outline" slot="start"></ion-icon>
           Room {{data.room_no}}
+          <ion-badge *ngIf="data.admission_status == 'AC'"
+            color="mango"
+            slot="end">
+            Admitted
+          </ion-badge>
+          <ion-badge *ngIf="data.admission_status == 'DN'"
+            color="mango"
+            slot="end">
+            For Discharge
+          </ion-badge>
         </div>
-        <ion-badge *ngIf="data.admission_status == 'AC'"
-        color="mango"
-        slot="end">
-        Admitted
-      </ion-badge>
-      <ion-badge *ngIf="data.admission_status == 'DN'"
-        color="mango"
-        slot="end">
-        For Discharge
-      </ion-badge>
+
     </div>
 
     </ion-label>
@@ -146,9 +147,8 @@
   <div class="ion-text-wrap">
     <!-- <ion-text *ngIf="data.admission_status == 'AC'">Status : Admitted </ion-text>  -->
 
-  <br />
     <!-- <ion-text *ngIf="data.admission_status == 'DN'">Status : For Discharge<br /></ion-text> -->
-    <ion-text>Admission Date : {{data.admission_date}}</ion-text>
+    <ion-icon name="calendar-outline"></ion-icon><ion-text> Admission Date : {{data.admission_date}}</ion-text>
   </div>
   </ion-item>
 </ion-list>
@@ -186,9 +186,18 @@
           <ion-text>Remarks : {{remarks}}</ion-text>
         </div>
       </ion-item>
-      <!-- <ion-item lines="none"> -->
-        <ion-button expand="block" shape="round" (click)='detail(data.admission_no)' color="mango" *ngIf="data.is_posted == 0 || data.is_posted == null">UPDATE</ion-button>
-      <!-- </ion-item> -->
+      <ion-item lines="none"> 
+        
+        <ion-grid class="ion-no-padding">
+          <ion-row >
+            <ion-col size-xs="12" >
+              <ion-button expand="block" shape="round" (click)='detail(data.admission_no)' color="mango" *ngIf="data.is_posted == 0 || data.is_posted == null">UPDATE</ion-button>
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+     </ion-item> 
+
     </ion-list>
   </ion-card>
 

@@ -10,6 +10,7 @@ import { ToastService } from '../../services/toast.service';
 import { BehaviorSubject } from 'rxjs';
 import {DoctorInfoGlobal} from '../../common/doctorinfo-global';
 import {LoginData} from '../../models/logindata.model';
+import { AlertController } from '@ionic/angular';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -25,7 +26,8 @@ export class LoginPage implements OnInit {
       private authService: AuthService,
       private storageService: StorageService,
       private toast:ToastService,
-      private doctorService:DoctorService
+      private doctorService:DoctorService,
+      public alertController: AlertController
      
     ) {}
 
@@ -49,7 +51,7 @@ export class LoginPage implements OnInit {
       password.length > 0
       );
     }
-    
+    async Alert(data1:any,data2:any) {const alert = await this.alertController.create({cssClass: 'my-custom-class',message: data1,buttons: [{text: data2,handler: () => {}}]});await alert.present();}
     loginAction() {
 
         this.authService.doctorsPortalLogin(this.postData.username, this.postData.password).subscribe(
@@ -60,11 +62,13 @@ export class LoginPage implements OnInit {
               this.storageService.store(AuthConstants.AUTH, this.logindata);
               this.router.navigate(['/menu/dashboard']);
             }else{
-              this.toast.presentToast('Incorrect Authentication Details.');
+              this.Alert('Incorrect Authentication Details.','Okay');
+              //this.toast.presentToast('Incorrect Authentication Details.');
             }
   
           },error =>{
-            this.toast.presentToast('Server Error');
+            this.Alert('Server Error','Okay');
+           // this.toast.presentToast('Server Error');
           });
 /*
         if (this.validateInputs()) {

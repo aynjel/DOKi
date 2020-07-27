@@ -4,12 +4,12 @@ import { Router } from '@angular/router';
 import { StorageService } from '../services/storage.service';
 import { AuthConstants } from '../config/auth-constants';
 import { DoctorService } from '../services/doctor.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { PatientdetailsPage } from '../components/patientdetailss/patientdetails.page';
 import { ScreensizeService } from '../services/screensize.service';
 import { PopoverController } from '@ionic/angular';  
 import {InpatientmodalPage} from '../components/inpatientmodal/inpatientmodal.page';
-import { InpatientmodalPageModule} from '../components/inpatientmodal/inpatientmodal.module';
+
 import { timeStamp } from 'console';
 import {DoctorInfoGlobal} from '../common/doctorinfo-global';
 import {LoginData} from '../models/logindata.model';
@@ -43,7 +43,8 @@ export class Tab1Page {
     private modalController:ModalController,
     private screensizeService: ScreensizeService,
     private popover:PopoverController,
-    private location: Location
+    private location: Location,
+    public alertController: AlertController
     ) {
 
       this.screensizeService.isDesktopView().subscribe(isDesktop => {
@@ -65,7 +66,7 @@ export class Tab1Page {
   ngOnInit() {
    
   }
-  
+  async Alert(data1:any,data2:any) {const alert = await this.alertController.create({cssClass: 'my-custom-class',message: data1,buttons: [{text: data2,handler: () => {}}]});await alert.present();}
 
   filterList(){
 
@@ -139,7 +140,16 @@ export class Tab1Page {
           this.inPatientsDraft.push(element);
         });
         this.filterList();
+    },
+    error => {
+      this.Alert('Server Error','Okay');
+    },
+    () => {
+
     }
+
+
+
     );
   }
   //swipe down refresh
@@ -179,5 +189,16 @@ export class Tab1Page {
     }
     // Directly return the joined string
     return splitStr.join(' '); 
+  }
+  onSubmit(data1:any,data2:boolean) {
+    
+    if(data1 == "ALL"){
+      this.router.navigate(['/menu/in-patients']);
+    }else if(data1 == "AC"){
+      this.router.navigate(['/menu/in-patients/AC']);
+    }else if(data1 == "DN"){
+      this.router.navigate(['/menu/in-patients/DN']);
+    }
+
   }
 }

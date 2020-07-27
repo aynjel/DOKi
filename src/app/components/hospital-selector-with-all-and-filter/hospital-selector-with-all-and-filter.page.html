@@ -25,21 +25,6 @@
     </ion-select>
   </ion-button>
 
-  <ion-fab horizontal="end" vertical="bottom" slot="fixed" *ngIf="!isDesktop" style="z-index:99999999">
-    <ion-fab-button color="light" class="">
-      <ion-icon name="options-outline"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="bottom">
-      <ion-fab-button color="light" (click)="onSubmit('ALL',true)"   data-desc="All" >
-        <ion-icon name="person-outline"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="light" (click)="onSubmit('AC',true)"  data-desc="Admitted">
-        <ion-icon name="person-add-outline"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="light" (click)="onSubmit('DN',true)" data-desc="For Discharge">
-        <ion-icon name="person-remove-outline"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
+
 
 </div>

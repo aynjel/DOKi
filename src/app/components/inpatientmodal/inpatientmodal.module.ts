@@ -1,19 +1,20 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
 import { InpatientmodalPageRoutingModule } from './inpatientmodal-routing.module';
-
+import { BrowserModule } from '@angular/platform-browser';
 import { InpatientmodalPage } from './inpatientmodal.page';
 import { TextAvatarModule } from '../text-avatar/text-avatar.module';
 @NgModule({
   imports: [
-    CommonModule,
+
     FormsModule,
     IonicModule,
     TextAvatarModule,
+    BrowserModule,
     InpatientmodalPageRoutingModule
   ],
   declarations: [InpatientmodalPage]

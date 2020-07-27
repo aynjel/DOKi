@@ -1,12 +1,20 @@
 
+<ion-header mode="md" class="ion-no-border">
+  <ion-toolbar class="in-toolbar ios toolbar-title-default hydrated" color="mango">
+    <ion-title>
+      <ion-icon name="card-outline"></ion-icon> Professional Fee
+    </ion-title>
+
+  </ion-toolbar>
+</ion-header>
 
 
 <ion-content>
-  <ion-item style="padding-top: 10px;">
+  <!--ion-item style="padding-top: 10px;">
     <div class="ion-text-wrap">
       <b>Professional Fee</b><br />
     </div>
-  </ion-item>
+  </ion-item-->
   <ion-item>
     <ion-label position="fixed">Fee</ion-label>
     <ion-input type="number" id="input-professionalFee" ngModel="postData.professionalFee" placeholder="0.00" value="{{professionalFee}}" autocomplete  (ionChange)="test()" ></ion-input>
