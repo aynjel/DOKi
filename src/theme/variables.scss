@@ -103,7 +103,16 @@
     --ion-color-mangolight-contrast-rgb: 0,0,0;
     --ion-color-mangolight-shade: #275228;
     --ion-color-mangolight-tint: #275228;
-
+    .link {
+      --color: #528d53;
+    }
+   
+    .active-link {
+      --color: #275228;
+      border-bottom: 2px solid #275228;
+      font-weight: bold;
+    }
+   
 
 }
 
@@ -176,6 +185,38 @@
     --ion-color-light-contrast-rgb: 255,255,255;
     --ion-color-light-shade: #1e2023;
     --ion-color-light-tint: #383a3e;
+    --text-color: #c0c0c0;
+    --background-color: #1F2227;
+    --text-color: #c0c0c0;
+    --hilight-color: #8db4d6;
+    :root {
+      --background-color: #1F2227;
+      --text-color: #c0c0c0;
+      --hilight-color: #8db4d6;
+    }
+  
+  /* Some data colors. Light mode uses defaults */
+  .highcharts-color-0 {
+      fill: #0460ba;
+      stroke: #0460ba;
+  }
+  .highcharts-color-1 {
+      fill: #9696ab;
+      stroke: #9696ab;
+  }
+  .chh-darkmode {
+    background-color: #1F2227;
+    --text-color: #c0c0c0 !important;
+   }
+   .link {
+    --color: #c0c0c0;
+  }
+  .active-link {
+    background-color: #1F2227;
+    --text-color: #c0c0c0 !important;
+    border-bottom: 2px solid #c0c0c0;
+    font-weight: bold;
+  }
   }
 
   /*
@@ -184,7 +225,7 @@
    */
 
   .ios body[color-theme="dark"] {
-    --ion-background-color: #000000;
+    --ion-background-color: #121212;
     --ion-background-color-rgb: 0,0,0;
 
     --ion-text-color: #ffffff;

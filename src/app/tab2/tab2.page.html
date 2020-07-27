@@ -8,27 +8,29 @@
         <ion-icon name="calendar-outline"></ion-icon> Appointments
       </ion-title>
     </ion-toolbar>
+    <ion-grid class=" ion-no-padding" >
+      <ion-row >
+        <!--ion-col size-md="6" offset-md="3" size-sm="6"  --> 
+        <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3" class="custom-border-bottom chh-darkmode">
+       
+            <app-hospital 
+              (hospital)="locationAction($event)"
+              [readonlyComp]="buttonDisablerHospSelector"
+              [Activator]="hospitalActivator"
+              ></app-hospital>
+            <app-dateselector 
+              [passedDate]="selectedDate"
+              (dateSelector)="dateChanged($event)"
+              [readonlyComp]="buttonDisablerDateSelector"
+               ></app-dateselector>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
-  <ion-grid class=" ion-no-padding" >
-    <ion-row >
-      <!--ion-col size-md="6" offset-md="3" size-sm="6"  --> 
-      <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3" class="custom-border-bottom">
-     
-          <app-hospital 
-            (hospital)="locationAction($event)"
-            [readonlyComp]="buttonDisablerHospSelector"
-            [Activator]="hospitalActivator"
-            ></app-hospital>
-          <app-dateselector 
-            [passedDate]="selectedDate"
-            (dateSelector)="dateChanged($event)"
-            [readonlyComp]="buttonDisablerDateSelector"
-             ></app-dateselector>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+
 </ion-header>
 <ion-content >
+  
 <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
   <ion-refresher-content ></ion-refresher-content>
 </ion-refresher>
@@ -42,8 +44,8 @@
     <ion-row>
       <ion-col size-md="4" offset-md="4">
         <ion-list>
-<div *ngIf="objecthandler">
-  <ion-list-header >
+
+  <ion-list-header  *ngIf="objecthandler">
     Patient List
   </ion-list-header>
   <div *ngFor="let x of jsonObj5">
@@ -58,7 +60,7 @@
             </ion-avatar>
             <ion-label style="margin-top:-5px">
               <ion-item class="ion-no-padding">
-                <h3 class="ion-text-wrap" style="padding-top:20px">{{y.patientName}}</h3>
+                <h2 class="ion-text-wrap" style="padding-top:20px">{{y.patientName}}</h2>
               </ion-item>
               <ion-row class="ion-no-padding" lines="none">
                 <!-- Default Progressbar with 50 percent -->
@@ -69,7 +71,7 @@
                     {{y.time}}
 
                   </p>
-                  <ion-badge color="success" slot="end" *ngIf="y.status == 'Complete'">{{y.status}}</ion-badge>
+                  <ion-badge color="success" slot="end" *ngIf="y.status == 'Complete'">Completed</ion-badge>
                   <ion-badge color="primary" *ngIf="y.status == 'Waiting'" slot="end" >{{y.status}}</ion-badge>
                   <ion-badge color="secondary" *ngIf="y.status == 'Serving'" slot="end" >{{y.status}}</ion-badge>
                   <ion-badge color="warning" *ngIf="y.status == 'Reserved'" slot="end" >{{y.status}}</ion-badge>
@@ -85,13 +87,11 @@
       </div>
 
   </div>
-
-</div>
-<div *ngIf="!objecthandler">
-  <ion-list-header slot="center">
-    No Data Available
-  </ion-list-header>
-</div>
+  <div *ngIf="!objecthandler">
+    <ion-list-header slot="center">
+      No Data Available
+    </ion-list-header>
+  </div>
 
 
 

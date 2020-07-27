@@ -56,17 +56,6 @@ export class HospitalSelectorWithAllAndFilterPage implements OnInit {
       this.active1 = false;
       this.active3 = true;
     }
-    if(data1 == "ALL"){
-
-      if(this.currenturl != data1){
-        this.currenturl = data1;
-        this.router.navigate(['/menu/in-patients']);
-      }
-    }else if(data1 == "AC"){
-      this.router.navigate(['/menu/in-patients/AC']);
-    }else if(data1 == "DN"){
-      this.router.navigate(['/menu/in-patients/DN']);
-    }
     this.hospital.emit(data1);
   }
   changeRedirect(event:any){

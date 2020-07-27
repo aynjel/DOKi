@@ -180,34 +180,17 @@ ion-toolbar{
    }
   
  
-  
-   .link {
-     --color: #528d53;
-   }
-  
-   .active-link {
-     --color: #275228;
-     border-bottom: 1px solid #275228;
-     font-weight: bold;
-   }
+
+
  
  }
 
- .link {
-   --color: #528d53;
- }
-
- .active-link {
-   --color: #275228;
-   border-bottom: 2px solid #275228;
-   font-weight: bold;
- }
 
 /*for charts*/
 @import 'https://code.highcharts.com/css/highcharts.css';
 
 :root { /* light mode */
-	--background-color: #ffffff;
+	--background-color: rgba(255, 255, 255,0);
 	--text-color: #292b2c;
 	--hilight-color: #0275d8;
 }
@@ -253,4 +236,16 @@ body {
 }
 .highcharts-column-series rect.highcharts-point {
     stroke: var(--background-color);
+}
+
+
+.alert-radio-label.sc-ion-alert-md {
+  white-space: pre-line !important;
+}
+
+.alert-radio-label.sc-ion-alert-ios {
+  white-space: pre-line !important;
+}
+ion-label {
+  white-space: normal !important;
 }

@@ -14,7 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { Ionic4DatepickerModule } from "@logisticinfotech/ionic4-datepicker";
-
+import {InpatientmodalPageModule} from './components/inpatientmodal/inpatientmodal.module';
+import {AddappointmentsmodalPageModule} from './components/addappointmentsmodal/addappointmentsmodal.module';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -25,7 +26,8 @@ import { Ionic4DatepickerModule } from "@logisticinfotech/ionic4-datepicker";
     AppRoutingModule,
     HttpClientModule,
     Ionic4DatepickerModule,
-    
+    InpatientmodalPageModule,
+    AddappointmentsmodalPageModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production },)],
   providers: [
     StatusBar,

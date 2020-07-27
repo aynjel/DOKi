@@ -1,6 +1,6 @@
 import { Component, OnInit,Input } from '@angular/core';
 import { ScreensizeService } from '../../services/screensize.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { PatientService } from '../../services/patient.service';
 import {LoginData} from '../../models/logindata.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -42,7 +42,9 @@ export class AddappointmentsmodalPage implements OnInit {
   datePickerObj2: any = {};
 
 /*new date picker*/
-datePickerObj123: any = {};
+datePickerObjForDateOfAppointment: any = {};
+datePickerObjForBirthdate: any = {};
+
 /*new date picker*/
 
 /* for ux */
@@ -56,7 +58,8 @@ uxSaveCancel = true;
       private patientService:PatientService,
       private authService:AuthService,
       public modalCtrl: ModalController,
-      private toast:ToastService){
+      private toast:ToastService,
+      public alertController: AlertController){
         this.screensizeService.isDesktopView().subscribe(isDesktop => {
         if (this.isDesktop && !isDesktop) {
           window.location.reload();
@@ -71,13 +74,16 @@ uxSaveCancel = true;
 
 
   jsonObj2 = [];
+  async Alert(data1:any,data2:any) {const alert = await this.alertController.create({cssClass: 'my-custom-class',message: data1,buttons: [{text: data2,handler: () => {}}]});await alert.present();}
+
+
   ngOnInit() {
     this.location = this.appt_id;
     this.retriveMTWThFSS(this.dr_code,this.appt_id);
     this.setDatepicker();
     this.pickTime();
     /*new date picker*/
-    this.datePickerObj123 = {
+    this.datePickerObjForDateOfAppointment = {
       inputDate: new Date(),
       dateFormat: "YYYY-MM-DD",
       disableWeekDays: this.disableWeekDays1,
@@ -91,6 +97,20 @@ uxSaveCancel = true;
   
       }
     };
+    this.datePickerObjForBirthdate = {
+      inputDate: this.mydate2,
+      dateFormat: "YYYY-MM-DD",
+      btnProperties: {
+        expand: "block", // "block" | "full"
+        fill: "", // "clear" | "default" | "outline" | "solid"
+        size: "", // "default" | "large" | "small"
+        disabled: "", // boolean (default false)
+        strong: "", // boolean (default false)
+        color: ""
+  
+      }
+    };
+    
     /*new date picker*/
   }
 
@@ -112,8 +132,10 @@ uxSaveCancel = true;
   address(){
     console.log(this.adrress);
     if(this.adrress != null){
+     
       this.uxSaveCancel = false;
-    }else{
+    }else if(this.adrress == ""){
+      console.log("--"+this.adrress);
       this.uxSaveCancel = true;
     }
   }
@@ -122,24 +144,32 @@ uxSaveCancel = true;
 
 
     /*new date picker*/
-  async openDatePicker123() {
+  async openDatePickerForDateOfAppointment() {
     const datePickerModal = await this.modalCtrl.create({
       component: Ionic4DatepickerModalComponent,
       cssClass: "li-ionic4-datePicker",
-      componentProps: { objConfig: this.datePickerObj123 }
+      componentProps: { objConfig: this.datePickerObjForDateOfAppointment }
     });
     await datePickerModal.present();
-
     datePickerModal.onDidDismiss().then(data => {
-      // this.isModalOpen = false;
-
      if(data.data.date != 'Invalid date'){
       this.mydate1 = data.data.date;
       this.pickTime();
      }
-     
-      
-      
+    });
+  }
+  async openDatePickerForBirthdate() {
+    const datePickerModal = await this.modalCtrl.create({
+      component: Ionic4DatepickerModalComponent,
+      cssClass: "li-ionic4-datePicker",
+      componentProps: { objConfig: this.datePickerObjForBirthdate }
+    });
+    await datePickerModal.present();
+    datePickerModal.onDidDismiss().then(data => {
+     if(data.data.date != 'Invalid date'){
+      this.mydate2 = data.data.date;
+      this.pickTime();
+     }
     });
   }
       /*new date picker*/
@@ -210,6 +240,7 @@ uxSaveCancel = true;
     this.patientService.retrieveMTWTFSS(data1,data2).subscribe(
       
       (res:any)=>{
+        console.log(res);
       let parseddata = JSON.parse((res));
       parseddata.forEach(element => {
           if(element.sched_day == "SUNDAY"){this.Weekdays.push(0);}
@@ -232,7 +263,9 @@ uxSaveCancel = true;
     },() => {
       if(this.disableWeekDays1.length >= 7){
           this.btnSave=true;
+          this.Alert('No Available Schedule for '+this.mydate1,'Okay');
       }
+      console.log(this.disableWeekDays1);
     }
     
     
@@ -243,13 +276,13 @@ uxSaveCancel = true;
     this.doctorSchedule=[];
   
     this.patientService.retrieveSchedTime(this.dr_code,this.mydate1,this.location).subscribe((res:any)=>{
-      console.log((res));
+  
       res = JSON.parse(res);
       let x=0;
       res.forEach(element => {
         x++;
-          if(element.appt_id == null){
-           // this.doctorSchedule.push(element);
+         if(element.appt_id == null){
+           this.doctorSchedule.push(element);
             this.doctorSchedule.push({"time_in":element.time_in,"time_out":element.time_out,"slot":x});
           }
       });
@@ -271,10 +304,13 @@ uxSaveCancel = true;
   save(){
     this.patientService.addAppointments(this.dr_code,this.mydate1,this.time,this.lname,this.fname,this.mname,this.gender,this.mydate2,this.adrress,this.contact,this.appt_id).subscribe((res:any)=>{
      //this.doctorSchedule = res;
+     console.log(res);
       if(res){
-        this.toast.presentToast('Successfully added ' +this.lname+', '+this.fname);
+        this.Alert('Successfully added ' +this.lname+', '+this.fname,'Okay');
+        //this.toast.presentToast('Successfully added ' +this.lname+', '+this.fname);
       }else{
-        this.toast.presentToast('Error saving ' +this.lname+', '+this.fname);
+        this.Alert('Error saving ' +this.lname+', '+this.fname,'Okay');
+        //this.toast.presentToast('Error saving ' +this.lname+', '+this.fname);
       }
       this.closeModal();
   });

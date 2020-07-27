@@ -45,7 +45,8 @@ export class Tab2Page {
       public actionSheetController: ActionSheetController,
       public alertController: AlertController,
       private toast:ToastService,
-      public loadingController: LoadingController
+      public loadingController: LoadingController,
+     
     ) {  
       this.screensizeService.isDesktopView().subscribe(isDesktop => {
         if (this.isDesktop && !isDesktop) {window.location.reload();}this.isDesktop = isDesktop;
@@ -53,6 +54,7 @@ export class Tab2Page {
 
   }
 
+  async Alert(data1:any,data2:any) {const alert = await this.alertController.create({cssClass: 'my-custom-class',message: data1,buttons: [{text: data2,handler: () => {}}]});await alert.present();}
 
 
   //present View & Delete
@@ -80,8 +82,10 @@ export class Tab2Page {
               (res:any) => {
                 if(res == 'UPDATED'){
                   this.toast.presentToast('Successfully Deleted '+data1);
+                  //this.Alert('Successfully Deleted '+data1,'Okay');
                 }else{
                   this.toast.presentToast('Error on Deleting '+data1);
+                  //this.Alert('Error on Deleting '+data1,'Okay');
                 }
                 this.getDate(this.selectedDate,this.selectedLocation);
               }
@@ -202,8 +206,11 @@ export class Tab2Page {
       this.dr_code = this.logindata[0].dr_code;
     }
     
-    this.selectedDate = this.yyyymmdd();
-    this.selectedLocation = "C";
+
+    if(this.selectedDate == null){
+      this.selectedDate = this.yyyymmdd();
+      this.selectedLocation = "C";
+    }
     this.getDate(this.selectedDate,this.selectedLocation);
   }
   //generate date

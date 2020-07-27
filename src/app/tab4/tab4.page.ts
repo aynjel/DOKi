@@ -7,6 +7,7 @@ import { DoctorService } from '../services/doctor.service';
 import * as HighCharts from 'highcharts';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { AlertController } from '@ionic/angular';
 @Component({
   selector: 'app-tab4',
   templateUrl: './tab4.page.html',
@@ -35,13 +36,14 @@ export class Tab4Page implements OnInit {
     private screensizeService: ScreensizeService,
     private storageService:StorageService,
     private doctorService:DoctorService,
-    private router:Router) {
+    private router:Router,
+    public alertController: AlertController) {
     this.screensizeService.isDesktopView().subscribe(isDesktop => {
       if (this.isDesktop && !isDesktop) {window.location.reload();}this.isDesktop = isDesktop;
     });
     
   }
-
+  async Alert(data1:any,data2:any) {const alert = await this.alertController.create({cssClass: 'my-custom-class',message: data1,buttons: [{text: data2,handler: () => {}}]});await alert.present();}
   doRefresh(event) {
     setTimeout(() => {
       this.ionViewWillEnter();
@@ -61,7 +63,14 @@ export class Tab4Page implements OnInit {
       plotOptions: {line: {dataLabels: {enabled: true},enableMouseTracking: false},column: {
         borderRadius: 5
     }},
-      series: [{type: undefined,name: 'Patients',data: this.lineChartyAxisForYear}],
+      series: [
+          {
+            type: undefined,
+            name: 'Patients',
+            data: this.lineChartyAxisForYear,
+            label : {enabled:false}
+            
+          }],
       responsive: {
         rules: [
           {
@@ -85,7 +94,8 @@ export class Tab4Page implements OnInit {
   lineChartPopulationForMonth(){
 
     HighCharts.chart('lineChartForMonth',{
-      chart: {    
+      chart: {  
+        height: 300,  
       type: 'column',
       styledMode: true},
       title: {text: '30-Day Trend'},
@@ -142,7 +152,7 @@ export class Tab4Page implements OnInit {
       let DayValue=[];
       this.doctorService.MonthHistoryGraph(this.dr_code).subscribe(
         (res: any) => {
-          
+          console.log(res);
           let x = JSON.stringify(res);
           x = x.replace("[", "").replace("]", "");
           //x = x.replace("]", "");

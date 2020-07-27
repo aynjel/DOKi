@@ -13,7 +13,7 @@ export class HomeGuard implements CanActivate {
         if (res) {
           resolve(true);
         } else {
-          this.router.navigate(['/index']);
+          this.router.navigate(['/']);
           resolve(false);
         }
       }).catch(err => {resolve(false);});
