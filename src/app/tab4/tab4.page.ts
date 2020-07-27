@@ -61,7 +61,14 @@ export class Tab4Page implements OnInit {
       plotOptions: {line: {dataLabels: {enabled: true},enableMouseTracking: false},column: {
         borderRadius: 5
     }},
-      series: [{type: undefined,name: 'Patients',data: this.lineChartyAxisForYear}],
+      series: [
+          {
+            type: undefined,
+            name: 'Patients',
+            data: this.lineChartyAxisForYear,
+            label : {enabled:false}
+            
+          }],
       responsive: {
         rules: [
           {
@@ -85,7 +92,8 @@ export class Tab4Page implements OnInit {
   lineChartPopulationForMonth(){
 
     HighCharts.chart('lineChartForMonth',{
-      chart: {    
+      chart: {  
+        height: 300,  
       type: 'column',
       styledMode: true},
       title: {text: '30-Day Trend'},
@@ -142,7 +150,7 @@ export class Tab4Page implements OnInit {
       let DayValue=[];
       this.doctorService.MonthHistoryGraph(this.dr_code).subscribe(
         (res: any) => {
-          
+          console.log(res);
           let x = JSON.stringify(res);
           x = x.replace("[", "").replace("]", "");
           //x = x.replace("]", "");

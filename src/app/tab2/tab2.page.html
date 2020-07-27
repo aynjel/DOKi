@@ -69,7 +69,7 @@
                     {{y.time}}
 
                   </p>
-                  <ion-badge color="success" slot="end" *ngIf="y.status == 'Complete'">{{y.status}}</ion-badge>
+                  <ion-badge color="success" slot="end" *ngIf="y.status == 'Complete'">Completed</ion-badge>
                   <ion-badge color="primary" *ngIf="y.status == 'Waiting'" slot="end" >{{y.status}}</ion-badge>
                   <ion-badge color="secondary" *ngIf="y.status == 'Serving'" slot="end" >{{y.status}}</ion-badge>
                   <ion-badge color="warning" *ngIf="y.status == 'Reserved'" slot="end" >{{y.status}}</ion-badge>

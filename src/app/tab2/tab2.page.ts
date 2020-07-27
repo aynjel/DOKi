@@ -202,8 +202,11 @@ export class Tab2Page {
       this.dr_code = this.logindata[0].dr_code;
     }
     
-    this.selectedDate = this.yyyymmdd();
-    this.selectedLocation = "C";
+
+    if(this.selectedDate == null){
+      this.selectedDate = this.yyyymmdd();
+      this.selectedLocation = "C";
+    }
     this.getDate(this.selectedDate,this.selectedLocation);
   }
   //generate date

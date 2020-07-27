@@ -9,6 +9,7 @@ import { PatientdetailsPage } from '../components/patientdetailss/patientdetails
 import { ScreensizeService } from '../services/screensize.service';
 import { PopoverController } from '@ionic/angular';  
 import {InpatientmodalPage} from '../components/inpatientmodal/inpatientmodal.page';
+import { InpatientmodalPageModule} from '../components/inpatientmodal/inpatientmodal.module';
 import { timeStamp } from 'console';
 import {DoctorInfoGlobal} from '../common/doctorinfo-global';
 import {LoginData} from '../models/logindata.model';
