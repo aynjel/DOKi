@@ -1,98 +1,119 @@
-
 <ion-header mode="md" class="ion-no-border">
   <div *ngIf="!isDesktop">
-    <ion-toolbar  color="mango" >
+    <ion-toolbar color="mango">
       <ion-title>
-        <ion-icon name="man-outline"></ion-icon> Settings
+        <ion-icon name="settings-outline"></ion-icon> Settings
       </ion-title>
-      <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated" >
-        <ion-button (click)="logout()" class="ios button button-clear ion-activatable ion-focusable hydrated">Log out&nbsp; <ion-icon name="power-outline"></ion-icon></ion-button>
+      <ion-buttons
+        slot="end"
+        class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated"
+      >
+        <ion-button
+          (click)="logout()"
+          color="chh-css-primary2"
+          class="ios button button-clear ion-activatable ion-focusable hydrated"
+          >Log out&nbsp; <ion-icon name="log-out-outline"></ion-icon>
+        </ion-button>
       </ion-buttons>
     </ion-toolbar>
-
-    
   </div>
-  
-
-  
-  
 </ion-header>
 
-
-<ion-content >
+<ion-content>
   <ion-grid class="my-backbround ion-no-padding">
     <ion-row>
-      <ion-col
-        size-md="8"
-        offset-md="2"
-        size-lg="4"
-        offset-lg="4"
-        >
+      <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
+        <div *ngFor="let x of account">
+          <ion-card mode="ios">
+            <br />
+            <ion-item lines="none">
+              <ion-avatar slot="start">
+                <text-avatar [text]="x.last_name" [color]=""></text-avatar>
+              </ion-avatar>
+              <ion-label style="margin-top: -5px;">
+                <ion-item class="ion-no-padding">
+                  <h1 class="ion-text-wrap" style="padding-top: 20px;">
+                    DR. {{ x.first_name }} {{ x.last_name }}
+                  </h1>
+                </ion-item>
+              </ion-label>
+            </ion-item>
 
-        
-        <div  *ngFor="let x of account">
-
-
-
-
-
-
-
-        <ion-card  mode="ios">
-          <ion-item lines="none">
-            <ion-avatar slot="start">
-              <text-avatar [text]="x.last_name" [color]=""></text-avatar>
-            </ion-avatar>
-            <ion-label style="margin-top:-5px">
-              <ion-item class="ion-no-padding">
-                <h3 class="ion-text-wrap" style="padding-top:20px">{{ x.first_name }} {{ x.last_name }}</h3>
-              </ion-item>
-            </ion-label>
-          </ion-item>
-
-
-    
-          <ion-card-content class="ion-no-padding">
-    
-            <ion-list>
-              <ion-item>
-                <br />
-              </ion-item>
-              <ion-item>
-                <b>App Settings</b>
-              </ion-item>
-              <ion-item>
-                <ion-label class="ion-text-wrap">Notify me via SMS if my patient is admitted</ion-label>
-                <ion-toggle  disabled="true"></ion-toggle>
-              </ion-item>
-              <ion-item>
-                <ion-label class="ion-text-wrap">Notify me via SMS if my patient is about to be discharged</ion-label>
-                <ion-toggle  disabled="true"></ion-toggle>
-              </ion-item>
-              <ion-item>
-                <ion-label class="ion-text-wrap">Alert me through Push Notifications</ion-label>
-                <ion-toggle  disabled="true"></ion-toggle>
-              </ion-item>      
-              <ion-item>
-                <br />
-              </ion-item>
-                <ion-item lines="none">
-                  <p>For inquiries, please contact Chong Hua Hospital IT Department (<b><a href="tel: +63322558000">+63 32 255 8000</a></b>)</p>
+            <ion-card-content class="ion-no-padding">
+              <ion-list>
+                <ion-item>
+                  <br />
+                </ion-item>
+                <ion-item>
+                  <ion-icon slot="end" name="notifications-outline"></ion-icon>
+                  <b>Notifications</b>
+                </ion-item>
+                <ion-item>
+                  <ion-label class="ion-text-wrap"
+                    >Notify me via SMS if my patient is admitted</ion-label
+                  >
+                  <ion-toggle
+                    color="mango"
+                    disabled="true"
+                    checked="true"
+                  ></ion-toggle>
+                </ion-item>
+                <ion-item>
+                  <ion-label class="ion-text-wrap"
+                    >Notify me via SMS if my patient is about to be
+                    discharged</ion-label
+                  >
+                  <ion-toggle
+                    color="mango"
+                    disabled="true"
+                    checked="true"
+                  ></ion-toggle>
+                </ion-item>
+                <ion-item>
+                  <ion-label class="ion-text-wrap"
+                    >Alert me through Push Notifications</ion-label
+                  >
+                  <ion-toggle disabled="true"></ion-toggle>
+                </ion-item>
+                <ion-item>
+                  <br />
                 </ion-item>
 
-            </ion-list>
-          </ion-card-content>
+                <ion-item>
+                  <ion-icon slot="end" name="color-palette-outline"></ion-icon>
+                  <b>Appearance</b>
+                </ion-item>
+                <ion-item>
+                  <ion-label class="ion-text-wrap"
+                    >Switch to Dark Mode</ion-label
+                  >
+                  <ion-toggle
+                    color="mango"
+                    disabled="false"
+                    (ionChange)="onDarkModeEnable($event)"
+                  ></ion-toggle>
+                </ion-item>
 
-        </ion-card>
-      </div>
+                <ion-item>
+                  <br />
+                </ion-item>
 
-
-
-
-
-
-
-
+                <ion-item lines="none">
+<<<<<<< HEAD
+                  <p>For inquiries, please contact Chong Hua Hospital IT Department (<b><a href="tel: +63322558000">+63 32 255 8000</a></b>)</p>
+=======
+                  <p>
+                    For inquiries please contact Systems Solutions and Business
+                    Intelligence Team of Chong Hua Hospital IT Division (<b
+                      ><a href="tel: +63322558000">+63 32 255 8000</a></b
+                    >)
+                  </p>
+>>>>>>> origin/animation-fix
+                </ion-item>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>
