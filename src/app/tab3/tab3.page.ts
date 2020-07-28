@@ -53,6 +53,8 @@ export class Tab3Page {
       this.renderer.setAttribute(document.body, "color-theme", "light");
       localStorage.setItem('darkmode','false');
     }
+    if(this.isDesktop){window.location.reload();}
+    
   }
 
   logout() {

@@ -118,7 +118,13 @@ uxSaveCancel = true;
 
   /*for ux*/
   uxTime(){
-    this.uxUserInfo = false;
+    console.log(this.time);
+    if(this.time != null){
+      this.uxUserInfo = false;
+    }else{
+      this.uxUserInfo = true;
+    }
+    
   }
   userInfo(){
     console.log(this.gender);

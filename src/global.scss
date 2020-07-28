@@ -253,3 +253,10 @@ body {
 .highcharts-column-series rect.highcharts-point {
     stroke: var(--background-color);
 }
+.alert-radio-label.sc-ion-alert-md {
+  white-space: pre-line !important;
+}
+
+.alert-radio-label.sc-ion-alert-ios {
+  white-space: pre-line !important;
+}
