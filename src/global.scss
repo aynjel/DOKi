@@ -180,29 +180,45 @@ ion-toolbar{
    }
   
  
-
-
+  
+   .link {
+     --color: #528d53;
+   }
+  
+   .active-link {
+     --color: #275228;
+     border-bottom: 1px solid #275228;
+     font-weight: bold;
+   }
  
  }
 
+ .link {
+   --color: #528d53;
+ }
 
+ .active-link {
+   --color: #275228;
+   border-bottom: 2px solid #275228;
+   font-weight: bold;
+ }
+ .chh-darkmode{
+  background-color: var(--background-color);
+}
 /*for charts*/
 @import 'https://code.highcharts.com/css/highcharts.css';
 
-:root { /* light mode */
-	--background-color: rgba(255, 255, 255,0);
-	--text-color: #292b2c;
-	--hilight-color: #0275d8;
+:root { 
+	--background-color: #ffffff;
+
 }
 
 @media (prefers-color-scheme: dark) { 
     :root {
-        --background-color: #1F2227;
-        --text-color: #c0c0c0;
-        --hilight-color: #8db4d6;
+        background-color:var(--background-color);
+        font: var(--text-color);
+
     }
-    
-    /* Some data colors. Light mode uses defaults */
     .highcharts-color-0 {
         fill: #0460ba;
         stroke: #0460ba;
@@ -236,16 +252,4 @@ body {
 }
 .highcharts-column-series rect.highcharts-point {
     stroke: var(--background-color);
-}
-
-
-.alert-radio-label.sc-ion-alert-md {
-  white-space: pre-line !important;
-}
-
-.alert-radio-label.sc-ion-alert-ios {
-  white-space: pre-line !important;
-}
-ion-label {
-  white-space: normal !important;
 }
