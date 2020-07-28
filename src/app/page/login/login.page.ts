@@ -60,6 +60,8 @@ export class LoginPage implements OnInit {
             if(res != ""){
               this.logindata = <LoginData>res;
               this.storageService.store(AuthConstants.AUTH, this.logindata);
+ 
+              //
               this.router.navigate(['/menu/dashboard']);
             }else{
               this.Alert('Incorrect Authentication Details.','Okay');

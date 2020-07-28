@@ -158,6 +158,7 @@ export class Tab2Page {
     var myObject = {};var jsonObj2 = [];var item1 = {}
     this.patientService.retrieveSchedTime(this.dr_code,data1,data2).subscribe(
       (patientService:any) => {
+ 
         let parseddata = JSON.parse((patientService));
           item1 ["date"] =data1;
           parseddata.forEach(element => {
@@ -185,6 +186,7 @@ export class Tab2Page {
       () => {
         this.buttonDisablerHospSelector = false;
         this.buttonDisablerDateSelector = false;
+        console.log(this.jsonObj5);
       }
 
 

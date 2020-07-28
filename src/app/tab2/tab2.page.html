@@ -35,82 +35,80 @@
   <ion-refresher-content ></ion-refresher-content>
 </ion-refresher>
     <ion-fab vertical="bottom" horizontal="end" slot="fixed" color="mangolight" >
-      <!--ion-fab-button  routerLink='/addappointmentsmodal' (click)="showaddmodal()"-->
       <ion-fab-button  (click)="showaddmodal()" color="mangolight">
         <ion-icon name="add"></ion-icon>
       </ion-fab-button>
     </ion-fab>
-  <ion-grid class="my-backbround ion-no-padding">
+
+  <ion-grid class="ion-no-padding" >
     <ion-row>
-      <ion-col size-md="4" offset-md="4">
-        <ion-list>
-
-  <ion-list-header  *ngIf="objecthandler">
-    Patient List
-  </ion-list-header>
-  <div *ngFor="let x of jsonObj5">
-      <div *ngFor="let y of x.data">
+      <ion-col
+        size-md="8"
+        offset-md="2"
+        size-lg="4"
+        offset-lg="4"
+        >
 
 
 
-        <ion-card (click)='presentActionSheet(y.appt_id,y.status,y.patientName)' mode="ios">
-          <ion-item lines="none">
-            <ion-avatar slot="start">
-              <text-avatar [text]="y.patientName" [color]=""></text-avatar>
-            </ion-avatar>
-            <ion-label style="margin-top:-5px">
-              <ion-item class="ion-no-padding">
-                <h2 class="ion-text-wrap" style="padding-top:20px">{{y.patientName}}</h2>
-              </ion-item>
-              <ion-row class="ion-no-padding" lines="none">
-                <!-- Default Progressbar with 50 percent -->
-
-                <div>
-                  <p>
-                    <ion-icon name="time-outline" slot="start"  style="padding-top:5px !important;"></ion-icon>
-                    {{y.time}}
-
-                  </p>
-                  <ion-badge color="success" slot="end" *ngIf="y.status == 'Complete'">Completed</ion-badge>
-                  <ion-badge color="primary" *ngIf="y.status == 'Waiting'" slot="end" >{{y.status}}</ion-badge>
-                  <ion-badge color="secondary" *ngIf="y.status == 'Serving'" slot="end" >{{y.status}}</ion-badge>
-                  <ion-badge color="warning" *ngIf="y.status == 'Reserved'" slot="end" >{{y.status}}</ion-badge>
-                </div>
- 
-                <br />
-
-              </ion-row> 
-            </ion-label>
-          </ion-item>
-        </ion-card>
+        <div *ngFor="let x of jsonObj5">
+          <div *ngFor="let y of x.data">
+    
+            <ion-card (click)='presentActionSheet(y.appt_id,y.status,y.patientName)' mode="ios">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <text-avatar [text]="y.patientName" [color]=""></text-avatar>
+                </ion-avatar>
+                <ion-label style="margin-top:-5px">
+                  <ion-item class="ion-no-padding">
+                    <h2 class="ion-text-wrap" style="padding-top:20px">{{y.patientName}}</h2>
+                  </ion-item>
+                  <ion-row class="ion-no-padding" lines="none">
+                    <!-- Default Progressbar with 50 percent -->
+    
+                    <div>
+                      <p>
+                        <ion-icon name="time-outline" slot="start"  style="padding-top:5px !important;"></ion-icon>
+                        {{y.time}}
+    
+                      </p>
+                      <ion-badge color="success" slot="end" *ngIf="y.status == 'Complete'">Completed</ion-badge>
+                      <ion-badge color="primary" *ngIf="y.status == 'Waiting'" slot="end" >{{y.status}}</ion-badge>
+                      <ion-badge color="secondary" *ngIf="y.status == 'Serving'" slot="end" >{{y.status}}</ion-badge>
+                      <ion-badge color="warning" *ngIf="y.status == 'Reserved'" slot="end" >{{y.status}}</ion-badge>
+                    </div>
      
+                    <br />
+    
+                  </ion-row> 
+                </ion-label>
+              </ion-item>
+            </ion-card>
+         
+          </div>
+    
       </div>
 
-  </div>
-  <div *ngIf="!objecthandler">
-    <ion-list-header slot="center">
-      No Data Available
-    </ion-list-header>
-  </div>
+      <div *ngIf="!objecthandler">
+        <ion-list-header slot="center" mode = "ios">
+          No Data Available
+        </ion-list-header>
+      </div>
 
 
 
 
 
 
-</ion-list>
-  </ion-col>
-  </ion-row>
+
+
+
+
+
+
+      </ion-col>
+    </ion-row>
   </ion-grid>
-
-
-
-  <!--div class="spinner-container">
-    <ion-spinner *ngIf="jsonObj5.length > 0"></ion-spinner>
-  </div-->
-
-
-
 
 
 

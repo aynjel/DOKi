@@ -16,6 +16,7 @@ export class Tab3Page {
   public logindata: LoginData;
   account: LoginData;
   isDesktop: boolean;
+  darkmode:boolean = true;
   displayUserData: any;
   constructor(
     private authService: AuthService,
@@ -37,13 +38,20 @@ export class Tab3Page {
       console.log(res);
       this.account = <LoginData>res;
     });
+    if(localStorage.getItem('darkmode') == 'true'){
+      this.darkmode = true
+    }else{
+      this.darkmode = false;
+    }
   }
 
   onDarkModeEnable(event: { detail: { checked: any } }) {
     if (event.detail.checked) {
       this.renderer.setAttribute(document.body, "color-theme", "dark");
+      localStorage.setItem('darkmode','true');
     } else {
       this.renderer.setAttribute(document.body, "color-theme", "light");
+      localStorage.setItem('darkmode','false');
     }
   }
 
@@ -52,7 +60,8 @@ export class Tab3Page {
       //clear behavior subject
       this.userData$.next("");
       //clear local storage
-      localStorage.clear();
+      localStorage.removeItem('_cap_userDataKey');
+      //localStorage.clear();
       window.location.reload();
       //this.router.navigate(['/login']);
     });

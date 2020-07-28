@@ -47,6 +47,7 @@
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
     <ion-refresher-content ></ion-refresher-content>
   </ion-refresher>
+
   <ion-grid class="ion-no-padding" >
     <ion-row>
       <ion-col
@@ -56,6 +57,7 @@
         offset-lg="4"
         >
          <div  *ngFor="let x of inPatients">
+           
           <ion-card (click)='detail(x)' mode="ios">
             <ion-item lines="none">
               <ion-avatar slot="start">
@@ -110,7 +112,7 @@
 
         </div>
         <div *ngIf="!objecthandler">
-          <ion-list-header slot="center">
+          <ion-list-header slot="center" mode = "ios">
             No Data Available
           </ion-list-header>
         </div>

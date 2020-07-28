@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Renderer2 } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { StorageService } from '../services/storage.service';
@@ -44,7 +44,8 @@ export class Tab1Page {
     private screensizeService: ScreensizeService,
     private popover:PopoverController,
     private location: Location,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private renderer: Renderer2
     ) {
 
       this.screensizeService.isDesktopView().subscribe(isDesktop => {
@@ -64,7 +65,8 @@ export class Tab1Page {
       });
     }
   ngOnInit() {
-   
+
+
   }
   async Alert(data1:any,data2:any) {const alert = await this.alertController.create({cssClass: 'my-custom-class',message: data1,buttons: [{text: data2,handler: () => {}}]});await alert.present();}
 
@@ -116,6 +118,14 @@ export class Tab1Page {
   }
   //Fired when the component routing to is about to animate into view.
   ionViewWillEnter(){
+
+  
+
+
+
+
+
+
     if(!this.dr_code){
       this.logindata = <LoginData>this.authService.userData$.getValue();
       this.dr_code = this.logindata[0].dr_code;
