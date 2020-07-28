@@ -8,26 +8,25 @@
         <ion-icon name="calendar-outline"></ion-icon> Appointments
       </ion-title>
     </ion-toolbar>
-    <ion-grid class=" ion-no-padding" >
-      <ion-row >
-        <!--ion-col size-md="6" offset-md="3" size-sm="6"  --> 
-        <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3" class="custom-border-bottom chh-darkmode">
-       
-            <app-hospital 
-              (hospital)="locationAction($event)"
-              [readonlyComp]="buttonDisablerHospSelector"
-              [Activator]="hospitalActivator"
-              ></app-hospital>
-            <app-dateselector 
-              [passedDate]="selectedDate"
-              (dateSelector)="dateChanged($event)"
-              [readonlyComp]="buttonDisablerDateSelector"
-               ></app-dateselector>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
 
+  </div>
+  <ion-grid class="ion-no-padding chh-darkmode" >
+    <ion-row >
+      <!--ion-col size-md="6" offset-md="3" size-sm="6"  --> 
+      <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3" class="custom-border-bottom chh-darkmode">
+          <app-hospital 
+            (hospital)="locationAction($event)"
+            [readonlyComp]="buttonDisablerHospSelector"
+            [Activator]="hospitalActivator"
+            ></app-hospital>
+          <app-dateselector 
+            [passedDate]="selectedDate"
+            (dateSelector)="dateChanged($event)"
+            [readonlyComp]="buttonDisablerDateSelector"
+             ></app-dateselector>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-header>
 <ion-content >
   
