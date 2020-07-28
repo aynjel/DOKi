@@ -17,8 +17,8 @@
               <ion-input type="password" id="input-password" [(ngModel)]="postData.password"></ion-input>
             </ion-item>
             <div class="ion-margin-vertical ion-text-right">
-              <ion-button expand="block" shape="round" id="btn-confirm" (click)="loginAction() " color="mango">
-              LOGIN
+              <ion-button expand="block" shape="round" id="btn-confirm" (click)="loginAction() " color="mango" disabled="{{btnDisable}}" >
+              <span *ngIf="!btnDisable">LOGIN</span><ion-spinner *ngIf="btnDisable"></ion-spinner>
               </ion-button>
             </div>
           </ion-card-content>
