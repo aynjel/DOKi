@@ -81,11 +81,11 @@ export class Tab2Page {
             this.patientService.deletePatients(data2).subscribe(
               (res:any) => {
                 if(res == 'UPDATED'){
-                  this.toast.presentToast('Successfully Deleted '+data1);
-                  //this.Alert('Successfully Deleted '+data1,'Okay');
+                  //this.toast.presentToast('Successfully Deleted '+data1);
+                  this.Alert('Successfully Deleted '+data1,'Okay');
                 }else{
-                  this.toast.presentToast('Error on Deleting '+data1);
-                  //this.Alert('Error on Deleting '+data1,'Okay');
+                  //this.toast.presentToast('Error on Deleting '+data1);
+                  this.Alert('Error on Deleting '+data1,'Okay');
                 }
                 this.getDate(this.selectedDate,this.selectedLocation);
               }

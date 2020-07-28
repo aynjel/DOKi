@@ -215,7 +215,7 @@ ion-toolbar{
 
 @media (prefers-color-scheme: dark) { 
     :root {
-        background-color:var(--background-color);
+        background-color:var(background-color);
         font: var(--text-color);
 
     }

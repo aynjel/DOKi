@@ -1,5 +1,5 @@
 import { Component, OnInit, Input} from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import {FeePage } from '../fee/fee.page';
 import { from } from 'rxjs';
 import { PopoverController } from '@ionic/angular';  
@@ -19,7 +19,7 @@ export class InpatientmodalPage implements OnInit {
   method:any;
   coDoctors:any;
   constructor(private modalController: ModalController,
-    private popover:PopoverController, private doctorService:DoctorService) { 
+    private popover:PopoverController, private doctorService:DoctorService,public alertController: AlertController) { 
 
     }
     postData = {
@@ -40,7 +40,7 @@ export class InpatientmodalPage implements OnInit {
       "dept_short_desc": "string",
 
     }
-
+    async Alert(data1:any,data2:any) {const alert = await this.alertController.create({cssClass: 'my-custom-class',message: data1,buttons: [{text: data2,handler: () => {}}]});await alert.present();}
   ngOnInit() {
     this.data.admission_date = this.explodeDate(this.data.admission_date);
     if(this.data.site == 'C'){this.site = 'CHHC';}
@@ -115,21 +115,23 @@ export class InpatientmodalPage implements OnInit {
 
 
             let x = data.data.method;
-            console.log("METHOD :" + x);
+            //console.log("METHOD :" + x);
            // this.doctorService.insertPF(this.postData);
             if(x == 'POST'){
-              console.log("postData : "+JSON.stringify(this.postData));
               this.doctorService.insertPF(this.postData).subscribe(
-                (res: any) => {console.log(res);});
+                (res: any) => {
+                  this.Alert("Successfully SAVED the Professional Fee.","Okay");
+                });
             }else if(x == 'PUT'){
-              console.log("postData : "+JSON.stringify(this.postData));
               this.doctorService.updatePF(this.postData).subscribe(
-                (res: any) => {console.log(res);});
+                (res: any) => {
+                  this.Alert("Successfully UPDATED the Professional Fee.","Okay");
+                });
             }else if(x == 'DELETE'){
-           
-              console.log("postData : "+JSON.stringify(this.postData));
               this.doctorService.DeletePf(this.postData.AdmisisonNo,this.postData.DoctorStatusCode).subscribe(
-                (res: any) => {console.log("Delete Response : " + res);});
+                (res: any) => {
+                  this.Alert("Successfully DELETED the Professional Fee.","Okay");
+                  });
             }
 
 

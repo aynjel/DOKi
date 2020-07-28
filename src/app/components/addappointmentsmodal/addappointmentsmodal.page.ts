@@ -288,7 +288,7 @@ uxSaveCancel = true;
       res.forEach(element => {
         x++;
          if(element.appt_id == null){
-           this.doctorSchedule.push(element);
+           //this.doctorSchedule.push(element);
             this.doctorSchedule.push({"time_in":element.time_in,"time_out":element.time_out,"slot":x});
           }
       });
