@@ -36,7 +36,7 @@ export class LoginPage implements OnInit {
       username: '',
       password: ''
     };
-      
+    btnDisable:boolean = false;
     ngOnInit() {}
     
     validateInputs() {
@@ -53,7 +53,7 @@ export class LoginPage implements OnInit {
     }
     async Alert(data1:any,data2:any) {const alert = await this.alertController.create({cssClass: 'my-custom-class',message: data1,buttons: [{text: data2,handler: () => {}}]});await alert.present();}
     loginAction() {
-
+        this.btnDisable = true;
         this.authService.doctorsPortalLogin(this.postData.username, this.postData.password).subscribe(
           (res: any) => {
             console.log(res);
@@ -69,8 +69,11 @@ export class LoginPage implements OnInit {
             }
   
           },error =>{
+            this.btnDisable = false;
             this.Alert('Server Error','Okay');
            // this.toast.presentToast('Server Error');
+          },()=>{
+            this.btnDisable = false;
           });
 /*
         if (this.validateInputs()) {
