@@ -1,27 +1,33 @@
-import { FormsModule } from '@angular/forms';
+import { FormsModule } from "@angular/forms";
 
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { RouteReuseStrategy } from "@angular/router";
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
+import { SplashScreen } from "@ionic-native/splash-screen/ngx";
+import { StatusBar } from "@ionic-native/status-bar/ngx";
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { HttpClientModule } from "@angular/common/http";
+import { ServiceWorkerModule } from "@angular/service-worker";
+import { environment } from "../environments/environment";
 import { Ionic4DatepickerModule } from "@logisticinfotech/ionic4-datepicker";
-import {InpatientmodalPageModule} from './components/inpatientmodal/inpatientmodal.module';
-import {AddappointmentsmodalPageModule} from './components/addappointmentsmodal/addappointmentsmodal.module';
+import { InpatientmodalPageModule } from "./components/inpatientmodal/inpatientmodal.module";
+import { AddappointmentsmodalPageModule } from "./components/addappointmentsmodal/addappointmentsmodal.module";
+//import { SliderPageModule } from './components/slider/slider.module';
+//import { defineCustomElements } from '@teamhive/lottie-player/loader';
+
+//import {LottieAnimationViewModule } from 'ng-lottie';
+
+//defineCustomElements(window);
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [ 
-    FormsModule,  
+  imports: [
+    FormsModule,
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
@@ -29,13 +35,18 @@ import {AddappointmentsmodalPageModule} from './components/addappointmentsmodal/
     Ionic4DatepickerModule,
     InpatientmodalPageModule,
     AddappointmentsmodalPageModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production },)],
+    //LottieAnimationViewModule,
+    //SliderPageModule,
+    ServiceWorkerModule.register("ngsw-worker.js", {
+      enabled: environment.production,
+    }),
+  ],
   providers: [
     StatusBar,
     SplashScreen,
     HttpClientModule,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
