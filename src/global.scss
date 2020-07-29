@@ -31,6 +31,16 @@
 /*For Google Web Font*/
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  // src: url(/assets/fonts/Inter/Inter.eot);
+  src: url(./assets/Inter.eot);
+  src: local('Inter'), url(./assets/Inter.eot?#iefix) format('embedded-opentype');
+  // src: local('Inter'), url(/assets/fonts/Inter/Inter.eot?#iefix) format('embedded-opentype');
+}
+
 /*
 .my-custom-modal-css .modal-wrapper {
     height: 30%;
@@ -265,5 +275,5 @@ body {
 }
 
 .swiper-pagination {
-  bottom: 95% !important;
+  bottom: 97% !important;
 }
