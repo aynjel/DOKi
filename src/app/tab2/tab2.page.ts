@@ -219,7 +219,7 @@ export class Tab2Page {
         this.buttonDisablerHospSelector = false;
         this.buttonDisablerDateSelector = false;
         this.isFetchDone = true;
-        console.log(this.jsonObj5);
+        //console.log(this.jsonObj5);
       }
     );
   }
