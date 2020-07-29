@@ -25,6 +25,10 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+/*for charts*/
+@import 'https://code.highcharts.com/css/highcharts.css';
+
+/*For Google Web Font*/
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
 /*
@@ -205,8 +209,7 @@ ion-toolbar{
  .chh-darkmode{
   background-color: var(--background-color);
 }
-/*for charts*/
-@import 'https://code.highcharts.com/css/highcharts.css';
+
 
 :root { 
 	--background-color: #ffffff;

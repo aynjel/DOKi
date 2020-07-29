@@ -15,11 +15,13 @@ import {DoctorInfoGlobal} from '../common/doctorinfo-global';
 import {LoginData} from '../models/logindata.model';
 import {InpatientData} from '../models/inpatient.model';
 import { Location } from "@angular/common";
+
 @Component({
   selector: "app-tab1",
   templateUrl: "tab1.page.html",
   styleUrls: ["tab1.page.scss"],
 })
+
 export class Tab1Page {
   public logindata: LoginData;
   public inPatientData: InpatientData;
@@ -68,6 +70,7 @@ export class Tab1Page {
       }
     });
   }
+
   ngOnInit() {}
   async Alert(data1: any, data2: any) {
     const alert = await this.alertController.create({
@@ -117,6 +120,7 @@ export class Tab1Page {
         }
       });
     }
+
     /*check if ALL - ADMITTED - FOR DISCHARGE*/
     if (this.admittedOrDischarge != "ALL") {
       let verifier: boolean = false; //to verify if naa ba jud na check na value AC or DN
@@ -134,12 +138,14 @@ export class Tab1Page {
           }
         }
       });
+
       if (verifier) {
         this.inPatients = [];
         this.inPatients = sampleInPatients1;
       }
     }
   }
+
   //Fired when the component routing to is about to animate into view.
   ionViewWillEnter() {
     if (!this.dr_code) {
@@ -148,8 +154,11 @@ export class Tab1Page {
     }
     this.callPatient(this.site);
   }
+
   //Get using Doctors API
   callPatient(data: any) {
+    this.isFetchDone = false;
+    
     setTimeout(() => {
       this.doctorService.getInPatient(this.dr_code).subscribe(
         (res: any) => {
@@ -199,6 +208,7 @@ export class Tab1Page {
       this.callPatient(this.site);
     });
   }
+
   //location is changed
   locationAction(data: any) {
     if (data == "A" || data == "C" || data == "M") {
@@ -208,6 +218,7 @@ export class Tab1Page {
     }
     this.filterList();
   }
+
   camelCase(str) {
     var splitStr = str.toLowerCase().split(" ");
     for (var i = 0; i < splitStr.length; i++) {
@@ -219,6 +230,7 @@ export class Tab1Page {
     // Directly return the joined string
     return splitStr.join(" ");
   }
+
   onSubmit(data1: any, data2: boolean) {
     if (data1 == "ALL") {
       this.router.navigate(["/menu/in-patients"]);
