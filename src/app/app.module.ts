@@ -16,6 +16,7 @@ import { environment } from '../environments/environment';
 import { Ionic4DatepickerModule } from "@logisticinfotech/ionic4-datepicker";
 import {InpatientmodalPageModule} from './components/inpatientmodal/inpatientmodal.module';
 import {AddappointmentsmodalPageModule} from './components/addappointmentsmodal/addappointmentsmodal.module';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
