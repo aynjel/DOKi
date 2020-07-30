@@ -47,10 +47,10 @@ export class Tab3Page {
 
   onDarkModeEnable(event: { detail: { checked: any } }) {
     if (event.detail.checked) {
-      //this.renderer.setAttribute(document.body, "color-theme", "dark");
+      this.renderer.setAttribute(document.body, "color-theme", "dark");
       localStorage.setItem('darkmode','true');
     } else {
-      //this.renderer.setAttribute(document.body, "color-theme", "light");
+      this.renderer.setAttribute(document.body, "color-theme", "light");
       localStorage.setItem('darkmode','false');
     }
     if(this.isDesktop){window.location.reload();}

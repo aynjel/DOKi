@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { SliderPageRoutingModule } from './slider-routing.module';
 
-import { SliderPage } from './slider.page';
+//import { SliderPage } from './slider.page';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA ],

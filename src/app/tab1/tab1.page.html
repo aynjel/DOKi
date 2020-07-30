@@ -1,7 +1,6 @@
-
-<ion-header mode="md" class="ion-no-border" >
+<ion-header mode="md" class="ion-no-border">
   <div *ngIf="!isDesktop">
-    <ion-toolbar  color="mango" >
+    <ion-toolbar color="mango">
       <ion-title>
         <ion-icon name="person-circle-outline"></ion-icon> In-Patients
       </ion-title>
@@ -11,111 +10,344 @@
         <ion-icon name="options-outline"></ion-icon>
       </ion-fab-button>
       <ion-fab-list side="bottom">
-        <ion-fab-button color="light" (click)="onSubmit('ALL',true)"   data-desc="All" >
+        <ion-fab-button
+          class="tab-font-family"
+          color="light"
+          (click)="onSubmit('ALL',true)"
+          data-desc="All"
+        >
           <ion-icon name="person-outline"></ion-icon>
         </ion-fab-button>
-        <ion-fab-button color="light" (click)="onSubmit('AC',true)"  data-desc="Admitted">
+        <ion-fab-button
+          class="tab-font-family"
+          color="light"
+          (click)="onSubmit('AC',true)"
+          data-desc="Admitted"
+        >
           <ion-icon name="person-add-outline"></ion-icon>
         </ion-fab-button>
-        <ion-fab-button color="light" (click)="onSubmit('DN',true)" data-desc="For Discharge">
+        <ion-fab-button
+          class="tab-font-family"
+          color="light"
+          (click)="onSubmit('DN',true)"
+          data-desc="For Discharge"
+        >
           <ion-icon name="person-remove-outline"></ion-icon>
         </ion-fab-button>
       </ion-fab-list>
     </ion-fab>
   </div>
-  <ion-grid class="ion-no-padding chh-darkmode" >
-    <ion-row >
-      <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4" class="custom-border-bottom ion-no-border ">
-        <app-hospital-selector-with-all (hospital)="locationAction($event)" ></app-hospital-selector-with-all>
-      </ion-col>
-    </ion-row>
-    <ion-row class=""  >
-      <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4" class=" ion-no-border ">
-
-          <ion-searchbar [(ngModel)]="searchBar" (ionChange)="filterList()" mode="ios"></ion-searchbar>
-
-      </ion-col>
-    </ion-row>
-    
-  </ion-grid>
-
-</ion-header>
-
-
-
-<ion-content >
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
-    <ion-refresher-content ></ion-refresher-content>
-  </ion-refresher>
-
-  <ion-grid class="ion-no-padding" >
+  <ion-grid class="ion-no-padding chh-darkmode">
     <ion-row>
       <ion-col
         size-md="8"
         offset-md="2"
         size-lg="4"
         offset-lg="4"
-        >
-         <div  *ngFor="let x of inPatients">
-           
-          <ion-card (click)='detail(x)' mode="ios">
-            <ion-item lines="none">
-              <ion-avatar slot="start">
-                <text-avatar [text]="x.last_name" [color]=""></text-avatar>
-              </ion-avatar>
-              <ion-label style="margin-top:-5px">
-                <ion-item   slot="start" lines="none"  class="ion-no-padding"  style="padding-bottom:5px">
-                  <h2 class="ion-text-wrap " style="padding-top:20px">{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</h2>
-                  <ion-badge
-                    color="warning"
-                    slot="end"
-                    *ngIf="x.admission_status == 'DN' && x.doctor_prof_fee == null && x.is_posted ==null">
-                    PF</ion-badge>
-                  <ion-badge
-                    color="success"
-                    slot="end"
-                    *ngIf="x.doctor_prof_fee != null && x.is_posted !=null">
-                    <ion-icon name="checkmark-outline"></ion-icon></ion-badge>
-                </ion-item>
-                <div *ngIf="x.admission_status == 'AC'" >
-                <!--Patient Admitted--> 
-                <ion-progress-bar value=".25" buffer="0.35" color="warning"></ion-progress-bar>
-                </div>
-                <div *ngIf="x.admission_status == 'DN'  && (x.is_posted ==null || x.is_posted ==0 ) && x.doctor_prof_fee ==null">
-                <!--Patient For Discharge-->
-                <ion-progress-bar value=".50" buffer="0.60" color="warning"></ion-progress-bar>
-                </div>
-                <div  *ngIf="x.admission_status == 'DN'  && (x.is_posted ==null|| x.is_posted ==0 ) && x.doctor_prof_fee !=null">
-                <!--Patient For Discharge-->
-                <ion-progress-bar value=".75" buffer="0.85"color="warning"></ion-progress-bar>
-                </div>
-                <div *ngIf="x.admission_status == 'DN'  && x.is_posted !=0 && x.doctor_prof_fee !=null">
-                <!--Patient For Discharge-->
-                <ion-progress-bar value="1" color="mango"></ion-progress-bar>
-                </div>
-              <ion-row class="ion-no-padding" lines="none" style="padding-top:10px !important;">
-                <p>
-                  <span *ngIf="x.site == 'C'">
-                    <ion-icon name="location-outline" slot="start"></ion-icon>Chong Hua Hospital
-                  </span>
-                  <span *ngIf="x.site == 'M'">
-                    <ion-icon name="location-outline" slot="start"></ion-icon>Chong Hua Hospital Mandaue
-                  </span><br />
-                    <ion-icon name="bed-outline" slot="start"></ion-icon>Room {{x.room_no}}<br />
-                    <!--ion-icon name="body-outline"></ion-icon>Patient Journey<br /-->
-                  </p>
-                <br />
-              </ion-row>     
-              </ion-label>
-            </ion-item>
-          </ion-card>
+        class="custom-border-bottom ion-no-border"
+      >
+        <app-hospital-selector-with-all-and-filter
+          (hospital)="locationAction($event)"
+        ></app-hospital-selector-with-all-and-filter>
+      </ion-col>
+    </ion-row>
+    <ion-row class="">
+      <ion-col
+        size-md="8"
+        offset-md="2"
+        size-lg="4"
+        offset-lg="4"
+        class="ion-no-border"
+      >
+        <ion-searchbar
+          [(ngModel)]="searchBar"
+          (ionChange)="filterList()"
+          mode="ios"
+        ></ion-searchbar>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-header>
 
-        </div>
-        <div *ngIf="!objecthandler">
-          <ion-list-header slot="center" mode = "ios">
-            No Data Available
-          </ion-list-header>
-        </div>
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
+        <ng-container>
+          <div *ngFor="let x of inPatients">
+            <ion-card (click)="detail(x)" mode="ios">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <text-avatar [text]="x.last_name" [color]=""></text-avatar>
+                </ion-avatar>
+                <ion-label style="margin-top: -5px;">
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="padding-bottom: 5px;"
+                  >
+                    <h2 class="ion-text-wrap" style="padding-top: 20px;">
+                      {{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}
+                    </h2>
+                    <ion-badge
+                      color="warning"
+                      slot="end"
+                      *ngIf="x.admission_status == 'DN' && x.doctor_prof_fee == null && x.is_posted ==null"
+                    >
+                      PF</ion-badge
+                    >
+                    <ion-badge
+                      color="success"
+                      slot="end"
+                      *ngIf="x.doctor_prof_fee != null && x.is_posted !=null"
+                    >
+                      <ion-icon name="checkmark-outline"></ion-icon
+                    ></ion-badge>
+                  </ion-item>
+                  <div *ngIf="x.admission_status == 'AC'">
+                    <!--Patient Admitted-->
+                    <ion-progress-bar
+                      value=".25"
+                      buffer="0.35"
+                      color="warning"
+                    ></ion-progress-bar>
+                  </div>
+                  <div
+                    *ngIf="x.admission_status == 'DN'  && (x.is_posted ==null || x.is_posted ==0 ) && x.doctor_prof_fee ==null"
+                  >
+                    <!--Patient For Discharge-->
+                    <ion-progress-bar
+                      value=".50"
+                      buffer="0.60"
+                      color="warning"
+                    ></ion-progress-bar>
+                  </div>
+                  <div
+                    *ngIf="x.admission_status == 'DN'  && (x.is_posted ==null|| x.is_posted ==0 ) && x.doctor_prof_fee !=null"
+                  >
+                    <!--Patient For Discharge-->
+                    <ion-progress-bar
+                      value=".75"
+                      buffer="0.85"
+                      color="warning"
+                    ></ion-progress-bar>
+                  </div>
+                  <div
+                    *ngIf="x.admission_status == 'DN'  && x.is_posted !=0 && x.doctor_prof_fee !=null"
+                  >
+                    <!--Patient For Discharge-->
+                    <ion-progress-bar
+                      value="1"
+                      color="mango"
+                    ></ion-progress-bar>
+                  </div>
+                  <ion-row
+                    class="ion-no-padding"
+                    lines="none"
+                    style="padding-top: 10px !important;"
+                  >
+                    <p>
+                      <span *ngIf="x.site == 'C'">
+                        <ion-icon
+                          name="location-outline"
+                          slot="start"
+                        ></ion-icon
+                        >Chong Hua Hospital
+                      </span>
+                      <span *ngIf="x.site == 'M'">
+                        <ion-icon
+                          name="location-outline"
+                          slot="start"
+                        ></ion-icon
+                        >Chong Hua Hospital Mandaue </span
+                      ><br />
+                      <ion-icon name="bed-outline" slot="start"></ion-icon>Room
+                      {{x.room_no}}<br />
+                      <!--ion-icon name="body-outline"></ion-icon>Patient Journey<br /-->
+                    </p>
+                    <br />
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+          </div>
+        </ng-container>
+
+        <ng-container>
+          <div
+            *ngIf="!objecthandler && !isFetchDone else noDataAvailable"
+            class="ion-padding custom-skeleton"
+          >
+            <!-- Skeleton  -->
+            <ion-card mode="ios">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="margin-top: -5px;">
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="padding-bottom: 5px;"
+                  >
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%;"
+                    ></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 60%;"
+                  ></ion-skeleton-text>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 40%;"
+                    ></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+
+            <ion-card mode="ios">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="margin-top: -5px;">
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="padding-bottom: 5px;"
+                  >
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%;"
+                    ></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 60%;"
+                  ></ion-skeleton-text>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 40%;"
+                    ></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+
+            <ion-card mode="ios">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="margin-top: -5px;">
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="padding-bottom: 5px;"
+                  >
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%;"
+                    ></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 60%;"
+                  ></ion-skeleton-text>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 40%;"
+                    ></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+
+            <ion-card mode="ios">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="margin-top: -5px;">
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="padding-bottom: 5px;"
+                  >
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%;"
+                    ></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 60%;"
+                  ></ion-skeleton-text>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 40%;"
+                    ></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+
+            <ion-card mode="ios">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="margin-top: -5px;">
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="padding-bottom: 5px;"
+                  >
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%; height: 30px;"
+                    ></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 60%;"
+                  ></ion-skeleton-text>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 40%;"
+                    ></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+          </div>
+        </ng-container>
+
+        <ng-template #noDataAvailable>
+          <div *ngIf="!objecthandler && isFetchDone">
+            <ion-list-header slot="center" mode="ios">
+              No Data Available
+            </ion-list-header>
+          </div>
+        </ng-template>
       </ion-col>
     </ion-row>
   </ion-grid>

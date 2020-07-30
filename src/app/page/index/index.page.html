@@ -1,10 +1,91 @@
-
 <ion-content>
-<ion-grid>
+  <ion-grid>
     <ion-row>
-        <ion-col size-lg="6"  size-md="6" offset-md="3 " size-sm="6" size="12" >
-            <app-slider></app-slider>
-        </ion-col>
+      <ion-col size-lg="6" size-md="6" offset-md="3 " size-sm="6" size="12">
+        <ion-slides pager>
+          <ion-slide>
+            <app-logo></app-logo>
+            <h1><b>Welcome aboard, Doc!</b></h1>
+            <div align="center">
+              <lottie-player
+                src="assets/animations/21474-medical-frontliners.json"
+                mode="bounce"
+                background="transparent"
+                speed="3"
+                style="width: 300px;"
+                loop
+                autoplay
+              ></lottie-player>
+            </div>
+            <h3>
+              We <b>thank you</b> for your courage and service. We truly
+              appreciate it!
+            </h3>
+            <p>Swipe left to see what we've built for you.</p>
+          </ion-slide>
+          <ion-slide>
+            <h1>View your admitted patients.</h1>
+            <div align="center">
+              <lottie-player
+                src="assets/animations/18646-medic-clinic-chh-branding.json"
+                mode="bounce"
+                background="transparent"
+                speed="1"
+                style="width: 300px; height: 300px;"
+                loop
+                autoplay
+              ></lottie-player>
+            </div>
+            <p>
+              You will be notified via SMS when you have patients admitted in
+              the hospital on both sites (Cebu and Mandaue).
+            </p>
+          </ion-slide>
+          <ion-slide>
+            <h1>View patient appointments.</h1>
+            <div align="center">
+              <lottie-player
+                src="assets/animations/11013-animation-feed-chh-branding.json"
+                mode="bounce"
+                background="transparent"
+                speed="1"
+                style="width: 300px; height: 300px;"
+                loop
+                autoplay
+              ></lottie-player>
+            </div>
+            <p>
+              When your patients booked an appointment schedule online, you can
+              now view a list of patients that are expected to visit your
+              clinic.
+            </p>
+          </ion-slide>
+          <ion-slide>
+            <h1>Submit professional fee online.</h1>
+            <div align="center">
+              <lottie-player
+                src="assets/animations/4774-done-chh-branding.json"
+                mode="bounce"
+                background="transparent"
+                speed="1"
+                style="width: 300px; height: 300px;"
+                loop
+                autoplay
+              ></lottie-player>
+            </div>
+            <p>
+              You will be notified via SMS if your patient is about to be
+              discharged. Then, you can submit your professional fee using this
+              app.
+            </p>
+            <ion-row>
+              <ion-col size-lg="2" offset-md="5">
+                <app-start></app-start>
+              </ion-col>
+            </ion-row>
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
     </ion-row>
-</ion-grid>
+  </ion-grid>
 </ion-content>

@@ -1,6 +1,6 @@
 {
-  "name": "app",
-  "short_name": "app",
+  "name": "Doctors' Portal",
+  "short_name": "Doctors' Portal",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
