@@ -29,8 +29,8 @@ export class Tab4Page implements OnInit {
   discharge = "D";
   getTotalCount = {Admitted: "0", ForDischarge: "0", Total: "0"};
 
-
   public logindata:LoginData;
+
   constructor(
     private authService:AuthService,
     private screensizeService: ScreensizeService,
@@ -52,8 +52,16 @@ export class Tab4Page implements OnInit {
   }
   lineChartPopulationForYear(){
 
+    HighCharts.setOptions({
+      chart: {
+        style: {
+            fontFamily: 'Inter'
+        }
+      }
+    });
+
     HighCharts.chart('lineChartForYear',{
-      chart: {height: 300,type: 'column',
+      chart: {renderTo: 'container', height: 300,type: 'column',
       styledMode: true},
       title: {text: '12-Month Trend'},
       xAxis: {categories: this.lineChartxAxisForYear,  labels: {
@@ -93,8 +101,17 @@ export class Tab4Page implements OnInit {
 
   lineChartPopulationForMonth(){
 
+    HighCharts.setOptions({
+      chart: {
+        style: {
+            fontFamily: 'Inter'
+        }
+      }
+    });
+
     HighCharts.chart('lineChartForMonth',{
-      chart: {  
+      chart: {
+        renderTo: 'container',  
         height: 300,  
       type: 'column',
       styledMode: true},

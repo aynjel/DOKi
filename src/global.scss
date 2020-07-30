@@ -25,21 +25,16 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-/*for charts*/
-@import 'https://code.highcharts.com/css/highcharts.css';
-
 /*For Google Web Font*/
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  // src: url(/assets/fonts/Inter/Inter.eot);
-  src: url(./assets/Inter.eot);
-  src: local('Inter'), url(./assets/Inter.eot?#iefix) format('embedded-opentype');
-  // src: local('Inter'), url(/assets/fonts/Inter/Inter.eot?#iefix) format('embedded-opentype');
-}
+// @font-face {
+//   font-family: 'Inter';
+//   font-style: normal;
+//   font-weight: 400;
+//   src: url(./assets/Inter.eot);
+//   src: local('Inter'), url(./assets/Inter.eot?#iefix) format('embedded-opentype');
+// }
 
 /*
 .my-custom-modal-css .modal-wrapper {
@@ -122,10 +117,10 @@ ion-popover{
            // --border-radious: 0px; // This Variable changes the border radious of buttons.
            // button customization css write here...
        }
-       @media (min-width: 768px) {
-           width: 350px;
-           height: 65%;
-       }
+      //  @media (min-width: 768px) {
+      //      width: 350px;
+      //      height: 65%;
+      //  }
    }
 }
 
@@ -245,6 +240,11 @@ ion-toolbar{
 body {
     background-color: var(--background-color);
 }
+
+/*for charts*/
+//@import 'https://code.highcharts.com/css/highcharts.css';
+@import './assets/highcharts/highcharts.css';
+
 .highcharts-background {
     fill: var(--background-color);
 }
