@@ -7640,7 +7640,7 @@ parcelRequire = function(e, r, t, n) {
                 if (!this.shadowRoot) return;
                 const i = {
                     container: this.container,
-                    loop: 8,
+                    loop: 15,
                     autoplay: 1,
                     renderer: this.renderer,
                     rendererSettings: {
