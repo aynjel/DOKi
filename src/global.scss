@@ -121,10 +121,10 @@ ion-popover{
            // --border-radious: 0px; // This Variable changes the border radious of buttons.
            // button customization css write here...
        }
-      //  @media (min-width: 768px) {
-      //      width: 350px;
-      //      height: 65%;
-      //  }
+       @media (min-width: 768px) {
+           width: 350px;
+           height: 65%;
+       }
    }
 }
 
