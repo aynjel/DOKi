@@ -1,7 +1,7 @@
 {
   "name": "Doctors' Portal",
   "short_name": "Doctors' Portal",
-  "theme_color": "#1976d2",
+  "theme_color": "#275228",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
