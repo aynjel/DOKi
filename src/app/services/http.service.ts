@@ -46,6 +46,13 @@ export class HttpService {
   }
  /* for doctors portal */
 
+ getNodeJsServer(){
+  const headers = new HttpHeaders();
+  const options = { headers: headers, withCredintials: false };
+  const url = 'http://localhost:8085/posts';
+  return this.http.get(url);
+ }
+
 
 
 
