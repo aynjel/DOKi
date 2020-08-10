@@ -60,9 +60,4 @@ export class AuthService {
   }*/
   /*For Doctors Portal */
 
-
-  getNodeJs() : Observable<any> {
-    return this.httpService.getNodeJsServer();
-  }
-
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpUrlEncodingCodec } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpUrlEncodingCodec, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment'; 
+import { stringify } from 'querystring';
 
 @Injectable({
   providedIn: 'root'
@@ -21,22 +22,44 @@ export class HttpService {
   /* for doctors portal */
   DoctorsPortalGet(serviceName: string, data1: any) {
     const headers = new HttpHeaders();
-    const options = { headers: headers, withCredintials: false };
-    const url = environment.apiUrlDoctorsPortal + serviceName+data1;
+    const options = { headers: headers, withCredintials: false};
+    const url = environment.apiUrlDoctorsPortal + serviceName + data1;
     return this.http.get(url);
   }
+
+  // getNodeJsServer(){
+  //   const headers = new HttpHeaders();
+  //   const options = { headers: headers, withCredintials: false};
+  //   const params = new HttpParams()
+  //     .set('drcode', 'MD000077')
+  //     .set('birthday', encodeURIComponent('09/07/1961'));
+  //     //{fromString: 'drcode=MD000077&birthday=09/07/1961'}
+  //   //);
+
+  //   const url = environment.apiRouterTestUrl + '/Login/Get?' + params.toString();
+  //   console.log(url);
+
+  //   return this.http.get(url, options);
+  //  }
+
   DoctorsPortalPostJSON(serviceName: string, data: any) {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
     const options = { headers: headers, withCredintials: false };
+
     const url = environment.apiUrlDoctorsPortal + serviceName;
+    //const url = environment.apiUrlDoctorsPortal + serviceName;
+    console.log(data);
+    console.log(JSON.stringify(data));
     return this.http.post(url, JSON.stringify(data), options);
   }
+
   DoctorsPortalPutJSON(serviceName: string, data: any) {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
     const options = { headers: headers, withCredintials: false };
     const url = environment.apiUrlDoctorsPortal + serviceName;
     return this.http.put(url, JSON.stringify(data), options);
   }
+
   DoctorsPortalDelete(serviceName: string, data: any) {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
     const options = { headers: headers, withCredintials: false };
@@ -46,12 +69,7 @@ export class HttpService {
   }
  /* for doctors portal */
 
- getNodeJsServer(){
-  const headers = new HttpHeaders();
-  const options = { headers: headers, withCredintials: false };
-  const url = 'http://localhost:8085/posts';
-  return this.http.get(url);
- }
+ 
 
 
 
@@ -68,7 +86,7 @@ export class HttpService {
 AppointmentsGet(serviceName: string, data1: any) {
   const headers = new HttpHeaders();
   const options = { headers: headers, withCredintials: false };
-  const url = environment.apiUrl + serviceName+data1;
+  const url = environment.apiUrl + serviceName + data1;
   return this.http.get(url);
 }
 
@@ -82,7 +100,7 @@ AppointmentsPut(serviceName: string, data1: any) {
 
   const headers = new HttpHeaders();
   const options = { headers: headers, withCredintials: false };
-  const url = environment.apiUrl + serviceName+data1;
+  const url = environment.apiUrl + serviceName + data1;
   return this.http.put(url, options);
 }
 

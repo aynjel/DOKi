@@ -64,29 +64,34 @@ export class DoctorService {
   getInPatient(postData1: any){
     return this.httpService.DoctorsPortalGet('Inpatient/Get/', postData1);
   }
+
   getCoDoctors(postData1: any){
     return this.httpService.DoctorsPortalGet('Inpatient/CoDoctors/', postData1);
   }
+
   getYearHistoryGraph(postData1: any){
     return this.httpService.DoctorsPortalGet('Inpatient/YearHistoryGraph/', postData1);
   }
+
   getTotalCount(postData1: any){
     return this.httpService.DoctorsPortalGet('Inpatient/TotalCount/', postData1);
   }
+
   MonthHistoryGraph(postData1: any){
     return this.httpService.DoctorsPortalGet('Inpatient/MonthHistoryGraph/', postData1);
   }
 
   insertPF(data1:any){
+    return this.httpService.DoctorsPortalPostJSON('ProfFee/Insert', data1);
+  }
 
-    return this.httpService.DoctorsPortalPostJSON('ProfFee/Insert',data1);
-  }
   updatePF(data1:any){
-    return this.httpService.DoctorsPortalPutJSON('ProfFee/Update',data1);   
+    return this.httpService.DoctorsPortalPutJSON('ProfFee/Update', data1);   
   }
+
   DeletePf(data1:any,data2:any){
-    let x = "?accountno="+data1+"&drstatuscode="+data2;
-    return this.httpService.DoctorsPortalDelete('ProfFee/Delete',x);   
+    let x = "?accountno=" + data1 + "&drstatuscode=" + data2;
+    return this.httpService.DoctorsPortalDelete('ProfFee/Delete', x);   
   }
   /* for doctors Portal */
 }

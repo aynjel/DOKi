@@ -57,25 +57,6 @@ export class LoginPage implements OnInit {
     }
     async Alert(data1:any,data2:any) {const alert = await this.alertController.create({cssClass: 'my-custom-class',message: data1,buttons: [{text: data2,handler: () => {}}]});await alert.present();}
     loginAction() {
-
-        // test node server
-        this.authService.getNodeJs().subscribe(
-          (res: any) => {
-
-            console.log(res);
-
-          },error =>{
-            this.btnDisable = false;
-            this.Alert('Server Error','Okay');
-           // this.toast.presentToast('Server Error');
-           console.log("ERROR......");
-          },()=>{
-            //this.btnDisable = false;
-            console.log("done.....");
-          });
-
-        //console.log(",,,,,,,,,,,,,,,,,,,,,,");
-
         this.btnDisable = true;
         this.authService.doctorsPortalLogin(this.postData.username, this.postData.password).subscribe(
           (res: any) => {
@@ -83,8 +64,7 @@ export class LoginPage implements OnInit {
             if(res != ""){
               this.logindata = <LoginData>res;
               this.storageService.store(AuthConstants.AUTH, this.logindata);
- 
-              //
+
               this.router.navigate(['/menu/dashboard']);
             }else{
               this.Alert('Incorrect Authentication Details.','Okay');
