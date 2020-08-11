@@ -2,7 +2,9 @@
   <div *ngIf="!isDesktop">
     <ion-toolbar color="mango">
       <ion-title>
-        <ion-icon name="person-circle-outline"></ion-icon> In-Patients
+        <ion-icon name="person-circle-outline"></ion-icon> In-Patients <ion-text style="font-size:14px">
+          {{admittedOrDischargeLabel}}
+        </ion-text>
       </ion-title>
     </ion-toolbar>
     <ion-fab horizontal="end" vertical="top" slot="fixed" *ngIf="!isDesktop">
