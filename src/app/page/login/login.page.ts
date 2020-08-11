@@ -63,12 +63,9 @@ export class LoginPage implements OnInit {
             console.log('res :');
             console.log(res);
             if(res.length != "0"){
-
               if(res.Message){
                 this.Alert(res.Message,'Okay');
               }else{
-
-         
               this.logindata = <LoginData>res;
               this.storageService.store(AuthConstants.AUTH, this.logindata);
               this.router.navigate(['/menu/dashboard']);
