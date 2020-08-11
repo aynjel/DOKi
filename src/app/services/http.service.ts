@@ -45,26 +45,24 @@ export class HttpService {
   DoctorsPortalPostJSON(serviceName: string, data: any) {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
     const options = { headers: headers, withCredintials: false };
-
     const url = environment.apiUrlDoctorsPortal + serviceName;
-    //const url = environment.apiUrlDoctorsPortal + serviceName;
-    console.log(data);
-    console.log(JSON.stringify(data));
-    return this.http.post(url, JSON.stringify(data), options);
+    //return this.http.post(url, JSON.stringify(data), options);
+    return this.http.post(url, data, options);
   }
 
   DoctorsPortalPutJSON(serviceName: string, data: any) {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
     const options = { headers: headers, withCredintials: false };
     const url = environment.apiUrlDoctorsPortal + serviceName;
-    return this.http.put(url, JSON.stringify(data), options);
+    //return this.http.put(url, JSON.stringify(data), options);
+    return this.http.put(url, data, options);
   }
 
   DoctorsPortalDelete(serviceName: string, data: any) {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
     const options = { headers: headers, withCredintials: false };
-    const url = environment.apiUrlDoctorsPortal + serviceName+data;
-    console.log("url : "+url);
+    const url = environment.apiUrlDoctorsPortal + serviceName + data;
+    console.log("url : " + url);
     return this.http.delete(url, options);
   }
  /* for doctors portal */

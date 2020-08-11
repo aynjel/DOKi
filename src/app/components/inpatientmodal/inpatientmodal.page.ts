@@ -142,17 +142,17 @@ export class InpatientmodalPage implements OnInit {
         // this.doctorService.insertPF(this.postData);
         if (x == "POST") {
           this.doctorService.insertPF(this.postData).subscribe((res: any) => {
-            this.Alert("Successfully SAVED the Professional Fee.", "Okay");
+            this.Alert("Thank you, Doc! You have successfully SAVED your Professional Fee.", "Okay");
           });
         } else if (x == "PUT") {
           this.doctorService.updatePF(this.postData).subscribe((res: any) => {
-            this.Alert("Successfully UPDATED the Professional Fee.", "Okay");
+            this.Alert("Successfully UPDATED your Professional Fee.", "Okay");
           });
         } else if (x == "DELETE") {
           this.doctorService
             .DeletePf(this.postData.AdmisisonNo, this.postData.DoctorStatusCode)
             .subscribe((res: any) => {
-              this.Alert("Successfully DELETED the Professional Fee.", "Okay");
+              this.Alert("Successfully DELETED your Professional Fee.", "Okay");
             });
         }
 

@@ -23,7 +23,6 @@ export class FeePage implements OnInit {
   }
   ClosePopover()
   {
-    console.log('hehe');
    this.popover.dismiss(this.postData);
   }
   test(){
