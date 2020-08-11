@@ -5,7 +5,6 @@
   </ion-toolbar>
 </ion-header-->
 
-
 <!--ion-header mode="md" role="banner" class="ios header-ios header-translucent header-collapse-none header-translucent-ios hydrated"><div class="header-background"></div>
   <ion-toolbar class="in-toolbar ios toolbar-title-default hydrated" color="mango">
     <ion-title class="ios title-default hydrated">Patient Detail</ion-title>
@@ -20,216 +19,245 @@
     <ion-button (click)="closeModal()" routerDirection="back" class="ios button button-clear ion-activatable ion-focusable hydrated" color="danger">Close</ion-button>
   </ion-buttons>
 </ion-toolbar-->
-<ion-header mode="md" class="ion-no-border">
 
-  <ion-toolbar  color="mango" >
-    <ion-title>
-       Patient Information
-    </ion-title>
-    <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated" >
-      <ion-button (click)="closeModal()" color="chh-css-primary2">Close&nbsp; <ion-icon name="close-outline"></ion-icon></ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-
-
-</ion-header>
-
-
-<ion-content>
-<!--
-<ion-item>
-<ion-label>
-  <b>{{data.last_name}}, {{data.first_name}} {{data.middle_name}}</b>
-</ion-label>
-</ion-item>
-<ion-item>
-<ion-label>
-  Admission Date : {{data.admission_date }}
-</ion-label>
-</ion-item>
-<ion-item>
-<ion-label>
-  Admission Status : {{data.admission_status}}
-</ion-label>
-</ion-item>
-<ion-item>
-<ion-label>
-  <div *ngIf="data.site == 'C'">
-    Location : Chong Hua Hospital (Cebu City)<br />
-  </div>
-  <div *ngIf="data.site == 'M'">
-    Location : Chong Hua Hospital Mandaue
-  </div> 
-</ion-label>
-</ion-item>
-<ion-item>
-<ion-label>
-  Room No. : {{data.room_no}}
-</ion-label>
-</ion-item>
-<ion-item button (click)='detail(data.admission_no)'  detail>
-<ion-label >
-  <b>Doctor's Fee :  {{professionalFee}}</b>
-</ion-label>
-</ion-item>
-<ion-item>
-<ion-label>
-  <b>Remarks : {{remarks}}</b>
-</ion-label>
-</ion-item>
-<ion-item-divider></ion-item-divider>
-<ion-item>
-<p>
-  <b>Primary Attending Pysician</b><br />
-  &nbsp;&nbsp;&nbsp;Dr. Reginita Uy<br />
-  <b>Co-Manage</b><br />
-  &nbsp;&nbsp;&nbsp;Dr. Joel Yu<br />
-  &nbsp;&nbsp;&nbsp;Dr. Gary Galon
-</p>
-</ion-item>
+<!-- 
+ooooooooo.                 .    o8o                            .  
+`888   `Y88.             .o8    `"'                          .o8  
+ 888   .d88'  .oooo.   .o888oo oooo   .ooooo.  ooo. .oo.   .o888oo
+ 888ooo88P'  `P  )88b    888   `888  d88' `88b `888P"Y88b    888  
+ 888          .oP"888    888    888  888ooo888  888   888    888  
+ 888         d8(  888    888 .  888  888    .o  888   888    888 .
+o888o        `Y888""8o   "888" o888o `Y8bod8P' o888o o888o   "888" 
 -->
 
-
-
-
-<ion-card mode="ios">
-<ion-list>
-  <ion-item lines="none">
-    <!--ion-avatar slot="start">
+<ion-header mode="md" class="ion-no-border">
+  <ion-toolbar color="mango">
+    <ion-title>
+      Patient Information
+    </ion-title>
+    <ion-buttons
+      slot="end"
+      class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated"
+    >
+      <ion-button (click)="closeModal()" color="chh-css-primary2"
+        >Close&nbsp; <ion-icon name="close-outline"></ion-icon
+      ></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card mode="ios">
+    <ion-list>
+      <ion-item lines="none">
+        <!--ion-avatar slot="start">
       <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg">
     </ion-avatar-->
-    <ion-avatar slot="start">
-      <text-avatar [text]="data.last_name" [color]=""></text-avatar>
-    </ion-avatar>
-    <ion-label>
-      <ion-item class="ion-no-padding" >
-        <h2 class="ion-text-wrap " style="padding-top:20px">{{data.last_name}}, {{data.first_name}} {{data.middle_name}}</h2>
-        <ion-badge
-        color="warning"
-        slot="end"
-        *ngIf="data.admission_status == 'DN' && data.doctor_prof_fee == null && data.is_posted ==null" >
-        PF</ion-badge>
-      <ion-badge
-        color="success"
-        slot="end"
-        *ngIf="data.doctor_prof_fee != null && data.is_posted !=null">
-        PF OK</ion-badge>
-      </ion-item>
-      <div class="ion-text-wrap" style="padding-top:5px">
-        <div *ngIf="data.site == 'C'">
-          <ion-icon name="location-outline" slot="start"></ion-icon>
-          Chong Hua Hospital
-        </div>
-        <div  *ngIf="data.site == 'M'">
-          <ion-icon name="location-outline" slot="start"></ion-icon>
-          Chong Hua Hospital Mandaue
-        </div>
-        <div>
-          <ion-icon name="bed-outline" slot="start"></ion-icon>
-          Room {{data.room_no}}
-          <ion-badge *ngIf="data.admission_status == 'AC'"
+        <ion-avatar slot="start">
+          <text-avatar [text]="data.last_name" [color]=""></text-avatar>
+        </ion-avatar>
+        <ion-label>
+          <ion-item class="ion-no-padding">
+            <h2 class="ion-text-wrap" style="padding-top: 20px;">
+              {{data.last_name}}, {{data.first_name}} {{data.middle_name}}
+            </h2>
+            <ion-badge
+              color="warning"
+              slot="end"
+              *ngIf="data.admission_status == 'DN' && data.doctor_prof_fee == null && data.is_posted ==null"
+            >
+              PF</ion-badge
+            >
+            <ion-badge
+              color="success"
+              slot="end"
+              *ngIf="data.doctor_prof_fee != null && data.is_posted !=null"
+            >
+              PF OK</ion-badge
+            >
+          </ion-item>
+          <div class="ion-text-wrap" style="padding-top: 5px;">
+            <div *ngIf="data.site == 'C'">
+              <ion-icon name="location-outline" slot="start"></ion-icon>
+              Chong Hua Hospital
+            </div>
+            <div *ngIf="data.site == 'M'">
+              <ion-icon name="location-outline" slot="start"></ion-icon>
+              Chong Hua Hospital Mandaue
+            </div>
+            <div>
+              <ion-icon name="bed-outline" slot="start"></ion-icon>
+              Room {{data.room_no}}
+
+              <ion-chip *ngIf="data.admission_status == 'AC'">
+                <ion-label color="mango"><b>Admitted</b></ion-label>
+              </ion-chip>
+
+              <!-- <ion-badge *ngIf="data.admission_status == 'AC'"
             color="mango"
             slot="end">
             Admitted
-          </ion-badge>
-          <ion-badge *ngIf="data.admission_status == 'DN'"
+          </ion-badge> -->
+
+              <ion-chip *ngIf="data.admission_status == 'DN'">
+                <ion-label color="mango"><b>For Discharge</b></ion-label>
+              </ion-chip>
+
+              <!-- <ion-badge *ngIf="data.admission_status == 'DN'"
             color="mango"
             slot="end">
             For Discharge
-          </ion-badge>
-        </div>
-
-    </div>
-
-    </ion-label>
-  </ion-item>
-  <ion-item lines="none" style="padding-bottom: 10px;">
-  <div class="ion-text-wrap">
-    <!-- <ion-text *ngIf="data.admission_status == 'AC'">Status : Admitted </ion-text>  -->
-
-    <!-- <ion-text *ngIf="data.admission_status == 'DN'">Status : For Discharge<br /></ion-text> -->
-    <ion-icon name="calendar-outline"></ion-icon><ion-text> Admission Date : {{data.admission_date}}</ion-text>
-  </div>
-  </ion-item>
-</ion-list>
-</ion-card>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <ion-card mode="ios" *ngIf="data.admission_status == 'DN'">
-    <ion-list>
-      
-      <ion-item style="padding-top: 10px;">
+          </ion-badge> -->
+            </div>
+          </div>
+        </ion-label>
+      </ion-item>
+      <ion-item lines="none" style="padding-bottom: 10px;">
         <div class="ion-text-wrap">
-          <b>Professional Fee</b><br />
+          <!-- <ion-text *ngIf="data.admission_status == 'AC'">Status : Admitted </ion-text>  -->
+
+          <!-- <ion-text *ngIf="data.admission_status == 'DN'">Status : For Discharge<br /></ion-text> -->
+          <ion-icon name="calendar-outline"></ion-icon
+          ><ion-text> Admission Date : {{data.admission_date}}</ion-text>
         </div>
       </ion-item>
-      <ion-item style="padding-top: 10px;" lines="none">
-        <div class="ion-text-wrap">
-          <ion-text style="padding-top: 15px;">Amount : {{professionalFee}}<br /></ion-text>
-          <ion-text class="ion-text-wrap " >Remarks : {{remarks}}</ion-text>
-        </div>
-      </ion-item>
-      <ion-item lines="none"> 
-        
-        <ion-grid class="ion-no-padding">
-          <ion-row >
-            <ion-col size-xs="12" >
-              <ion-button expand="block" shape="round" (click)='detail(data.admission_no)' color="mango" *ngIf="data.is_posted == 0 || data.is_posted == null">UPDATE</ion-button>
-            </ion-col>
-
-          </ion-row>
-        </ion-grid>
-     </ion-item> 
-
     </ion-list>
   </ion-card>
 
+  <!-- 
+ooooooooo.                       .o88o.    oooooooooooo                    
+`888   `Y88.                     888 `"    `888'     `8                    
+ 888   .d88' oooo d8b  .ooooo.  o888oo      888          .ooooo.   .ooooo. 
+ 888ooo88P'  `888""8P d88' `88b  888        888oooo8    d88' `88b d88' `88b
+ 888          888     888   888  888        888    "    888ooo888 888ooo888
+ 888          888     888   888  888        888         888    .o 888    .o
+o888o        d888b    `Y8bod8P' o888o      o888o        `Y8bod8P' `Y8bod8P' 
+-->
 
+  <ion-card mode="ios" *ngIf="data.admission_status == 'DN'">
+    <ion-list>
+      <ion-item style="padding-top: 10px;">
+        <div class="ion-text-wrap"><b>Professional Fee</b><br /></div>
+      </ion-item>
+      <ion-item style="padding-top: 10px;" lines="none">
+        <div class="ion-text-wrap">
+          <ion-text style="padding-top: 15px;"
+            >Amount : {{professionalFee}}<br
+          /></ion-text>
+          <ion-text class="ion-text-wrap">Remarks : {{remarks}}</ion-text>
+        </div>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-grid class="ion-no-padding">
+          <ion-row>
+            <ion-col size-xs="12">
+              <ion-button
+                expand="block"
+                shape="round"
+                (click)="detail(data.admission_no)"
+                color="mango"
+                *ngIf="data.is_posted == 0 || data.is_posted == null"
+                >UPDATE</ion-button
+              >
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </ion-card>
 
+  <!-- 
+  oooooooooo.                           .                              
+  `888'   `Y8b                        .o8                              
+   888      888  .ooooo.   .ooooo.  .o888oo  .ooooo.  oooo d8b  .oooo.o
+   888      888 d88' `88b d88' `"Y8   888   d88' `88b `888""8P d88(  "8
+   888      888 888   888 888         888   888   888  888     `"Y88b. 
+   888     d88' 888   888 888   .o8   888 . 888   888  888     o.  )88b
+  o888bood8P'   `Y8bod8P' `Y8bod8P'   "888" `Y8bod8P' d888b    8""888P'
+-->
 
-
-<ion-card mode="ios">
-  <ion-list>
-    <ion-item style="padding-top: 10px;">
-      <div class="ion-text-wrap">
-        <b>Doctors</b><br />
-      </div>
-    </ion-item>
-    <ion-item lines="none" *ngFor="let dr of coDoctors">
-      <ion-avatar slot="start">
-        <text-avatar [text]="dr.last_name" [color]=""></text-avatar>
-      </ion-avatar>
-      <ion-label style="margin-top:-10px">
-        <ion-item class="ion-no-padding" style="padding-bottom:5px">
-          <h3 class="ion-text-wrap" style="padding-top:20px">Dr. {{dr.first_name}} {{dr.last_name}}</h3>
+  <ion-card mode="ios">
+    <ion-list>
+      <ion-item style="padding-top: 10px;">
+        <div class="ion-text-wrap"><b>Doctors</b><br /></div>
+      </ion-item>
+      <ng-container>
+        <ion-item lines="none" *ngFor="let dr of coDoctors">
+          <ion-avatar slot="start">
+            <text-avatar [text]="dr.last_name" [color]=""></text-avatar>
+          </ion-avatar>
+          <ion-label style="margin-top: -10px;">
+            <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+              <h3 class="ion-text-wrap" style="padding-top: 20px;">
+                Dr. {{dr.first_name}} {{dr.last_name}}
+              </h3>
+            </ion-item>
+            <ion-badge color="medium"> {{dr.status}}</ion-badge>
+          </ion-label>
         </ion-item>
-        <ion-badge
-        color="medium" >
-        {{dr.status}}</ion-badge>
-        </ion-label>
-    </ion-item>
+      </ng-container>
 
+      <ng-container>
+        <div
+          *ngIf="!objecthandler && !isFetchDone else noDataAvailable"
+          class="ion-padding custom-skeleton"
+        >
+          <!-- Skeleton  -->
+          <ion-item>
+            <ion-avatar slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-avatar>
+            <ion-label style="margin-top: -10px;">
+              <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-item>
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-avatar slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-avatar>
+            <ion-label style="margin-top: -10px;">
+              <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-item>
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-avatar slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-avatar>
+            <ion-label style="margin-top: -10px;">
+              <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-item>
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-avatar slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-avatar>
+            <ion-label style="margin-top: -10px;">
+              <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-item>
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-label>
+          </ion-item>
+        </div>
+      </ng-container>
 
+      <ng-template #noDataAvailable>
+        <div *ngIf="!objecthandler && isFetchDone">
+          <ion-list-header slot="center" mode="ios">
+            Cannot retrieve list of Doctors at this time. Please retry.
+          </ion-list-header>
+        </div>
+      </ng-template>
 
-
-    <!--ion-item lines="none">
+      <!--ion-item lines="none">
       <ion-avatar slot="start">
         <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg">
       </ion-avatar>
@@ -264,22 +292,10 @@
         <div class="ion-text-wrap" style="padding-top:5px"><p>Co - Manage</p></div>
         </ion-label>
     </ion-item-->
-  </ion-list>
-</ion-card>
+    </ion-list>
+  </ion-card>
 
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
+  <!--
 
 
 <ion-card>
@@ -381,19 +397,7 @@
 
 </ion-card>
 -->
-
-
-
-
-
-
-
-
-
-
-
 </ion-content>
-
 
 <!--ion-card>
 <ion-item>
