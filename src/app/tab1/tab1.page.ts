@@ -115,7 +115,7 @@ export class Tab1Page {
           e.middle_name +
           " " +
           e.last_name;
-        if (this.name.toLowerCase().includes(this.searchBar)) {
+        if (this.name.toLowerCase().includes(this.searchBar.toLowerCase())) {
           this.inPatients.push(e);
         }
       });
