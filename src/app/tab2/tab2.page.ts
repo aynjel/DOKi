@@ -93,7 +93,7 @@ export class Tab2Page {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
       message:
-        "Are you sure you want to delete <strong>" + data1 + "</strong> ?",
+        "Are you sure you want to delete <strong>" + data1 + "</strong>'s appointment?",
       buttons: [
         { text: "Cancel", role: "cancel", cssClass: "secondary" },
         {
