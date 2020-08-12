@@ -5,11 +5,13 @@ import { from } from "rxjs";
 import { PopoverController } from "@ionic/angular";
 import { timeStamp } from "console";
 import { DoctorService } from "src/app/services/doctor.service";
+
 @Component({
   selector: "app-inpatientmodal",
   templateUrl: "./inpatientmodal.page.html",
   styleUrls: ["./inpatientmodal.page.scss"],
 })
+
 export class InpatientmodalPage implements OnInit {
   @Input() data: any;
   site: any;
@@ -26,6 +28,7 @@ export class InpatientmodalPage implements OnInit {
     private doctorService: DoctorService,
     public alertController: AlertController
   ) {}
+
   postData = {
     AdmisisonNo: "string",
     DoctorCode: "string",
@@ -36,6 +39,7 @@ export class InpatientmodalPage implements OnInit {
     CreatedBy: "string",
     Remarks: "string",
   };
+
   coDoctorData = {
     first_name: "string",
     last_name: "string",
@@ -43,6 +47,7 @@ export class InpatientmodalPage implements OnInit {
     mobile_no: "string",
     dept_short_desc: "string",
   };
+
   async Alert(data1: any, data2: any) {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
@@ -51,6 +56,7 @@ export class InpatientmodalPage implements OnInit {
     });
     await alert.present();
   }
+
   ngOnInit() {
     this.data.admission_date = this.explodeDate(this.data.admission_date);
     if (this.data.site == "C") {
@@ -129,7 +135,12 @@ export class InpatientmodalPage implements OnInit {
     popover.present();
     return popover.onDidDismiss().then((data: any) => {
       if (data) {
-        console.log(data.data.professionalFee);
+        console.log('[inpatientmodal] ------ Fee PopOver Dismissed --------.');
+        console.log('[inpatientmodal] popOverDismiss->data.data.professionalFee: ' + data.data.professionalFee);
+        console.log('[inpatientmodal] popOverDismiss->data.data.remarks: ' + data.data.remarks);
+        console.log('[inpatientmodal] popOverDismiss->data.data.method: ' + data.data.method);
+        console.log('[inpatientmodal] Values above are bounded to UI.');
+
         this.professionalFee = data.data.professionalFee;
         this.remarks = data.data.remarks;
 

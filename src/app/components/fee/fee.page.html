@@ -17,13 +17,13 @@
   </ion-item-->
   <ion-item>
     <ion-label position="fixed">Fee</ion-label>
-    <ion-input type="number" id="input-professionalFee" ngModel="postData.professionalFee" placeholder="0.00" value="{{professionalFee}}" autocomplete  (ionChange)="test()" ></ion-input>
+    <ion-input type="number" id="input-professionalFee" ngModel="postData.professionalFee" placeholder="0.00" value="{{professionalFee}}" autocomplete  (ionChange)="feeInputChanged()" ></ion-input>
 
 </ion-item>
 
 <ion-item>
   <ion-label position="fixed">Remarks</ion-label>
-  <ion-textarea  type="text" id="input-remarks" value="{{remarks}}" maxlength="50"></ion-textarea>
+  <ion-textarea  type="text" id="input-remarks" value="{{remarks}}" maxlength="50" (ionChange)="feeInputChanged()"></ion-textarea>
 </ion-item>
 
 
@@ -31,7 +31,7 @@
   <ion-grid >
     <ion-row >
       <ion-col size-xs="6" >
-        <ion-button expand="block"shape="round"  id="btn-confirm" (click)="save()" color="mango">
+        <ion-button expand="block"shape="round"  id="btn-confirm" (click)="save()" color="mango" [disabled]="!disableSaveBtn" >
           Save
         </ion-button>
       </ion-col>
