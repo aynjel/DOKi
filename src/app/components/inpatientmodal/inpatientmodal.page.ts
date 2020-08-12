@@ -11,7 +11,6 @@ import { DoctorService } from "src/app/services/doctor.service";
   templateUrl: "./inpatientmodal.page.html",
   styleUrls: ["./inpatientmodal.page.scss"],
 })
-
 export class InpatientmodalPage implements OnInit {
   @Input() data: any;
   site: any;
@@ -83,6 +82,7 @@ export class InpatientmodalPage implements OnInit {
     let coDoctors1 = [];
     let coDoctors2 = [];
     let coDoctors3 = [];
+
     //"status": "Primary Attending Physician"
     this.isFetchDone = false;
     this.doctorService.getCoDoctors(this.data.admission_no).subscribe(
@@ -119,7 +119,8 @@ export class InpatientmodalPage implements OnInit {
   dateChanged(data1: any) {
     //  console.log("changed data: "+data1);
   }
-  //popup for fee
+
+  // Prof Fee Pop Over
   async detail(data: any) {
     console.log("Detail : " + this.method);
     const popover = await this.popover.create({
@@ -135,12 +136,6 @@ export class InpatientmodalPage implements OnInit {
     popover.present();
     return popover.onDidDismiss().then((data: any) => {
       if (data) {
-        console.log('[inpatientmodal] ------ Fee PopOver Dismissed --------.');
-        console.log('[inpatientmodal] popOverDismiss->data.data.professionalFee: ' + data.data.professionalFee);
-        console.log('[inpatientmodal] popOverDismiss->data.data.remarks: ' + data.data.remarks);
-        console.log('[inpatientmodal] popOverDismiss->data.data.method: ' + data.data.method);
-        console.log('[inpatientmodal] Values above are bounded to UI.');
-
         this.professionalFee = data.data.professionalFee;
         this.remarks = data.data.remarks;
 
@@ -149,11 +144,13 @@ export class InpatientmodalPage implements OnInit {
         this.postData.DateCreated = this.getDateTime();
 
         let x = data.data.method;
-        //console.log("METHOD :" + x);
-        // this.doctorService.insertPF(this.postData);
+
         if (x == "POST") {
           this.doctorService.insertPF(this.postData).subscribe((res: any) => {
-            this.Alert("Thank you, Doc! You have successfully SAVED your Professional Fee.", "Okay");
+            this.Alert(
+              "Thank you, Doc! You have successfully SAVED your Professional Fee.",
+              "Okay"
+            );
           });
         } else if (x == "PUT") {
           this.doctorService.updatePF(this.postData).subscribe((res: any) => {
@@ -166,10 +163,6 @@ export class InpatientmodalPage implements OnInit {
               this.Alert("Successfully DELETED your Professional Fee.", "Okay");
             });
         }
-
-        //this.data.doctor_prof_fee = data.professionalFee;
-        //console.log("+++++"+JSON.stringify(data));
-        // trigger here the method dependind on the popover response
       }
     });
   }
@@ -208,7 +201,7 @@ export class InpatientmodalPage implements OnInit {
   addZeroBefore(n) {
     return (n < 10 ? "0" : "") + n;
   }
-  
+
   explodeDate(data: any) {
     let myarr = data.split("T");
     if (myarr[1]) {
