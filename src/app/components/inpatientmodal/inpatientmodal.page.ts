@@ -122,7 +122,7 @@ export class InpatientmodalPage implements OnInit {
 
   // Prof Fee Pop Over
   async detail(data: any) {
-    console.log("Detail : " + this.method);
+    //console.log("Detail : " + this.method);
     const popover = await this.popover.create({
       component: FeePage,
       showBackdrop: true,

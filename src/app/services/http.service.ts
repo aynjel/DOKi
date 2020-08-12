@@ -62,7 +62,6 @@ export class HttpService {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
     const options = { headers: headers, withCredintials: false };
     const url = environment.apiUrlDoctorsPortal + serviceName + data;
-    console.log("url : " + url);
     return this.http.delete(url, options);
   }
  /* for doctors portal */

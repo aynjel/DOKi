@@ -51,10 +51,6 @@ export class FeePage implements OnInit {
       document.getElementById("input-remarks")
     )).value;
 
-    console.log(feePopOverProfFeeInput);
-    console.log(this.remarks);
-    console.log(feePopOverRemarksInput);
-
     if (
       (this.professionalFee == feePopOverProfFeeInput &&
         this.remarks == feePopOverRemarksInput) ||
