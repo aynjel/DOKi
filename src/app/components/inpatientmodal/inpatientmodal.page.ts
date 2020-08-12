@@ -200,7 +200,9 @@ export class InpatientmodalPage implements OnInit {
   
   explodeDate(data: any) {
     let myarr = data.split("T");
-    let myarr2 = myarr[1].split(".");
-    return myarr[0] + " | " + myarr2[0];
+    if (myarr[1]) {
+      let myarr2 = myarr[1].split(".");
+      return myarr[0] + " | " + myarr2[0];
+    }
   }
 }
