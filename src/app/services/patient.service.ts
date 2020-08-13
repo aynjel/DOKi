@@ -27,7 +27,7 @@ export class PatientService {
   ): Observable<any> {
     /*const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
-    const url = environment.apiUrl + "Schedules?Drcode="+postData1+"&ApptDate="+postData2+"&Site="+postData3;
+    const url = environment.apiRouterUrl + "Schedules?Drcode="+postData1+"&ApptDate="+postData2+"&Site="+postData3;
     return this.http.get(url, options);*/
     let data =
       "Drcode=" + postData1 + "&ApptDate=" + postData2 + "&Site=" + postData3;
@@ -37,7 +37,7 @@ export class PatientService {
   retrieveMTWTFSS(postData1: any, postData2: any): Observable<any> {
     /* const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
-    const url = environment.apiUrl + "DoctorSchedMaster/DocSchedMaster/"+postData1+"/"+postData2;
+    const url = environment.apiRouterUrl + "DoctorSchedMaster/DocSchedMaster/"+postData1+"/"+postData2;
     console.log(url);
     return this.http.get(url, options);
 */
@@ -48,7 +48,7 @@ export class PatientService {
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     
-    const url = environment.apiUrl + "Schedules?Drcode="+postData1+"&ApptDate="+postData2+"&Site="+postData3;
+    const url = environment.apiRouterUrl + "Schedules?Drcode="+postData1+"&ApptDate="+postData2+"&Site="+postData3;
     console.log("URL : "+url);
     return this.http.get(url, options);
   }*/
@@ -66,7 +66,7 @@ export class PatientService {
     postData10: any,
     postData11: any
   ): Observable<any> {
-    /*onst url = environment.apiUrl + "InsertCMAAppt?username=&drcode="+postData1+
+    /*onst url = environment.apiRouterUrl + "InsertCMAAppt?username=&drcode="+postData1+
     "&app_date="+postData2+
     "&timedesc="+postData3+
     "&remarks=Reserved"+
@@ -111,7 +111,7 @@ export class PatientService {
     /* console.log(JSON.stringify(postData));
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
         const options = { headers: headers, withCredintials: false };
-        const url = environment.apiUrl + 'CMAAppointmentMaster';
+        const url = environment.apiRouterUrl + 'CMAAppointmentMaster';
         return this.http.post(url, JSON.stringify(postData), options);*/
     return this.httpService.AppointmentsPostJSON(
       "CMAAppointmentMaster",
@@ -126,7 +126,7 @@ export class PatientService {
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     const url =
-      environment.apiUrl +
+      environment.apiRouterUrl +
       "CMAAppointmentMaster?ApptId=" +
       postData1 +
       "&ApptStatus=6&ApptRemarks=Cancelled";
@@ -137,7 +137,7 @@ export class PatientService {
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     const url =
-      environment.apiUrl +
+      environment.apiRouterUrl +
       "CMAAppointmentMaster/GetCMAAppointmentMaster/" +
       postData1;
     return this.http.get(url, options);
