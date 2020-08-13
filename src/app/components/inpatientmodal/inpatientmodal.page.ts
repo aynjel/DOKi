@@ -5,6 +5,7 @@ import { from } from "rxjs";
 import { PopoverController } from "@ionic/angular";
 import { timeStamp } from "console";
 import { DoctorService } from "src/app/services/doctor.service";
+
 @Component({
   selector: "app-inpatientmodal",
   templateUrl: "./inpatientmodal.page.html",
@@ -26,6 +27,7 @@ export class InpatientmodalPage implements OnInit {
     private doctorService: DoctorService,
     public alertController: AlertController
   ) {}
+
   postData = {
     AdmisisonNo: "string",
     DoctorCode: "string",
@@ -36,6 +38,7 @@ export class InpatientmodalPage implements OnInit {
     CreatedBy: "string",
     Remarks: "string",
   };
+
   coDoctorData = {
     first_name: "string",
     last_name: "string",
@@ -43,6 +46,7 @@ export class InpatientmodalPage implements OnInit {
     mobile_no: "string",
     dept_short_desc: "string",
   };
+
   async Alert(data1: any, data2: any) {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
@@ -51,6 +55,7 @@ export class InpatientmodalPage implements OnInit {
     });
     await alert.present();
   }
+
   ngOnInit() {
     this.data.admission_date = this.explodeDate(this.data.admission_date);
     if (this.data.site == "C") {
@@ -77,6 +82,7 @@ export class InpatientmodalPage implements OnInit {
     let coDoctors1 = [];
     let coDoctors2 = [];
     let coDoctors3 = [];
+
     //"status": "Primary Attending Physician"
     this.isFetchDone = false;
     this.doctorService.getCoDoctors(this.data.admission_no).subscribe(
@@ -113,9 +119,10 @@ export class InpatientmodalPage implements OnInit {
   dateChanged(data1: any) {
     //  console.log("changed data: "+data1);
   }
-  //popup for fee
+
+  // Prof Fee Pop Over
   async detail(data: any) {
-    console.log("Detail : " + this.method);
+    //console.log("Detail : " + this.method);
     const popover = await this.popover.create({
       component: FeePage,
       showBackdrop: true,
@@ -129,7 +136,6 @@ export class InpatientmodalPage implements OnInit {
     popover.present();
     return popover.onDidDismiss().then((data: any) => {
       if (data) {
-        console.log(data.data.professionalFee);
         this.professionalFee = data.data.professionalFee;
         this.remarks = data.data.remarks;
 
@@ -138,11 +144,13 @@ export class InpatientmodalPage implements OnInit {
         this.postData.DateCreated = this.getDateTime();
 
         let x = data.data.method;
-        //console.log("METHOD :" + x);
-        // this.doctorService.insertPF(this.postData);
+
         if (x == "POST") {
           this.doctorService.insertPF(this.postData).subscribe((res: any) => {
-            this.Alert("Thank you, Doc! You have successfully SAVED your Professional Fee.", "Okay");
+            this.Alert(
+              "Thank you, Doc! You have successfully SAVED your Professional Fee.",
+              "Okay"
+            );
           });
         } else if (x == "PUT") {
           this.doctorService.updatePF(this.postData).subscribe((res: any) => {
@@ -155,10 +163,6 @@ export class InpatientmodalPage implements OnInit {
               this.Alert("Successfully DELETED your Professional Fee.", "Okay");
             });
         }
-
-        //this.data.doctor_prof_fee = data.professionalFee;
-        //console.log("+++++"+JSON.stringify(data));
-        // trigger here the method dependind on the popover response
       }
     });
   }
@@ -197,7 +201,7 @@ export class InpatientmodalPage implements OnInit {
   addZeroBefore(n) {
     return (n < 10 ? "0" : "") + n;
   }
-  
+
   explodeDate(data: any) {
     let myarr = data.split("T");
     if (myarr[1]) {
