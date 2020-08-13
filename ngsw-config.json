@@ -1,6 +1,10 @@
 {
   "$schema": "./node_modules/@angular/service-worker/config/schema.json",
   "index": "/index.html",
+  "appData": {
+    "version": "1.0.0-rc10",
+    "changelog": "Version 1.0.0 release candidate."
+  },
   "assetGroups": [
     {
       "name": "app",
@@ -14,7 +18,8 @@
           "/*.js"
         ]
       }
-    }, {
+    }, 
+    {
       "name": "assets",
       "installMode": "lazy",
       "updateMode": "prefetch",
@@ -22,7 +27,30 @@
         "files": [
           "/assets/**",
           "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
+        ],
+        "urls": [
+          "https://fonts.googleapis.com/**"
         ]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "from-api",
+      "version": 1,
+      "urls": [
+        "/api",
+        "/menu/dashboard",
+        "/menu/in-patients",
+        "/menu/in-patients/AC",
+        "/menu/in-patients/DN",
+        "/menu/appointments"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 1, 
+        "maxAge": "1s",
+        "timeout": "0u"
       }
     }
   ]
