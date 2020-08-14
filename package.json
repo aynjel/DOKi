@@ -1,8 +1,8 @@
 {
   "name": "doctorsportal",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "version": "1.0.0",
+  "author": "Chong Hua Hospital",
+  "homepage": "https://doctorsportal.chonghua.com.ph",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -65,5 +65,5 @@
     "tslint": "~6.1.0",
     "typescript": "~3.8.3"
   },
-  "description": "An Ionic project"
+  "description": "PWA for doctors to view patient info, set appointments, and submit prof fees online."
 }
