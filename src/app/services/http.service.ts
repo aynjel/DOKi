@@ -13,54 +13,75 @@ export class HttpService {
 /*
   posttest(serviceName: string, data1: any,data2: any) {
     const headers = new HttpHeaders();
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: false };
     const url = environment.apiRouterUrl + serviceName + "?username="+data1 + "&password="+data2;
     console.log("testurl -> " +url);
     return this.http.post(url, options);
   }
 */
   /* for doctors portal */
+
   DoctorsPortalGet(serviceName: string, data1: any) {
-    const headers = new HttpHeaders();
-    const options = { headers: headers, withCredintials: false};
+    /*
+    const headers = new HttpHeaders({
+      "Cache-Control":
+        "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
+      Pragma: "no-cache",
+      Expires: "0",
+    });*/
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const options = { headers: headers, withCredentials: false};
     const url = environment.apiRouterUrl + serviceName + data1;
     return this.http.get(url);
+    //return this.http.get(url, options);
   }
 
-  // getNodeJsServer(){
-  //   const headers = new HttpHeaders();
-  //   const options = { headers: headers, withCredintials: false};
-  //   const params = new HttpParams()
-  //     .set('drcode', 'MD000077')
-  //     .set('birthday', encodeURIComponent('09/07/1961'));
-  //     //{fromString: 'drcode=MD000077&birthday=09/07/1961'}
-  //   //);
-
-  //   const url = environment.apiRouterTestUrl + '/Login/Get?' + params.toString();
-  //   console.log(url);
-
-  //   return this.http.get(url, options);
-  //  }
-
   DoctorsPortalPostJSON(serviceName: string, data: any) {
+    /*
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      "Cache-Control":
+        "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
+      Pragma: "no-cache",
+      Expires: "0",
+    });*/
+
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: false };
     const url = environment.apiRouterUrl + serviceName;
     //return this.http.post(url, JSON.stringify(data), options);
     return this.http.post(url, data, options);
   }
 
   DoctorsPortalPutJSON(serviceName: string, data: any) {
+    /*
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      "Cache-Control":
+        "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
+      Pragma: "no-cache",
+      Expires: "0",
+    });*/
+
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: false };
     const url = environment.apiRouterUrl + serviceName;
     //return this.http.put(url, JSON.stringify(data), options);
     return this.http.put(url, data, options);
   }
 
   DoctorsPortalDelete(serviceName: string, data: any) {
+    /*
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      "Cache-Control":
+        "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
+      Pragma: "no-cache",
+      Expires: "0",
+    });*/
+
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: false };
     const url = environment.apiRouterUrl + serviceName + data;
     return this.http.delete(url, options);
   }
@@ -82,7 +103,7 @@ export class HttpService {
 
 AppointmentsGet(serviceName: string, data1: any) {
   const headers = new HttpHeaders();
-  const options = { headers: headers, withCredintials: false };
+  const options = { headers: headers, withCredentials: false };
   const url = environment.apiRouterUrl + serviceName + data1;
   return this.http.get(url);
 }
@@ -90,20 +111,20 @@ AppointmentsGet(serviceName: string, data1: any) {
 
 AppointmentsPut(serviceName: string, data1: any) {
   /*const headers = new HttpHeaders();
-  const options = { headers: headers, withCredintials: false };
+  const options = { headers: headers, withCredentials: false };
   const url = environment.apiRouterUrl + serviceName+data1;
   return this.http.get(url);
 */
 
   const headers = new HttpHeaders();
-  const options = { headers: headers, withCredintials: false };
+  const options = { headers: headers, withCredentials: false };
   const url = environment.apiRouterUrl + serviceName + data1;
   return this.http.put(url, options);
 }
 
 AppointmentsPostJSON(serviceName: string, data: any) {
   const headers = new HttpHeaders({'Content-Type': 'application/json'});
-  const options = { headers: headers, withCredintials: false };
+  const options = { headers: headers, withCredentials: false };
   const url = environment.apiRouterUrl + serviceName;
   //return this.http.post(url, JSON.stringify(data), options);
   return this.http.post(url, data, options);
@@ -124,7 +145,7 @@ AppointmentsPostJSON(serviceName: string, data: any) {
   getAppointments(serviceName: string, data1: any,data2: any) {
     data2 = encodeURIComponent(data2);
     const headers = new HttpHeaders();
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: false };
     const url = environment.apiRouterUrl + serviceName+'drcode='+data1+'&birthday='+data2;
     console.log(url);
     return this.http.get(url);
@@ -132,7 +153,7 @@ AppointmentsPostJSON(serviceName: string, data: any) {
 /*
   getInpatient(serviceName: string, data1: any) {
     const headers = new HttpHeaders();
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: false };
     const url = environment.apiRouterUrl + serviceName+data1;
     console.log(url);
   

@@ -2,7 +2,7 @@
   "$schema": "./node_modules/@angular/service-worker/config/schema.json",
   "index": "/index.html",
   "appData": {
-    "version": "1.0.0-rc10",
+    "version": "1.0.0-rc14",
     "changelog": "Version 1.0.0 release candidate."
   },
   "assetGroups": [
@@ -31,38 +31,6 @@
         "urls": [
           "https://fonts.googleapis.com/**"
         ]
-      }
-    }
-  ],
-  "dataGroups": [
-    {
-      "name": "from-api",
-      "version": 1,
-      "urls": [
-        "/api",
-        "/api/Inpatient/YearHistoryGraph/",
-        "/api/Inpatient/MonthHistoryGraph/",
-        "/api/Inpatient/TotalCount/",
-        "/api/Inpatient/Get/",
-        "/api/Inpatient/CoDoctors/",
-        "/api/ProfFee/Insert",
-        "/api/ProfFee/Update",
-        "/api/ProfFee/Delete",
-        "/api/Schedules",
-        "/api/DoctorSchedMaster/DocSchedMaster/",
-        "/api/CMAAppointmentMaster/GetCMAAppointmentMaster/",
-        "/api/CMAAppointmentMaster",
-        "/menu/dashboard",
-        "/menu/in-patients",
-        "/menu/in-patients/AC",
-        "/menu/in-patients/DN",
-        "/menu/appointments"
-      ],
-      "cacheConfig": {
-        "strategy": "freshness",
-        "maxSize": 1, 
-        "maxAge": "1s",
-        "timeout": "0u"
       }
     }
   ]
