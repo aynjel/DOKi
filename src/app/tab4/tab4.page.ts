@@ -55,7 +55,7 @@ export class Tab4Page implements OnInit {
     HighCharts.setOptions({
       chart: {
         style: {
-            fontFamily: 'Inter'
+            fontFamily: 'Nunito' // fontFamily: 'Inter'
         }
       }
     });
@@ -104,7 +104,7 @@ export class Tab4Page implements OnInit {
     HighCharts.setOptions({
       chart: {
         style: {
-            fontFamily: 'Inter'
+            fontFamily: 'Nunito' // fontFamily: 'Inter'
         }
       }
     });
