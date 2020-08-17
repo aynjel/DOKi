@@ -180,7 +180,7 @@ export class Tab1Page {
         },
         (error) => {
           this.isFetchDone = true;
-          this.Alert("Server Error", "Okay");
+          this.Alert("Sorry Doc. We cannot retrieve the list of your admitted patients at this time. Please try again.", "Okay");
         },
         () => {
           this.isFetchDone = true;
