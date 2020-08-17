@@ -26,7 +26,8 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 /*For Google Web Font*/
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+//@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');  // Inter
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap'); // Nunito
 
 // @font-face {
 //   font-family: 'Inter';
@@ -47,7 +48,7 @@
 */
 
 .tab-font-family {
-  font-family: "Inter", sans-serif;
+  font-family: "Nunito", sans-serif;
 }
 
 .desktop-wrapper {
@@ -111,8 +112,8 @@ ion-popover{
        max-height: 478px;
        width: 312px;
        border-radius: 5px;
-       border: 1px solid #009444;
-       --ion-color-primary: #009444; // This Variable used for the change of colour ion-datepicker only.
+       border: 1px solid #275228 ;
+       --ion-color-primary: #275228 ; // This Variable used for the change of colour ion-datepicker only.
        --ion-color-primary-tint: rgb(214, 153, 153); // This Variable changes the tint colour of background when click button.
        ion-button {
           

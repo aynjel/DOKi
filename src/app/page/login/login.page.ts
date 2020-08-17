@@ -74,7 +74,7 @@ export class LoginPage implements OnInit {
               this.router.navigate(['/menu/dashboard']);
             }
             }else{
-              this.Alert('Incorrect Authentication Details.','Okay');
+              this.Alert('Oops! You might have entered a different username or password. Please try again.','Okay');
               //this.toast.presentToast('Incorrect Authentication Details.');
             }
 
@@ -83,7 +83,7 @@ export class LoginPage implements OnInit {
   
           },error =>{
             this.btnDisable = false;
-            this.Alert('Server Error','Okay');
+            this.Alert('Sorry, Doc. We cannot log you in at this time. Please try again.','Okay');
            // this.toast.presentToast('Server Error');
           },()=>{
             this.btnDisable = false;

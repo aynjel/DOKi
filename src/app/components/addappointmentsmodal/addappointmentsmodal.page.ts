@@ -269,7 +269,7 @@ uxSaveCancel = true;
     },() => {
       if(this.disableWeekDays1.length >= 7){
           this.btnSave=true;
-          this.Alert('No Available Schedule for '+this.mydate1,'Okay');
+          this.Alert('Upon checking, there is no available schedule for ' + this.mydate1 + '. You may also want to try changing the Hospital site.','Okay');
       }
       console.log(this.disableWeekDays1);
     }
@@ -312,10 +312,10 @@ uxSaveCancel = true;
      //this.doctorSchedule = res;
      console.log(res);
       if(res){
-        this.Alert('Successfully added ' +this.lname+', '+this.fname,'Okay');
+        this.Alert('Way to go, Doc! Your patient, ' + this.lname +' , ' + this.fname + ', has been booked successfully!','Okay');
         //this.toast.presentToast('Successfully added ' +this.lname+', '+this.fname);
       }else{
-        this.Alert('Error saving ' +this.lname+', '+this.fname,'Okay');
+        this.Alert('U-oh! We cannot book your patient, ' + this.lname + ', ' + this.fname + ', at this time. Please try again, Doc.','Okay');
         //this.toast.presentToast('Error saving ' +this.lname+', '+this.fname);
       }
       this.closeModal();
