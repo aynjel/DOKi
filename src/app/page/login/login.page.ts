@@ -83,7 +83,7 @@ export class LoginPage implements OnInit {
   
           },error =>{
             this.btnDisable = false;
-            this.Alert('Sorry, Doc. We cannot log you in at this time. Please try again.','Okay');
+            this.Alert('Sorry, Doc. We cannot log you in at the moment. Please try again.','Okay');
            // this.toast.presentToast('Server Error');
           },()=>{
             this.btnDisable = false;
