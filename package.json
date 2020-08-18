@@ -38,6 +38,7 @@
     "ionic-text-avatar": "^1.1.0",
     "moment": "^2.27.0",
     "ng-lottie": "^0.3.2",
+    "ngx-google-analytics": "^9.0.0",
     "rxjs": "~6.5.1",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

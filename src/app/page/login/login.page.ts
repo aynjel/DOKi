@@ -11,6 +11,8 @@ import { BehaviorSubject } from 'rxjs';
 import {DoctorInfoGlobal} from '../../common/doctorinfo-global';
 import {LoginData} from '../../models/logindata.model';
 import { AlertController } from '@ionic/angular';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -27,7 +29,8 @@ export class LoginPage implements OnInit {
       private storageService: StorageService,
       private toast:ToastService,
       private doctorService:DoctorService,
-      public alertController: AlertController
+      public alertController: AlertController,
+      protected $gaService: GoogleAnalyticsService
      
     ) {}
 
@@ -40,7 +43,7 @@ export class LoginPage implements OnInit {
 
     ngOnInit() {
 
-
+      this.$gaService.pageView('/login', 'Login Page');
     }
     
     validateInputs() {

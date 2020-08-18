@@ -8,6 +8,7 @@ import * as HighCharts from 'highcharts';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { AlertController } from '@ionic/angular';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 @Component({
   selector: 'app-tab4',
   templateUrl: './tab4.page.html',
@@ -37,7 +38,8 @@ export class Tab4Page implements OnInit {
     private storageService:StorageService,
     private doctorService:DoctorService,
     private router:Router,
-    public alertController: AlertController) {
+    public alertController: AlertController,
+    protected $gaService: GoogleAnalyticsService) {
     this.screensizeService.isDesktopView().subscribe(isDesktop => {
       if (this.isDesktop && !isDesktop) {window.location.reload();}this.isDesktop = isDesktop;
     });
@@ -132,7 +134,7 @@ export class Tab4Page implements OnInit {
   
 
   ngOnInit() {
-
+    this.$gaService.pageView('/Dashboard', 'Dashboard Tab');
   }
   goto(data){
     this.router.navigate(['/menu/in-patients'+data]);

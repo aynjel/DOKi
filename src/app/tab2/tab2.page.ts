@@ -13,6 +13,7 @@ import { AddappointmentsmodalPage } from "../components/addappointmentsmodal/add
 import { ToastService } from "../services/toast.service";
 import { LoadingController } from "@ionic/angular";
 import { LoginData } from "../models/logindata.model";
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 
 @Component({
   selector: "app-tab2",
@@ -48,7 +49,8 @@ export class Tab2Page {
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
     private toast: ToastService,
-    public loadingController: LoadingController
+    public loadingController: LoadingController,
+    protected $gaService: GoogleAnalyticsService
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -225,6 +227,7 @@ export class Tab2Page {
   }
 
   ngOnInit() {
+    this.$gaService.pageView('/Appointments', 'Appointments Tab');
     //this.selectedDate = this.yyyymmdd();
     //this.selectedLocation = "C";
     //this.getDate(this.selectedDate,this.selectedLocation);
