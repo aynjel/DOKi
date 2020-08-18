@@ -89,8 +89,8 @@ export class DoctorService {
     return this.httpService.DoctorsPortalPutJSON('ProfFee/Update', data1);   
   }
 
-  DeletePf(data1:any,data2:any){
-    let x = "?accountno=" + data1 + "&drstatuscode=" + data2;
+  DeletePf(accountNo:any, doctorStatusCode:any, doctorCode:string){
+    let x = "?accountno=" + accountNo + "&drstatuscode=" + doctorStatusCode + "&drcode=" + doctorCode;
     return this.httpService.DoctorsPortalDelete('ProfFee/Delete', x);   
   }
   /* for doctors Portal */
