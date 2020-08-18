@@ -147,20 +147,46 @@ export class InpatientmodalPage implements OnInit {
 
         if (x == "POST") {
           this.doctorService.insertPF(this.postData).subscribe((res: any) => {
-            this.Alert(
-              "Thank you, Doc! You have successfully SAVED your Professional Fee.",
-              "Okay"
-            );
+            if (res.length != "0") {
+              if (res.Message) {
+                this.Alert(res.Message, "Okay");
+              } else {
+                this.Alert(
+                  "Thank you, Doc! You have successfully SAVED your Professional Fee.",
+                  "Okay"
+                );
+              }
+            }
           });
         } else if (x == "PUT") {
+          console.log("PUT doctorCode: " + this.postData.DoctorCode);
           this.doctorService.updatePF(this.postData).subscribe((res: any) => {
-            this.Alert("Successfully UPDATED your Professional Fee.", "Okay");
+            if (res.length != "0") {
+              if (res.Message) {
+                this.Alert(res.Message, "Okay");
+              } else {
+                this.Alert(
+                  "Successfully UPDATED your Professional Fee.",
+                  "Okay"
+                );
+              }
+            }
           });
         } else if (x == "DELETE") {
+          console.log("DELETE: " + this.postData);
           this.doctorService
-            .DeletePf(this.postData.AdmisisonNo, this.postData.DoctorStatusCode)
+            .DeletePf(this.postData.AdmisisonNo, this.postData.DoctorStatusCode, this.postData.DoctorCode)
             .subscribe((res: any) => {
-              this.Alert("Successfully DELETED your Professional Fee.", "Okay");
+              if (res.length != "0") {
+                if (res.Message) {
+                  this.Alert(res.Message, "Okay");
+                } else {
+                  this.Alert(
+                    "Successfully DELETED your Professional Fee.",
+                    "Okay"
+                  );
+                }
+              }
             });
         }
       }

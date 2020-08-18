@@ -14,11 +14,12 @@
     <ion-label position="fixed">Fee</ion-label>
     <ion-input
       type="number"
+      maxlength=7 
       id="input-professionalFee"
-      ngModel="postData.professionalFee"
       placeholder="0.00"
+      [(ngModel)]="professionalFee"
       value="{{professionalFee}}"
-      autocomplete
+      type="number"
       (ionChange)="feeInputChanged()"
     ></ion-input>
   </ion-item>

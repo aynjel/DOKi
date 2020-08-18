@@ -87,17 +87,6 @@ export class HttpService {
   }
  /* for doctors portal */
 
- 
-
-
-
-
-
-
-
-
-
-
 /* for Appointments */
 
 
@@ -108,14 +97,7 @@ AppointmentsGet(serviceName: string, data1: any) {
   return this.http.get(url);
 }
 
-
 AppointmentsPut(serviceName: string, data1: any) {
-  /*const headers = new HttpHeaders();
-  const options = { headers: headers, withCredentials: false };
-  const url = environment.apiRouterUrl + serviceName+data1;
-  return this.http.get(url);
-*/
-
   const headers = new HttpHeaders();
   const options = { headers: headers, withCredentials: false };
   const url = environment.apiRouterUrl + serviceName + data1;
@@ -129,18 +111,6 @@ AppointmentsPostJSON(serviceName: string, data: any) {
   //return this.http.post(url, JSON.stringify(data), options);
   return this.http.post(url, data, options);
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
   getAppointments(serviceName: string, data1: any,data2: any) {
     data2 = encodeURIComponent(data2);
