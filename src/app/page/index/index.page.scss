@@ -1,0 +1,15 @@
+ion-slide {
+    padding: 5%;
+    display: block;
+    img {
+      width: 100px;
+    }
+    h2 {
+      font-size: 36px;
+      font-weight: bold;
+    }
+  }
+  
+  ion-slides {
+    --bullet-background-active: #009444;
+  }

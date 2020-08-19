@@ -1,0 +1,50 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="4" offset-md="4">
+        <ion-card mode="ios">
+          <ion-card-content>
+            <div class="center">
+              <app-logo></app-logo>
+              <h1><b>Hello, Doc!</b></h1>
+            </div>
+            <ion-item>
+              <ion-label position="floating">Username</ion-label>
+              <ion-input
+                type="text"
+                id="input-username"
+                [(ngModel)]="postData.username"
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Password</ion-label>
+              <ion-input
+                type="password"
+                id="input-password"
+                [(ngModel)]="postData.password"
+              ></ion-input>
+            </ion-item>
+            <div class="ion-margin-vertical ion-text-right">
+              <ion-button
+                expand="block"
+                shape="round"
+                id="btn-confirm"
+                (click)="loginAction() "
+                color="mango"
+                disabled="{{btnDisable}}"
+              >
+                <span *ngIf="!btnDisable">LOG IN</span
+                ><ion-spinner *ngIf="btnDisable"></ion-spinner>
+              </ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <p>v1.0.0-rc21</p>
+  </ion-toolbar>
+</ion-footer>

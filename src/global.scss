@@ -1,0 +1,284 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+/*For Google Web Font*/
+//@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');  // Inter
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap'); // Nunito
+
+// @font-face {
+//   font-family: 'Inter';
+//   font-style: normal;
+//   font-weight: 400;
+//   src: url(./assets/Inter.eot);
+//   src: local('Inter'), url(./assets/Inter.eot?#iefix) format('embedded-opentype');
+// }
+
+/*
+.my-custom-modal-css .modal-wrapper {
+    height: 30%;
+    width: 90%;
+    top: 15;
+    position: absolute; 
+    display: block;  
+ }
+*/
+
+.tab-font-family {
+  font-family: "Nunito", sans-serif;
+}
+
+.desktop-wrapper {
+   ion-toolbar {
+     text-align: center;
+   }
+   
+   ion-header {
+     &.header-md:after {
+       background: none;
+     }
+   }
+ }
+ .my-custom-modal-inpatient-css .modal-wrapper {
+  
+  --background: transparent !important;
+
+
+ }
+ .my-custom-modal-appointment-css .modal-wrapper {
+   height: 50%;
+   width: 50%;
+   top: 15;
+   position: absolute; 
+   display: block;  
+}
+
+ .my-custom-modal-css .modal-wrapper {
+   height: 45%;
+   width: 95%;
+   top: 5%;
+   position: absolute; 
+   display: block;  
+}
+
+ion-popover{
+   ion-backdrop{
+   opacity: 0.5 !important;
+   }
+   .popover-wrapper{
+   .popover-content{
+   width:80vw;
+   max-width:500px;
+   }
+   }
+   }
+
+.custom-border-top{
+   border-top: 1px solid #275228 !important;
+}
+.custom-border-bottom{
+   border-bottom: 1px solid rgb(39, 82, 40, 0.3) !important;
+
+}
+   
+
+
+.li-ionic4-datePicker {
+   .modal-wrapper {
+       height: 75%;
+       max-height: 478px;
+       width: 312px;
+       border-radius: 5px;
+       border: 1px solid #275228 ;
+       --ion-color-primary: #275228 ; // This Variable used for the change of colour ion-datepicker only.
+       --ion-color-primary-tint: rgb(214, 153, 153); // This Variable changes the tint colour of background when click button.
+       ion-button {
+          
+           // --ion-color-primary: green; // This Variable used for the change colour of buttons only.
+           // --ion-color-primary-tint: lightgreen; // This Variable changes the tint color of background when click buttons.
+           // --border-radious: 0px; // This Variable changes the border radious of buttons.
+           // button customization css write here...
+       }
+       @media (min-width: 768px) {
+           width: 350px;
+           height: 65%;
+       }
+   }
+}
+
+.floatingwithicon {
+   .clearButton {
+       right: 37px !important;
+       bottom: 11px !important;
+   }
+}
+
+ion-toggle {
+   .ng-valid[required],
+   .ng-valid.required,
+   .ng-valid:not(form) {
+       border-bottom: none !important;
+       /* green */
+   }
+   .ng-invalid:not(form) {
+       //border-bottom: 1px solid #a94442 !important;
+       /* red */
+   }
+   .ng-pristine:not(form) {
+      // border-bottom: 1px solid #ccc !important;
+   }
+}
+
+li-ionic4-datepicker {
+   input[_ngcontent-c1] {
+     //  border-bottom: unset !important;
+   }
+}
+
+.ng-valid[required],
+.ng-valid.required,
+.ng-valid:not(form) {
+   //border-bottom: 1px solid #42A948;
+   /* green */
+}
+
+.ng-invalid:not(form) {
+   //border-bottom: 1px solid #a94442;
+   /* red */
+}
+
+.ng-pristine:not(form) {
+  // border-bottom: 1px solid #ccc;
+}
+
+body{
+  // --ion-background-color:rgb(233, 235, 238);
+}
+
+ion-toolbar{
+  // --min-height:40px;
+}
+
+/****/
+.desktop {
+   ion-router-outlet {
+     margin-top: 4.5%;
+     margin-bottom: 35px;
+   }
+  
+   .logo {
+     max-height: 100%;
+   }
+  
+ 
+  
+   .link {
+     --color: #528d53;
+   }
+  
+   .active-link {
+     --color: #275228;
+     border-bottom: 1px solid #275228;
+     font-weight: bold;
+   }
+ 
+ }
+
+ .link {
+   --color: #528d53;
+ }
+
+ .active-link {
+   --color: #275228;
+   border-bottom: 2px solid #275228;
+   font-weight: bold;
+ }
+ .chh-darkmode{
+  background-color: var(--background-color);
+}
+
+
+:root { 
+	--background-color: #ffffff;
+
+}
+
+@media (prefers-color-scheme: dark) { 
+    :root {
+        background-color:var(background-color);
+        font: var(--text-color);
+
+    }
+    // .highcharts-color-0 {
+    //     fill: #0460ba;
+    //     stroke: #0460ba;
+    // }
+    // .highcharts-color-1 {
+    //     fill: #9696ab;
+    //     stroke: #9696ab;
+    // }
+}
+
+body {
+    background-color: var(--background-color);
+}
+
+/*for charts*/
+//@import 'https://code.highcharts.com/css/highcharts.css';
+@import './assets/highcharts/highcharts.css';
+
+.highcharts-background {
+    fill: var(--background-color);
+}
+.highcharts-container text {
+    fill: var(--text-color);
+}
+.highcharts-subtitle,
+.highcharts-credits,
+.highcharts-axis-title {
+    fill-opacity: 0.7;
+}
+.highcharts-grid-line {
+    stroke: var(--text-color);
+    stroke-opacity: 0.2;
+}
+.highcharts-tooltip-box {
+    fill: var(--background-color);
+}
+.highcharts-column-series rect.highcharts-point {
+    stroke: var(--background-color);
+}
+.alert-radio-label.sc-ion-alert-md {
+  white-space: pre-line !important;
+}
+
+.alert-radio-label.sc-ion-alert-ios {
+  white-space: pre-line !important;
+}
+
+.swiper-pagination {
+  bottom: 97% !important;
+}

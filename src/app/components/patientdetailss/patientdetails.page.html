@@ -1,0 +1,56 @@
+<ion-header translucent="" role="banner" class="ios header-ios header-translucent header-collapse-none header-translucent-ios hydrated"><!----><div class="header-background"></div>
+  <ion-toolbar class="in-toolbar ios toolbar-title-default hydrated" color="mango">
+    <ion-title class="ios title-default hydrated">Patient Detail</ion-title>
+    <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
+      <ion-button (click)="ClosePopover()" class="ios button button-clear ion-activatable ion-focusable hydrated">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+  <div *ngFor="let x of cardData">
+ 
+
+     
+
+    <ion-card-content>
+      <h3><b>{{ x.last_name }}, {{x.first_name}}</b></h3>
+      Address: {{x.address}}<br />
+      Contact Number :{{x.contact_number}}<br />
+      Date of Birth : {{x.birth_Date}}<br />
+    </ion-card-content>
+  </div>
+  <!--div *ngFor="let x of receiveddata">
+  <div class="ion-text-right">
+      <ion-icon name="close-outline"  (click)="closeModal()" ></ion-icon>
+  </div>
+  <ion-card-header>
+    <ion-card-title>{{ x.last_name }}, {{x.first_name}}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    Address: {{x.address}}<br />
+    Contact Number :{{x.contact_number}}<br />
+    Date of Birth : {{x.birth_Date}}<br />
+  </ion-card-content>
+</div-->
+<!-- Skeleton screen -->
+
+
+
+
+<!--d!iv *ngIf="!items.length >0">
+  <div class="ion-padding custom-skeleton">
+    <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+    <ion-skeleton-text animated></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+  </div>
+
+
+</div-->
+
+</ion-content>

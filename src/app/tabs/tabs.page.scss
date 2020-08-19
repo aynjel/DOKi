@@ -1,0 +1,23 @@
+.footer {
+  width: 100%;
+  color: #fff;
+  font-weight: bold;
+  background: #275228;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  position: fixed;
+  bottom: 0px;
+}
+
+ion-button {
+  ion-badge {
+    position: absolute;
+    opacity: 0.9;
+    top: 0.1rem;
+    right: 0.2rem;
+    & ~ ion-icon {
+      margin-right: 1.2rem;
+    }
+  }
+}

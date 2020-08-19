@@ -1,0 +1,64 @@
+<ion-header mode="md" class="ion-no-border">
+  <ion-toolbar
+    class="in-toolbar ios toolbar-title-default hydrated"
+    color="mango"
+  >
+    <ion-title>
+      <ion-icon name="card-outline"></ion-icon> Professional Fee
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="fixed">Fee</ion-label>
+    <ion-input
+      type="number" 
+      min="0"
+      id="input-professionalFee"
+      placeholder="0"
+      [(ngModel)]="professionalFee"
+      value="{{professionalFee}}"
+      (ionChange)="feeInputChanged()"
+    ></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="fixed">Remarks</ion-label>
+    <ion-textarea
+      type="text"
+      id="input-remarks"
+      value="{{remarks}}"
+      maxlength="50"
+      (ionChange)="feeInputChanged()"
+    ></ion-textarea>
+  </ion-item>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size-xs="6">
+        <ion-button
+          expand="block"
+          shape="round"
+          id="btn-confirm"
+          (click)="save()"
+          color="mango"
+          [disabled]="!disableSaveBtn"
+        >
+          SAVE
+        </ion-button>
+      </ion-col>
+      <ion-col size-xs="6">
+        <ion-button
+          expand="block"
+          shape="round"
+          id="btn-confirm"
+          (click)="ClosePopover()"
+          color="danger"
+        >
+          CANCEL
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
