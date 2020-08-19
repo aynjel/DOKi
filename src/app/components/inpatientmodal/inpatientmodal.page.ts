@@ -5,6 +5,7 @@ import { from } from "rxjs";
 import { PopoverController } from "@ionic/angular";
 import { timeStamp } from "console";
 import { DoctorService } from "src/app/services/doctor.service";
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 
 @Component({
   selector: "app-inpatientmodal",
@@ -25,7 +26,8 @@ export class InpatientmodalPage implements OnInit {
     private modalController: ModalController,
     private popover: PopoverController,
     private doctorService: DoctorService,
-    public alertController: AlertController
+    public alertController: AlertController,
+    protected $gaService: GoogleAnalyticsService
   ) {}
 
   postData = {
@@ -57,6 +59,7 @@ export class InpatientmodalPage implements OnInit {
   }
 
   ngOnInit() {
+    this.$gaService.pageView('/In-Patient/Patient Details', 'Patient Details Modal');
     this.data.admission_date = this.explodeDate(this.data.admission_date);
     if (this.data.site == "C") {
       this.site = "CHHC";

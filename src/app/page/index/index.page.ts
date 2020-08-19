@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 //import { Platform } from '@angular/cdk/platform';
 import { AlertController, Platform } from "@ionic/angular";
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 @Component({
   selector: "app-index",
   templateUrl: "./index.page.html",
@@ -14,11 +15,13 @@ export class IndexPage implements OnInit {
   ios: boolean = false;
   constructor(
     private platform: Platform,
-    public alertController: AlertController
+    public alertController: AlertController,
+    protected $gaService: GoogleAnalyticsService
   ) {}
 
   ngOnInit() {
     this.initPwaPrompt();
+    this.$gaService.pageView('/index', 'Index Page');
   }
 
   async Alert(data1: any, data2: any) {

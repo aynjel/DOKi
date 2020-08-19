@@ -23,6 +23,7 @@ import { AddappointmentsmodalPageModule } from "./components/addappointmentsmoda
 
 //defineCustomElements(window);
 
+import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -35,6 +36,8 @@ import { AddappointmentsmodalPageModule } from "./components/addappointmentsmoda
     Ionic4DatepickerModule,
     InpatientmodalPageModule,
     AddappointmentsmodalPageModule,
+    NgxGoogleAnalyticsModule.forRoot('UA-175566562-1'),
+    NgxGoogleAnalyticsRouterModule,
     //LottieAnimationViewModule,
     //SliderPageModule,
     ServiceWorkerModule.register("ngsw-worker.js", {

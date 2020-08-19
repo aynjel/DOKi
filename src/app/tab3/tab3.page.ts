@@ -6,6 +6,7 @@ import { AuthConstants } from "../config/auth-constants";
 import { ScreensizeService } from "../services/screensize.service";
 import { LoginData } from "../models/logindata.model";
 import { BehaviorSubject } from "rxjs";
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 @Component({
   selector: "app-tab3",
   templateUrl: "tab3.page.html",
@@ -23,7 +24,8 @@ export class Tab3Page {
     private router: Router,
     private storageService: StorageService,
     private screensizeService: ScreensizeService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    protected $gaService: GoogleAnalyticsService
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -34,6 +36,7 @@ export class Tab3Page {
   }
 
   ngOnInit() {
+    this.$gaService.pageView('/Settings', 'Settings Tab');
     this.authService.userData$.subscribe((res: any) => {
       console.log(res);
       this.account = <LoginData>res;

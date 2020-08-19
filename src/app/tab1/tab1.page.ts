@@ -15,6 +15,7 @@ import {DoctorInfoGlobal} from '../common/doctorinfo-global';
 import {LoginData} from '../models/logindata.model';
 import {InpatientData} from '../models/inpatient.model';
 import { Location } from "@angular/common";
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 
 @Component({
   selector: "app-tab1",
@@ -50,7 +51,8 @@ export class Tab1Page {
     private popover: PopoverController,
     private location: Location,
     public alertController: AlertController,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    protected $gaService: GoogleAnalyticsService
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -72,7 +74,9 @@ export class Tab1Page {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.$gaService.pageView('/In-Patient', 'In-Patient Tab');
+  }
   async Alert(data1: any, data2: any) {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",

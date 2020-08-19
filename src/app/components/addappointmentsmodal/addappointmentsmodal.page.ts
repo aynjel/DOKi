@@ -6,6 +6,7 @@ import {LoginData} from '../../models/logindata.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { Ionic4DatepickerModalComponent } from '@logisticinfotech/ionic4-datepicker';
 import { ToastService } from '../../services/toast.service';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 @Component({
   selector: 'app-addappointmentsmodal',
   templateUrl: './addappointmentsmodal.page.html',
@@ -59,7 +60,8 @@ uxSaveCancel = true;
       private authService:AuthService,
       public modalCtrl: ModalController,
       private toast:ToastService,
-      public alertController: AlertController){
+      public alertController: AlertController,
+      protected $gaService: GoogleAnalyticsService){
         this.screensizeService.isDesktopView().subscribe(isDesktop => {
         if (this.isDesktop && !isDesktop) {
           window.location.reload();
@@ -78,6 +80,7 @@ uxSaveCancel = true;
 
 
   ngOnInit() {
+    this.$gaService.pageView('/Appointments/Add Appointments', 'Add Appointments Modal');
     this.location = this.appt_id;
     this.retriveMTWThFSS(this.dr_code,this.appt_id);
     this.setDatepicker();
