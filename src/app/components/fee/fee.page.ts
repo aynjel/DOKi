@@ -51,9 +51,8 @@ export class FeePage implements OnInit {
       document.getElementById("input-remarks")
     )).value;
 
-    if (
-      (this.professionalFee == feePopOverProfFeeInput &&
-        this.remarks == feePopOverRemarksInput) ||
+    if ((this.initialFeePopOverProfFee == feePopOverProfFeeInput &&
+        this.initialFeePopOverRemarks == feePopOverRemarksInput) ||
       ((feePopOverProfFeeInput == "" || feePopOverProfFeeInput == null) &&
         this.remarks != feePopOverRemarksInput) ||
       (feePopOverProfFeeInput == "0" && this.method != "")
@@ -76,8 +75,10 @@ export class FeePage implements OnInit {
     if (this.method == "POST") {
       feePopOverMethod = "POST";
     } else if (
-      this.professionalFee == feePopOverProfFee &&
-      this.remarks == feePopOverRemarks
+      //this.professionalFee == feePopOverProfFee &&
+      //this.remarks == feePopOverRemarks
+      this.initialFeePopOverProfFee == feePopOverProfFee &&
+      this.initialFeePopOverRemarks == feePopOverRemarks
     ) {
       feePopOverMethod = "NOTHING";
     } else if (

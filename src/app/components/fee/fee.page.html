@@ -13,13 +13,12 @@
   <ion-item>
     <ion-label position="fixed">Fee</ion-label>
     <ion-input
-      type="number"
-      maxlength=7 
+      type="number" 
+      min="0"
       id="input-professionalFee"
-      placeholder="0.00"
+      placeholder="0"
       [(ngModel)]="professionalFee"
       value="{{professionalFee}}"
-      type="number"
       (ionChange)="feeInputChanged()"
     ></ion-input>
   </ion-item>
