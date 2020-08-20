@@ -77,6 +77,7 @@ export class InpatientmodalPage implements OnInit {
     }
     this.postData.AdmisisonNo = this.data.admission_no;
     this.postData.DoctorCode = this.data.dr_code;
+    //this.postData.DoctorCode = this.data.dr_code;
     this.postData.DoctorStatusCode = this.getDoctorStatusCode(
       this.data.Doctor_Status
     );
@@ -126,6 +127,12 @@ export class InpatientmodalPage implements OnInit {
   // Prof Fee Pop Over
   async detail(data: any) {
     //console.log("Detail : " + this.method);
+
+    if (this.data.doctor_prof_fee == null) {
+      this.method = "POST";
+    } else {
+      this.method = "";
+    }
     const popover = await this.popover.create({
       component: FeePage,
       showBackdrop: true,
@@ -150,29 +157,42 @@ export class InpatientmodalPage implements OnInit {
 
         if (x == "POST") {
           this.doctorService.insertPF(this.postData).subscribe((res: any) => {
-            if (res.length != "0") {
-              if (res.Message) {
-                this.Alert(res.Message, "Okay");
-              } else {
-                this.Alert(
-                  "Thank you, Doc! You have successfully SAVED your Professional Fee.",
-                  "Okay"
-                );
-              }
+            if(res == true){
+              this.professionalFee = data.data.professionalFee;
+              this.remarks = data.data.remarks;
+              this.postData.ProfFee = data.data.professionalFee;
+              this.postData.Remarks = data.data.remarks;
+              this.postData.DateCreated = this.getDateTime();
+              this.data.doctor_prof_fee = data.data.professionalFee;
+              this.Alert(
+                "Thank you, Doc! You have successfully SAVED your Professional Fee.",
+                "Okay"
+              );
+            }else{
+              this.Alert(
+                "SAVING of Professional Fee was Unsuccessful",
+                "Okay"
+              );
             }
           });
         } else if (x == "PUT") {
-          console.log("PUT doctorCode: " + this.postData.DoctorCode);
           this.doctorService.updatePF(this.postData).subscribe((res: any) => {
-            if (res.length != "0") {
-              if (res.Message) {
-                this.Alert(res.Message, "Okay");
-              } else {
-                this.Alert(
-                  "Successfully UPDATED your Professional Fee.",
-                  "Okay"
-                );
-              }
+            if(res == true){
+              this.professionalFee = data.data.professionalFee;
+              this.remarks = data.data.remarks;
+              this.postData.ProfFee = data.data.professionalFee;
+              this.postData.Remarks = data.data.remarks;
+              this.postData.DateCreated = this.getDateTime();
+              this.data.doctor_prof_fee = data.data.professionalFee;
+              this.Alert(
+                "Successfully UPDATED your Professional Fee.",
+                "Okay"
+              );
+            }else{
+              this.Alert(
+                "UPDATING of Professional Fee was Unsuccessful",
+                "Okay"
+              );
             }
           });
         } else if (x == "DELETE") {
@@ -180,15 +200,24 @@ export class InpatientmodalPage implements OnInit {
           this.doctorService
             .DeletePf(this.postData.AdmisisonNo, this.postData.DoctorStatusCode, this.postData.DoctorCode)
             .subscribe((res: any) => {
-              if (res.length != "0") {
-                if (res.Message) {
-                  this.Alert(res.Message, "Okay");
-                } else {
-                  this.Alert(
-                    "Successfully DELETED your Professional Fee.",
-                    "Okay"
-                  );
-                }
+              if(res == true){
+                this.professionalFee = data.data.professionalFee;
+                this.remarks = data.data.remarks;
+                this.professionalFee = data.data.professionalFee;
+                this.remarks = data.data.remarks;
+                this.postData.ProfFee = data.data.professionalFee;
+                this.postData.Remarks = data.data.remarks;
+                this.postData.DateCreated = this.getDateTime();
+                this.data.doctor_prof_fee = data.data.professionalFee;
+                this.Alert(
+                  "Successfully DELETED your Professional Fee.",
+                  "Okay"
+                );
+              }else{
+                this.Alert(
+                  "DELETING of Professional Fee was Unsuccessful",
+                  "Okay"
+                );
               }
             });
         }

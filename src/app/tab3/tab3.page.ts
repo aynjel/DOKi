@@ -65,8 +65,8 @@ export class Tab3Page {
       //clear behavior subject
       this.userData$.next("");
       //clear local storage
-      //localStorage.removeItem('_cap_userDataKey');
-      localStorage.clear();
+      localStorage.removeItem('_cap_userDataKey');
+      //localStorage.clear();
       //window.location.reload();
       this.router.navigate(['/login']);
     });
