@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ChhAppAddAppointmentsModalPage } from './chh-app-add-appointments-modal.page';
+import { ChhAppError404Page } from './chh-app-error-404.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ChhAppAddAppointmentsModalPage
+    component: ChhAppError404Page
   }
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ChhAppAddAppointmentsmodalPageRoutingModule {}
+export class ChhAppError404PageRoutingModule {}

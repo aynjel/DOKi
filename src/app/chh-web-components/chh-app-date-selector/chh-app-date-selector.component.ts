@@ -5,7 +5,7 @@ import { Component, OnInit, EventEmitter, Output, Input} from '@angular/core';
   templateUrl: './chh-app-date-selector.component.html',
   styleUrls: ['./chh-app-date-selector.component.scss'],
 })
-export class DateSelectorComponent implements OnInit {
+export class ChhAppDateSelectorComponent implements OnInit {
   @Input() passedDate:any;
   @Output() dateSelector: EventEmitter<any> = new EventEmitter();
   selectedDate:any;

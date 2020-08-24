@@ -9,7 +9,7 @@ import { ScreensizeService } from "../services/screensize.service";
 import { ActionSheetController } from "@ionic/angular";
 import { PopoverController } from "@ionic/angular";
 import { AlertController } from "@ionic/angular";
-import { AddAppointmentsModalPage } from "../chh-web-components/chh-app-add-appointments-modal/chh-app-add-appointments-modal.page";
+import { ChhAppAddAppointmentsModalPage } from "../chh-web-components/chh-app-add-appointments-modal/chh-app-add-appointments-modal.page";
 import { ToastService } from "../services/toast.service";
 import { LoadingController } from "@ionic/angular";
 import { LoginData } from "../models/logindata.model";
@@ -143,7 +143,7 @@ export class Tab2Page {
   //present addPatient
   async showaddmodal() {
     const modal = await this.modalController.create({
-      component: AddAppointmentsModalPage,
+      component: ChhAppAddAppointmentsModalPage,
       componentProps: {
         appt_id: this.selectedLocation,
         backdropDismiss: true,

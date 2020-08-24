@@ -12,7 +12,7 @@ import { GoogleAnalyticsService } from 'ngx-google-analytics';
   templateUrl: './chh-app-add-appointments-modal.page.html',
   styleUrls: ['./chh-app-add-appointments-modal.page.scss'],
 })
-export class AddAppointmentsModalPage implements OnInit {
+export class ChhAppAddAppointmentsModalPage implements OnInit {
   @Input() appt_id: any;
   doctorSchedule:any;
   isDesktop: boolean;

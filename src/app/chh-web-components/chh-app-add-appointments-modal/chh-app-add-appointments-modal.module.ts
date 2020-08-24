@@ -4,9 +4,10 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AddAppointmentsmodalPageRoutingModule } from './chh-app-add-appointments-modal-routing.module';
+import { ChhAppAddAppointmentsmodalPageRoutingModule } from '../chh-app-add-appointments-modal/chh-app-add-appointments-modal-routing.module';
 
-import { AddAppointmentsModalPage } from './chh-app-add-appointments-modal.page';
+import { ChhAppAddAppointmentsModalPage } from './chh-app-add-appointments-modal.page';
+
 import { Ionic4DatepickerModule } from '@logisticinfotech/ionic4-datepicker';
 
 @NgModule({
@@ -15,8 +16,8 @@ import { Ionic4DatepickerModule } from '@logisticinfotech/ionic4-datepicker';
     FormsModule,
     IonicModule,
     Ionic4DatepickerModule,
-    AddAppointmentsmodalPageRoutingModule
+    ChhAppAddAppointmentsmodalPageRoutingModule
   ],
-  declarations: [AddAppointmentsModalPage]
+  declarations: [ChhAppAddAppointmentsModalPage]
 })
-export class AddAppointmentsModalPageModule {}
+export class ChhAppAddAppointmentsModalPageModule {}

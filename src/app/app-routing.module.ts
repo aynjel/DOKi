@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { IndexGuard } from './guards/index.guard';
 import {HomeGuard} from './guards/home.guard';
-import { Error404PageModule } from './components/error404/error404.module';
+import { ChhAppError404PageModule } from '../app/chh-web-components/chh-app-error-404/chh-app-error-404.module';
 const routes: Routes = [
   /*{
     path: '',
@@ -23,11 +23,11 @@ const routes: Routes = [
     loadChildren: () => import('./page/index/index.module').then( m => m.IndexPageModule)
   },{
     path: 'error404',
-    loadChildren: () => import('./components/error404/error404.module').then( m => m.Error404PageModule)
+    loadChildren: () => import('../app/chh-web-components/chh-app-error-404/chh-app-error-404.module').then( m => m.ChhAppError404PageModule)
   },{
     path        : '**',
     pathMatch   : 'full',
-    loadChildren: () => import('./components/error404/error404.module').then( m => m.Error404PageModule)
+    loadChildren: () => import('../app/chh-web-components/chh-app-error-404/chh-app-error-404.module').then( m => m.ChhAppError404PageModule)
 }
 ];
 @NgModule({
