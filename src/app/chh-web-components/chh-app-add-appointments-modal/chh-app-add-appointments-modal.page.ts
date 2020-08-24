@@ -8,11 +8,11 @@ import { Ionic4DatepickerModalComponent } from '@logisticinfotech/ionic4-datepic
 import { ToastService } from '../../services/toast.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 @Component({
-  selector: 'app-addappointmentsmodal',
-  templateUrl: './addappointmentsmodal.page.html',
-  styleUrls: ['./addappointmentsmodal.page.scss'],
+  selector: 'app-add-appointments-modal',
+  templateUrl: './chh-app-add-appointments-modal.page.html',
+  styleUrls: ['./chh-app-add-appointments-modal.page.scss'],
 })
-export class AddappointmentsmodalPage implements OnInit {
+export class AddAppointmentsModalPage implements OnInit {
   @Input() appt_id: any;
   doctorSchedule:any;
   isDesktop: boolean;
