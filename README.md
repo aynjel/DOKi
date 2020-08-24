@@ -1,29 +1,15 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+An app that will be used by Doctors to view admitted patients, view and add appointments, and submit their professional fees anywhere, anytime.
 
-### What is this repository for? ###
+### Confluence ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* [Project Space in Confluence](https://chonghua.atlassian.net/wiki/spaces/DPP/overview?homepageId=101319095)
 
-### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+### Who do I talk to about this project? ###
 
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+* Kristoffer Dominic Amora (kristoffer_dominic_amora@chonghua.com.ph)
+* Roberto Pedroza, Jr. (roberto_pedroza@chonghua.com.ph)
+* Jessie Jay Rubi (jessie_jay_rubi@chonghua.com.ph)
+* Leizel Montebon (leizel_romero@chonghua.com.ph)
