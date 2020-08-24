@@ -9,7 +9,6 @@ import { ScreensizeService } from "../services/screensize.service";
 import { ActionSheetController } from "@ionic/angular";
 import { PopoverController } from "@ionic/angular";
 import { AlertController } from "@ionic/angular";
-//import { AddAppointmentsModalPage } from "../components/addappointmentsmodal/addappointmentsmodal.page";
 import { AddAppointmentsModalPage } from "../chh-web-components/chh-app-add-appointments-modal/chh-app-add-appointments-modal.page";
 import { ToastService } from "../services/toast.service";
 import { LoadingController } from "@ionic/angular";

@@ -21,11 +21,11 @@
           [readonlyComp]="buttonDisablerHospSelector"
           [Activator]="hospitalActivator"
         ></app-hospital>
-        <app-dateselector
+        <chh-app-date-selector
           [passedDate]="selectedDate"
           (dateSelector)="dateChanged($event)"
           [readonlyComp]="buttonDisablerDateSelector"
-        ></app-dateselector>
+        ></chh-app-date-selector>
       </ion-col>
     </ion-row>
   </ion-grid>

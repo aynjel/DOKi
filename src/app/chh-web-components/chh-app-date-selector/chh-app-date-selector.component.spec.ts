@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { DateselectorComponent } from './dateselector.component';
+import { DateSelectorComponent } from './chh-app-date-selector.component';
 
-describe('DateselectorComponent', () => {
-  let component: DateselectorComponent;
-  let fixture: ComponentFixture<DateselectorComponent>;
+describe('DateSelectorComponent', () => {
+  let component: DateSelectorComponent;
+  let fixture: ComponentFixture<DateSelectorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DateselectorComponent ],
+      declarations: [ DateSelectorComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DateselectorComponent);
+    fixture = TestBed.createComponent(DateSelectorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
