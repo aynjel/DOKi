@@ -187,6 +187,8 @@ export class Tab4Page implements OnInit {
     this.logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_code = this.logindata[0].dr_code;
     this.first_name = this.camelCase(this.logindata[0].first_name);
+    let  dr_name = this.logindata[0].last_name;
+    this.$gaService.event('Dashboard','User Flow',dr_name);
 
     let catego = [];
     let totalPatient = [];

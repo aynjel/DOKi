@@ -238,7 +238,8 @@ export class Tab2Page {
   ionViewWillEnter() {
     this.logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_code = this.logindata[0].dr_code;
-
+    let  dr_name = this.logindata[0].last_name;
+    this.$gaService.event('Appointments','User Flow',dr_name);
     if (this.selectedDate == null) {
       this.selectedDate = this.yyyymmdd();
       this.selectedLocation = "C";

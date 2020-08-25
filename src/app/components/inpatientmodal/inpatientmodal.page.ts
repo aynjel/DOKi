@@ -6,13 +6,15 @@ import { PopoverController } from "@ionic/angular";
 import { timeStamp } from "console";
 import { DoctorService } from "src/app/services/doctor.service";
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
-
+import { AuthService } from 'src/app/services/auth.service';
+import {LoginData} from '../../models/logindata.model';
 @Component({
   selector: "app-inpatientmodal",
   templateUrl: "./inpatientmodal.page.html",
   styleUrls: ["./inpatientmodal.page.scss"],
 })
 export class InpatientmodalPage implements OnInit {
+  public logindata: LoginData;
   @Input() data: any;
   site: any;
   date: any;
@@ -27,7 +29,8 @@ export class InpatientmodalPage implements OnInit {
     private popover: PopoverController,
     private doctorService: DoctorService,
     public alertController: AlertController,
-    protected $gaService: GoogleAnalyticsService
+    protected $gaService: GoogleAnalyticsService,
+    private authService:AuthService
   ) {}
 
   postData = {
@@ -60,6 +63,11 @@ export class InpatientmodalPage implements OnInit {
 
   ngOnInit() {
     this.$gaService.pageView('/In-Patient/Patient Details', 'Patient Details Modal');
+
+    let logindata = <LoginData>this.authService.userData$.getValue();
+    let  dr_name = logindata[0].last_name;
+    this.$gaService.event('Patient Information','User Flow',dr_name);
+
     this.data.admission_date = this.explodeDate(this.data.admission_date);
     if (this.data.site == "C") {
       this.site = "CHHC";

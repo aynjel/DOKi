@@ -153,7 +153,8 @@ export class Tab1Page {
   ionViewWillEnter() {
     this.logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_code = this.logindata[0].dr_code;
-
+    let  dr_name = this.logindata[0].last_name;
+    this.$gaService.event('In-Patient','User Flow',dr_name);
     this.callPatient(this.site);
   }
 

@@ -19,6 +19,7 @@ export class Tab3Page {
   isDesktop: boolean;
   darkmode:boolean = true;
   displayUserData: any;
+  dr_name:any;
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -37,6 +38,9 @@ export class Tab3Page {
 
   ngOnInit() {
     this.$gaService.pageView('/Settings', 'Settings Tab');
+    this.logindata = <LoginData>this.authService.userData$.getValue();
+    this.dr_name = this.logindata[0].last_name;
+    this.$gaService.event('Settings','User Flow',this.dr_name);
     this.authService.userData$.subscribe((res: any) => {
       console.log(res);
       this.account = <LoginData>res;
@@ -52,9 +56,11 @@ export class Tab3Page {
     if (event.detail.checked) {
       this.renderer.setAttribute(document.body, "color-theme", "dark");
       localStorage.setItem('darkmode','true');
+          this.$gaService.event('Settings - Dark Mode True','User Flow',this.dr_name);
     } else {
       this.renderer.setAttribute(document.body, "color-theme", "light");
       localStorage.setItem('darkmode','false');
+      this.$gaService.event('Settings - Dark Mode False','User Flow',this.dr_name);
     }
     if(this.isDesktop){window.location.reload();}
     

@@ -41,7 +41,7 @@ export class AddappointmentsmodalPage implements OnInit {
   // mydate3 = '13 Dec 2018';
   datePickerObj: any = {};
   datePickerObj2: any = {};
-
+  dr_name:any;
 /*new date picker*/
 datePickerObjForDateOfAppointment: any = {};
 datePickerObjForBirthdate: any = {};
@@ -68,10 +68,9 @@ uxSaveCancel = true;
         }
         this.isDesktop = isDesktop;
         });
-        if(!this.dr_code){
           let logindata = <LoginData>this.authService.userData$.getValue();
           this.dr_code = logindata[0].dr_code;
-        }
+          this.dr_name = logindata[0].last_name;
 }
 
 
@@ -81,6 +80,11 @@ uxSaveCancel = true;
 
   ngOnInit() {
     this.$gaService.pageView('/Appointments/Add Appointments', 'Add Appointments Modal');
+    
+   
+    this.$gaService.event('Add Appointments','User Flow',this.dr_name);
+
+
     this.location = this.appt_id;
     this.retriveMTWThFSS(this.dr_code,this.appt_id);
     this.setDatepicker();
@@ -299,6 +303,7 @@ uxSaveCancel = true;
     });
   }
   async closeModal() {
+    this.$gaService.event('Add Appointments - CLOSE','User Flow',this.dr_name);
     await this.modalController.dismiss();
   }
   yyyymmdd() {
@@ -311,6 +316,7 @@ uxSaveCancel = true;
     return '' + y+"-" + mm+"-"  + dd;
   }
   save(){
+    this.$gaService.event('Add Appointments - SAVE','User Flow',this.dr_name);
     this.patientService.addAppointments(this.dr_code,this.mydate1,this.time,this.lname,this.fname,this.mname,this.gender,this.mydate2,this.adrress,this.contact,this.appt_id).subscribe((res:any)=>{
      //this.doctorSchedule = res;
      console.log(res);
