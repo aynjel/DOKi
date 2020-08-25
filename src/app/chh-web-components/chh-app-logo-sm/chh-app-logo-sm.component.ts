@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-logo-sm',
-  templateUrl: './logo-sm.component.html',
-  styleUrls: ['./logo-sm.component.scss'],
+  selector: 'chh-app-logo-sm',
+  templateUrl: './chh-app-logo-sm.component.html',
+  styleUrls: ['./chh-app-logo-sm.component.scss'],
 })
-export class LogoSmComponent implements OnInit {
+export class ChhAppLogoSmComponent implements OnInit {
   logo:any;
   constructor() { }
 

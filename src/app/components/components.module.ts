@@ -9,7 +9,7 @@ import { ChhAppHospitalComponent } from "../chh-web-components/chh-app-hospital/
 
 import { ChhAppDateSelectorComponent } from "../chh-web-components/chh-app-date-selector/chh-app-date-selector.component";
 import { IonicModule } from "@ionic/angular";
-import { LogoSmComponent } from "./logo-sm/logo-sm.component";
+import { ChhAppLogoSmComponent } from "../chh-web-components/chh-app-logo-sm/chh-app-logo-sm.component";
 //import { HospitalSelectorWithAllComponent } from "./hospital-selector-with-all/hospital-selector-with-all.component";
 import { ChhAppHospitalSelectorWithAllComponent } from "../chh-web-components/chh-app-hospital-selector-with-all/chh-app-hospital-selector-with-all.component";
 import { TextAvatarModule } from "./text-avatar/text-avatar.module";
@@ -22,7 +22,7 @@ import { TextAvatarModule } from "./text-avatar/text-avatar.module";
     ChhAppHospitalComponent,
     ChhAppHospitalSelectorWithAllComponent,
     ChhAppDateSelectorComponent,
-    LogoSmComponent,
+    ChhAppLogoSmComponent,
     SliderPage,
   ],
   exports: [
@@ -32,7 +32,7 @@ import { TextAvatarModule } from "./text-avatar/text-avatar.module";
     ChhAppHospitalComponent,
     ChhAppHospitalSelectorWithAllComponent,
     ChhAppDateSelectorComponent,
-    LogoSmComponent,
+    ChhAppLogoSmComponent,
     SliderPage,
   ],
   imports: [CommonModule, IonicModule, TextAvatarModule],

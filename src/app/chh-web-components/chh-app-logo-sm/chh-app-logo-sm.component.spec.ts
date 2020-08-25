@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { LogoSmComponent } from './logo-sm.component';
+import { ChhAppLogoSmComponent } from './chh-app-logo-sm.component';
 
-describe('LogoSmComponent', () => {
-  let component: LogoSmComponent;
-  let fixture: ComponentFixture<LogoSmComponent>;
+describe('ChhAppLogoSmComponent', () => {
+  let component: ChhAppLogoSmComponent;
+  let fixture: ComponentFixture<ChhAppLogoSmComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LogoSmComponent ],
+      declarations: [ ChhAppLogoSmComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LogoSmComponent);
+    fixture = TestBed.createComponent(ChhAppLogoSmComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
