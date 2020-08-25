@@ -12,7 +12,7 @@ import { GoogleAnalyticsService } from 'ngx-google-analytics';
   templateUrl: "./chh-app-in-patient-modal.page.html",
   styleUrls: ["./chh-app-in-patient-modal.page.scss"],
 })
-export class ChhAppInpatientmodalPage implements OnInit {
+export class ChhAppInPatientModalPage implements OnInit {
   @Input() data: any;
   site: any;
   date: any;

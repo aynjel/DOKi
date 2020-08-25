@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ChhAppInpatientmodalPage } from './chh-app-in-patient-modal.page';
+import { ChhAppInPatientModalPage } from './chh-app-in-patient-modal.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ChhAppInpatientmodalPage
+    component: ChhAppInPatientModalPage
   }
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ChhAppInpatientmodalPageRoutingModule {}
+export class ChhAppInPatientModalPageRoutingModule {}

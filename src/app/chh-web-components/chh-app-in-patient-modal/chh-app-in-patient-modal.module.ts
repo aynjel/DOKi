@@ -5,9 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 //import { ChhAppInpatientmodalPageRoutingModule } from './chh-app-in-patient-modal-routing.module';
-import { ChhAppInpatientmodalPageRoutingModule } from '../chh-app-in-patient-modal/chh-app-in-patient-modal-routing.module';
+import { ChhAppInPatientModalPageRoutingModule } from '../chh-app-in-patient-modal/chh-app-in-patient-modal-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { ChhAppInpatientmodalPage } from './chh-app-in-patient-modal.page';
+import { ChhAppInPatientModalPage } from './chh-app-in-patient-modal.page';
 //import { TextAvatarModule } from '../text-avatar/text-avatar.module';
 import { TextAvatarModule } from '../../components/text-avatar/text-avatar.module';
 @NgModule({
@@ -17,8 +17,8 @@ import { TextAvatarModule } from '../../components/text-avatar/text-avatar.modul
     IonicModule,
     TextAvatarModule,
     BrowserModule,
-    ChhAppInpatientmodalPageRoutingModule
+    ChhAppInPatientModalPageRoutingModule
   ],
-  declarations: [ChhAppInpatientmodalPage]
+  declarations: [ChhAppInPatientModalPage]
 })
-export class ChhAppInpatientmodalPageModule {}
+export class ChhAppInPatientModalPageModule {}

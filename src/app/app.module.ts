@@ -15,7 +15,7 @@ import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "../environments/environment";
 import { Ionic4DatepickerModule } from "@logisticinfotech/ionic4-datepicker";
 //import { InpatientmodalPageModule } from "./components/inpatientmodal/inpatientmodal.module";
-import { ChhAppInpatientmodalPageModule } from "../app/chh-web-components/chh-app-in-patient-modal/chh-app-in-patient-modal.module";
+import { ChhAppInPatientModalPageModule } from "../app/chh-web-components/chh-app-in-patient-modal/chh-app-in-patient-modal.module";
 import { ChhAppAddAppointmentsModalPageModule } from "../app/chh-web-components/chh-app-add-appointments-modal/chh-app-add-appointments-modal.module";
 
 //import { SliderPageModule } from './components/slider/slider.module';
@@ -36,7 +36,7 @@ import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-go
     AppRoutingModule,
     HttpClientModule,
     Ionic4DatepickerModule,
-    ChhAppInpatientmodalPageModule,
+    ChhAppInPatientModalPageModule,
     ChhAppAddAppointmentsModalPageModule,
     NgxGoogleAnalyticsModule.forRoot('UA-175566562-1'),
     NgxGoogleAnalyticsRouterModule,
