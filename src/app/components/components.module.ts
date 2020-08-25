@@ -1,7 +1,8 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ChhAppLogoComponent } from "../chh-web-components/chh-app-logo/chh-app-logo.component";
-import { SlidesComponent } from "./slides/slides.component";
+import { ChhAppSlidesComponent } from "../chh-web-components/chh-app-slides/chh-app-slides.component";
+
 import { ChhAppSliderPage } from "../chh-web-components/chh-app-slider/chh-app-slider.page";
 import { StartComponent } from "./start/start.component";
 import { ChhAppHospitalComponent } from "../chh-web-components/chh-app-hospital/chh-app-hospital.component";
@@ -15,7 +16,7 @@ import { TextAvatarModule } from "./text-avatar/text-avatar.module";
 @NgModule({
   declarations: [
     ChhAppLogoComponent,
-    SlidesComponent,
+    ChhAppSlidesComponent,
     StartComponent,
     ChhAppHospitalComponent,
     ChhAppHospitalSelectorWithAllComponent,
@@ -25,7 +26,7 @@ import { TextAvatarModule } from "./text-avatar/text-avatar.module";
   ],
   exports: [
     ChhAppLogoComponent,
-    SlidesComponent,
+    ChhAppSlidesComponent,
     StartComponent,
     ChhAppHospitalComponent,
     ChhAppHospitalSelectorWithAllComponent,
