@@ -11,7 +11,7 @@ import { ChhAppDateSelectorComponent } from "../chh-web-components/chh-app-date-
 import { IonicModule } from "@ionic/angular";
 import { ChhAppLogoSmComponent } from "../chh-web-components/chh-app-logo-sm/chh-app-logo-sm.component";
 import { ChhAppHospitalSelectorWithAllComponent } from "../chh-web-components/chh-app-hospital-selector-with-all/chh-app-hospital-selector-with-all.component";
-import { TextAvatarModule } from "./text-avatar/text-avatar.module";
+import { ChhAppTextAvatarModule } from "../chh-web-components/chh-app-text-avatar/chh-app-text-avatar.module";
 
 @NgModule({
   declarations: [
@@ -34,6 +34,6 @@ import { TextAvatarModule } from "./text-avatar/text-avatar.module";
     ChhAppLogoSmComponent,
     ChhAppSliderPage,
   ],
-  imports: [CommonModule, IonicModule, TextAvatarModule],
+  imports: [CommonModule, IonicModule, ChhAppTextAvatarModule],
 })
 export class ComponentsModule {}

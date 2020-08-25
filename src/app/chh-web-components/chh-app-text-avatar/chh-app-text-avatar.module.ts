@@ -1,12 +1,12 @@
 import { NgModule } from "@angular/core";
-import { TextAvatarDirective } from './text-avatar';
+import { ChhAppTextAvatarDirective } from './chh-app-text-avatar';
 import { CommonModule } from '@angular/common';
 import { ColorGenerator } from './color-generator';
 
 @NgModule({
   imports: [CommonModule],
-  declarations: [TextAvatarDirective],
-  exports: [TextAvatarDirective],
+  declarations: [ChhAppTextAvatarDirective],
+  exports: [ChhAppTextAvatarDirective],
   providers: [ColorGenerator]
 })
-export class TextAvatarModule {}
+export class ChhAppTextAvatarModule {}

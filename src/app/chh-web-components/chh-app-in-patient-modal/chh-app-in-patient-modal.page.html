@@ -53,7 +53,7 @@ o888o        `Y888""8o   "888" o888o `Y8bod8P' o888o o888o   "888"
       <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg">
     </ion-avatar-->
         <ion-avatar slot="start">
-          <text-avatar [text]="data.last_name" [color]=""></text-avatar>
+          <chh-app-text-avatar [text]="data.last_name" [color]=""></chh-app-text-avatar>
         </ion-avatar>
         <ion-label>
           <ion-item class="ion-no-padding">
@@ -185,7 +185,7 @@ o888o        d888b    `Y8bod8P' o888o      o888o        `Y8bod8P' `Y8bod8P'
       <ng-container>
         <ion-item lines="none" *ngFor="let dr of coDoctors">
           <ion-avatar slot="start">
-            <text-avatar [text]="dr.last_name" [color]=""></text-avatar>
+            <chh-app-text-avatar [text]="dr.last_name" [color]=""></chh-app-text-avatar>
           </ion-avatar>
           <ion-label style="margin-top: -10px;">
             <ion-item class="ion-no-padding" style="padding-bottom: 5px;">

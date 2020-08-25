@@ -7,7 +7,7 @@ import { Tab1Page } from './tab1.page';
 import { ComponentsModule } from '../components/components.module';
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 
-import { TextAvatarModule } from '../components/text-avatar/text-avatar.module';
+import { ChhAppTextAvatarModule } from '../chh-web-components/chh-app-text-avatar/chh-app-text-avatar.module';
 
 /* import {HospitalSelectorWithAllAndFilterPage} 
 from '../components/hospital-selector-with-all-and-filter/hospital-selector-with-all-and-filter.page'; */
@@ -20,7 +20,7 @@ from '../chh-web-components/chh-app-hospital-selector-with-all-and-filter/chh-ap
     IonicModule,
     CommonModule,
     FormsModule,
-    TextAvatarModule,
+    ChhAppTextAvatarModule,
     Tab1PageRoutingModule,
     ComponentsModule,
 

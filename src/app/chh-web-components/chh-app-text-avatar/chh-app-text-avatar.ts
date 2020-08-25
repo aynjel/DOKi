@@ -2,13 +2,13 @@ import { Input, SimpleChanges, Component, ViewChild } from '@angular/core';
 import { ColorGenerator } from "./color-generator";
 
 @Component({
-  selector: 'text-avatar',
+  selector: 'chh-app-text-avatar',
   template: `
     <div class="u-text-avatar" [ngStyle]="styles">{{ firstLetter }}</div>
   `,
-  styleUrls: ['./text-avatar.scss']
+  styleUrls: ['./chh-app-text-avatar.scss']
 })
-export class TextAvatarDirective {
+export class ChhAppTextAvatarDirective {
   @Input() text: string;
   @Input() color: string;
   @Input() textColor: string;
