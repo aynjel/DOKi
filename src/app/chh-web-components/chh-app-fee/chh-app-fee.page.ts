@@ -1,11 +1,11 @@
 import { Component, EventEmitter, OnInit, Output, Input } from "@angular/core";
 import { ModalController, PopoverController } from "@ionic/angular";
 @Component({
-  selector: "app-fee",
-  templateUrl: "./fee.page.html",
-  styleUrls: ["./fee.page.scss"],
+  selector: "chh-app-fee",
+  templateUrl: "./chh-app-fee.page.html",
+  styleUrls: ["./chh-app-fee.page.scss"],
 })
-export class FeePage implements OnInit {
+export class ChhAppFeePage implements OnInit {
   public initialFeePopOverProfFee: string = "";
   public initialFeePopOverRemarks: string = "";
   public initialFeePopOverMethod: string = "";

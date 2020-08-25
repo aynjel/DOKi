@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FeePageRoutingModule } from './fee-routing.module';
+import { ChhAppFeePageRoutingModule } from './chh-app-fee-routing.module';
 
-import { FeePage } from './fee.page';
+import { ChhAppFeePage } from './chh-app-fee.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    FeePageRoutingModule
+    ChhAppFeePageRoutingModule
   ],
-  declarations: [FeePage]
+  declarations: [ChhAppFeePage]
 })
-export class FeePageModule {}
+export class ChhAppFeePageModule {}

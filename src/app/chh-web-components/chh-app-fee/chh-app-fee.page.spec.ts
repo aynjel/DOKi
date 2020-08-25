@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { Error404Page } from './error404.page';
+import { ChhAppFeePage } from './chh-app-fee.page';
 
-describe('Error404Page', () => {
-  let component: Error404Page;
-  let fixture: ComponentFixture<Error404Page>;
+describe('ChhAppFeePage', () => {
+  let component: ChhAppFeePage;
+  let fixture: ComponentFixture<ChhAppFeePage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ Error404Page ],
+      declarations: [ ChhAppFeePage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Error404Page);
+    fixture = TestBed.createComponent(ChhAppFeePage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

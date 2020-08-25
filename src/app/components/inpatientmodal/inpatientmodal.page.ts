@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { ModalController, AlertController } from "@ionic/angular";
-import { FeePage } from "../fee/fee.page";
+import { ChhAppFeePage } from "../../chh-web-components/chh-app-fee/chh-app-fee.page";
 import { from } from "rxjs";
 import { PopoverController } from "@ionic/angular";
 import { timeStamp } from "console";
@@ -134,7 +134,7 @@ export class InpatientmodalPage implements OnInit {
       this.method = "";
     }
     const popover = await this.popover.create({
-      component: FeePage,
+      component: ChhAppFeePage,
       showBackdrop: true,
       translucent: true,
       componentProps: {
