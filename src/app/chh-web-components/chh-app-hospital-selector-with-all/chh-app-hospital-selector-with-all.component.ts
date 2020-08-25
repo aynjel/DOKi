@@ -2,11 +2,11 @@ import { Component, OnInit, EventEmitter, Output, Input} from '@angular/core';
 import { Router } from '@angular/router';
 import { ScreensizeService } from '../../services/screensize.service';
 @Component({
-  selector: 'app-hospital-selector-with-all',
-  templateUrl: './hospital-selector-with-all.component.html',
-  styleUrls: ['./hospital-selector-with-all.component.scss'],
+  selector: 'chh-app-hospital-selector-with-all',
+  templateUrl: './chh-app-hospital-selector-with-all.component.html',
+  styleUrls: ['./chh-app-hospital-selector-with-all.component.scss'],
 })
-export class HospitalSelectorWithAllComponent implements OnInit {
+export class ChhAppHospitalSelectorWithAllComponent implements OnInit {
   active:boolean = false;
   active1:boolean = false;
   active2:boolean = false;
