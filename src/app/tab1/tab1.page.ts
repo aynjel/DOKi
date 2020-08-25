@@ -8,7 +8,8 @@ import { ModalController, AlertController } from '@ionic/angular';
 import { PatientdetailsPage } from '../components/patientdetailss/patientdetails.page';
 import { ScreensizeService } from '../services/screensize.service';
 import { PopoverController } from '@ionic/angular';  
-import {InpatientmodalPage} from '../components/inpatientmodal/inpatientmodal.page';
+//import {InpatientmodalPage} from '../components/inpatientmodal/inpatientmodal.page';
+import {ChhAppInpatientmodalPage} from '../chh-web-components/chh-app-in-patient-modal/chh-app-in-patient-modal.page';
 
 import { timeStamp } from 'console';
 import {DoctorInfoGlobal} from '../common/doctorinfo-global';
@@ -204,7 +205,7 @@ export class Tab1Page {
 
   async detail(data: any) {
     const modal = await this.modalController.create({
-      component: InpatientmodalPage,
+      component: ChhAppInpatientmodalPage,
       componentProps: { data: data },
       cssClass: "my-custom-modal-inpatient-css",
     });

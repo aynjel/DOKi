@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { ModalController, AlertController } from "@ionic/angular";
-import { ChhAppFeePage } from "../../chh-web-components/chh-app-fee/chh-app-fee.page";
+import { ChhAppFeePage } from "../chh-app-fee/chh-app-fee.page";
 import { from } from "rxjs";
 import { PopoverController } from "@ionic/angular";
 import { timeStamp } from "console";
@@ -8,11 +8,11 @@ import { DoctorService } from "src/app/services/doctor.service";
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 
 @Component({
-  selector: "app-inpatientmodal",
-  templateUrl: "./inpatientmodal.page.html",
-  styleUrls: ["./inpatientmodal.page.scss"],
+  selector: "chh-app-in-patient-modal",
+  templateUrl: "./chh-app-in-patient-modal.page.html",
+  styleUrls: ["./chh-app-in-patient-modal.page.scss"],
 })
-export class InpatientmodalPage implements OnInit {
+export class ChhAppInpatientmodalPage implements OnInit {
   @Input() data: any;
   site: any;
   date: any;
