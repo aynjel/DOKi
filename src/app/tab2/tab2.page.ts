@@ -4,7 +4,7 @@ import { ModalController } from "@ionic/angular";
 import { AuthService } from "src/app/services/auth.service";
 import { DoctorService } from "../services/doctor.service";
 import { HostListener } from "@angular/core";
-import { PatientdetailsPage } from "../components/patientdetailss/patientdetails.page";
+import { ChhAppPatientDetailsPage } from "../chh-web-components/chh-app-patient-details/chh-app-patient-details.page";
 import { ScreensizeService } from "../services/screensize.service";
 import { ActionSheetController } from "@ionic/angular";
 import { PopoverController } from "@ionic/angular";
@@ -121,7 +121,7 @@ export class Tab2Page {
   //present View Detail
   async presentModal(data: any) {
     const popover = await this.popover.create({
-      component: PatientdetailsPage,
+      component: ChhAppPatientDetailsPage,
       showBackdrop: true,
       translucent: true,
       componentProps: {

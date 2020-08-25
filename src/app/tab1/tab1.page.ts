@@ -5,10 +5,9 @@ import { StorageService } from '../services/storage.service';
 import { AuthConstants } from '../config/auth-constants';
 import { DoctorService } from '../services/doctor.service';
 import { ModalController, AlertController } from '@ionic/angular';
-import { PatientdetailsPage } from '../components/patientdetailss/patientdetails.page';
+import { ChhAppPatientDetailsPage } from '../chh-web-components/chh-app-patient-details/chh-app-patient-details.page';
 import { ScreensizeService } from '../services/screensize.service';
 import { PopoverController } from '@ionic/angular';  
-//import {InpatientmodalPage} from '../components/inpatientmodal/inpatientmodal.page';
 import {ChhAppInPatientModalPage} from '../chh-web-components/chh-app-in-patient-modal/chh-app-in-patient-modal.page';
 
 import { timeStamp } from 'console';

@@ -8,7 +8,7 @@ import { TextAvatarModule } from '../components/text-avatar/text-avatar.module';
 
 import { Tab2PageRoutingModule } from './tab2-routing.module';
 import { ComponentsModule } from '../components/components.module';
-import { PatientdetailsPage } from '../components/patientdetailss/patientdetails.page';
+import { ChhAppPatientDetailsPage } from '../chh-web-components/chh-app-patient-details/chh-app-patient-details.page';
 
 @NgModule({
   imports: [
@@ -19,8 +19,8 @@ import { PatientdetailsPage } from '../components/patientdetailss/patientdetails
     ComponentsModule,
     TextAvatarModule
   ],
-  declarations: [Tab2Page,PatientdetailsPage],
-  entryComponents:[PatientdetailsPage],
+  declarations: [Tab2Page,ChhAppPatientDetailsPage],
+  entryComponents:[ChhAppPatientDetailsPage],
   providers:[]
 })
 export class Tab2PageModule {}

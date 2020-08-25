@@ -4,11 +4,11 @@ import { PatientService } from 'src/app/services/patient.service';
 
 
 @Component({
-  selector: 'app-patientdetails',
-  templateUrl: './patientdetails.page.html',
-  styleUrls: ['./patientdetails.page.scss'],
+  selector: 'chh-app-patient-details',
+  templateUrl: './chh-app-patient-details.page.html',
+  styleUrls: ['./chh-app-patient-details.page.scss'],
 })
-export class PatientdetailsPage implements OnInit {
+export class ChhAppPatientDetailsPage implements OnInit {
   segment = "chhc";
    cardData: any;
  receiveddata:any[] = [];
