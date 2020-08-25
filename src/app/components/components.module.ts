@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { LogoComponent } from "./logo/logo.component";
+import { ChhAppLogoComponent } from "../chh-web-components/chh-app-logo/chh-app-logo.component";
 import { SlidesComponent } from "./slides/slides.component";
 import { SliderPage } from "./slider/slider.page";
 import { StartComponent } from "./start/start.component";
@@ -16,7 +16,7 @@ import { TextAvatarModule } from "./text-avatar/text-avatar.module";
 
 @NgModule({
   declarations: [
-    LogoComponent,
+    ChhAppLogoComponent,
     SlidesComponent,
     StartComponent,
     ChhAppHospitalComponent,
@@ -26,7 +26,7 @@ import { TextAvatarModule } from "./text-avatar/text-avatar.module";
     SliderPage,
   ],
   exports: [
-    LogoComponent,
+    ChhAppLogoComponent,
     SlidesComponent,
     StartComponent,
     ChhAppHospitalComponent,
