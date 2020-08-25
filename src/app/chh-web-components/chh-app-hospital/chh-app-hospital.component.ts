@@ -1,11 +1,11 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 @Component({
-  selector: 'app-hospital',
-  templateUrl: './hospital.component.html',
-  styleUrls: ['./hospital.component.scss'],
+  selector: 'chh-app-hospital',
+  templateUrl: './chh-app-hospital.component.html',
+  styleUrls: ['./chh-app-hospital.component.scss'],
 })
-export class HospitalComponent implements OnInit {
+export class ChhAppHospitalComponent implements OnInit {
   active:boolean = true;
   active1:boolean = false;
   @Output() hospital: EventEmitter<any> = new EventEmitter();

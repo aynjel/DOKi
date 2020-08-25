@@ -4,7 +4,9 @@ import { LogoComponent } from "./logo/logo.component";
 import { SlidesComponent } from "./slides/slides.component";
 import { SliderPage } from "./slider/slider.page";
 import { StartComponent } from "./start/start.component";
-import { HospitalComponent } from "./hospital/hospital.component";
+//import { ChhAppHospitalComponent } from "./hospital/hospital.component";
+import { ChhAppHospitalComponent } from "../chh-web-components/chh-app-hospital/chh-app-hospital.component";
+
 import { ChhAppDateSelectorComponent } from "../chh-web-components/chh-app-date-selector/chh-app-date-selector.component";
 import { IonicModule } from "@ionic/angular";
 import { LogoSmComponent } from "./logo-sm/logo-sm.component";
@@ -16,7 +18,7 @@ import { TextAvatarModule } from "./text-avatar/text-avatar.module";
     LogoComponent,
     SlidesComponent,
     StartComponent,
-    HospitalComponent,
+    ChhAppHospitalComponent,
     HospitalSelectorWithAllComponent,
     ChhAppDateSelectorComponent,
     LogoSmComponent,
@@ -26,7 +28,7 @@ import { TextAvatarModule } from "./text-avatar/text-avatar.module";
     LogoComponent,
     SlidesComponent,
     StartComponent,
-    HospitalComponent,
+    ChhAppHospitalComponent,
     HospitalSelectorWithAllComponent,
     ChhAppDateSelectorComponent,
     LogoSmComponent,
