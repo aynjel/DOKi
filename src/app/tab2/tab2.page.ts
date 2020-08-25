@@ -95,7 +95,9 @@ export class Tab2Page {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
       message:
-        "Are you sure you want to delete <strong>" + data1 + "</strong>'s appointment?",
+        "Are you sure you want to delete <strong>" +
+        data1 +
+        "</strong>'s appointment?",
       buttons: [
         { text: "Cancel", role: "cancel", cssClass: "secondary" },
         {
@@ -227,17 +229,15 @@ export class Tab2Page {
   }
 
   ngOnInit() {
-    this.$gaService.pageView('/Appointments', 'Appointments Tab');
+    this.$gaService.pageView("/Appointments", "Appointments Tab");
     //this.selectedDate = this.yyyymmdd();
     //this.selectedLocation = "C";
     //this.getDate(this.selectedDate,this.selectedLocation);
   }
 
   ionViewWillEnter() {
-    if (!this.dr_code) {
-      this.logindata = <LoginData>this.authService.userData$.getValue();
-      this.dr_code = this.logindata[0].dr_code;
-    }
+    this.logindata = <LoginData>this.authService.userData$.getValue();
+    this.dr_code = this.logindata[0].dr_code;
 
     if (this.selectedDate == null) {
       this.selectedDate = this.yyyymmdd();

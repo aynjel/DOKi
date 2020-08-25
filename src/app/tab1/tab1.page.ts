@@ -22,7 +22,6 @@ import { GoogleAnalyticsService } from 'ngx-google-analytics';
   templateUrl: "tab1.page.html",
   styleUrls: ["tab1.page.scss"],
 })
-
 export class Tab1Page {
   public logindata: LoginData;
   public inPatientData: InpatientData;
@@ -39,7 +38,6 @@ export class Tab1Page {
   admittedOrDischargeLabel = "";
   route: string;
   objecthandler: boolean = false;
-
 
   constructor(
     private authService: AuthService,
@@ -75,7 +73,7 @@ export class Tab1Page {
   }
 
   ngOnInit() {
-    this.$gaService.pageView('/In-Patient', 'In-Patient Tab');
+    this.$gaService.pageView("/In-Patient", "In-Patient Tab");
   }
   async Alert(data1: any, data2: any) {
     const alert = await this.alertController.create({
@@ -153,17 +151,16 @@ export class Tab1Page {
 
   //Fired when the component routing to is about to animate into view.
   ionViewWillEnter() {
-    if (!this.dr_code) {
-      this.logindata = <LoginData>this.authService.userData$.getValue();
-      this.dr_code = this.logindata[0].dr_code;
-    }
+    this.logindata = <LoginData>this.authService.userData$.getValue();
+    this.dr_code = this.logindata[0].dr_code;
+
     this.callPatient(this.site);
   }
 
   //Get using Doctors API
   callPatient(data: any) {
     this.isFetchDone = false;
-    
+
     setTimeout(() => {
       this.doctorService.getInPatient(this.dr_code).subscribe(
         (res: any) => {
@@ -177,14 +174,17 @@ export class Tab1Page {
             element.last_name = element.last_name.toUpperCase();
             element.middle_name = this.camelCase(element.middle_name);
             element.first_name = this.camelCase(element.first_name);
-  
+
             this.inPatientsDraft.push(element);
           });
           this.filterList();
         },
         (error) => {
           this.isFetchDone = true;
-          this.Alert("Sorry Doc. We cannot retrieve the list of your admitted patients at this time. Please try again.", "Okay");
+          this.Alert(
+            "Sorry Doc. We cannot retrieve the list of your admitted patients at this time. Please try again.",
+            "Okay"
+          );
         },
         () => {
           this.isFetchDone = true;
@@ -192,7 +192,7 @@ export class Tab1Page {
       );
     }, 1000);
   }
-    
+
   //swipe down refresh
   doRefresh(event) {
     setTimeout(() => {
