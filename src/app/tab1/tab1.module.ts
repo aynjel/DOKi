@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Tab1Page } from './tab1.page';
 
-import { ComponentsModule } from '../components/components.module';
+import { ChhWebComponentsModule } from '../chh-web-components/chh-web-components.module';
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 
 import { ChhAppTextAvatarModule } from '../chh-web-components/chh-app-text-avatar/chh-app-text-avatar.module';
@@ -22,7 +22,7 @@ from '../chh-web-components/chh-app-hospital-selector-with-all-and-filter/chh-ap
     FormsModule,
     ChhAppTextAvatarModule,
     Tab1PageRoutingModule,
-    ComponentsModule,
+    ChhWebComponentsModule,
 
 
 

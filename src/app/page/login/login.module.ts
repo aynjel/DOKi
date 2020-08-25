@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { LoginPageRoutingModule } from './login-routing.module';
 
 import { LoginPage } from './login.page';
-import { ComponentsModule } from './../../components/components.module';
+import { ChhWebComponentsModule } from '../../chh-web-components/chh-web-components.module';
 
 @NgModule({
   imports: [
@@ -15,7 +15,7 @@ import { ComponentsModule } from './../../components/components.module';
     FormsModule,
     IonicModule,
     LoginPageRoutingModule,
-    ComponentsModule
+    ChhWebComponentsModule
   ],
   declarations: [LoginPage]
 })

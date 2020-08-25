@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { IndexPageRoutingModule } from './index-routing.module';
-import { ComponentsModule } from './../../components/components.module';
+import { ChhWebComponentsModule } from '../../chh-web-components/chh-web-components.module';
 import { IndexPage } from './index.page';
 
 @NgModule({
@@ -14,7 +14,7 @@ import { IndexPage } from './index.page';
     FormsModule,
     IonicModule,
     IndexPageRoutingModule,
-    ComponentsModule
+    ChhWebComponentsModule
   ],
   declarations: [IndexPage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA ]
