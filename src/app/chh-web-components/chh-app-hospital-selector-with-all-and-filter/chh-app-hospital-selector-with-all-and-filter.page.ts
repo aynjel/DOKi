@@ -3,11 +3,11 @@ import { ScreensizeService } from '../../services/screensize.service';
 import { Router } from '@angular/router';
 import { Location } from "@angular/common";
 @Component({
-  selector: 'app-hospital-selector-with-all-and-filter',
-  templateUrl: './hospital-selector-with-all-and-filter.page.html',
-  styleUrls: ['./hospital-selector-with-all-and-filter.page.scss'],
+  selector: 'chh-app-hospital-selector-with-all-and-filter',
+  templateUrl: './chh-app-hospital-selector-with-all-and-filter.page.html',
+  styleUrls: ['./chh-app-hospital-selector-with-all-and-filter.page.scss'],
 })
-export class HospitalSelectorWithAllAndFilterPage implements OnInit {
+export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
 
   
   active:boolean = false;

@@ -9,8 +9,11 @@ import { Tab1PageRoutingModule } from './tab1-routing.module';
 
 import { TextAvatarModule } from '../components/text-avatar/text-avatar.module';
 
-import {HospitalSelectorWithAllAndFilterPage} 
-from '../components/hospital-selector-with-all-and-filter/hospital-selector-with-all-and-filter.page';
+/* import {HospitalSelectorWithAllAndFilterPage} 
+from '../components/hospital-selector-with-all-and-filter/hospital-selector-with-all-and-filter.page'; */
+
+import {ChhAppHospitalSelectorWithAllAndFilterPage} 
+from '../chh-web-components/chh-app-hospital-selector-with-all-and-filter/chh-app-hospital-selector-with-all-and-filter.page';
 
 @NgModule({
   imports: [
@@ -24,6 +27,6 @@ from '../components/hospital-selector-with-all-and-filter/hospital-selector-with
 
 
   ],
-  declarations: [Tab1Page,HospitalSelectorWithAllAndFilterPage]
+  declarations: [Tab1Page,ChhAppHospitalSelectorWithAllAndFilterPage]
 })
 export class Tab1PageModule {}
