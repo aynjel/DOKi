@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { StartComponent } from './start.component';
+import { ChhAppStartComponent } from './chh-app-start.component';
 
-describe('StartComponent', () => {
-  let component: StartComponent;
-  let fixture: ComponentFixture<StartComponent>;
+describe('ChhAppStartComponent', () => {
+  let component: ChhAppStartComponent;
+  let fixture: ComponentFixture<ChhAppStartComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StartComponent ],
+      declarations: [ ChhAppStartComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(StartComponent);
+    fixture = TestBed.createComponent(ChhAppStartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

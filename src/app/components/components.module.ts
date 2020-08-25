@@ -4,7 +4,7 @@ import { ChhAppLogoComponent } from "../chh-web-components/chh-app-logo/chh-app-
 import { ChhAppSlidesComponent } from "../chh-web-components/chh-app-slides/chh-app-slides.component";
 
 import { ChhAppSliderPage } from "../chh-web-components/chh-app-slider/chh-app-slider.page";
-import { StartComponent } from "./start/start.component";
+import { ChhAppStartComponent } from "../chh-web-components/chh-app-start/chh-app-start.component";
 import { ChhAppHospitalComponent } from "../chh-web-components/chh-app-hospital/chh-app-hospital.component";
 
 import { ChhAppDateSelectorComponent } from "../chh-web-components/chh-app-date-selector/chh-app-date-selector.component";
@@ -17,7 +17,7 @@ import { TextAvatarModule } from "./text-avatar/text-avatar.module";
   declarations: [
     ChhAppLogoComponent,
     ChhAppSlidesComponent,
-    StartComponent,
+    ChhAppStartComponent,
     ChhAppHospitalComponent,
     ChhAppHospitalSelectorWithAllComponent,
     ChhAppDateSelectorComponent,
@@ -27,7 +27,7 @@ import { TextAvatarModule } from "./text-avatar/text-avatar.module";
   exports: [
     ChhAppLogoComponent,
     ChhAppSlidesComponent,
-    StartComponent,
+    ChhAppStartComponent,
     ChhAppHospitalComponent,
     ChhAppHospitalSelectorWithAllComponent,
     ChhAppDateSelectorComponent,
