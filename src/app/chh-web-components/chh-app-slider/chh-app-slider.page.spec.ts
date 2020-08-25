@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { SliderPage } from './slider.page';
+import { ChhAppSliderPage } from './chh-app-slider.page';
 
-describe('SliderPage', () => {
-  let component: SliderPage;
-  let fixture: ComponentFixture<SliderPage>;
+describe('ChhAppSliderPage', () => {
+  let component: ChhAppSliderPage;
+  let fixture: ComponentFixture<ChhAppSliderPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SliderPage ],
+      declarations: [ ChhAppSliderPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SliderPage);
+    fixture = TestBed.createComponent(ChhAppSliderPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

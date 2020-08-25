@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { SliderPageRoutingModule } from './slider-routing.module';
+import { ChhAppSliderPageRoutingModule } from './chh-app-slider-routing.module';
 
 //import { SliderPage } from './slider.page';
 
@@ -14,7 +14,7 @@ import { SliderPageRoutingModule } from './slider-routing.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    SliderPageRoutingModule
+    ChhAppSliderPageRoutingModule
   ]
 })
-export class SliderPageModule {}
+export class ChhAppSliderPageModule {}
