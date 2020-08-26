@@ -7,6 +7,7 @@ import { AuthService } from "src/app/services/auth/auth.service";
 import { Ionic4DatepickerModalComponent } from "@logisticinfotech/ionic4-datepicker";
 import { ToastService } from "../../services/toast/toast.service";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
+import { Constants } from "../../shared/constants";
 
 @Component({
   selector: "app-add-appointments-modal",
@@ -63,7 +64,8 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
     public modalCtrl: ModalController,
     private toast: ToastService,
     public alertController: AlertController,
-    protected $gaService: GoogleAnalyticsService
+    protected $gaService: GoogleAnalyticsService,
+    private constants: Constants
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -249,20 +251,20 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
         console.log(res);
         let parseddata = JSON.parse(res);
         parseddata.forEach((element) => {
-          if (element.sched_day == "SUNDAY") {
-            this.Weekdays.push(0);
-          } else if (element.sched_day == "MONDAY") {
-            this.Weekdays.push(1);
-          } else if (element.sched_day == "TUESDAY") {
-            this.Weekdays.push(2);
-          } else if (element.sched_day == "WEDNESDAY") {
-            this.Weekdays.push(3);
-          } else if (element.sched_day == "THURSDAY") {
-            this.Weekdays.push(4);
-          } else if (element.sched_day == "FRIDAY") {
-            this.Weekdays.push(5);
-          } else if (element.sched_day == "SATURDAY") {
-            this.Weekdays.push(6);
+          if (element.sched_day == this.constants.WEEK_DAY__VALUE__SUNDAY) {
+            this.Weekdays.push(this.constants.WEEK_DAY__CODE__SUNDAY);
+          } else if (element.sched_day == this.constants.WEEK_DAY__VALUE__MONDAY) {
+            this.Weekdays.push(this.constants.WEEK_DAY__CODE__MONDAY);
+          } else if (element.sched_day == this.constants.WEEK_DAY__VALUE__TUESDAY) {
+            this.Weekdays.push(this.constants.WEEK_DAY__VALUE__TUESDAY);
+          } else if (element.sched_day == this.constants.WEEK_DAY__VALUE__WEDNESDAY) {
+            this.Weekdays.push(this.constants.WEEK_DAY__CODE__WEDNESDAY);
+          } else if (element.sched_day == this.constants.WEEK_DAY__VALUE__THURSDAY) {
+            this.Weekdays.push(this.constants.WEEK_DAY__CODE__THURSDAY);
+          } else if (element.sched_day == this.constants.WEEK_DAY__VALUE__FRIDAY) {
+            this.Weekdays.push(this.constants.WEEK_DAY__CODE__FRIDAY);
+          } else if (element.sched_day == this.constants.WEEK_DAY__VALUE__SATURDAY) {
+            this.Weekdays.push(this.constants.WEEK_DAY__CODE__SATURDAY);
           }
         });
         var i;
