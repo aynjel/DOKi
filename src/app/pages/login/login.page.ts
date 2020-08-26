@@ -7,7 +7,7 @@ import { DoctorService } from "../../services/doctor/doctor.service";
 import { StorageService } from "../../services/storage/storage.service";
 import { ToastService } from "../../services/toast/toast.service";
 import { BehaviorSubject } from "rxjs";
-import { DoctorInfoGlobal } from "../../shared/doctorinfo-global";
+import { DoctorInfoGlobal } from "../../shared/doctor-info-global";
 import { LoginData } from "../../models/login-data.model";
 import { AlertController } from "@ionic/angular";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
