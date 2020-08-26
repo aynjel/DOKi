@@ -62,7 +62,7 @@ export class Tab3Page {
       localStorage.setItem('darkmode','false');
       this.$gaService.event('Settings - Dark Mode False','User Flow',this.dr_name);
     }
-    if(this.isDesktop){window.location.reload();}
+    //if(this.isDesktop){window.location.reload();}
     
   }
 
