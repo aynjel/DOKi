@@ -1,8 +1,7 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
+import { IndexGuard } from "./index.guard";
 
-import { IndexGuard } from './index.guard';
-
-describe('IndexGuard', () => {
+describe("IndexGuard", () => {
   let guard: IndexGuard;
 
   beforeEach(() => {
@@ -10,7 +9,7 @@ describe('IndexGuard', () => {
     guard = TestBed.inject(IndexGuard);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(guard).toBeTruthy();
   });
 });

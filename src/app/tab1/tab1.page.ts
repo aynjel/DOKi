@@ -11,7 +11,7 @@ import { PopoverController } from '@ionic/angular';
 import {ChhAppInPatientModalPage} from '../chh-web-components/chh-app-in-patient-modal/chh-app-in-patient-modal.page';
 
 import { timeStamp } from 'console';
-import {DoctorInfoGlobal} from '../common/doctorinfo-global';
+import {DoctorInfoGlobal} from '../shared/doctorinfo-global';
 import {LoginData} from '../models/login-data.model';
 import {InPatientData} from '../models/in-patient.model';
 import { Location } from "@angular/common";
