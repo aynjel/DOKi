@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, Input } from "@angular/core";
 import { Router } from "@angular/router";
-import { ScreensizeService } from "../../services/screensize.service";
+import { ScreenSizeService } from "../../services/screen-size/screen-size.service";
 
 @Component({
   selector: "chh-app-hospital-selector-with-all",
@@ -19,7 +19,7 @@ export class ChhAppHospitalSelectorWithAllComponent implements OnInit {
   @Output() hospital: EventEmitter<any> = new EventEmitter();
   constructor(
     private router: Router,
-    private screensizeService: ScreensizeService
+    private screensizeService: ScreenSizeService
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -60,6 +60,6 @@ export class ChhAppHospitalSelectorWithAllComponent implements OnInit {
     }
     this.hospital.emit(data1);
   }
-  
+
   redirect() {}
 }

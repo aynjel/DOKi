@@ -2,10 +2,10 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthConstants } from "../../config/auth-constants";
 import { DoctorConstants } from "../../config/auth-constants";
-import { AuthService } from "../../services/auth.service";
-import { DoctorService } from "../../services/doctor.service";
-import { StorageService } from "./../../services/storage.service";
-import { ToastService } from "../../services/toast.service";
+import { AuthService } from "../../services/auth/auth.service";
+import { DoctorService } from "../../services/doctor/doctor.service";
+import { StorageService } from "../../services/storage/storage.service";
+import { ToastService } from "../../services/toast/toast.service";
 import { BehaviorSubject } from "rxjs";
 import { DoctorInfoGlobal } from "../../common/doctorinfo-global";
 import { LoginData } from "../../models/logindata.model";
@@ -60,7 +60,7 @@ export class LoginPage implements OnInit {
     });
     await alert.present();
   }
-  
+
   loginAction() {
     this.btnDisable = true;
     this.authService

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { AuthConstants } from '../config/auth-constants';
-import { StorageService } from '../services/storage.service';
+import { StorageService } from '../services/storage/storage.service';
 
 @Injectable({
 providedIn: 'root'

@@ -4,7 +4,7 @@ import { ChhAppFeePage } from "../chh-app-fee/chh-app-fee.page";
 import { from } from "rxjs";
 import { PopoverController } from "@ionic/angular";
 import { timeStamp } from "console";
-import { DoctorService } from "src/app/services/doctor.service";
+import { DoctorService } from "src/app/services/doctor/doctor.service";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
 
 @Component({

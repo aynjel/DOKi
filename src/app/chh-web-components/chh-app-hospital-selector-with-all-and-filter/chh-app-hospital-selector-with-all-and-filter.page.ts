@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Input} from '@angular/core';
-import { ScreensizeService } from '../../services/screensize.service';
+import { ScreenSizeService } from '../../services/screen-size/screen-size.service';
 import { Router } from '@angular/router';
 import { Location } from "@angular/common";
 
@@ -18,7 +18,7 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
   isDesktop: boolean;
   admittedOrDischarge:any="All";
   @Output() hospital: EventEmitter<any> = new EventEmitter();
-  constructor(private router:Router,    private screensizeService: ScreensizeService,    private location: Location) {
+  constructor(private router:Router,    private screensizeService: ScreenSizeService,    private location: Location) {
     this.screensizeService.isDesktopView().subscribe(isDesktop => {
       if (this.isDesktop && !isDesktop) {window.location.reload();}this.isDesktop = isDesktop;
     });
@@ -59,7 +59,7 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
     }
     this.hospital.emit(data1);
   }
-  
+
   changeRedirect(event:any){
 
     if(this.admittedOrDischarge == "ALL"){

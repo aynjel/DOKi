@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { ScreensizeService } from "../../services/screensize.service";
+import { ScreenSizeService } from "../../services/screen-size/screen-size.service";
 import { ModalController, AlertController } from "@ionic/angular";
-import { PatientService } from "../../services/patient.service";
+import { PatientService } from "../../services/patient/patient.service";
 import { LoginData } from "../../models/logindata.model";
-import { AuthService } from "src/app/services/auth.service";
+import { AuthService } from "src/app/services/auth/auth.service";
 import { Ionic4DatepickerModalComponent } from "@logisticinfotech/ionic4-datepicker";
-import { ToastService } from "../../services/toast.service";
+import { ToastService } from "../../services/toast/toast.service";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
 
 @Component({
@@ -56,7 +56,7 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
   uxSaveCancel = true;
 
   constructor(
-    private screensizeService: ScreensizeService,
+    private screensizeService: ScreenSizeService,
     private modalController: ModalController,
     private patientService: PatientService,
     private authService: AuthService,
@@ -331,7 +331,7 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
     var dd = d < 10 ? "0" + d : d;
     return "" + y + "-" + mm + "-" + dd;
   }
-  
+
   save() {
     this.patientService
       .addAppointments(

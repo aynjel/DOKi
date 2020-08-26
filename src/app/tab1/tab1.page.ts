@@ -1,12 +1,12 @@
 import { Component, Renderer2 } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
-import { StorageService } from '../services/storage.service';
+import { StorageService } from '../services/storage/storage.service';
 import { AuthConstants } from '../config/auth-constants';
-import { DoctorService } from '../services/doctor.service';
+import { DoctorService } from '../services/doctor/doctor.service';
 import { ModalController, AlertController } from '@ionic/angular';
 import { ChhAppPatientDetailsPage } from '../chh-web-components/chh-app-patient-details/chh-app-patient-details.page';
-import { ScreensizeService } from '../services/screensize.service';
+import { ScreenSizeService } from '../services/screen-size/screen-size.service';
 import { PopoverController } from '@ionic/angular';  
 import {ChhAppInPatientModalPage} from '../chh-web-components/chh-app-in-patient-modal/chh-app-in-patient-modal.page';
 
@@ -47,7 +47,7 @@ export class Tab1Page {
     private storageService: StorageService,
     private doctorService: DoctorService,
     private modalController: ModalController,
-    private screensizeService: ScreensizeService,
+    private screensizeService: ScreenSizeService,
     private popover: PopoverController,
     private location: Location,
     public alertController: AlertController,

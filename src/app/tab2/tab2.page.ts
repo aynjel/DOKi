@@ -1,25 +1,26 @@
 import { Component, OnInit } from "@angular/core";
-import { PatientService } from "../services/patient.service";
+import { PatientService } from "../services/patient/patient.service";
 import { ModalController } from "@ionic/angular";
-import { AuthService } from "src/app/services/auth.service";
-import { DoctorService } from "../services/doctor.service";
+import { AuthService } from "src/app/services/auth/auth.service";
+import { DoctorService } from "../services/doctor/doctor.service";
 import { HostListener } from "@angular/core";
 import { ChhAppPatientDetailsPage } from "../chh-web-components/chh-app-patient-details/chh-app-patient-details.page";
-import { ScreensizeService } from "../services/screensize.service";
+import { ScreenSizeService } from "../services/screen-size/screen-size.service";
 import { ActionSheetController } from "@ionic/angular";
 import { PopoverController } from "@ionic/angular";
 import { AlertController } from "@ionic/angular";
 import { ChhAppAddAppointmentsModalPage } from "../chh-web-components/chh-app-add-appointments-modal/chh-app-add-appointments-modal.page";
-import { ToastService } from "../services/toast.service";
+import { ToastService } from "../services/toast/toast.service";
 import { LoadingController } from "@ionic/angular";
 import { LoginData } from "../models/logindata.model";
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { GoogleAnalyticsService } from "ngx-google-analytics";
 
 @Component({
   selector: "app-tab2",
   templateUrl: "tab2.page.html",
   styleUrls: ["tab2.page.scss"],
 })
+
 export class Tab2Page {
   isDesktop: boolean;
   displaydata = "chhc";
@@ -44,7 +45,7 @@ export class Tab2Page {
     private modalController: ModalController,
     private authService: AuthService,
     private doctorService: DoctorService,
-    private screensizeService: ScreensizeService,
+    private screensizeService: ScreenSizeService,
     private popover: PopoverController,
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
@@ -95,7 +96,9 @@ export class Tab2Page {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
       message:
-        "Are you sure you want to delete <strong>" + data1 + "</strong>'s appointment?",
+        "Are you sure you want to delete <strong>" +
+        data1 +
+        "</strong>'s appointment?",
       buttons: [
         { text: "Cancel", role: "cancel", cssClass: "secondary" },
         {
@@ -227,7 +230,7 @@ export class Tab2Page {
   }
 
   ngOnInit() {
-    this.$gaService.pageView('/Appointments', 'Appointments Tab');
+    this.$gaService.pageView("/Appointments", "Appointments Tab");
     //this.selectedDate = this.yyyymmdd();
     //this.selectedLocation = "C";
     //this.getDate(this.selectedDate,this.selectedLocation);

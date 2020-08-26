@@ -1,8 +1,7 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
+import { SignalRService } from "./signal-r.service";
 
-import { SignalRService } from './signal-r.service';
-
-describe('SignalRService', () => {
+describe("SignalRService", () => {
   let service: SignalRService;
 
   beforeEach(() => {
@@ -10,7 +9,7 @@ describe('SignalRService', () => {
     service = TestBed.inject(SignalRService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });

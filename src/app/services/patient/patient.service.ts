@@ -1,17 +1,16 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-
-import { StorageService } from "./storage.service";
-import { AuthConstants } from "../config/auth-constants";
+import { StorageService } from "../storage/storage.service";
+import { AuthConstants } from "../../config/auth-constants";
 import { BehaviorSubject, Observable } from "rxjs";
-import { HttpService } from "./http.service";
-
+import { HttpService } from "../http/http.service";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { environment } from "../../environments/environment";
+import { environment } from "../../../environments/environment";
 
 @Injectable({
   providedIn: "root",
 })
+
 export class PatientService {
   constructor(
     private httpService: HttpService,

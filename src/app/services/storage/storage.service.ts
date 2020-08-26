@@ -1,19 +1,21 @@
-import { Injectable } from '@angular/core';
-import { Plugins } from '@capacitor/core';
+import { Injectable } from "@angular/core";
+import { Plugins } from "@capacitor/core";
+
 const { Storage } = Plugins;
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
+
 export class StorageService {
-drCode:any ;
-  constructor() { }
+  drCode: any;
+  constructor() {}
 
   // Store the value
   async store(storageKey: string, value: any) {
     const encryptedValue = btoa(escape(JSON.stringify(value)));
     await Storage.set({
       key: storageKey,
-      value: encryptedValue
+      value: encryptedValue,
     });
   }
 
@@ -21,9 +23,9 @@ drCode:any ;
   async get(storageKey: string) {
     const ret = await Storage.get({ key: storageKey });
     //
-    if(ret.value){
+    if (ret.value) {
       return JSON.parse(unescape(atob(ret.value)));
-    }else{
+    } else {
       return false;
     }
   }

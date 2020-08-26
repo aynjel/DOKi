@@ -1,6 +1,6 @@
 import { Component, OnInit, Input} from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
-import { PatientService } from 'src/app/services/patient.service';
+import { PatientService } from 'src/app/services/patient/patient.service';
 
 @Component({
   selector: 'chh-app-patient-details',

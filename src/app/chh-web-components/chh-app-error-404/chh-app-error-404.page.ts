@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { AuthService } from "src/app/services/auth.service";
+import { AuthService } from "src/app/services/auth/auth.service";
 import { Router } from "@angular/router";
-import { ScreensizeService } from "../../services/screensize.service";
+import { ScreenSizeService } from "../../services/screen-size/screen-size.service";
 
 @Component({
   selector: "chh-app-error-404",
@@ -11,7 +11,7 @@ import { ScreensizeService } from "../../services/screensize.service";
 
 export class ChhAppError404Page implements OnInit {
   isDesktop: boolean;
-  constructor(private screensizeService: ScreensizeService) {
+  constructor(private screensizeService: ScreenSizeService) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         window.location.reload();

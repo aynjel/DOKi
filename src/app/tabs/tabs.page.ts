@@ -1,7 +1,7 @@
 import { Component, Renderer2 } from '@angular/core';
-import { ScreensizeService } from '../services/screensize.service';
+import { ScreenSizeService } from '../services/screen-size/screen-size.service';
 //import { SignalRService } from '../services/signal-r.service';
-import { StorageService } from '../services/storage.service';
+import { StorageService } from '../services/storage/storage.service';
 import { AuthConstants } from '../config/auth-constants';
 @Component({
   selector: 'app-tabs',
@@ -12,7 +12,7 @@ export class TabsPage {
   badgecount=0;
   isDesktop: boolean;
   signalList: any = [];
-  constructor(private screensizeService: ScreensizeService,private storageService:StorageService,
+  constructor(private screensizeService: ScreenSizeService,private storageService:StorageService,
     private renderer: Renderer2) {
     this.screensizeService.isDesktopView().subscribe(isDesktop => {
       if (this.isDesktop && !isDesktop) {
