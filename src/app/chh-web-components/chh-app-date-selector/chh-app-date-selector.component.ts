@@ -17,6 +17,7 @@ export class ChhAppDateSelectorComponent implements OnInit {
   active2: boolean = true;
   active3: boolean = false;
   @Input() readonlyComp: boolean;
+
   constructor() {
     this.customPickerOptions = {
       buttons: [
@@ -68,7 +69,7 @@ export class ChhAppDateSelectorComponent implements OnInit {
     console.log(this.selectedDate);
     this.dateSelector.emit(this.selectedDate);
   }
-  
+
   yyyymmdd() {
     var now = new Date();
     var y = now.getFullYear();
@@ -78,6 +79,7 @@ export class ChhAppDateSelectorComponent implements OnInit {
     var dd = d < 10 ? "0" + d : d;
     return "" + y + "-" + mm + "-" + dd;
   }
+  
   incrementDate(date_str, incrementor) {
     var parts = date_str.split("-");
     var dt = new Date(

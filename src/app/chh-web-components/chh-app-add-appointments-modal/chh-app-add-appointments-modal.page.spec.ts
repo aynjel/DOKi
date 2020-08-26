@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { IonicModule } from "@ionic/angular";
+import { ChhAppAddAppointmentsModalPage } from "./chh-app-add-appointments-modal.page";
 
-import { ChhAppAddAppointmentsModalPage } from './chh-app-add-appointments-modal.page';
-
-describe('ChhAppAddAppointmentsModalPage', () => {
+describe("ChhAppAddAppointmentsModalPage", () => {
   let component: ChhAppAddAppointmentsModalPage;
   let fixture: ComponentFixture<ChhAppAddAppointmentsModalPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChhAppAddAppointmentsModalPage ],
-      imports: [IonicModule.forRoot()]
+      declarations: [ChhAppAddAppointmentsModalPage],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ChhAppAddAppointmentsModalPage);
@@ -18,7 +17,7 @@ describe('ChhAppAddAppointmentsModalPage', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

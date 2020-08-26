@@ -2,14 +2,14 @@ import { Component, OnInit, EventEmitter, Output, Input} from '@angular/core';
 import { ScreensizeService } from '../../services/screensize.service';
 import { Router } from '@angular/router';
 import { Location } from "@angular/common";
+
 @Component({
   selector: 'chh-app-hospital-selector-with-all-and-filter',
   templateUrl: './chh-app-hospital-selector-with-all-and-filter.page.html',
   styleUrls: ['./chh-app-hospital-selector-with-all-and-filter.page.scss'],
 })
-export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
 
-  
+export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
   active:boolean = false;
   active1:boolean = false;
   active2:boolean = false;
@@ -40,6 +40,7 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
   }
 
   ngOnInit() {} 
+
   onSubmit(data1:any,data2:boolean) {
     if(data1 == "C"){
       this.active = true;
@@ -58,6 +59,7 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
     }
     this.hospital.emit(data1);
   }
+  
   changeRedirect(event:any){
 
     if(this.admittedOrDischarge == "ALL"){

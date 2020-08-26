@@ -1,10 +1,12 @@
 import { Component, EventEmitter, OnInit, Output, Input } from "@angular/core";
 import { ModalController, PopoverController } from "@ionic/angular";
+
 @Component({
   selector: "chh-app-fee",
   templateUrl: "./chh-app-fee.page.html",
   styleUrls: ["./chh-app-fee.page.scss"],
 })
+
 export class ChhAppFeePage implements OnInit {
   public initialFeePopOverProfFee: string = "";
   public initialFeePopOverRemarks: string = "";
@@ -51,7 +53,8 @@ export class ChhAppFeePage implements OnInit {
       document.getElementById("input-remarks")
     )).value;
 
-    if ((this.initialFeePopOverProfFee == feePopOverProfFeeInput &&
+    if (
+      (this.initialFeePopOverProfFee == feePopOverProfFeeInput &&
         this.initialFeePopOverRemarks == feePopOverRemarksInput) ||
       ((feePopOverProfFeeInput == "" || feePopOverProfFeeInput == null) &&
         this.remarks != feePopOverRemarksInput) ||

@@ -5,13 +5,14 @@ import { from } from "rxjs";
 import { PopoverController } from "@ionic/angular";
 import { timeStamp } from "console";
 import { DoctorService } from "src/app/services/doctor.service";
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { GoogleAnalyticsService } from "ngx-google-analytics";
 
 @Component({
   selector: "chh-app-in-patient-modal",
   templateUrl: "./chh-app-in-patient-modal.page.html",
   styleUrls: ["./chh-app-in-patient-modal.page.scss"],
 })
+
 export class ChhAppInPatientModalPage implements OnInit {
   @Input() data: any;
   site: any;
@@ -59,7 +60,10 @@ export class ChhAppInPatientModalPage implements OnInit {
   }
 
   ngOnInit() {
-    this.$gaService.pageView('/In-Patient/Patient Details', 'Patient Details Modal');
+    this.$gaService.pageView(
+      "/In-Patient/Patient Details",
+      "Patient Details Modal"
+    );
     this.data.admission_date = this.explodeDate(this.data.admission_date);
     if (this.data.site == "C") {
       this.site = "CHHC";
@@ -157,7 +161,7 @@ export class ChhAppInPatientModalPage implements OnInit {
 
         if (x == "POST") {
           this.doctorService.insertPF(this.postData).subscribe((res: any) => {
-            if(res == true){
+            if (res == true) {
               this.professionalFee = data.data.professionalFee;
               this.remarks = data.data.remarks;
               this.postData.ProfFee = data.data.professionalFee;
@@ -168,27 +172,21 @@ export class ChhAppInPatientModalPage implements OnInit {
                 "Thank you, Doc! You have successfully SAVED your Professional Fee.",
                 "Okay"
               );
-            }else{
-              this.Alert(
-                "SAVING of Professional Fee was Unsuccessful",
-                "Okay"
-              );
+            } else {
+              this.Alert("SAVING of Professional Fee was Unsuccessful", "Okay");
             }
           });
         } else if (x == "PUT") {
           this.doctorService.updatePF(this.postData).subscribe((res: any) => {
-            if(res == true){
+            if (res == true) {
               this.professionalFee = data.data.professionalFee;
               this.remarks = data.data.remarks;
               this.postData.ProfFee = data.data.professionalFee;
               this.postData.Remarks = data.data.remarks;
               this.postData.DateCreated = this.getDateTime();
               this.data.doctor_prof_fee = data.data.professionalFee;
-              this.Alert(
-                "Successfully UPDATED your Professional Fee.",
-                "Okay"
-              );
-            }else{
+              this.Alert("Successfully UPDATED your Professional Fee.", "Okay");
+            } else {
               this.Alert(
                 "UPDATING of Professional Fee was Unsuccessful",
                 "Okay"
@@ -198,9 +196,13 @@ export class ChhAppInPatientModalPage implements OnInit {
         } else if (x == "DELETE") {
           console.log("DELETE: " + this.postData);
           this.doctorService
-            .DeletePf(this.postData.AdmisisonNo, this.postData.DoctorStatusCode, this.postData.DoctorCode)
+            .DeletePf(
+              this.postData.AdmisisonNo,
+              this.postData.DoctorStatusCode,
+              this.postData.DoctorCode
+            )
             .subscribe((res: any) => {
-              if(res == true){
+              if (res == true) {
                 this.professionalFee = data.data.professionalFee;
                 this.remarks = data.data.remarks;
                 this.professionalFee = data.data.professionalFee;
@@ -213,7 +215,7 @@ export class ChhAppInPatientModalPage implements OnInit {
                   "Successfully DELETED your Professional Fee.",
                   "Okay"
                 );
-              }else{
+              } else {
                 this.Alert(
                   "DELETING of Professional Fee was Unsuccessful",
                   "Okay"

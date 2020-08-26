@@ -191,7 +191,7 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
     this.retriveMTWThFSS(this.dr_code, this.location);
     //this.setDatepicker();
   }
-  
+
   /*old date picker*/
   setDatepicker() {
     // EXAMPLE OBJECT
@@ -239,6 +239,7 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
       },
     };
   }
+
   /*old date picker*/
   retriveMTWThFSS(data1: any, data2: any) {
     this.disableWeekDays1 = new Array();
@@ -292,6 +293,7 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
       }
     );
   }
+
   pickTime() {
     //console.log(this.mydate1+" | "+this.dr_code );
     this.doctorSchedule = [];
@@ -315,9 +317,11 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
         //this.doctorSchedule = JSON.parse(res);
       });
   }
+
   async closeModal() {
     await this.modalController.dismiss();
   }
+
   yyyymmdd() {
     var now = new Date();
     var y = now.getFullYear();
@@ -327,6 +331,7 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
     var dd = d < 10 ? "0" + d : d;
     return "" + y + "-" + mm + "-" + dd;
   }
+  
   save() {
     this.patientService
       .addAppointments(

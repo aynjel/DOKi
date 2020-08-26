@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { IonicModule } from "@ionic/angular";
+import { ChhAppFeePage } from "./chh-app-fee.page";
 
-import { ChhAppFeePage } from './chh-app-fee.page';
-
-describe('ChhAppFeePage', () => {
+describe("ChhAppFeePage", () => {
   let component: ChhAppFeePage;
   let fixture: ComponentFixture<ChhAppFeePage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChhAppFeePage ],
-      imports: [IonicModule.forRoot()]
+      declarations: [ChhAppFeePage],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ChhAppFeePage);
@@ -18,7 +17,7 @@ describe('ChhAppFeePage', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

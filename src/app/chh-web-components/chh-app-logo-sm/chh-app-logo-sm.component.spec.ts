@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { IonicModule } from "@ionic/angular";
+import { ChhAppLogoSmComponent } from "./chh-app-logo-sm.component";
 
-import { ChhAppLogoSmComponent } from './chh-app-logo-sm.component';
-
-describe('ChhAppLogoSmComponent', () => {
+describe("ChhAppLogoSmComponent", () => {
   let component: ChhAppLogoSmComponent;
   let fixture: ComponentFixture<ChhAppLogoSmComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChhAppLogoSmComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [ChhAppLogoSmComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ChhAppLogoSmComponent);
@@ -18,7 +17,7 @@ describe('ChhAppLogoSmComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { IonicModule } from "@ionic/angular";
+import { ChhAppHospitalSelectorWithAllComponent } from "./chh-app-hospital-selector-with-all.component";
 
-import { ChhAppHospitalSelectorWithAllComponent } from './chh-app-hospital-selector-with-all.component';
-
-describe('ChhAppHospitalSelectorWithAllComponent', () => {
+describe("ChhAppHospitalSelectorWithAllComponent", () => {
   let component: ChhAppHospitalSelectorWithAllComponent;
   let fixture: ComponentFixture<ChhAppHospitalSelectorWithAllComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChhAppHospitalSelectorWithAllComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [ChhAppHospitalSelectorWithAllComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ChhAppHospitalSelectorWithAllComponent);
@@ -18,7 +17,7 @@ describe('ChhAppHospitalSelectorWithAllComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

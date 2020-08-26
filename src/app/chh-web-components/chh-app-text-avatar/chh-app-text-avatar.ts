@@ -1,38 +1,45 @@
-import { Input, SimpleChanges, Component, ViewChild } from '@angular/core';
+import { Input, SimpleChanges, Component, ViewChild } from "@angular/core";
 import { ColorGenerator } from "./color-generator";
 
 @Component({
-  selector: 'chh-app-text-avatar',
+  selector: "chh-app-text-avatar",
   template: `
     <div class="u-text-avatar" [ngStyle]="styles">{{ firstLetter }}</div>
   `,
-  styleUrls: ['./chh-app-text-avatar.scss']
+  styleUrls: ["./chh-app-text-avatar.scss"],
 })
+
 export class ChhAppTextAvatarDirective {
   @Input() text: string;
   @Input() color: string;
   @Input() textColor: string;
-  
+
   public firstLetter = "";
   public styles = {
-    'background-color': "#fff",
-    'color': "#000"
+    "background-color": "#fff",
+    color: "#000",
   };
-  
+
   constructor(private colorGenerator: ColorGenerator) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    let text = changes['text'] ? changes['text'].currentValue : null;
-    let color = changes['color'] ? changes['color'].currentValue : null;
-    let textColor = changes['textColor'] ? changes['textColor'].currentValue : this.styles.color;
+    let text = changes["text"] ? changes["text"].currentValue : null;
+    let color = changes["color"] ? changes["color"].currentValue : null;
+    let textColor = changes["textColor"]
+      ? changes["textColor"].currentValue
+      : this.styles.color;
 
     this.firstLetter = this.extractFirstCharacter(text);
 
-    this.styles = {...this.styles, 'background-color': this.backgroundColorHexString(color, text), 'color': textColor}
+    this.styles = {
+      ...this.styles,
+      "background-color": this.backgroundColorHexString(color, text),
+      color: textColor,
+    };
   }
 
   private extractFirstCharacter(text: string): string {
-    return text.charAt(0) || '';
+    return text.charAt(0) || "";
   }
 
   private backgroundColorHexString(color: string, text: string): string {

@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { IonicModule } from "@ionic/angular";
+import { ChhAppSliderPage } from "./chh-app-slider.page";
 
-import { ChhAppSliderPage } from './chh-app-slider.page';
-
-describe('ChhAppSliderPage', () => {
+describe("ChhAppSliderPage", () => {
   let component: ChhAppSliderPage;
   let fixture: ComponentFixture<ChhAppSliderPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChhAppSliderPage ],
-      imports: [IonicModule.forRoot()]
+      declarations: [ChhAppSliderPage],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ChhAppSliderPage);
@@ -18,7 +17,7 @@ describe('ChhAppSliderPage', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

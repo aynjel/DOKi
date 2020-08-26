@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { IonicModule } from "@ionic/angular";
+import { ChhAppDateSelectorComponent } from "./chh-app-date-selector.component";
 
-import { ChhAppDateSelectorComponent } from './chh-app-date-selector.component';
-
-describe('ChhAppDateSelectorComponent', () => {
+describe("ChhAppDateSelectorComponent", () => {
   let component: ChhAppDateSelectorComponent;
   let fixture: ComponentFixture<ChhAppDateSelectorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChhAppDateSelectorComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [ChhAppDateSelectorComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ChhAppDateSelectorComponent);
@@ -18,7 +17,7 @@ describe('ChhAppDateSelectorComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
