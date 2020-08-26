@@ -11,6 +11,7 @@ import { DoctorInfoGlobal } from "../../shared/doctor-info-global";
 import { LoginData } from "../../models/login-data.model";
 import { AlertController } from "@ionic/angular";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
+import { Constants } from "../../shared/constants"; 
 
 @Component({
   selector: "app-login",
@@ -28,7 +29,8 @@ export class LoginPage implements OnInit {
     private toast: ToastService,
     private doctorService: DoctorService,
     public alertController: AlertController,
-    protected $gaService: GoogleAnalyticsService
+    protected $gaService: GoogleAnalyticsService,
+    public constants: Constants
   ) {}
 
   public postData = {

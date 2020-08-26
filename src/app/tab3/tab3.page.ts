@@ -7,6 +7,7 @@ import { ScreenSizeService } from "../services/screen-size/screen-size.service";
 import { LoginData } from "../models/login-data.model";
 import { BehaviorSubject } from "rxjs";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
+import { Constants } from "../shared/constants";
 
 @Component({
   selector: "app-tab3",
@@ -27,7 +28,8 @@ export class Tab3Page {
     private storageService: StorageService,
     private screensizeService: ScreenSizeService,
     private renderer: Renderer2,
-    protected $gaService: GoogleAnalyticsService
+    protected $gaService: GoogleAnalyticsService,
+    public constants: Constants,
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {

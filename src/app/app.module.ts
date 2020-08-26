@@ -26,6 +26,7 @@ import { ChhAppAddAppointmentsModalPageModule } from "../app/chh-web-components/
 //defineCustomElements(window);
 
 import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
+import { Constants } from "../app/shared/constants";
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -47,6 +48,7 @@ import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-go
     }),
   ],
   providers: [
+    Constants,
     StatusBar,
     SplashScreen,
     HttpClientModule,
