@@ -15,12 +15,12 @@ const routes: Routes = [
     path: 'login',
     
     canActivate:[IndexGuard], 
-    loadChildren: () => import('./page/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: '',
     canActivate:[IndexGuard], 
-    loadChildren: () => import('./page/index/index.module').then( m => m.IndexPageModule)
+    loadChildren: () => import('./pages/index/index.module').then( m => m.IndexPageModule)
   },{
     path: 'error404',
     loadChildren: () => import('../app/chh-web-components/chh-app-error-404/chh-app-error-404.module').then( m => m.ChhAppError404PageModule)

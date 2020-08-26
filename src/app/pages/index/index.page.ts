@@ -1,12 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 //import { Platform } from '@angular/cdk/platform';
 import { AlertController, Platform } from "@ionic/angular";
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { GoogleAnalyticsService } from "ngx-google-analytics";
+
 @Component({
   selector: "app-index",
   templateUrl: "./index.page.html",
   styleUrls: ["./index.page.scss"],
 })
+
 export class IndexPage implements OnInit {
   private promptEvent: any;
   showButton = false;
@@ -21,7 +23,7 @@ export class IndexPage implements OnInit {
 
   ngOnInit() {
     this.initPwaPrompt();
-    this.$gaService.pageView('/index', 'Index Page');
+    this.$gaService.pageView("/index", "Index Page");
   }
 
   async Alert(data1: any, data2: any) {
@@ -32,6 +34,7 @@ export class IndexPage implements OnInit {
     });
     await alert.present();
   }
+  
   initPwaPrompt() {
     this.platform.ready().then(() => {
       if (this.platform.is("android") || this.platform.is("desktop")) {
@@ -73,7 +76,10 @@ export class IndexPage implements OnInit {
     this.promptEvent.prompt();
     this.promptEvent.userChoice.then((choiceResult) => {
       if (choiceResult.outcome === "accepted") {
-        this.Alert("Great, Doc! You may now close your browser and launch the app from your home screen.", "Okay");
+        this.Alert(
+          "Great, Doc! You may now close your browser and launch the app from your home screen.",
+          "Okay"
+        );
         this.android = false;
         this.android1 = true;
       } else {
