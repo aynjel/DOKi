@@ -155,8 +155,8 @@ export class InpatientmodalPage implements OnInit {
 //admitting diagnosis
 this.doctorService.getAdmittingDiagnosis(this.data.admission_no).subscribe(
   (res: any) => {
-    this.admittingDiagnosis = res[0].admitting_diagnosis2;
-    this.admittingDiagnosis1 = this.truncateChar(this.camelCase(this.admittingDiagnosis));
+    this.admittingDiagnosis = this.camelCase(res[0].admitting_diagnosis2);
+    this.admittingDiagnosis1 = this.truncateChar(this.camelCase(this.admittingDiagnosis),100);
     this.admittingDiagnosis2 = this.camelCase(this.admittingDiagnosis);
   },
   (error) => {
@@ -168,10 +168,11 @@ this.doctorService.getAdmittingDiagnosis(this.data.admission_no).subscribe(
   }
 );
 //final diagnosis
+if(this.data.admission_status == 'DN'){
     this.doctorService.getFinalDiagnosis(this.data.admission_no).subscribe(
       (res: any) => {
         this.finalDiagnosis = res[0].final_diagnosis;
-        this.finalDiagnosis1 = this.truncateChar(this.camelCase(this.finalDiagnosis));
+        this.finalDiagnosis1 = this.truncateChar(this.camelCase(this.finalDiagnosis),50);
         this.finalDiagnosis2 = this.finalDiagnosis.replace(/(\r\n|\n|\r)/gm, "").split('.)');
         this.finalDiagnosis2.shift();
         for(let i = 0; i < this.finalDiagnosis2.length-1; i++){
@@ -191,6 +192,8 @@ this.doctorService.getAdmittingDiagnosis(this.data.admission_no).subscribe(
         this.isFetchDone = true;
       }
     );
+  }
+
   }
 
   dateChanged(data1: any) {
@@ -340,8 +343,8 @@ this.doctorService.getAdmittingDiagnosis(this.data.admission_no).subscribe(
       return myarr[0] + " | " + myarr2[0];
     }
   }
-  truncateChar(text: string): string {
-    let charlimit = 40;
+  truncateChar(text: string, limit:any): string {
+    let charlimit = limit;
     if(!text || text.length <= charlimit )
     {
         return text;

@@ -144,12 +144,12 @@ o888o        `Y888""8o   "888" o888o `Y8bod8P' o888o o888o   "888"
         <div class="ion-text-wrap">
 
           <div *ngIf="admittingDiagnosis">
-            <div *ngIf="admittingDiagnosis.length <= limit">{{admittingDiagnosis}}</div>
-            <div *ngIf="truncating1 && admittingDiagnosis.length > limit">
+            <div *ngIf="admittingDiagnosis.length <= 100">{{admittingDiagnosis}}</div>
+            <div *ngIf="truncating1 && admittingDiagnosis.length > 100">
               {{admittingDiagnosis1}}
               <button ion-button (click)="truncating1 = false">show more</button>
             </div>
-            <div *ngIf="!truncating1 && admittingDiagnosis.length > limit">
+            <div *ngIf="!truncating1 && admittingDiagnosis.length > 100">
               <!--{{admittingDiagnosis}}-->
              
                 <ion-text class="ion-text-wrap">{{admittingDiagnosis2}}<br
