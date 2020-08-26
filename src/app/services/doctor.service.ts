@@ -69,6 +69,13 @@ export class DoctorService {
     return this.httpService.DoctorsPortalGet('Inpatient/CoDoctors/', postData1);
   }
 
+  getAdmittingDiagnosis(postData1: any){
+    return this.httpService.DoctorsPortalGet('Inpatient/AdmittingDiagnosis/', postData1);
+  }
+
+  getFinalDiagnosis(postData1: any){
+    return this.httpService.DoctorsPortalGet('Inpatient/FinalDiagnosis/', postData1);
+  }
   getYearHistoryGraph(postData1: any){
     return this.httpService.DoctorsPortalGet('Inpatient/YearHistoryGraph/', postData1);
   }

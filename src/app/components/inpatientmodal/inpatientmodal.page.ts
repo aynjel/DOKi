@@ -24,6 +24,17 @@ export class InpatientmodalPage implements OnInit {
   isFetchDone: boolean = false;
   objecthandler: boolean = false;
   coDoctors: any;
+  finalDiagnosis:any;
+  finalDiagnosis1:any;
+  finalDiagnosis2:any;
+  admittingDiagnosis:any;
+  admittingDiagnosis1:any;
+  admittingDiagnosis2:any;
+  text: string;
+  limit: number = 40;
+  truncating = true;
+  truncating1 = true;
+  daysOfManage:any;
   constructor(
     private modalController: ModalController,
     private popover: PopoverController,
@@ -62,6 +73,7 @@ export class InpatientmodalPage implements OnInit {
   }
 
   ngOnInit() {
+ 
     this.$gaService.pageView('/In-Patient/Patient Details', 'Patient Details Modal');
 
     let logindata = <LoginData>this.authService.userData$.getValue();
@@ -99,6 +111,18 @@ export class InpatientmodalPage implements OnInit {
     this.isFetchDone = false;
     this.doctorService.getCoDoctors(this.data.admission_no).subscribe(
       (res: any) => {
+        console.log(res);
+        res.forEach(element => {
+          if(element.dr_code == this.data.dr_code){
+            if(element.no_of_days_manage == null){
+              this.daysOfManage = 0;
+            }else{
+              this.daysOfManage = element.no_of_days_manage;
+            }
+            
+          }
+          //
+        });
         if (res.length) {
           this.objecthandler = true;
         } else {
@@ -117,6 +141,47 @@ export class InpatientmodalPage implements OnInit {
 
         this.coDoctors = coDoctors1.concat(coDoctors2).concat(coDoctors3);
         //this.coDoctors.push(coDoctors2);
+      },
+      (error) => {
+        this.isFetchDone = true;
+        this.Alert("Server Error", "Okay");
+      },
+      () => {
+        this.isFetchDone = true;
+      }
+    );
+
+
+//admitting diagnosis
+this.doctorService.getAdmittingDiagnosis(this.data.admission_no).subscribe(
+  (res: any) => {
+    this.admittingDiagnosis = res[0].admitting_diagnosis2;
+    this.admittingDiagnosis1 = this.truncateChar(this.camelCase(this.admittingDiagnosis));
+    this.admittingDiagnosis2 = this.camelCase(this.admittingDiagnosis);
+  },
+  (error) => {
+    this.isFetchDone = true;
+    this.Alert("Server Error", "Okay");
+  },
+  () => {
+    this.isFetchDone = true;
+  }
+);
+//final diagnosis
+    this.doctorService.getFinalDiagnosis(this.data.admission_no).subscribe(
+      (res: any) => {
+        this.finalDiagnosis = res[0].final_diagnosis;
+        this.finalDiagnosis1 = this.truncateChar(this.camelCase(this.finalDiagnosis));
+        this.finalDiagnosis2 = this.finalDiagnosis.replace(/(\r\n|\n|\r)/gm, "").split('.)');
+        this.finalDiagnosis2.shift();
+        for(let i = 0; i < this.finalDiagnosis2.length-1; i++){
+          this.finalDiagnosis2[i] = this.finalDiagnosis2[i].substring(0, this.finalDiagnosis2[i].length - 1);
+          console.log(this.finalDiagnosis2[i]);
+        }
+        for(let i = 0; i < this.finalDiagnosis2.length; i++){
+          this.finalDiagnosis2[i] = i+1 + '.) ' + this.camelCase(this.finalDiagnosis2[i]);
+        }
+
       },
       (error) => {
         this.isFetchDone = true;
@@ -274,5 +339,26 @@ export class InpatientmodalPage implements OnInit {
       let myarr2 = myarr[1].split(".");
       return myarr[0] + " | " + myarr2[0];
     }
+  }
+  truncateChar(text: string): string {
+    let charlimit = 40;
+    if(!text || text.length <= charlimit )
+    {
+        return text;
+    }
+    let without_html = text.replace(/<(?:.|\n)*?>/gm, '');
+    let shortened = without_html.substring(0, charlimit) + "...";
+    return shortened;
+  }
+  camelCase(str) {
+    var splitStr = str.toLowerCase().split(" ");
+    for (var i = 0; i < splitStr.length; i++) {
+      // You do not need to check if i is larger than splitStr length, as your for does that for you
+      // Assign it back to the array
+      splitStr[i] =
+        splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+    }
+    // Directly return the joined string
+    return splitStr.join(" ");
   }
 }
