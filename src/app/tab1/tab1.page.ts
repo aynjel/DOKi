@@ -13,7 +13,7 @@ import {ChhAppInPatientModalPage} from '../chh-web-components/chh-app-in-patient
 import { timeStamp } from 'console';
 import {DoctorInfoGlobal} from '../common/doctorinfo-global';
 import {LoginData} from '../models/logindata.model';
-import {InpatientData} from '../models/inpatient.model';
+import {InPatientData} from '../models/in-patient.model';
 import { Location } from "@angular/common";
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 
@@ -25,7 +25,7 @@ import { GoogleAnalyticsService } from 'ngx-google-analytics';
 
 export class Tab1Page {
   public logindata: LoginData;
-  public inPatientData: InpatientData;
+  public inPatientData: InPatientData;
   isDesktop: boolean;
   isFetchDone: boolean = false;
   dr_code = "";

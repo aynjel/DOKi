@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { LiteralExpr } from '@angular/compiler'
 
-export interface InpatientData{
+export interface InPatientData{
     Doctor_Status: string
     admission_date: any
     admission_no: string
