@@ -12,7 +12,7 @@ import { AlertController } from "@ionic/angular";
 import { ChhAppAddAppointmentsModalPage } from "../chh-web-components/chh-app-add-appointments-modal/chh-app-add-appointments-modal.page";
 import { ToastService } from "../services/toast/toast.service";
 import { LoadingController } from "@ionic/angular";
-import { LoginData } from "../models/logindata.model";
+import { LoginData } from "../models/login-data.model";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
 
 @Component({

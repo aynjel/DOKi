@@ -4,7 +4,7 @@ import { StorageService } from "../storage/storage.service";
 import { AuthConstants } from "../../config/auth-constants";
 import { BehaviorSubject, Observable } from "rxjs";
 import { HttpService } from "../http/http.service";
-import { LoginData } from "../../models/logindata.model";
+import { LoginData } from "../../models/login-data.model";
 
 @Injectable({
   providedIn: "root",

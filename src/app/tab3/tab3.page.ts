@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { StorageService } from "../services/storage/storage.service";
 import { AuthConstants } from "../config/auth-constants";
 import { ScreenSizeService } from "../services/screen-size/screen-size.service";
-import { LoginData } from "../models/logindata.model";
+import { LoginData } from "../models/login-data.model";
 import { BehaviorSubject } from "rxjs";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
 

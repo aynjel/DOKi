@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { AuthService } from "src/app/services/auth/auth.service";
 import { ScreenSizeService } from "../services/screen-size/screen-size.service";
 import { StorageService } from "../services/storage/storage.service";
-import { LoginData } from "../models/logindata.model";
+import { LoginData } from "../models/login-data.model";
 import { DoctorService } from "../services/doctor/doctor.service";
 import * as HighCharts from "highcharts";
 import { Router } from "@angular/router";

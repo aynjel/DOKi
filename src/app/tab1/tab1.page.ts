@@ -12,7 +12,7 @@ import {ChhAppInPatientModalPage} from '../chh-web-components/chh-app-in-patient
 
 import { timeStamp } from 'console';
 import {DoctorInfoGlobal} from '../common/doctorinfo-global';
-import {LoginData} from '../models/logindata.model';
+import {LoginData} from '../models/login-data.model';
 import {InPatientData} from '../models/in-patient.model';
 import { Location } from "@angular/common";
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
