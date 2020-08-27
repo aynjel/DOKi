@@ -3,20 +3,3 @@ img {
 }
 
 
-@media (prefers-color-scheme: dark) {
-  .darkmode{
-      display: inline;
-  }
-  .lightmode{
-      display:none;
-  }
-}
-
-@media (prefers-color-scheme: light) {
-    .darkmode{
-        display: none;
-    }
-    .lightmode{
-        display:inline;
-    }
-  }
