@@ -9,16 +9,16 @@ import { ToastService } from "../../services/toast/toast.service";
 import { BehaviorSubject } from "rxjs";
 import { DoctorInfoGlobal } from "../../shared/doctor-info-global";
 import { LoginData } from "../../models/login-data.model";
-import { AlertController } from "@ionic/angular";
+import { FunctionsService } from "../../shared/functions/functions.service"; //"@ionic/angular";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
-import { Constants } from "../../shared/constants"; 
+import { Constants } from "../../shared/constants";
+//import { Variables} from "../../shared/variables";
 
 @Component({
   selector: "app-login",
   templateUrl: "./login.page.html",
   styleUrls: ["./login.page.scss"],
 })
-
 export class LoginPage implements OnInit {
   public logindata: LoginData;
 
@@ -28,7 +28,7 @@ export class LoginPage implements OnInit {
     private storageService: StorageService,
     private toast: ToastService,
     private doctorService: DoctorService,
-    public alertController: AlertController,
+    public functionsService: FunctionsService,
     protected $gaService: GoogleAnalyticsService,
     public constants: Constants
   ) {}
@@ -37,13 +37,14 @@ export class LoginPage implements OnInit {
     username: "",
     password: "",
   };
+
   btnDisable: boolean = false;
 
   ngOnInit() {
     this.$gaService.pageView("/login", "Login Page");
   }
 
-  validateInputs() {
+  /* validateInputs() {
     let username = this.postData.username.trim();
     let password = this.postData.password.trim();
     return (
@@ -52,16 +53,16 @@ export class LoginPage implements OnInit {
       username.length > 0 &&
       password.length > 0
     );
-  }
+  } */
 
-  async Alert(data1: any, data2: any) {
+  /*   async Alert(data1: any, data2: any) {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
       message: data1,
       buttons: [{ text: data2, handler: () => {} }],
     });
     await alert.present();
-  }
+  } */
 
   loginAction() {
     this.btnDisable = true;
@@ -73,14 +74,14 @@ export class LoginPage implements OnInit {
           console.log(res);
           if (res.length != "0") {
             if (res.Message) {
-              this.Alert(res.Message, "Okay");
+              this.functionsService.alert(res.Message, "Okay");
             } else {
               this.logindata = <LoginData>res;
               this.storageService.store(AuthConstants.AUTH, this.logindata);
               this.router.navigate(["/menu/dashboard"]);
             }
           } else {
-            this.Alert(
+            this.functionsService.alert(
               "Oops! You might have entered a different username or password. Please try again.",
               "Okay"
             );
@@ -89,7 +90,7 @@ export class LoginPage implements OnInit {
         },
         (error) => {
           this.btnDisable = false;
-          this.Alert(
+          this.functionsService.alert(
             "Sorry, Doc. We cannot log you in at the moment. Please try again.",
             "Okay"
           );
