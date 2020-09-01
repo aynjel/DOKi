@@ -91,7 +91,7 @@ export class FunctionsService {
   }
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  /* Get Doctor Status Code */
+  /* Close PopOver Controller */
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   public closePopOver(popOverController: PopoverController)
   {
@@ -99,7 +99,7 @@ export class FunctionsService {
   }
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  /* Get Doctor Status Code */
+  /* Close Modal Controller */
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   public async closeModal(modalController: ModalController) {
     await modalController.dismiss();
