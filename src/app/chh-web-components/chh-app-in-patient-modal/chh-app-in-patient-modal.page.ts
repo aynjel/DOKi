@@ -231,10 +231,10 @@ export class ChhAppInPatientModalPage implements OnInit {
     let s = this.addZeroBefore(xx.getSeconds());
     let v = xx.getMilliseconds();
 
-    return this.yyyymmdd() + "T" + H + ":" + i + ":" + s + "." + v + "Z";
+    return this.functionsService.getSystemDate() + "T" + H + ":" + i + ":" + s + "." + v + "Z";
   }
 
-  yyyymmdd() {
+ /*  yyyymmdd() {
     var now = new Date();
     var y = now.getFullYear();
     var m = now.getMonth() + 1;
@@ -242,7 +242,7 @@ export class ChhAppInPatientModalPage implements OnInit {
     var mm = m < 10 ? "0" + m : m;
     var dd = d < 10 ? "0" + d : d;
     return "" + y + "-" + mm + "-" + dd;
-  }
+  } */
 
   getDoctorStatusCode(data: string) {
     if (data == "Co-Manage") return "CM";
