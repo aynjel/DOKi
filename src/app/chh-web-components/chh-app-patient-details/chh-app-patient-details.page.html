@@ -2,7 +2,7 @@
   <ion-toolbar class="in-toolbar ios toolbar-title-default hydrated" color="mango">
     <ion-title class="ios title-default hydrated">Patient Detail</ion-title>
     <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
-      <ion-button (click)="ClosePopover()" class="ios button button-clear ion-activatable ion-focusable hydrated">Close</ion-button>
+      <ion-button (click)="this.functionsService.closePopOver(this.popover)" class="ios button button-clear ion-activatable ion-focusable hydrated">Close</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
