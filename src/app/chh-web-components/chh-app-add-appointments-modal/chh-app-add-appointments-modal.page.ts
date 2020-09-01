@@ -28,7 +28,7 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
   Weekdays = new Array();
   disableWeekDays1 = new Array();
   total = [0, 1, 2, 3, 4, 5, 6];
-  mydate1 = this.yyyymmdd();
+  mydate1 = this.functionsService.getSystemDate();
   mydate2 = "1990-01-01";
   mydate3 = "";
   fname: any;
@@ -246,17 +246,29 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
         parseddata.forEach((element) => {
           if (element.sched_day == this.constants.WEEK_DAY__VALUE__SUNDAY) {
             this.Weekdays.push(this.constants.WEEK_DAY__CODE__SUNDAY);
-          } else if (element.sched_day == this.constants.WEEK_DAY__VALUE__MONDAY) {
+          } else if (
+            element.sched_day == this.constants.WEEK_DAY__VALUE__MONDAY
+          ) {
             this.Weekdays.push(this.constants.WEEK_DAY__CODE__MONDAY);
-          } else if (element.sched_day == this.constants.WEEK_DAY__VALUE__TUESDAY) {
+          } else if (
+            element.sched_day == this.constants.WEEK_DAY__VALUE__TUESDAY
+          ) {
             this.Weekdays.push(this.constants.WEEK_DAY__VALUE__TUESDAY);
-          } else if (element.sched_day == this.constants.WEEK_DAY__VALUE__WEDNESDAY) {
+          } else if (
+            element.sched_day == this.constants.WEEK_DAY__VALUE__WEDNESDAY
+          ) {
             this.Weekdays.push(this.constants.WEEK_DAY__CODE__WEDNESDAY);
-          } else if (element.sched_day == this.constants.WEEK_DAY__VALUE__THURSDAY) {
+          } else if (
+            element.sched_day == this.constants.WEEK_DAY__VALUE__THURSDAY
+          ) {
             this.Weekdays.push(this.constants.WEEK_DAY__CODE__THURSDAY);
-          } else if (element.sched_day == this.constants.WEEK_DAY__VALUE__FRIDAY) {
+          } else if (
+            element.sched_day == this.constants.WEEK_DAY__VALUE__FRIDAY
+          ) {
             this.Weekdays.push(this.constants.WEEK_DAY__CODE__FRIDAY);
-          } else if (element.sched_day == this.constants.WEEK_DAY__VALUE__SATURDAY) {
+          } else if (
+            element.sched_day == this.constants.WEEK_DAY__VALUE__SATURDAY
+          ) {
             this.Weekdays.push(this.constants.WEEK_DAY__CODE__SATURDAY);
           }
         });
@@ -317,7 +329,7 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
     await this.modalController.dismiss();
   }
 
-  yyyymmdd() {
+  /* yyyymmdd() {
     var now = new Date();
     var y = now.getFullYear();
     var m = now.getMonth() + 1;
@@ -325,7 +337,7 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
     var mm = m < 10 ? "0" + m : m;
     var dd = d < 10 ? "0" + d : d;
     return "" + y + "-" + mm + "-" + dd;
-  }
+  } */
 
   save() {
     this.patientService
