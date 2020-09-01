@@ -147,7 +147,7 @@ export class ChhAppInPatientModalPage implements OnInit {
 
         this.postData.ProfFee = data.data.professionalFee;
         this.postData.Remarks = data.data.remarks;
-        this.postData.DateCreated = this.functionsService.getDateTime();
+        this.postData.DateCreated = this.functionsService.getSystemDateTime();
 
         let x = data.data.method;
 
@@ -175,7 +175,7 @@ export class ChhAppInPatientModalPage implements OnInit {
               this.remarks = data.data.remarks;
               this.postData.ProfFee = data.data.professionalFee;
               this.postData.Remarks = data.data.remarks;
-              this.postData.DateCreated = this.functionsService.getDateTime();
+              this.postData.DateCreated = this.functionsService.getSystemDateTime();
               this.data.doctor_prof_fee = data.data.professionalFee;
               this.functionsService.alert("Successfully UPDATED your Professional Fee.", "Okay");
             } else {
@@ -201,7 +201,7 @@ export class ChhAppInPatientModalPage implements OnInit {
                 this.remarks = data.data.remarks;
                 this.postData.ProfFee = data.data.professionalFee;
                 this.postData.Remarks = data.data.remarks;
-                this.postData.DateCreated = this.functionsService.getDateTime();
+                this.postData.DateCreated = this.functionsService.getSystemDateTime();
                 this.data.doctor_prof_fee = data.data.professionalFee;
                 this.functionsService.alert(
                   "Successfully DELETED your Professional Fee.",
