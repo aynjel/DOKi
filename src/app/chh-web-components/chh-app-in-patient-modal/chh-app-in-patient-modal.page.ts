@@ -56,7 +56,7 @@ export class ChhAppInPatientModalPage implements OnInit {
       "/In-Patient/Patient Details",
       "Patient Details Modal"
     );
-    this.data.admission_date = this.explodeDate(this.data.admission_date);
+    this.data.admission_date = this.functionsService.explodeDate(this.data.admission_date);
     if (this.data.site == "C") {
       this.site = "CHHC";
     } else {
@@ -254,11 +254,11 @@ export class ChhAppInPatientModalPage implements OnInit {
     return (n < 10 ? "0" : "") + n;
   } */
 
-  explodeDate(data: any) {
+  /* explodeDate(data: any) {
     let myarr = data.split("T");
     if (myarr[1]) {
       let myarr2 = myarr[1].split(".");
       return myarr[0] + " | " + myarr2[0];
     }
-  }
+  } */
 }
