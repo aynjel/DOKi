@@ -8,6 +8,7 @@ import { Ionic4DatepickerModalComponent } from "@logisticinfotech/ionic4-datepic
 import { ToastService } from "../../services/toast/toast.service";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
 import { Constants } from "../../shared/constants";
+import { FunctionsService } from "../../shared/functions/functions.service";
 
 @Component({
   selector: "app-add-appointments-modal",
@@ -63,7 +64,7 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
     private authService: AuthService,
     public modalCtrl: ModalController,
     private toast: ToastService,
-    public alertController: AlertController,
+    public functionsService: FunctionsService,
     protected $gaService: GoogleAnalyticsService,
     private constants: Constants
   ) {
@@ -80,14 +81,6 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
   }
 
   jsonObj2 = [];
-  async Alert(data1: any, data2: any) {
-    const alert = await this.alertController.create({
-      cssClass: "my-custom-class",
-      message: data1,
-      buttons: [{ text: data2, handler: () => {} }],
-    });
-    await alert.present();
-  }
 
   ngOnInit() {
     this.$gaService.pageView(
@@ -284,7 +277,7 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
       () => {
         if (this.disableWeekDays1.length >= 7) {
           this.btnSave = true;
-          this.Alert(
+          this.functionsService.alert(
             "Upon checking, there is no available schedule for " +
               this.mydate1 +
               ". You may also want to try changing the Hospital site.",
@@ -353,7 +346,7 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
         //this.doctorSchedule = res;
         console.log(res);
         if (res) {
-          this.Alert(
+          this.functionsService.alert(
             "Way to go, Doc! Your patient, " +
               this.lname +
               " , " +
@@ -363,7 +356,7 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
           );
           //this.toast.presentToast('Successfully added ' +this.lname+', '+this.fname);
         } else {
-          this.Alert(
+          this.functionsService.alert(
             "U-oh! We cannot book your patient, " +
               this.lname +
               ", " +
