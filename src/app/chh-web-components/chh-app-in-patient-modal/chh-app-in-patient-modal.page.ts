@@ -25,8 +25,8 @@ export class ChhAppInPatientModalPage implements OnInit {
   objecthandler: boolean = false;
   coDoctors: any;
   constructor(
-    private modalController: ModalController,
-    private popover: PopoverController,
+    public modalController: ModalController,
+    public popover: PopoverController,
     private doctorService: DoctorService,
     public functionsService: FunctionsService,
     protected $gaService: GoogleAnalyticsService
@@ -219,9 +219,9 @@ export class ChhAppInPatientModalPage implements OnInit {
     });
   }
 
-  async closeModal() {
+  /* async closeModal() {
     await this.modalController.dismiss();
-  }
+  } */
 
   /* getDateTime() {
     let xx = new Date();
