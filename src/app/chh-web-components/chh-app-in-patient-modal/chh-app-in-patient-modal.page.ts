@@ -74,7 +74,7 @@ export class ChhAppInPatientModalPage implements OnInit {
     this.postData.AdmisisonNo = this.data.admission_no;
     this.postData.DoctorCode = this.data.dr_code;
     //this.postData.DoctorCode = this.data.dr_code;
-    this.postData.DoctorStatusCode = this.getDoctorStatusCode(
+    this.postData.DoctorStatusCode = this.functionsService.getDoctorStatusCode(
       this.data.Doctor_Status
     );
     this.postData.site = this.data.site;
@@ -243,12 +243,12 @@ export class ChhAppInPatientModalPage implements OnInit {
     return "" + y + "-" + mm + "-" + dd;
   } */
 
-  getDoctorStatusCode(data: string) {
+ /*  getDoctorStatusCode(data: string) {
     if (data == "Co-Manage") return "CM";
     if (data == "Primary Attending Physician") return "AP";
     if (data == "Consult") return "CO";
     if (data == "HMO") return "HC";
-  }
+  } */
 
 /*   addZeroBefore(n) {
     return (n < 10 ? "0" : "") + n;

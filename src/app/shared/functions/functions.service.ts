@@ -66,8 +66,8 @@ export class FunctionsService {
   }
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-   /* Get Doctor Status Code */
-
+  /* Get Doctor Status Code */
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   getDoctorStatusCode(data: string) {
 
    /*  if (data == "Co-Manage") return "CM";
@@ -81,7 +81,8 @@ export class FunctionsService {
     if (data == this.constants.DOCTOR_SERVICE_TYPE__VALUE__HMO) return this.constants.DOCTOR_SERVICE_TYPE__CODE__HMO;
 
   }
-
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
   /* Validate Login Inputs */
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   /* validateLogin(postData: string) {
