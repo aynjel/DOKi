@@ -38,6 +38,7 @@ export class AppComponent {
       this.presentAlertConfirm();
     });
   }
+
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -46,6 +47,7 @@ export class AppComponent {
     });
     await alert.present();
   }
+  
   @HostListener('window:resize', ['$event'])
   private onResize(event) {
     this.screensizeService.onResize(event.target.innerWidth);

@@ -245,14 +245,14 @@ export class Tab2Page {
     }
 
     if (this.selectedDate == null) {
-      this.selectedDate = this.yyyymmdd();
+      this.selectedDate = this.functionsService.getSystemDate();
       this.selectedLocation = "C";
     }
     this.getDate(this.selectedDate, this.selectedLocation);
   }
 
   //generate date
-  yyyymmdd() {
+ /*  yyyymmdd() {
     var now = new Date();
     var y = now.getFullYear();
     var m = now.getMonth() + 1;
@@ -260,7 +260,7 @@ export class Tab2Page {
     var mm = m < 10 ? "0" + m : m;
     var dd = d < 10 ? "0" + d : d;
     return "" + y + "-" + mm + "-" + dd;
-  }
+  } */
 
   incrementDate(date_str, incrementor) {
     var parts = date_str.split("-");
