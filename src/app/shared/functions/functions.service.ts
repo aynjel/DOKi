@@ -35,7 +35,7 @@ export class FunctionsService {
 
   /* Get System Date Time */
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  getDateTime() {
+  getSystemDateTime() {
     let xx = new Date();
     let H = this.addZeroBefore(xx.getHours());
     let i = this.addZeroBefore(xx.getMinutes());
@@ -46,10 +46,23 @@ export class FunctionsService {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /* Get System Date Time */
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   addZeroBefore(n) {
     return (n < 10 ? "0" : "") + n;
   }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  /* Explode Date */
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  explodeDate(data: any) {
+    let myarr = data.split("T");
+    if (myarr[1]) {
+      let myarr2 = myarr[1].split(".");
+      return myarr[0] + " | " + myarr2[0];
+    }
+  }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
   /* Validate Login Inputs */
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   /* validateLogin(postData: string) {
