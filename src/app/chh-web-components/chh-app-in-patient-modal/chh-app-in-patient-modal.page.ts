@@ -158,7 +158,7 @@ export class ChhAppInPatientModalPage implements OnInit {
               this.remarks = data.data.remarks;
               this.postData.ProfFee = data.data.professionalFee;
               this.postData.Remarks = data.data.remarks;
-              this.postData.DateCreated = this.functionsService.getDateTime();
+              this.postData.DateCreated = this.functionsService.getSystemDateTime();
               this.data.doctor_prof_fee = data.data.professionalFee;
               this.functionsService.alert(
                 "Thank you, Doc! You have successfully SAVED your Professional Fee.",
