@@ -12,7 +12,6 @@ import { LoginData } from "../../models/login-data.model";
 import { FunctionsService } from "../../shared/functions/functions.service"; //"@ionic/angular";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
 import { Constants } from "../../shared/constants";
-//import { Variables} from "../../shared/variables";
 
 @Component({
   selector: "app-login",

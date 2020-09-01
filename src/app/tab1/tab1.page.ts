@@ -9,13 +9,14 @@ import { ChhAppPatientDetailsPage } from '../chh-web-components/chh-app-patient-
 import { ScreenSizeService } from '../services/screen-size/screen-size.service';
 import { PopoverController } from '@ionic/angular';  
 import {ChhAppInPatientModalPage} from '../chh-web-components/chh-app-in-patient-modal/chh-app-in-patient-modal.page';
-
 import { timeStamp } from 'console';
 import {DoctorInfoGlobal} from '../shared/doctor-info-global';
 import {LoginData} from '../models/login-data.model';
 import {InPatientData} from '../models/in-patient.model';
 import { Location } from "@angular/common";
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { FunctionsService } from "../shared/functions/functions.service";
+
 
 @Component({
   selector: "app-tab1",
@@ -50,7 +51,7 @@ export class Tab1Page {
     private screensizeService: ScreenSizeService,
     private popover: PopoverController,
     private location: Location,
-    public alertController: AlertController,
+    public functionsService: FunctionsService,
     private renderer: Renderer2,
     protected $gaService: GoogleAnalyticsService
   ) {
@@ -77,14 +78,15 @@ export class Tab1Page {
   ngOnInit() {
     this.$gaService.pageView('/In-Patient', 'In-Patient Tab');
   }
-  async Alert(data1: any, data2: any) {
+
+  /* async Alert(data1: any, data2: any) {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
       message: data1,
       buttons: [{ text: data2, handler: () => {} }],
     });
     await alert.present();
-  }
+  } */
 
   filterList() {
     if (this.site == "A") {
@@ -184,7 +186,7 @@ export class Tab1Page {
         },
         (error) => {
           this.isFetchDone = true;
-          this.Alert("Sorry Doc. We cannot retrieve the list of your admitted patients at this time. Please try again.", "Okay");
+          this.functionsService.alert("Sorry Doc. We cannot retrieve the list of your admitted patients at this time. Please try again.", "Okay");
         },
         () => {
           this.isFetchDone = true;

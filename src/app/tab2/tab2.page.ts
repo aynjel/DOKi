@@ -9,6 +9,7 @@ import { ScreenSizeService } from "../services/screen-size/screen-size.service";
 import { ActionSheetController } from "@ionic/angular";
 import { PopoverController } from "@ionic/angular";
 import { AlertController } from "@ionic/angular";
+import { FunctionsService } from "../shared/functions/functions.service";
 import { ChhAppAddAppointmentsModalPage } from "../chh-web-components/chh-app-add-appointments-modal/chh-app-add-appointments-modal.page";
 import { ToastService } from "../services/toast/toast.service";
 import { LoadingController } from "@ionic/angular";
@@ -49,6 +50,7 @@ export class Tab2Page {
     private popover: PopoverController,
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
+    public functionsService: FunctionsService,
     private toast: ToastService,
     public loadingController: LoadingController,
     protected $gaService: GoogleAnalyticsService
@@ -61,14 +63,14 @@ export class Tab2Page {
     });
   }
 
-  async Alert(data1: any, data2: any) {
+  /* async Alert(data1: any, data2: any) {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
       message: data1,
       buttons: [{ text: data2, handler: () => {} }],
     });
     await alert.present();
-  }
+  } */
 
   //present View & Delete
   async presentActionSheet(data1: any, data2: any, data3: any) {
@@ -107,10 +109,10 @@ export class Tab2Page {
             this.patientService.deletePatients(data2).subscribe((res: any) => {
               if (res == "UPDATED") {
                 //this.toast.presentToast('Successfully Deleted '+data1);
-                this.Alert("Successfully Deleted " + data1, "Okay");
+                this.functionsService.alert("Successfully Deleted " + data1, "Okay");
               } else {
                 //this.toast.presentToast('Error on Deleting '+data1);
-                this.Alert("Error on Deleting " + data1, "Okay");
+                this.functionsService.alert("Error on Deleting " + data1, "Okay");
               }
               this.getDate(this.selectedDate, this.selectedLocation);
             });
