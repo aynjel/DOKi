@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { Injectable } from "@angular/core";
+import { AlertController } from "@ionic/angular";
+import { Constants } from "../constants";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class FunctionsService {
 
@@ -62,7 +63,16 @@ export class FunctionsService {
     }
   }
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
+   /* Get Doctor Status Code */
+
+  getDoctorStatusCode(data: string) {
+    if (data == "Co-Manage") return "CM";
+    if (data == "Primary Attending Physician") return "AP";
+    if (data == "Consult") return "CO";
+    if (data == "HMO") return "HC";
+  }
+
   /* Validate Login Inputs */
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   /* validateLogin(postData: string) {
