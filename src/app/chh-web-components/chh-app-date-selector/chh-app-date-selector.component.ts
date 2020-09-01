@@ -1,11 +1,11 @@
 import { Component, OnInit, EventEmitter, Output, Input } from "@angular/core";
+import { FunctionsService } from "../../shared/functions/functions.service";
 
 @Component({
   selector: "chh-app-date-selector",
   templateUrl: "./chh-app-date-selector.component.html",
   styleUrls: ["./chh-app-date-selector.component.scss"],
 })
-
 export class ChhAppDateSelectorComponent implements OnInit {
   @Input() passedDate: any;
   @Output() dateSelector: EventEmitter<any> = new EventEmitter();
@@ -18,7 +18,7 @@ export class ChhAppDateSelectorComponent implements OnInit {
   active3: boolean = false;
   @Input() readonlyComp: boolean;
 
-  constructor() {
+  constructor(public functionsService: FunctionsService) {
     this.customPickerOptions = {
       buttons: [
         {
@@ -42,7 +42,7 @@ export class ChhAppDateSelectorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectedDate = this.yyyymmdd();
+    this.selectedDate = this.functionsService.getSystemDate();
   }
 
   forceModal() {
@@ -70,7 +70,7 @@ export class ChhAppDateSelectorComponent implements OnInit {
     this.dateSelector.emit(this.selectedDate);
   }
 
-  yyyymmdd() {
+  /* yyyymmdd() {
     var now = new Date();
     var y = now.getFullYear();
     var m = now.getMonth() + 1;
@@ -78,8 +78,8 @@ export class ChhAppDateSelectorComponent implements OnInit {
     var mm = m < 10 ? "0" + m : m;
     var dd = d < 10 ? "0" + d : d;
     return "" + y + "-" + mm + "-" + dd;
-  }
-  
+  } */
+
   incrementDate(date_str, incrementor) {
     var parts = date_str.split("-");
     var dt = new Date(
