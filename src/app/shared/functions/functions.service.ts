@@ -7,7 +7,9 @@ import { Constants } from "../constants";
 })
 export class FunctionsService {
 
-  constructor(public alertController: AlertController) { }
+  constructor(public alertController: AlertController,
+              public constants: Constants      
+    ) { }
 
   /* Alert */
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -67,10 +69,17 @@ export class FunctionsService {
    /* Get Doctor Status Code */
 
   getDoctorStatusCode(data: string) {
-    if (data == "Co-Manage") return "CM";
+
+   /*  if (data == "Co-Manage") return "CM";
     if (data == "Primary Attending Physician") return "AP";
     if (data == "Consult") return "CO";
-    if (data == "HMO") return "HC";
+    if (data == "HMO") return "HC"; */
+
+    if (data == this.constants.DOCTOR_SERVICE_TYPE__VALUE__CO_MANAGE) return this.constants.DOCTOR_SERVICE_TYPE__CODE__CO_MANAGE;
+    if (data == this.constants.DOCTOR_SERVICE_TYPE__VALUE__PRIMARY_ATTENDING_PHYSICIAN) return this.constants.DOCTOR_SERVICE_TYPE__CODE__PRIMARY_ATTENDING_PHYSICIAN;
+    if (data == this.constants.DOCTOR_SERVICE_TYPE__VALUE__CONSULT) return this.constants.DOCTOR_SERVICE_TYPE__CODE__CONSULT;
+    if (data == this.constants.DOCTOR_SERVICE_TYPE__VALUE__HMO) return this.constants.DOCTOR_SERVICE_TYPE__CODE__HMO;
+
   }
 
   /* Validate Login Inputs */
