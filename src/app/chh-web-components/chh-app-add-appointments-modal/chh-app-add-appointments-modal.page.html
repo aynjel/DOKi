@@ -11,7 +11,7 @@
       slot="end"
       class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated"
     >
-      <ion-button (click)="closeModal()" color="chh-css-primary2"
+      <ion-button (click)="this.functionsService.closeModal(this.modalController)" color="chh-css-primary2"
         >Close&nbsp; <ion-icon name="close-outline"></ion-icon
       ></ion-button>
     </ion-buttons>
@@ -198,7 +198,7 @@
                   expand="block"
                   shape="round"
                   id="btn-confirm"
-                  (click)="closeModal()"
+                  (click)="this.functionsService.closeModal(this.modalController)"
                   color="danger"
                 >
                   CANCEL
