@@ -1,15 +1,17 @@
 import { Injectable } from "@angular/core";
 import { AlertController } from "@ionic/angular";
 import { Constants } from "../constants";
+import { ModalController, PopoverController } from "@ionic/angular";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
-export class FunctionsService {
 
-  constructor(public alertController: AlertController,
-              public constants: Constants      
-    ) { }
+export class FunctionsService {
+  constructor(
+    public alertController: AlertController,
+    public constants: Constants
+  ) {}
 
   /* Alert */
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -69,20 +71,30 @@ export class FunctionsService {
   /* Get Doctor Status Code */
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   getDoctorStatusCode(data: string) {
-
-   /*  if (data == "Co-Manage") return "CM";
+    /*  if (data == "Co-Manage") return "CM";
     if (data == "Primary Attending Physician") return "AP";
     if (data == "Consult") return "CO";
     if (data == "HMO") return "HC"; */
 
-    if (data == this.constants.DOCTOR_SERVICE_TYPE__VALUE__CO_MANAGE) return this.constants.DOCTOR_SERVICE_TYPE__CODE__CO_MANAGE;
-    if (data == this.constants.DOCTOR_SERVICE_TYPE__VALUE__PRIMARY_ATTENDING_PHYSICIAN) return this.constants.DOCTOR_SERVICE_TYPE__CODE__PRIMARY_ATTENDING_PHYSICIAN;
-    if (data == this.constants.DOCTOR_SERVICE_TYPE__VALUE__CONSULT) return this.constants.DOCTOR_SERVICE_TYPE__CODE__CONSULT;
-    if (data == this.constants.DOCTOR_SERVICE_TYPE__VALUE__HMO) return this.constants.DOCTOR_SERVICE_TYPE__CODE__HMO;
-
+    if (data == this.constants.DOCTOR_SERVICE_TYPE__VALUE__CO_MANAGE)
+      return this.constants.DOCTOR_SERVICE_TYPE__CODE__CO_MANAGE;
+    if (
+      data ==
+      this.constants.DOCTOR_SERVICE_TYPE__VALUE__PRIMARY_ATTENDING_PHYSICIAN
+    )
+      return this.constants
+        .DOCTOR_SERVICE_TYPE__CODE__PRIMARY_ATTENDING_PHYSICIAN;
+    if (data == this.constants.DOCTOR_SERVICE_TYPE__VALUE__CONSULT)
+      return this.constants.DOCTOR_SERVICE_TYPE__CODE__CONSULT;
+    if (data == this.constants.DOCTOR_SERVICE_TYPE__VALUE__HMO)
+      return this.constants.DOCTOR_SERVICE_TYPE__CODE__HMO;
   }
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
+  async closeModal(modalController: ModalController) {
+    await modalController.dismiss();
+  }
+
   /* Validate Login Inputs */
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   /* validateLogin(postData: string) {

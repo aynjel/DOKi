@@ -325,18 +325,8 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
       });
   }
 
-  async closeModal() {
+ /*  async closeModal() {
     await this.modalController.dismiss();
-  }
-
-  /* yyyymmdd() {
-    var now = new Date();
-    var y = now.getFullYear();
-    var m = now.getMonth() + 1;
-    var d = now.getDate();
-    var mm = m < 10 ? "0" + m : m;
-    var dd = d < 10 ? "0" + d : d;
-    return "" + y + "-" + mm + "-" + dd;
   } */
 
   save() {
@@ -378,7 +368,7 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
           );
           //this.toast.presentToast('Error saving ' +this.lname+', '+this.fname);
         }
-        this.closeModal();
+        this.functionsService.closeModal(this.modalController);
       });
   }
 }
