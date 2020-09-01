@@ -21,6 +21,7 @@ export class FunctionsService {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /* Get System Date */
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   getSystemDate() {
     var now = new Date();
     var y = now.getFullYear();
@@ -29,6 +30,24 @@ export class FunctionsService {
     var mm = m < 10 ? "0" + m : m;
     var dd = d < 10 ? "0" + d : d;
     return "" + y + "-" + mm + "-" + dd;
+  }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  /* Get System Date Time */
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  getDateTime() {
+    let xx = new Date();
+    let H = this.addZeroBefore(xx.getHours());
+    let i = this.addZeroBefore(xx.getMinutes());
+    let s = this.addZeroBefore(xx.getSeconds());
+    let v = xx.getMilliseconds();
+    return this.getSystemDate() + "T" + H + ":" + i + ":" + s + "." + v + "Z";
+  }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  /* Get System Date Time */
+  addZeroBefore(n) {
+    return (n < 10 ? "0" : "") + n;
   }
 
   /* Validate Login Inputs */

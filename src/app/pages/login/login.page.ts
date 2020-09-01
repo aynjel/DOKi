@@ -43,26 +43,6 @@ export class LoginPage implements OnInit {
     this.$gaService.pageView("/login", "Login Page");
   }
 
-  /* validateInputs() {
-    let username = this.postData.username.trim();
-    let password = this.postData.password.trim();
-    return (
-      this.postData.username &&
-      this.postData.password &&
-      username.length > 0 &&
-      password.length > 0
-    );
-  } */
-
-  /*   async Alert(data1: any, data2: any) {
-    const alert = await this.alertController.create({
-      cssClass: "my-custom-class",
-      message: data1,
-      buttons: [{ text: data2, handler: () => {} }],
-    });
-    await alert.present();
-  } */
-
   loginAction() {
     this.btnDisable = true;
     this.authService

@@ -28,7 +28,6 @@ export class ChhAppInPatientModalPage implements OnInit {
     private modalController: ModalController,
     private popover: PopoverController,
     private doctorService: DoctorService,
-    //public alertController: AlertController,
     public functionsService: FunctionsService,
     protected $gaService: GoogleAnalyticsService
   ) {}
@@ -148,7 +147,7 @@ export class ChhAppInPatientModalPage implements OnInit {
 
         this.postData.ProfFee = data.data.professionalFee;
         this.postData.Remarks = data.data.remarks;
-        this.postData.DateCreated = this.getDateTime();
+        this.postData.DateCreated = this.functionsService.getDateTime();
 
         let x = data.data.method;
 
@@ -159,7 +158,7 @@ export class ChhAppInPatientModalPage implements OnInit {
               this.remarks = data.data.remarks;
               this.postData.ProfFee = data.data.professionalFee;
               this.postData.Remarks = data.data.remarks;
-              this.postData.DateCreated = this.getDateTime();
+              this.postData.DateCreated = this.functionsService.getDateTime();
               this.data.doctor_prof_fee = data.data.professionalFee;
               this.functionsService.alert(
                 "Thank you, Doc! You have successfully SAVED your Professional Fee.",
@@ -176,7 +175,7 @@ export class ChhAppInPatientModalPage implements OnInit {
               this.remarks = data.data.remarks;
               this.postData.ProfFee = data.data.professionalFee;
               this.postData.Remarks = data.data.remarks;
-              this.postData.DateCreated = this.getDateTime();
+              this.postData.DateCreated = this.functionsService.getDateTime();
               this.data.doctor_prof_fee = data.data.professionalFee;
               this.functionsService.alert("Successfully UPDATED your Professional Fee.", "Okay");
             } else {
@@ -202,7 +201,7 @@ export class ChhAppInPatientModalPage implements OnInit {
                 this.remarks = data.data.remarks;
                 this.postData.ProfFee = data.data.professionalFee;
                 this.postData.Remarks = data.data.remarks;
-                this.postData.DateCreated = this.getDateTime();
+                this.postData.DateCreated = this.functionsService.getDateTime();
                 this.data.doctor_prof_fee = data.data.professionalFee;
                 this.functionsService.alert(
                   "Successfully DELETED your Professional Fee.",
@@ -224,7 +223,7 @@ export class ChhAppInPatientModalPage implements OnInit {
     await this.modalController.dismiss();
   }
 
-  getDateTime() {
+  /* getDateTime() {
     let xx = new Date();
     let H = this.addZeroBefore(xx.getHours());
     let i = this.addZeroBefore(xx.getMinutes());
@@ -232,7 +231,7 @@ export class ChhAppInPatientModalPage implements OnInit {
     let v = xx.getMilliseconds();
 
     return this.functionsService.getSystemDate() + "T" + H + ":" + i + ":" + s + "." + v + "Z";
-  }
+  } */
 
  /*  yyyymmdd() {
     var now = new Date();
@@ -251,9 +250,9 @@ export class ChhAppInPatientModalPage implements OnInit {
     if (data == "HMO") return "HC";
   }
 
-  addZeroBefore(n) {
+/*   addZeroBefore(n) {
     return (n < 10 ? "0" : "") + n;
-  }
+  } */
 
   explodeDate(data: any) {
     let myarr = data.split("T");
