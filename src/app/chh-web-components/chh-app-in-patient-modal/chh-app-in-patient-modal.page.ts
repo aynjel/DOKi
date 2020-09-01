@@ -6,6 +6,7 @@ import { PopoverController } from "@ionic/angular";
 import { timeStamp } from "console";
 import { DoctorService } from "src/app/services/doctor/doctor.service";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
+import { FunctionsService } from "../../shared/functions/functions.service";
 
 @Component({
   selector: "chh-app-in-patient-modal",
@@ -27,7 +28,8 @@ export class ChhAppInPatientModalPage implements OnInit {
     private modalController: ModalController,
     private popover: PopoverController,
     private doctorService: DoctorService,
-    public alertController: AlertController,
+    //public alertController: AlertController,
+    public functionsService: FunctionsService,
     protected $gaService: GoogleAnalyticsService
   ) {}
 
@@ -49,15 +51,6 @@ export class ChhAppInPatientModalPage implements OnInit {
     mobile_no: "string",
     dept_short_desc: "string",
   };
-
-  async Alert(data1: any, data2: any) {
-    const alert = await this.alertController.create({
-      cssClass: "my-custom-class",
-      message: data1,
-      buttons: [{ text: data2, handler: () => {} }],
-    });
-    await alert.present();
-  }
 
   ngOnInit() {
     this.$gaService.pageView(
@@ -116,7 +109,7 @@ export class ChhAppInPatientModalPage implements OnInit {
       },
       (error) => {
         this.isFetchDone = true;
-        this.Alert("Server Error", "Okay");
+        this.functionsService.alert("Server Error", "Okay");
       },
       () => {
         this.isFetchDone = true;
@@ -168,12 +161,12 @@ export class ChhAppInPatientModalPage implements OnInit {
               this.postData.Remarks = data.data.remarks;
               this.postData.DateCreated = this.getDateTime();
               this.data.doctor_prof_fee = data.data.professionalFee;
-              this.Alert(
+              this.functionsService.alert(
                 "Thank you, Doc! You have successfully SAVED your Professional Fee.",
                 "Okay"
               );
             } else {
-              this.Alert("SAVING of Professional Fee was Unsuccessful", "Okay");
+              this.functionsService.alert("SAVING of Professional Fee was Unsuccessful", "Okay");
             }
           });
         } else if (x == "PUT") {
@@ -185,9 +178,9 @@ export class ChhAppInPatientModalPage implements OnInit {
               this.postData.Remarks = data.data.remarks;
               this.postData.DateCreated = this.getDateTime();
               this.data.doctor_prof_fee = data.data.professionalFee;
-              this.Alert("Successfully UPDATED your Professional Fee.", "Okay");
+              this.functionsService.alert("Successfully UPDATED your Professional Fee.", "Okay");
             } else {
-              this.Alert(
+              this.functionsService.alert(
                 "UPDATING of Professional Fee was Unsuccessful",
                 "Okay"
               );
@@ -211,12 +204,12 @@ export class ChhAppInPatientModalPage implements OnInit {
                 this.postData.Remarks = data.data.remarks;
                 this.postData.DateCreated = this.getDateTime();
                 this.data.doctor_prof_fee = data.data.professionalFee;
-                this.Alert(
+                this.functionsService.alert(
                   "Successfully DELETED your Professional Fee.",
                   "Okay"
                 );
               } else {
-                this.Alert(
+                this.functionsService.alert(
                   "DELETING of Professional Fee was Unsuccessful",
                   "Okay"
                 );
