@@ -7,7 +7,8 @@ import { DoctorService } from "../services/doctor/doctor.service";
 import * as HighCharts from "highcharts";
 import { Router } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
-import { AlertController } from "@ionic/angular";
+//import { AlertController } from "@ionic/angular";
+import { FunctionsService } from "../shared/functions/functions.service";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
 
 @Component({
@@ -40,7 +41,8 @@ export class Tab4Page implements OnInit {
     private storageService: StorageService,
     private doctorService: DoctorService,
     private router: Router,
-    public alertController: AlertController,
+    //public alertController: AlertController,
+    public functionsService: FunctionsService,
     protected $gaService: GoogleAnalyticsService
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
@@ -50,14 +52,16 @@ export class Tab4Page implements OnInit {
       this.isDesktop = isDesktop;
     });
   }
-  async Alert(data1: any, data2: any) {
+
+ /*  async Alert(data1: any, data2: any) {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
       message: data1,
       buttons: [{ text: data2, handler: () => {} }],
     });
     await alert.present();
-  }
+  } */
+
   doRefresh(event) {
     setTimeout(() => {
       this.ionViewWillEnter();
