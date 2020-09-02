@@ -1,25 +1,27 @@
 import { Component, OnInit } from "@angular/core";
-import { PatientService } from "../services/patient.service";
+import { PatientService } from "../services/patient/patient.service";
 import { ModalController } from "@ionic/angular";
-import { AuthService } from "src/app/services/auth.service";
-import { DoctorService } from "../services/doctor.service";
+import { AuthService } from "src/app/services/auth/auth.service";
+import { DoctorService } from "../services/doctor/doctor.service";
 import { HostListener } from "@angular/core";
-import { PatientdetailsPage } from "../components/patientdetailss/patientdetails.page";
-import { ScreensizeService } from "../services/screensize.service";
+import { ChhAppPatientDetailsPage } from "../chh-web-components/chh-app-patient-details/chh-app-patient-details.page";
+import { ScreenSizeService } from "../services/screen-size/screen-size.service";
 import { ActionSheetController } from "@ionic/angular";
 import { PopoverController } from "@ionic/angular";
 import { AlertController } from "@ionic/angular";
-import { AddappointmentsmodalPage } from "../components/addappointmentsmodal/addappointmentsmodal.page";
-import { ToastService } from "../services/toast.service";
+import { FunctionsService } from "../shared/functions/functions.service";
+import { ChhAppAddAppointmentsModalPage } from "../chh-web-components/chh-app-add-appointments-modal/chh-app-add-appointments-modal.page";
+import { ToastService } from "../services/toast/toast.service";
 import { LoadingController } from "@ionic/angular";
-import { LoginData } from "../models/logindata.model";
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { LoginData } from "../models/login-data.model";
+import { GoogleAnalyticsService } from "ngx-google-analytics";
 
 @Component({
   selector: "app-tab2",
   templateUrl: "tab2.page.html",
   styleUrls: ["tab2.page.scss"],
 })
+
 export class Tab2Page {
   isDesktop: boolean;
   displaydata = "chhc";
@@ -44,10 +46,11 @@ export class Tab2Page {
     private modalController: ModalController,
     private authService: AuthService,
     private doctorService: DoctorService,
-    private screensizeService: ScreensizeService,
+    private screensizeService: ScreenSizeService,
     private popover: PopoverController,
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
+    public functionsService: FunctionsService,
     private toast: ToastService,
     public loadingController: LoadingController,
     protected $gaService: GoogleAnalyticsService
@@ -60,14 +63,14 @@ export class Tab2Page {
     });
   }
 
-  async Alert(data1: any, data2: any) {
+  /* async Alert(data1: any, data2: any) {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
       message: data1,
       buttons: [{ text: data2, handler: () => {} }],
     });
     await alert.present();
-  }
+  } */
 
   //present View & Delete
   async presentActionSheet(data1: any, data2: any, data3: any) {
@@ -106,10 +109,10 @@ export class Tab2Page {
             this.patientService.deletePatients(data2).subscribe((res: any) => {
               if (res == "UPDATED") {
                 //this.toast.presentToast('Successfully Deleted '+data1);
-                this.Alert("Successfully Deleted " + data1, "Okay");
+                this.functionsService.alert("Successfully Deleted " + data1, "Okay");
               } else {
                 //this.toast.presentToast('Error on Deleting '+data1);
-                this.Alert("Error on Deleting " + data1, "Okay");
+                this.functionsService.alert("Error on Deleting " + data1, "Okay");
               }
               this.getDate(this.selectedDate, this.selectedLocation);
             });
@@ -123,7 +126,7 @@ export class Tab2Page {
   //present View Detail
   async presentModal(data: any) {
     const popover = await this.popover.create({
-      component: PatientdetailsPage,
+      component: ChhAppPatientDetailsPage,
       showBackdrop: true,
       translucent: true,
       componentProps: {
@@ -145,7 +148,7 @@ export class Tab2Page {
   //present addPatient
   async showaddmodal() {
     const modal = await this.modalController.create({
-      component: AddappointmentsmodalPage,
+      component: ChhAppAddAppointmentsModalPage,
       componentProps: {
         appt_id: this.selectedLocation,
         backdropDismiss: true,
@@ -168,7 +171,7 @@ export class Tab2Page {
 
   //change date + -
   adjustDate(data1: any) {
-    this.selectedDate = this.incrementDate(this.selectedDate, data1);
+    this.selectedDate = this.functionsService.incrementDate(this.selectedDate, data1);
     this.getDate(this.selectedDate, this.selectedLocation);
   }
 
@@ -241,14 +244,14 @@ export class Tab2Page {
     let  dr_name = this.logindata[0].last_name;
     this.$gaService.event('Appointments','User Flow',dr_name);
     if (this.selectedDate == null) {
-      this.selectedDate = this.yyyymmdd();
+      this.selectedDate = this.functionsService.getSystemDate();
       this.selectedLocation = "C";
     }
     this.getDate(this.selectedDate, this.selectedLocation);
   }
 
   //generate date
-  yyyymmdd() {
+ /*  yyyymmdd() {
     var now = new Date();
     var y = now.getFullYear();
     var m = now.getMonth() + 1;
@@ -256,9 +259,9 @@ export class Tab2Page {
     var mm = m < 10 ? "0" + m : m;
     var dd = d < 10 ? "0" + d : d;
     return "" + y + "-" + mm + "-" + dd;
-  }
+  } */
 
-  incrementDate(date_str, incrementor) {
+ /*  incrementDate(date_str, incrementor) {
     var parts = date_str.split("-");
     var dt = new Date(
       parseInt(parts[0], 10), // year
@@ -276,7 +279,7 @@ export class Tab2Page {
       parts[2] = "0" + parts[2];
     }
     return parts.join("-");
-  }
+  } */
 
   //swipe action
   doRefresh(event) {

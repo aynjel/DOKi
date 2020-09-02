@@ -4,11 +4,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Tab2Page } from './tab2.page';
-import { TextAvatarModule } from '../components/text-avatar/text-avatar.module';
+import { ChhAppTextAvatarModule } from '../chh-web-components/chh-app-text-avatar/chh-app-text-avatar.module';
 
 import { Tab2PageRoutingModule } from './tab2-routing.module';
-import { ComponentsModule } from '../components/components.module';
-import { PatientdetailsPage } from '../components/patientdetailss/patientdetails.page';
+import { ChhWebComponentsModule } from '../chh-web-components/chh-web-components.module';
+import { ChhAppPatientDetailsPage } from '../chh-web-components/chh-app-patient-details/chh-app-patient-details.page';
 
 @NgModule({
   imports: [
@@ -16,11 +16,11 @@ import { PatientdetailsPage } from '../components/patientdetailss/patientdetails
     CommonModule,
     FormsModule,
     Tab2PageRoutingModule,
-    ComponentsModule,
-    TextAvatarModule
+    ChhWebComponentsModule,
+    ChhAppTextAvatarModule
   ],
-  declarations: [Tab2Page,PatientdetailsPage],
-  entryComponents:[PatientdetailsPage],
+  declarations: [Tab2Page,ChhAppPatientDetailsPage],
+  entryComponents:[ChhAppPatientDetailsPage],
   providers:[]
 })
 export class Tab2PageModule {}

@@ -1,19 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
-import { ScreensizeService } from '../services/screensize.service';
-import { StorageService } from '../services/storage.service';
-import {LoginData} from '../models/logindata.model';
-import { DoctorService } from '../services/doctor.service';
-import * as HighCharts from 'highcharts';
-import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
-import { AlertController } from '@ionic/angular';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { Component, OnInit } from "@angular/core";
+import { AuthService } from "src/app/services/auth/auth.service";
+import { ScreenSizeService } from "../services/screen-size/screen-size.service";
+import { StorageService } from "../services/storage/storage.service";
+import { LoginData } from "../models/login-data.model";
+import { DoctorService } from "../services/doctor/doctor.service";
+import * as HighCharts from "highcharts";
+import { Router } from "@angular/router";
+import { BehaviorSubject } from "rxjs";
+//import { AlertController } from "@ionic/angular";
+import { FunctionsService } from "../shared/functions/functions.service";
+import { GoogleAnalyticsService } from "ngx-google-analytics";
+
 @Component({
   selector: "app-tab4",
   templateUrl: "./tab4.page.html",
   styleUrls: ["./tab4.page.scss"],
 })
+
 export class Tab4Page implements OnInit {
   userData$ = new BehaviorSubject<any>([]);
   displayUserData: any;
@@ -34,11 +37,12 @@ export class Tab4Page implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private screensizeService: ScreensizeService,
+    private screensizeService: ScreenSizeService,
     private storageService: StorageService,
     private doctorService: DoctorService,
     private router: Router,
-    public alertController: AlertController,
+    //public alertController: AlertController,
+    public functionsService: FunctionsService,
     protected $gaService: GoogleAnalyticsService
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
@@ -46,16 +50,10 @@ export class Tab4Page implements OnInit {
         window.location.reload();
       }
       this.isDesktop = isDesktop;
+
     });
   }
-  async Alert(data1: any, data2: any) {
-    const alert = await this.alertController.create({
-      cssClass: "my-custom-class",
-      message: data1,
-      buttons: [{ text: data2, handler: () => {} }],
-    });
-    await alert.present();
-  }
+
   doRefresh(event) {
     setTimeout(() => {
       this.ionViewWillEnter();
@@ -189,7 +187,6 @@ export class Tab4Page implements OnInit {
     this.first_name = this.camelCase(this.logindata[0].first_name);
     let  dr_name = this.logindata[0].last_name;
     this.$gaService.event('Dashboard','User Flow',dr_name);
-
     let catego = [];
     let totalPatient = [];
     this.doctorService.getYearHistoryGraph(this.dr_code).subscribe(

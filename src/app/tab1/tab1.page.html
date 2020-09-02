@@ -48,9 +48,9 @@
         offset-lg="4"
         class="custom-border-bottom ion-no-border"
       >
-        <app-hospital-selector-with-all-and-filter
+        <chh-app-hospital-selector-with-all-and-filter
           (hospital)="locationAction($event)"
-        ></app-hospital-selector-with-all-and-filter>
+        ></chh-app-hospital-selector-with-all-and-filter>
       </ion-col>
     </ion-row>
     <ion-row class="">
@@ -84,7 +84,7 @@
             <ion-card (click)="detail(x)" mode="ios" class="pointer">
               <ion-item lines="none">
                 <ion-avatar slot="start">
-                  <text-avatar [text]="x.last_name" [color]=""></text-avatar>
+                  <chh-app-text-avatar [text]="x.last_name" [color]=""></chh-app-text-avatar>
                 </ion-avatar>
                 <ion-label style="margin-top: -5px;">
                   <ion-item
