@@ -2,19 +2,19 @@
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="dashboard">
       <ion-icon name="stats-chart-outline"></ion-icon>
-      <ion-label class="tab-font-family">Dashboard</ion-label>
+      <ion-label class="tab-font-family">{{this.constants.MENU__VALUE__DASHBOARD}}</ion-label>
     </ion-tab-button>
     <ion-tab-button tab="in-patients">
       <ion-icon name="person-circle-outline"></ion-icon>
-      <ion-label class="tab-font-family">In-Patients</ion-label>
+      <ion-label class="tab-font-family">{{this.constants.MENU__VALUE__IN_PATIENTS}}</ion-label>
     </ion-tab-button>
     <ion-tab-button tab="appointments">
       <ion-icon name="calendar-outline"></ion-icon>
-      <ion-label class="tab-font-family">Appointments</ion-label>
+      <ion-label class="tab-font-family">{{this.constants.MENU__VALUE__APPOINTMENTS}}</ion-label>
     </ion-tab-button>
     <ion-tab-button tab="settings">
       <ion-icon name="settings-outline"></ion-icon>
-      <ion-label class="tab-font-family">Settings</ion-label>
+      <ion-label class="tab-font-family">{{this.constants.MENU__VALUE__SETTINGS}}</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
@@ -24,7 +24,7 @@
     <ion-toolbar>
       <ion-row class="ion-align-items-center">
         <ion-col size="2">
-          <app-logo-sm style="padding-left: 20px;"></app-logo-sm>
+          <chh-app-logo-sm ></chh-app-logo-sm>
         </ion-col>
         <ion-col size="10">
           <div class="navbar" class="ion-text-center chh-bg">

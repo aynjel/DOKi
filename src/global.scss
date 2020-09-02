@@ -75,7 +75,7 @@
    position: absolute; 
    display: block;  
 }
-
+.pointer {cursor: pointer;}
  .my-custom-modal-css .modal-wrapper {
    height: 45%;
    width: 95%;
@@ -281,4 +281,20 @@ body {
 
 .swiper-pagination {
   bottom: 97% !important;
+}
+body[color-theme="dark"] {
+  .darkmode{
+    display: block;
+  }
+  .lightmode{
+    display: none;
+  }
+}
+body[color-theme="light"] {
+  .darkmode{
+    display: none;
+  }
+  .lightmode{
+    display: block;
+  }
 }

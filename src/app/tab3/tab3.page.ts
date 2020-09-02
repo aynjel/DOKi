@@ -1,32 +1,36 @@
 import { Component, OnInit, Renderer2 } from "@angular/core";
-import { AuthService } from "src/app/services/auth.service";
+import { AuthService } from "src/app/services/auth/auth.service";
 import { Router } from "@angular/router";
-import { StorageService } from "../services/storage.service";
+import { StorageService } from "../services/storage/storage.service";
 import { AuthConstants } from "../config/auth-constants";
-import { ScreensizeService } from "../services/screensize.service";
-import { LoginData } from "../models/logindata.model";
+import { ScreenSizeService } from "../services/screen-size/screen-size.service";
+import { LoginData } from "../models/login-data.model";
 import { BehaviorSubject } from "rxjs";
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { GoogleAnalyticsService } from "ngx-google-analytics";
+import { Constants } from "../shared/constants";
+
 @Component({
   selector: "app-tab3",
   templateUrl: "tab3.page.html",
   styleUrls: ["tab3.page.scss"],
 })
+
 export class Tab3Page {
   userData$ = new BehaviorSubject<any>([]);
   public logindata: LoginData;
   account: LoginData;
   isDesktop: boolean;
-  darkmode:boolean = true;
+  darkmode: boolean = true;
   displayUserData: any;
   dr_name:any;
   constructor(
     private authService: AuthService,
     private router: Router,
     private storageService: StorageService,
-    private screensizeService: ScreensizeService,
+    private screensizeService: ScreenSizeService,
     private renderer: Renderer2,
-    protected $gaService: GoogleAnalyticsService
+    protected $gaService: GoogleAnalyticsService,
+    public constants: Constants,
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -37,6 +41,7 @@ export class Tab3Page {
   }
 
   ngOnInit() {
+
     this.$gaService.pageView('/Settings', 'Settings Tab');
     this.logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_name = this.logindata[0].last_name;
@@ -45,9 +50,9 @@ export class Tab3Page {
       console.log(res);
       this.account = <LoginData>res;
     });
-    if(localStorage.getItem('darkmode') == 'true'){
-      this.darkmode = true
-    }else{
+    if (localStorage.getItem("darkmode") == "true") {
+      this.darkmode = true;
+    } else {
       this.darkmode = false;
     }
   }
@@ -62,8 +67,7 @@ export class Tab3Page {
       localStorage.setItem('darkmode','false');
       this.$gaService.event('Settings - Dark Mode False','User Flow',this.dr_name);
     }
-    if(this.isDesktop){window.location.reload();}
-    
+    //if(this.isDesktop){window.location.reload();}
   }
 
   logout() {
@@ -71,10 +75,10 @@ export class Tab3Page {
       //clear behavior subject
       this.userData$.next("");
       //clear local storage
-      localStorage.removeItem('_cap_userDataKey');
+      localStorage.removeItem("_cap_userDataKey");
       //localStorage.clear();
       //window.location.reload();
-      this.router.navigate(['/login']);
+      this.router.navigate(["/login"]);
     });
   }
 }
