@@ -15,7 +15,6 @@ import { FunctionsService } from "../../shared/functions/functions.service";
   templateUrl: "./chh-app-add-appointments-modal.page.html",
   styleUrls: ["./chh-app-add-appointments-modal.page.scss"],
 })
-
 export class ChhAppAddAppointmentsModalPage implements OnInit {
   @Input() appt_id: any;
   doctorSchedule: any;
@@ -45,7 +44,7 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
   // mydate3 = '13 Dec 2018';
   datePickerObj: any = {};
   datePickerObj2: any = {};
-
+  dr_name: any;
   /*new date picker*/
   datePickerObjForDateOfAppointment: any = {};
   datePickerObjForBirthdate: any = {};
@@ -74,10 +73,9 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
       }
       this.isDesktop = isDesktop;
     });
-    if (!this.dr_code) {
-      let logindata = <LoginData>this.authService.userData$.getValue();
-      this.dr_code = logindata[0].dr_code;
-    }
+    let logindata = <LoginData>this.authService.userData$.getValue();
+    this.dr_code = logindata[0].dr_code;
+    this.dr_name = logindata[0].last_name;
   }
 
   jsonObj2 = [];
@@ -87,6 +85,9 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
       "/Appointments/Add Appointments",
       "Add Appointments Modal"
     );
+
+    this.$gaService.event('Add Appointments','User Flow',this.dr_name);
+
     this.location = this.appt_id;
     this.retriveMTWThFSS(this.dr_code, this.appt_id);
     this.setDatepicker();
@@ -325,11 +326,17 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
       });
   }
 
- /*  async closeModal() {
+  async closeModal() {
+    this.$gaService.event(
+      "Add Appointments - CLOSE",
+      "User Flow",
+      this.dr_name
+    );
     await this.modalController.dismiss();
-  } */
+  }
 
   save() {
+    this.$gaService.event("Add Appointments - SAVE", "User Flow", this.dr_name);
     this.patientService
       .addAppointments(
         this.dr_code,
@@ -368,7 +375,7 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
           );
           //this.toast.presentToast('Error saving ' +this.lname+', '+this.fname);
         }
-        this.functionsService.closeModal(this.modalController);
+        this.closeModal();
       });
   }
 }

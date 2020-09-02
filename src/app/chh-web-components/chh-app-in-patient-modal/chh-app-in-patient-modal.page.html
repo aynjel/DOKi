@@ -123,6 +123,130 @@ o888o        `Y888""8o   "888" o888o `Y8bod8P' o888o o888o   "888"
     </ion-list>
   </ion-card>
 
+
+
+
+
+
+
+
+
+
+
+
+  <ion-card mode="ios"   >
+    <ion-list>
+      <ion-item style="padding-top: 10px;">
+        <div class="ion-text-wrap"><b>Admitting Diagnosis</b><br /></div>
+        
+      </ion-item>
+      <ion-item style="padding-top: 10px;" lines="none">
+        <div class="ion-text-wrap">
+
+          <div *ngIf="admittingDiagnosis">
+            <div *ngIf="admittingDiagnosis.length <= 100">{{admittingDiagnosis}}</div>
+            <div *ngIf="truncating1 && admittingDiagnosis.length > 100">
+              {{admittingDiagnosis1}}
+              <button ion-button (click)="truncating1 = false">show more</button>
+            </div>
+            <div *ngIf="!truncating1 && admittingDiagnosis.length > 100">
+              <!--{{admittingDiagnosis}}-->
+             
+                <ion-text class="ion-text-wrap">{{admittingDiagnosis2}}<br
+          /></ion-text>
+        
+              <button ion-button (click)="truncating1 = true">show less</button>
+            </div>
+            </div>
+
+
+            <ng-container>
+              <div
+                *ngIf="!objecthandler && !isFetchDone else noDataAvailable"
+                class=" custom-skeleton">
+                <ion-item>
+                  <ion-label style="margin-top: -10px;">
+                    <ion-item  style="padding-bottom: 5px;">
+                      <ion-skeleton-text animated></ion-skeleton-text>
+                    </ion-item>
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </ion-label>
+                </ion-item>
+              </div>
+            </ng-container>
+
+
+        </div>
+      </ion-item>
+
+    </ion-list>
+  </ion-card>
+
+  <ion-card mode="ios"  *ngIf="data.admission_status == 'DN'" >
+    <ion-list>
+      <ion-item style="padding-top: 10px;">
+        <div class="ion-text-wrap"><b>Final Diagnosis</b><br /></div>
+        
+      </ion-item>
+      <ion-item style="padding-top: 10px;" lines="none">
+        <div class="ion-text-wrap">
+
+          <div *ngIf="finalDiagnosis">
+            <div *ngIf="finalDiagnosis.length <= limit">{{finalDiagnosis}}</div>
+            <div *ngIf="truncating && finalDiagnosis.length > limit">
+              {{finalDiagnosis1}}
+              <button ion-button (click)="truncating = false">show more</button>
+            </div>
+            <div *ngIf="!truncating && finalDiagnosis.length > limit">
+              <!--{{finalDiagnosis}}-->
+              <div *ngFor="let x of finalDiagnosis2">
+                <ion-text style="padding-top: 15px;"
+            >{{x}}<br
+          /></ion-text>
+              </div>
+              <button ion-button (click)="truncating = true">show less</button>
+            </div>
+            </div>
+            
+            <ng-container>
+              <div
+                *ngIf="!objecthandler && !isFetchDone else noDataAvailable"
+                class=" custom-skeleton">
+                <ion-item>
+                  <ion-label style="margin-top: -10px;">
+                    <ion-item  style="padding-bottom: 5px;">
+                      <ion-skeleton-text animated></ion-skeleton-text>
+                    </ion-item>
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </ion-label>
+                </ion-item>
+              </div>
+            </ng-container>
+        </div>
+      </ion-item>
+
+    </ion-list>
+  </ion-card>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <!-- 
 ooooooooo.                       .o88o.    oooooooooooo                    
 `888   `Y88.                     888 `"    `888'     `8                    
@@ -138,8 +262,12 @@ o888o        d888b    `Y8bod8P' o888o      o888o        `Y8bod8P' `Y8bod8P'
       <ion-item style="padding-top: 10px;">
         <div class="ion-text-wrap"><b>Professional Fee</b><br /></div>
       </ion-item>
+      
       <ion-item style="padding-top: 10px;" lines="none">
         <div class="ion-text-wrap">
+          <ion-text style="padding-top: 15px;"
+            >Days of Manage: {{daysOfManage}} Days<br/>
+        </ion-text>
           <ion-text style="padding-top: 15px;"
             >Amount : {{professionalFee}}<br
           /></ion-text>

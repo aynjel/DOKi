@@ -239,11 +239,10 @@ export class Tab2Page {
   }
 
   ionViewWillEnter() {
-    if (!this.dr_code) {
-      this.logindata = <LoginData>this.authService.userData$.getValue();
-      this.dr_code = this.logindata[0].dr_code;
-    }
-
+    this.logindata = <LoginData>this.authService.userData$.getValue();
+    this.dr_code = this.logindata[0].dr_code;
+    let  dr_name = this.logindata[0].last_name;
+    this.$gaService.event('Appointments','User Flow',dr_name);
     if (this.selectedDate == null) {
       this.selectedDate = this.functionsService.getSystemDate();
       this.selectedLocation = "C";

@@ -50,17 +50,9 @@ export class Tab4Page implements OnInit {
         window.location.reload();
       }
       this.isDesktop = isDesktop;
+
     });
   }
-
- /*  async Alert(data1: any, data2: any) {
-    const alert = await this.alertController.create({
-      cssClass: "my-custom-class",
-      message: data1,
-      buttons: [{ text: data2, handler: () => {} }],
-    });
-    await alert.present();
-  } */
 
   doRefresh(event) {
     setTimeout(() => {
@@ -184,15 +176,17 @@ export class Tab4Page implements OnInit {
   ngOnInit() {
     this.$gaService.pageView("/Dashboard", "Dashboard Tab");
   }
+
   goto(data) {
     this.router.navigate(["/menu/in-patients" + data]);
   }
+
   ionViewWillEnter() {
-    if (!this.dr_code) {
-      this.logindata = <LoginData>this.authService.userData$.getValue();
-      this.dr_code = this.logindata[0].dr_code;
-      this.first_name = this.camelCase(this.logindata[0].first_name);
-    }
+    this.logindata = <LoginData>this.authService.userData$.getValue();
+    this.dr_code = this.logindata[0].dr_code;
+    this.first_name = this.camelCase(this.logindata[0].first_name);
+    let  dr_name = this.logindata[0].last_name;
+    this.$gaService.event('Dashboard','User Flow',dr_name);
     let catego = [];
     let totalPatient = [];
     this.doctorService.getYearHistoryGraph(this.dr_code).subscribe(
@@ -253,6 +247,7 @@ export class Tab4Page implements OnInit {
       () => {}
     );
   }
+
   camelCase(str) {
     var splitStr = str.toLowerCase().split(" ");
     for (var i = 0; i < splitStr.length; i++) {

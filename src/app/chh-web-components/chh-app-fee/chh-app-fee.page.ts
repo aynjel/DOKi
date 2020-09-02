@@ -1,5 +1,8 @@
 import { Component, EventEmitter, OnInit, Output, Input } from "@angular/core";
 import { ModalController, PopoverController } from "@ionic/angular";
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { LoginData } from 'src/app/models/login-data.model';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 
 @Component({
   selector: "chh-app-fee",
@@ -12,7 +15,8 @@ export class ChhAppFeePage implements OnInit {
   public initialFeePopOverRemarks: string = "";
   public initialFeePopOverMethod: string = "";
   public disableSaveBtn = false;
-
+  public logindata: LoginData;
+  public dr_name:any;
   public postData = {
     professionalFee: "",
     remarks: "",
@@ -25,17 +29,25 @@ export class ChhAppFeePage implements OnInit {
 
   constructor(
     private modalController: ModalController,
-    private popover: PopoverController
+    private popover: PopoverController,
+    private authService:AuthService,
+    protected $gaService: GoogleAnalyticsService
   ) {}
 
   ngOnInit() {
     this.initialFeePopOverProfFee = this.professionalFee;
     this.initialFeePopOverRemarks = this.remarks;
     this.initialFeePopOverMethod = this.method;
+
+    
+    this.logindata = <LoginData>this.authService.userData$.getValue();
+    this.dr_name = this.logindata[0].last_name;
+    this.$gaService.event('Professional Fee','User Flow',this.dr_name);
   }
 
   ClosePopover() {
     // Get initial value.
+    this.$gaService.event('Professional Fee - NO','User Flow',this.dr_name);
     this.postData.professionalFee = this.initialFeePopOverProfFee;
     this.postData.remarks = this.initialFeePopOverRemarks;
     this.postData.method = "NOTHING"; // Explicit this.postData.method = this.initialFeePopOverMethod;
@@ -65,6 +77,7 @@ export class ChhAppFeePage implements OnInit {
   }
 
   save() {
+    this.$gaService.event('Professional Fee - YES','User Flow',this.dr_name);
     let feePopOverMethod = "";
 
     let feePopOverProfFee = (<HTMLInputElement>(

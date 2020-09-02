@@ -14,11 +14,9 @@ export class ChhAppHospitalComponent implements OnInit {
   @Input() readonlyComp: boolean;
   @Input() Activator: any;
   constructor() {
-    console.log("Activator 1" + this.Activator);
   }
 
   ngOnInit() {
-    console.log("Activator " + this.Activator);
     if (this.Activator == "C") {
       this.active = true;
       this.active1 = false;

@@ -6,6 +6,8 @@ import { PopoverController } from "@ionic/angular";
 import { timeStamp } from "console";
 import { DoctorService } from "src/app/services/doctor/doctor.service";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
+import { AuthService } from "src/app/services/auth/auth.service";
+import { LoginData } from "../../models/login-data.model";
 import { FunctionsService } from "../../shared/functions/functions.service";
 
 @Component({
@@ -15,6 +17,7 @@ import { FunctionsService } from "../../shared/functions/functions.service";
 })
 
 export class ChhAppInPatientModalPage implements OnInit {
+  public logindata: LoginData;
   @Input() data: any;
   site: any;
   date: any;
@@ -24,12 +27,25 @@ export class ChhAppInPatientModalPage implements OnInit {
   isFetchDone: boolean = false;
   objecthandler: boolean = false;
   coDoctors: any;
+  finalDiagnosis: any;
+  finalDiagnosis1: any;
+  finalDiagnosis2: any;
+  admittingDiagnosis: any;
+  admittingDiagnosis1: any;
+  admittingDiagnosis2: any;
+  text: string;
+  limit: number = 40;
+  truncating = true;
+  truncating1 = true;
+  daysOfManage: any;
   constructor(
     public modalController: ModalController,
     public popover: PopoverController,
     private doctorService: DoctorService,
-    public functionsService: FunctionsService,
-    protected $gaService: GoogleAnalyticsService
+    public alertController: AlertController,
+    protected $gaService: GoogleAnalyticsService,
+    private authService: AuthService,
+    public functionsService: FunctionsService
   ) {}
 
   postData = {
@@ -56,7 +72,14 @@ export class ChhAppInPatientModalPage implements OnInit {
       "/In-Patient/Patient Details",
       "Patient Details Modal"
     );
-    this.data.admission_date = this.functionsService.explodeDate(this.data.admission_date);
+
+    let logindata = <LoginData>this.authService.userData$.getValue();
+    let dr_name = logindata[0].last_name;
+    this.$gaService.event("Patient Information", "User Flow", dr_name);
+
+    this.data.admission_date = this.functionsService.explodeDate(
+      this.data.admission_date
+    );
     if (this.data.site == "C") {
       this.site = "CHHC";
     } else {
@@ -87,6 +110,17 @@ export class ChhAppInPatientModalPage implements OnInit {
     this.isFetchDone = false;
     this.doctorService.getCoDoctors(this.data.admission_no).subscribe(
       (res: any) => {
+        console.log(res);
+        res.forEach((element) => {
+          if (element.dr_code == this.data.dr_code) {
+            if (element.no_of_days_manage == null) {
+              this.daysOfManage = 0;
+            } else {
+              this.daysOfManage = element.no_of_days_manage;
+            }
+          }
+          //
+        });
         if (res.length) {
           this.objecthandler = true;
         } else {
@@ -114,6 +148,66 @@ export class ChhAppInPatientModalPage implements OnInit {
         this.isFetchDone = true;
       }
     );
+
+    //admitting diagnosis
+    this.doctorService.getAdmittingDiagnosis(this.data.admission_no).subscribe(
+      (res: any) => {
+        this.admittingDiagnosis = this.functionsService.convertToCamelCase(
+          res[0].admitting_diagnosis2
+        );
+        this.admittingDiagnosis1 = this.functionsService.truncateChar(
+          this.functionsService.convertToCamelCase(this.admittingDiagnosis),
+          100
+        );
+        this.admittingDiagnosis2 = this.functionsService.convertToCamelCase(
+          this.admittingDiagnosis
+        );
+      },
+      (error) => {
+        this.isFetchDone = true;
+        this.functionsService.alert("Server Error", "Okay");
+      },
+      () => {
+        this.isFetchDone = true;
+      }
+    );
+    //final diagnosis
+    if (this.data.admission_status == "DN") {
+      this.doctorService.getFinalDiagnosis(this.data.admission_no).subscribe(
+        (res: any) => {
+          this.finalDiagnosis = res[0].final_diagnosis;
+          this.finalDiagnosis1 = this.functionsService.truncateChar(
+            this.functionsService.convertToCamelCase(this.finalDiagnosis),
+            50
+          );
+          this.finalDiagnosis2 = this.finalDiagnosis
+            .replace(/(\r\n|\n|\r)/gm, "")
+            .split(".)");
+          this.finalDiagnosis2.shift();
+          for (let i = 0; i < this.finalDiagnosis2.length - 1; i++) {
+            this.finalDiagnosis2[i] = this.finalDiagnosis2[i].substring(
+              0,
+              this.finalDiagnosis2[i].length - 1
+            );
+            console.log(this.finalDiagnosis2[i]);
+          }
+          for (let i = 0; i < this.finalDiagnosis2.length; i++) {
+            this.finalDiagnosis2[i] =
+              i +
+              1 +
+              ".) " +
+              this.functionsService.convertToCamelCase(this.finalDiagnosis2[i]);
+          }
+        },
+        (error) => {
+          this.isFetchDone = true;
+          this.functionsService.alert("Server Error", "Okay");
+        },
+        () => {
+          this.isFetchDone = true;
+        }
+      );
+    }
   }
 
   dateChanged(data1: any) {
@@ -165,7 +259,10 @@ export class ChhAppInPatientModalPage implements OnInit {
                 "Okay"
               );
             } else {
-              this.functionsService.alert("SAVING of Professional Fee was Unsuccessful", "Okay");
+              this.functionsService.alert(
+                "SAVING of Professional Fee was Unsuccessful",
+                "Okay"
+              );
             }
           });
         } else if (x == "PUT") {
@@ -177,7 +274,10 @@ export class ChhAppInPatientModalPage implements OnInit {
               this.postData.Remarks = data.data.remarks;
               this.postData.DateCreated = this.functionsService.getSystemDateTime();
               this.data.doctor_prof_fee = data.data.professionalFee;
-              this.functionsService.alert("Successfully UPDATED your Professional Fee.", "Okay");
+              this.functionsService.alert(
+                "Successfully UPDATED your Professional Fee.",
+                "Okay"
+              );
             } else {
               this.functionsService.alert(
                 "UPDATING of Professional Fee was Unsuccessful",
@@ -233,7 +333,7 @@ export class ChhAppInPatientModalPage implements OnInit {
     return this.functionsService.getSystemDate() + "T" + H + ":" + i + ":" + s + "." + v + "Z";
   } */
 
- /*  yyyymmdd() {
+  /*  yyyymmdd() {
     var now = new Date();
     var y = now.getFullYear();
     var m = now.getMonth() + 1;
@@ -243,14 +343,14 @@ export class ChhAppInPatientModalPage implements OnInit {
     return "" + y + "-" + mm + "-" + dd;
   } */
 
- /*  getDoctorStatusCode(data: string) {
+  /*  getDoctorStatusCode(data: string) {
     if (data == "Co-Manage") return "CM";
     if (data == "Primary Attending Physician") return "AP";
     if (data == "Consult") return "CO";
     if (data == "HMO") return "HC";
   } */
 
-/*   addZeroBefore(n) {
+  /*   addZeroBefore(n) {
     return (n < 10 ? "0" : "") + n;
   } */
 
@@ -260,5 +360,29 @@ export class ChhAppInPatientModalPage implements OnInit {
       let myarr2 = myarr[1].split(".");
       return myarr[0] + " | " + myarr2[0];
     }
+<<<<<<< HEAD:src/app/components/inpatientmodal/inpatientmodal.page.ts
+  }
+  truncateChar(text: string, limit:any): string {
+    let charlimit = limit;
+    if(!text || text.length <= charlimit )
+    {
+        return text;
+    }
+    let without_html = text.replace(/<(?:.|\n)*?>/gm, '');
+    let shortened = without_html.substring(0, charlimit) + "...";
+    return shortened;
+  }
+  camelCase(str) {
+    var splitStr = str.toLowerCase().split(" ");
+    for (var i = 0; i < splitStr.length; i++) {
+      // You do not need to check if i is larger than splitStr length, as your for does that for you
+      // Assign it back to the array
+      splitStr[i] =
+        splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+    }
+    // Directly return the joined string
+    return splitStr.join(" ");
+  }
+=======
   } */
 }

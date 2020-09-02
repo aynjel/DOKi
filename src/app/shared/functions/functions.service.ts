@@ -140,7 +140,18 @@ export class FunctionsService {
     return splitStr.join(" ");
   }
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
+  truncateChar(text: string, limit:any): string {
+    let charlimit = limit;
+    if(!text || text.length <= charlimit )
+    {
+        return text;
+    }
+    let without_html = text.replace(/<(?:.|\n)*?>/gm, '');
+    let shortened = without_html.substring(0, charlimit) + "...";
+    return shortened;
+  }
+
   /* Validate Login Inputs */
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   /* validateLogin(postData: string) {
