@@ -65,7 +65,7 @@ export class ChhAppDateSelectorComponent implements OnInit {
       this.active2 = false;
       this.active3 = true;
     }
-    this.selectedDate = this.incrementDate(this.selectedDate, data1);
+    this.selectedDate = this.functionsService.incrementDate(this.selectedDate, data1);
     console.log(this.selectedDate);
     this.dateSelector.emit(this.selectedDate);
   }
@@ -80,7 +80,7 @@ export class ChhAppDateSelectorComponent implements OnInit {
     return "" + y + "-" + mm + "-" + dd;
   } */
 
-  incrementDate(date_str, incrementor) {
+  /* incrementDate(date_str, incrementor) {
     var parts = date_str.split("-");
     var dt = new Date(
       parseInt(parts[0], 10), // year
@@ -98,5 +98,5 @@ export class ChhAppDateSelectorComponent implements OnInit {
       parts[2] = "0" + parts[2];
     }
     return parts.join("-");
-  }
+  } */
 }

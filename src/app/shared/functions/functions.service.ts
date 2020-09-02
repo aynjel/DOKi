@@ -104,7 +104,7 @@ export class FunctionsService {
   public async closeModal(modalController: ModalController) {
     await modalController.dismiss();
   }
-   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /* Increment Date */
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
