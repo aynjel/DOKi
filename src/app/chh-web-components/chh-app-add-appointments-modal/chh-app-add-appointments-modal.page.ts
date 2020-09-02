@@ -59,7 +59,7 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
 
   constructor(
     private screensizeService: ScreenSizeService,
-    private modalController: ModalController,
+    public modalController: ModalController,
     private patientService: PatientService,
     private authService: AuthService,
     public modalCtrl: ModalController,

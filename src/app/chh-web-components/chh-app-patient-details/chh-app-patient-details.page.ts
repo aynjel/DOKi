@@ -15,7 +15,7 @@ export class ChhAppPatientDetailsPage implements OnInit {
   public items: string[] = [];
   @Input() appt_id: any;
   constructor(
-    private modalController: ModalController,
+    public modalController: ModalController,
     private patientService: PatientService,
     public popover: PopoverController,
     public functionsService: FunctionsService
