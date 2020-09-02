@@ -171,7 +171,7 @@ export class Tab2Page {
 
   //change date + -
   adjustDate(data1: any) {
-    this.selectedDate = this.incrementDate(this.selectedDate, data1);
+    this.selectedDate = this.functionsService.incrementDate(this.selectedDate, data1);
     this.getDate(this.selectedDate, this.selectedLocation);
   }
 
@@ -262,7 +262,7 @@ export class Tab2Page {
     return "" + y + "-" + mm + "-" + dd;
   } */
 
-  incrementDate(date_str, incrementor) {
+ /*  incrementDate(date_str, incrementor) {
     var parts = date_str.split("-");
     var dt = new Date(
       parseInt(parts[0], 10), // year
@@ -280,7 +280,7 @@ export class Tab2Page {
       parts[2] = "0" + parts[2];
     }
     return parts.join("-");
-  }
+  } */
 
   //swipe action
   doRefresh(event) {
