@@ -52,11 +52,11 @@ export class Constants {
   // (M)
 
   /* Menu */
-  public MENU__VALUE__DASHBOARD: string = "DASHBOARD";
-  public MENU__VALUE__IN_PATIENTS: string = "IN-PATIENTS";
-  public MENU__VALUE__APPOINTMENTS: string = "APPOINTMENTS";
-  public MENU__VALUE__SETTINGS: string = "SETTINGS";
-  public MENU__VALUE__LOG_OUT: string = "LOG OUT";
+  public MENU__VALUE__DASHBOARD: string = "Dashboard";
+  public MENU__VALUE__IN_PATIENTS: string = "In-Patients";
+  public MENU__VALUE__APPOINTMENTS: string = "Appointments";
+  public MENU__VALUE__SETTINGS: string = "Settings";
+  public MENU__VALUE__LOG_OUT: string = "Log Out";
 
   // (S)
 
@@ -66,7 +66,7 @@ export class Constants {
   // (V)
 
   /* Version */
-  public DOCTOR_PORTAL__VALUE__VERSION: string = "v1.0.1";
+  public DOCTOR_PORTAL__VALUE__VERSION: string = "v1.1.2";
 
   // (W)
 
