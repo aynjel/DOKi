@@ -29,7 +29,6 @@
     "@ionic/angular": "^5.0.0",
     "@logisticinfotech/ionic4-datepicker": "^1.4.3",
     "@lottiefiles/lottie-player": "^0.5.1",
-    "@mobiscroll/angular": "https://npm.mobiscroll.com/@mobiscroll/angular-trial/-/angular-trial-4.10.6.tgz",
     "@synapsium/ngx-lottie": "^8.2.9",
     "@teamhive/lottie-player": "^1.0.0",
     "capacitor-datepicker": "0.0.2",
