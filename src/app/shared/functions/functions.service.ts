@@ -129,7 +129,7 @@ export class FunctionsService {
   }
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  /* Increment Date */
+  /* Convert To Camel Case */
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   convertToCamelCase(str) {
     var splitStr = str.toLowerCase().split(" ");
@@ -152,7 +152,17 @@ export class FunctionsService {
     return shortened;
   }
 
-  /* Validate Login Inputs */
+  /* Convert To Sentece Case */
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  convertToSentenceCase(stringData: string){
+    return stringData.split(" ").map(w => w[0].toUpperCase() + w.substr(1).toLowerCase()).join(" ")
+  }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+ 
+}
+
+ /* Validate Login Inputs */
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   /* validateLogin(postData: string) {
     let username = postData.username.trim();
@@ -165,4 +175,3 @@ export class FunctionsService {
     );
   } */
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-}

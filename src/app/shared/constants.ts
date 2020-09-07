@@ -26,7 +26,9 @@ export class Constants {
   public CHH_SITE__VALUE__ALL: string = "ALL";
   public CHH_NAME__VALUE__CEBU: string = "Chong Hua Hospital";
   public CHH_NAME__VALUE__MANDAUE: string = "Chong Hua Hospital Mandaue";
-
+  public CHH_LABEL__VALUE__CEBU: string = "CEBU";
+  public CHH_LABEL__VALUE__MANDAUE: string = "MANDAUE";
+  public CHH_LABEL__VALUE__BOTH: string = "BOTH";
   // (D)
 
   /* Doctor Service Types */
