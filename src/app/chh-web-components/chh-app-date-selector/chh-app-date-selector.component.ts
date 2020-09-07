@@ -9,7 +9,7 @@ import { FunctionsService } from "../../shared/functions/functions.service";
 export class ChhAppDateSelectorComponent implements OnInit {
   @Input() passedDate: any;
   @Output() dateSelector: EventEmitter<any> = new EventEmitter();
-  selectedDate: any;
+  //selectedDate: any;
   customPickerOptions: any;
 
   myDate;
@@ -17,7 +17,7 @@ export class ChhAppDateSelectorComponent implements OnInit {
   active2: boolean = true;
   active3: boolean = false;
   @Input() readonlyComp: boolean;
-
+  @Input('header-data') selectedDate;
   constructor(public functionsService: FunctionsService) {
     this.customPickerOptions = {
       buttons: [
