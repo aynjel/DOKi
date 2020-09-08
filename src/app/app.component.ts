@@ -5,6 +5,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ScreenSizeService } from './services/screen-size/screen-size.service';
 import { SwUpdate } from '@angular/service-worker';
 import { AlertController } from '@ionic/angular';
+import { FunctionsService } from "./shared/functions/functions.service";
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -18,7 +19,8 @@ export class AppComponent {
     private statusBar: StatusBar,
     private update:SwUpdate,
     private screensizeService: ScreenSizeService,
-    public alertController: AlertController
+    public alertController: AlertController,
+    public functionsService: FunctionsService
   ) {
     this.initializeApp();
     this.updateClient();
@@ -32,8 +34,8 @@ export class AppComponent {
     });
   }
   updateClient(){
-    if(!this.update.isEnabled){console.log("not enabled");}
-    else{console.log("enabled");}
+    if(!this.update.isEnabled){this.functionsService.logToConsole("not enabled");}
+    else{this.functionsService.logToConsole("enabled");}
     this.update.available.subscribe((event) =>{
       this.presentAlertConfirm();
     });

@@ -156,9 +156,9 @@ export class Tab2Page {
   }
   setCard(x, element){
     x = x /1.5;
-    console.log('x ->' + x);
+    this.functionsService.logToConsole('x ->' + x);
     if(!(x > 0)){x = x * -1;}
-     console.log('x ->' + (1 - (x/100)));
+     this.functionsService.logToConsole('x ->' + (1 - (x/100)));
     element.style.opacity = 1 - (x/100);
   }
   callback(){
@@ -337,7 +337,7 @@ export class Tab2Page {
         this.buttonDisablerHospSelector = false;
         this.buttonDisablerDateSelector = false;
         this.isFetchDone = true;
-        //console.log(this.jsonObj5);
+        //this.functionsService.logToConsole(this.jsonObj5);
       }
     );
   }

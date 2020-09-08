@@ -31,7 +31,7 @@ export class TabsPage {
       this.isDesktop = isDesktop;
     });
     /*this.signalRService.signalReceived.subscribe((signal: any) => {
-      console.log("-->" + signal.msg);
+      this.functionsService.logToConsole("-->" + signal.msg);
       this.badgecount = signal.msg;
       this.signalList.push(signal);
     });*/
@@ -42,10 +42,11 @@ export class TabsPage {
       localStorage.setItem("darkmode", "false");
     }
     if (localStorage.getItem("darkmode") == "true") {
-      console.log("true");
+      //this.functionsService.logToConsole("true");
+      this.functionsService.logToConsole("true");
       this.renderer.setAttribute(document.body, "color-theme", "dark");
     } else {
-      console.log("false");
+      this.functionsService.logToConsole("false");
       this.renderer.setAttribute(document.body, "color-theme", "light");
     }
   }

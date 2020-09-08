@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, Input } from "@angular/core";
 import { Router } from "@angular/router";
 import { ScreenSizeService } from "../../services/screen-size/screen-size.service";
+import { FunctionsService } from "../../shared/functions/functions.service";
 
 @Component({
   selector: "chh-app-hospital-selector-with-all",
@@ -19,7 +20,8 @@ export class ChhAppHospitalSelectorWithAllComponent implements OnInit {
   @Output() hospital: EventEmitter<any> = new EventEmitter();
   constructor(
     private router: Router,
-    private screensizeService: ScreenSizeService
+    private screensizeService: ScreenSizeService,
+    public functionsService: FunctionsService
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -48,7 +50,7 @@ export class ChhAppHospitalSelectorWithAllComponent implements OnInit {
       this.active3 = true;
     }
     if (data1 == "ALL") {
-      console.log(this.currenturl);
+      this.functionsService.logToConsole(this.currenturl);
       if (this.currenturl != data1) {
         this.currenturl = data1;
         this.router.navigate(["/menu/in-patients"]);

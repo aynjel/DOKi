@@ -160,7 +160,7 @@ export class FunctionsService {
   }
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  
-  logConsole(message: any){
+  logToConsole(message: any){
     if(environment.consoleLog){
       console.log(message);
     }

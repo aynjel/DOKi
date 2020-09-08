@@ -266,7 +266,8 @@ export class Tab1Page {
   }
 
   onSubmit(data1: any, data2: boolean) {
-    if (data1 == this.constants.CHH_SITE__CODE__ALL /*"ALL"*/) {
+    //console.log(data1);
+    if (data1 == this.constants.CHH_SITE__VALUE__ALL /*"ALL"*/) {
       this.router.navigate(["/menu/in-patients"]);
     } else if (data1 == this.constants.ADMISSION_STATUS__CODE__ADMITTED /*"AC"*/) {
       this.router.navigate(["/menu/in-patients/AC"]);

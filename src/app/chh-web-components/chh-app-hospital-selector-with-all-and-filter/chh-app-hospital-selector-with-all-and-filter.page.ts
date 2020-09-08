@@ -78,7 +78,7 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
   }
 
   changeRedirect(event:any){
-    console.log('1');
+    this.functionsService.logToConsole('1');
 
      this.variables.tempSelection = this.admittedOrDischarge;
 
@@ -92,7 +92,7 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
 
       //this.variables.tempCounter++;
 
-      //console.log(this.variables.tempCounter+" COUNTER " + this.admittedOrDischarge);
+      //this.functionsService.logToConsole(this.variables.tempCounter+" COUNTER " + this.admittedOrDischarge);
 
   } 
 
