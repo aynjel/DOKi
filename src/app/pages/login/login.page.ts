@@ -49,8 +49,8 @@ export class LoginPage implements OnInit {
       .doctorsPortalLogin(this.postData.username, this.postData.password)
       .subscribe(
         (res: any) => {
-          console.log("res :");
-          console.log(res);
+          /*console.log("res :");
+          console.log(res);*/
           if (res.length != "0") {
             if (res.Message) {
               this.functionsService.alert(res.Message, "Okay");
