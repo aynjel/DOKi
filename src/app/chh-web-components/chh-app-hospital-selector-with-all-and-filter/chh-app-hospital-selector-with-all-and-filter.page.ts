@@ -4,6 +4,9 @@ import { Router } from "@angular/router";
 import { Location } from "@angular/common";
 import { Constants } from "../../shared/constants";
 import { FunctionsService } from "../../shared/functions/functions.service";
+import { Variables } from "../../shared/variables";
+import { throwError } from 'rxjs';
+import { Console } from 'console';
 
 @Component({
   selector: "chh-app-hospital-selector-with-all-and-filter",
@@ -18,36 +21,42 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
   active3: boolean = true;
   currenturl: any;
   isDesktop: boolean;
-  admittedOrDischarge: any = "All";
+
+  public admittedOrDischarge: string = "All";
+
   @Output() hospital: EventEmitter<any> = new EventEmitter();
   constructor(
     private router: Router,
     private screensizeService: ScreenSizeService,
     private location: Location,
     public constants: Constants,
-    public functionsService: FunctionsService
+    public functionsService: FunctionsService,
+    public variables: Variables
   ) {
-    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
+     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
-        window.location.reload();
+        window.location.reload();window.location.reload();
       }
       this.isDesktop = isDesktop;
     });
 
     if (this.isDesktop) {
+     
       router.events.subscribe((val) => {
-        if (location.path() == "/menu/in-patients") {
-          this.admittedOrDischarge = "ALL";
-        } else if (location.path() == "/menu/in-patients/AC") {
-          this.admittedOrDischarge = "AC";
-        } else if (location.path() == "/menu/in-patients/DN") {
-          this.admittedOrDischarge = "DN";
+        if (location.path().trim() == "/menu/in-patients") {
+            this.admittedOrDischarge = "All"; 
+        } else if (location.path().trim() == "/menu/in-patients/AC") {
+            this.admittedOrDischarge = "AC";
+        } else if (location.path().trim() == "/menu/in-patients/DN") {
+            this.admittedOrDischarge = "DN";
         }
+        this.admittedOrDischarge = this.variables.tempSelection;
       });
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   onSubmit(data1: any, data2: boolean) {
     if (data1 == "C") {
@@ -69,12 +78,21 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
   }
 
   changeRedirect(event: any) {
-    if (this.admittedOrDischarge == "ALL") {
-      this.router.navigate(["/menu/in-patients"]);
-    } else if (this.admittedOrDischarge == "AC") {
-      this.router.navigate(["/menu/in-patients/AC"]);
-    } else if (this.admittedOrDischarge == "DN") {
-      this.router.navigate(["/menu/in-patients/DN"]);
-    }
-  }
+
+     this.variables.tempSelection = this.admittedOrDischarge;
+
+      if (this.admittedOrDischarge.trim() == "All") {
+        this.router.navigate(["/menu/in-patients"]);
+      } else if (this.admittedOrDischarge.trim() == "AC") {
+        this.router.navigate(["/menu/in-patients/AC"]);
+      } else if (this.admittedOrDischarge.trim() == "DN") {
+        this.router.navigate(["/menu/in-patients/DN"]);
+      }
+
+      this.variables.tempCounter++;
+
+      console.log(this.variables.tempCounter+" COUNTER " + this.admittedOrDischarge);
+
+  } 
+
 }

@@ -14,15 +14,17 @@
     class="link" size="small">
     {{this.functionsService.convertToSentenceCase(this.constants.CHH_LABEL__VALUE__MANDAUE)}}
   </ion-button>
-  <ion-button fill="clear"  *ngIf="isDesktop"
-  [ngClass]="{'active-link':active2, 'notactive':!active2}" 
-    class="link" size="small">
-    <ion-select [(ngModel)]="admittedOrDischarge" placeholder="Filter" (ionChange)="changeRedirect($event)" color="mango">
-      <ion-select-option value={{this.constants.CHH_SITE__VALUE__ALL}}>{{this.functionsService.convertToSentenceCase(this.constants.CHH_SITE__VALUE__ALL)}}</ion-select-option>
-      <ion-select-option value={{this.constants.ADMISSION_STATUS__CODE__ADMITTED}}>{{this.functionsService.convertToSentenceCase(this.constants.ADMISSION_STATUS__VALUE__ADMITTED)}}</ion-select-option>
-      <ion-select-option value={{this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE}}>{{this.functionsService.convertToSentenceCase(this.constants.ADMISSION_STATUS__VALUE__FOR_DISCHARGE)}}</ion-select-option>
+
+ <ion-button fill="clear"  *ngIf="this.isDesktop"
+  [ngClass]="{'active-link':active1, 'notactive':!active2}" 
+   size="small">
+    <ion-select [(ngModel)] = "this.admittedOrDischarge" value = "{{this.admittedOrDischarge}}" placeholder="Filter" (ionChange)="changeRedirect($event)" color="mango">
+      <ion-select-option value="{{this.functionsService.convertToSentenceCase(this.constants.CHH_SITE__VALUE__ALL)}}">{{this.functionsService.convertToSentenceCase(this.constants.CHH_SITE__VALUE__ALL)}}</ion-select-option>
+      <ion-select-option value="{{this.constants.ADMISSION_STATUS__CODE__ADMITTED}}">{{this.functionsService.convertToSentenceCase(this.constants.ADMISSION_STATUS__VALUE__ADMITTED)}}</ion-select-option>
+      <ion-select-option value="{{this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE}}">{{this.functionsService.convertToSentenceCase(this.constants.ADMISSION_STATUS__VALUE__FOR_DISCHARGE)}}</ion-select-option>
     </ion-select>
   </ion-button>
+  
 </div>
 
 <!-- BEFORE REFACTORED -->

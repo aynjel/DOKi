@@ -8,4 +8,8 @@ export class Variables {
         password: "",
       };
 
+    public tempSelection: string = "All";
+    public tempSelectionTemp: string = "ALL";
+    public tempCounter: number = 0;
+
 }
