@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { AlertController } from "@ionic/angular";
 import { Constants } from "../constants";
 import { ModalController, PopoverController } from "@ionic/angular";
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: "root",
@@ -159,6 +160,12 @@ export class FunctionsService {
   }
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  
+  logConsole(message: any){
+    if(environment.consoleLog){
+      console.log(message);
+    }
+  }
+
 }
 
  /* Validate Login Inputs */

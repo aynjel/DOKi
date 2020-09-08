@@ -77,13 +77,8 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
     this.hospital.emit(data1);
   }
 
-<<<<<<< HEAD
-  changeRedirect(event: any) {
-=======
   changeRedirect(event:any){
     console.log('1');
-    
->>>>>>> origin/dev_branch
 
      this.variables.tempSelection = this.admittedOrDischarge;
 
@@ -95,9 +90,9 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
         this.router.navigate(["/menu/in-patients/DN"]);
       }
 
-      this.variables.tempCounter++;
+      //this.variables.tempCounter++;
 
-      console.log(this.variables.tempCounter+" COUNTER " + this.admittedOrDischarge);
+      //console.log(this.variables.tempCounter+" COUNTER " + this.admittedOrDischarge);
 
   } 
 

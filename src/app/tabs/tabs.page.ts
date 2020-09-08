@@ -4,6 +4,7 @@ import { ScreenSizeService } from "../services/screen-size/screen-size.service";
 import { StorageService } from "../services/storage/storage.service";
 import { AuthConstants } from "../config/auth-constants";
 import { Constants } from "../shared/constants";
+import { FunctionsService } from "../shared/functions/functions.service"
 
 @Component({
   selector: "app-tabs",
@@ -18,7 +19,8 @@ export class TabsPage {
     private screensizeService: ScreenSizeService,
     private storageService: StorageService,
     private renderer: Renderer2,
-    public constants: Constants
+    public constants: Constants,
+    public functionsService: FunctionsService
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
