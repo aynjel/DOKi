@@ -7,20 +7,23 @@ import {
 } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
 import { stringify } from "querystring";
+import { FunctionsService } from "../../shared/functions/functions.service";
 
 @Injectable({
   providedIn: "root",
 })
 
 export class HttpService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+    public functionsService: FunctionsService
+    ) {}
 
   /*
   posttest(serviceName: string, data1: any,data2: any) {
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredentials: false };
     const url = environment.apiRouterUrl + serviceName + "?username="+data1 + "&password="+data2;
-    console.log("testurl -> " +url);
+    this.functionsService.logToConsole("testurl -> " +url);
     return this.http.post(url, options);
   }
 */
@@ -128,7 +131,7 @@ export class HttpService {
       data1 +
       "&birthday=" +
       data2;
-    console.log(url);
+    this.functionsService.logToConsole(url);
     return this.http.get(url);
   }
   /*
@@ -136,7 +139,7 @@ export class HttpService {
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredentials: false };
     const url = environment.apiRouterUrl + serviceName+data1;
-    console.log(url);
+    this.functionsService.logToConsole(url);
   
     return this.http.get(url);
   }*/

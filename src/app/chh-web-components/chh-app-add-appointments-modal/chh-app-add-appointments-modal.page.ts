@@ -124,7 +124,7 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
 
   /*for ux*/
   uxTime() {
-    console.log(this.time);
+    this.functionsService.logToConsole(this.time);
     if (this.time != null) {
       this.uxUserInfo = false;
     } else {
@@ -133,7 +133,7 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
   }
 
   userInfo() {
-    console.log(this.gender);
+    this.functionsService.logToConsole(this.gender);
     if (this.fname != null && this.lname != null && this.gender != null) {
       this.uxEndpart = false;
     } else {
@@ -142,11 +142,11 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
   }
 
   address() {
-    console.log(this.adrress);
+    this.functionsService.logToConsole(this.adrress);
     if (this.adrress != null) {
       this.uxSaveCancel = false;
     } else if (this.adrress == "") {
-      console.log("--" + this.adrress);
+      this.functionsService.logToConsole("--" + this.adrress);
       this.uxSaveCancel = true;
     }
   }
@@ -242,7 +242,7 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
     this.Weekdays = new Array();
     this.patientService.retrieveMTWTFSS(data1, data2).subscribe(
       (res: any) => {
-        console.log(res);
+        this.functionsService.logToConsole(res);
         let parseddata = JSON.parse(res);
         parseddata.forEach((element) => {
           if (element.sched_day == this.constants.WEEK_DAY__VALUE__SUNDAY) {
@@ -297,13 +297,13 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
             "Okay"
           );
         }
-        console.log(this.disableWeekDays1);
+        this.functionsService.logToConsole(this.disableWeekDays1);
       }
     );
   }
 
   pickTime() {
-    //console.log(this.mydate1+" | "+this.dr_code );
+    //this.functionsService.logToConsole(this.mydate1+" | "+this.dr_code );
     this.doctorSchedule = [];
 
     this.patientService
@@ -353,7 +353,7 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
       )
       .subscribe((res: any) => {
         //this.doctorSchedule = res;
-        console.log(res);
+        this.functionsService.logToConsole(res);
         if (res) {
           this.functionsService.alert(
             "Way to go, Doc! Your patient, " +

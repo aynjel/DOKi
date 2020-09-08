@@ -25,12 +25,12 @@ export class ChhAppPatientDetailsPage implements OnInit {
     this.patientService
       .getPatientDetails(this.appt_id)
       .subscribe((patientService: any) => {
-        console.log(patientService);
-        console.log(JSON.stringify(patientService));
-        console.log(JSON.parse(patientService));
+        this.functionsService.logToConsole(patientService);
+        this.functionsService.logToConsole(JSON.stringify(patientService));
+        this.functionsService.logToConsole(JSON.parse(patientService));
 
         this.cardData = JSON.parse(patientService);
-        //console.log(JSON.parse(patientService));
+        //this.functionsService.logToConsole(JSON.parse(patientService));
         //this.cardData.push(patientService);
       });
   }
