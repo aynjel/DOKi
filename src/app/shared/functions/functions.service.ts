@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { AlertController } from "@ionic/angular";
 import { Constants } from "../constants";
 import { ModalController, PopoverController } from "@ionic/angular";
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: "root",
@@ -129,7 +130,7 @@ export class FunctionsService {
   }
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  /* Increment Date */
+  /* Convert To Camel Case */
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   convertToCamelCase(str) {
     var splitStr = str.toLowerCase().split(" ");
@@ -152,7 +153,22 @@ export class FunctionsService {
     return shortened;
   }
 
-  /* Validate Login Inputs */
+  /* Convert To Sentece Case */
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  convertToSentenceCase(stringData: string){
+    return stringData.split(" ").map(w => w[0].toUpperCase() + w.substr(1).toLowerCase()).join(" ")
+  }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ 
+  logToConsole(message: any){
+    if(environment.consoleLog){
+      console.log(message);
+    }
+  }
+
+}
+
+ /* Validate Login Inputs */
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   /* validateLogin(postData: string) {
     let username = postData.username.trim();
@@ -165,4 +181,3 @@ export class FunctionsService {
     );
   } */
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-}

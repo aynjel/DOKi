@@ -49,8 +49,8 @@ export class LoginPage implements OnInit {
       .doctorsPortalLogin(this.postData.username, this.postData.password)
       .subscribe(
         (res: any) => {
-          /*console.log("res :");
-          console.log(res);*/
+          /*this.functionsService.logToConsole("res :");
+          this.functionsService.logToConsole(res);*/
           if (res.length != "0") {
             if (res.Message) {
               this.functionsService.alert(res.Message, "Okay");
@@ -86,11 +86,11 @@ export class LoginPage implements OnInit {
               if (res == "true:D") {
                 this.doctorService.retrieveUserDetails(this.postData.username).subscribe(
                   (result:any)=>{
-                    console.log("result.last_name --> "+result.last_name);
+                    this.functionsService.logToConsole("result.last_name --> "+result.last_name);
                     localStorage.setItem('dr_code',result.last_name);
                     this.doctorService.getDoctorName(result.last_name).subscribe(
                       (doctordetail:any)=>{
-                        console.log("doctordetail --> "+JSON.stringify(doctordetail));
+                        this.functionsService.logToConsole("doctordetail --> "+JSON.stringify(doctordetail));
                           this.storageService.store(AuthConstants.AUTH, doctordetail);
                           this.router.navigate(['/menu/tab1']);
                       }

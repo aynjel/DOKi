@@ -8,6 +8,7 @@ import { LoginData } from "../models/login-data.model";
 import { BehaviorSubject } from "rxjs";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
 import { Constants } from "../shared/constants";
+import { FunctionsService } from "../shared/functions/functions.service";
 
 @Component({
   selector: "app-tab3",
@@ -31,6 +32,7 @@ export class Tab3Page {
     private renderer: Renderer2,
     protected $gaService: GoogleAnalyticsService,
     public constants: Constants,
+    public functionsService: FunctionsService
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -47,7 +49,7 @@ export class Tab3Page {
     this.dr_name = this.logindata[0].last_name;
     this.$gaService.event('Settings','User Flow',this.dr_name);
     this.authService.userData$.subscribe((res: any) => {
-      console.log(res);
+      this.functionsService.logToConsole(res);
       this.account = <LoginData>res;
     });
     if (localStorage.getItem("darkmode") == "true") {

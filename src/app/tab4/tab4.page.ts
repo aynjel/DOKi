@@ -212,7 +212,7 @@ export class Tab4Page implements OnInit {
     let DayValue = [];
     this.doctorService.MonthHistoryGraph(this.dr_code).subscribe(
       (res: any) => {
-        console.log(res);
+        this.functionsService.logToConsole(res);
         let x = JSON.stringify(res);
         x = x.replace("[", "").replace("]", "");
         //x = x.replace("]", "");
@@ -238,7 +238,7 @@ export class Tab4Page implements OnInit {
     );
     this.doctorService.getTotalCount(this.dr_code).subscribe(
       (res: any) => {
-        console.log(JSON.stringify(res));
+        this.functionsService.logToConsole(JSON.stringify(res));
         if (res) {
           this.getTotalCount = res;
         }

@@ -4,6 +4,7 @@ import { ScreenSizeService } from "../services/screen-size/screen-size.service";
 import { StorageService } from "../services/storage/storage.service";
 import { AuthConstants } from "../config/auth-constants";
 import { Constants } from "../shared/constants";
+import { FunctionsService } from "../shared/functions/functions.service"
 
 @Component({
   selector: "app-tabs",
@@ -18,7 +19,8 @@ export class TabsPage {
     private screensizeService: ScreenSizeService,
     private storageService: StorageService,
     private renderer: Renderer2,
-    public constants: Constants
+    public constants: Constants,
+    public functionsService: FunctionsService
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -29,7 +31,7 @@ export class TabsPage {
       this.isDesktop = isDesktop;
     });
     /*this.signalRService.signalReceived.subscribe((signal: any) => {
-      console.log("-->" + signal.msg);
+      this.functionsService.logToConsole("-->" + signal.msg);
       this.badgecount = signal.msg;
       this.signalList.push(signal);
     });*/
@@ -40,10 +42,11 @@ export class TabsPage {
       localStorage.setItem("darkmode", "false");
     }
     if (localStorage.getItem("darkmode") == "true") {
-      console.log("true");
+      //this.functionsService.logToConsole("true");
+      this.functionsService.logToConsole("true");
       this.renderer.setAttribute(document.body, "color-theme", "dark");
     } else {
-      console.log("false");
+      this.functionsService.logToConsole("false");
       this.renderer.setAttribute(document.body, "color-theme", "light");
     }
   }

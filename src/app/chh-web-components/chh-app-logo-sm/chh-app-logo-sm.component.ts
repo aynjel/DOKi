@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { FunctionsService } from "../../shared/functions/functions.service";
 
 @Component({
   selector: "chh-app-logo-sm",
@@ -8,14 +9,14 @@ import { Component, OnInit } from "@angular/core";
 
 export class ChhAppLogoSmComponent implements OnInit {
   logo: any;
-  constructor() {}
+  constructor(public functionsService: FunctionsService) {}
 
   ngOnInit() {
     if (localStorage.getItem("darkmode") == "true") {
-      console.log("true");
+      this.functionsService.logToConsole("true");
       this.logo = "assets/img/orgwidelogosupergraphic.png";
     } else {
-      console.log("false");
+      this.functionsService.logToConsole("false");
       this.logo = "assets/img/orgwidelogo.png";
     }
   }

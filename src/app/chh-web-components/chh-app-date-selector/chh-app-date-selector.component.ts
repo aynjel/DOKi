@@ -46,7 +46,7 @@ export class ChhAppDateSelectorComponent implements OnInit {
   }
 
   forceModal() {
-    console.log("123");
+    this.functionsService.logToConsole("123");
   }
 
   adjustDate(data1: any) {
@@ -66,7 +66,7 @@ export class ChhAppDateSelectorComponent implements OnInit {
       this.active3 = true;
     }
     this.selectedDate = this.functionsService.incrementDate(this.selectedDate, data1);
-    console.log(this.selectedDate);
+    this.functionsService.logToConsole(this.selectedDate);
     this.dateSelector.emit(this.selectedDate);
   }
 

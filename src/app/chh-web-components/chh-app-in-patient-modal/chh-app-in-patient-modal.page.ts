@@ -110,7 +110,7 @@ export class ChhAppInPatientModalPage implements OnInit {
     this.isFetchDone = false;
     this.doctorService.getCoDoctors(this.data.admission_no).subscribe(
       (res: any) => {
-        console.log(res);
+        this.functionsService.logToConsole(res);
         res.forEach((element) => {
           if (element.dr_code == this.data.dr_code) {
             if (element.no_of_days_manage == null) {
@@ -126,7 +126,7 @@ export class ChhAppInPatientModalPage implements OnInit {
         } else {
           this.objecthandler = false;
         }
-        //console.log(res);
+        //this.functionsService.logToConsole(res);
         res.forEach((element) => {
           if (element.status == "Primary Attending Physician") {
             coDoctors1.push(element);
@@ -189,7 +189,7 @@ export class ChhAppInPatientModalPage implements OnInit {
               0,
               this.finalDiagnosis2[i].length - 1
             );
-            console.log(this.finalDiagnosis2[i]);
+            this.functionsService.logToConsole(this.finalDiagnosis2[i]);
           }
           for (let i = 0; i < this.finalDiagnosis2.length; i++) {
             this.finalDiagnosis2[i] =
@@ -211,12 +211,12 @@ export class ChhAppInPatientModalPage implements OnInit {
   }
 
   dateChanged(data1: any) {
-    //  console.log("changed data: "+data1);
+    //  this.functionsService.logToConsole("changed data: "+data1);
   }
 
   // Prof Fee Pop Over
   async detail(data: any) {
-    //console.log("Detail : " + this.method);
+    //this.functionsService.logToConsole("Detail : " + this.method);
 
     if (this.data.doctor_prof_fee == null) {
       this.method = "POST";
@@ -286,7 +286,7 @@ export class ChhAppInPatientModalPage implements OnInit {
             }
           });
         } else if (x == "DELETE") {
-          console.log("DELETE: " + this.postData);
+          this.functionsService.logToConsole("DELETE: " + this.postData);
           this.doctorService
             .DeletePf(
               this.postData.AdmisisonNo,

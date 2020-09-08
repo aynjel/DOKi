@@ -37,7 +37,7 @@ export class PatientService {
     /* const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     const url = environment.apiRouterUrl + "DoctorSchedMaster/DocSchedMaster/"+postData1+"/"+postData2;
-    console.log(url);
+    this.functionsService.logToConsole(url);
     return this.http.get(url, options);
 */
     let data = "DocSchedMaster/" + postData1 + "/" + postData2;
@@ -48,7 +48,7 @@ export class PatientService {
     const options = { headers: headers, withCredintials: false };
     
     const url = environment.apiRouterUrl + "Schedules?Drcode="+postData1+"&ApptDate="+postData2+"&Site="+postData3;
-    console.log("URL : "+url);
+    this.functionsService.logToConsole("URL : "+url);
     return this.http.get(url, options);
   }*/
 
@@ -107,7 +107,7 @@ export class PatientService {
       slot_no: res[1],
     };
 
-    /* console.log(JSON.stringify(postData));
+    /* this.functionsService.logToConsole(JSON.stringify(postData));
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
         const options = { headers: headers, withCredintials: false };
         const url = environment.apiRouterUrl + 'CMAAppointmentMaster';
@@ -117,7 +117,7 @@ export class PatientService {
       postData
     );
 
-    //console.log(postData);
+    //this.functionsService.logToConsole(postData);
     //return this.http.post(postData, options);
   }
 

@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 @Injectable()
 export class ColorGenerator {
   constructor() {
-    //console.log('created');
+    //this.functionsService.logToConsole('created');
   }
 
   COLORS: any[] = [
