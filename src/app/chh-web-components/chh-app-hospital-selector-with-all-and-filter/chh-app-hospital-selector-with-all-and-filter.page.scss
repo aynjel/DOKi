@@ -1,7 +1,6 @@
-ion-fab-button[data-desc] {
+  ion-fab-button[data-desc] {
     position: relative;
   }
-  
   ion-fab-button[data-desc]::after {
     position: absolute;
     content: attr(data-desc);

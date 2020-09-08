@@ -16,6 +16,12 @@ import { LoadingController } from "@ionic/angular";
 import { LoginData } from "../models/login-data.model";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
 
+import {  AfterViewInit, ElementRef, Renderer2, Input, NgZone } from '@angular/core';
+import { GestureController } from '@ionic/angular';
+import { Gesture, GestureConfig } from '@ionic/core';
+import { ViewChildren, QueryList } from "@angular/core";
+import {  IonGrid, IonContent,IonRow } from "@ionic/angular";
+
 @Component({
   selector: "app-tab2",
   templateUrl: "tab2.page.html",
@@ -40,7 +46,9 @@ export class Tab2Page {
   hospitalActivator: any;
   dr_code = "";
   public logindata: LoginData;
-
+  yAxisArray;
+  ishidden:boolean = true;
+  headerData;
   constructor(
     private patientService: PatientService,
     private modalController: ModalController,
@@ -53,7 +61,11 @@ export class Tab2Page {
     public functionsService: FunctionsService,
     private toast: ToastService,
     public loadingController: LoadingController,
-    protected $gaService: GoogleAnalyticsService
+    protected $gaService: GoogleAnalyticsService,
+    private gestureCtrl: GestureController,
+    private element: ElementRef,
+    private renderer: Renderer2,
+    private zone:NgZone
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -61,8 +73,107 @@ export class Tab2Page {
       }
       this.isDesktop = isDesktop;
     });
+    this.headerData = this.functionsService.getSystemDate();
   }
 
+  @ViewChildren(IonGrid, {read: ElementRef}) yAxis:QueryList<ElementRef>
+  async ngAfterViewInit() {
+    this.yAxisArray = this.yAxis.toArray();
+      const options1: GestureConfig = {
+      el: document.querySelector('#headerx'),
+      direction:  'x',
+      gestureName: 'slide-drawer-swipe',
+      onMove: (ev) => {
+        this.yAxisArray[1].nativeElement.style.transform = '.5s ease-in';
+        this.setCard(ev.deltaX,this.yAxisArray[1].nativeElement);
+        if(ev.deltaX > 120){
+          this.yAxisArray[1].nativeElement.style.transform =  `translateX(${500}px)`;
+        }else if (ev.deltaX < -120){
+          this.yAxisArray[1].nativeElement.style.transform = `translateX(${-500}px)`;
+        }else{
+          this.zone.run(() =>{this.ishidden=false;})
+          this.yAxisArray[1].nativeElement.style.transform = `translateX(${ev.deltaX}px) rotate(${ev.deltaX / 90}deg)`;
+        }
+       },onEnd: ev =>{
+        this.yAxisArray[1].nativeElement.style.opacity = 1;
+        this.yAxisArray[1].nativeElement.style.transform = '.5s ease-out';
+        if(ev.deltaX > 120){
+            this.zone.run(() =>{
+              this.headerData = this.selectedDate = this.functionsService.incrementDate(this.selectedDate, -1);
+              this.dateChanged(this.selectedDate);
+              this.zone.run(() =>{this.ishidden=true;})
+              this.yAxisArray[1].nativeElement.style.transform = '';
+            })
+          }else if (ev.deltaX < -120){
+            this.zone.run(() =>{
+            this.headerData = this.selectedDate = this.functionsService.incrementDate(this.selectedDate, 1);
+            this.dateChanged(this.selectedDate);
+            this.yAxisArray[1].nativeElement.style.transform = '';
+            this.zone.run(() =>{this.ishidden=true;})
+          })
+          }else{
+            this.zone.run(() =>{this.ishidden=true;})
+            this.yAxisArray[1].nativeElement.style.transform = '';
+          }
+       }
+    };
+   const options2: GestureConfig = {
+      el: document.querySelector('#headery'),
+      direction:  'y',
+      gestureName: 'slide-drawer-swipeer',
+      onMove: (ev) => {
+      if(ev.deltaY >= 150){
+        this.zone.run(() =>{this.ishidden=false;})
+        this.yAxisArray[1].nativeElement.style.transform = '1s transition-delay';
+        this.yAxisArray[1].nativeElement.style.transform = `translateY(${150}px)`;
+      }
+       },onEnd: (ev) =>{
+
+       this.yAxisArray[1].nativeElement.style.transform = '.5s ease-out';
+        if(ev.deltaY >= 150){
+          this.zone.run(() =>{
+            this.doRefresh1(event); 
+          })
+          setTimeout(()=>{
+
+            this.callback();
+       
+          },1000); 
+        }else{
+          this.yAxisArray[1].nativeElement.style.transform = '';
+        }
+
+       }
+     
+    };
+    if(!this.isDesktop){
+      const gesture1 = await this.gestureCtrl.create(options1);
+      const gesture2 = await this.gestureCtrl.create(options2);
+      gesture1.enable();
+      gesture2.enable();
+    }
+
+  }
+  setCard(x, element){
+    x = x /1.5;
+    console.log('x ->' + x);
+    if(!(x > 0)){x = x * -1;}
+     console.log('x ->' + (1 - (x/100)));
+    element.style.opacity = 1 - (x/100);
+  }
+  callback(){
+    this.yAxisArray[1].nativeElement.style.transform = '';
+    this.zone.run(() =>{
+      this.ishidden=true;
+    })
+    
+  }
+  doRefresh1(event) {
+    setTimeout(() => {
+      this.getDate(this.selectedDate, this.selectedLocation);
+
+    }, 1000);
+  }
   /* async Alert(data1: any, data2: any) {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",

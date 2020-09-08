@@ -77,7 +77,13 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
     this.hospital.emit(data1);
   }
 
+<<<<<<< HEAD
   changeRedirect(event: any) {
+=======
+  changeRedirect(event:any){
+    console.log('1');
+    
+>>>>>>> origin/dev_branch
 
      this.variables.tempSelection = this.admittedOrDischarge;
 

@@ -15,7 +15,22 @@
     {{this.functionsService.convertToSentenceCase(this.constants.CHH_LABEL__VALUE__MANDAUE)}}
   </ion-button>
 
- <ion-button fill="clear"  *ngIf="this.isDesktop"
+  <ion-button fill="clear"  *ngIf="isDesktop"
+  [ngClass]="{'active-link':active2, 'notactive':!active2}" 
+    class="link" size="small">
+    <ion-select [(ngModel)]="admittedOrDischarge" placeholder="Filter" (ionChange)="changeRedirect($event)" color="mango" style="display:none">
+      <ion-select-option value="ALL" >All</ion-select-option>
+      <ion-select-option value="AC">Admitted</ion-select-option>
+      <ion-select-option value="DN">For Discharge</ion-select-option>
+    </ion-select>
+    <select [(ngModel)]="admittedOrDischarge" placeholder="Filter" (ionChange)="changeRedirect($event)" color="mango" style="border:none;">
+      <option value="ALL">All</option>
+      <option value="AC">Admitted</option>
+      <option value="DN">for Discharge</option>
+    </select>
+  </ion-button>
+
+ <!-- <ion-button fill="clear"  *ngIf="this.isDesktop"
   [ngClass]="{'active-link':active1, 'notactive':!active2}" 
    size="small">
     <ion-select [(ngModel)] = "this.admittedOrDischarge" value = "{{this.admittedOrDischarge}}" placeholder="Filter" (ionChange)="changeRedirect($event)" color="mango">
@@ -23,7 +38,7 @@
       <ion-select-option value="{{this.constants.ADMISSION_STATUS__CODE__ADMITTED}}">{{this.functionsService.convertToSentenceCase(this.constants.ADMISSION_STATUS__VALUE__ADMITTED)}}</ion-select-option>
       <ion-select-option value="{{this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE}}">{{this.functionsService.convertToSentenceCase(this.constants.ADMISSION_STATUS__VALUE__FOR_DISCHARGE)}}</ion-select-option>
     </ion-select>
-  </ion-button>
+  </ion-button> -->
   
 </div>
 
@@ -48,10 +63,15 @@
   <ion-button fill="clear"  *ngIf="isDesktop"
   [ngClass]="{'active-link':active2, 'notactive':!active2}" 
     class="link" size="small">
-    <ion-select [(ngModel)]="admittedOrDischarge" placeholder="Filter" (ionChange)="changeRedirect($event)" color="mango">
-      <ion-select-option value="ALL">All</ion-select-option>
+    <ion-select [(ngModel)]="admittedOrDischarge" placeholder="Filter" (ionChange)="changeRedirect($event)" color="mango" style="display:none">
+      <ion-select-option value="ALL" >All</ion-select-option>
       <ion-select-option value="AC">Admitted</ion-select-option>
       <ion-select-option value="DN">For Discharge</ion-select-option>
     </ion-select>
+    <select [(ngModel)]="admittedOrDischarge" placeholder="Filter" (ionChange)="changeRedirect($event)" color="mango" style="border:none;">
+      <option value="ALL">All</option>
+      <option value="AC">Admitted</option>
+      <option value="DN">for Discharge</option>
+    </select>
   </ion-button>
-</div> -->
+-->
