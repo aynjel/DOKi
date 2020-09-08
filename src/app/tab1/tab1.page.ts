@@ -1,31 +1,31 @@
-import { Component, Renderer2 } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
-import { Router } from '@angular/router';
-import { StorageService } from '../services/storage.service';
-import { AuthConstants } from '../config/auth-constants';
-import { DoctorService } from '../services/doctor.service';
-import { ModalController, AlertController } from '@ionic/angular';
-import { PatientdetailsPage } from '../components/patientdetailss/patientdetails.page';
-import { ScreensizeService } from '../services/screensize.service';
-import { PopoverController } from '@ionic/angular';  
-import {InpatientmodalPage} from '../components/inpatientmodal/inpatientmodal.page';
-
-import { timeStamp } from 'console';
-import {DoctorInfoGlobal} from '../common/doctorinfo-global';
-import {LoginData} from '../models/logindata.model';
-import {InpatientData} from '../models/inpatient.model';
+import { Component, Renderer2 } from "@angular/core";
+import { AuthService } from "src/app/services/auth/auth.service";
+import { Router } from "@angular/router";
+import { StorageService } from "../services/storage/storage.service";
+import { AuthConstants } from "../config/auth-constants";
+import { DoctorService } from "../services/doctor/doctor.service";
+import { ModalController, AlertController } from "@ionic/angular";
+import { ChhAppPatientDetailsPage } from "../chh-web-components/chh-app-patient-details/chh-app-patient-details.page";
+import { ScreenSizeService } from "../services/screen-size/screen-size.service";
+import { PopoverController } from "@ionic/angular";
+import { ChhAppInPatientModalPage } from "../chh-web-components/chh-app-in-patient-modal/chh-app-in-patient-modal.page";
+import { timeStamp } from "console";
+import { DoctorInfoGlobal } from "../shared/doctor-info-global";
+import { LoginData } from "../models/login-data.model";
+import { InPatientData } from "../models/in-patient.model";
 import { Location } from "@angular/common";
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { GoogleAnalyticsService } from "ngx-google-analytics";
+import { FunctionsService } from "../shared/functions/functions.service";
+import { Constants } from "../shared/constants";
 
 @Component({
   selector: "app-tab1",
   templateUrl: "tab1.page.html",
   styleUrls: ["tab1.page.scss"],
 })
-
 export class Tab1Page {
   public logindata: LoginData;
-  public inPatientData: InpatientData;
+  public inPatientData: InPatientData;
   isDesktop: boolean;
   isFetchDone: boolean = false;
   dr_code = "";
@@ -40,19 +40,19 @@ export class Tab1Page {
   route: string;
   objecthandler: boolean = false;
 
-
   constructor(
     private authService: AuthService,
     private router: Router,
     private storageService: StorageService,
     private doctorService: DoctorService,
     private modalController: ModalController,
-    private screensizeService: ScreensizeService,
+    private screensizeService: ScreenSizeService,
     private popover: PopoverController,
     private location: Location,
-    public alertController: AlertController,
+    public functionsService: FunctionsService,
     private renderer: Renderer2,
-    protected $gaService: GoogleAnalyticsService
+    protected $gaService: GoogleAnalyticsService,
+    public constants: Constants
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -62,43 +62,51 @@ export class Tab1Page {
     });
     router.events.subscribe((val) => {
       if (location.path() == "/menu/in-patients") {
-        this.admittedOrDischarge = "ALL";
+        this.admittedOrDischarge = this.constants.CHH_SITE__VALUE__ALL; //"ALL";
         this.admittedOrDischargeLabel = "";
       } else if (location.path() == "/menu/in-patients/AC") {
-        this.admittedOrDischarge = "AC";
-        this.admittedOrDischargeLabel = "(Admitted)";
+        this.admittedOrDischarge = this.constants.ADMISSION_STATUS__CODE__ADMITTED; //"AC";
+        this.admittedOrDischargeLabel =
+          "(" +
+          this.functionsService.convertToSentenceCase(
+            this.constants.ADMISSION_STATUS__VALUE__ADMITTED
+          ) +
+          ")"; //"(Admitted)";
       } else if (location.path() == "/menu/in-patients/DN") {
-        this.admittedOrDischarge = "DN";
+        this.admittedOrDischarge = this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE; //"DN";
         this.admittedOrDischargeLabel = "(for Discharge)";
       }
     });
   }
 
   ngOnInit() {
-    this.$gaService.pageView('/In-Patient', 'In-Patient Tab');
+    this.$gaService.pageView("/In-Patient", "In-Patient Tab");
   }
-  async Alert(data1: any, data2: any) {
+
+  /* async Alert(data1: any, data2: any) {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
       message: data1,
       buttons: [{ text: data2, handler: () => {} }],
     });
     await alert.present();
-  }
+  } */
 
   filterList() {
-    if (this.site == "A") {
+    if (this.site == this.constants.CHH_SITE__CODE__ALL /*"A"*/) {
       this.inPatients = [];
       this.inPatients = this.inPatientsDraft;
     } else {
       this.inPatients = [];
       this.inPatientsDraft.forEach((element) => {
-        if (this.site == "C") {
-          if (element.site == "C") {
+        if (this.site == this.constants.CHH_SITE__CODE__CEBU /*"C"*/) {
+          if (element.site == this.constants.CHH_SITE__CODE__CEBU /*"C"*/) {
             this.inPatients.push(element);
           }
-        } else if (this.site == "M") {
-          if (element.site == "M") {
+        } else if (
+          this.site == this.constants.CHH_SITE__CODE__MANDAUE /*"M"*/
+        ) {
+          if (element.site == this.constants.CHH_SITE__CODE__MANDAUE /*"M"*/) {
             this.inPatients.push(element);
           }
         }
@@ -127,18 +135,32 @@ export class Tab1Page {
     }
 
     /*check if ALL - ADMITTED - FOR DISCHARGE*/
-    if (this.admittedOrDischarge != "ALL") {
+    if (
+      this.admittedOrDischarge != this.constants.CHH_SITE__VALUE__ALL /*"ALL"*/
+    ) {
       let verifier: boolean = false; //to verify if naa ba jud na check na value AC or DN
       let sampleInPatients1 = [];
       this.inPatients.forEach((element) => {
-        if (this.admittedOrDischarge == "AC") {
+        if (
+          this.admittedOrDischarge ==
+          this.constants.ADMISSION_STATUS__CODE__ADMITTED /*"AC"*/
+        ) {
           verifier = true;
-          if (element.admission_status == "AC") {
+          if (
+            element.admission_status ==
+            this.constants.ADMISSION_STATUS__CODE__ADMITTED /*"AC"*/
+          ) {
             sampleInPatients1.push(element);
           }
-        } else if (this.admittedOrDischarge == "DN") {
+        } else if (
+          this.admittedOrDischarge ==
+          this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE /*"DN"*/
+        ) {
           verifier = true;
-          if (element.admission_status == "DN") {
+          if (
+            element.admission_status ==
+            this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE /*"DN"*/
+          ) {
             sampleInPatients1.push(element);
           }
         }
@@ -153,17 +175,17 @@ export class Tab1Page {
 
   //Fired when the component routing to is about to animate into view.
   ionViewWillEnter() {
-    if (!this.dr_code) {
-      this.logindata = <LoginData>this.authService.userData$.getValue();
-      this.dr_code = this.logindata[0].dr_code;
-    }
+    this.logindata = <LoginData>this.authService.userData$.getValue();
+    this.dr_code = this.logindata[0].dr_code;
+    let dr_name = this.logindata[0].last_name;
+    this.$gaService.event("In-Patient", "User Flow", dr_name);
     this.callPatient(this.site);
   }
 
   //Get using Doctors API
   callPatient(data: any) {
     this.isFetchDone = false;
-    
+
     setTimeout(() => {
       this.doctorService.getInPatient(this.dr_code).subscribe(
         (res: any) => {
@@ -177,14 +199,17 @@ export class Tab1Page {
             element.last_name = element.last_name.toUpperCase();
             element.middle_name = this.camelCase(element.middle_name);
             element.first_name = this.camelCase(element.first_name);
-  
+
             this.inPatientsDraft.push(element);
           });
           this.filterList();
         },
         (error) => {
           this.isFetchDone = true;
-          this.Alert("Sorry Doc. We cannot retrieve the list of your admitted patients at this time. Please try again.", "Okay");
+          this.functionsService.alert(
+            "Sorry Doc. We cannot retrieve the list of your admitted patients at this time. Please try again.",
+            "Okay"
+          );
         },
         () => {
           this.isFetchDone = true;
@@ -192,7 +217,7 @@ export class Tab1Page {
       );
     }, 1000);
   }
-    
+
   //swipe down refresh
   doRefresh(event) {
     setTimeout(() => {
@@ -204,7 +229,7 @@ export class Tab1Page {
 
   async detail(data: any) {
     const modal = await this.modalController.create({
-      component: InpatientmodalPage,
+      component: ChhAppInPatientModalPage,
       componentProps: { data: data },
       cssClass: "my-custom-modal-inpatient-css",
     });
@@ -216,7 +241,11 @@ export class Tab1Page {
 
   //location is changed
   locationAction(data: any) {
-    if (data == "A" || data == "C" || data == "M") {
+    if (
+      data == this.constants.CHH_SITE__CODE__ALL /*"A"*/ ||
+      data == this.constants.CHH_SITE__CODE__CEBU /*"C"*/ ||
+      data == this.constants.CHH_SITE__CODE__MANDAUE /*"M"*/
+    ) {
       this.site = data;
     } else {
       this.admittedOrDischarge = data;
@@ -237,11 +266,12 @@ export class Tab1Page {
   }
 
   onSubmit(data1: any, data2: boolean) {
-    if (data1 == "ALL") {
+    //console.log(data1);
+    if (data1 == this.constants.CHH_SITE__VALUE__ALL /*"ALL"*/) {
       this.router.navigate(["/menu/in-patients"]);
-    } else if (data1 == "AC") {
+    } else if (data1 == this.constants.ADMISSION_STATUS__CODE__ADMITTED /*"AC"*/) {
       this.router.navigate(["/menu/in-patients/AC"]);
-    } else if (data1 == "DN") {
+    } else if (data1 == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE/*"DN"*/) {
       this.router.navigate(["/menu/in-patients/DN"]);
     }
   }

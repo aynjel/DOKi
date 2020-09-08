@@ -1,25 +1,33 @@
 import { Component, OnInit } from "@angular/core";
-import { PatientService } from "../services/patient.service";
+import { PatientService } from "../services/patient/patient.service";
 import { ModalController } from "@ionic/angular";
-import { AuthService } from "src/app/services/auth.service";
-import { DoctorService } from "../services/doctor.service";
+import { AuthService } from "src/app/services/auth/auth.service";
+import { DoctorService } from "../services/doctor/doctor.service";
 import { HostListener } from "@angular/core";
-import { PatientdetailsPage } from "../components/patientdetailss/patientdetails.page";
-import { ScreensizeService } from "../services/screensize.service";
+import { ChhAppPatientDetailsPage } from "../chh-web-components/chh-app-patient-details/chh-app-patient-details.page";
+import { ScreenSizeService } from "../services/screen-size/screen-size.service";
 import { ActionSheetController } from "@ionic/angular";
 import { PopoverController } from "@ionic/angular";
 import { AlertController } from "@ionic/angular";
-import { AddappointmentsmodalPage } from "../components/addappointmentsmodal/addappointmentsmodal.page";
-import { ToastService } from "../services/toast.service";
+import { FunctionsService } from "../shared/functions/functions.service";
+import { ChhAppAddAppointmentsModalPage } from "../chh-web-components/chh-app-add-appointments-modal/chh-app-add-appointments-modal.page";
+import { ToastService } from "../services/toast/toast.service";
 import { LoadingController } from "@ionic/angular";
-import { LoginData } from "../models/logindata.model";
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { LoginData } from "../models/login-data.model";
+import { GoogleAnalyticsService } from "ngx-google-analytics";
+
+import {  AfterViewInit, ElementRef, Renderer2, Input, NgZone } from '@angular/core';
+import { GestureController } from '@ionic/angular';
+import { Gesture, GestureConfig } from '@ionic/core';
+import { ViewChildren, QueryList } from "@angular/core";
+import {  IonGrid, IonContent,IonRow } from "@ionic/angular";
 
 @Component({
   selector: "app-tab2",
   templateUrl: "tab2.page.html",
   styleUrls: ["tab2.page.scss"],
 })
+
 export class Tab2Page {
   isDesktop: boolean;
   displaydata = "chhc";
@@ -38,19 +46,26 @@ export class Tab2Page {
   hospitalActivator: any;
   dr_code = "";
   public logindata: LoginData;
-
+  yAxisArray;
+  ishidden:boolean = true;
+  headerData;
   constructor(
     private patientService: PatientService,
     private modalController: ModalController,
     private authService: AuthService,
     private doctorService: DoctorService,
-    private screensizeService: ScreensizeService,
+    private screensizeService: ScreenSizeService,
     private popover: PopoverController,
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
+    public functionsService: FunctionsService,
     private toast: ToastService,
     public loadingController: LoadingController,
-    protected $gaService: GoogleAnalyticsService
+    protected $gaService: GoogleAnalyticsService,
+    private gestureCtrl: GestureController,
+    private element: ElementRef,
+    private renderer: Renderer2,
+    private zone:NgZone
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -58,16 +73,115 @@ export class Tab2Page {
       }
       this.isDesktop = isDesktop;
     });
+    this.headerData = this.functionsService.getSystemDate();
   }
 
-  async Alert(data1: any, data2: any) {
+  @ViewChildren(IonGrid, {read: ElementRef}) yAxis:QueryList<ElementRef>
+  async ngAfterViewInit() {
+    this.yAxisArray = this.yAxis.toArray();
+      const options1: GestureConfig = {
+      el: document.querySelector('#headerx'),
+      direction:  'x',
+      gestureName: 'slide-drawer-swipe',
+      onMove: (ev) => {
+        this.yAxisArray[1].nativeElement.style.transform = '.5s ease-in';
+        this.setCard(ev.deltaX,this.yAxisArray[1].nativeElement);
+        if(ev.deltaX > 120){
+          this.yAxisArray[1].nativeElement.style.transform =  `translateX(${500}px)`;
+        }else if (ev.deltaX < -120){
+          this.yAxisArray[1].nativeElement.style.transform = `translateX(${-500}px)`;
+        }else{
+          this.zone.run(() =>{this.ishidden=false;})
+          this.yAxisArray[1].nativeElement.style.transform = `translateX(${ev.deltaX}px) rotate(${ev.deltaX / 90}deg)`;
+        }
+       },onEnd: ev =>{
+        this.yAxisArray[1].nativeElement.style.opacity = 1;
+        this.yAxisArray[1].nativeElement.style.transform = '.5s ease-out';
+        if(ev.deltaX > 120){
+            this.zone.run(() =>{
+              this.headerData = this.selectedDate = this.functionsService.incrementDate(this.selectedDate, -1);
+              this.dateChanged(this.selectedDate);
+              this.zone.run(() =>{this.ishidden=true;})
+              this.yAxisArray[1].nativeElement.style.transform = '';
+            })
+          }else if (ev.deltaX < -120){
+            this.zone.run(() =>{
+            this.headerData = this.selectedDate = this.functionsService.incrementDate(this.selectedDate, 1);
+            this.dateChanged(this.selectedDate);
+            this.yAxisArray[1].nativeElement.style.transform = '';
+            this.zone.run(() =>{this.ishidden=true;})
+          })
+          }else{
+            this.zone.run(() =>{this.ishidden=true;})
+            this.yAxisArray[1].nativeElement.style.transform = '';
+          }
+       }
+    };
+   const options2: GestureConfig = {
+      el: document.querySelector('#headery'),
+      direction:  'y',
+      gestureName: 'slide-drawer-swipeer',
+      onMove: (ev) => {
+      if(ev.deltaY >= 150){
+        this.zone.run(() =>{this.ishidden=false;})
+        this.yAxisArray[1].nativeElement.style.transform = '1s transition-delay';
+        this.yAxisArray[1].nativeElement.style.transform = `translateY(${150}px)`;
+      }
+       },onEnd: (ev) =>{
+
+       this.yAxisArray[1].nativeElement.style.transform = '.5s ease-out';
+        if(ev.deltaY >= 150){
+          this.zone.run(() =>{
+            this.doRefresh1(event); 
+          })
+          setTimeout(()=>{
+
+            this.callback();
+       
+          },1000); 
+        }else{
+          this.yAxisArray[1].nativeElement.style.transform = '';
+        }
+
+       }
+     
+    };
+    if(!this.isDesktop){
+      const gesture1 = await this.gestureCtrl.create(options1);
+      const gesture2 = await this.gestureCtrl.create(options2);
+      gesture1.enable();
+      gesture2.enable();
+    }
+
+  }
+  setCard(x, element){
+    x = x /1.5;
+    this.functionsService.logToConsole('x ->' + x);
+    if(!(x > 0)){x = x * -1;}
+     this.functionsService.logToConsole('x ->' + (1 - (x/100)));
+    element.style.opacity = 1 - (x/100);
+  }
+  callback(){
+    this.yAxisArray[1].nativeElement.style.transform = '';
+    this.zone.run(() =>{
+      this.ishidden=true;
+    })
+    
+  }
+  doRefresh1(event) {
+    setTimeout(() => {
+      this.getDate(this.selectedDate, this.selectedLocation);
+
+    }, 1000);
+  }
+  /* async Alert(data1: any, data2: any) {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
       message: data1,
       buttons: [{ text: data2, handler: () => {} }],
     });
     await alert.present();
-  }
+  } */
 
   //present View & Delete
   async presentActionSheet(data1: any, data2: any, data3: any) {
@@ -95,7 +209,9 @@ export class Tab2Page {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
       message:
-        "Are you sure you want to delete <strong>" + data1 + "</strong>'s appointment?",
+        "Are you sure you want to delete <strong>" +
+        data1 +
+        "</strong>'s appointment?",
       buttons: [
         { text: "Cancel", role: "cancel", cssClass: "secondary" },
         {
@@ -104,10 +220,10 @@ export class Tab2Page {
             this.patientService.deletePatients(data2).subscribe((res: any) => {
               if (res == "UPDATED") {
                 //this.toast.presentToast('Successfully Deleted '+data1);
-                this.Alert("Successfully Deleted " + data1, "Okay");
+                this.functionsService.alert("Successfully Deleted " + data1, "Okay");
               } else {
                 //this.toast.presentToast('Error on Deleting '+data1);
-                this.Alert("Error on Deleting " + data1, "Okay");
+                this.functionsService.alert("Error on Deleting " + data1, "Okay");
               }
               this.getDate(this.selectedDate, this.selectedLocation);
             });
@@ -121,7 +237,7 @@ export class Tab2Page {
   //present View Detail
   async presentModal(data: any) {
     const popover = await this.popover.create({
-      component: PatientdetailsPage,
+      component: ChhAppPatientDetailsPage,
       showBackdrop: true,
       translucent: true,
       componentProps: {
@@ -143,7 +259,7 @@ export class Tab2Page {
   //present addPatient
   async showaddmodal() {
     const modal = await this.modalController.create({
-      component: AddappointmentsmodalPage,
+      component: ChhAppAddAppointmentsModalPage,
       componentProps: {
         appt_id: this.selectedLocation,
         backdropDismiss: true,
@@ -166,7 +282,7 @@ export class Tab2Page {
 
   //change date + -
   adjustDate(data1: any) {
-    this.selectedDate = this.incrementDate(this.selectedDate, data1);
+    this.selectedDate = this.functionsService.incrementDate(this.selectedDate, data1);
     this.getDate(this.selectedDate, this.selectedLocation);
   }
 
@@ -221,33 +337,32 @@ export class Tab2Page {
         this.buttonDisablerHospSelector = false;
         this.buttonDisablerDateSelector = false;
         this.isFetchDone = true;
-        //console.log(this.jsonObj5);
+        //this.functionsService.logToConsole(this.jsonObj5);
       }
     );
   }
 
   ngOnInit() {
-    this.$gaService.pageView('/Appointments', 'Appointments Tab');
+    this.$gaService.pageView("/Appointments", "Appointments Tab");
     //this.selectedDate = this.yyyymmdd();
     //this.selectedLocation = "C";
     //this.getDate(this.selectedDate,this.selectedLocation);
   }
 
   ionViewWillEnter() {
-    if (!this.dr_code) {
-      this.logindata = <LoginData>this.authService.userData$.getValue();
-      this.dr_code = this.logindata[0].dr_code;
-    }
-
+    this.logindata = <LoginData>this.authService.userData$.getValue();
+    this.dr_code = this.logindata[0].dr_code;
+    let  dr_name = this.logindata[0].last_name;
+    this.$gaService.event('Appointments','User Flow',dr_name);
     if (this.selectedDate == null) {
-      this.selectedDate = this.yyyymmdd();
+      this.selectedDate = this.functionsService.getSystemDate();
       this.selectedLocation = "C";
     }
     this.getDate(this.selectedDate, this.selectedLocation);
   }
 
   //generate date
-  yyyymmdd() {
+ /*  yyyymmdd() {
     var now = new Date();
     var y = now.getFullYear();
     var m = now.getMonth() + 1;
@@ -255,9 +370,9 @@ export class Tab2Page {
     var mm = m < 10 ? "0" + m : m;
     var dd = d < 10 ? "0" + d : d;
     return "" + y + "-" + mm + "-" + dd;
-  }
+  } */
 
-  incrementDate(date_str, incrementor) {
+ /*  incrementDate(date_str, incrementor) {
     var parts = date_str.split("-");
     var dt = new Date(
       parseInt(parts[0], 10), // year
@@ -275,7 +390,7 @@ export class Tab2Page {
       parts[2] = "0" + parts[2];
     }
     return parts.join("-");
-  }
+  } */
 
   //swipe action
   doRefresh(event) {

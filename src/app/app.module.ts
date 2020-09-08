@@ -14,8 +14,10 @@ import { HttpClientModule } from "@angular/common/http";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "../environments/environment";
 import { Ionic4DatepickerModule } from "@logisticinfotech/ionic4-datepicker";
-import { InpatientmodalPageModule } from "./components/inpatientmodal/inpatientmodal.module";
-import { AddappointmentsmodalPageModule } from "./components/addappointmentsmodal/addappointmentsmodal.module";
+//import { InpatientmodalPageModule } from "./components/inpatientmodal/inpatientmodal.module";
+import { ChhAppInPatientModalPageModule } from "../app/chh-web-components/chh-app-in-patient-modal/chh-app-in-patient-modal.module";
+import { ChhAppAddAppointmentsModalPageModule } from "../app/chh-web-components/chh-app-add-appointments-modal/chh-app-add-appointments-modal.module";
+
 //import { SliderPageModule } from './components/slider/slider.module';
 //import { defineCustomElements } from '@teamhive/lottie-player/loader';
 
@@ -24,6 +26,9 @@ import { AddappointmentsmodalPageModule } from "./components/addappointmentsmoda
 //defineCustomElements(window);
 
 import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
+import { Constants } from "../app/shared/constants";
+import { Variables } from "../app/shared/variables";
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -34,8 +39,8 @@ import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-go
     AppRoutingModule,
     HttpClientModule,
     Ionic4DatepickerModule,
-    InpatientmodalPageModule,
-    AddappointmentsmodalPageModule,
+    ChhAppInPatientModalPageModule,
+    ChhAppAddAppointmentsModalPageModule,
     NgxGoogleAnalyticsModule.forRoot('UA-175566562-1'),
     NgxGoogleAnalyticsRouterModule,
     //LottieAnimationViewModule,
@@ -45,6 +50,8 @@ import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-go
     }),
   ],
   providers: [
+    Variables,
+    Constants,
     StatusBar,
     SplashScreen,
     HttpClientModule,

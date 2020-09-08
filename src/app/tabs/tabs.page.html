@@ -2,19 +2,19 @@
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="dashboard">
       <ion-icon name="stats-chart-outline"></ion-icon>
-      <ion-label class="tab-font-family">Dashboard</ion-label>
+      <ion-label class="tab-font-family">{{this.constants.MENU__VALUE__DASHBOARD}}</ion-label>
     </ion-tab-button>
     <ion-tab-button tab="in-patients">
       <ion-icon name="person-circle-outline"></ion-icon>
-      <ion-label class="tab-font-family">In-Patients</ion-label>
+      <ion-label class="tab-font-family">{{this.constants.MENU__VALUE__IN_PATIENTS}}</ion-label>
     </ion-tab-button>
     <ion-tab-button tab="appointments">
       <ion-icon name="calendar-outline"></ion-icon>
-      <ion-label class="tab-font-family">Appointments</ion-label>
+      <ion-label class="tab-font-family">{{this.constants.MENU__VALUE__APPOINTMENTS}}</ion-label>
     </ion-tab-button>
     <ion-tab-button tab="settings">
       <ion-icon name="settings-outline"></ion-icon>
-      <ion-label class="tab-font-family">Settings</ion-label>
+      <ion-label class="tab-font-family">{{this.constants.MENU__VALUE__SETTINGS}}</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
@@ -24,7 +24,7 @@
     <ion-toolbar>
       <ion-row class="ion-align-items-center">
         <ion-col size="2">
-          <app-logo-sm style="padding-left: 20px;"></app-logo-sm>
+          <chh-app-logo-sm ></chh-app-logo-sm>
         </ion-col>
         <ion-col size="10">
           <div class="navbar" class="ion-text-center chh-bg">
@@ -35,7 +35,7 @@
               routerLinkActive="active-link"
               class="link"
             >
-              Dashboard
+              {{this.constants.MENU__VALUE__DASHBOARD}}
             </ion-button>
             <ion-button
               fill="clear"
@@ -44,7 +44,7 @@
               routerLinkActive="active-link"
               class="link"
             >
-              In-Patients
+              {{this.constants.MENU__VALUE__IN_PATIENTS}}
             </ion-button>
             <ion-button
               fill="clear"
@@ -53,7 +53,7 @@
               routerLinkActive="active-link"
               class="link"
             >
-              Appointments
+              {{this.constants.MENU__VALUE__APPOINTMENTS}}
             </ion-button>
             <ion-button
               fill="clear"
@@ -62,7 +62,7 @@
               routerLinkActive="active-link"
               class="link"
             >
-              Settings
+            {{this.constants.MENU__VALUE__SETTINGS}}
             </ion-button>
             <ion-button
               fill="clear"
@@ -71,7 +71,7 @@
               class="link"
               (click)="logout()"
             >
-              Log Out
+            {{this.constants.MENU__VALUE__LOG_OUT}}
             </ion-button>
           </div>
         </ion-col>
@@ -82,6 +82,6 @@
   <ion-router-outlet></ion-router-outlet>
 
   <div class="footer tab-font-family">
-    <span>Chong Hua Hospital</span>
+    <span>{{this.constants.CHH_NAME__VALUE__CEBU}}</span>
   </div>
 </div>

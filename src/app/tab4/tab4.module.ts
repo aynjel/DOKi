@@ -7,14 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { Tab4PageRoutingModule } from './tab4-routing.module';
 
 import { Tab4Page } from './tab4.page';
-import { TextAvatarModule } from '../components/text-avatar/text-avatar.module';
+import { ChhAppTextAvatarModule } from '../chh-web-components/chh-app-text-avatar/chh-app-text-avatar.module';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     Tab4PageRoutingModule,
-    TextAvatarModule
+    ChhAppTextAvatarModule
   ],
   declarations: [Tab4Page]
 })

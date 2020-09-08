@@ -16,7 +16,7 @@
           class="tab-font-family"
           color="light"
           (click)="onSubmit('ALL',true)"
-          data-desc="All"
+          data-desc= "All"
         >
           <ion-icon name="person-outline"></ion-icon>
         </ion-fab-button>
@@ -48,9 +48,9 @@
         offset-lg="4"
         class="custom-border-bottom ion-no-border"
       >
-        <app-hospital-selector-with-all-and-filter
+        <chh-app-hospital-selector-with-all-and-filter
           (hospital)="locationAction($event)"
-        ></app-hospital-selector-with-all-and-filter>
+        ></chh-app-hospital-selector-with-all-and-filter>
       </ion-col>
     </ion-row>
     <ion-row class="">
@@ -81,10 +81,10 @@
       <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
         <ng-container>
           <div *ngFor="let x of inPatients">
-            <ion-card (click)="detail(x)" mode="ios">
+            <ion-card (click)="detail(x)" mode="ios" class="pointer">
               <ion-item lines="none">
                 <ion-avatar slot="start">
-                  <text-avatar [text]="x.last_name" [color]=""></text-avatar>
+                  <chh-app-text-avatar [text]="x.last_name" [color]=""></chh-app-text-avatar>
                 </ion-avatar>
                 <ion-label style="margin-top: -5px;">
                   <ion-item
@@ -99,7 +99,7 @@
                     <ion-badge
                       color="warning"
                       slot="end"
-                      *ngIf="x.admission_status == 'DN' && x.doctor_prof_fee == null && x.is_posted ==null"
+                      *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE && x.doctor_prof_fee == this.constants.ANY__VALUE__NULL && x.is_posted == this.constants.ANY__VALUE__NULL"
                     >
                       PF</ion-badge
                     >

@@ -16,22 +16,23 @@
         offset-lg="3"
         class="custom-border-bottom chh-darkmode"
       >
-        <app-hospital
+        <chh-app-hospital
           (hospital)="locationAction($event)"
           [readonlyComp]="buttonDisablerHospSelector"
           [Activator]="hospitalActivator"
-        ></app-hospital>
-        <app-dateselector
+        ></chh-app-hospital>
+        <chh-app-date-selector
           [passedDate]="selectedDate"
+          [header-data]="headerData"
           (dateSelector)="dateChanged($event)"
           [readonlyComp]="buttonDisablerDateSelector"
-        ></app-dateselector>
+        ></chh-app-date-selector>
       </ion-col>
     </ion-row>
   </ion-grid>
 </ion-header>
-<ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
+<ion-content id="headerx">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios" *ngIf="isDesktop">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" color="mangolight">
@@ -39,8 +40,10 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
-  <ion-grid class="ion-no-padding">
+  <div class="spin" [hidden]="ishidden">
+    <ion-spinner class="spinner-class"></ion-spinner>
+  </div>
+  <ion-grid class="ion-no-padding" id="headery">
     <ion-row>
       <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
         <!-- <ng-container> -->
@@ -49,13 +52,14 @@
               <ion-card
                 (click)="presentActionSheet(y.appt_id,y.status,y.patientName)"
                 mode="ios"
+                class="pointer"
               >
                 <ion-item lines="none">
                   <ion-avatar slot="start">
-                    <text-avatar
+                    <chh-app-text-avatar
                       [text]="y.patientName"
                       [color]=""
-                    ></text-avatar>
+                    ></chh-app-text-avatar>
                   </ion-avatar>
                   <ion-label style="margin-top: -5px;">
                     <ion-item class="ion-no-padding">
