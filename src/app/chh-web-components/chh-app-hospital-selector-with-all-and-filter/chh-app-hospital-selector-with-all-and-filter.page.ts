@@ -61,6 +61,8 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
   }
 
   changeRedirect(event:any){
+    console.log('1');
+    
 
     if(this.admittedOrDischarge == "ALL"){
 
