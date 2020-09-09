@@ -5,10 +5,10 @@
 #   \/_____/   \/_____/   \/_/   \/_____/   \/____/
                                                  
 FROM node:13-alpine AS buildEnv
-LABEL maintainer = "Kristoffer Dominic Amora, IT - Systems Solution & Business Intelligence"
+LABEL maintainer="Kristoffer Dominic Amora, IT - Systems Solution & Business Intelligence"
 
 # ENV Variables
-ENV BUILD_SOURCE_DIR = "/usr/projects/dpp"
+ENV BUILD_SOURCE_DIR="/usr/projects/dpp"
 ENV BUILD_OUTPUT_DIR="/usr/projects/dpp/www/"
 
 # Work dir building the app
@@ -45,7 +45,7 @@ RUN echo $(ls -1 ${BUILD_OUTPUT_DIR})
 # Enable systemd and httpd
 
 FROM centos8-base as prodEnv
-LABEL maintainer = "Kristoffer Dominic Amora, IT - Systems Solution & Business Intelligence"
+LABEL maintainer="Kristoffer Dominic Amora, IT - Systems Solution & Business Intelligence"
 # ENV Variables
 ENV BUILD_OUTPUT_DIR="/usr/projects/dpp/www/" \
     PROD_DEST_DIR="/var/www/html" \
@@ -58,4 +58,4 @@ WORKDIR ${PROD_DEST_DIR}
 RUN rm -rf ${PROD_DEST_DIR_AND_SUB}
 COPY --from=buildEnv ${BUILD_OUTPUT_DIR} ./
 EXPOSE ${PORT_TO_EXPOSE}
-CMD [${PROD_SYSTEM_INIT_CMD}]
+CMD ["/usr/sbin/init"]
