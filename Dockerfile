@@ -3,19 +3,22 @@
 # \ \  __<   \ \ \_\ \  \ \ \  \ \ \____  \ \ \/\ \
 #  \ \_____\  \ \_____\  \ \_\  \ \_____\  \ \____-
 #   \/_____/   \/_____/   \/_/   \/_____/   \/____/
+#
+# Pre-requisites: 
+#   (1) Pull the target version (using tags or SHA) of the front-end source code from Bitbucket repo.
+#   (2) Pull the target version (using tags or SHA) of the back-end source code from Bitbucket repo.
+#   (3) Pull the Docker images used to build the front-end and back-end source build environments.
                                                  
 FROM node:13-alpine AS buildEnv
 LABEL maintainer="Kristoffer Dominic Amora, IT - Systems Solution & Business Intelligence"
 
 # ENV Variables
-ENV BUILD_SOURCE_DIR="/usr/projects/dpp"
-ENV BUILD_OUTPUT_DIR="/usr/projects/dpp/www/"
+ENV BUILD_APP_SOURCE_DIR="/usr/projects/dpp" \
+    BUILD_APP_OUTPUT_DIR="/usr/projects/dpp/www/"
 
 # Work directory building the app
-RUN mkdir -p ${BUILD_SOURCE_DIR}
-RUN echo $(ls -1 ${BUILD_SOURCE_DIR})
-WORKDIR ${BUILD_SOURCE_DIR}
-RUN echo $(node -v)
+RUN mkdir -p ${BUILD_APP_SOURCE_DIR}
+WORKDIR ${BUILD_APP_SOURCE_DIR}
 # -- The following commands are not needed because the Node base image already has npm installed.
 # -- Installing angular CLI is done already on RUN npm install below as it includes building
 # -- the dev dependencies in which angular CLI is listed already in package.json.
@@ -24,7 +27,6 @@ RUN echo $(node -v)
     # RUN npm install -g @angular/cli 
 RUN npm install -g @ionic/cli
 COPY package*.json ./             
-RUN echo $(ls -1 ${BUILD_SOURCE_DIR})
 # -- If building our code for production
 # RUN npm ci --only=production  
 #   -- Running npm ci production resulted to a build error if there's no package lock JSON file. 
@@ -37,7 +39,6 @@ COPY . .
 # RUN npm run-script build:prod
 #   -- ionic build --prod is used which calls angular production build under the hood.
 RUN ionic build --prod
-RUN echo $(ls -1 ${BUILD_OUTPUT_DIR})
 
 #  ______   ______     ______     _____     __  __     ______     ______   __     ______     __   __   
 # /\  == \ /\  == \   /\  __ \   /\  __-.  /\ \/\ \   /\  ___\   /\__  _\ /\ \   /\  __ \   /\ "-.\ \  
@@ -45,21 +46,25 @@ RUN echo $(ls -1 ${BUILD_OUTPUT_DIR})
 #  \ \_\    \ \_\ \_\  \ \_____\  \ \____-  \ \_____\  \ \_____\    \ \_\  \ \_\  \ \_____\  \ \_\\"\_\
 #   \/_/     \/_/ /_/   \/_____/   \/____/   \/_____/   \/_____/     \/_/   \/_/   \/_____/   \/_/ \/_/
 #
-# Pre-requisite: Make a CentOS 8 base image from official Docker Hub registry 
-# Enable systemd and httpd
+# Pre-requisites: 
+#   - Build a CentOS 8 base image from official Docker Hub registry and enable systemd 
+#        or 
+#   - Pull a prepped image from CHH SSBI Org/Team in Docker Hub.
 
-FROM centos8-base as prodEnv
+FROM coolnumber9/dpp:c8-systemd-base-img as prodEnv
 LABEL maintainer="Kristoffer Dominic Amora, IT - Systems Solution & Business Intelligence"
 # ENV Variables
-ENV BUILD_OUTPUT_DIR="/usr/projects/dpp/www/" \
+ENV BUILD_APP_OUTPUT_DIR="/usr/projects/dpp/www/" \
     PROD_DEST_DIR="/var/www/html" \
-    PROD_DEST_DIR_AND_SUB="/var/www/html/*" \
-    PORT_TO_EXPOSE="80/tcp"
+    PROD_DEST_DIR_AND_SUB="/var/www/html/*" 
+
+# Making port changeable during build through --build-arg
+ARG PORT_TO_EXPOSE="80/tcp"
 
 RUN yum -y install httpd; yum clean all; systemctl enable httpd.service
 WORKDIR ${PROD_DEST_DIR}
 RUN rm -rf ${PROD_DEST_DIR_AND_SUB}
-COPY --from=buildEnv ${BUILD_OUTPUT_DIR} ./
+COPY --from=buildEnv ${BUILD_APP_OUTPUT_DIR} ./
 EXPOSE ${PORT_TO_EXPOSE}
 # Removed ENV variables in CMD because for some reason Docker can't find it when running the container.
 CMD ["/usr/sbin/init"]
