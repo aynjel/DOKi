@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  pwa:
+    image: coolnumber9/dpp:v1.1.2
+    volumes: 
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    ports:
+      - 80:80
+    
+  middleware:
+    image: coolnumber9/dpp:v1.0.3-middleware
+    ports:
+        - 8085:8085
+
+volumes: 
+    /sys/fs/cgroup:
