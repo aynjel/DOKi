@@ -3,10 +3,10 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Tab2Page } from './tab2.page';
+import { TabAppointmentsPage } from './tab-appointments.page';
 import { ChhAppTextAvatarModule } from '../chh-web-components/chh-app-text-avatar/chh-app-text-avatar.module';
 
-import { Tab2PageRoutingModule } from './tab2-routing.module';
+import { TabAppointmentsPageRoutingModule } from './tab-appointments-routing.module';
 import { ChhWebComponentsModule } from '../chh-web-components/chh-web-components.module';
 import { ChhAppPatientDetailsPage } from '../chh-web-components/chh-app-patient-details/chh-app-patient-details.page';
 
@@ -15,12 +15,12 @@ import { ChhAppPatientDetailsPage } from '../chh-web-components/chh-app-patient-
     IonicModule,
     CommonModule,
     FormsModule,
-    Tab2PageRoutingModule,
+    TabAppointmentsPageRoutingModule,
     ChhWebComponentsModule,
     ChhAppTextAvatarModule
   ],
-  declarations: [Tab2Page,ChhAppPatientDetailsPage],
+  declarations: [TabAppointmentsPage,ChhAppPatientDetailsPage],
   entryComponents:[ChhAppPatientDetailsPage],
   providers:[]
 })
-export class Tab2PageModule {}
+export class TabAppointmentsPageModule {}

@@ -26,7 +26,7 @@ const routes: Routes = [
       },
       {
         path: 'appointments',
-        loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+        loadChildren: () => import('../tab-appointments/tab-appointments.module').then(m => m.TabAppointmentsPageModule)
       },
       {
         path: 'settings',

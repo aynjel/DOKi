@@ -23,12 +23,12 @@ import { ViewChildren, QueryList } from "@angular/core";
 import {  IonGrid, IonContent,IonRow } from "@ionic/angular";
 
 @Component({
-  selector: "app-tab2",
-  templateUrl: "tab2.page.html",
-  styleUrls: ["tab2.page.scss"],
+  selector: "app-tab-appointments",
+  templateUrl: "tab-appointments.page.html",
+  styleUrls: ["tab-appointments.page.scss"],
 })
 
-export class Tab2Page {
+export class TabAppointmentsPage {
   isDesktop: boolean;
   displaydata = "chhc";
   segment = "chhc";
