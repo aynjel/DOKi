@@ -19,11 +19,11 @@ import { FunctionsService } from "../shared/functions/functions.service";
 import { Constants } from "../shared/constants";
 
 @Component({
-  selector: "app-tab1",
-  templateUrl: "tab1.page.html",
-  styleUrls: ["tab1.page.scss"],
+  selector: "app-tab-in-patients",
+  templateUrl: "tab-in-patients.page.html",
+  styleUrls: ["tab-in-patients.page.scss"],
 })
-export class Tab1Page {
+export class TabInPatientsPage {
   public logindata: LoginData;
   public inPatientData: InPatientData;
   isDesktop: boolean;

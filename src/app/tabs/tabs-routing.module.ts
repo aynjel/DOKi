@@ -14,15 +14,15 @@ const routes: Routes = [
     children: [
       {
         path: 'in-patients',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+        loadChildren: () => import('../tab-in-patients/tab-in-patients.module').then(m => m.TabInPatientsPageModule)
       },
       {
         path: 'in-patients/DN',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+        loadChildren: () => import('../tab-in-patients/tab-in-patients.module').then(m => m.TabInPatientsPageModule)
       },
       {
         path: 'in-patients/AC',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+        loadChildren: () => import('../tab-in-patients/tab-in-patients.module').then(m => m.TabInPatientsPageModule)
       },
       {
         path: 'appointments',
@@ -44,7 +44,7 @@ const routes: Routes = [
   },
   {
     path: 'menu',
-    redirectTo: '/menu/tab1',
+    redirectTo: '/menu/tab-in-patients',
     pathMatch: 'full'
   },
   
