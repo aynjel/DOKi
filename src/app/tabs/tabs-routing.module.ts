@@ -30,7 +30,7 @@ const routes: Routes = [
       },
       {
         path: 'settings',
-        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+        loadChildren: () => import('../tab-settings/tab-settings.module').then(m => m.TabSettingsPageModule)
       },{
         path: 'dashboard',
         loadChildren: () => import('../tab4/tab4.module').then(m => m.Tab4PageModule)
