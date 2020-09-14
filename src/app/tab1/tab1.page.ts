@@ -68,7 +68,7 @@ export class Tab1Page {
         this.admittedOrDischarge = this.constants.ADMISSION_STATUS__CODE__ADMITTED; //"AC";
         this.admittedOrDischargeLabel =
           "(" +
-          this.functionsService.convertToSentenceCase(
+          this.functionsService.convertAllFirstLetterToUpperCase(
             this.constants.ADMISSION_STATUS__VALUE__ADMITTED
           ) +
           ")"; //"(Admitted)";

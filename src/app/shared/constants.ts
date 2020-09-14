@@ -5,6 +5,9 @@ export class Constants {
   // (A)
 
   /* Admission Status */
+  /**
+   * Test 
+   */
   public ADMISSION_STATUS__CODE__ADMITTED: string = "AC";
   public ADMISSION_STATUS__VALUE__ADMITTED: string = "ADMITTED";
   public ADMISSION_STATUS__CODE__FOR_DISCHARGE: string = "DN";
