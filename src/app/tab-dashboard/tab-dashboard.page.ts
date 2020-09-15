@@ -7,9 +7,9 @@ import { DoctorService } from "../services/doctor/doctor.service";
 import * as HighCharts from "highcharts";
 import { Router } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
-//import { AlertController } from "@ionic/angular";
 import { FunctionsService } from "../shared/functions/functions.service";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
+import { Constants } from "../shared/constants";
 
 @Component({
   selector: "app-tab-dashboard",
@@ -41,9 +41,9 @@ export class TabDashboardPage implements OnInit {
     private storageService: StorageService,
     private doctorService: DoctorService,
     private router: Router,
-    //public alertController: AlertController,
     public functionsService: FunctionsService,
-    protected $gaService: GoogleAnalyticsService
+    protected $gaService: GoogleAnalyticsService,
+    public constants: Constants
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {

@@ -3,7 +3,7 @@
   <div >
     <ion-toolbar  color="mango" >
       <ion-title>
-        <ion-icon name="stats-chart-outline"></ion-icon> Dashboard
+        <ion-icon name="stats-chart-outline"></ion-icon> {{this.constants.MENU__VALUE__DASHBOARD}}
       </ion-title>
     </ion-toolbar>
   </div>
@@ -32,7 +32,7 @@
             
             <ion-label>
               <h1><b>{{getTotalCount.Admitted}}</b></h1>
-              <p>Admitted</p>
+              <p>{{this.functionsService.convertToCamelCase(this.constants.ADMISSION_STATUS__VALUE__ADMITTED)}}</p>
             </ion-label>
           </ion-item>
       </ion-col>
@@ -43,7 +43,7 @@
             </ion-avatar>
             <ion-label>
               <h1><b>{{getTotalCount.ForDischarge}}</b></h1>
-              <p class="ion-text-wrap" >For Discharge</p>
+              <p class="ion-text-wrap" >{{this.functionsService.convertToCamelCase(this.constants.ADMISSION_STATUS__VALUE__FOR_DISCHARGE)}}</p>
             </ion-label>
           </ion-item>
       </ion-col>
