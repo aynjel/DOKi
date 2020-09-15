@@ -21,6 +21,8 @@ import { GestureController } from '@ionic/angular';
 import { Gesture, GestureConfig } from '@ionic/core';
 import { ViewChildren, QueryList } from "@angular/core";
 import {  IonGrid, IonContent,IonRow } from "@ionic/angular";
+import { Constants } from "../shared/constants";
+import { Messages } from "../shared/messages";
 
 @Component({
   selector: "app-tab-appointments",
@@ -30,8 +32,8 @@ import {  IonGrid, IonContent,IonRow } from "@ionic/angular";
 
 export class TabAppointmentsPage {
   isDesktop: boolean;
-  displaydata = "chhc";
-  segment = "chhc";
+  displaydata = this.constants.CHH_SITE__VALUE__CEBU.toLowerCase(); //"chhc";
+  segment = this.constants.CHH_SITE__VALUE__CEBU.toLowerCase(); //"chhc";
   sidesegment = "today";
   selectedDate: any;
   selectedLocation: any;
@@ -65,7 +67,9 @@ export class TabAppointmentsPage {
     private gestureCtrl: GestureController,
     private element: ElementRef,
     private renderer: Renderer2,
-    private zone:NgZone
+    private zone:NgZone,
+    public constants: Constants,
+    public messages: Messages
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -185,19 +189,19 @@ export class TabAppointmentsPage {
 
   //present View & Delete
   async presentActionSheet(data1: any, data2: any, data3: any) {
-    if (data2 == "Reserved") {
+    if (data2 == this.constants.APPOINTMENT_STATUS__VALUE__RESERVED/*"Reserved"*/) {
       const actionSheet = await this.actionSheetController.create({
         cssClass: "my-custom-class",
         buttons: [
           {
-            text: "Delete",
+            text:this.constants.UI_COMPONENT_TEXT__VALUE__DELETE,
             role: "destructive",
             icon: "trash",
             handler: () => {
               this.presentAlertConfirm(data3, data1);
             },
           },
-          { text: "Cancel", icon: "close", role: "cancel" },
+          { text: this.constants.UI_COMPONENT_TEXT__VALUE__CANCEL, icon: "close", role: "cancel" },
         ],
       });
       await actionSheet.present();
@@ -209,21 +213,21 @@ export class TabAppointmentsPage {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
       message:
-        "Are you sure you want to delete <strong>" +
+        this.messages.CONFIRMATION_DELETE_RECORD + "<strong>" +
         data1 +
         "</strong>'s appointment?",
       buttons: [
-        { text: "Cancel", role: "cancel", cssClass: "secondary" },
+        { text: this.constants.UI_COMPONENT_TEXT__VALUE__CANCEL, role: "cancel", cssClass: "secondary" },
         {
           text: "Sure",
           handler: () => {
             this.patientService.deletePatients(data2).subscribe((res: any) => {
               if (res == "UPDATED") {
                 //this.toast.presentToast('Successfully Deleted '+data1);
-                this.functionsService.alert("Successfully Deleted " + data1, "Okay");
+                this.functionsService.alert(this.messages.SUCCESS_DELETING_RECORD + data1, this.constants.UI_COMPONENT_TEXT__VALUE__OKAY);
               } else {
                 //this.toast.presentToast('Error on Deleting '+data1);
-                this.functionsService.alert("Error on Deleting " + data1, "Okay");
+                this.functionsService.alert(this.messages.ERROR_DELETING_RECORD + data1, this.constants.UI_COMPONENT_TEXT__VALUE__OKAY);
               }
               this.getDate(this.selectedDate, this.selectedLocation);
             });
@@ -356,7 +360,7 @@ export class TabAppointmentsPage {
     this.$gaService.event('Appointments','User Flow',dr_name);
     if (this.selectedDate == null) {
       this.selectedDate = this.functionsService.getSystemDate();
-      this.selectedLocation = "C";
+      this.selectedLocation = this.constants.CHH_SITE__CODE__CEBU; /*"C"*/
     }
     this.getDate(this.selectedDate, this.selectedLocation);
   }

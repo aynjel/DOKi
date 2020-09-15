@@ -2,25 +2,34 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class Constants {
-  // (A)
 
-  /* Admission Status */
+  // (A)
   /**
-   * Test 
+   * Admission Status
    */
   public ADMISSION_STATUS__CODE__ADMITTED: string = "AC";
   public ADMISSION_STATUS__VALUE__ADMITTED: string = "ADMITTED";
   public ADMISSION_STATUS__CODE__FOR_DISCHARGE: string = "DN";
   public ADMISSION_STATUS__VALUE__FOR_DISCHARGE: string = "FOR DISCHARGE";
 
-  // (B)
+  /**
+   * Appointment Status
+   */
+  public APPOINTMENT_STATUS__VALUE__COMPLETE: string = "Complete";
+  public APPOINTMENT_STATUS__VALUE__WAITING: string = "Waiting";
+  public APPOINTMENT_STATUS__VALUE__SERVING: string = "Serving";
+  public APPOINTMENT_STATUS__VALUE__RESERVED: string = "Reserved";
 
-  /* Blank Space */
+  // (B)
+  /**
+   *  Blank Space
+   */
   public BLANK_SPACE: string = " ";
 
   // (C)
-
-  /* CHH Site */
+  /**
+   * CHH Site
+   */
   public CHH_SITE__CODE__CEBU: string = "C";
   public CHH_SITE__VALUE__CEBU: string = "CHHC";
   public CHH_SITE__CODE__MANDAUE: string = "M";
@@ -32,9 +41,11 @@ export class Constants {
   public CHH_LABEL__VALUE__CEBU: string = "CEBU";
   public CHH_LABEL__VALUE__MANDAUE: string = "MANDAUE";
   public CHH_LABEL__VALUE__BOTH: string = "BOTH";
+  
   // (D)
-
-  /* Doctor Service Types */
+  /**
+   * Doctor Service Types
+   */
   public DOCTOR_SERVICE_TYPE__CODE__CO_MANAGE: string = "CM";
   public DOCTOR_SERVICE_TYPE__VALUE__CO_MANAGE: string = "Co-Manage";
   public DOCTOR_SERVICE_TYPE__CODE__PRIMARY_ATTENDING_PHYSICIAN: string = "AP";
@@ -46,15 +57,17 @@ export class Constants {
   public DOCTOR_SERVICE_TYPE__VALUE__HMO: string = "HMO";
 
   // (E)
-
-  /* Empty String, Null, Zero*/
+  /**
+   * Empty String, Null, Zero
+   */
   public STRING__VALUE__EMPTY: string = "";
   public ANY__VALUE__NULL: any = null;
   public NUMBER__VALUE__ZERO: number = 0;
 
   // (M)
-
-  /* Menu */
+  /**
+   * Menu
+   */
   public MENU__VALUE__DASHBOARD: string = "Dashboard";
   public MENU__VALUE__IN_PATIENTS: string = "In-Patients";
   public MENU__VALUE__APPOINTMENTS: string = "Appointments";
@@ -62,18 +75,29 @@ export class Constants {
   public MENU__VALUE__LOG_OUT: string = "Log Out";
 
   // (S)
-
-  /* Signal R */
+  /**
+   * SignalR URL
+   */
   public SIGNAL_R__VALUE__URL: string = "http://localhost:52080/signalHub";
 
-  // (V)
+   // (U)
+   /**
+   * UI Component Text
+   */
+  public UI_COMPONENT_TEXT__VALUE__DELETE: string = "Delete";
+  public UI_COMPONENT_TEXT__VALUE__CANCEL: string = "Cancel";
+  public UI_COMPONENT_TEXT__VALUE__OKAY: string = "Okay";
 
-  /* Version */
+  // (V)
+  /**
+   * Version
+   */
   public DOCTOR_PORTAL__VALUE__VERSION: string = "v1.1.2";
 
   // (W)
-
-  /* Week Days */
+  /**
+   * Week Days
+   */
   public WEEK_DAY__CODE__SUNDAY: number = 0;
   public WEEK_DAY__VALUE__SUNDAY: string = "SUNDAY";
   public WEEK_DAY__CODE__MONDAY: number = 1;

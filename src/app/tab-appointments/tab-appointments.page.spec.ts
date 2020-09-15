@@ -1,7 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
 import { TabAppointmentsPage } from './tab-appointments.page';
+import { Constants } from "../shared/constants";
+
+constants: Constants
 
 describe('TabAppointmentsPage', () => {
   let component: TabAppointmentsPage;
@@ -22,3 +24,4 @@ describe('TabAppointmentsPage', () => {
     expect(component).toBeTruthy();
   });
 });
+

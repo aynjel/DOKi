@@ -28,6 +28,7 @@ import { ChhAppAddAppointmentsModalPageModule } from "../app/chh-web-components/
 import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
 import { Constants } from "../app/shared/constants";
 import { Variables } from "../app/shared/variables";
+import { Messages } from "../app/shared/messages";
 
 @NgModule({
   declarations: [AppComponent],
@@ -50,6 +51,7 @@ import { Variables } from "../app/shared/variables";
     }),
   ],
   providers: [
+    Messages,
     Variables,
     Constants,
     StatusBar,
