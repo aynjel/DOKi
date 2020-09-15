@@ -11,6 +11,7 @@ export class Constants {
   public ADMISSION_STATUS__VALUE__ADMITTED: string = "ADMITTED";
   public ADMISSION_STATUS__CODE__FOR_DISCHARGE: string = "DN";
   public ADMISSION_STATUS__VALUE__FOR_DISCHARGE: string = "FOR DISCHARGE";
+  public ADMISSION_STATUS_SELECTION__VALUE__ALL: string = "ALL"
 
   /**
    * Appointment Status
@@ -56,6 +57,12 @@ export class Constants {
   public DOCTOR_SERVICE_TYPE__CODE__HMO: string = "HC";
   public DOCTOR_SERVICE_TYPE__VALUE__HMO: string = "HMO";
 
+   /**
+   * Doctor Professional Fee
+   */
+  public DOCTOR__CODE__PROFESSIONAL_FEE: string = "PF";
+  public DOCTOR__VALUE__PROFESSIONAL_FEE: string = "Professional Fee";
+
   // (E)
   /**
    * Empty String, Null, Zero
@@ -74,6 +81,11 @@ export class Constants {
   public MENU__VALUE__SETTINGS: string = "Settings";
   public MENU__VALUE__LOG_OUT: string = "Log Out";
 
+  // (P)
+  /**
+   * 
+   */
+ 
   // (S)
   /**
    * SignalR URL

@@ -30,6 +30,7 @@ export class Messages {
      */
     public ERROR_SERVER : string = "Server Error";
     public ERROR_DELETING_RECORD:string = "Error on Deleting ";
+    public ERROR_RETRIEVING_ADMITTED_PATIENTS:string = "Sorry Doc. We cannot retrieve the list of your admitted patients at this time. Please try again.";
 
     /**
      * Success
