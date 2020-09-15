@@ -33,7 +33,7 @@ const routes: Routes = [
         loadChildren: () => import('../tab-settings/tab-settings.module').then(m => m.TabSettingsPageModule)
       },{
         path: 'dashboard',
-        loadChildren: () => import('../tab4/tab4.module').then(m => m.Tab4PageModule)
+        loadChildren: () => import('../tab-dashboard/tab-dashboard.module').then(m => m.TabDashboardPageModule)
       },
       {
         path: '',

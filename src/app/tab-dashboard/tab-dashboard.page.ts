@@ -12,12 +12,12 @@ import { FunctionsService } from "../shared/functions/functions.service";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
 
 @Component({
-  selector: "app-tab4",
-  templateUrl: "./tab4.page.html",
-  styleUrls: ["./tab4.page.scss"],
+  selector: "app-tab-dashboard",
+  templateUrl: "./tab-dashboard.page.html",
+  styleUrls: ["./tab-dashboard.page.scss"],
 })
 
-export class Tab4Page implements OnInit {
+export class TabDashboardPage implements OnInit {
   userData$ = new BehaviorSubject<any>([]);
   displayUserData: any;
   isDesktop: boolean;
