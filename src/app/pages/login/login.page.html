@@ -9,7 +9,7 @@
               <h1><b>Hello, Doc!</b></h1>
             </div>
             <ion-item>
-              <ion-label position="floating">Username</ion-label>
+              <ion-label position="fixed">Username</ion-label>
               <ion-input
                 type="text"
                 id="input-username"
@@ -17,12 +17,20 @@
               ></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label position="floating">Password</ion-label>
-              <ion-input
+              <ion-label position="fixed">Password</ion-label>
+              <!--ion-input
                 type="password"
                 id="input-password"
                 [(ngModel)]="postData.password"
-              ></ion-input>
+              ></ion-input-->
+
+              
+
+              <ion-input type="password" id="input-password" [type]="getType()"  [(ngModel)]="postData.password"></ion-input>
+              <ion-icon  name="eye-off" item-right   class="rectangle"></ion-icon>
+
+
+
             </ion-item>
             <div class="ion-margin-vertical ion-text-right">
               <ion-button
