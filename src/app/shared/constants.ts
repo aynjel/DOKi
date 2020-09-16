@@ -81,6 +81,13 @@ export class Constants {
   public MENU__VALUE__SETTINGS: string = "Settings";
   public MENU__VALUE__LOG_OUT: string = "Log Out";
 
+  // (N)
+  /**
+   * Name Prefix
+   */
+  public NAME_PREFIX__CODE__DOCTOR: string = "Dr.";
+  public NAME_PREFIX__VALUE__DOCTOR: string = "Doctor";
+
   // (P)
   /**
    * 
@@ -100,6 +107,20 @@ export class Constants {
   public UI_COMPONENT_TEXT__VALUE__CANCEL: string = "Cancel";
   public UI_COMPONENT_TEXT__VALUE__OKAY: string = "Okay";
 
+  /**
+   * UI Component Text - Settings 
+   */
+  public UI_COMPONENT_TEXT__VALUE__SETTINGS_NOTIFICATIONS: string = "Notifications";
+  public UI_COMPONENT_TEXT__VALUE__SETTINGS_SMS_NOTIFICATIONS_ADMITTED: string = "Notify me via SMS if my patient is admitted";
+  public UI_COMPONENT_TEXT__VALUE__SETTINGS_SMS_NOTIFICATIONS_FOR_DISCHARGE: string = "Notify me via SMS if my patient is about to be discharged";
+  public UI_COMPONENT_TEXT__VALUE__SETTINGS_PUSH_NOTIFICATIONS: string = "Alert me through Push Notifications";
+  public UI_COMPONENT_TEXT__VALUE__SETTINGS_APPEARANCE: string = "Appearance";
+  public UI_COMPONENT_TEXT__VALUE__SETTINGS_APPEARANCE_DARK_MODE: string = "Switch to Dark Mode";
+  public UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO: string = "For inquiries, please contact Systems Solution & Business Intelligence Team of Chong Hua Hospital IT Division";
+  public UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_TELEPHONE: string = "+63 32 233 8000";
+  public UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_TELEPHONE_HREF: string = "tel: +63322338000";
+  public UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_APP_VERSION: string = "App Version:";
+  
   // (V)
   /**
    * Version
