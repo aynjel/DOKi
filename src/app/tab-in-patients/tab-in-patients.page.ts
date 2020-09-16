@@ -17,13 +17,14 @@ import { Location } from "@angular/common";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
 import { FunctionsService } from "../shared/functions/functions.service";
 import { Constants } from "../shared/constants";
+import { Messages } from "../shared/messages";
 
 @Component({
-  selector: "app-tab1",
-  templateUrl: "tab1.page.html",
-  styleUrls: ["tab1.page.scss"],
+  selector: "app-tab-in-patients",
+  templateUrl: "tab-in-patients.page.html",
+  styleUrls: ["tab-in-patients.page.scss"],
 })
-export class Tab1Page {
+export class TabInPatientsPage {
   public logindata: LoginData;
   public inPatientData: InPatientData;
   isDesktop: boolean;
@@ -32,10 +33,10 @@ export class Tab1Page {
   inPatients: any;
   inPatientsDraft: any;
   inPatientsDraft1: any;
-  site: any = "A";
+  site: any = this.constants.CHH_SITE__CODE__ALL; //"A";
   searchBar: any;
   name: any;
-  admittedOrDischarge = "ALL";
+  admittedOrDischarge = this.constants.ADMISSION_STATUS_SELECTION__VALUE__ALL;//"ALL";
   admittedOrDischargeLabel = "";
   route: string;
   objecthandler: boolean = false;
@@ -52,7 +53,8 @@ export class Tab1Page {
     public functionsService: FunctionsService,
     private renderer: Renderer2,
     protected $gaService: GoogleAnalyticsService,
-    public constants: Constants
+    public constants: Constants,
+    public messages: Messages
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -68,7 +70,7 @@ export class Tab1Page {
         this.admittedOrDischarge = this.constants.ADMISSION_STATUS__CODE__ADMITTED; //"AC";
         this.admittedOrDischargeLabel =
           "(" +
-          this.functionsService.convertToSentenceCase(
+          this.functionsService.convertAllFirstLetterToUpperCase(
             this.constants.ADMISSION_STATUS__VALUE__ADMITTED
           ) +
           ")"; //"(Admitted)";
@@ -207,8 +209,8 @@ export class Tab1Page {
         (error) => {
           this.isFetchDone = true;
           this.functionsService.alert(
-            "Sorry Doc. We cannot retrieve the list of your admitted patients at this time. Please try again.",
-            "Okay"
+            this.messages.ERROR_RETRIEVING_ADMITTED_PATIENTS,
+            this.constants.UI_COMPONENT_TEXT__VALUE__OKAY
           );
         },
         () => {

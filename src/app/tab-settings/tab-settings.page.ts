@@ -11,12 +11,12 @@ import { Constants } from "../shared/constants";
 import { FunctionsService } from "../shared/functions/functions.service";
 
 @Component({
-  selector: "app-tab3",
-  templateUrl: "tab3.page.html",
-  styleUrls: ["tab3.page.scss"],
+  selector: "app-tab-settings",
+  templateUrl: "tab-settings.page.html",
+  styleUrls: ["tab-settings.page.scss"],
 })
 
-export class Tab3Page {
+export class TabSettingsPage {
   userData$ = new BehaviorSubject<any>([]);
   public logindata: LoginData;
   account: LoginData;
