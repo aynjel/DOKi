@@ -107,6 +107,7 @@ export class Constants {
   public UI_COMPONENT_TEXT__VALUE__DELETE: string = "Delete";
   public UI_COMPONENT_TEXT__VALUE__CANCEL: string = "Cancel";
   public UI_COMPONENT_TEXT__VALUE__OKAY: string = "Okay";
+  public UI_COMPONENT_TEXT__VALUE__LOGIN: string = "Log In";
 
 
   /**
@@ -122,6 +123,13 @@ export class Constants {
   public UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_TELEPHONE: string = "+63 32 233 8000";
   public UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_TELEPHONE_HREF: string = "tel: +63322338000";
   public UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_APP_VERSION: string = "App Version:";
+
+  /**
+   * UI Component Text - Login
+   */
+  public UI_COMPONENT_TEXT__VALUE__LOGIN_GREETINGS: string = "Hello, Doc!";
+  public UI_COMPONENT_TEXT__VALUE__LOGIN_USERNAME: string = "Username";
+  public UI_COMPONENT_TEXT__VALUE__LOGIN_PASSWORD: string = "Password";
   
   // (V)
   /**
