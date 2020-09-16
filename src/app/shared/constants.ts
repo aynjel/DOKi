@@ -103,9 +103,11 @@ export class Constants {
    /**
    * UI Component Text
    */
+  public UI_COMPONENT_TEXT__VALUE__UPDATE: string = "Update";
   public UI_COMPONENT_TEXT__VALUE__DELETE: string = "Delete";
   public UI_COMPONENT_TEXT__VALUE__CANCEL: string = "Cancel";
   public UI_COMPONENT_TEXT__VALUE__OKAY: string = "Okay";
+
 
   /**
    * UI Component Text - Settings 

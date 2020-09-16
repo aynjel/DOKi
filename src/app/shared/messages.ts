@@ -37,5 +37,10 @@ export class Messages {
      */
     public SUCCESS_DELETING_RECORD: string = "Successfully Deleted ";
 
+    /**
+     * Update AVAILABLE
+     */
+    public UPDATE_AVAILABLE: string = "Update Available...";
+
 
 }
