@@ -58,7 +58,7 @@ RUN ionic build --prod
 #
 # ------------------------------------------------------------------------------
 # Use this if Apache HTTP Web Server is preferred. Use the Chong Hua Hospital configured
-# image to make sure proxy settings is configuration.
+# image to make sure proxy settings is set.
 #   - FROM httpd:2.4 as prodEnv
 #   - ENV PROD_DEST_DIR_HTTPD="/usr/local/apache2/htdocs/" \
 #       PROD_DEST_DIR_HTTPD_AND_SUB="/usr/local/apache2/htdocs/*" 
@@ -67,7 +67,12 @@ FROM nginx as prodEnv
 LABEL maintainer="Kristoffer Dominic Amora, IT - Systems Solution & Business Intelligence"
 # ENV Variables
 ENV PROD_DEST_DIR_NGINX="/usr/share/nginx/html" \
-    PROD_DEST_DIR_NGINX_AND_SUB="/usr/share/nginx/html/*"
+    PROD_DEST_DIR_NGINX_AND_SUB="/usr/share/nginx/html/*" \
+    NGINX_CONFIG_SOURCE="./dockerfiles/nginx/dpp-nginx.conf" \
+    NGINX_CONFIG_DEST="/etc/nginx/conf.d/default.conf"
+
+# Copy Doctors Portal Reverse Proxy Config
+COPY dpp-nginx.conf ${NGINX_CONFIG_DEST}
 
 # Making port changeable during build through --build-arg
 ARG PORT_TO_EXPOSE="80/tcp"

@@ -26,8 +26,8 @@
 
               
 
-              <ion-input type="password" id="input-password" [type]="getType()"  [(ngModel)]="postData.password"></ion-input>
-              <ion-icon  name="eye-off" item-right   class="rectangle"></ion-icon>
+              <ion-input type="password" id="input-password" [type]="getType()"  (keyup.enter)="loginAction()" [(ngModel)]="postData.password"></ion-input>
+              <ion-icon  name="eye-off-outline" [name]="getName()" item-right   class="rectangle"></ion-icon>
 
 
 

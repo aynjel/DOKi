@@ -9,6 +9,10 @@ import { BehaviorSubject } from "rxjs";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
 import { Constants } from "../shared/constants";
 import { FunctionsService } from "../shared/functions/functions.service";
+import { ModalController } from '@ionic/angular';
+import { ChhAppAddAppointmentsModalPage } from "../chh-web-components/chh-app-add-appointments-modal/chh-app-add-appointments-modal.page";
+import { ChhAppChangePasswordPage } from "../chh-web-components/chh-app-change-password/chh-app-change-password.page";
+import { ChhAppChangePassPage } from "../chh-web-components/chh-app-change-pass/chh-app-change-pass.page";
 
 @Component({
   selector: "app-tab-settings",
@@ -32,7 +36,8 @@ export class TabSettingsPage {
     private renderer: Renderer2,
     protected $gaService: GoogleAnalyticsService,
     public constants: Constants,
-    public functionsService: FunctionsService
+    public functionsService: FunctionsService,
+    private modalController: ModalController
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -42,7 +47,37 @@ export class TabSettingsPage {
     });
   }
 
-  ngOnInit() {
+
+
+
+  async showaddmodal() {
+    const modal = await this.modalController.create({
+      component: ChhAppChangePasswordPage,
+      componentProps: {
+        backdropDismiss: true,
+      },
+    });
+    modal.onDidDismiss().then((data) => {
+     
+    });
+    return await modal.present();
+  }
+
+  async showaddmodal1() {
+    const modal = await this.modalController.create({
+      component: ChhAppChangePassPage,
+      componentProps: {
+        backdropDismiss: true,
+      },
+    });
+    modal.onDidDismiss().then((data) => {
+     
+    });
+    return await modal.present();
+  }
+  
+  ngOnInit(){}
+  ionViewWillEnter() {
 
     this.$gaService.pageView('/Settings', 'Settings Tab');
     this.logindata = <LoginData>this.authService.userData$.getValue();

@@ -29,6 +29,7 @@ const routes: Routes = [
     pathMatch   : 'full',
     loadChildren: () => import('../app/chh-web-components/chh-app-error-404/chh-app-error-404.module').then( m => m.ChhAppError404PageModule)
 }
+
 ];
 @NgModule({
   imports: [

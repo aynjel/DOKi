@@ -60,11 +60,13 @@ export class LoginPage implements AfterViewInit {
 
       this.zone.run(() =>{
         this.isActiveToggleTextPassword = (this.isActiveToggleTextPassword==true)?false:true;
+        this.isEyeOnOff = (this.isEyeOnOff==true)?false:true;
       })
 
     },onEnd: ()=>{
       this.zone.run(() =>{
         this.isActiveToggleTextPassword = (this.isActiveToggleTextPassword==true)?false:true;
+        this.isEyeOnOff = (this.isEyeOnOff==true)?false:true;
       })
 
     }
@@ -75,18 +77,16 @@ export class LoginPage implements AfterViewInit {
 
 
   isActiveToggleTextPassword: Boolean = true;
-  public toggleTextPassword(): void{
-    console.log('toggleTextPassword');
-    
-      this.isActiveToggleTextPassword = (this.isActiveToggleTextPassword==true)?false:true;
-  }
+  isEyeOnOff: Boolean = true;
+
   public getType() {
-    console.log('getType');
-    
       return this.isActiveToggleTextPassword ? 'password' : 'text';
   }
 
 
+  public getName() {
+    return this.isEyeOnOff ? 'eye-off-outline' : 'eye-outline';
+}
 
 
 
