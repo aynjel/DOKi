@@ -17,6 +17,7 @@ import { Ionic4DatepickerModule } from "@logisticinfotech/ionic4-datepicker";
 //import { InpatientmodalPageModule } from "./components/inpatientmodal/inpatientmodal.module";
 import { ChhAppInPatientModalPageModule } from "../app/chh-web-components/chh-app-in-patient-modal/chh-app-in-patient-modal.module";
 import { ChhAppAddAppointmentsModalPageModule } from "../app/chh-web-components/chh-app-add-appointments-modal/chh-app-add-appointments-modal.module";
+import { ChhAppChangePassPageModule } from "../app/chh-web-components/chh-app-change-pass/chh-app-change-pass.module";
 
 //import { SliderPageModule } from './components/slider/slider.module';
 //import { defineCustomElements } from '@teamhive/lottie-player/loader';
@@ -41,6 +42,7 @@ import { Variables } from "../app/shared/variables";
     Ionic4DatepickerModule,
     ChhAppInPatientModalPageModule,
     ChhAppAddAppointmentsModalPageModule,
+    ChhAppChangePassPageModule,
     NgxGoogleAnalyticsModule.forRoot('UA-175566562-1'),
     NgxGoogleAnalyticsRouterModule,
     //LottieAnimationViewModule,
