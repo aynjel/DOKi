@@ -2,17 +2,17 @@
   <ion-button fill="clear" (click)="onSubmit(this.constants.CHH_SITE__CODE__ALL,active3)" 
   [ngClass]="{'active-link':active3, 'notactive':!active3}" 
     class="link" size="small">
-    {{this.functionsService.convertToSentenceCase(this.constants.CHH_LABEL__VALUE__BOTH)}}
+    {{this.functionsService.convertAllFirstLetterToUpperCase(this.constants.CHH_LABEL__VALUE__BOTH)}}
   </ion-button>
   <ion-button fill="clear" (click)="onSubmit(this.constants.CHH_SITE__CODE__CEBU,active)" 
   [ngClass]="{'active-link':active, 'notactive':!active}" 
     class="link" size="small">
-    {{this.functionsService.convertToSentenceCase(this.constants.CHH_LABEL__VALUE__CEBU)}}
+    {{this.functionsService.convertAllFirstLetterToUpperCase(this.constants.CHH_LABEL__VALUE__CEBU)}}
   </ion-button>
   <ion-button fill="clear" (click)="onSubmit(this.constants.CHH_SITE__CODE__MANDAUE,active1)" 
   [ngClass]="{'active-link':active1, 'notactive':!active1}"
     class="link" size="small">
-    {{this.functionsService.convertToSentenceCase(this.constants.CHH_LABEL__VALUE__MANDAUE)}}
+    {{this.functionsService.convertAllFirstLetterToUpperCase(this.constants.CHH_LABEL__VALUE__MANDAUE)}}
   </ion-button>
 
   <ion-button fill="clear"  *ngIf="isDesktop"
@@ -34,9 +34,9 @@
   [ngClass]="{'active-link':active1, 'notactive':!active2}" 
    size="small">
     <ion-select [(ngModel)] = "this.admittedOrDischarge" value = "{{this.admittedOrDischarge}}" placeholder="Filter" (ionChange)="changeRedirect($event)" color="mango">
-      <ion-select-option value="{{this.functionsService.convertToSentenceCase(this.constants.CHH_SITE__VALUE__ALL)}}">{{this.functionsService.convertToSentenceCase(this.constants.CHH_SITE__VALUE__ALL)}}</ion-select-option>
-      <ion-select-option value="{{this.constants.ADMISSION_STATUS__CODE__ADMITTED}}">{{this.functionsService.convertToSentenceCase(this.constants.ADMISSION_STATUS__VALUE__ADMITTED)}}</ion-select-option>
-      <ion-select-option value="{{this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE}}">{{this.functionsService.convertToSentenceCase(this.constants.ADMISSION_STATUS__VALUE__FOR_DISCHARGE)}}</ion-select-option>
+      <ion-select-option value="{{this.functionsService.convertAllFirstLetterToUpperCase(this.constants.CHH_SITE__VALUE__ALL)}}">{{this.functionsService.convertAllFirstLetterToUpperCase(this.constants.CHH_SITE__VALUE__ALL)}}</ion-select-option>
+      <ion-select-option value="{{this.constants.ADMISSION_STATUS__CODE__ADMITTED}}">{{this.functionsService.convertAllFirstLetterToUpperCase(this.constants.ADMISSION_STATUS__VALUE__ADMITTED)}}</ion-select-option>
+      <ion-select-option value="{{this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE}}">{{this.functionsService.convertAllFirstLetterToUpperCase(this.constants.ADMISSION_STATUS__VALUE__FOR_DISCHARGE)}}</ion-select-option>
     </ion-select>
   </ion-button> -->
   

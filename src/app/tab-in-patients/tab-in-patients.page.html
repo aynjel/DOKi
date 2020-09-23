@@ -2,7 +2,7 @@
   <div *ngIf="!isDesktop">
     <ion-toolbar color="mango">
       <ion-title>
-        <ion-icon name="person-circle-outline"></ion-icon> In-Patients <ion-text style="font-size:14px">
+        <ion-icon name="person-circle-outline"></ion-icon> {{this.constants.MENU__VALUE__IN_PATIENTS}} <ion-text style="font-size:14px">
           {{admittedOrDischargeLabel}}
         </ion-text>
       </ion-title>
@@ -15,7 +15,7 @@
         <ion-fab-button
           class="tab-font-family"
           color="light"
-          (click)="onSubmit('ALL',true)"
+          (click)="onSubmit(this.constants.ADMISSION_STATUS_SELECTION__VALUE__ALL,true)"
           data-desc= "All"
         >
           <ion-icon name="person-outline"></ion-icon>
@@ -23,7 +23,7 @@
         <ion-fab-button
           class="tab-font-family"
           color="light"
-          (click)="onSubmit('AC',true)"
+          (click)="onSubmit(this.constants.ADMISSION_STATUS__CODE__ADMITTED,true)"
           data-desc="Admitted"
         >
           <ion-icon name="person-add-outline"></ion-icon>
@@ -31,7 +31,7 @@
         <ion-fab-button
           class="tab-font-family"
           color="light"
-          (click)="onSubmit('DN',true)"
+          (click)="onSubmit(this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE,true)"
           data-desc="For Discharge"
         >
           <ion-icon name="person-remove-outline"></ion-icon>
@@ -101,17 +101,17 @@
                       slot="end"
                       *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE && x.doctor_prof_fee == this.constants.ANY__VALUE__NULL && x.is_posted == this.constants.ANY__VALUE__NULL"
                     >
-                      PF</ion-badge
+                      {{this.constants.DOCTOR__CODE__PROFESSIONAL_FEE}}</ion-badge
                     >
                     <ion-badge
                       color="success"
                       slot="end"
-                      *ngIf="x.doctor_prof_fee != null && x.is_posted !=null"
+                      *ngIf="x.doctor_prof_fee != this.constants.ANY__VALUE__NULL && x.is_posted !=this.constants.ANY__VALUE__NULL"
                     >
                       <ion-icon name="checkmark-outline"></ion-icon
                     ></ion-badge>
                   </ion-item>
-                  <div *ngIf="x.admission_status == 'AC'">
+                  <div *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__ADMITTED">
                     <!--Patient Admitted-->
                     <ion-progress-bar
                       value=".25"
@@ -120,7 +120,7 @@
                     ></ion-progress-bar>
                   </div>
                   <div
-                    *ngIf="x.admission_status == 'DN'  && (x.is_posted ==null || x.is_posted ==0 ) && x.doctor_prof_fee ==null"
+                    *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE && (x.is_posted == this.constants.ANY__VALUE__NULL || x.is_posted == this.constants.NUMBER__VALUE__ZERO) && x.doctor_prof_fee == this.constants.ANY__VALUE__NULL"
                   >
                     <!--Patient For Discharge-->
                     <ion-progress-bar
@@ -130,7 +130,7 @@
                     ></ion-progress-bar>
                   </div>
                   <div
-                    *ngIf="x.admission_status == 'DN'  && (x.is_posted ==null|| x.is_posted ==0 ) && x.doctor_prof_fee !=null"
+                    *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE  && (x.is_posted ==this.constants.ANY__VALUE__NULL|| x.is_posted ==this.constants.NUMBER__VALUE__ZERO ) && x.doctor_prof_fee !=this.constants.ANY__VALUE__NULL"
                   >
                     <!--Patient For Discharge-->
                     <ion-progress-bar
@@ -140,7 +140,7 @@
                     ></ion-progress-bar>
                   </div>
                   <div
-                    *ngIf="x.admission_status == 'DN'  && x.is_posted !=0 && x.doctor_prof_fee !=null"
+                    *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE  && x.is_posted !=this.constants.NUMBER__VALUE__ZERO && x.doctor_prof_fee !=this.constants.ANY__VALUE__NULL"
                   >
                     <!--Patient For Discharge-->
                     <ion-progress-bar
@@ -154,19 +154,19 @@
                     style="padding-top: 10px !important;"
                   >
                     <p>
-                      <span *ngIf="x.site == 'C'">
+                      <span *ngIf="x.site == this.constants.CHH_SITE__CODE__CEBU">
                         <ion-icon
                           name="location-outline"
                           slot="start"
                         ></ion-icon
-                        >Chong Hua Hospital
+                        >{{this.constants.CHH_NAME__VALUE__CEBU}}
                       </span>
-                      <span *ngIf="x.site == 'M'">
+                      <span *ngIf="x.site == this.constants.CHH_SITE__CODE__MANDAUE">
                         <ion-icon
                           name="location-outline"
                           slot="start"
                         ></ion-icon
-                        >Chong Hua Hospital Mandaue </span
+                        >{{this.constants.CHH_NAME__VALUE__MANDAUE}} </span
                       ><br />
                       <ion-icon name="bed-outline" slot="start"></ion-icon>Room
                       {{x.room_no}}<br />
@@ -346,7 +346,7 @@
         <ng-template #noDataAvailable>
           <div *ngIf="!objecthandler && isFetchDone">
             <ion-list-header slot="center" mode="ios">
-              No Data Available
+              {{this.messages.NO_DATA_AVAILABLE}}
             </ion-list-header>
             <img src="assets/img/3973477-no-data-concept-illustration-custom.png">
           </div>

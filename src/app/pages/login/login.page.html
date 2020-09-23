@@ -6,10 +6,10 @@
           <ion-card-content>
             <div class="center">
               <chh-app-logo></chh-app-logo>
-              <h1><b>Hello, Doc!</b></h1>
+              <h1><b>{{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN_GREETINGS}}</b></h1>
             </div>
             <ion-item>
-              <ion-label position="fixed">Username</ion-label>
+              <ion-label position="fixed">{{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN_USERNAME}}</ion-label>
               <ion-input
                 type="text"
                 id="input-username"
@@ -17,7 +17,7 @@
               ></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label position="fixed">Password</ion-label>
+              <ion-label position="fixed">{{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN_PASSWORD}}</ion-label>
               <!--ion-input
                 type="password"
                 id="input-password"
@@ -41,7 +41,7 @@
                 color="mango"
                 disabled="{{btnDisable}}"
               >
-                <span *ngIf="!btnDisable">LOG IN</span
+                <span *ngIf="!btnDisable">{{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN.toUpperCase()}}</span
                 ><ion-spinner *ngIf="btnDisable"></ion-spinner>
               </ion-button>
             </div>

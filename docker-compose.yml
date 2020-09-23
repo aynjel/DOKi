@@ -2,16 +2,13 @@ version: "3.8"
 
 services:
   pwa:
-    image: coolnumber9/dpp:v1.1.2
-    volumes: 
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    container_name: doctors-portal-pwa-v1.1.3
+    image: coolnumber9/dpp:v1.1.3-on-nginx
     ports:
-      - 80:80
+      - 8080:80
     
   middleware:
-    image: coolnumber9/dpp:v1.0.3-middleware
+    container_name: doctors-portal-middleware-v1.0.4
+    image: coolnumber9/dpp:v1.0.4-middleware
     ports:
-        - 8085:8085
-
-volumes: 
-    /sys/fs/cgroup:
+      - 8085:8085

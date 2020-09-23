@@ -3,22 +3,20 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Tab3Page } from './tab3.page';
-import { ChhWebComponentsModule } from '../chh-web-components/chh-web-components.module';
+import { TabSettingsPage } from './tab-settings.page';
 import { ChhAppTextAvatarModule } from '../chh-web-components/chh-app-text-avatar/chh-app-text-avatar.module';
-import { Tab3PageRoutingModule } from './tab3-routing.module'
+import { TabSettingsPageRoutingModule } from './tab-settings-routing.module'
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    ChhWebComponentsModule,
-    RouterModule.forChild([{ path: '', component: Tab3Page }]),
-    Tab3PageRoutingModule,
+    RouterModule.forChild([{ path: '', component: TabSettingsPage }]),
+    TabSettingsPageRoutingModule,
     ChhAppTextAvatarModule
   ],
-  declarations: [Tab3Page],
+  declarations: [TabSettingsPage],
   entryComponents:[]
 })
-export class Tab3PageModule {}
+export class TabSettingsPageModule {}
