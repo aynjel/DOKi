@@ -135,7 +135,7 @@ export class Constants {
   /**
    * Version
    */
-  public DOCTOR_PORTAL__VALUE__VERSION: string = "v1.1.2";
+  public DOCTOR_PORTAL__VALUE__VERSION: string = "v1.1.3";
 
   // (W)
   /**
