@@ -13,7 +13,7 @@ FROM node:13-alpine AS buildEnv
 LABEL maintainer="Kristoffer Dominic Amora, IT - Systems Solution & Business Intelligence"
 
 # ENV Variables
-ENV BUILD_APP_SOURCE_DIR="/usr/projects/dpp" 
+ENV BUILD_APP_SOURCE_DIR="/usr/projects/dpp"
 
 # Work directory building the app
 RUN mkdir -p ${BUILD_APP_SOURCE_DIR}
@@ -64,12 +64,15 @@ RUN ionic build --prod
 #       PROD_DEST_DIR_HTTPD_AND_SUB="/usr/local/apache2/htdocs/*" 
 
 FROM nginx as prodEnv
+# FROM coolnumber9/dpp:dpp-nginx-reverse-proxy as prodEnv
+
 LABEL maintainer="Kristoffer Dominic Amora, IT - Systems Solution & Business Intelligence"
 # ENV Variables
 ENV PROD_DEST_DIR_NGINX="/usr/share/nginx/html" \
     PROD_DEST_DIR_NGINX_AND_SUB="/usr/share/nginx/html/*" \
     NGINX_CONFIG_SOURCE="./dockerfiles/nginx/dpp-nginx.conf" \
-    NGINX_CONFIG_DEST="/etc/nginx/conf.d/default.conf"
+    NGINX_CONFIG_DEST="/etc/nginx/conf.d/default.conf" \
+    BUILD_APP_OUTPUT_DIR="/usr/projects/dpp/www/"
 
 # Copy Doctors Portal Reverse Proxy Config
 COPY dpp-nginx.conf ${NGINX_CONFIG_DEST}
@@ -81,7 +84,7 @@ ARG PORT_TO_EXPOSE="80/tcp"
 #   - RUN yum -y install httpd; yum clean all; systemctl enable httpd.service
 
 WORKDIR ${PROD_DEST_DIR_NGINX}
-RUN rm -rf ${PROD_DEST_DIR_NGINX_AND_SUB}
+# RUN rm -rf ${PROD_DEST_DIR_NGINX_AND_SUB}
 COPY --from=buildEnv ${BUILD_APP_OUTPUT_DIR} ./
 EXPOSE ${PORT_TO_EXPOSE}
 
