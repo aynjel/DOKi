@@ -1,6 +1,6 @@
 {
   "name": "doctorsportal",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "author": "Chong Hua Hospital",
   "homepage": "https://doctorsportal.chonghua.com.ph",
   "scripts": {
@@ -9,7 +9,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "compodoc": "npx compodoc -p tsconfig.json -w -s --hideGenerator --customLogo /src/assets/icons/icon-512x512.png --name Doctors-Portal-App"
   },
   "private": true,
   "dependencies": {
@@ -29,7 +30,6 @@
     "@ionic/angular": "^5.0.0",
     "@logisticinfotech/ionic4-datepicker": "^1.4.3",
     "@lottiefiles/lottie-player": "^0.5.1",
-    "@mobiscroll/angular": "https://npm.mobiscroll.com/@mobiscroll/angular-trial/-/angular-trial-4.10.6.tgz",
     "@synapsium/ngx-lottie": "^8.2.9",
     "@teamhive/lottie-player": "^1.0.0",
     "capacitor-datepicker": "0.0.2",
@@ -49,10 +49,11 @@
     "@angular/compiler": "~9.1.6",
     "@angular/compiler-cli": "~9.1.6",
     "@angular/language-service": "~9.1.6",
+    "@compodoc/compodoc": "^1.1.11",
     "@ionic/angular-toolkit": "^2.1.1",
-    "@types/node": "^12.11.1",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",

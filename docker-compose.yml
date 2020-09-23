@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  pwa:
+    container_name: doctors-portal-pwa-v1.1.3
+    image: coolnumber9/dpp:v1.1.3-on-nginx
+    ports:
+      - 8080:80
+    
+  middleware:
+    container_name: doctors-portal-middleware-v1.0.4
+    image: coolnumber9/dpp:v1.0.4-middleware
+    ports:
+      - 8085:8085

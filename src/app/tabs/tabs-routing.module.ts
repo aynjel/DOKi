@@ -14,26 +14,26 @@ const routes: Routes = [
     children: [
       {
         path: 'in-patients',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+        loadChildren: () => import('../tab-in-patients/tab-in-patients.module').then(m => m.TabInPatientsPageModule)
       },
       {
         path: 'in-patients/DN',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+        loadChildren: () => import('../tab-in-patients/tab-in-patients.module').then(m => m.TabInPatientsPageModule)
       },
       {
         path: 'in-patients/AC',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+        loadChildren: () => import('../tab-in-patients/tab-in-patients.module').then(m => m.TabInPatientsPageModule)
       },
       {
         path: 'appointments',
-        loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+        loadChildren: () => import('../tab-appointments/tab-appointments.module').then(m => m.TabAppointmentsPageModule)
       },
       {
         path: 'settings',
-        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+        loadChildren: () => import('../tab-settings/tab-settings.module').then(m => m.TabSettingsPageModule)
       },{
         path: 'dashboard',
-        loadChildren: () => import('../tab4/tab4.module').then(m => m.Tab4PageModule)
+        loadChildren: () => import('../tab-dashboard/tab-dashboard.module').then(m => m.TabDashboardPageModule)
       },
       {
         path: '',
@@ -44,7 +44,7 @@ const routes: Routes = [
   },
   {
     path: 'menu',
-    redirectTo: '/menu/tab1',
+    redirectTo: '/menu/tab-in-patients',
     pathMatch: 'full'
   },
   

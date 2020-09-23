@@ -14,8 +14,11 @@ export class FunctionsService {
     public constants: Constants
   ) {}
 
-  /* Alert */
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ /**
+  * Alert
+  * @param data1 Text Message
+  * @param data2 Button Label
+  */
   async alert(data1: any, data2: any) {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
@@ -24,10 +27,12 @@ export class FunctionsService {
     });
     await alert.present();
   }
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  /* Get System Date */
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  /**
+   * Get System Date
+   * @example
+   * Return: 2020-09-14
+   */
   getSystemDate() {
     var now = new Date();
     var y = now.getFullYear();
@@ -37,10 +42,12 @@ export class FunctionsService {
     var dd = d < 10 ? "0" + d : d;
     return "" + y + "-" + mm + "-" + dd;
   }
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  /* Get System Date Time */
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ 
+  /**
+   * Get System Date Time
+   * @example
+   * Return: 2020-09-14T15:08:47.640Z
+   */
   getSystemDateTime() {
     let xx = new Date();
     let H = this.addZeroBefore(xx.getHours());
@@ -49,33 +56,47 @@ export class FunctionsService {
     let v = xx.getMilliseconds();
     return this.getSystemDate() + "T" + H + ":" + i + ":" + s + "." + v + "Z";
   }
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  /* Add zero before first character */
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  /**
+   * Add zero before the first character
+   * @param n Number
+   * @example
+   * Parameter (n): 6
+   * Return: 06
+   */
   addZeroBefore(n) {
     return (n < 10 ? "0" : "") + n;
   }
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  /* Explode Date */
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  /**
+   * Explode Date / Split Date & Time using | separator
+   * @param data 
+   * @example
+   * Parameter (data): 2020-03-16T23:26:06.013
+   * Return: 2020-03-16 | 23:26:06
+   */
   explodeDate(data: any) {
     let myarr = data.split("T");
     if (myarr[1]) {
       let myarr2 = myarr[1].split(".");
+      console.log(myarr[0] + " | " + myarr2[0]);
       return myarr[0] + " | " + myarr2[0];
     }
   }
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  /* Get Doctor Status Code */
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+ /**
+  * Get Doctor Status Code
+  * @param data String source data
+  * @example
+  * Parameter (data): Co-Manage
+  * Return: CM
+  * Table:
+  * CM = Co-Manage
+  * AP = Primary Attending Physician
+  * CO = Consult
+  * HC = HMO
+  */
   getDoctorStatusCode(data: string) {
-    /*  if (data == "Co-Manage") return "CM";
-    if (data == "Primary Attending Physician") return "AP";
-    if (data == "Consult") return "CO";
-    if (data == "HMO") return "HC"; */
 
     if (data == this.constants.DOCTOR_SERVICE_TYPE__VALUE__CO_MANAGE)
       return this.constants.DOCTOR_SERVICE_TYPE__CODE__CO_MANAGE;
@@ -90,25 +111,33 @@ export class FunctionsService {
     if (data == this.constants.DOCTOR_SERVICE_TYPE__VALUE__HMO)
       return this.constants.DOCTOR_SERVICE_TYPE__CODE__HMO;
   }
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  /* Close PopOver Controller */
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ 
+  /**
+   * Close Pop Over Controller
+   * @param popOverController 
+   */
   public closePopOver(popOverController: PopoverController)
   {
     popOverController.dismiss();
   }
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  /* Close Modal Controller */
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ /**
+  * Close Modal Controller
+  * @param modalController 
+  */
   public async closeModal(modalController: ModalController) {
     await modalController.dismiss();
   }
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  /* Increment Date */
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ 
+  /**
+   * Increment Date
+   * @param date_str String date 
+   * @param incrementor Integer value
+   * @example
+   * Parameter (date_str): 2020-09-14
+   * Parameter (incrementor): 1
+   * Return: 2020-09-15
+   */
    incrementDate(date_str, incrementor) {
     var parts = date_str.split("-");
     var dt = new Date(
@@ -128,11 +157,15 @@ export class FunctionsService {
     }
     return parts.join("-");
   }
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  /* Convert To Camel Case */
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  convertToCamelCase(str) {
+ /**
+  * Convert to camel case
+  * @param str String to be converted
+  * @example
+  * Parameter (str): test data
+  * Return: Test Data
+  */
+  convertToCamelCase(str:string){
     var splitStr = str.toLowerCase().split(" ");
     for (var i = 0; i < splitStr.length; i++) {
       splitStr[i] =
@@ -140,8 +173,16 @@ export class FunctionsService {
     }
     return splitStr.join(" ");
   }
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+ 
+  /**
+   * Truncate character(s) from string data
+   * @param text Source string data
+   * @param limit Total numbers of characters to truncate
+   * @example
+   * Parameter (text): test data
+   * Parameter (limit): 6
+   * Return: test d
+   */
   truncateChar(text: string, limit:any): string {
     let charlimit = limit;
     if(!text || text.length <= charlimit )
@@ -153,13 +194,25 @@ export class FunctionsService {
     return shortened;
   }
 
-  /* Convert To Sentece Case */
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  convertToSentenceCase(stringData: string){
+  /**
+   * Convert all first letter to upper case
+   * @param stringData String data to be converted
+   * @returns Converted string
+   * @example
+   * Parameter (stringData): test data
+   * Return: Test Data
+   */
+  convertAllFirstLetterToUpperCase(stringData: string):string{
     return stringData.split(" ").map(w => w[0].toUpperCase() + w.substr(1).toLowerCase()).join(" ")
   }
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- 
+  
+  /**
+   * Shared function to enable/disable console logging
+   * @param message Any data to display
+   * @example
+   * Parameter (message): Test sample
+   * Output: Test sample
+   */
   logToConsole(message: any){
     if(environment.consoleLog){
       console.log(message);
@@ -167,17 +220,3 @@ export class FunctionsService {
   }
 
 }
-
- /* Validate Login Inputs */
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  /* validateLogin(postData: string) {
-    let username = postData.username.trim();
-    let password = this.postData.password.trim();
-    return (
-      this.postData.username &&
-      this.postData.password &&
-      username.length > 0 &&
-      password.length > 0
-    );
-  } */
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

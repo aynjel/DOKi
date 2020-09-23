@@ -6,10 +6,10 @@
           <ion-card-content>
             <div class="center">
               <chh-app-logo></chh-app-logo>
-              <h1><b>Hello, Doc!</b></h1>
+              <h1><b>{{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN_GREETINGS}}</b></h1>
             </div>
             <ion-item>
-              <ion-label position="floating">Username</ion-label>
+              <ion-label position="fixed">{{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN_USERNAME}}</ion-label>
               <ion-input
                 type="text"
                 id="input-username"
@@ -17,12 +17,20 @@
               ></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label position="floating">Password</ion-label>
-              <ion-input
+              <ion-label position="fixed">{{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN_PASSWORD}}</ion-label>
+              <!--ion-input
                 type="password"
                 id="input-password"
                 [(ngModel)]="postData.password"
-              ></ion-input>
+              ></ion-input-->
+
+              
+
+              <ion-input type="password" id="input-password" [type]="getType()"  (keyup.enter)="loginAction()" [(ngModel)]="postData.password"></ion-input>
+              <ion-icon  name="eye-off-outline" [name]="getName()" item-right   class="rectangle"></ion-icon>
+
+
+
             </ion-item>
             <div class="ion-margin-vertical ion-text-right">
               <ion-button
@@ -33,7 +41,7 @@
                 color="mango"
                 disabled="{{btnDisable}}"
               >
-                <span *ngIf="!btnDisable">LOG IN</span
+                <span *ngIf="!btnDisable">{{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN.toUpperCase()}}</span
                 ><ion-spinner *ngIf="btnDisable"></ion-spinner>
               </ion-button>
             </div>

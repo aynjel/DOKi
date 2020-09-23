@@ -13,12 +13,19 @@ import { FunctionsService } from "../../shared/functions/functions.service"; //"
 import { GoogleAnalyticsService } from "ngx-google-analytics";
 import { Constants } from "../../shared/constants";
 
+import {  AfterViewInit, ElementRef, Renderer2, Input, NgZone } from '@angular/core';
+import { GestureController } from '@ionic/angular';
+import { Gesture, GestureConfig } from '@ionic/core';
+import { ViewChildren, QueryList } from "@angular/core";
+import {  IonGrid, IonContent,IonRow } from "@ionic/angular";
+
+
 @Component({
   selector: "app-login",
   templateUrl: "./login.page.html",
   styleUrls: ["./login.page.scss"],
 })
-export class LoginPage implements OnInit {
+export class LoginPage implements AfterViewInit {
   public logindata: LoginData;
 
   constructor(
@@ -29,8 +36,59 @@ export class LoginPage implements OnInit {
     private doctorService: DoctorService,
     public functionsService: FunctionsService,
     protected $gaService: GoogleAnalyticsService,
-    public constants: Constants
+    public constants: Constants,
+    private gestureCtrl: GestureController,
+    private element: ElementRef,
+    private renderer: Renderer2,
+    private zone:NgZone
   ) {}
+
+
+
+
+
+
+
+  async ngAfterViewInit() {
+   const rectangle = document.querySelector('.rectangle');
+     
+    const options1: GestureConfig = {
+      el: rectangle,
+      threshold: 0,
+      gestureName: 'slide-drawer-swipe',
+    onStart: (ev) => { 
+
+      this.zone.run(() =>{
+        this.isActiveToggleTextPassword = (this.isActiveToggleTextPassword==true)?false:true;
+        this.isEyeOnOff = (this.isEyeOnOff==true)?false:true;
+      })
+
+    },onEnd: ()=>{
+      this.zone.run(() =>{
+        this.isActiveToggleTextPassword = (this.isActiveToggleTextPassword==true)?false:true;
+        this.isEyeOnOff = (this.isEyeOnOff==true)?false:true;
+      })
+
+    }
+    };
+    const gesture1 = await this.gestureCtrl.create(options1);
+    gesture1.enable();
+  }
+
+
+  isActiveToggleTextPassword: Boolean = true;
+  isEyeOnOff: Boolean = true;
+
+  public getType() {
+      return this.isActiveToggleTextPassword ? 'password' : 'text';
+  }
+
+
+  public getName() {
+    return this.isEyeOnOff ? 'eye-off-outline' : 'eye-outline';
+}
+
+
 
   public postData = {
     username: "",
