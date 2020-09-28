@@ -14,11 +14,11 @@ import { GoogleAnalyticsService } from "ngx-google-analytics";
 import { Constants } from "../../shared/constants";
 
 import {  AfterViewInit, ElementRef, Renderer2, Input, NgZone } from '@angular/core';
-import { GestureController } from '@ionic/angular';
+import { GestureController, ModalController } from '@ionic/angular';
 import { Gesture, GestureConfig } from '@ionic/core';
 import { ViewChildren, QueryList } from "@angular/core";
 import {  IonGrid, IonContent,IonRow } from "@ionic/angular";
-
+import { ChhAppPrivacyPolicyPage } from "./../../chh-web-components/chh-app-privacy-policy/chh-app-privacy-policy.page"
 
 @Component({
   selector: "app-login",
@@ -40,7 +40,8 @@ export class LoginPage implements AfterViewInit {
     private gestureCtrl: GestureController,
     private element: ElementRef,
     private renderer: Renderer2,
-    private zone:NgZone
+    private zone:NgZone,
+    private modalController: ModalController,
   ) {}
 
 
@@ -101,7 +102,41 @@ export class LoginPage implements AfterViewInit {
     this.$gaService.pageView("/login", "Login Page");
   }
 
+
+
+
+  async privacyPolicy(){
+    const modal = await this.modalController.create({
+      component: ChhAppPrivacyPolicyPage,
+      componentProps: {
+        backdropDismiss: true,
+      },
+    });
+    modal.onDidDismiss().then((data) => {
+      console.log(data.data);
+      if(data.data){
+        this.loginAction();
+      }else{
+        
+      }
+    });
+    return await modal.present();
+  }
   loginAction() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     this.btnDisable = true;
     this.authService
       .doctorsPortalLogin(this.postData.username, this.postData.password)

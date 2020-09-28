@@ -1,0 +1,65 @@
+<ion-header mode="md" class="ion-no-border">
+  <ion-toolbar
+    class="in-toolbar ios toolbar-title-default hydrated"
+    color="mango"
+  >
+    <ion-title> <ion-icon name="lock-closed-outline"></ion-icon> Privacy Policy </ion-title>
+    <!--ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
+      <ion-button (click)="closeModal()" routerDirection="back" class="ios button button-clear ion-activatable ion-focusable hydrated">Close</ion-button>
+    </ion-buttons-->
+    <ion-buttons
+      slot="end"
+      class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated"
+    >
+      <ion-button (click)="closeModal()" color="chh-css-primary2"
+        >Close&nbsp; <ion-icon name="close-outline"></ion-icon
+      >
+    
+    </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="my-backbround ion-no-padding">
+    <ion-row>
+      <ion-col>
+
+        <ion-card mode="ios"   >
+         
+         
+          <ion-list>
+            <ion-item style="padding-top: 10px;">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </ion-item>
+            <ion-item>
+              <ion-checkbox  (click)="accept()"></ion-checkbox> Accept
+            </ion-item>
+          </ion-list>
+
+
+          <ion-grid>
+            <ion-row>
+              <ion-col size-xs="12">
+                <ion-button
+                  expand="block"
+                  shape="round"
+                  id="btn-confirm"
+                  (click)="save()"
+                  color="mango"
+                  disabled="{{uxSaveCancel}}"
+                >
+                  SAVE
+                </ion-button>
+              </ion-col>
+
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+
+
+       
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
