@@ -9,7 +9,8 @@ import { ModalController } from '@ionic/angular';
 export class ChhAppPrivacyPolicyPage implements OnInit {
   uxSaveCancel:boolean = true;
   constructor(public modalController: ModalController) { }
-
+  isButtonColor1:boolean=true;
+  isButtonColor2:boolean=true;
   ngOnInit() {
   }
   async closeModal() {
@@ -20,5 +21,19 @@ export class ChhAppPrivacyPolicyPage implements OnInit {
   }
   accept(){
     this.uxSaveCancel = false;
+  }
+  public getColor1() {
+    return this.isButtonColor1 ? 'primary' : 'light';
+  }
+  public getColor2() {
+    return this.isButtonColor2 ? 'danger' : 'light';
+  }
+  accept1(){
+    this.isButtonColor1 = true;
+    this.isButtonColor2 = false;
+  }
+  decline1(){
+    this.isButtonColor1 = false;
+    this.isButtonColor2 = true;
   }
 }
