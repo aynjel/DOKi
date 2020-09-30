@@ -37,11 +37,11 @@
                 expand="block"
                 shape="round"
                 id="btn-confirm"
-                (click)="loginAction() "
+                (click)="privacyPolicy() "
                 color="mango"
                 disabled="{{btnDisable}}"
-              >
-                <span *ngIf="!btnDisable">{{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN.toUpperCase()}}</span
+              >{{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN.toUpperCase()}}
+                <span *ngIf="!btnDisable"></span
                 ><ion-spinner *ngIf="btnDisable"></ion-spinner>
               </ion-button>
             </div>
