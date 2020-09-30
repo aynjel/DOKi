@@ -1,5 +1,8 @@
 ion-slide {
+
+  @media (max-width: 411px) {
     padding: 5%;
+}
     display: block;
     img {
       width: 100px;

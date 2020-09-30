@@ -33,11 +33,44 @@
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </ion-item>
             <ion-item>
-              <ion-checkbox  (click)="accept()"></ion-checkbox> Accept
+              <ion-grid>
+                <ion-row>
+                  <ion-col size-xs="12">
+                    <ion-checkbox  (click)="accept()"></ion-checkbox> Accept
+                  </ion-col>
+              </ion-row>
+              </ion-grid>
             </ion-item>
           </ion-list>
 
+          <ion-grid>
+            <ion-row>
+              <ion-col size-xs="6">
+                <ion-button
+                  expand="block"
+                  shape="round"
+                  id="btn-confirm"
+                  [color]="getColor1()"
+                  color="light"
+                  (click)="accept1();"
+                >
+                  Accept
+                </ion-button>
+              </ion-col>
+              <ion-col size-xs="6">
+                <ion-button
+                  expand="block"
+                  shape="round"
+                  id="btn-confirm"
 
+                  [color]="getColor2()"
+                  (click)="decline1();"
+                >
+                  Decline
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
           <ion-grid>
             <ion-row>
               <ion-col size-xs="12">

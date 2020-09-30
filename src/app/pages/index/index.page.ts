@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 //import { Platform } from '@angular/cdk/platform';
 import { AlertController, Platform } from "@ionic/angular";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
+import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
 import { FunctionsService } from "../../shared/functions/functions.service";
 
 @Component({
@@ -16,17 +17,43 @@ export class IndexPage implements OnInit {
   android: boolean = false;
   android1: boolean = false;
   ios: boolean = false;
+  isDesktop: boolean;
+  sampleVariable:boolean=true;
   constructor(
     private platform: Platform,
     public functionsService: FunctionsService,
-    protected $gaService: GoogleAnalyticsService
-  ) {}
+    protected $gaService: GoogleAnalyticsService,
+    private screensizeService: ScreenSizeService
+  ) {
 
+    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
+      if (this.isDesktop && !isDesktop) {
+        // Reload because our routing is out of place
+        //window.location.reload();
+      }
+
+      this.isDesktop = isDesktop;
+    });
+
+  }
+  slideOpts = {
+    initialSlide: 0,
+    speed: 400,
+    pager:true
+  };
   ngOnInit() {
+
     this.initPwaPrompt();
     this.$gaService.pageView("/index", "Index Page");
   }
-  
+  moveToNext(slides){
+    console.log(slides);
+    slides.slideNext();
+}
+moveToPrev(slides){
+  console.log(slides);
+  slides.slidePrev();
+}
   initPwaPrompt() {
     this.platform.ready().then(() => {
       if (this.platform.is("android") || this.platform.is("desktop")) {
