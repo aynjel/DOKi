@@ -24,9 +24,9 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-/* Cypress.Commands.add('swipeLeft', () => {
+Cypress.Commands.add('swipeLeft', () => {
     cy.get('ion-slides')
       .trigger('mousedown', {position: "right"})
       .trigger('mousemove', {clientX: 100, clientY: 275})
       .trigger('mouseup', {force: true})
-  }); */
+  });

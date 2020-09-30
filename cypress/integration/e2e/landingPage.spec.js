@@ -6,19 +6,17 @@ context('Landing', () => {
         
       it("Continue Swipe", () => {
 
-           /*  cy.get('ion-grid');
-            cy.get('ion-row');
-            cy.get('ion-col');
-            cy.get('ion-slides');  cy.get('ion-slide'); */
-
-            Cypress.Commands.add('swipeLeft', () => {
-                cy.get('ion-slides')
-                  .trigger('mousedown', {position: "right"})
-                  .trigger('mousemove', {clientX: 10, clientY: 100})
-                  .trigger('mouseup', {force: true})
-              });
+        cy.get('ion-slides')
+            .trigger('pointerdown', { which: 1 })
+            .trigger('pointermove',{clientX: 100, clientY: 275})
+            .trigger('pointerup', { force: true });
+        
+            cy.get('ion-slides')
+            .trigger('mousedown', {which: 2})
+            .trigger('mousemove', {clientX: 100, clientY: 275})
+            .trigger('mouseup', {force: true});
  
-            cy.swipeLeft();
+            //cy.swipeLeft();
             //cy.swipeLeft();
             //cy.swipeLeft();
 
