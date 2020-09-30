@@ -7,7 +7,7 @@
 
 
         <ion-slides pager='{{!isDesktop}}'  #theSlides [options]="slideOpts">
-          <ion-slide>
+          <ion-slide id="slide1">
             <!-- <app-logo></app-logo> -->
             <img src="assets/img/LOGOMARK.png" alt="Chong Hua Hospital">
             <h1><b>Welcome aboard, Doc!</b></h1>
@@ -27,7 +27,7 @@
               appreciate it!
             </h3>
             <p>Swipe left to see what we've built for you.</p>
-            <ion-button *ngIf="isDesktop" (click)="moveToNext(theSlides)"><ion-icon name="chevron-forward-outline"></ion-icon></ion-button>  
+            <ion-button id="first-slide-button-right" *ngIf="isDesktop" (click)="moveToNext(theSlides)"><ion-icon name="chevron-forward-outline"></ion-icon></ion-button>  
 
 
             
@@ -49,8 +49,8 @@
               You will be notified via SMS when you have patients admitted in
               the hospital on both sites (Cebu and Mandaue).
             </p>
-            <ion-button *ngIf="isDesktop" (click)="moveToPrev(theSlides)"><ion-icon name="chevron-back-outline"></ion-icon></ion-button>  
-            <ion-button *ngIf="isDesktop" (click)="moveToNext(theSlides)"><ion-icon name="chevron-forward-outline"></ion-icon></ion-button>  
+            <ion-button id="second-slide-button-left" *ngIf="isDesktop" (click)="moveToPrev(theSlides)"><ion-icon name="chevron-back-outline"></ion-icon></ion-button>  
+            <ion-button id="second-slide-button-right" *ngIf="isDesktop" (click)="moveToNext(theSlides)"><ion-icon name="chevron-forward-outline"></ion-icon></ion-button>  
           </ion-slide>
           <ion-slide>
             <h1>View patient appointments.</h1>
@@ -70,8 +70,8 @@
               now view a list of patients that are expected to visit your
               clinic.
             </p>
-            <ion-button *ngIf="isDesktop" (click)="moveToPrev(theSlides)"><ion-icon name="chevron-back-outline"></ion-icon></ion-button>  
-            <ion-button *ngIf="isDesktop" (click)="moveToNext(theSlides)"><ion-icon name="chevron-forward-outline"></ion-icon></ion-button>  
+            <ion-button id="third-slide-button-left" *ngIf="isDesktop" (click)="moveToPrev(theSlides)"><ion-icon name="chevron-back-outline"></ion-icon></ion-button>  
+            <ion-button id="third-slide-button-right" *ngIf="isDesktop" (click)="moveToNext(theSlides)"><ion-icon name="chevron-forward-outline"></ion-icon></ion-button>  
           </ion-slide>
           <ion-slide>
             <h1>Submit professional fee online.</h1>
@@ -94,11 +94,11 @@
             <ion-row>
               <ion-col size-lg="4" offset-lg="4">
                 <chh-app-start *ngIf="!android"></chh-app-start>
-                <ion-button *ngIf="android" shape="round" expand="block" (click)="addToHomeScreen()" color="mango">INSTALL</ion-button>
+                <ion-button id="button-lets-go" *ngIf="android" shape="round" expand="block" (click)="addToHomeScreen()" color="mango">INSTALL</ion-button>
 
               </ion-col>
             </ion-row>
-            <ion-button *ngIf="isDesktop" (click)="moveToPrev(theSlides)"><ion-icon name="chevron-back-outline"></ion-icon></ion-button>  
+            <ion-button id="fourth-slide-button-left" *ngIf="isDesktop" (click)="moveToPrev(theSlides)"><ion-icon name="chevron-back-outline"></ion-icon></ion-button>  
 
           </ion-slide>
         </ion-slides>
