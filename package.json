@@ -11,6 +11,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "cypress:open": "npx cypress open",
+    "record:cypress:open":"cypress run --record --key 7c05416d-5a2b-4492-90ff-007cf5585360",
     "compodoc": "npx compodoc -p tsconfig.json -w -s --hideGenerator --customLogo /src/assets/icons/icon-512x512.png --name Doctors-Portal-App"
   },
   "private": true,
