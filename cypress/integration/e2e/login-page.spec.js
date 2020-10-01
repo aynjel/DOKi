@@ -1,17 +1,17 @@
 context('Actions', () => {
-    context('Login', () => {
+    context('Login Page', () => {
 
         beforeEach(() => {
             cy.visit("http://localhost:8100/login");
         });
 
-        it("(1) Username or Password is empty.", () =>{
+        it("Test Scenario 1 - Username or Password is empty.", () =>{
             cy.get("ion-grid");
-            cy.get('ion-button[id="btn-confirm"]').click();
-            cy.contains('Okay').click();
+            cy.acceptAgreementLoginContinue(true);
+            cy.whereAmI("http://localhost:8100/login");
         });
        
-        it("(2) Username or Password not in the Database.", () =>{
+        it("Test Scenario 2 - Username or Password not in the Database.", () =>{
             cy.get("ion-grid");
             cy.get('ion-input[id="input-username"]')
                 .type("MD0001751")
@@ -19,11 +19,11 @@ context('Actions', () => {
             cy.get('ion-input[id="input-password"]')
                 .type("02/08/19541")
                 .should("have.value", "02/08/19541");
-            cy.get('ion-button[id="btn-confirm"]').click();
-            cy.contains('Okay').click();
+            cy.acceptAgreementLoginContinue(true);
+            cy.whereAmI("http://localhost:8100/login");
         });
 
-        it("(3) Username and Password are valid.", () =>{
+        it("Test Scenario 3 - Username and Password are valid.", () =>{
             cy.get("ion-grid");
             cy.get('ion-input[id="input-username"]')
                 .type("MD000175")
@@ -31,8 +31,9 @@ context('Actions', () => {
             cy.get('ion-input[id="input-password"]')
                 .type("02/08/1954")
                 .should("have.value", "02/08/1954");
-            cy.get('ion-button[id="btn-confirm"]').click();
-            cy.contains('Welcome');
+            cy.acceptAgreementLoginContinue(false);
+            cy.wait(1000);
+            cy.whereAmI("http://localhost:8100/menu/dashboard");
         });
     });
         

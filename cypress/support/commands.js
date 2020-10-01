@@ -32,6 +32,12 @@ Cypress.Commands.add('swipeLeft', () => {
   });
 
 /**
+ * -------------------------------------------------------------------------
+ * CUSTOM COMMANDS
+ * -------------------------------------------------------------------------
+ */
+
+/**
  * Slider Commands
  */
 // First Slide
@@ -60,6 +66,20 @@ Cypress.Commands.add('fourthSlideGoLeft', () => {
     cy.get('ion-button[id="fourth-slide-button-left"]').click();
   });
 
+
+  // Do Clickable Element
+  Cypress.Commands.add('doClick', (elementText) =>{
+    cy.contains(elementText).click();
+    cy.wait(1000);
+  });
+
+
+/**
+ * -------------------------------------------------------------------------
+ * CUSTOM COMMAND IMPLEMENTATION
+ * -------------------------------------------------------------------------
+ */
+
 // Left To Right
 Cypress.Commands.add('leftToRight', () => {
     // Left To Right
@@ -71,15 +91,80 @@ Cypress.Commands.add('leftToRight', () => {
     cy.wait(1000);
   });
 
-  Cypress.Commands.add('rightToLeft', () => {
-     // Right To Left
-     cy.fourthSlideGoLeft();
-     cy.wait(1000);
-     cy.thirdSlideGoLeft();
-     cy.wait(1000);
-     cy.secondSlideGoLeft();
-     cy.wait(1000);
+// Right To Left
+Cypress.Commands.add('rightToLeft', () => {
+    // Right To Left
+    cy.fourthSlideGoLeft();
+    cy.wait(1000);
+    cy.thirdSlideGoLeft();
+    cy.wait(1000);
+    cy.secondSlideGoLeft();
+    cy.wait(1000);
+ });
+
+ // Accept Data Privacy Agreement
+  Cypress.Commands.add('acceptAgreement', () =>{
+    cy.doClick("Accept");
+    cy.doClick("SAVE");
   });
 
-  
+// Accept Data Privacy Agreement, Log In then continue
+  Cypress.Commands.add('acceptAgreementLoginContinue', (alertWindow) =>{
+    cy.doClick("LOG IN");
+    cy.acceptAgreement();
+    if(alertWindow){
+        cy.doClick("Okay");
+    }
+  });
 
+// Log In
+Cypress.Commands.add('login', (userName, password) =>{
+    cy.get("ion-grid");
+    cy.get('ion-input[id="input-username"]')
+        .type(userName)
+        .should("have.value", userName);
+    cy.get('ion-input[id="input-password"]')
+        .type(password)
+        .should("have.value", password);
+    cy.acceptAgreementLoginContinue(false);
+    cy.contains('Welcome');
+  });
+
+// Where Am I
+Cypress.Commands.add('whereAmI', (url) =>{
+    cy.url().should('eq', url);
+});
+
+// Navigate Tab Menu
+Cypress.Commands.add('navigateTabMenu', (startValue) =>{
+    var ndx = startValue;
+    var i;
+    var buttonId="";
+    if(startValue == 0 ){
+        for (i = ndx; i < tabUrl.length; i++) {
+            buttonId = 'ion-button[id="' + tabButtonId[i] + '"]';
+            cy.get(buttonId).click();
+            cy.whereAmI(tabUrl[i]);
+            cy.wait(1000);
+          };
+    }else{
+        for (i = ndx; i >= 0; i--) {
+            buttonId = 'ion-button[id="' + tabButtonId[i] + '"]';
+            cy.get(buttonId).click();
+            cy.whereAmI(tabUrl[i]);
+            cy.wait(1000);
+          };
+    }
+});
+
+
+
+var tabUrl = ["http://localhost:8100/menu/dashboard", 
+"http://localhost:8100/menu/in-patients", 
+"http://localhost:8100/menu/appointments",
+"http://localhost:8100/menu/settings"];
+var tabButtonId = ["button-dashboard",
+                   "button-in-patients", 
+                   "button-appointments",  
+                   "button-settings"                 
+                    ];
