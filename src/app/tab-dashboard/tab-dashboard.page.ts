@@ -184,7 +184,7 @@ export class TabDashboardPage implements OnInit {
   ionViewWillEnter() {
     this.logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_code = this.logindata[0].dr_code;
-    this.first_name = this.camelCase(this.logindata[0].first_name);
+    this.first_name = this.logindata[0].first_name;//this.camelCase(this.logindata[0].first_name);
     let  dr_name = this.logindata[0].last_name;
     this.$gaService.event('Dashboard','User Flow',dr_name);
     let catego = [];

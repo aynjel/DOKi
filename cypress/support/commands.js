@@ -170,7 +170,3 @@ var tabButtonId = ["button-dashboard",
                    "button-settings"                 
                     ];
 
-// Generate Random Number
-function generateRandomNumber(arrayLength){
-  return Math.floor(Math.random() * arrayLength); 
-}

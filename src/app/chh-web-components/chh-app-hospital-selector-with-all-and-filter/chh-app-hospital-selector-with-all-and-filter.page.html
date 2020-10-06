@@ -1,15 +1,15 @@
 <div class="navbar" class="ion-text-center" >
-  <ion-button fill="clear" (click)="onSubmit(this.constants.CHH_SITE__CODE__ALL,active3)" 
+  <ion-button id="ion-button-filter-both" fill="clear" (click)="onSubmit(this.constants.CHH_SITE__CODE__ALL,active3)" 
   [ngClass]="{'active-link':active3, 'notactive':!active3}" 
     class="link" size="small">
     {{this.functionsService.convertAllFirstLetterToUpperCase(this.constants.CHH_LABEL__VALUE__BOTH)}}
   </ion-button>
-  <ion-button fill="clear" (click)="onSubmit(this.constants.CHH_SITE__CODE__CEBU,active)" 
+  <ion-button id="ion-button-filter-cebu" fill="clear" (click)="onSubmit(this.constants.CHH_SITE__CODE__CEBU,active)" 
   [ngClass]="{'active-link':active, 'notactive':!active}" 
     class="link" size="small">
     {{this.functionsService.convertAllFirstLetterToUpperCase(this.constants.CHH_LABEL__VALUE__CEBU)}}
   </ion-button>
-  <ion-button fill="clear" (click)="onSubmit(this.constants.CHH_SITE__CODE__MANDAUE,active1)" 
+  <ion-button id="ion-button-filter-mandaue" fill="clear" (click)="onSubmit(this.constants.CHH_SITE__CODE__MANDAUE,active1)" 
   [ngClass]="{'active-link':active1, 'notactive':!active1}"
     class="link" size="small">
     {{this.functionsService.convertAllFirstLetterToUpperCase(this.constants.CHH_LABEL__VALUE__MANDAUE)}}
