@@ -38,6 +38,8 @@ context('Actions', () => {
             cy.whereAmI("http://localhost:8100/login");
             
         });
-});
+
+    });
 
  });
+

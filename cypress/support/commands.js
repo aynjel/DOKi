@@ -142,22 +142,23 @@ Cypress.Commands.add('navigateTabMenu', (startValue) =>{
     var buttonId="";
     if(startValue == 0 ){
         for (i = ndx; i < tabUrl.length; i++) {
-            buttonId = 'ion-button[id="' + tabButtonId[i] + '"]';
-            cy.get(buttonId).click();
-            cy.whereAmI(tabUrl[i]);
-            cy.wait(1000);
+            cy.goToTabMenu(i);
           };
     }else{
         for (i = ndx; i >= 0; i--) {
-            buttonId = 'ion-button[id="' + tabButtonId[i] + '"]';
-            cy.get(buttonId).click();
-            cy.whereAmI(tabUrl[i]);
-            cy.wait(1000);
+            cy.goToTabMenu(i);
           };
     }
 });
 
-
+// Goto Tab Menu
+Cypress.Commands.add('goToTabMenu', (tabIndex) =>{
+  var buttonId="";  
+    buttonId = 'ion-button[id="' + tabButtonId[tabIndex] + '"]';
+    cy.get(buttonId).click();
+    cy.whereAmI(tabUrl[tabIndex]);
+    cy.wait(1000);
+});
 
 var tabUrl = ["http://localhost:8100/menu/dashboard", 
 "http://localhost:8100/menu/in-patients", 
@@ -168,3 +169,8 @@ var tabButtonId = ["button-dashboard",
                    "button-appointments",  
                    "button-settings"                 
                     ];
+
+// Generate Random Number
+function generateRandomNumber(arrayLength){
+  return Math.floor(Math.random() * arrayLength); 
+}
