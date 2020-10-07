@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -7,11 +7,18 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./chh-app-privacy-policy.page.scss'],
 })
 export class ChhAppPrivacyPolicyPage implements OnInit {
+  @Input() origin: string;
+  @Input() lastName: string;
+  @Input() middleInitial: string;
   uxSaveCancel:boolean = true;
   constructor(public modalController: ModalController) { }
   isButtonColor1:boolean=true;
   isButtonColor2:boolean=true;
   ngOnInit() {
+    //console.log('asdasdasdasd');
+    console.log(this.origin);
+    
+    
   }
   async closeModal() {
     await this.modalController.dismiss(false);

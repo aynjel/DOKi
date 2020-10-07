@@ -110,6 +110,7 @@ export class LoginPage implements AfterViewInit {
       component: ChhAppPrivacyPolicyPage,
       componentProps: {
         backdropDismiss: true,
+        'origin': 'login'
       },
     });
     modal.onDidDismiss().then((data) => {

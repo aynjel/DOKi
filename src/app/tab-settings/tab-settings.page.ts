@@ -9,11 +9,11 @@ import { BehaviorSubject } from "rxjs";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
 import { Constants } from "../shared/constants";
 import { FunctionsService } from "../shared/functions/functions.service";
-import { ModalController } from '@ionic/angular';
+import { ActionSheetController, ModalController } from '@ionic/angular';
 import { ChhAppAddAppointmentsModalPage } from "../chh-web-components/chh-app-add-appointments-modal/chh-app-add-appointments-modal.page";
 import { ChhAppChangePasswordPage } from "../chh-web-components/chh-app-change-password/chh-app-change-password.page";
 import { ChhAppChangePassPage } from "../chh-web-components/chh-app-change-pass/chh-app-change-pass.page";
-
+import { ChhAppPrivacyPolicyPage } from "../chh-web-components/chh-app-privacy-policy/chh-app-privacy-policy.page"
 @Component({
   selector: "app-tab-settings",
   templateUrl: "tab-settings.page.html",
@@ -28,6 +28,7 @@ export class TabSettingsPage {
   darkmode: boolean = true;
   displayUserData: any;
   dr_name:any;
+  privacyPolicy:boolean = true;
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -37,8 +38,10 @@ export class TabSettingsPage {
     protected $gaService: GoogleAnalyticsService,
     public constants: Constants,
     public functionsService: FunctionsService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private actionSheetController:ActionSheetController
   ) {
+    this.privacyPolicy = true;
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         window.location.reload();
@@ -117,5 +120,59 @@ export class TabSettingsPage {
       //window.location.reload();
       this.router.navigate(["/login"]);
     });
+  }
+  
+  async optoutofprivacy(event: { detail: { checked: any } }) {
+
+    if (event.detail.checked) {}
+    else{
+
+      const actionSheet = await this.actionSheetController.create({
+        mode:'ios',
+        header: 'Are you sure you want to opt-out of our privacy Policy?',
+        cssClass: "my-custom-class",
+        buttons: [{
+          text: 'Yes, Opt-Out',
+          role: 'destructive',
+          icon: 'arrow-undo-outline',
+          handler: () => {
+            this.userData$.next("");
+            localStorage.removeItem("_cap_userDataKey");
+            this.router.navigate(["/login"]);
+          }
+        },  {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            this.privacyPolicy = true;
+          }
+        }]
+      });
+      await actionSheet.present();
+  
+    }
+  }
+
+  async viewPrivacyPolicy(){
+    let cssData;
+    if(this.isDesktop){
+      cssData ='my-privacy-modal-css'
+    }else{
+      cssData = "";
+    }
+    const modal = await this.modalController.create({
+      component: ChhAppPrivacyPolicyPage,
+      cssClass: cssData,
+      componentProps: {
+        backdropDismiss: true,
+        'origin': 'settings'
+      },
+
+    });
+    modal.onDidDismiss().then((data) => {
+
+    });
+    return await modal.present();
   }
 }
