@@ -160,6 +160,31 @@ Cypress.Commands.add('goToTabMenu', (tabIndex) =>{
     cy.wait(1000);
 });
 
+// Test In-Patients Detail
+Cypress.Commands.add('testInPatientsDetails', (site) =>{
+  cy.get('body').then(($body => {
+    // synchronously query from body
+    // to find which element was created
+    if ($body.find('h2').length) {
+      // p was found, do something else here
+      //return 'input'
+      cy.get('p').then((el)=> {
+        switch(site){
+          case "CEBU":
+            assert.include(el.text(), "Chong Hua Hospital");
+            break;
+          case "MANDAUE":
+            assert.include(el.text(), "Chong Hua Hospital Mandaue");
+            break;
+          case "BOTH":
+            assert.include(el.text(), "Chong Hua Hospital");
+            assert.include(el.text(), "Chong Hua Hospital Mandaue");
+        }
+      });
+    };
+}));
+});
+
 var tabUrl = ["http://localhost:8100/menu/dashboard", 
 "http://localhost:8100/menu/in-patients", 
 "http://localhost:8100/menu/appointments",
