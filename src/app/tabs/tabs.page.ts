@@ -5,6 +5,8 @@ import { StorageService } from "../services/storage/storage.service";
 import { AuthConstants } from "../config/auth-constants";
 import { Constants } from "../shared/constants";
 import { FunctionsService } from "../shared/functions/functions.service"
+import { Route } from '@angular/compiler/src/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-tabs",
@@ -20,7 +22,8 @@ export class TabsPage {
     private storageService: StorageService,
     private renderer: Renderer2,
     public constants: Constants,
-    public functionsService: FunctionsService
+    public functionsService: FunctionsService,
+    public router:Router
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
