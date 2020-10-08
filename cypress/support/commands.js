@@ -127,6 +127,7 @@ Cypress.Commands.add('login', (userName, password) =>{
         .type(password)
         .should("have.value", password);
     cy.acceptAgreementLoginContinue(false);
+    cy.wait(2000);
     cy.contains('Welcome');
   });
 
