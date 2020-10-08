@@ -1,4 +1,5 @@
 {
   "baseUrl": "http://localhost:8100/",
-  "projectId": "v1wydv"
+  "projectId": "v1wydv",
+  "retries": 3
 }
