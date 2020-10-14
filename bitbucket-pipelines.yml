@@ -18,7 +18,7 @@ pipelines:
                 - cypress/reports/**
                 - cypress/videos/**
     branches:
-        '{master,dev_branch}'
+        '{master,dev_branch}':
             - step:
                 name: Master and Dev Branch Pipe
                 script:
