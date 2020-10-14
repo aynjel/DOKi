@@ -1,22 +1,30 @@
 image: node:10.8.0
 options:
-  max-time: 15
+    max-time: 15
+
 pipelines:
-  default:
-  - step:
-      name: Pipeline Cypress E2E
-      caches:
-        - npm
-        - cypress
-      image: cypress/base:10
-      script:
-        - npm ci
-        - npx cypress run
-      artifacts:
-        - cypress/reports/**
-        - cypress/videos/**
+    default:
+        - step:
+            name: Pipeline Cypress E2E
+            caches:
+                - npm
+                - cypress
+            image: cypress/base:10
+            script:
+                - npm ci
+                - npx cypress run
+            artifacts:
+                - cypress/screenshots/**
+                - cypress/reports/**
+                - cypress/videos/**
+    branches:
+        '{master,dev_branch}'
+            - step:
+                name: Master and Dev Branch Pipe
+                script:
+                    - echo "master, dev_branch script here..."
 
 definitions:
-  caches:
-    npm: $HOME/.npm
-    cypress: $HOME/.cache/Cypress
+    caches:
+        npm: $HOME/.npm
+        cypress: $HOME/.cache/Cypress
