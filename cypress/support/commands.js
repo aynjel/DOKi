@@ -42,35 +42,35 @@ Cypress.Commands.add('swipeLeft', () => {
  */
 // First Slide
 Cypress.Commands.add('firstSlideGoRight', () => {
-    cy.get('ion-button[id="first-slide-button-right"]').click();
+    cy.get('ion-button[id="first-slide-button-right"]').click().end();
   });
 
 // Second Slide
 Cypress.Commands.add('secondSlideGoRight', () => {
-    cy.get('ion-button[id="second-slide-button-right"]').click();
+    cy.get('ion-button[id="second-slide-button-right"]').click().end();
   });
   Cypress.Commands.add('secondSlideGoLeft', () => {
-    cy.get('ion-button[id="second-slide-button-left"]').click();
+    cy.get('ion-button[id="second-slide-button-left"]').click().end();
   });
 
 // Third Slide
   Cypress.Commands.add('thirdSlideGoRight', () => {
-    cy.get('ion-button[id="third-slide-button-right"]').click();
+    cy.get('ion-button[id="third-slide-button-right"]').click().end();
   });
   Cypress.Commands.add('thirdSlideGoLeft', () => {
-    cy.get('ion-button[id="third-slide-button-left"]').click();
+    cy.get('ion-button[id="third-slide-button-left"]').click().end();
   });
 
 // Fourth Slide
 Cypress.Commands.add('fourthSlideGoLeft', () => {
-    cy.get('ion-button[id="fourth-slide-button-left"]').click();
+    cy.get('ion-button[id="fourth-slide-button-left"]').click().end();
   });
 
 
   // Do Clickable Element
   Cypress.Commands.add('doClick', (elementText) =>{
-    cy.contains(elementText).click();
-    cy.wait(1000);
+    cy.contains(elementText).click().end();
+    //cy.wait(1000);
   });
 
 
@@ -127,8 +127,8 @@ Cypress.Commands.add('login', (userName, password) =>{
         .type(password)
         .should("have.value", password);
     cy.acceptAgreementLoginContinue(false);
-    cy.wait(2000);
-    cy.contains('Welcome');
+    cy.wait(5000);
+    cy.contains('Welcome').end();
   });
 
 // Where Am I
@@ -186,10 +186,46 @@ Cypress.Commands.add('testInPatientsDetails', (site) =>{
 }));
 });
 
-var tabUrl = ["http://localhost:8100/menu/dashboard", 
-"http://localhost:8100/menu/in-patients", 
-"http://localhost:8100/menu/appointments",
-"http://localhost:8100/menu/settings"];
+/**
+ * Test Onboarding Left to Right
+ */
+Cypress.Commands.add("onboarding", () => {
+  cy.get("ion-grid");
+  cy.wait(1000);
+  // Left To Right
+  cy.firstSlideGoRight();
+  cy.wait(1000);
+  cy.secondSlideGoRight();
+  cy.wait(1000);
+  cy.thirdSlideGoRight();
+  cy.wait(1000);
+
+  cy.doClick("LET'S GO!");
+  //cy.doClick("INSTALL");
+  cy.wait(1000);
+  cy.whereAmI(loginUrl);
+});
+
+/**
+ * Test Jump to Login from Onboarding
+ */
+Cypress.Commands.add("jumpToLogin", () => {
+  cy.visit("/");
+  cy.wait(5000);
+  cy.doClick("LET'S GO!");
+  //cy.doClick("INSTALL");
+  //cy.wait(1000);
+  cy.whereAmI(loginUrl);
+});
+
+var loginUrl = Cypress.env("baseUrlToTest") + Cypress.env("loginUrl");
+var dashboardUrl = Cypress.env("baseUrlToTest") + Cypress.env("dashboardUrl");
+var inpatientsUrl = Cypress.env("baseUrlToTest") + Cypress.env("inpatientsUrl");
+var appointmentsUrl = Cypress.env("baseUrlToTest") + Cypress.env("appointmentsUrl");
+var settingsUrl = Cypress.env("baseUrlToTest") + Cypress.env("settingsUrl");
+
+var tabUrl = [dashboardUrl, inpatientsUrl, appointmentsUrl, settingsUrl];
+
 var tabButtonId = ["button-dashboard",
                    "button-in-patients", 
                    "button-appointments",  
