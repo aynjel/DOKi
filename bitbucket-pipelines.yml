@@ -34,7 +34,7 @@ pipelines:
                 size: 2x
                 script:
                     - echo "Building and then Test the app..."
-                    - docker-compose -f docker-compose-cypress.yml build 
+                    #- docker-compose -f docker-compose-cypress.yml build 
                     - docker-compose -f docker-compose-cypress.yml up --exit-code-from cypress
                     #- npm ci
                     #- npx cypress run

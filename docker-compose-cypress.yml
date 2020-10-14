@@ -18,7 +18,7 @@ services:
     image: "cypress/included:5.3.0"
     container_name: cypress
     #restart: unless-stopped
-    command: "--browser chrome"
+    command: "npm run cypress:run:record"
     depends_on:
       - pwa
     environment:
@@ -30,7 +30,7 @@ services:
       - ./:/e2e
 
 # Just added a comment to test pipeline trigger.
-      
+
 # services: 
 #     # this container will run Cypress test using Chrome browser
 #     e2e-chrome:
