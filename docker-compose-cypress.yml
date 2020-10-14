@@ -16,8 +16,7 @@ services:
     # the Docker image to use from https://github.com/cypress-io/cypress-docker-images
     image: "cypress/included:5.3.0"
     container_name: cypress
-    ipc: host
-    #restart: unless-stopped
+    #ipc: host
     entrypoint: "npm run cypress:run:record"
     depends_on:
       - pwa
