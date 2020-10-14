@@ -1,22 +1,24 @@
 image: node:10.8.0
 options:
     max-time: 15
+    docker: true
+    size: 2x
 
 pipelines:
-    default:
-        - step:
-            name: Pipeline Cypress E2E
-            caches:
-                - npm
-                - cypress
-            image: cypress/base:10
-            script:
-                - npm ci
-                - npx cypress run
-            artifacts:
-                - cypress/screenshots/**
-                - cypress/reports/**
-                - cypress/videos/**
+    # default:
+    #     - step:
+    #         name: Pipeline Cypress E2E
+    #         caches:
+    #             - npm
+    #             - cypress
+    #         image: cypress/base:10
+    #         script:
+    #             - npm ci
+    #             - npx cypress run
+    #         artifacts:
+    #             - cypress/screenshots/**
+    #             - cypress/reports/**
+    #             - cypress/videos/**
     branches:
         '{master,dev_branch}':
             - step:
@@ -29,6 +31,7 @@ pipelines:
                 image: docker/compose:latest
                 services:
                     - docker
+                size: 2x
                 script:
                     - echo "Building and then Test the app..."
                     - docker-compose -f docker-compose-cypress.yml build 
@@ -44,3 +47,6 @@ definitions:
     caches:
         npm: $HOME/.npm
         cypress: $HOME/.cache/Cypress
+    services:
+        docker:
+            memory: 4096
