@@ -22,11 +22,11 @@ pipelines:
     branches:
         '{master,dev_branch}':
             - step:
-                name: Doctors' Portal PWA E2E Tests
+                name: PWA E2E Tests
                 caches:
                     - docker
-                #    - npm
-                #    - cypress
+                    - npm
+                    - cypress
                 #image: cypress/base:10
                 image: docker/compose:latest
                 services:
@@ -36,12 +36,10 @@ pipelines:
                     - echo "Building and then Test the app..."
                     #- docker-compose -f docker-compose-cypress.yml build 
                     - docker-compose -f docker-compose-cypress.yml up --exit-code-from cypress
-                    #- npm ci
-                    #- npx cypress run
-                #artifacts:
-                    #- cypress/screenshots/**
-                    #- cypress/reports/**
-                    #- cypress/videos/**
+                artifacts:
+                    - cypress/screenshots/**
+                    - cypress/reports/**
+                    - cypress/videos/**
 
 definitions:
     caches:
