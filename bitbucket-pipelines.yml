@@ -1,0 +1,22 @@
+image: node:10.8.0
+options:
+  max-time: 15
+pipelines:
+  default:
+  - step:
+      name: Pipeline Cypress E2E
+      caches:
+        - npm
+        - cypress
+      image: cypress/base:10
+      script:
+        - npm ci
+        - npx cypress run
+      artifacts:
+        - cypress/reports/**
+        - cypress/videos/**
+
+definitions:
+  caches:
+    npm: $HOME/.npm
+    cypress: $HOME/.cache/Cypress
