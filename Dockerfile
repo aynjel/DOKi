@@ -25,7 +25,7 @@ WORKDIR ${BUILD_APP_SOURCE_DIR}
     # RUN npm install -g npm@latest
     # RUN npm install -g @angular/cli 
 RUN npm install -g @ionic/cli
-COPY package*.json ./             
+COPY package.json ./             
 # -- If building our code for production
 # RUN npm ci --only=production  
 #   -- Running npm ci production resulted to a build error if there's no package lock JSON file. 
