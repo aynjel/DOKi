@@ -21,8 +21,18 @@ pipelines:
         '{master,dev_branch}':
             - step:
                 name: Master and Dev Branch Pipe
+                caches:
+                    - npm
+                    - cypress
+                image: cypress/base:10
                 script:
-                    - echo "master, dev_branch script here..."
+                    - echo "Running Cypress CI..."
+                    - npm ci
+                    - npx cypress run
+                artifacts:
+                    - cypress/screenshots/**
+                    - cypress/reports/**
+                    - cypress/videos/**
 
 definitions:
     caches:
