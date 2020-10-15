@@ -40,6 +40,19 @@ pipelines:
                     - cypress/screenshots/**
                     - cypress/reports/**
                     - cypress/videos/**
+            - step:
+                name: Deploy to Test Env
+                deployment: staging
+                script:
+                    - pipe: atlassian/sftp-deploy:0.5.6
+                      variables:
+                        USER: $DPP_USER
+                        SERVER: $DPP_SERVER
+                        REMOTE_PATH: $DPP_REMOTE_PATH
+                        LOCAL_PATH: 'www'
+                        PASSWORD: $DPP_PASSWORD
+                        #DELETE_FLAG: 'false' # Don't delete existing files
+                        #EXTRA_ARGS: "--exclude=.bitbucket/ --exclude=.git/ --exclude=bitbucket-pipelines.yml --exclude=.gitignore" # Ignore these
 
 definitions:
     caches:
