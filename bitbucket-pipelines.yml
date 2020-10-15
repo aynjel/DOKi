@@ -49,7 +49,7 @@ pipelines:
                         USER: $DPP_USER
                         SERVER: $DPP_SERVER
                         REMOTE_PATH: $DPP_REMOTE_PATH
-                        LOCAL_PATH: 'www'
+                        LOCAL_PATH: $DPP_LOCAL_PATH
                         PASSWORD: $DPP_PASSWORD
                         #DELETE_FLAG: 'false' # Don't delete existing files
                         #EXTRA_ARGS: "--exclude=.bitbucket/ --exclude=.git/ --exclude=bitbucket-pipelines.yml --exclude=.gitignore" # Ignore these
