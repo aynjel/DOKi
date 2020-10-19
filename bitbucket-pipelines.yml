@@ -25,6 +25,8 @@ pipelines:
                 name: PWA E2E Tests
                 caches:
                     - docker
+                    - composer
+                    - node 
                     - npm
                     - cypress
                 #image: cypress/base:10
@@ -37,6 +39,7 @@ pipelines:
                     #- docker-compose -f docker-compose-cypress.yml build 
                     - docker-compose -f docker-compose-cypress.yml up --exit-code-from cypress
                 artifacts:
+                    # Include built output 
                     - cypress/screenshots/**
                     - cypress/reports/**
                     - cypress/videos/**
