@@ -102,9 +102,34 @@ export class LoginPage implements AfterViewInit {
     this.$gaService.pageView("/login", "Login Page");
   }
 
+  checkPrivacyPolicy(){
+    let x:boolean = false;
+    let y=0;
+    this.authService
+      .mockGetPrivacy()
+      .subscribe(
+        (res: any) => {
 
+          Object.keys(res).forEach(function (key){
+           
+           if(res[key].accepted == true || res[key].accepted == false){
+              if(res[key].accepted ){
+                x=true;
+              }
+              
+           }
+           
+           
+        });
+        });
+        
+        if(x){
+          this.loginAction();
+        }else{
+          this.privacyPolicy();
+        }
 
-
+  }
   async privacyPolicy(){
     const modal = await this.modalController.create({
       component: ChhAppPrivacyPolicyPage,
@@ -114,7 +139,7 @@ export class LoginPage implements AfterViewInit {
       },
     });
     modal.onDidDismiss().then((data) => {
-      console.log(data.data);
+
       if(data.data){
         this.loginAction();
       }else{
@@ -123,19 +148,9 @@ export class LoginPage implements AfterViewInit {
     });
     return await modal.present();
   }
+
+
   loginAction() {
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     this.btnDisable = true;
@@ -205,4 +220,6 @@ export class LoginPage implements AfterViewInit {
 
         /*For Doctors Portal */
   }
+
+
 }

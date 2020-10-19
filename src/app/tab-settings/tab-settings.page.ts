@@ -25,10 +25,18 @@ export class TabSettingsPage {
   public logindata: LoginData;
   account: LoginData;
   isDesktop: boolean;
-  darkmode: boolean = true;
+
   displayUserData: any;
   dr_name:any;
   privacyPolicy:boolean = true;
+
+  //toggles
+  smsAdmitted:boolean = true;
+  smsDischarge:boolean = true;
+  pushNotiAdmitted = false;
+  pushNotiDischarge = false;
+  darkmode: boolean = true;
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -95,6 +103,29 @@ export class TabSettingsPage {
     } else {
       this.darkmode = false;
     }
+
+
+
+    //mock Codes
+    let x:boolean = false;
+    let y=0;
+    this.authService.mockUserSettings().subscribe((res: any) => {
+    
+      
+      let data = JSON.stringify(res);
+      console.log(data);
+      
+      data = '['+data+']';
+      let adat = JSON.parse(data);
+      adat.forEach(element => {
+
+          this.smsAdmitted  = element.smsNotifications.patientAdmitted;
+          this.smsDischarge  = element.smsNotifications.patientDischarged;
+          this.pushNotiAdmitted  = element.pushNotifications.patientAdmitted;
+          this.pushNotiDischarge  = element.pushNotifications.patientDischarged;
+ 
+      });
+    });
   }
 
   onDarkModeEnable(event: { detail: { checked: any } }) {

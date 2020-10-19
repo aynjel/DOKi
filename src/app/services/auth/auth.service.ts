@@ -6,7 +6,12 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { HttpService } from "../http/http.service";
 import { LoginData } from "../../models/login-data.model";
 import { FunctionsService } from "../../shared/functions/functions.service";
-
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpUrlEncodingCodec,
+  HttpParams,
+} from "@angular/common/http";
 @Injectable({ 
   providedIn: "root",
 })
@@ -18,7 +23,8 @@ export class AuthService {
     private httpService: HttpService,
     private storageService: StorageService,
     private router: Router,
-    public functionsService: FunctionsService
+    public functionsService: FunctionsService,
+    private http: HttpClient
   ) {}
 
   getUserData() {
@@ -59,4 +65,40 @@ export class AuthService {
     return this.httpService.getAppointments('Login/Get?', postData1, postData2);
   }*/
   /*For Doctors Portal */
+
+
+
+
+
+
+
+
+
+
+
+  //TEMPORARY CODES
+  mockGetPrivacy() {
+    /*
+    const headers = new HttpHeaders({
+      "Cache-Control":
+        "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
+      Pragma: "no-cache",
+      Expires: "0",
+    });*/
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredentials: false };
+    const url = 'https://5062fd91-27be-4d0f-af3e-9d283d0a4af4.mock.pstmn.io/api/PrivatePolicy/Get?drCode=MD000555';
+    return this.http.get(url);
+    //return this.http.get(url, options);
+  }
+
+
+
+  mockUserSettings(){
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredentials: false };
+    const url = 'https://5062fd91-27be-4d0f-af3e-9d283d0a4af4.mock.pstmn.io/api/UserSettings/Get?drCode=MD000123';
+    return this.http.get(url);
+
+  }
 }
