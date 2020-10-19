@@ -28,7 +28,11 @@ const routes: Routes = [
     path        : '**',
     pathMatch   : 'full',
     loadChildren: () => import('../app/chh-web-components/chh-app-error-404/chh-app-error-404.module').then( m => m.ChhAppError404PageModule)
-}
+},  {
+    path: 'chh-app-terms-and-conditions',
+    loadChildren: () => import('./chh-web-components/chh-app-terms-and-conditions/chh-app-terms-and-conditions.module').then( m => m.ChhAppTermsAndConditionsPageModule)
+  }
+
 
 ];
 @NgModule({
