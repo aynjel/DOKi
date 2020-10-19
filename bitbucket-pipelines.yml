@@ -25,7 +25,6 @@ pipelines:
                 name: PWA E2E Tests
                 caches:
                     - docker
-                    - composer
                     - node 
                     - npm
                     - cypress
@@ -37,6 +36,7 @@ pipelines:
                 script:
                     - echo "Building and then Test the app..."
                     #- docker-compose -f docker-compose-cypress.yml build 
+                    - npx eslint --format=checkstyle -o checkstyle-result.xml *.js
                     - docker-compose -f docker-compose-cypress.yml up --exit-code-from cypress
                 artifacts:
                     # Include built output 
