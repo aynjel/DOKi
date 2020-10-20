@@ -36,8 +36,10 @@ pipelines:
                 script:
                     - echo "Building and then Test the app..."
                     #- docker-compose -f docker-compose-cypress.yml build 
-                    - npx eslint --format=checkstyle -o checkstyle-result.xml *.js
                     - docker-compose -f docker-compose-cypress.yml up --exit-code-from cypress
+                    - npx eslint --format=checkstyle -o checkstyle-result.xml *.js
+                after-script:
+                    - pipe: atlassian/checkstyle-report:0.2.0
                 artifacts:
                     # Include built output 
                     - cypress/screenshots/**
