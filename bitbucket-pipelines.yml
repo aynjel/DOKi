@@ -2,23 +2,23 @@ image: node:10.8.0
 options:
     max-time: 15
     docker: true
-    size: 2x
+    size: 2x    
 
 pipelines:
-    # default:
-    #     - step:
-    #         name: Pipeline Cypress E2E
-    #         caches:
-    #             - npm
-    #             - cypress
-    #         image: cypress/base:10
-    #         script:
-    #             - npm ci
-    #             - npx cypress run
-    #         artifacts:
-    #             - cypress/screenshots/**
-    #             - cypress/reports/**
-    #             - cypress/videos/**
+    default:
+        - step:
+            name: Pipeline Cypress E2E
+            caches:
+                - npm
+                - cypress
+            image: cypress/base:10
+            script:
+                - npm ci
+                - npx cypress run
+            artifacts:
+                - cypress/screenshots/**
+                - cypress/reports/**
+                - cypress/videos/**
     branches:
         '{master,dev_branch}':
             - step:
@@ -35,11 +35,11 @@ pipelines:
                 script:
                     - echo "Building and then Test the app..."
                     #- docker-compose -f docker-compose-cypress.yml build 
-                    - docker-compose -f docker-compose-cypress.yml up --exit-code-from cypress
-                artifacts:
-                    - cypress/screenshots/**
-                    - cypress/reports/**
-                    - cypress/videos/**
+                    #- docker-compose -f docker-compose-cypress.yml up --exit-code-from cypress
+                #artifacts:
+                #    - cypress/screenshots/**
+                #    - cypress/reports/**
+                #    - cypress/videos/**
             - step:
                 name: Deploy to Test Env
                 deployment: staging
