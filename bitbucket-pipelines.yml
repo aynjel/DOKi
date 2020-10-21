@@ -13,6 +13,8 @@ pipelines:
                 - cypress
             image: cypress/base:10
             script:
+                - npm install -g @ionic/cli
+                - npm install
                 - ionic build --prod
                 - npm ci
                 - npx cypress run
