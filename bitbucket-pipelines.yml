@@ -13,6 +13,7 @@ pipelines:
                 - cypress
             image: cypress/base:10
             script:
+                - ionic build --prod
                 - npm ci
                 - npx cypress run
             artifacts:
