@@ -29,7 +29,8 @@ export class TabSettingsPage {
 
   displayUserData: any;
   dr_name:any;
-  privacyPolicy:boolean = true;
+  dr_code:any;
+
 
   //toggles
   smsAdmitted:boolean = true;
@@ -37,7 +38,10 @@ export class TabSettingsPage {
   pushNotiAdmitted = false;
   pushNotiDischarge = false;
   darkmode: boolean = true;
+  privacyPolicy:boolean = true;
 
+  draftJson:any;
+  draftJson2:any;
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -57,6 +61,13 @@ export class TabSettingsPage {
       }
       this.isDesktop = isDesktop;
     });
+    this.authService.mockGetAppSetting().subscribe(
+      (res: any) => {  
+        console.log('constructor');
+            
+        let data = JSON.stringify(res);data = '['+data+']';this.draftJson = JSON.parse(data);
+      });
+
   }
 
 
@@ -88,15 +99,69 @@ export class TabSettingsPage {
     return await modal.present();
   }
   
-  ngOnInit(){}
-  ionViewWillEnter() {
+  ngOnInit(){
 
+    
+  }
+  ionViewWillEnter() {
+   
+
+    
     this.$gaService.pageView('/Settings', 'Settings Tab');
     this.logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_name = this.logindata[0].last_name;
+    this.dr_code = this.logindata[0].dr_code;
+
+
+    console.log('------------------------------------------');
+    let xxx = this.authService.mockGetUserSettings('DPP',this.dr_code).pipe().subscribe();
+    console.log(xxx);
+    console.log('------------------------------------------');
+
+      
+    this.authService.mockGetUserSettings('DPP',this.dr_code).subscribe(
+      (res: any) => {
+        let data = JSON.stringify(res);data = '['+data+']';this.draftJson2 = JSON.parse(data);
+        console.log('FIRST RUN --->>>>');
+        console.log(JSON.stringify(this.draftJson));
+        if (typeof this.draftJson2[0].smsNotification !== 'undefined') {
+
+        }
+        if (typeof this.draftJson2[0].pushNotification !== 'undefined') {
+
+        }
+        if (typeof this.draftJson2[0].appearance !== 'undefined') {
+
+        }
+        if (typeof this.draftJson2[0].privacyPolicy !== 'undefined') {
+            this.draftJson[0].privacyPolicy.accepted = this.draftJson2[0].privacyPolicy.accepted;
+            
+        }
+        console.log('SECOND RUN --->>>>');
+        console.log(JSON.stringify(this.draftJson));
+        /*
+        
+        
+          if (typeof this.draftJson2[0].smsNotification.patientAdmitted !== 'undefined') {
+
+              
+          }
+      
+        */
+        
+      });
+
+
+
+
+
+
+
+
+    
     this.$gaService.event('Settings','User Flow',this.dr_name);
     this.authService.userData$.subscribe((res: any) => {
-      this.functionsService.logToConsole(res);
+      //this.functionsService.logToConsole(res);
       this.account = <LoginData>res;
     });
     if (localStorage.getItem("darkmode") == "true") {
@@ -108,6 +173,7 @@ export class TabSettingsPage {
 
 
     //mock Codes
+    /*
     let x:boolean = false;
     let y=0;
     this.authService.mockUserSettings().subscribe((res: any) => {
@@ -126,11 +192,12 @@ export class TabSettingsPage {
           this.pushNotiDischarge  = element.pushNotifications.patientDischarged;
  
       });
-    });
+    });*/
   }
 
   onDarkModeEnable(event: { detail: { checked: any } }) {
     if (event.detail.checked) {
+      
       this.renderer.setAttribute(document.body, "color-theme", "dark");
       localStorage.setItem('darkmode','true');
           this.$gaService.event('Settings - Dark Mode True','User Flow',this.dr_name);
@@ -168,6 +235,8 @@ export class TabSettingsPage {
           role: 'destructive',
           icon: 'arrow-undo-outline',
           handler: () => {
+            let smpJSON = '{"username": "'+this.dr_code+'","appcode": "DPP","setting": "privacyPolicy","property": "accepted","value": "0"}';
+            this.authService.mockUpdateUserSettings(smpJSON).subscribe((res: any) => {});
             this.userData$.next("");
             localStorage.removeItem("_cap_userDataKey");
             this.router.navigate(["/login"]);

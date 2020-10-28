@@ -26,8 +26,13 @@ export class ChhAppPrivacyPolicyPage implements OnInit {
   save(){
      this.modalController.dismiss(true);
   }
-  accept(){
-    this.uxSaveCancel = false;
+  accept(event: { detail: { checked: any } }){
+
+    
+    
+    if (event.detail.checked) {this.uxSaveCancel = false;}
+    else{this.uxSaveCancel = true;}
+
   }
   public getColor1() {
     return this.isButtonColor1 ? 'primary' : 'light';
