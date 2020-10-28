@@ -14,6 +14,7 @@ import { ChhAppAddAppointmentsModalPage } from "../chh-web-components/chh-app-ad
 import { ChhAppChangePasswordPage } from "../chh-web-components/chh-app-change-password/chh-app-change-password.page";
 import { ChhAppChangePassPage } from "../chh-web-components/chh-app-change-pass/chh-app-change-pass.page";
 import { ChhAppPrivacyPolicyPage } from "../chh-web-components/chh-app-privacy-policy/chh-app-privacy-policy.page"
+import { ChhAppTermsAndConditionsPage } from "../chh-web-components/chh-app-terms-and-conditions/chh-app-terms-and-conditions.page";
 @Component({
   selector: "app-tab-settings",
   templateUrl: "tab-settings.page.html",
@@ -194,6 +195,27 @@ export class TabSettingsPage {
     }
     const modal = await this.modalController.create({
       component: ChhAppPrivacyPolicyPage,
+      cssClass: cssData,
+      componentProps: {
+        backdropDismiss: true,
+        'origin': 'settings'
+      },
+
+    });
+    modal.onDidDismiss().then((data) => {
+
+    });
+    return await modal.present();
+  }
+  async viewTermsAndCondition(){
+    let cssData;
+    if(this.isDesktop){
+      cssData ='my-privacy-modal-css'
+    }else{
+      cssData = "";
+    }
+    const modal = await this.modalController.create({
+      component: ChhAppTermsAndConditionsPage,
       cssClass: cssData,
       componentProps: {
         backdropDismiss: true,

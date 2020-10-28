@@ -19,6 +19,7 @@ import { ChhAppInPatientModalPageModule } from "../app/chh-web-components/chh-ap
 import { ChhAppAddAppointmentsModalPageModule } from "../app/chh-web-components/chh-app-add-appointments-modal/chh-app-add-appointments-modal.module";
 import { ChhAppChangePassPageModule } from "../app/chh-web-components/chh-app-change-pass/chh-app-change-pass.module";
 import { ChhAppPrivacyPolicyPageModule } from "./chh-web-components/chh-app-privacy-policy/chh-app-privacy-policy.module"
+import { ChhAppTermsAndConditionsPageModule } from "./chh-web-components/chh-app-terms-and-conditions/chh-app-terms-and-conditions.module"
 //import { SliderPageModule } from './components/slider/slider.module';
 //import { defineCustomElements } from '@teamhive/lottie-player/loader';
 
@@ -44,6 +45,7 @@ import { Messages } from "../app/shared/messages";
     ChhAppInPatientModalPageModule,
     ChhAppAddAppointmentsModalPageModule,
     ChhAppPrivacyPolicyPageModule,
+    ChhAppTermsAndConditionsPageModule,
     ChhAppChangePassPageModule,
     NgxGoogleAnalyticsModule.forRoot('UA-175566562-1'),
     NgxGoogleAnalyticsRouterModule,
