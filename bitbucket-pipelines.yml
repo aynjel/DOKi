@@ -39,7 +39,6 @@ pipelines:
                 script:
                     - echo "Building and then Test the app..."
                     #- docker-compose -f docker-compose-cypress.yml build 
-<<<<<<< HEAD
                     - npx eslint --format=checkstyle -o checkstyle-result.xml *.js
                     - docker-compose -f docker-compose-cypress.yml up --exit-code-from cypress
                 artifacts:
@@ -47,13 +46,6 @@ pipelines:
                     - cypress/screenshots/**
                     - cypress/reports/**
                     - cypress/videos/**
-=======
-                    #- docker-compose -f docker-compose-cypress.yml up --exit-code-from cypress
-                #artifacts:
-                #    - cypress/screenshots/**
-                #    - cypress/reports/**
-                #    - cypress/videos/**
->>>>>>> origin/DPP-395
             - step:
                 name: Deploy to Test Env
                 deployment: staging
