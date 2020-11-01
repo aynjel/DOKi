@@ -1,5 +1,5 @@
 #image: node:10.8.0
-image: coolnumber9/node-ionic-angular-cypress:nov2020-v1.0.0
+image: coolnumber9/node-ionic-angular:nov2020-v1.0.1
 options:
   max-time: 15
   docker: true
