@@ -8,11 +8,13 @@ options:
 pipelines:
   default:
     - step:
-        name: Build
-        #caches:
-        #  - npm
+        name: Install and Build
+        caches:
+          - npm
+          - cypress
         script:
-        #  - npm install
+          - npm install -g cypress --unsafe-perm --silent
+          - npm install
           - ionic build --prod
     - step:
         name: E2E using Cypress
