@@ -11,7 +11,7 @@ pipelines:
         name: Pipeline Cypress E2E
         caches:
           - npm
-          - cypress
+        #  - cypress
         # image: cypress/base:10
         script:
           #     - npm install -g @ionic/cli
