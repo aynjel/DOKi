@@ -8,18 +8,25 @@ options:
 pipelines:
   default:
     - step:
-        name: Pipeline Cypress E2E
+        name: Install dependencies and Build
         caches:
           - npm
-        #  - cypress
-        # image: cypress/base:10
         script:
-          #     - npm install -g @ionic/cli
           - npm install
           - ionic build --prod
+    - step:
+        name: E2E using Cypress
+        caches:
+          - npm
+          - cypress
+        image: cypress/base:10
+        script:
+          # - npm install -g @ionic/cli
+          # - npm install
+          # - ionic build --prod
           - npm ci
           - npm cypress:run
-        #     - npm run cypress:run:record
+         # - npm run cypress:run:record
         artifacts:
           - cypress/screenshots/**
           - cypress/reports/**
