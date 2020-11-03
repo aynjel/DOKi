@@ -47,11 +47,11 @@ export class IndexPage implements OnInit {
     this.$gaService.pageView("/index", "Index Page");
   }
   moveToNext(slides){
-    console.log(slides);
+    //console.log(slides);
     slides.slideNext();
 }
 moveToPrev(slides){
-  console.log(slides);
+  //console.log(slides);
   slides.slidePrev();
 }
   initPwaPrompt() {

@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { StorageService } from "../services/storage/storage.service";
 import { AuthConstants } from "../config/auth-constants";
 import { ScreenSizeService } from "../services/screen-size/screen-size.service";
+import { PatientService } from "../services/patient/patient.service";
 import { LoginData } from "../models/login-data.model";
 import { BehaviorSubject } from "rxjs";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
@@ -42,6 +43,11 @@ export class TabSettingsPage {
 
   draftJson:any;
   draftJson2:any;
+
+  isset_smsNotification:boolean = false;
+  isset_pushNotification:boolean = false;
+  isset_appearance:boolean = false;
+  isset_privacyPolicy:boolean = false;
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -52,7 +58,8 @@ export class TabSettingsPage {
     public constants: Constants,
     public functionsService: FunctionsService,
     private modalController: ModalController,
-    private actionSheetController:ActionSheetController
+    private actionSheetController:ActionSheetController,
+    private patientService:PatientService
   ) {
     this.privacyPolicy = true;
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
@@ -61,10 +68,9 @@ export class TabSettingsPage {
       }
       this.isDesktop = isDesktop;
     });
-    this.authService.mockGetAppSetting().subscribe(
+    this.patientService.getAppSetting().subscribe(
       (res: any) => {  
-        console.log('constructor');
-            
+           
         let data = JSON.stringify(res);data = '['+data+']';this.draftJson = JSON.parse(data);
       });
 
@@ -104,7 +110,7 @@ export class TabSettingsPage {
     
   }
   ionViewWillEnter() {
-   
+
 
     
     this.$gaService.pageView('/Settings', 'Settings Tab');
@@ -112,43 +118,37 @@ export class TabSettingsPage {
     this.dr_name = this.logindata[0].last_name;
     this.dr_code = this.logindata[0].dr_code;
 
-
-    console.log('------------------------------------------');
-    let xxx = this.authService.mockGetUserSettings('DPP',this.dr_code).pipe().subscribe();
-    console.log(xxx);
-    console.log('------------------------------------------');
-
-      
-    this.authService.mockGetUserSettings('DPP',this.dr_code).subscribe(
+    
+    this.patientService.getUserSettings('DPP',this.dr_code).subscribe(
       (res: any) => {
         let data = JSON.stringify(res);data = '['+data+']';this.draftJson2 = JSON.parse(data);
         console.log('FIRST RUN --->>>>');
         console.log(JSON.stringify(this.draftJson));
         if (typeof this.draftJson2[0].smsNotification !== 'undefined') {
-
+          this.isset_smsNotification = true;
+        }else{
+          this.isset_smsNotification = false;
         }
         if (typeof this.draftJson2[0].pushNotification !== 'undefined') {
-
+          this.isset_pushNotification = true;
+        }else{
+          this.isset_pushNotification = false;
         }
         if (typeof this.draftJson2[0].appearance !== 'undefined') {
-
+          this.isset_appearance = true;
+        }else{
+          this.isset_appearance = false;
         }
         if (typeof this.draftJson2[0].privacyPolicy !== 'undefined') {
+          this.isset_privacyPolicy = true;
             this.draftJson[0].privacyPolicy.accepted = this.draftJson2[0].privacyPolicy.accepted;
             
+        }else{
+          this.isset_privacyPolicy = false;
         }
         console.log('SECOND RUN --->>>>');
         console.log(JSON.stringify(this.draftJson));
-        /*
-        
-        
-          if (typeof this.draftJson2[0].smsNotification.patientAdmitted !== 'undefined') {
-
-              
-          }
       
-        */
-        
       });
 
 
@@ -170,44 +170,42 @@ export class TabSettingsPage {
       this.darkmode = false;
     }
 
-
-
-    //mock Codes
-    /*
-    let x:boolean = false;
-    let y=0;
-    this.authService.mockUserSettings().subscribe((res: any) => {
-    
-      
-      let data = JSON.stringify(res);
-      console.log(data);
-      
-      data = '['+data+']';
-      let adat = JSON.parse(data);
-      adat.forEach(element => {
-
-          this.smsAdmitted  = element.smsNotifications.patientAdmitted;
-          this.smsDischarge  = element.smsNotifications.patientDischarged;
-          this.pushNotiAdmitted  = element.pushNotifications.patientAdmitted;
-          this.pushNotiDischarge  = element.pushNotifications.patientDischarged;
- 
-      });
-    });*/
   }
 
   onDarkModeEnable(event: { detail: { checked: any } }) {
+    let value = 0;
     if (event.detail.checked) {
-      
+      value = 1;
       this.renderer.setAttribute(document.body, "color-theme", "dark");
       localStorage.setItem('darkmode','true');
           this.$gaService.event('Settings - Dark Mode True','User Flow',this.dr_name);
     } else {
+      value =0;
       this.renderer.setAttribute(document.body, "color-theme", "light");
       localStorage.setItem('darkmode','false');
       this.$gaService.event('Settings - Dark Mode False','User Flow',this.dr_name);
     }
     //if(this.isDesktop){window.location.reload();}
+    this.updateOrInsert(this.dr_code,'DPP','appearance','darkmode',value,this.isset_appearance);
+     
+   
   }
+
+
+
+  updateOrInsert(username:any, appcode:any, settings:any, property:any,value:any,flag:boolean){
+    let smpJSON = '{"username": "'+username+'","appcode": "'+appcode+'","setting": "'+settings+'","property": "'+property+'","value": "'+value+'"}';
+    if(flag){
+      this.patientService.updateUserSettings(smpJSON).subscribe((res1: any) => {});
+    }else{
+      this.isset_appearance = true;
+      this.patientService.insertUserSettings(smpJSON).subscribe((res1: any) => {});
+    }
+  }
+
+
+
+
 
   logout() {
     this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
@@ -236,10 +234,14 @@ export class TabSettingsPage {
           icon: 'arrow-undo-outline',
           handler: () => {
             let smpJSON = '{"username": "'+this.dr_code+'","appcode": "DPP","setting": "privacyPolicy","property": "accepted","value": "0"}';
-            this.authService.mockUpdateUserSettings(smpJSON).subscribe((res: any) => {});
+
+            this.updateOrInsert(this.dr_code,'DPP','privacyPolicy','accepted',0,this.isset_privacyPolicy);
+
+            this.privacyPolicy = true;
             this.userData$.next("");
             localStorage.removeItem("_cap_userDataKey");
             this.router.navigate(["/login"]);
+
           }
         },  {
           text: 'Cancel',

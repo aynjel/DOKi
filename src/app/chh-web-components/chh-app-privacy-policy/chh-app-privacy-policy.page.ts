@@ -16,7 +16,7 @@ export class ChhAppPrivacyPolicyPage implements OnInit {
   isButtonColor2:boolean=true;
   ngOnInit() {
     //console.log('asdasdasdasd');
-    console.log(this.origin);
+    //console.log(this.origin);
     
     
   }
