@@ -22,7 +22,8 @@ pipelines:
           #- ionic build --prod
           - npm ci
           #- ionic serve 
-          - ionic serve & wait-on http://localhost:8100
+          #- ionic serve & wait-on http://localhost:8100
+          - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
           #- npm ci
           - npx cypress run 
     - step:
