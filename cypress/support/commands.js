@@ -114,7 +114,7 @@ Cypress.Commands.add('rightToLeft', () => {
     cy.acceptAgreement();
     if(alertWindow){
         cy.doClick("Okay");
-    }
+    } 
   });
 
 // Log In
@@ -130,6 +130,7 @@ Cypress.Commands.add('login', (userName, password) =>{
     cy.wait(5000);
     cy.contains('Welcome').end();
   });
+
 
 // Where Am I
 Cypress.Commands.add('whereAmI', (url) =>{

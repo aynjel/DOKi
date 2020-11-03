@@ -1,9 +1,9 @@
 import { Component, EventEmitter, OnInit, Output, Input } from "@angular/core";
-import { ModalController, PopoverController } from "@ionic/angular";
+import { ActionSheetController, ModalController, PopoverController } from "@ionic/angular";
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { LoginData } from 'src/app/models/login-data.model';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
-
+import { FunctionsService } from "../../shared/functions/functions.service";
 @Component({
   selector: "chh-app-fee",
   templateUrl: "./chh-app-fee.page.html",
@@ -31,7 +31,9 @@ export class ChhAppFeePage implements OnInit {
     private modalController: ModalController,
     private popover: PopoverController,
     private authService:AuthService,
-    protected $gaService: GoogleAnalyticsService
+    protected $gaService: GoogleAnalyticsService,
+    private actionSheetController:ActionSheetController,
+    public functionsService: FunctionsService
   ) {}
 
   ngOnInit() {
@@ -123,7 +125,37 @@ export class ChhAppFeePage implements OnInit {
       method: feePopOverMethod,
       cancel: false,
     };
+    this.actionSheet(feePopOverProfFee,postData);
+    //this.popover.dismiss(postData);
+  }
 
-    this.popover.dismiss(postData);
+  async actionSheet(feePopOverProfFee:any,postData:any) {
+
+    
+  var newVal = this.functionsService.numberWithCommas(feePopOverProfFee);
+
+      const actionSheet = await this.actionSheetController.create({
+        mode:'ios',
+        header: 'Are you sure of the Professional Fee?',
+        cssClass: "my-custom-class",
+        buttons: [{
+          text: 'Yes, '+newVal,
+          icon: 'share-outline',
+          handler: () => {
+            this.popover.dismiss(postData);
+            
+          }
+        },  {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'destructive',
+          handler: () => {
+            //this.ClosePopover();
+          }
+        }]
+      });
+      await actionSheet.present();
+  
+
   }
 }

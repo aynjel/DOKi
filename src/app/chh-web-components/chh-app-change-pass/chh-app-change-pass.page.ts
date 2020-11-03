@@ -116,7 +116,7 @@ export class ChhAppChangePassPage implements AfterViewInit {
     //psWord1_1[0].nativeElement.style.transform =  `translateX(${10}px)`;
 
     if(this.NewPassword != this.ConfirmPassword){
-      console.log('111');
+      //console.log('111');
       
       this.errMessage = " (passwords did not Match)";
       let myDiv1 = document.getElementById('pWord1');
@@ -124,7 +124,7 @@ export class ChhAppChangePassPage implements AfterViewInit {
       myDiv1.style.color = 'red'; 
       myDiv2.style.color = 'red'; 
     }else{
-      console.log('222');
+      //console.log('222');
       this.errMessage = "";
       let myDiv1 = document.getElementById('pWord1');
       let myDiv2 = document.getElementById('pWord2');

@@ -94,11 +94,31 @@ export class AuthService {
 
 
 
-  mockUserSettings(){
+  mockGetAppSetting(){
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredentials: false };
-    const url = 'https://5062fd91-27be-4d0f-af3e-9d283d0a4af4.mock.pstmn.io/api/UserSettings/Get?drCode=MD000123';
+    const url = 'http://10.130.21.200:81/api/AppSetting/GetAppSetting/DPP';
     return this.http.get(url);
+  }
+  mockGetUserSettings(data1:any,data2:any){
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredentials: false };
+    const url = 'http://10.130.21.200:81/api/AppSetting/GetUserSetting/'+data1+'/'+data2;
+    return this.http.get(url);
+  }
 
+  mockInsertUserSettings(data:any){
+      const headers = new HttpHeaders({ "Content-Type": "application/json" });
+      const options = { headers: headers, withCredentials: false };
+      const url = 'http://10.130.21.200:81/api/UserSetting/Insert';
+      //return this.http.post(url, JSON.stringify(data), options);
+      return this.http.post(url, data, options);
+  }
+  mockUpdateUserSettings(data:any){
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredentials: false };
+    const url = 'http://10.130.21.200:81/api/UserSetting/Update';
+    //return this.http.post(url, JSON.stringify(data), options);
+    return this.http.put(url, data, options);
   }
 }

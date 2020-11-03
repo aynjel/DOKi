@@ -141,4 +141,38 @@ export class PatientService {
       postData1;
     return this.http.get(url, options);
   }
+
+  ///////////////////////
+  getUserSettings(data1:any,data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url =
+      environment.apiRouterUrl +
+      "AppSetting/GetUserSetting/"+data1+'/'+data2;
+    return this.http.get(url, options);
+  }
+  getAppSetting(){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url =
+      environment.apiRouterUrl +
+      "AppSetting/GetAppSetting/DPP";
+    return this.http.get(url, options);
+  }
+  insertUserSettings(data:any){
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    const url =
+      environment.apiRouterUrl +
+      "UserSetting/Insert";
+    return this.http.post(url,  data, options);
+  }
+  updateUserSettings(data:any){
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    const url =
+      environment.apiRouterUrl +
+      "UserSetting/Update";
+    return this.http.put(url,  data, options);
+  }
 }
