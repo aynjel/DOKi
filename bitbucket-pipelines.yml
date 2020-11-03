@@ -18,9 +18,12 @@ pipelines:
           # - npm install --production
           - npm install -g @angular/cli
           - npm install -g @ionic/cli
-          - npm install
-          - ionic build --prod
+          #- npm install
+          #- ionic build --prod
           - npm ci
+          #- ionic serve 
+          - ionic serve & wait-on http://localhost:8100
+          #- npm ci
           - npx cypress run 
     - step:
         name: E2E using Cypress
