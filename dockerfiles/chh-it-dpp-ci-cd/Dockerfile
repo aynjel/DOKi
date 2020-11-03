@@ -14,9 +14,10 @@
 FROM node:13-alpine AS buildEnv
 LABEL maintainer="Kristoffer Dominic Amora, IT - Systems Solution & Business Intelligence"
 
-# Install Angular CLI
+# Install Angular CLI and build dev dependencies
 RUN npm install -g @angular/cli
 # RUN npm install -g @angular/cli@9.1.12 <- if specific version is desired
+RUN npm install -g @angular-devkit/build-angular
 
 # Intall Ionic CLI
 RUN npm install -g @ionic/cli
@@ -36,18 +37,18 @@ ARG PORT_TO_EXPOSE="80/tcp"
 
 # HOW TO BUILD THE IMAGE
 # cd to the directory where this file is stored
-# docker build -t coolnumber9/node-ionic-angular:nov2020-v1.0.1 .
+# docker build -t coolnumber9/node-ionic-angular:nov2020-v1.0.2 .
 #
 # If rebuilding without cache
-# docker build --no-cache -t coolnumber9/node-ionic-angular:nov2020-v1.0.1 . 
+# docker build --no-cache -t coolnumber9/node-ionic-angular:nov2020-v1.0.2 . 
 
 # HOW TO RUN THE CONTAINER
-# docker run --rm -it -dp 9000:80 --name chh-it-dpp-ci-cd-v1.0.1 coolnumber9/node-ionic-angular:nov2020-v1.0.1
+# docker run --rm -it -dp 9000:80 --name chh-it-dpp-ci-cd-v1.0.2 coolnumber9/node-ionic-angular:nov2020-v1.0.2
 
 # HOW TO EXECUTE BASH inside the container
-# docker exec -it chh-it-dpp-ci-cd-v1.0.1 bash  <- If base image used has bash installed
-# docker exec -it chh-it-dpp-ci-cd-v1.0.1 sh    <- Alpine doesn't have bash shell
+# docker exec -it chh-it-dpp-ci-cd-v1.0.2 bash  <- If base image used has bash installed
+# docker exec -it chh-it-dpp-ci-cd-v1.0.2 sh    <- Alpine doesn't have bash shell
 
 # HOW TO TAG ANG PUSH to remote repo
-# docker tag coolnumber9/node-ionic-angular:nov2020-v1.0.1 coolnumber9/node-ionic-angular:nov2020-v1.0.1 
-# docker push coolnumber9/node-ionic-angular:nov2020-v1.0.1 
+# docker tag coolnumber9/node-ionic-angular:nov2020-v1.0.2 coolnumber9/node-ionic-angular:nov2020-v1.0.2 
+# docker push coolnumber9/node-ionic-angular:nov2020-v1.0.2

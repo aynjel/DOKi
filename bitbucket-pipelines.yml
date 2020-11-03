@@ -1,5 +1,5 @@
 #image: node:10.8.0
-image: coolnumber9/node-ionic-angular:nov2020-v1.0.1
+image: coolnumber9/node-ionic-angular:nov2020-v1.0.2
 options:
   max-time: 15
   docker: true
@@ -43,16 +43,16 @@ pipelines:
   branches:
     '{master,dev_branch}':
       - step:
-          name: Build Prod Artifacts
+          name: Build Artifacts
           caches:
             - docker
-          image: coolnumber9/node-ionic-angular:nov2020-v1.0.1
+          image: coolnumber9/node-ionic-angular:nov2020-v1.0.2
           #services:
           #  - docker
           #size: 2x
           script:
-            - echo "Building Production Artifacts..."
-            - npm install
+            - echo "Building Artifacts..."
+            - npm install --production
             - ionic build --prod
             # - docker-compose -f docker-compose-cypress.yml build
             # - docker-compose -f docker-compose-cypress.yml up --exit-code-from cypress
