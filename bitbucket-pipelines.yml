@@ -44,18 +44,15 @@ pipelines:
     '{master,dev_branch}':
       - step:
           name: Build Prod Artifacts
-          #caches:
-          #  - docker
-          #  - npm
-          #  - cypress
-          #image: cypress/base:10
-          #image: docker/compose:latest
+          caches:
+            - docker
           image: coolnumber9/node-ionic-angular:nov2020-v1.0.1
           #services:
           #  - docker
           #size: 2x
           script:
             - echo "Building Production Artifacts..."
+            - npm install
             - ionic build --prod
             # - docker-compose -f docker-compose-cypress.yml build
             # - docker-compose -f docker-compose-cypress.yml up --exit-code-from cypress
