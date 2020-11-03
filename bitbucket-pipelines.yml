@@ -16,6 +16,7 @@ pipelines:
         script:
           # - npm install -g cypress --unsafe-perm --silent
           # - npm install --production
+          - npm install -g @angular/cli
           - npm install -g @ionic/cli
           - npm install
           - ionic build --prod
