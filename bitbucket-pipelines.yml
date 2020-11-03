@@ -21,7 +21,7 @@ pipelines:
           - npm install
           - ionic build --prod
           - npm ci
-          - npm cypress:run 
+          - npx cypress run 
     - step:
         name: E2E using Cypress
         caches:
