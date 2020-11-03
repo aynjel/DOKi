@@ -19,7 +19,7 @@ pipelines:
           - npm ci
           #- npm install 
           - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
-          - npx cypress run --browser chrome --record --key $DPP_CYPRESS_RECORD_KEY
+          - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY
     - step:
         name: Code Linting
         script: 
