@@ -52,7 +52,8 @@ pipelines:
           #size: 2x
           script:
             - echo "Building Artifacts..."
-            - npm ci
+            #- npm ci
+            - npm install --production
             - ionic build --prod
             # - docker-compose -f docker-compose-cypress.yml build
             # - docker-compose -f docker-compose-cypress.yml up --exit-code-from cypress
