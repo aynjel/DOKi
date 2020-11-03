@@ -11,11 +11,16 @@ pipelines:
         name: Install and Build
         caches:
           - npm
-          # - cypress
+          - cypress
+        image: cypress/base:10
         script:
           # - npm install -g cypress --unsafe-perm --silent
-          - npm install --production
+          # - npm install --production
+          - npm install -g @ionic/cli
+          - npm install
           - ionic build --prod
+          - npm ci
+          - npm cypress:run 
     - step:
         name: E2E using Cypress
         caches:
