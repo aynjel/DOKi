@@ -8,64 +8,61 @@ options:
 pipelines:
   default:
     - step:
-        name: Install and Build
+        name: Build and E2E Tests
         caches:
           - npm
           - cypress
         image: cypress/base:10
         script:
-          # - npm install -g cypress --unsafe-perm --silent
-          # - npm install --production
           - npm install -g @angular/cli
           - npm install -g wait-on
-          #- npm install -g @ionic/cli
-          #- npm install
-          #- ionic build --prod
-          #- npm ci
-          - npm install 
-          #- ionic serve 
-          #- ionic serve & wait-on http://localhost:8100
-          - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
-          #- npm ci
-          - npx cypress run 
-    - step:
-        name: E2E using Cypress
-        caches:
-          - npm
-          - cypress
-        image: cypress/base:10
-        script:
-          # - npm install -g @ionic/cli
-          # - npm install
-          # - ionic build --prod
           - npm ci
-          - npm cypress:run
-         # - npm run cypress:run:record
-        artifacts:
-          - cypress/screenshots/**
-          - cypress/reports/**
-          - cypress/videos/**
+          #- npm install 
+          - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
+          - npx cypress run --browser chrome --record --key $DPP_CYPRESS_RECORD_KEY
+    - step:
+        name: Code Linting
+    # - step:
+    #     name: E2E using Cypress
+    #     caches:
+    #       - npm
+    #       - cypress
+    #     image: cypress/base:10
+    #     script:
+    #       # - npm install -g @ionic/cli
+    #       # - npm install
+    #       # - ionic build --prod
+    #       - npm ci
+    #       - npm cypress:run
+    #      # - npm run cypress:run:record
+    #     artifacts:
+    #       - cypress/screenshots/**
+    #       - cypress/reports/**
+    #       - cypress/videos/**
   branches:
     '{master,dev_branch}':
       - step:
-          name: PWA E2E Tests
-          caches:
-            - docker
-            - npm
-            - cypress
+          name: Build Prod Artifacts
+          #caches:
+          #  - docker
+          #  - npm
+          #  - cypress
           #image: cypress/base:10
-          image: docker/compose:latest
-          services:
-            - docker
-          size: 2x
+          #image: docker/compose:latest
+          #services:
+          #  - docker
+          #size: 2x
           script:
-            - echo "Building and then Test the app..."
+            - echo "Building Production Artifacts..."
+            - ionic build --prod
             # - docker-compose -f docker-compose-cypress.yml build
             # - docker-compose -f docker-compose-cypress.yml up --exit-code-from cypress
           #artifacts:
           #    - cypress/screenshots/**
           #    - cypress/reports/**
           #    - cypress/videos/**
+          artifacts:
+            - www/**
       - step:
           name: Deploy to Test Env
           deployment: staging
