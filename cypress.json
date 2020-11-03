@@ -1,9 +1,9 @@
 {
-  "baseUrl": "http://pwa",
+  "baseUrl": "http://localhost:8100",
   "projectId": "v1wydv",
-  "retries": 2,
+  "retries": 0,
   "env": {
-    "baseUrlToTest": "http://pwa",
+    "baseUrlToTest": "http://localhost:8100",
     "loginUrl": "/login",
     "dashboardUrl": "/menu/dashboard",
     "inpatientsUrl": "/menu/in-patients",

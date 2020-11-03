@@ -1,66 +1,87 @@
-image: node:10.8.0
+#image: node:10.8.0
+image: coolnumber9/node-ionic-angular:nov2020-v1.0.1
 options:
-    max-time: 15
-    docker: true
-    size: 2x
+  max-time: 15
+  docker: true
+  size: 2x
 
 pipelines:
-    # default:
-    #     - step:
-    #         name: Pipeline Cypress E2E
-    #         caches:
-    #             - npm
-    #             - cypress
-    #         image: cypress/base:10
-    #         script:
-    #             - npm ci
-    #             - npx cypress run
-    #         artifacts:
-    #             - cypress/screenshots/**
-    #             - cypress/reports/**
-    #             - cypress/videos/**
-    branches:
-        '{master,dev_branch}':
-            - step:
-                name: PWA E2E Tests
-                caches:
-                    - docker
-                    - node 
-                    - npm
-                    - cypress
-                #image: cypress/base:10
-                image: docker/compose:latest
-                services:
-                    - docker
-                size: 2x
-                script:
-                    - echo "Building and then Test the app..."
-                    #- docker-compose -f docker-compose-cypress.yml build 
-                    - npx eslint --format=checkstyle -o checkstyle-result.xml *.js
-                    - docker-compose -f docker-compose-cypress.yml up --exit-code-from cypress
-                artifacts:
-                    # Include built output 
-                    - cypress/screenshots/**
-                    - cypress/reports/**
-                    - cypress/videos/**
-            - step:
-                name: Deploy to Test Env
-                deployment: staging
-                script:
-                    - pipe: atlassian/sftp-deploy:0.5.6
-                      variables:
-                        USER: $DPP_USER
-                        SERVER: $DPP_SERVER
-                        REMOTE_PATH: $DPP_REMOTE_PATH
-                        LOCAL_PATH: $DPP_LOCAL_PATH
-                        PASSWORD: $DPP_PASSWORD
-                        #DELETE_FLAG: 'false' # Don't delete existing files
-                        #EXTRA_ARGS: "--exclude=.bitbucket/ --exclude=.git/ --exclude=bitbucket-pipelines.yml --exclude=.gitignore" # Ignore these
+  default:
+    - step:
+        name: Build and E2E Tests
+        caches:
+          - npm
+          - cypress
+        image: cypress/base:10
+        script:
+          - npm install -g @angular/cli
+          - npm install -g wait-on
+          - npm ci
+          - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
+          - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY
+    - step:
+        name: Code Linting
+        script: 
+          - echo "Code linting to be added soon..."
+    # - step:
+    #     name: E2E using Cypress
+    #     caches:
+    #       - npm
+    #       - cypress
+    #     image: cypress/base:10
+    #     script:
+    #       # - npm install -g @ionic/cli
+    #       # - npm install
+    #       # - ionic build --prod
+    #       - npm ci
+    #       - npm cypress:run
+    #      # - npm run cypress:run:record
+    #     artifacts:
+    #       - cypress/screenshots/**
+    #       - cypress/reports/**
+    #       - cypress/videos/**
+  branches:
+    '{master,dev_branch}':
+      - step:
+          name: Build Prod Artifacts
+          #caches:
+          #  - docker
+          #  - npm
+          #  - cypress
+          #image: cypress/base:10
+          #image: docker/compose:latest
+          #services:
+          #  - docker
+          #size: 2x
+          script:
+            - echo "Building Production Artifacts..."
+            - ionic build --prod
+            # - docker-compose -f docker-compose-cypress.yml build
+            # - docker-compose -f docker-compose-cypress.yml up --exit-code-from cypress
+          #artifacts:
+          #    - cypress/screenshots/**
+          #    - cypress/reports/**
+          #    - cypress/videos/**
+          artifacts:
+            - www/**
+      - step:
+          name: Deploy to Test Env
+          deployment: staging
+          script:
+            - pipe: atlassian/sftp-deploy:0.5.6
+              variables:
+                USER: $DPP_USER
+                SERVER: $DPP_SERVER
+                REMOTE_PATH: $DPP_REMOTE_PATH
+                LOCAL_PATH: $DPP_LOCAL_PATH
+                PASSWORD: $DPP_PASSWORD
+                #DELETE_FLAG: 'false' # Don't delete existing files
+                #EXTRA_ARGS: "--exclude=.bitbucket/ --exclude=.git/ --exclude=bitbucket-pipelines.yml --exclude=.gitignore" # Ignore these
 
 definitions:
-    caches:
-        npm: $HOME/.npm
-        cypress: $HOME/.cache/Cypress
-    services:
-        docker:
-            memory: 4096
+  caches:
+    npm: $HOME/.npm
+    cypress: $HOME/.cache/Cypress
+  services:
+    docker:
+      memory: 4096

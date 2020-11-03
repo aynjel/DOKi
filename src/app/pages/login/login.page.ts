@@ -4,6 +4,7 @@ import { AuthConstants } from "../../config/auth-constants";
 import { DoctorConstants } from "../../config/auth-constants";
 import { AuthService } from "../../services/auth/auth.service";
 import { DoctorService } from "../../services/doctor/doctor.service";
+import { PatientService } from "../../services/patient/patient.service";
 import { StorageService } from "../../services/storage/storage.service";
 import { ToastService } from "../../services/toast/toast.service";
 import { BehaviorSubject } from "rxjs";
@@ -42,8 +43,10 @@ export class LoginPage implements AfterViewInit {
     private renderer: Renderer2,
     private zone:NgZone,
     private modalController: ModalController,
+    private patientService:PatientService
   ) {}
-
+    isSetPrivacyPolicy:boolean = false;
+    isPrivacyPolicy:boolean = false;
 
 
 
@@ -103,32 +106,49 @@ export class LoginPage implements AfterViewInit {
   }
 
   checkPrivacyPolicy(){
-    let x:boolean = false;
-    let y=0;
-    this.authService
-      .mockGetPrivacy()
-      .subscribe(
-        (res: any) => {
 
-          Object.keys(res).forEach(function (key){
-           
-           if(res[key].accepted == true || res[key].accepted == false){
-              if(res[key].accepted ){
-                x=true;
+    /* get user settings,
+      if user settings is empty, promt the privacy policy modal
+
+      if user accepts privacy policy
+
+      go to login and add privacy policy on API
+
+    */
+
+   let y=0;
+
+    
+    this.patientService.getUserSettings('DPP',this.postData.username).subscribe(
+        (res: any) => {       
+          //console.log(res);
+             
+          if(Object.keys(res).length >= 1){
+            let data = JSON.stringify(res);data = '['+data+']';let adat = JSON.parse(data);
+            adat.forEach(el => {
+              if(el.privacyPolicy.accepted == 1){
+                this.isSetPrivacyPolicy = true;
+                this.isPrivacyPolicy = true;
+              }else{
+                this.isSetPrivacyPolicy = true;
+                this.isPrivacyPolicy = false;
               }
-              
-           }
-           
-           
+            });
+          }else{
+            this.isSetPrivacyPolicy = false;
+          }
+ 
+        },
+        (error)=>{
+          console.log('error connecting');
+          
+        },() =>{
+            if(this.isSetPrivacyPolicy == false || this.isPrivacyPolicy == false){
+              this.privacyPolicy();
+            }else{
+              this.loginAction();
+            }
         });
-        });
-        
-        if(x){
-          this.loginAction();
-        }else{
-          this.privacyPolicy();
-        }
-
   }
   async privacyPolicy(){
     const modal = await this.modalController.create({
@@ -139,11 +159,12 @@ export class LoginPage implements AfterViewInit {
       },
     });
     modal.onDidDismiss().then((data) => {
-
+     
       if(data.data){
         this.loginAction();
       }else{
-        
+        this.isSetPrivacyPolicy = false;
+        this.isPrivacyPolicy = false;
       }
     });
     return await modal.present();
@@ -151,30 +172,15 @@ export class LoginPage implements AfterViewInit {
 
 
   loginAction() {
-
+    let loginresponse;
 
     this.btnDisable = true;
     this.authService
       .doctorsPortalLogin(this.postData.username, this.postData.password)
       .subscribe(
         (res: any) => {
-          /*this.functionsService.logToConsole("res :");
-          this.functionsService.logToConsole(res);*/
-          if (res.length != "0") {
-            if (res.Message) {
-              this.functionsService.alert(res.Message, "Okay");
-            } else {
-              this.logindata = <LoginData>res;
-              this.storageService.store(AuthConstants.AUTH, this.logindata);
-              this.router.navigate(["/menu/dashboard"]);
-            }
-          } else {
-            this.functionsService.alert(
-              "Oops! You might have entered a different username or password. Please try again.",
-              "Okay"
-            );
-            //this.toast.presentToast('Incorrect Authentication Details.');
-          }
+          loginresponse = res;
+          
         },
         (error) => {
           this.btnDisable = false;
@@ -185,6 +191,41 @@ export class LoginPage implements AfterViewInit {
           // this.toast.presentToast('Server Error');
         },
         () => {
+          if (loginresponse.length != "0") {
+            /* check if privacy policy is true or false*/
+            if(this.isSetPrivacyPolicy == false){
+              /*this.patientService.getAppSetting().subscribe(
+                (res: any) => {     
+                  console.log(res);
+                  
+                });*/
+
+              
+              let privacyPolicy = '{"username": "'+this.postData.username+'","appcode": "DPP","setting": "privacyPolicy","property": "accepted","value": "1"}';
+              this.patientService.insertUserSettings(privacyPolicy).subscribe((res2: any) => {});
+              /*
+              let smsNotification = '{"username": "'+this.postData.username+'","appcode": "DPP","setting": "privacyPolicy","property": "accepted","value": "1"}';
+              this.patientService.insertUserSettings(smsNotification).subscribe((res2: any) => {});*/
+            }else if(this.isSetPrivacyPolicy == true){
+              let smpJSON = '{"username": "'+this.postData.username+'","appcode": "DPP","setting": "privacyPolicy","property": "accepted","value": "1"}';
+              this.patientService.updateUserSettings(smpJSON).subscribe((res1: any) => {});
+            }
+
+
+            if (loginresponse.Message) {
+              this.functionsService.alert(loginresponse.Message, "Okay");
+            } else {
+              this.logindata = <LoginData>loginresponse;
+              this.storageService.store(AuthConstants.AUTH, this.logindata);
+              this.router.navigate(["/menu/dashboard"]);
+            }
+          } else {
+            this.functionsService.alert(
+              "Oops! You might have entered a different username or password. Please try again.",
+              "Okay"
+            );
+
+          }
           this.btnDisable = false;
         }
       );

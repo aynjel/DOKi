@@ -79,7 +79,7 @@ export class FunctionsService {
     let myarr = data.split("T");
     if (myarr[1]) {
       let myarr2 = myarr[1].split(".");
-      console.log(myarr[0] + " | " + myarr2[0]);
+     // console.log(myarr[0] + " | " + myarr2[0]);
       return myarr[0] + " | " + myarr2[0];
     }
   }
@@ -217,6 +217,11 @@ export class FunctionsService {
     if(environment.consoleLog){
       console.log(message);
     }
+  }
+
+
+  numberWithCommas(x) {
+    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   }
 
 }
