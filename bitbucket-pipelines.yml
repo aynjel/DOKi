@@ -22,6 +22,8 @@ pipelines:
           - npx cypress run --browser chrome --record --key $DPP_CYPRESS_RECORD_KEY
     - step:
         name: Code Linting
+        script: 
+          - echo "Code linting to be added soon..."
     # - step:
     #     name: E2E using Cypress
     #     caches:
