@@ -50,11 +50,11 @@ pipelines:
             - npm
             - cypress
           #  - docker
-          #image: coolnumber9/node-ionic-angular:nov2020-v1.0.2
+          image: coolnumber9/node-ionic-angular:nov2020-v1.0.2
           #services:
           #  - docker
           #size: 2x
-          image: cypress/base:10
+          #image: cypress/base:10
           script:
             - echo "Building Artifacts..."
             #- npm ci
