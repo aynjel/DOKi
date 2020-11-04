@@ -1,65 +1,50 @@
 image: node:10.8.0
-#image: coolnumber9/node-ionic-angular:nov2020-v1.0.2
+# image: coolnumber9/node-ionic-angular:nov2020-v1.0.2
 options:
   max-time: 15
   docker: true
   size: 2x
 
 pipelines:
-  default:
-    - step:
-        name: Build and E2E Tests
-        caches:
-          - npm
-          - cypress
-        image: cypress/base:10
-        script:
-          - npm install -g @angular/cli
-          - npm install -g wait-on
-          - npm ci
-          - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
-          - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY
-        artifacts:
-          - node_modules/** # Save modules for next steps
-    - step:
-        name: Code Linting
-        script: 
-          - echo "Code linting to be added soon..."
-    # - step:
-    #     name: E2E using Cypress
-    #     caches:
-    #       - npm
-    #       - cypress
-    #     image: cypress/base:10
-    #     script:
-    #       # - npm install -g @ionic/cli
-    #       # - npm install
-    #       # - ionic build --prod
-    #       - npm ci
-    #       - npm cypress:run
-    #      # - npm run cypress:run:record
-    #     artifacts:
-    #       - cypress/screenshots/**
-    #       - cypress/reports/**
-    #       - cypress/videos/**
   branches:
-    '{master,dev_branch}':
+    '{dev_branch,develop}':
       - step:
-          name: Build Artifacts
+          name: Code Linting
+          script: 
+            - echo "Code linting to be added soon..."
+      - step:
+          name: Build and E2E Tests
+          caches:
+            - npm
+            - cypress
+          image: cypress/base:10
+          script:
+            - npm install -g @angular/cli
+            - npm install -g @ionic/cli
+            - npm install -g wait-on
+            - npm ci
+            - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
+            - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY
+          artifacts:
+            - node_modules/** # Save modules for next steps
+            # - cypress/screenshots/**
+            # - cypress/reports/**
+            # - cypress/videos/**          
+      - step:
+          name: Build PWA Artifacts
           caches:
             - npm
             - cypress
           #  - docker
-          #image: coolnumber9/node-ionic-angular:nov2020-v1.0.2
-          #services:
+          # image: coolnumber9/node-ionic-angular:nov2020-v1.0.2
+          # services:
           #  - docker
-          #size: 2x
+          # size: 2x
           image: cypress/base:10
           script:
             - echo "Building Artifacts..."
-            - npm install -g @ionic/cli
             #- npm ci
-            - npm install
+            #- npm install
             - ionic build --prod
             # - docker-compose -f docker-compose-cypress.yml build
             # - docker-compose -f docker-compose-cypress.yml up --exit-code-from cypress
@@ -71,7 +56,7 @@ pipelines:
             - www/**
       - step:
           name: Deploy to Test Env
-          deployment: staging
+          deployment: test
           script:
             - pipe: atlassian/sftp-deploy:0.5.6
               variables:
