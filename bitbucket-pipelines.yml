@@ -1,5 +1,5 @@
-#image: node:10.8.0
-image: coolnumber9/node-ionic-angular:nov2020-v1.0.2
+image: node:10.8.0
+#image: coolnumber9/node-ionic-angular:nov2020-v1.0.2
 options:
   max-time: 15
   docker: true
@@ -19,6 +19,8 @@ pipelines:
           - npm ci
           - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
           - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY
+        artifacts:
+          - node_modules/** # Save modules for next steps
     - step:
         name: Code Linting
         script: 
@@ -45,15 +47,18 @@ pipelines:
       - step:
           name: Build Artifacts
           caches:
-            - docker
-          image: coolnumber9/node-ionic-angular:nov2020-v1.0.2
+            - npm
+            - cypress
+          #  - docker
+          #image: coolnumber9/node-ionic-angular:nov2020-v1.0.2
           #services:
           #  - docker
           #size: 2x
+          image: cypress/base:10
           script:
             - echo "Building Artifacts..."
             #- npm ci
-            - npm install --production
+            - npm install
             - ionic build --prod
             # - docker-compose -f docker-compose-cypress.yml build
             # - docker-compose -f docker-compose-cypress.yml up --exit-code-from cypress
