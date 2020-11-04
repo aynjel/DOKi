@@ -13,55 +13,50 @@ pipelines:
           caches:
             - npm
             - node
+            - cypress
           image: cypress/base:10
           script:
             - npm install -g @angular/cli
             - npm install -g @ionic/cli
             - npm install -g wait-on
             - npm ci
-          artifacts:
-            - node_modules/** # Save modules for next steps 
-      - step:
-          name: Code Linting
-          script: 
-            - echo "Code linting to be added soon..."
-      - step:
-          name: E2E Tests
-          caches:
-            - npm
-            - cypress
-          image: cypress/base:10
-          script:
             - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
             - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY
+            - ionic build --prod
           artifacts:
+            - node_modules/** # Save modules for next steps 
+            - www/**
             # - cypress/screenshots/**
             # - cypress/reports/**
             # - cypress/videos/**
       - step:
-          name: Build PWA Artifacts
-          #caches:
-          #  - npm
-          #  - cypress
-          #  - docker
-          # image: coolnumber9/node-ionic-angular:nov2020-v1.0.2
-          # services:
-          #  - docker
-          # size: 2x
-          image: cypress/base:10
-          script:
-            - echo "Building Artifacts..."
-            #- npm ci
-            #- npm install
-            - ionic build --prod
-            # - docker-compose -f docker-compose-cypress.yml build
-            # - docker-compose -f docker-compose-cypress.yml up --exit-code-from cypress
-          #artifacts:
-          #    - cypress/screenshots/**
-          #    - cypress/reports/**
-          #    - cypress/videos/**
-          artifacts:
-            - www/**
+          name: Code Linting
+          script: 
+            - echo "Code linting to be added soon..."
+      # - step:
+      #     name: Build PWA Artifacts
+      #     #caches:
+      #     #  - npm
+      #     #  - cypress
+      #     #  - docker
+      #     # image: coolnumber9/node-ionic-angular:nov2020-v1.0.2
+      #     # services:
+      #     #  - docker
+      #     # size: 2x
+      #     image: cypress/base:10
+      #     script:
+      #       - echo "Building Artifacts..."
+      #       #- npm ci
+      #       #- npm install
+      #       - ionic build --prod
+      #       # - docker-compose -f docker-compose-cypress.yml build
+      #       # - docker-compose -f docker-compose-cypress.yml up --exit-code-from cypress
+      #     #artifacts:
+      #     #    - cypress/screenshots/**
+      #     #    - cypress/reports/**
+      #     #    - cypress/videos/**
+      #     artifacts:
+      #       - www/**
       - step:
           name: Deploy to Test Env
           deployment: test
