@@ -121,33 +121,31 @@ export class LoginPage implements AfterViewInit {
     
     this.patientService.getUserSettings('DPP',this.postData.username).subscribe(
         (res: any) => {       
-          //console.log(res);
-             
+         
           if(Object.keys(res).length >= 1){
             let data = JSON.stringify(res);data = '['+data+']';let adat = JSON.parse(data);
             adat.forEach(el => {
-              if(el.privacyPolicy.accepted == 1){
-                this.isSetPrivacyPolicy = true;
-                this.isPrivacyPolicy = true;
+              if(typeof el.privacyPolicy !== 'undefined'){
+                if(el.privacyPolicy.accepted == 1){
+                  this.isSetPrivacyPolicy = true;this.isPrivacyPolicy = true;
+                }else{
+                  this.isSetPrivacyPolicy = true;this.isPrivacyPolicy = false;
+                }
               }else{
-                this.isSetPrivacyPolicy = true;
-                this.isPrivacyPolicy = false;
+                this.isSetPrivacyPolicy = false;
               }
             });
-          }else{
-            this.isSetPrivacyPolicy = false;
-          }
- 
+          }else{this.isSetPrivacyPolicy = false;}
         },
         (error)=>{
-          console.log('error connecting');
-          
+          this.functionsService.alert(
+            "Sorry, Doc. We cannot log you in at the moment. Please try again.",
+            "Okay"
+          );
         },() =>{
             if(this.isSetPrivacyPolicy == false || this.isPrivacyPolicy == false){
               this.privacyPolicy();
-            }else{
-              this.loginAction();
-            }
+            }else{this.loginAction();}
         });
   }
   async privacyPolicy(){
@@ -159,13 +157,8 @@ export class LoginPage implements AfterViewInit {
       },
     });
     modal.onDidDismiss().then((data) => {
-     
-      if(data.data){
-        this.loginAction();
-      }else{
-        this.isSetPrivacyPolicy = false;
-        this.isPrivacyPolicy = false;
-      }
+      if(data.data){this.loginAction();}
+      else{this.isSetPrivacyPolicy = false;this.isPrivacyPolicy = false;}
     });
     return await modal.present();
   }
@@ -173,45 +166,47 @@ export class LoginPage implements AfterViewInit {
 
   loginAction() {
     let loginresponse;
-
     this.btnDisable = true;
     this.authService
-      .doctorsPortalLogin(this.postData.username, this.postData.password)
-      .subscribe(
+      .doctorsPortalLogin(this.postData.username, this.postData.password).subscribe(
         (res: any) => {
           loginresponse = res;
-          
-        },
-        (error) => {
+        },(error) => {
           this.btnDisable = false;
           this.functionsService.alert(
             "Sorry, Doc. We cannot log you in at the moment. Please try again.",
             "Okay"
           );
-          // this.toast.presentToast('Server Error');
         },
         () => {
           if (loginresponse.length != "0") {
             /* check if privacy policy is true or false*/
             if(this.isSetPrivacyPolicy == false){
-              /*this.patientService.getAppSetting().subscribe(
-                (res: any) => {     
-                  console.log(res);
-                  
-                });*/
-
-              
-              let privacyPolicy = '{"username": "'+this.postData.username+'","appcode": "DPP","setting": "privacyPolicy","property": "accepted","value": "1"}';
-              this.patientService.insertUserSettings(privacyPolicy).subscribe((res2: any) => {});
-              /*
-              let smsNotification = '{"username": "'+this.postData.username+'","appcode": "DPP","setting": "privacyPolicy","property": "accepted","value": "1"}';
-              this.patientService.insertUserSettings(smsNotification).subscribe((res2: any) => {});*/
+              this.patientService.getAppSetting('DPP').subscribe(
+                (res: any) => {
+                  Object.keys(res).forEach((key) => {
+                    var value = res[key];
+                    Object.keys(value).forEach((lock) => {
+                      var valuex = value[lock];
+                      if(key != 'appcode'){
+                        //console.log(key + ':' + lock + ':' + valuex);
+                        if(key == 'privacyPolicy' && lock == 'accepted'){
+                          valuex = 1;
+                        }
+                        let tempJson = '{"username": "'+this.postData.username+'","appcode": "DPP","setting": "'+key+'","property": "'+lock+'","value": "'+valuex+'"}';
+                          
+                        this.patientService.insertUserSettings(tempJson).subscribe((res2: any) => {});   
+                      }
+                    });
+                  });
+              });
             }else if(this.isSetPrivacyPolicy == true){
               let smpJSON = '{"username": "'+this.postData.username+'","appcode": "DPP","setting": "privacyPolicy","property": "accepted","value": "1"}';
-              this.patientService.updateUserSettings(smpJSON).subscribe((res1: any) => {});
+           
+              if(!this.isPrivacyPolicy){
+                this.patientService.updateUserSettings(smpJSON).subscribe((res1: any) => {});
+              }
             }
-
-
             if (loginresponse.Message) {
               this.functionsService.alert(loginresponse.Message, "Okay");
             } else {
@@ -224,7 +219,6 @@ export class LoginPage implements AfterViewInit {
               "Oops! You might have entered a different username or password. Please try again.",
               "Okay"
             );
-
           }
           this.btnDisable = false;
         }

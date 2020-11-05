@@ -82,6 +82,7 @@
         <ng-container>
           <div *ngFor="let x of inPatients">
             <ion-card (click)="detail(x)" mode="ios" class="pointer">
+              
               <ion-item lines="none">
                 <ion-avatar slot="start">
                   <chh-app-text-avatar [text]="x.last_name" [color]=""></chh-app-text-avatar>
