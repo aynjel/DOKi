@@ -151,12 +151,12 @@ export class PatientService {
       "AppSetting/GetUserSetting/"+data1+'/'+data2;
     return this.http.get(url, options);
   }
-  getAppSetting(){
+  getAppSetting(data:any){
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     const url =
       environment.apiRouterUrl +
-      "AppSetting/GetAppSetting/DPP";
+      "AppSetting/GetAppSetting/"+data;
     return this.http.get(url, options);
   }
   insertUserSettings(data:any){
@@ -171,8 +171,14 @@ export class PatientService {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredintials: false };
     const url =
-      environment.apiRouterUrl +
-      "UserSetting/Update";
-    return this.http.put(url,  data, options);
+    environment.apiRouterUrl+"UserSetting/Update";
+    return this.http.put(url, data, options);
+  }
+  resetUserSettings(data:any){
+    //const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const headers = new HttpHeaders();
+    const options = { headers: headers,body:data, withCredentials: false };
+    const url = environment.apiRouterUrl+"UserSetting/Delete";
+    return this.http.delete(url,options)
   }
 }

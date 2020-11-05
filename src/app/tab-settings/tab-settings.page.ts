@@ -10,18 +10,17 @@ import { BehaviorSubject } from "rxjs";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
 import { Constants } from "../shared/constants";
 import { FunctionsService } from "../shared/functions/functions.service";
-import { ActionSheetController, ModalController } from '@ionic/angular';
+import { ActionSheetController, ModalController } from "@ionic/angular";
 import { ChhAppAddAppointmentsModalPage } from "../chh-web-components/chh-app-add-appointments-modal/chh-app-add-appointments-modal.page";
 import { ChhAppChangePasswordPage } from "../chh-web-components/chh-app-change-password/chh-app-change-password.page";
 import { ChhAppChangePassPage } from "../chh-web-components/chh-app-change-pass/chh-app-change-pass.page";
-import { ChhAppPrivacyPolicyPage } from "../chh-web-components/chh-app-privacy-policy/chh-app-privacy-policy.page"
+import { ChhAppPrivacyPolicyPage } from "../chh-web-components/chh-app-privacy-policy/chh-app-privacy-policy.page";
 import { ChhAppTermsAndConditionsPage } from "../chh-web-components/chh-app-terms-and-conditions/chh-app-terms-and-conditions.page";
 @Component({
   selector: "app-tab-settings",
   templateUrl: "tab-settings.page.html",
   styleUrls: ["tab-settings.page.scss"],
 })
-
 export class TabSettingsPage {
   userData$ = new BehaviorSubject<any>([]);
   public logindata: LoginData;
@@ -29,25 +28,27 @@ export class TabSettingsPage {
   isDesktop: boolean;
 
   displayUserData: any;
-  dr_name:any;
-  dr_code:any;
-
+  dr_name: any;
+  dr_code: any;
 
   //toggles
-  smsAdmitted:boolean = true;
-  smsDischarge:boolean = true;
+  smsAdmitted: boolean = false;
+  smsDischarge: boolean = false;
   pushNotiAdmitted = false;
   pushNotiDischarge = false;
-  darkmode: boolean = true;
-  privacyPolicy:boolean = true;
+  darkmode: boolean = false;
+  privacyPolicy: boolean = true;
 
-  draftJson:any;
-  draftJson2:any;
+  draftJson: any;
+  draftJson2: any;
 
-  isset_smsNotification:boolean = false;
-  isset_pushNotification:boolean = false;
-  isset_appearance:boolean = false;
-  isset_privacyPolicy:boolean = false;
+  tmpData;
+  isset_smsAdmitted: boolean = false;
+  isset_smsDischarge: boolean = false;
+  isset_pushNotiAdmitted: boolean = false;
+  isset_pushNotiDischarge: boolean = false;
+  isset_darkmode: boolean = false;
+  isset_privacyPolicy: boolean = false;
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -58,26 +59,23 @@ export class TabSettingsPage {
     public constants: Constants,
     public functionsService: FunctionsService,
     private modalController: ModalController,
-    private actionSheetController:ActionSheetController,
-    private patientService:PatientService
+    private actionSheetController: ActionSheetController,
+    private patientService: PatientService
   ) {
     this.privacyPolicy = true;
+
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         window.location.reload();
       }
       this.isDesktop = isDesktop;
     });
-    this.patientService.getAppSetting().subscribe(
-      (res: any) => {  
-           
-        let data = JSON.stringify(res);data = '['+data+']';this.draftJson = JSON.parse(data);
-      });
 
+    this.patientService.getAppSetting("DPP").subscribe((res: any) => {
+      this.draftJson = res;
+      //let data = JSON.stringify(res);data = '['+data+']';this.draftJson = JSON.parse(data);
+    });
   }
-
-
-
 
   async showaddmodal() {
     const modal = await this.modalController.create({
@@ -86,9 +84,7 @@ export class TabSettingsPage {
         backdropDismiss: true,
       },
     });
-    modal.onDidDismiss().then((data) => {
-     
-    });
+    modal.onDidDismiss().then((data) => {});
     return await modal.present();
   }
 
@@ -99,169 +95,276 @@ export class TabSettingsPage {
         backdropDismiss: true,
       },
     });
-    modal.onDidDismiss().then((data) => {
-     
-    });
+    modal.onDidDismiss().then((data) => {});
     return await modal.present();
   }
-  
-  ngOnInit(){
 
-    
-  }
+  ngOnInit() {}
+
   ionViewWillEnter() {
-
-
-    
-    this.$gaService.pageView('/Settings', 'Settings Tab');
+    this.$gaService.pageView("/Settings", "Settings Tab");
     this.logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_name = this.logindata[0].last_name;
     this.dr_code = this.logindata[0].dr_code;
+    let y = "";
+    //PARSE USER SETTINGS
+    this.patientService
+      .getUserSettings("DPP", this.dr_code).subscribe((res: any) => {
+        Object.keys(res).forEach((key) => {
+          var value = res[key];
+          Object.keys(value).forEach((lock) => {
+            var valuex = value[lock];
+            if (key != "appcode") {
+              if (key != "username") {
+                //let x = '{"'+key+'":{"'+lock+'":'+valuex+'}}';y = y+x+',';
+                //darkmode
+                if (key == "appearance") {
+                  this.isset_darkmode = true;
+                  if (valuex == "1") {
+                    this.darkmode = true;
+                    this.renderer.setAttribute(document.body,"color-theme","dark");
+                  } else {
+                    this.darkmode = false;
+                    this.renderer.setAttribute(document.body,"color-theme","light");
+                  }
+                }
+                if (key == "privacyPolicy") {
+                  this.isset_privacyPolicy = true;
+                  if (lock == "accepted") {
+                    if (valuex == "1") {
+                      this.privacyPolicy = true;
+                    } else {
+                      this.privacyPolicy = false;
+                    }
+                  }
+                }
+                if (key == "pushNotification") {
+                  if (lock == "patientAdmitted") {
+                    this.isset_pushNotiAdmitted = true;
+                    if (valuex == "1") {
+                      this.pushNotiAdmitted = true;
+                    } else {
+                      this.pushNotiAdmitted = false;
+                    }
+                  } else if (lock == "patientDischarged") {
+                    this.isset_pushNotiDischarge = true;
+                    if (valuex == "1") {
+                      this.pushNotiDischarge = true;
+                    } else {
+                      this.pushNotiDischarge = false;
+                    }
+                  }
+                }
+                if (key == "smsNotification") {
+                  if (lock == "patientAdmitted") {
+                    this.isset_smsAdmitted = true;
+                    if (valuex == "1") {
+                      this.smsAdmitted = true;
+                    } else {
+                      this.smsAdmitted = false;
+                    }
+                  } else if (lock == "patientDischarged") {
+                    this.isset_smsDischarge = true;
+                    if (valuex == "1") {
+                      this.smsDischarge = true;
+                    } else {
+                      this.smsDischarge = false;
+                    }
+                  }
+                }
+              }
+            }
+          });
+        });
 
-    
-    this.patientService.getUserSettings('DPP',this.dr_code).subscribe(
-      (res: any) => {
-        let data = JSON.stringify(res);data = '['+data+']';this.draftJson2 = JSON.parse(data);
-        console.log('FIRST RUN --->>>>');
-        console.log(JSON.stringify(this.draftJson));
-        if (typeof this.draftJson2[0].smsNotification !== 'undefined') {
-          this.isset_smsNotification = true;
-        }else{
-          this.isset_smsNotification = false;
-        }
-        if (typeof this.draftJson2[0].pushNotification !== 'undefined') {
-          this.isset_pushNotification = true;
-        }else{
-          this.isset_pushNotification = false;
-        }
-        if (typeof this.draftJson2[0].appearance !== 'undefined') {
-          this.isset_appearance = true;
-        }else{
-          this.isset_appearance = false;
-        }
-        if (typeof this.draftJson2[0].privacyPolicy !== 'undefined') {
-          this.isset_privacyPolicy = true;
-            this.draftJson[0].privacyPolicy.accepted = this.draftJson2[0].privacyPolicy.accepted;
-            
-        }else{
-          this.isset_privacyPolicy = false;
-        }
-        console.log('SECOND RUN --->>>>');
-        console.log(JSON.stringify(this.draftJson));
-      
+        //y = '['+y.slice(0, -1)+']';
+        //this.tmpData =JSON.parse(y);
       });
 
-
-
-
-
-
-
-
-    
-    this.$gaService.event('Settings','User Flow',this.dr_name);
+    this.$gaService.event("Settings", "User Flow", this.dr_name);
     this.authService.userData$.subscribe((res: any) => {
-      //this.functionsService.logToConsole(res);
       this.account = <LoginData>res;
     });
-    if (localStorage.getItem("darkmode") == "true") {
-      this.darkmode = true;
-    } else {
-      this.darkmode = false;
-    }
-
   }
 
-  onDarkModeEnable(event: { detail: { checked: any } }) {
-    let value = 0;
+  onDarkModeEnable(data: any) {
+    if (data == "1") {
+      this.renderer.setAttribute(document.body, "color-theme", "dark");
+      this.$gaService.event("Settings - Dark Mode True","User Flow",this.dr_name);
+    } else {
+      this.renderer.setAttribute(document.body, "color-theme", "light");
+      this.$gaService.event("Settings - Dark Mode False","User Flow",this.dr_name);
+    }
+  }
+  toggle(event: { detail: { checked: any } },settings:any,property:any,flag:boolean) {
+    let value: any;
     if (event.detail.checked) {
       value = 1;
-      this.renderer.setAttribute(document.body, "color-theme", "dark");
-      localStorage.setItem('darkmode','true');
-          this.$gaService.event('Settings - Dark Mode True','User Flow',this.dr_name);
     } else {
-      value =0;
-      this.renderer.setAttribute(document.body, "color-theme", "light");
-      localStorage.setItem('darkmode','false');
-      this.$gaService.event('Settings - Dark Mode False','User Flow',this.dr_name);
+      value = 0;
     }
-    //if(this.isDesktop){window.location.reload();}
-    this.updateOrInsert(this.dr_code,'DPP','appearance','darkmode',value,this.isset_appearance);
-     
-   
+    if (settings == "appearance") {
+      this.onDarkModeEnable(value);
+    }
+    this.updateOrInsert(settings, property, value, flag);
   }
 
-
-
-  updateOrInsert(username:any, appcode:any, settings:any, property:any,value:any,flag:boolean){
-    let smpJSON = '{"username": "'+username+'","appcode": "'+appcode+'","setting": "'+settings+'","property": "'+property+'","value": "'+value+'"}';
-    if(flag){
-      this.patientService.updateUserSettings(smpJSON).subscribe((res1: any) => {});
-    }else{
-      this.isset_appearance = true;
-      this.patientService.insertUserSettings(smpJSON).subscribe((res1: any) => {});
+  //UPDATE OR INSERT USER SETTINGS
+  updateOrInsert(settings: any, property: any, value: any, flag: boolean) {
+    let smpJSON ='{"username":"'+this.dr_code+'","appcode":"DPP","setting":"'+settings+'","property":"'+property+'","value":"'+value+'"}';
+    if (flag) {
+      this.patientService.updateUserSettings(smpJSON).subscribe(() => {this.ionViewWillEnter();});
+    } else {
+      this.patientService.insertUserSettings(smpJSON).subscribe(() => {this.ionViewWillEnter();});
     }
   }
-
-
-
-
 
   logout() {
     this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
-      //clear behavior subject
       this.userData$.next("");
-      //clear local storage
       localStorage.removeItem("_cap_userDataKey");
-      //localStorage.clear();
-      //window.location.reload();
       this.router.navigate(["/login"]);
     });
   }
-  
+  //OPT-OUT of PRIVACY POLICY
   async optoutofprivacy(event: { detail: { checked: any } }) {
-
-    if (event.detail.checked) {}
-    else{
-
+    if (event.detail.checked) {
+    } else {
       const actionSheet = await this.actionSheetController.create({
-        mode:'ios',
-        header: 'Are you sure you want to opt-out of our privacy Policy?',
+        mode: "ios",
+        header: "Are you sure you want to opt-out of our privacy Policy?",
         cssClass: "my-custom-class",
-        buttons: [{
-          text: 'Yes, Opt-Out',
-          role: 'destructive',
-          icon: 'arrow-undo-outline',
-          handler: () => {
-            let smpJSON = '{"username": "'+this.dr_code+'","appcode": "DPP","setting": "privacyPolicy","property": "accepted","value": "0"}';
-
-            this.updateOrInsert(this.dr_code,'DPP','privacyPolicy','accepted',0,this.isset_privacyPolicy);
-
-            this.privacyPolicy = true;
-            this.userData$.next("");
-            localStorage.removeItem("_cap_userDataKey");
-            this.router.navigate(["/login"]);
-
-          }
-        },  {
-          text: 'Cancel',
-          icon: 'close',
-          role: 'cancel',
-          handler: () => {
-            this.privacyPolicy = true;
-          }
-        }]
+        buttons: [
+          {
+            text: "Yes, Opt-Out",
+            role: "destructive",
+            icon: "arrow-undo-outline",
+            handler: () => {
+              let smpJSON ='{"username": "' +
+                this.dr_code +
+                '","appcode": "DPP","setting": "privacyPolicy","property": "accepted","value": "0"}';
+              this.updateOrInsert(
+                "privacyPolicy",
+                "accepted",
+                0,
+                this.isset_privacyPolicy
+              );
+              this.privacyPolicy = true;
+              this.userData$.next("");
+              localStorage.removeItem("_cap_userDataKey");
+              this.router.navigate(["/login"]);
+            },
+          },
+          {
+            text: "Cancel",
+            icon: "close",
+            role: "cancel",
+            handler: () => {
+              this.privacyPolicy = true;
+            },
+          },
+        ],
       });
       await actionSheet.present();
-  
     }
   }
 
-  async viewPrivacyPolicy(){
+  //when reset is clicked
+  async resetUserSettings() {
+    const actionSheet = await this.actionSheetController.create({
+      mode: "ios",
+      header: "Are you sure you want to RESET USER SETTINGS?",
+      cssClass: "my-custom-class",
+      buttons: [
+        {
+          text: "Yes, Reset",
+          role: "destructive",
+          icon: "refresh-outline",
+          handler: () => {
+            let smpJSON ='{"username": "'+this.dr_code +'","appcode": "DPP","setting": "string","property":"string","value": "string"}';
+            this.patientService
+              .resetUserSettings(JSON.parse(smpJSON))
+              .subscribe(
+                (res: any) => {},
+                (error) => {},
+                () => {
+                  this.backToDefault();
+                  let smpJSON = '{"username": "' + this.dr_code + '","appcode": "DPP","setting":"privacyPolicy","property": "accepted","value": "1"}';
+                  this.patientService
+                    .insertUserSettings(smpJSON)
+                    .subscribe(() => {
+                      this.ionViewWillEnter();
+                    });
+                }
+              );
+          },
+        },
+        { text: "Cancel", icon: "close", role: "cancel", handler: () => {} },
+      ],
+    });
+    await actionSheet.present();
+  }
+  //reset the data
+  backToDefault() {
+    let y = "";
+    Object.keys(this.draftJson).forEach((key) => {
+      var value = this.draftJson[key];
+      Object.keys(value).forEach((lock) => {
+        var valuex = value[lock];
+        if (key != "appcode") {
+          if (key == "appearance") {
+            this.isset_darkmode = false;
+            this.renderer.setAttribute(document.body, "color-theme", "light");
+            if (valuex == "1") {
+              this.darkmode = true;
+            } else {
+              this.darkmode = false;
+            }
+          }
+          if (key == "pushNotification") {
+            if (lock == "patientAdmitted") {
+              this.isset_pushNotiAdmitted = false;
+              if (valuex == "1") {
+                this.pushNotiAdmitted = true;
+              } else {
+                this.pushNotiAdmitted = false;
+              }
+            } else if (lock == "patientDischarged") {
+              this.isset_pushNotiDischarge = false;
+              if (valuex == "1") {
+                this.pushNotiDischarge = true;
+              } else {
+                this.pushNotiDischarge = false;
+              }
+            }
+          }
+          if (key == "smsNotification") {
+            if (lock == "patientAdmitted") {
+              this.isset_smsAdmitted = false;
+              if (valuex == "1") {
+                this.smsAdmitted = true;
+              } else {
+                this.smsAdmitted = false;
+              }
+            } else if (lock == "patientDischarged") {
+              this.isset_smsDischarge = false;
+              if (valuex == "1") {
+                this.smsDischarge = true;
+              } else {
+                this.smsDischarge = false;
+              }
+            }
+          }
+        }
+      });
+    });
+  }
+
+  async viewPrivacyPolicy() {
     let cssData;
-    if(this.isDesktop){
-      cssData ='my-privacy-modal-css'
-    }else{
+    if (this.isDesktop) {
+      cssData = "my-privacy-modal-css";
+    } else {
       cssData = "";
     }
     const modal = await this.modalController.create({
@@ -269,20 +372,17 @@ export class TabSettingsPage {
       cssClass: cssData,
       componentProps: {
         backdropDismiss: true,
-        'origin': 'settings'
+        origin: "settings",
       },
-
     });
-    modal.onDidDismiss().then((data) => {
-
-    });
+    modal.onDidDismiss().then((data) => {});
     return await modal.present();
   }
-  async viewTermsAndCondition(){
+  async viewTermsAndCondition() {
     let cssData;
-    if(this.isDesktop){
-      cssData ='my-privacy-modal-css'
-    }else{
+    if (this.isDesktop) {
+      cssData = "my-privacy-modal-css";
+    } else {
       cssData = "";
     }
     const modal = await this.modalController.create({
@@ -290,13 +390,10 @@ export class TabSettingsPage {
       cssClass: cssData,
       componentProps: {
         backdropDismiss: true,
-        'origin': 'settings'
+        origin: "settings",
       },
-
     });
-    modal.onDidDismiss().then((data) => {
-
-    });
+    modal.onDidDismiss().then((data) => {});
     return await modal.present();
   }
 }

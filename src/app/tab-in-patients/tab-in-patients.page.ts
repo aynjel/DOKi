@@ -173,6 +173,8 @@ export class TabInPatientsPage {
         this.inPatients = sampleInPatients1;
       }
     }
+    console.log(JSON.stringify(this.inPatients));
+    
   }
 
   //Fired when the component routing to is about to animate into view.
