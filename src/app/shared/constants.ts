@@ -127,7 +127,7 @@ export class Constants {
   /**
    * UI Component Text - Login
    */
-  public UI_COMPONENT_TEXT__VALUE__LOGIN_GREETINGS: string = "Hello, Doc!";
+  public UI_COMPONENT_TEXT__VALUE__LOGIN_GREETINGS: string = "Hello, Doctor!";
   public UI_COMPONENT_TEXT__VALUE__LOGIN_USERNAME: string = "Username";
   public UI_COMPONENT_TEXT__VALUE__LOGIN_PASSWORD: string = "Password";
   
@@ -135,7 +135,7 @@ export class Constants {
   /**
    * Version
    */
-  public DOCTOR_PORTAL__VALUE__VERSION: string = "v1.1.3";
+  public DOCTOR_PORTAL__VALUE__VERSION: string = "v1.3.X";
 
   // (W)
   /**
