@@ -39,3 +39,6 @@ npm-debug.log*
 # Ignore Cypress Screenshots and Videos
 /cypress/videos
 /cypress/screenshots
+
+# Ignore Firebase cache
+/.firebase
