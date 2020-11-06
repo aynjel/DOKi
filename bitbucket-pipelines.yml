@@ -35,15 +35,16 @@ pipelines:
             # - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY
             - ionic build --prod
           artifacts:
-            - node_modules/** # Save modules for next steps 
+            - node_modules/** # Save modules for next steps
             - www/**
             # - cypress/screenshots/**
             # - cypress/reports/**
             # - cypress/videos/**
       - step:
-          name: Deploy to Test Env
-          deployment: test
+          name: Deploy to Staging (Firebase)
+          deployment: staging
           script:
+            # --------- USING SFTP ---------
             # - pipe: atlassian/sftp-deploy:0.5.6
             #   variables:
             #     USER: $DPP_USER
@@ -53,13 +54,19 @@ pipelines:
             #     PASSWORD: $DPP_PASSWORD
             #     # DELETE_FLAG: 'false' # Don't delete existing files
             #     # EXTRA_ARGS: "--exclude=.bitbucket/ --exclude=.git/ --exclude=bitbucket-pipelines.yml --exclude=.gitignore" # Ignore these
-            
-            - pipe: atlassian/scp-deploy:0.3.13
+
+            # --------- USING SCP ---------
+            # - pipe: atlassian/scp-deploy:0.3.13
+            #   variables:
+            #     USER: $DPP_USER
+            #     SERVER: $DPP_SERVER
+            #     REMOTE_PATH: $DPP_REMOTE_PATH_STAGING
+            #     LOCAL_PATH: $DPP_LOCAL_PATH
+
+            # --------- USING Firebase Hosting Deployment ---------
+            - pipe: atlassian/firebase-deploy:0.6.0
               variables:
-                USER: $DPP_USER
-                SERVER: $DPP_SERVER
-                REMOTE_PATH: $DPP_REMOTE_PATH_STAGING
-                LOCAL_PATH: $DPP_LOCAL_PATH
+                FIREBASE_TOKEN: $DPP_STAGING_FIREBASE_TOKEN
 
     master:
       - step:
@@ -89,7 +96,7 @@ pipelines:
             - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY
             - ionic build --prod
           artifacts:
-            - node_modules/** # Save modules for next steps 
+            - node_modules/** # Save modules for next steps
             - www/**
             # - cypress/screenshots/**
             # - cypress/reports/**
@@ -116,7 +123,6 @@ definitions:
     docker:
       memory: 4096
 
-
       # - step:
       #     name: Build PWA Artifacts
       #     #caches:
@@ -141,4 +147,3 @@ definitions:
       #     #    - cypress/videos/**
       #     artifacts:
       #       - www/**
-
