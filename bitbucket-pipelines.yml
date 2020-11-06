@@ -29,10 +29,10 @@ pipelines:
           script:
             - npm install -g @angular/cli
             - npm install -g @ionic/cli
-            - npm install -g wait-on
+            # - npm install -g wait-on
             - npm ci
-            - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
-            - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY
+            # - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
+            # - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY
             - ionic build --prod
           artifacts:
             - node_modules/** # Save modules for next steps
