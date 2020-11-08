@@ -5,7 +5,7 @@ options:
   docker: true
   size: 2x
 
-# job definition for running E2E tests in parallel
+# Job definition for running E2E tests in parallel
 e2e: &e2e
   name: E2E Tests
   caches:
@@ -14,7 +14,7 @@ e2e: &e2e
   script:
     #- npm ci
     - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
-    - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY
+    - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --parallel
   artifacts:
     - cypress/screenshots/**
     - cypress/reports/**
