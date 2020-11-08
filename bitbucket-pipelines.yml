@@ -49,6 +49,9 @@ definitions:
     - step: &build-artifacts
         name: Build PWA Artifacts
         script:
+          - npm install -g @angular/cli
+          - npm install -g @ionic/cli
+          - npm ci
           - ionic build --prod
         artifacts:
           - node_modules/** # Save modules for next steps
@@ -125,30 +128,30 @@ pipelines:
   branches:
     '{dev_branch,develop}':
       - step: *code-linting
-      - step:
-          name: Install, Run, and Test
-          script:
-            - echo "Parallel Tests about to start..."
-      - parallel:
-          # Run Cypress Tests in parallel (6 machines)
-          - step:
-              <<: *e2e
-              name: Cypress on Machine (1)
-          - step:
-              <<: *e2e
-              name: Cypress on Machine (2)
-          - step:
-              <<: *e2e
-              name: Cypress on Machine (3)
-          - step:
-              <<: *e2e
-              name: Cypress on Machine (4)
-          - step:
-              <<: *e2e
-              name: Cypress on Machine (5)
-          - step:
-              <<: *e2e
-              name: Cypress on Machine (6)
+      # - step:
+      #     name: Install, Run, and Test
+      #     script:
+      #       - echo "Parallel Tests about to start..."
+      # - parallel:
+      #     # Run Cypress Tests in parallel (6 machines)
+      #     - step:
+      #         <<: *e2e
+      #         name: Cypress on Machine (1)
+      #     - step:
+      #         <<: *e2e
+      #         name: Cypress on Machine (2)
+      #     - step:
+      #         <<: *e2e
+      #         name: Cypress on Machine (3)
+      #     - step:
+      #         <<: *e2e
+      #         name: Cypress on Machine (4)
+      #     - step:
+      #         <<: *e2e
+      #         name: Cypress on Machine (5)
+      #     - step:
+      #         <<: *e2e
+      #         name: Cypress on Machine (6)
       - step: *build-artifacts
       - step: *deploy-staging-to-firebase
 
