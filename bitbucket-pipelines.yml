@@ -133,22 +133,22 @@ pipelines:
           # Run Cypress Tests in parallel (6 machines)
           - step:
               <<: *e2e
-              name: Cypress running on Machine (1)
+              name: Cypress on Machine (1)
           - step:
               <<: *e2e
-              name: Cypress running on Machine (2)
+              name: Cypress on Machine (2)
           - step:
               <<: *e2e
-              name: Cypress running on Machine (3)
+              name: Cypress on Machine (3)
           - step:
               <<: *e2e
-              name: Cypress running on Machine (4)
+              name: Cypress on Machine (4)
           - step:
               <<: *e2e
-              name: Cypress running on Machine (5)
+              name: Cypress on Machine (5)
           - step:
               <<: *e2e
-              name: Cypress running on Machine (6)
+              name: Cypress on Machine (6)
       - step: *build-artifacts
       - step: *deploy-staging-to-firebase
 
@@ -162,21 +162,21 @@ pipelines:
           # Run Cypress Tests in parallel (6 machines)
           - step:
               <<: *e2e
-              name: Cypress running on Machine (1)
+              name: Cypress on Machine (1)
           - step:
               <<: *e2e
-              name: Cypress running on Machine (2)
+              name: Cypress on Machine (2)
           - step:
               <<: *e2e
-              name: Cypress running on Machine (3)
+              name: Cypress on Machine (3)
           - step:
               <<: *e2e
-              name: Cypress running on Machine (4)
+              name: Cypress on Machine (4)
           - step:
               <<: *e2e
-              name: Cypress running on Machine (5)
+              name: Cypress on Machine (5)
           - step:
               <<: *e2e
-              name: Cypress running on Machine (6)
+              name: Cypress on Machine (6)
       - step: *build-artifacts
       - step: *deploy-prod-using-sftp
