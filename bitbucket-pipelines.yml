@@ -12,6 +12,7 @@ e2e: &e2e
   caches:
     - node
     - cypress
+  image: cypress/base:10
   script:
     - npm install -g @angular/cli
     - npm install -g @ionic/cli
