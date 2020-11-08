@@ -48,13 +48,14 @@ definitions:
           - node # pre-defined cache
     - step: &build-artifacts
         name: Build PWA Artifacts
+        image: cypress/base:10 # Because of Cypress dev dependency.
         script:
           - npm install -g @angular/cli
           - npm install -g @ionic/cli
           - npm ci
           - ionic build --prod
         artifacts:
-          - node_modules/** # Save modules for next steps
+          # - node_modules/** # Save modules for next steps
           - www/**
     # --------- Firebase Cloud Deployment ---------
     - step: &deploy-staging-to-firebase
