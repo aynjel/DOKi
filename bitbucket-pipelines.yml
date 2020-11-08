@@ -44,7 +44,8 @@ pipelines:
             - node
             - cypress
           image: cypress/base:10
-          # script:
+          script:
+            - echo "Parallel Tests about to start..."
           #   - npm install -g @angular/cli
           #   - npm install -g @ionic/cli
           #   - npm install -g wait-on
