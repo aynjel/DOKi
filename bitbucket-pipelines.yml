@@ -1,4 +1,5 @@
-image: node:10.8.0
+image: node:12.19.0-alpine3.10
+# image: node:10.8.0
 # image: coolnumber9/node-ionic-angular:nov2020-v1.0.2
 options:
   max-time: 15
@@ -43,11 +44,11 @@ pipelines:
             - node
             - cypress
           image: cypress/base:10
-          script:
-            - npm install -g @angular/cli
-            - npm install -g @ionic/cli
-            - npm install -g wait-on
-            - npm ci
+          # script:
+          #   - npm install -g @angular/cli
+          #   - npm install -g @ionic/cli
+          #   - npm install -g wait-on
+          #   - npm ci
       - parallel:
         # Run N steps in parallel
         - step:
