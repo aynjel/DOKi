@@ -1,144 +1,84 @@
 image: node:12.19.0-alpine3.10
-# image: node:10.8.0
 # image: coolnumber9/node-ionic-angular:nov2020-v1.0.2
+
 options:
   max-time: 15
   docker: true
   size: 2x
 
-# Job definition for running E2E tests in parallel
-e2e: &e2e
-  name: E2E Tests
-  caches:
-    - node
-    - cypress
-  image: cypress/base:10
-  script:
-    - npm install -g @angular/cli
-    - npm install -g @ionic/cli
-    - npm install -g wait-on
-    - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
-    - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --parallel
-  artifacts:
-    - cypress/screenshots/**
-    - cypress/reports/**
-    - cypress/videos/**    
-
-pipelines:
-  branches:
-    '{dev_branch,develop}':
-      - step:
-          name: Code linting
+  definitions:
+    caches:
+      npm: $HOME/.npm
+      cypress: $HOME/.cache/Cypress
+    services:
+      docker:
+        memory: 4096
+    # Job definition for running E2E tests in parallel
+    e2e: &e2e
+      name: E2E Parallel Tests
+      caches:
+        - npm
+        - node
+        - cypress
+      image: cypress/base:10
+      script:
+        - npm install -g @angular/cli
+        - npm install -g @ionic/cli
+        - npm install -g wait-on
+        - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
+        - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --parallel
+      artifacts:
+        - cypress/screenshots/**
+        - cypress/reports/**
+        - cypress/videos/**
+    steps:
+      - step: &code-linting
+          name: Code Linting
           script:
             - echo "Code linting to be added soon..."
-          #   - npm install eslint
-          #   - npx eslint .
-          #   - npx eslint --format=checkstyle -o checkstyle-result.xml *.js
-          # after-script:
-          #   - pipe: atlassian/checkstyle-report:0.2.0
-          # caches:
-          #   - node
-      - step:
-          name: Build and E2E Tests
+      - step: &code-linting-eslint
+          name: Code Linting
+          script:
+            - npm install eslint
+            - npx eslint .
+            - npx eslint --format=checkstyle -o checkstyle-result.xml *.js
+          after-script:
+            - pipe: atlassian/checkstyle-report:0.2.0
           caches:
-            - npm
             - node
-            - cypress
-          image: cypress/base:10
+      - step: &build-artifacts
+          name: Build PWA Artifacts
           script:
-            - echo "Parallel Tests about to start..."
-          #   - npm install -g @angular/cli
-          #   - npm install -g @ionic/cli
-          #   - npm install -g wait-on
-          #   - npm ci
-      - parallel:
-        # Run N steps in parallel
-        - step:
-            <<: *e2e
-        - step:
-            <<: *e2e
-        - step:
-            <<: *e2e
-        - step:
-            <<: *e2e
-        - step:
-            <<: *e2e
-        - step:
-            <<: *e2e
-            # - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
-            # - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY
-            # - ionic build --prod
-          # artifacts:
-          #   - node_modules/** # Save modules for next steps
-          #   - www/**
-          #   # - cypress/screenshots/**
-          #   # - cypress/reports/**
-          #   # - cypress/videos/**
-      - step:
-          name: Deploy to Staging (Firebase)
-          deployment: staging
-          script:
-            # --------- USING SFTP ---------
-            # - pipe: atlassian/sftp-deploy:0.5.6
-            #   variables:
-            #     USER: $DPP_USER
-            #     SERVER: $DPP_SERVER
-            #     REMOTE_PATH: $DPP_REMOTE_PATH_STAGING
-            #     LOCAL_PATH: $DPP_LOCAL_PATH
-            #     PASSWORD: $DPP_PASSWORD
-            #     # DELETE_FLAG: 'false' # Don't delete existing files
-            #     # EXTRA_ARGS: "--exclude=.bitbucket/ --exclude=.git/ --exclude=bitbucket-pipelines.yml --exclude=.gitignore" # Ignore these
-
-            # --------- USING SCP ---------
-            # - pipe: atlassian/scp-deploy:0.3.13
-            #   variables:
-            #     USER: $DPP_USER
-            #     SERVER: $DPP_SERVER
-            #     REMOTE_PATH: $DPP_REMOTE_PATH_STAGING
-            #     LOCAL_PATH: $DPP_LOCAL_PATH
-
-            # --------- USING Firebase Hosting Deployment ---------
-            - pipe: atlassian/firebase-deploy:0.6.0
-              variables:
-                FIREBASE_TOKEN: $DPP_STAGING_FIREBASE_TOKEN
-
-    master:
-      - step:
-          name: Code linting
-          script:
-            - echo "Code linting to be added soon..."
-          #   - npm install eslint
-          #   - npx eslint .
-          #   - npx eslint --format=checkstyle -o checkstyle-result.xml *.js
-          # after-script:
-          #   - pipe: atlassian/checkstyle-report:0.2.0
-          # caches:
-          #   - node
-      - step:
-          name: Build and E2E Tests
-          caches:
-            - npm
-            - node
-            - cypress
-          image: cypress/base:10
-          script:
-            - npm install -g @angular/cli
-            - npm install -g @ionic/cli
-            - npm install -g wait-on
-            - npm ci
-            - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
-            - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY
             - ionic build --prod
           artifacts:
             - node_modules/** # Save modules for next steps
             - www/**
-            # - cypress/screenshots/**
-            # - cypress/reports/**
-            # - cypress/videos/**
-      - step:
-          name: Deploy to Production
-          deployment: production
+      # --------- Firebase Cloud Deployment ---------
+      - step: &deploy-staging-to-firebase
+          name: Deploy Staging (Firebase)
+          deployment: staging
           script:
+            - pipe: atlassian/firebase-deploy:0.6.0
+              variables:
+                FIREBASE_TOKEN: $DPP_STAGING_FIREBASE_TOKEN
+      # --------- SFTP On-Premise Deployment ---------
+      - step: &deploy-staging-using-sftp
+          name: Deploy Staging (SFTP)
+          deployment: staging
+          script: 
+            - pipe: atlassian/sftp-deploy:0.5.6
+              variables:
+                USER: $DPP_USER
+                SERVER: $DPP_SERVER
+                REMOTE_PATH: $DPP_REMOTE_PATH_STAGING
+                LOCAL_PATH: $DPP_LOCAL_PATH
+                PASSWORD: $DPP_PASSWORD
+                # DELETE_FLAG: 'false' # Don't delete existing files
+                # EXTRA_ARGS: "--exclude=.bitbucket/ --exclude=.git/ --exclude=bitbucket-pipelines.yml --exclude=.gitignore" # Ignore these
+      - step: &deploy-prod-using-sftp
+          name: Deploy Prod (SFTP)
+          deployment: production
+          script: 
             - pipe: atlassian/sftp-deploy:0.5.6
               variables:
                 USER: $DPP_USER
@@ -148,36 +88,95 @@ pipelines:
                 PASSWORD: $DPP_PASSWORD
                 # DELETE_FLAG: 'false' # Don't delete existing files
                 # EXTRA_ARGS: "--exclude=.bitbucket/ --exclude=.git/ --exclude=bitbucket-pipelines.yml --exclude=.gitignore" # Ignore these
+      # --------- SCP On-Premise Deployment ---------
+      - step: &deploy-staging-using-scp 
+          name: Deploy Staging (SCP)
+          deployment: staging
+          script: 
+            - pipe: atlassian/scp-deploy:0.3.13
+              variables:
+                USER: $DPP_USER
+                SERVER: $DPP_SERVER
+                REMOTE_PATH: $DPP_REMOTE_PATH_STAGING
+                LOCAL_PATH: $DPP_LOCAL_PATH
+      - step: &deploy-prod-using-scp 
+          name: Deploy Prod (SCP)
+          deployment: production
+          script: 
+            - pipe: atlassian/scp-deploy:0.3.13
+              variables:
+                USER: $DPP_USER
+                SERVER: $DPP_SERVER
+                REMOTE_PATH: $DPP_REMOTE_PATH_PROD
+                LOCAL_PATH: $DPP_LOCAL_PATH
+      - step: &run-pwa-on-docker-compose
+          name: Run Tests using Docker Compose
+          image: coolnumber9/node-ionic-angular:nov2020-v1.0.2
+          caches:
+            - docker
+          services:
+            - docker
+          size: 2x
+          script:
+            - docker-compose -f docker-compose-cypress.yml build
+            - docker-compose -f docker-compose-cypress.yml up --exit-code-from cypress
 
-definitions:
-  caches:
-    npm: $HOME/.npm
-    cypress: $HOME/.cache/Cypress
-  services:
-    docker:
-      memory: 4096
+pipelines:
+  branches:
+    '{dev_branch,develop}':
+      - step: *code-linting
+      - step:
+          name: Install, Run, and Test
+          script:
+            - echo "Parallel Tests about to start..."
+      - parallel:
+        # Run Cypress Tests in parallel (6 machines)
+        - step:
+            <<: *e2e
+            name: Cypress running on Machine (1)
+        - step:
+            <<: *e2e
+            name: Cypress running on Machine (2)
+        - step:
+            <<: *e2e
+            name: Cypress running on Machine (3)
+        - step:
+            <<: *e2e
+            name: Cypress running on Machine (4)
+        - step:
+            <<: *e2e
+            name: Cypress running on Machine (5)
+        - step:
+            <<: *e2e
+            name: Cypress running on Machine (6)
+      - step: *build-artifacts
+      - step: *deploy-staging-to-firebase
 
-      # - step:
-      #     name: Build PWA Artifacts
-      #     #caches:
-      #     #  - npm
-      #     #  - cypress
-      #     #  - docker
-      #     # image: coolnumber9/node-ionic-angular:nov2020-v1.0.2
-      #     # services:
-      #     #  - docker
-      #     # size: 2x
-      #     image: cypress/base:10
-      #     script:
-      #       - echo "Building Artifacts..."
-      #       #- npm ci
-      #       #- npm install
-      #       - ionic build --prod
-      #       # - docker-compose -f docker-compose-cypress.yml build
-      #       # - docker-compose -f docker-compose-cypress.yml up --exit-code-from cypress
-      #     #artifacts:
-      #     #    - cypress/screenshots/**
-      #     #    - cypress/reports/**
-      #     #    - cypress/videos/**
-      #     artifacts:
-      #       - www/**
+    master:
+      - step: *code-linting
+      - step:
+        name: Install, Run, and Test
+        script:
+          - echo "Parallel Tests about to start..."
+      - parallel:
+        # Run Cypress Tests in parallel (6 machines)
+        - step:
+            <<: *e2e
+            name: Cypress running on Machine (1)
+        - step:
+            <<: *e2e
+            name: Cypress running on Machine (2)
+        - step:
+            <<: *e2e
+            name: Cypress running on Machine (3)
+        - step:
+            <<: *e2e
+            name: Cypress running on Machine (4)
+        - step:
+            <<: *e2e
+            name: Cypress running on Machine (5)
+        - step:
+            <<: *e2e
+            name: Cypress running on Machine (6)
+      - step: *build-artifacts
+      - step: *deploy-prod-using-sftp
