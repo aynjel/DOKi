@@ -5,6 +5,21 @@ options:
   docker: true
   size: 2x
 
+# job definition for running E2E tests in parallel
+e2e: &e2e
+  name: E2E Tests
+  caches:
+    - node
+    - cypress
+  script:
+    #- npm ci
+    - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
+    - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY
+  artifacts:
+    - cypress/screenshots/**
+    - cypress/reports/**
+    - cypress/videos/**    
+
 pipelines:
   branches:
     '{dev_branch,develop}':
@@ -29,17 +44,28 @@ pipelines:
           script:
             - npm install -g @angular/cli
             - npm install -g @ionic/cli
-            # - npm install -g wait-on
+            - npm install -g wait-on
             - npm ci
+      - parallel:
+        # Run N steps in parallel
+        - step:
+            <<: *e2e
+        - step:
+            <<: *e2e
+        - step:
+            <<: *e2e
+        - step:
+            <<: *e2e
+
             # - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
             # - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY
-            - ionic build --prod
-          artifacts:
-            - node_modules/** # Save modules for next steps
-            - www/**
-            # - cypress/screenshots/**
-            # - cypress/reports/**
-            # - cypress/videos/**
+            # - ionic build --prod
+          # artifacts:
+          #   - node_modules/** # Save modules for next steps
+          #   - www/**
+          #   # - cypress/screenshots/**
+          #   # - cypress/reports/**
+          #   # - cypress/videos/**
       - step:
           name: Deploy to Staging (Firebase)
           deployment: staging
