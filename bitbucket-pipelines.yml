@@ -3,7 +3,7 @@ image: node:12.19.0-alpine3.10
 
 options:
   max-time: 15
-  docker: true
+  # docker: true
   size: 2x
 
   definitions:
@@ -18,8 +18,8 @@ options:
       name: E2E Parallel Tests
       caches:
         - npm
-        - node
         - cypress
+        - node # pre-defined cache
       image: cypress/base:10
       script:
         - npm install -g @angular/cli
@@ -45,7 +45,7 @@ options:
           after-script:
             - pipe: atlassian/checkstyle-report:0.2.0
           caches:
-            - node
+            - node # pre-defined cache
       - step: &build-artifacts
           name: Build PWA Artifacts
           script:
@@ -111,9 +111,11 @@ options:
                 LOCAL_PATH: $DPP_LOCAL_PATH
       - step: &run-pwa-on-docker-compose
           name: Run Tests using Docker Compose
-          image: coolnumber9/node-ionic-angular:nov2020-v1.0.2
+          # image: coolnumber9/node-ionic-angular:nov2020-v1.0.2
           services:
             - docker
+          caches:
+            - docker # pre-defined cache
           size: 2x
           script:
             - docker-compose -f docker-compose-cypress.yml build
