@@ -10,6 +10,8 @@ options:
     caches:
       npm: $HOME/.npm
       cypress: $HOME/.cache/Cypress
+      node:
+      docker:
     services:
       docker:
         memory: 4096
