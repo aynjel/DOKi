@@ -10,7 +10,6 @@ options:
     caches:
       npm: $HOME/.npm
       cypress: $HOME/.cache/Cypress
-      docker:
     services:
       docker:
         memory: 4096
@@ -113,8 +112,6 @@ options:
       - step: &run-pwa-on-docker-compose
           name: Run Tests using Docker Compose
           image: coolnumber9/node-ionic-angular:nov2020-v1.0.2
-          caches:
-            - docker
           services:
             - docker
           size: 2x
