@@ -60,6 +60,11 @@ export class AuthService {
     let str = "drcode=" + postData1 + "&birthday=" + postData2;
     return this.httpService.DoctorsPortalGet("Login/Get?", str);
   }
+  doctorsPortalHISLogin(postData1: any, postData2: any): Observable<any> {
+    postData2 = encodeURIComponent(postData2);
+    let str = "username=" + postData1 + "&password=" + postData2;
+    return this.httpService.DoctorsPortalGet("Login/HISUser/Get?", str);
+  }
   /*
   doctorsPortalLoginAppointments(postData1: any,postData2: any){
     return this.httpService.getAppointments('Login/Get?', postData1, postData2);
