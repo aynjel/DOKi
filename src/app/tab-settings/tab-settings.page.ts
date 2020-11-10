@@ -108,14 +108,10 @@ export class TabSettingsPage {
     this.dr_code = this.logindata[0].dr_code;
     let y = "";
     //PARSE USER SETTINGS
-    console.log(this.logindata);
+
     
     this.patientService
       .getUserSettings("DPP", this.dr_code).subscribe((res: any) => {
-        console.log('0000000000000000000000000000000000000000');
-        
-        console.log(res);
-        
         Object.keys(res).forEach((key) => {
           var value = res[key];
           Object.keys(value).forEach((lock) => {

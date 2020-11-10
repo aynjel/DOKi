@@ -217,7 +217,7 @@ export class LoginPage implements AfterViewInit {
                   if(key == 'privacyPolicy' && lock == 'accepted'){
                     valuex = 1;
                   }
-                  let tempJson = '{"username": "'+this.postData.username+'","appcode": "DPP","setting": "'+key+'","property": "'+lock+'","value": "'+valuex+'"}';
+                  let tempJson = '{"username": "'+this.loginresponse.dr_code+'","appcode": "DPP","setting": "'+key+'","property": "'+lock+'","value": "'+valuex+'"}';
                     
                   this.patientService.insertUserSettings(tempJson).subscribe((res2: any) => {});   
                 }
@@ -225,9 +225,11 @@ export class LoginPage implements AfterViewInit {
             });
         });
       }else if(this.isSetPrivacyPolicy == true){
-        let smpJSON = '{"username": "'+this.postData.username+'","appcode": "DPP","setting": "privacyPolicy","property": "accepted","value": "1"}';
+        let smpJSON = '{"username": "'+this.loginresponse.dr_code+'","appcode": "DPP","setting": "privacyPolicy","property": "accepted","value": "1"}';
      
         if(!this.isPrivacyPolicy){
+          console.log(smpJSON);
+          
           this.patientService.updateUserSettings(smpJSON).subscribe((res1: any) => {});
         }
       }
