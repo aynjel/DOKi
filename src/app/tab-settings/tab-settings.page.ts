@@ -108,8 +108,14 @@ export class TabSettingsPage {
     this.dr_code = this.logindata[0].dr_code;
     let y = "";
     //PARSE USER SETTINGS
+    console.log(this.logindata);
+    
     this.patientService
       .getUserSettings("DPP", this.dr_code).subscribe((res: any) => {
+        console.log('0000000000000000000000000000000000000000');
+        
+        console.log(res);
+        
         Object.keys(res).forEach((key) => {
           var value = res[key];
           Object.keys(value).forEach((lock) => {
@@ -133,8 +139,6 @@ export class TabSettingsPage {
                   if (lock == "accepted") {
                     if (valuex == "1") {
                       this.privacyPolicy = true;
-                    } else {
-                      this.privacyPolicy = false;
                     }
                   }
                 }
@@ -228,6 +232,9 @@ export class TabSettingsPage {
   }
   //OPT-OUT of PRIVACY POLICY
   async optoutofprivacy(event: { detail: { checked: any } }) {
+    
+    console.log(event.detail.checked);
+    
     if (event.detail.checked) {
     } else {
       const actionSheet = await this.actionSheetController.create({

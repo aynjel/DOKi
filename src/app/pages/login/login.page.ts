@@ -114,7 +114,7 @@ export class LoginPage implements AfterViewInit {
     
     this.authService.doctorsPortalHISLogin(this.postData.username, this.postData.password).subscribe(
       (res: any) => {
-        this.loginresponse = res;
+        this.loginresponse = res; 
       },(error) => {
         this.btnDisable = false;
         this.functionsService.alert(
@@ -159,7 +159,7 @@ export class LoginPage implements AfterViewInit {
 
       
       let y=0;
-      this.patientService.getUserSettings('DPP',this.postData.username).subscribe(
+      this.patientService.getUserSettings('DPP',this.loginresponse.dr_code).subscribe(
           (res: any) => {       
             if(Object.keys(res).length >= 1){
               let data = JSON.stringify(res);data = '['+data+']';let adat = JSON.parse(data);
