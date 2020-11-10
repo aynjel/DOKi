@@ -104,35 +104,43 @@ export class LoginPage implements AfterViewInit {
     this.$gaService.pageView("/login", "Login Page");
   }
 
-
+  checkInput(){
+    if(this.postData.username == "" || this.postData.password == ""){
+      return false;
+    }else{
+      return true;
+    }
+  }
   checkUser(){
-    let x:boolean=false;
-
-
-
-
-    
-    this.authService.doctorsPortalHISLogin(this.postData.username, this.postData.password).subscribe(
-      (res: any) => {
-        this.loginresponse = res; 
-      },(error) => {
-        this.btnDisable = false;
-        this.functionsService.alert(
-          "Sorry, Doc. We cannot log you in at the moment. Please try again.",
-          "Okay"
-        );
-      },
-      () => {
-        this.btnDisable=false
-        if(typeof this.loginresponse.ErrorCode !== 'undefined'){
-            this.functionsService.alert(this.loginresponse.ErrorDescription,"Okay");
-          }else{
-            this.logindata = <LoginData>this.loginresponse;
-            this.checkPrivacyPolicy();
-          }
-      }
+   
+    if(this.checkInput()){
+      let x:boolean=false;
+      this.authService.doctorsPortalHISLogin(this.postData.username, this.postData.password).subscribe(
+        (res: any) => {
+          this.loginresponse = res; 
+        },(error) => {
+          this.btnDisable = false;
+          this.functionsService.alert(
+            "Sorry, Doc. We cannot log you in at the moment. Please try again.",
+            "Okay"
+          );
+        },
+        () => {
+          this.btnDisable=false
+          if(typeof this.loginresponse.ErrorCode !== 'undefined'){
+              this.functionsService.alert(this.loginresponse.ErrorDescription,"Okay");
+            }else{
+              this.logindata = <LoginData>this.loginresponse;
+              this.checkPrivacyPolicy();
+            }
+        }
+      );
+  }else{
+    this.functionsService.alert(
+      "Sorry, Doc. We cannot log you in at the moment. Please try again.",
+      "Okay"
     );
-
+  }
 
 
 
