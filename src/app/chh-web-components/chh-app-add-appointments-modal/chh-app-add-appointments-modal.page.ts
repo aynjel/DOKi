@@ -109,6 +109,7 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
     this.datePickerObjForBirthdate = {
       inputDate: this.mydate2,
       dateFormat: "YYYY-MM-DD",
+      fromDate: new Date('1900-01-01'), // default null
       btnProperties: {
         expand: "block", // "block" | "full"
         fill: "", // "clear" | "default" | "outline" | "solid"
