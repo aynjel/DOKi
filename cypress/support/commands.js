@@ -117,6 +117,13 @@ Cypress.Commands.add('rightToLeft', () => {
     } 
   });
 
+  Cypress.Commands.add('invalidUserCredential', (alertWindow) =>{
+    cy.doClick("LOG IN");
+    if(alertWindow){
+        cy.doClick("Okay");
+    } 
+  });
+
 // Log In
 Cypress.Commands.add('login', (userName, password) =>{
     cy.get("ion-grid");
@@ -129,6 +136,20 @@ Cypress.Commands.add('login', (userName, password) =>{
     cy.acceptAgreementLoginContinue(false);
     cy.wait(5000);
     cy.contains('Welcome').end();
+  });
+
+  Cypress.Commands.add('loginAndTestDataPrivacy', (userName, password) =>{
+    cy.get("ion-grid");
+    cy.get('ion-input[id="input-username"]')
+        .type(userName)
+        .should("have.value", userName);
+    cy.get('ion-input[id="input-password"]')
+        .type(password)
+        .should("have.value", password);
+    cy.contains('Welcome').end();
+    cy.doClick("LOG IN");
+    cy.wait(2000);
+    cy.testDataPrivacy();
   });
 
 
@@ -219,6 +240,29 @@ Cypress.Commands.add("jumpToLogin", () => {
   cy.whereAmI(loginUrl);
 });
 
+/**
+ * Test Data Privacy
+ * Updated by: Roberto Pedroza
+ * Date Updated: Nov-09-2020
+ * Remarks: New
+ */
+// ===============================================================================
+  Cypress.Commands.add('testDataPrivacy', () =>{
+    cy.get('body').then(($body => {
+      if ($body.find('ion-checkbox[id="acceptCheckBox"]').length) {
+        cy.acceptAgreement();
+      };
+    }));
+  });
+// ===============================================================================
+Cypress.Commands.add('getTestUserAccount', () =>{
+  var data;
+  cy.fixture('testUserAccount').then(function (data) {
+    this.data = data;
+    return this.getdata;
+  });
+});
+
 var loginUrl = Cypress.env("baseUrlToTest") + Cypress.env("loginUrl");
 var dashboardUrl = Cypress.env("baseUrlToTest") + Cypress.env("dashboardUrl");
 var inpatientsUrl = Cypress.env("baseUrlToTest") + Cypress.env("inpatientsUrl");
@@ -232,4 +276,5 @@ var tabButtonId = ["button-dashboard",
                    "button-appointments",  
                    "button-settings"                 
                     ];
+
 

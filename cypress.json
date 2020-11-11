@@ -1,7 +1,7 @@
 {
   "baseUrl": "http://localhost:8100",
   "projectId": "v1wydv",
-  "retries": 0,
+  "retries": 2,
   "env": {
     "baseUrlToTest": "http://localhost:8100",
     "loginUrl": "/login",
