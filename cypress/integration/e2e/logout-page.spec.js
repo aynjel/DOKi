@@ -7,8 +7,11 @@ context("Actions", () => {
       cy.jumpToLogin();
     });
 
+    /**
+    * Okay as of Nov/09/2020
+    */
     it("Test Scenario 1 - Login then Logout", () => {
-      cy.login("MD000175", "02/08/1954");
+      cy.loginAndTestDataPrivacy('50534','50534');
       cy.wait(1000);
       cy.whereAmI(dashboardUrl);
       cy.wait(1000);

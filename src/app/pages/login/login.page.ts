@@ -47,8 +47,7 @@ export class LoginPage implements AfterViewInit {
   ) {}
     isSetPrivacyPolicy:boolean = false;
     isPrivacyPolicy:boolean = false;
-
-
+    loginresponse:any;
 
 
 
@@ -105,7 +104,56 @@ export class LoginPage implements AfterViewInit {
     this.$gaService.pageView("/login", "Login Page");
   }
 
+  checkInput(){
+    if(this.postData.username == "" || this.postData.password == ""){
+      return false;
+    }else{
+      return true;
+    }
+  }
+  checkUser(){
+   
+    if(this.checkInput()){
+      let x:boolean=false;
+      this.authService.doctorsPortalHISLogin(this.postData.username, this.postData.password).subscribe(
+        (res: any) => {
+          this.loginresponse = res; 
+        },(error) => {
+          this.btnDisable = false;
+          this.functionsService.alert(
+            "Sorry, Doc. We cannot log you in at the moment. Please try again.",
+            "Okay"
+          );
+        },
+        () => {
+          this.btnDisable=false
+          if(typeof this.loginresponse.ErrorCode !== 'undefined'){
+              this.functionsService.alert(this.loginresponse.ErrorDescription,"Okay");
+            }else{
+              this.logindata = <LoginData>this.loginresponse;
+              this.checkPrivacyPolicy();
+            }
+        }
+      );
+  }else{
+    this.functionsService.alert(
+      "Sorry, Doc. We cannot log you in at the moment. Please try again.",
+      "Okay"
+    );
+  }
+
+
+
+  }
+
   checkPrivacyPolicy(){
+   
+
+
+
+
+
+
 
     /* get user settings,
       if user settings is empty, promt the privacy policy modal
@@ -116,39 +164,39 @@ export class LoginPage implements AfterViewInit {
 
     */
 
-   let y=0;
 
-    
-    this.patientService.getUserSettings('DPP',this.postData.username).subscribe(
-        (res: any) => {       
-         
-          if(Object.keys(res).length >= 1){
-            let data = JSON.stringify(res);data = '['+data+']';let adat = JSON.parse(data);
-            adat.forEach(el => {
-              if(typeof el.privacyPolicy !== 'undefined'){
-                if(el.privacyPolicy.accepted == 1){
-                  this.isSetPrivacyPolicy = true;this.isPrivacyPolicy = true;
+      
+      let y=0;
+      this.patientService.getUserSettings('DPP',this.loginresponse.dr_code).subscribe(
+          (res: any) => {       
+            if(Object.keys(res).length >= 1){
+              let data = JSON.stringify(res);data = '['+data+']';let adat = JSON.parse(data);
+              adat.forEach(el => {
+                if(typeof el.privacyPolicy !== 'undefined'){
+                  if(el.privacyPolicy.accepted == 1){
+                    this.isSetPrivacyPolicy = true;this.isPrivacyPolicy = true;
+                  }else{
+                    this.isSetPrivacyPolicy = true;this.isPrivacyPolicy = false;
+                  }
                 }else{
-                  this.isSetPrivacyPolicy = true;this.isPrivacyPolicy = false;
+                  this.isSetPrivacyPolicy = false;
                 }
-              }else{
-                this.isSetPrivacyPolicy = false;
-              }
-            });
-          }else{this.isSetPrivacyPolicy = false;}
-        },
-        (error)=>{
-          this.functionsService.alert(
-            "Sorry, Doc. We cannot log you in at the moment. Please try again.",
-            "Okay"
-          );
-        },() =>{
-            if(this.isSetPrivacyPolicy == false || this.isPrivacyPolicy == false){
-              this.privacyPolicy();
-            }else{this.loginAction();}
-        });
+              });
+            }else{this.isSetPrivacyPolicy = false;}
+          },
+          (error)=>{
+            this.functionsService.alert(
+              "Sorry, Doc. We cannot log you in at the moment. Please try again.",
+              "Okay"
+            );
+          },() =>{
+              if(this.isSetPrivacyPolicy == false || this.isPrivacyPolicy == false){
+                this.showPrivacyPolicy();
+              }else{this.loginAction();}
+          });
+      
   }
-  async privacyPolicy(){
+  async showPrivacyPolicy(){
     const modal = await this.modalController.create({
       component: ChhAppPrivacyPolicyPage,
       componentProps: {
@@ -165,12 +213,60 @@ export class LoginPage implements AfterViewInit {
 
 
   loginAction() {
-    let loginresponse;
-    this.btnDisable = true;
-    this.authService
-      .doctorsPortalLogin(this.postData.username, this.postData.password).subscribe(
+    if (this.loginresponse.length != "0") {
+      if(this.isSetPrivacyPolicy == false){
+        this.patientService.getAppSetting('DPP').subscribe(
+          (res: any) => {
+            Object.keys(res).forEach((key) => {
+              var value = res[key];
+              Object.keys(value).forEach((lock) => {
+                var valuex = value[lock];
+                if(key != 'appcode'){
+                  if(key == 'privacyPolicy' && lock == 'accepted'){
+                    valuex = 1;
+                  }
+                  let tempJson = '{"username": "'+this.loginresponse.dr_code+'","appcode": "DPP","setting": "'+key+'","property": "'+lock+'","value": "'+valuex+'"}';
+                    
+                  this.patientService.insertUserSettings(tempJson).subscribe((res2: any) => {});   
+                }
+              });
+            });
+        });
+      }else if(this.isSetPrivacyPolicy == true){
+        let smpJSON = '{"username": "'+this.loginresponse.dr_code+'","appcode": "DPP","setting": "privacyPolicy","property": "accepted","value": "1"}';
+     
+        if(!this.isPrivacyPolicy){
+          console.log(smpJSON);
+          
+          this.patientService.updateUserSettings(smpJSON).subscribe((res1: any) => {});
+        }
+      }
+
+        let data = JSON.stringify(this.logindata);
+        data = '['+data+']';
+        this.logindata = JSON.parse(data);
+       
+        this.storageService.store(AuthConstants.AUTH, this.logindata);
+        this.router.navigate(["/menu/dashboard"]);
+   
+    } else {
+      
+      this.functionsService.alert(
+        "Oops! You might have entered a different username or password. Please try again.",
+        "Okay"
+      );
+    }
+
+
+
+
+
+
+
+/*
+    this.authService.doctorsPortalLogin(this.postData.username, this.postData.password).subscribe(
         (res: any) => {
-          loginresponse = res;
+          this.loginresponse = res;
         },(error) => {
           this.btnDisable = false;
           this.functionsService.alert(
@@ -179,8 +275,7 @@ export class LoginPage implements AfterViewInit {
           );
         },
         () => {
-          if (loginresponse.length != "0") {
-            /* check if privacy policy is true or false*/
+          if (this.loginresponse.length != "0") {
             if(this.isSetPrivacyPolicy == false){
               this.patientService.getAppSetting('DPP').subscribe(
                 (res: any) => {
@@ -207,10 +302,10 @@ export class LoginPage implements AfterViewInit {
                 this.patientService.updateUserSettings(smpJSON).subscribe((res1: any) => {});
               }
             }
-            if (loginresponse.Message) {
-              this.functionsService.alert(loginresponse.Message, "Okay");
+            if (this.loginresponse.Message) {
+              this.functionsService.alert(this.loginresponse.Message, "Okay");
             } else {
-              this.logindata = <LoginData>loginresponse;
+              this.logindata = <LoginData>this.loginresponse;
               this.storageService.store(AuthConstants.AUTH, this.logindata);
               this.router.navigate(["/menu/dashboard"]);
             }
@@ -223,6 +318,30 @@ export class LoginPage implements AfterViewInit {
           this.btnDisable = false;
         }
       );
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /*
         if (this.validateInputs()) {
           this.authService.logintest(this.postData.username, this.postData.password).subscribe(
