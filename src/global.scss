@@ -84,7 +84,10 @@
   display: block;  
 }
 
-
+.with-header {
+  height: auto;
+  top: 12px;  // height of your app-header component
+}
 
 .pointer {cursor: pointer;}
  .my-custom-modal-css .modal-wrapper {
