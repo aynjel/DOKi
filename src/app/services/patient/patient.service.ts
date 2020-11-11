@@ -181,6 +181,16 @@ export class PatientService {
     const url = environment.apiRouterUrl+"UserSetting/Delete";
     return this.http.delete(url,options)
   }
+  changePassword(data: any) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    const url =
+      environment.apiRouterUrl + "Login/ChangePassword";
+      return this.http.put(url, data, options);
+  }
+
+
+
 
   mocktestlogin(data1:any,data2:any){
       //const headers = new HttpHeaders({ "Content-Type": "application/json" });

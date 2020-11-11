@@ -26,7 +26,7 @@
         <ion-card mode="ios"   >
           <ion-list>
             <ion-item style="padding-top: 10px;">
-              <div class="ion-text-wrap"><b>Old Password</b><br /></div>
+              <div class="ion-text-wrap" #psWord0 id="pWord0"><b>Old Password</b><i>{{errMessage}}</i><br /></div>
             </ion-item>
             <ion-item>
               <ion-input type="password" id="input-password" placeholder = "Old Password" [type]="getType1()"  [(ngModel)]="OldPassword"></ion-input>
@@ -62,7 +62,6 @@
                   id="btn-confirm"
                   (click)="save()"
                   color="mango"
-                  disabled="{{uxSaveCancel}}"
                 >
                   SAVE
                 </ion-button>

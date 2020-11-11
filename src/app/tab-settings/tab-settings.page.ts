@@ -104,6 +104,8 @@ export class TabSettingsPage {
   ionViewWillEnter() {
     this.$gaService.pageView("/Settings", "Settings Tab");
     this.logindata = <LoginData>this.authService.userData$.getValue();
+    console.log(atob(localStorage.getItem("username")));
+    
     this.dr_name = this.logindata[0].last_name;
     this.dr_code = this.logindata[0].dr_code;
     let y = "";
@@ -223,6 +225,7 @@ export class TabSettingsPage {
     this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
       this.userData$.next("");
       localStorage.removeItem("_cap_userDataKey");
+      localStorage.removeItem("username");
       this.router.navigate(["/login"]);
     });
   }

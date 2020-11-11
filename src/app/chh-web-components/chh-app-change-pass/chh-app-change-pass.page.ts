@@ -11,7 +11,8 @@ import { Gesture, GestureConfig } from '@ionic/core';
 import { ViewChildren, QueryList } from "@angular/core";
 import {  IonGrid, IonContent,IonRow } from "@ionic/angular";
 import { Constants } from "../../shared/constants";
-
+import { PatientService } from "../../services/patient/patient.service";
+import { FunctionsService } from 'src/app/shared/functions/functions.service';
 
 @Component({
   selector: 'app-chh-app-change-pass',
@@ -23,6 +24,7 @@ export class ChhAppChangePassPage implements AfterViewInit {
   NewPassword;
   ConfirmPassword;
   errMessage;
+
   isActiveToggleTextPassword1: Boolean = true;
   isEyeOnOff1: Boolean = true;
   isActiveToggleTextPassword2: Boolean = true;
@@ -30,11 +32,16 @@ export class ChhAppChangePassPage implements AfterViewInit {
   isActiveToggleTextPassword3: Boolean = true;
   isEyeOnOff3: Boolean = true;
   uxSaveCancel:boolean = true;
+  serverResponse:any;
   constructor(public modalController: ModalController,
+    private patientService: PatientService,
     public constants: Constants,
     private gestureCtrl: GestureController,
+    public alertController: AlertController,
     private element: ElementRef,
+    public functionsService: FunctionsService,
     private renderer: Renderer2,
+
     private zone:NgZone) { }
     @ViewChildren('psWord1', {read: ElementRef}) psWord1:QueryList<ElementRef>
     @ViewChildren('psWord2', {read: ElementRef}) psWord2:QueryList<ElementRef>
@@ -106,8 +113,20 @@ export class ChhAppChangePassPage implements AfterViewInit {
   async closeModal() {
     await this.modalController.dismiss();
   }
-  save(){
 
+  
+  
+  async alert(data1: any, data2: any,data3:boolean) {
+    const alert = await this.alertController.create({cssClass: "my-custom-class",message: data1,buttons: [{ text: data2, handler: () => {
+      if(data3){this.modalController.dismiss();}
+    } }],});await alert.present();
+  }
+
+
+
+
+  save(){
+    
     let psWord1_1 = this.psWord1.toArray();
     psWord1_1[0].nativeElement.style.transition = '1s';
     psWord1_1[0].nativeElement.style.transform =  `translateX(${10}px)`;
@@ -124,12 +143,41 @@ export class ChhAppChangePassPage implements AfterViewInit {
       myDiv1.style.color = 'red'; 
       myDiv2.style.color = 'red'; 
     }else{
+      let uname = atob(localStorage.getItem("username"));
       //console.log('222');
       this.errMessage = "";
       let myDiv1 = document.getElementById('pWord1');
       let myDiv2 = document.getElementById('pWord2');
       myDiv1.style.color = 'black'; 
-      myDiv2.style.color = 'black';      
+      myDiv2.style.color = 'black';     
+      if(this.NewPassword != this.OldPassword){
+        let smpJSON ='{"drCode": "'+uname+'","oldPassword": "'+this.OldPassword+'","newPassword": "'+this.NewPassword+'"}';
+        this.patientService.changePassword(smpJSON).subscribe(
+          (res) => {
+            this.serverResponse = res; 
+          },(error)=>{
+            this.functionsService.alert(
+              "Sorry, Doc. We cannot change your password at the moment. Please try again.",
+              "Okay"
+            );
+          },()=>{
+            if(typeof this.serverResponse.ErrorCode !== 'undefined'){
+              this.alert(this.serverResponse.ErrorDescription,"Okay",false);
+            }else{
+              this.alert(this.serverResponse.Message,"Okay",true);
+            }
+          }
+        );
+      }else{
+        this.errMessage = " (Old and New Passwords are the same)";
+        let myDiv0 = document.getElementById('pWord0');
+        let myDiv1 = document.getElementById('pWord1');
+        let myDiv2 = document.getElementById('pWord2');
+        
+        myDiv0.style.color = 'red'; 
+        myDiv1.style.color = 'red'; 
+        myDiv2.style.color = 'red'; 
+      }
     }
 
   }

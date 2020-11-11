@@ -247,6 +247,8 @@ export class LoginPage implements AfterViewInit {
         this.logindata = JSON.parse(data);
        
         this.storageService.store(AuthConstants.AUTH, this.logindata);
+
+        localStorage.setItem('username', btoa(this.postData.username));
         this.router.navigate(["/menu/dashboard"]);
    
     } else {
