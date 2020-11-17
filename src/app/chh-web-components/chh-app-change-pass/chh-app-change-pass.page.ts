@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-
-
-
 import { ModalController, AlertController, IonItem } from "@ionic/angular";
-
 import {  AfterViewInit, ElementRef, Renderer2, Input, NgZone } from '@angular/core';
 import { GestureController } from '@ionic/angular';
 import { Gesture, GestureConfig } from '@ionic/core';
@@ -13,13 +8,16 @@ import {  IonGrid, IonContent,IonRow } from "@ionic/angular";
 import { Constants } from "../../shared/constants";
 import { PatientService } from "../../services/patient/patient.service";
 import { FunctionsService } from 'src/app/shared/functions/functions.service';
-
+import { LoginData } from "../../models/login-data.model";
+import { AuthService } from 'src/app/services/auth/auth.service';
+import * as bcrypt from 'bcryptjs';
 @Component({
   selector: 'app-chh-app-change-pass',
   templateUrl: './chh-app-change-pass.page.html',
   styleUrls: ['./chh-app-change-pass.page.scss'],
 })
 export class ChhAppChangePassPage implements AfterViewInit {
+  public logindata: LoginData;
   OldPassword;
   NewPassword;
   ConfirmPassword;
@@ -41,7 +39,7 @@ export class ChhAppChangePassPage implements AfterViewInit {
     private element: ElementRef,
     public functionsService: FunctionsService,
     private renderer: Renderer2,
-
+    private authService: AuthService,
     private zone:NgZone) { }
     @ViewChildren('psWord1', {read: ElementRef}) psWord1:QueryList<ElementRef>
     @ViewChildren('psWord2', {read: ElementRef}) psWord2:QueryList<ElementRef>
@@ -98,29 +96,97 @@ export class ChhAppChangePassPage implements AfterViewInit {
      gesture2.enable();
      gesture3.enable();
    }
-
-
-
   public getType1() {return this.isActiveToggleTextPassword1 ? 'password' : 'text';}
   public getType2() {return this.isActiveToggleTextPassword2 ? 'password' : 'text';}
   public getType3() {return this.isActiveToggleTextPassword3 ? 'password' : 'text';}
-
   public getName1() {return this.isEyeOnOff1 ? 'eye-off-outline' : 'eye-outline';}
   public getName2() {return this.isEyeOnOff2 ? 'eye-off-outline' : 'eye-outline';}
   public getName3() {return this.isEyeOnOff3 ? 'eye-off-outline' : 'eye-outline';}
+  hashed_newPassword;
+  hashed_oldPassword;
+  dr_name;
+  dr_code ;
+  dr_username;
+  saltRounds = 10;
   ngOnInit() {
+    this.logindata = <LoginData>this.authService.userData$.getValue();
+    this.dr_name = this.logindata[0].last_name;
+    this.dr_code = this.logindata[0].dr_code;
+    this.dr_username = atob(localStorage.getItem("username"));
+    let json = '{"appCode": "DPP","userName": "'+this.dr_username+'"}';let resultJson;
+    console.log(json);
+    
+    this.patientService.mockValidate(json).subscribe(
+      (res: any) => {
+
+        resultJson = res.Data;            
+      },(error)=>{},
+      ()=>{       
+        this.hashed_oldPassword = resultJson;    
+     
+
+      });
   }
+
+
+
+
+
+
+
+
+
   async closeModal() {
     await this.modalController.dismiss();
   }
-
-  
-  
   async alert(data1: any, data2: any,data3:boolean) {
     const alert = await this.alertController.create({cssClass: "my-custom-class",message: data1,buttons: [{ text: data2, handler: () => {
       if(data3){this.modalController.dismiss();}
     } }],});await alert.present();
   }
+
+
+  validatePassword(){
+    bcrypt.compare(this.OldPassword, this.hashed_oldPassword).then(
+      (result) => {
+        if(result){
+
+
+          bcrypt.hash(this.NewPassword, this.saltRounds).then(
+            (hash) => {
+              let resJson = '{"appCode": "DPP","userName": "'+this.dr_username+'","oldPassword": "'+this.hashed_oldPassword+'","newPassword":"'+hash+'"}';
+              console.log(resJson);
+              
+              this.patientService.mockChangePassword(resJson).subscribe(
+                (res: any) => {
+                  this.serverResponse = res; 
+                },(error)=>{},
+                ()=>{
+                  if(typeof this.serverResponse.ErrorCode !== 'undefined'){
+                    this.alert(this.serverResponse.ErrorDescription,"Okay",false);
+                  }else{
+                    this.alert(this.serverResponse.Message,"Okay",true);
+                  }
+
+                }
+              );
+          });
+
+
+
+        }else{
+          this.functionsService.alert("Oldpassword != Saved Password","Okay");
+        }
+      }
+    );
+  }
+
+
+
+
+
+
+
 
 
 
@@ -143,7 +209,7 @@ export class ChhAppChangePassPage implements AfterViewInit {
       myDiv1.style.color = 'red'; 
       myDiv2.style.color = 'red'; 
     }else{
-      let uname = atob(localStorage.getItem("username"));
+
       //console.log('222');
       this.errMessage = "";
       let myDiv1 = document.getElementById('pWord1');
@@ -151,23 +217,42 @@ export class ChhAppChangePassPage implements AfterViewInit {
       myDiv1.style.color = 'black'; 
       myDiv2.style.color = 'black';     
       if(this.NewPassword != this.OldPassword){
-        let smpJSON ='{"drCode": "'+uname+'","oldPassword": "'+this.OldPassword+'","newPassword": "'+this.NewPassword+'"}';
-        this.patientService.changePassword(smpJSON).subscribe(
-          (res) => {
-            this.serverResponse = res; 
-          },(error)=>{
-            this.functionsService.alert(
-              "Sorry, Doc. We cannot change your password at the moment. Please try again.",
-              "Okay"
+
+        this.validatePassword();
+        /*
+        bcrypt.hash(this.NewPassword, this.saltRounds).then(
+          (hash) => {
+            console.log(hash);
+            
+         
+            let resJson = '{"appCode": "DPP","userName": "'+this.usename+'","oldPassword": "'+hash+'","newPassword":"'+hash+'"}';
+            console.log(resJson);
+            
+               /*
+            this.patientService.changePassword(smpJSON).subscribe(
+              (res) => {
+                this.serverResponse = res; 
+              },(error)=>{
+                this.functionsService.alert(
+                  "Sorry, Doc. We cannot change your password at the moment. Please try again.",
+                  "Okay"
+                );
+              },()=>{
+                if(typeof this.serverResponse.ErrorCode !== 'undefined'){
+                  this.alert(this.serverResponse.ErrorDescription,"Okay",false);
+                }else{
+                  this.alert(this.serverResponse.Message,"Okay",true);
+                }
+              }
             );
-          },()=>{
-            if(typeof this.serverResponse.ErrorCode !== 'undefined'){
-              this.alert(this.serverResponse.ErrorDescription,"Okay",false);
-            }else{
-              this.alert(this.serverResponse.Message,"Okay",true);
-            }
           }
         );
+        */
+
+
+
+
+
       }else{
         this.errMessage = " (Old and New Passwords are the same)";
         let myDiv0 = document.getElementById('pWord0');

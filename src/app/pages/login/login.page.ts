@@ -20,6 +20,8 @@ import { Gesture, GestureConfig } from '@ionic/core';
 import { ViewChildren, QueryList } from "@angular/core";
 import {  IonGrid, IonContent,IonRow } from "@ionic/angular";
 import { ChhAppPrivacyPolicyPage } from "./../../chh-web-components/chh-app-privacy-policy/chh-app-privacy-policy.page"
+import * as bcrypt from 'bcryptjs';
+
 
 @Component({
   selector: "app-login",
@@ -28,7 +30,7 @@ import { ChhAppPrivacyPolicyPage } from "./../../chh-web-components/chh-app-priv
 })
 export class LoginPage implements AfterViewInit {
   public logindata: LoginData;
-
+  saltRounds = 10;
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -48,7 +50,7 @@ export class LoginPage implements AfterViewInit {
     isSetPrivacyPolicy:boolean = false;
     isPrivacyPolicy:boolean = false;
     loginresponse:any;
-
+    hashedPassword:any;
 
 
 
@@ -106,14 +108,76 @@ export class LoginPage implements AfterViewInit {
 
   checkInput(){
     if(this.postData.username == "" || this.postData.password == ""){
-      return false;
+      this.functionsService.sorryDoc();
     }else{
-      return true;
+      this.checkbcrypt();
     }
   }
+  checkbcrypt(){
+    let json = '{"appCode": "DPP","userName": "'+this.postData.username+'"}';let resultJson;
+    this.patientService.mockValidate(json).subscribe(
+      (res: any) => {
+        resultJson = res;      
+      },(error)=>{this.functionsService.sorryDoc();},
+      ()=>{       
+        if(!(typeof resultJson.ErrorCode !== 'undefined')){
+          if(resultJson.Data == '1234'){
+            bcrypt.hash(resultJson.Data, this.saltRounds).then(
+              (hash) => {let resJson = '{"appCode": "DPP","userName": "'+this.postData.username+'","oldPassword": "1234","newPassword":"'+hash+'"}';let dJson;
+                this.patientService.mockChangePassword(resJson).subscribe(
+                  (res: any) => {dJson = res;},(error)=>{this.functionsService.sorryDoc();},
+                  () => {
+                    if(dJson.Message == 'Success'){this.hashedPassword = hash;this.loginUser();}
+                    else{this.functionsService.sorryDoc();}
+                  });
+              }
+            );
+          }else{
+            this.hashedPassword = resultJson.Data;
+            this.loginUser();
+          }
+      }else{
+        this.functionsService.alert(resultJson.ErrorDescription,"Okay");
+      }
+
+      });
+  }
+
+  loginUser(){
+ 
+    bcrypt.compare(this.postData.password, this.hashedPassword).then(
+      (result) => {
+        if(result){
+            let json = '{"appCode": "DPP","userName": "'+this.postData.username+'","password": "'+this.hashedPassword+'"}';
+
+            this.patientService.mockLoginGet(json).subscribe(
+              (res: any) => {
+                this.loginresponse = res; 
+         
+              },(error)=>{
+
+              },()=>{
+                if(typeof this.loginresponse.ErrorCode !== 'undefined'){
+                  this.functionsService.alert(this.loginresponse.ErrorDescription,"Okay");
+                }else{
+                  this.logindata = <LoginData>this.loginresponse;
+                  this.checkPrivacyPolicy();
+                  
+                }
+              });
+        }else{
+          this.functionsService.alert("Invalid Password","Okay");
+        }
+      }
+    );
+
+  }
+
+
+
+/*
   checkUser(){
    
-    if(this.checkInput()){
       let x:boolean=false;
       this.authService.doctorsPortalHISLogin(this.postData.username, this.postData.password).subscribe(
         (res: any) => {
@@ -135,16 +199,11 @@ export class LoginPage implements AfterViewInit {
             }
         }
       );
-  }else{
-    this.functionsService.alert(
-      "Sorry, Doc. We cannot log you in at the moment. Please try again.",
-      "Okay"
-    );
-  }
 
 
 
-  }
+  }*/
+
 
   checkPrivacyPolicy(){
    
@@ -165,12 +224,21 @@ export class LoginPage implements AfterViewInit {
     */
 
 
-      
+      let rsmJson;
       let y=0;
-      this.patientService.getUserSettings('DPP',this.loginresponse.dr_code).subscribe(
-          (res: any) => {       
-            if(Object.keys(res).length >= 1){
-              let data = JSON.stringify(res);data = '['+data+']';let adat = JSON.parse(data);
+      this.patientService.getUserSettings('DPP',this.logindata.dr_code).subscribe(
+          (res: any) => {    
+            rsmJson = res;   
+
+          },
+          (error)=>{
+            this.functionsService.alert(
+              "Sorry, Doc. We cannot log you in at the moment. Please try again.",
+              "Okay"
+            );
+          },() =>{
+            if(Object.keys(rsmJson).length >= 1){
+              let data = JSON.stringify(rsmJson);data = '['+data+']';let adat = JSON.parse(data);
               adat.forEach(el => {
                 if(typeof el.privacyPolicy !== 'undefined'){
                   if(el.privacyPolicy.accepted == 1){
@@ -183,13 +251,6 @@ export class LoginPage implements AfterViewInit {
                 }
               });
             }else{this.isSetPrivacyPolicy = false;}
-          },
-          (error)=>{
-            this.functionsService.alert(
-              "Sorry, Doc. We cannot log you in at the moment. Please try again.",
-              "Okay"
-            );
-          },() =>{
               if(this.isSetPrivacyPolicy == false || this.isPrivacyPolicy == false){
                 this.showPrivacyPolicy();
               }else{this.loginAction();}
@@ -199,10 +260,7 @@ export class LoginPage implements AfterViewInit {
   async showPrivacyPolicy(){
     const modal = await this.modalController.create({
       component: ChhAppPrivacyPolicyPage,
-      componentProps: {
-        backdropDismiss: true,
-        'origin': 'login'
-      },
+      componentProps: {backdropDismiss: true,'origin': 'login'},
     });
     modal.onDidDismiss().then((data) => {
       if(data.data){this.loginAction();}
@@ -210,8 +268,6 @@ export class LoginPage implements AfterViewInit {
     });
     return await modal.present();
   }
-
-
   loginAction() {
     if (this.loginresponse.length != "0") {
       if(this.isSetPrivacyPolicy == false){
@@ -236,8 +292,6 @@ export class LoginPage implements AfterViewInit {
         let smpJSON = '{"username": "'+this.loginresponse.dr_code+'","appcode": "DPP","setting": "privacyPolicy","property": "accepted","value": "1"}';
      
         if(!this.isPrivacyPolicy){
-          console.log(smpJSON);
-          
           this.patientService.updateUserSettings(smpJSON).subscribe((res1: any) => {});
         }
       }
