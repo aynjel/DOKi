@@ -136,7 +136,7 @@ export class ChhAppChangePassPage implements AfterViewInit {
 
 
   async closeModal() {
-    await this.modalController.dismiss();
+    await this.modalController.dismiss('none');
   }
   async alert(data1: any, data2: any,data3:boolean) {
     const alert = await this.alertController.create({cssClass: "my-custom-class",message: data1,buttons: [{ text: data2, handler: () => {
@@ -146,7 +146,18 @@ export class ChhAppChangePassPage implements AfterViewInit {
     } }],});await alert.present();
   }
 
+  async modalUpdate(header,message,data){
+    const alert = await this.alertController.create({
+      cssClass: "my-custom-class",
+      header:header,
+      message: message,
+      buttons: [{ text: 'Okay', handler: () => {
+          if(data){
 
+          }
+      } }],
+    });await alert.present();
+  }
   validatePassword(){
     bcrypt.compare(this.OldPassword, this.hashed_oldPassword).then(
       (result) => {
@@ -163,9 +174,13 @@ export class ChhAppChangePassPage implements AfterViewInit {
                 },(error)=>{},
                 ()=>{
                   if(typeof this.serverResponse.ErrorCode !== 'undefined'){
-                    this.alert(this.serverResponse.ErrorDescription,"Okay",false);
+                    //this.alert(this.serverResponse.ErrorDescription,"Okay",false);
+                    this.modalController.dismiss(this.serverResponse.ErrorDescription);
                   }else{
-                    this.alert(this.serverResponse.Message,"Okay",true);
+                    //this.alert(this.serverResponse.Message,"Okay",true);
+                    console.log(this.serverResponse.Message);
+                    
+                    this.modalController.dismiss(this.serverResponse.Message);
                   }
 
                 }
@@ -175,7 +190,7 @@ export class ChhAppChangePassPage implements AfterViewInit {
 
 
         }else{
-          this.functionsService.alert("Oldpassword != Saved Password","Okay");
+          this.functionsService.alert("It seems that the current password you entered can't be found in our system.","Okay");
         }
       }
     );

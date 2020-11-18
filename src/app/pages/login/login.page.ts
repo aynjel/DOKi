@@ -15,7 +15,7 @@ import { GoogleAnalyticsService } from "ngx-google-analytics";
 import { Constants } from "../../shared/constants";
 
 import {  AfterViewInit, ElementRef, Renderer2, Input, NgZone } from '@angular/core';
-import { GestureController, ModalController } from '@ionic/angular';
+import { AlertController, GestureController, ModalController } from '@ionic/angular';
 import { Gesture, GestureConfig } from '@ionic/core';
 import { ViewChildren, QueryList } from "@angular/core";
 import {  IonGrid, IonContent,IonRow } from "@ionic/angular";
@@ -46,7 +46,8 @@ export class LoginPage implements AfterViewInit {
     private renderer: Renderer2,
     private zone:NgZone,
     private modalController: ModalController,
-    private patientService:PatientService
+    private patientService:PatientService,
+    public alertController: AlertController
   ) {}
     isSetPrivacyPolicy:boolean = false;
     isPrivacyPolicy:boolean = false;
@@ -114,8 +115,20 @@ export class LoginPage implements AfterViewInit {
       this.checkbcrypt();
     }
   }
+  
 
-
+  async modalUpdate(header,message,data){
+    const alert = await this.alertController.create({
+      cssClass: "my-custom-class",
+      header:header,
+      message: message,
+      buttons: [{ text: 'Okay', handler: () => {
+          if(data){
+            this.loginUser();
+          }
+      } }],
+    });await alert.present();
+  }
   async updatePassword(){
     const modal = await this.modalController.create({
       component: ChhAppChangePasswordPage,
@@ -128,8 +141,13 @@ export class LoginPage implements AfterViewInit {
         if(typeof data.data !== 'undefined' && typeof data.role !== 'undefined'){
           this.hashedPassword = data.data;
           this.postData.password = data.role;
-           this.loginUser();
-        }        
+          this.modalUpdate(this.constants.UI_COMPONENT_TEXT_VALUE_PASSWORD_SUCCESS_TITLE,this.constants.UI_COMPONENT_TEXT_VALUE_UPDATE_PASSWORD_SUCCESS_BODY,true);
+
+        }else if(data.data == 'Error'){
+          this.modalUpdate(this.constants.UI_COMPONENT_TEXT_VALUE_PASSWORD_FAILED_TITLE,this.constants.UI_COMPONENT_TEXT_VALUE_UPDATE_PASSWORD_FAILED_BODY,false);
+        }else{
+
+        }
 
       });
     return await modal.present();

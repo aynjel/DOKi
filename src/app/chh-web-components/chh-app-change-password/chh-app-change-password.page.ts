@@ -36,6 +36,7 @@ saltRounds = 10;
     private renderer: Renderer2,
     private patientService: PatientService,
     public functionsService: FunctionsService,
+    public alertController: AlertController,
     private zone:NgZone) { }
 
   ngOnInit() {
@@ -92,8 +93,11 @@ saltRounds = 10;
   public getName2() {return this.isEyeOnOff2 ? 'eye-off-outline' : 'eye-outline';}
   public getName3() {return this.isEyeOnOff3 ? 'eye-off-outline' : 'eye-outline';}
   async closeModal() {
-    await this.modalController.dismiss();
+    await this.modalController.dismiss('None');
   }
+
+  /*<div class="alert-head sc-ion-alert-ios"><h2 id="alert-1-hdr" class="alert-title sc-ion-alert-ios">Use this lightsaber?</h2></div>
+  <div id="alert-1-msg" class="alert-message sc-ion-alert-ios">Do you agree to use this lightsaber to do good across the galaxy?</div>*/
 
 
   save(){
@@ -119,9 +123,12 @@ saltRounds = 10;
             () => {
               if(dJson.Message == 'Success'){
 
+                
                 this.modalController.dismiss(hashedPassword,this.NewPassword);
               }
-              else{this.functionsService.sorryDoc();}
+              else{
+                this.modalController.dismiss('Error');
+              }
             });
         }
       );

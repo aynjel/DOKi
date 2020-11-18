@@ -127,6 +127,22 @@ export class Constants {
   public UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_TELEPHONE_HREF: string = "tel: +63322338000";
   public UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_APP_VERSION: string = "App Version:";
 
+  public UI_COMPONENT_TEXT_VALUE_UPDATE_PASSWORD_HEADER="Great to have you, Doc! But before we can proceed and for security reasons, we advise you to change your password first. When you need to change your password in the future, you may do so in the Settings page.";
+
+  public UI_COMPONENT_TEXT_VALUE_PASSWORD_FAILED_TITLE="Ooops!";
+  public UI_COMPONENT_TEXT_VALUE_PASSWORD_SUCCESS_TITLE="Yey!";
+
+  public UI_COMPONENT_TEXT_VALUE_UPDATE_PASSWORD_SUCCESS_BODY="High five! Thanks for making your account more secure, Doc!";
+  public UI_COMPONENT_TEXT_VALUE_CHANGE_PASSWORD_SUCCESS_BODY="Great! You've successfully changed it! Please log in again using your new password. ";
+
+  
+  public UI_COMPONENT_TEXT_VALUE_UPDATE_PASSWORD_FAILED_BODY="U-oh! There was a problem updating your password. Please try again.";
+  public UI_COMPONENT_TEXT_VALUE_CHANGE_PASSWORD_FAILED_BODY="It seems that the current password you entered can't be found in our system. Please try again. ";
+
+
+
+
+
   /**
    * UI Component Text - Login
    */
