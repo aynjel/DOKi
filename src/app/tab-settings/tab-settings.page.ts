@@ -77,7 +77,7 @@ export class TabSettingsPage {
     });
   }
 
-  async showaddmodal() {
+ /* async showaddmodal() {
     const modal = await this.modalController.create({
       component: ChhAppChangePasswordPage,
       componentProps: {
@@ -86,7 +86,7 @@ export class TabSettingsPage {
     });
     modal.onDidDismiss().then((data) => {});
     return await modal.present();
-  }
+  }*/
 
   async showaddmodal1() {
     const modal = await this.modalController.create({
@@ -95,10 +95,40 @@ export class TabSettingsPage {
         backdropDismiss: true,
       },
     });
-    modal.onDidDismiss().then((data) => {});
+    modal.onDidDismiss().then((
+      data) => {
+        if(data.data == 'Success'){
+          this.autoLogoutActionSheet();
+        }
+      }
+      );
     return await modal.present();
   }
 
+
+  async autoLogoutActionSheet(){
+    const actionSheet = await this.actionSheetController.create({
+      mode: "ios",
+      header: "You will be logged Out",
+      cssClass: "my-custom-class",
+      buttons: [
+        {
+          text: "Okay",
+          role: "destructive",
+          icon: "arrow-undo-outline",
+          handler: () => {
+
+            this.privacyPolicy = true;
+            this.userData$.next("");
+            localStorage.removeItem("_cap_userDataKey");
+            this.router.navigate(["/login"]);
+          },
+        },
+
+      ],
+    });
+    await actionSheet.present();
+  }
   ngOnInit() {}
 
   ionViewWillEnter() {

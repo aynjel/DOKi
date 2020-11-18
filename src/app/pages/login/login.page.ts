@@ -21,7 +21,8 @@ import { ViewChildren, QueryList } from "@angular/core";
 import {  IonGrid, IonContent,IonRow } from "@ionic/angular";
 import { ChhAppPrivacyPolicyPage } from "./../../chh-web-components/chh-app-privacy-policy/chh-app-privacy-policy.page"
 import * as bcrypt from 'bcryptjs';
-
+import { ChhAppChangePasswordPage } from "../../chh-web-components/chh-app-change-password/chh-app-change-password.page";
+import { tick } from '@angular/core/testing';
 
 @Component({
   selector: "app-login",
@@ -113,6 +114,27 @@ export class LoginPage implements AfterViewInit {
       this.checkbcrypt();
     }
   }
+
+
+  async updatePassword(){
+    const modal = await this.modalController.create({
+      component: ChhAppChangePasswordPage,
+      componentProps: {
+        backdropDismiss: true,
+      },
+    });
+    modal.onDidDismiss().then(
+      (data) => {
+        if(typeof data.data !== 'undefined' && typeof data.role !== 'undefined'){
+          this.hashedPassword = data.data;
+          this.postData.password = data.role;
+           this.loginUser();
+        }        
+
+      });
+    return await modal.present();
+  }
+
   checkbcrypt(){
     let json = '{"appCode": "DPP","userName": "'+this.postData.username+'"}';let resultJson;
     this.patientService.mockValidate(json).subscribe(
@@ -121,7 +143,17 @@ export class LoginPage implements AfterViewInit {
       },(error)=>{this.functionsService.sorryDoc();},
       ()=>{       
         if(!(typeof resultJson.ErrorCode !== 'undefined')){
-          if(resultJson.Data == '1234'){
+          if(resultJson.Data.length <= 10){
+            if(this.postData.password == resultJson.Data){
+              localStorage.setItem('username', btoa(this.postData.username));
+              this.updatePassword();
+
+              
+            }
+            else{this.functionsService.alert("Invalid Password","Okay");}
+            
+
+/*
             bcrypt.hash(resultJson.Data, this.saltRounds).then(
               (hash) => {let resJson = '{"appCode": "DPP","userName": "'+this.postData.username+'","oldPassword": "1234","newPassword":"'+hash+'"}';let dJson;
                 this.patientService.mockChangePassword(resJson).subscribe(
@@ -132,6 +164,8 @@ export class LoginPage implements AfterViewInit {
                   });
               }
             );
+*/
+
           }else{
             this.hashedPassword = resultJson.Data;
             this.loginUser();
@@ -143,26 +177,34 @@ export class LoginPage implements AfterViewInit {
       });
   }
 
+
+
+
+  
+
+
+
+
+
+
+
+
+
   loginUser(){
- 
     bcrypt.compare(this.postData.password, this.hashedPassword).then(
       (result) => {
         if(result){
             let json = '{"appCode": "DPP","userName": "'+this.postData.username+'","password": "'+this.hashedPassword+'"}';
-
             this.patientService.mockLoginGet(json).subscribe(
               (res: any) => {
                 this.loginresponse = res; 
-         
               },(error)=>{
-
               },()=>{
                 if(typeof this.loginresponse.ErrorCode !== 'undefined'){
                   this.functionsService.alert(this.loginresponse.ErrorDescription,"Okay");
                 }else{
                   this.logindata = <LoginData>this.loginresponse;
                   this.checkPrivacyPolicy();
-                  
                 }
               });
         }else{
@@ -170,7 +212,6 @@ export class LoginPage implements AfterViewInit {
         }
       }
     );
-
   }
 
 

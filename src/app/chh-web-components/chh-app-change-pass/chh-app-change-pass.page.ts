@@ -114,8 +114,7 @@ export class ChhAppChangePassPage implements AfterViewInit {
     this.dr_code = this.logindata[0].dr_code;
     this.dr_username = atob(localStorage.getItem("username"));
     let json = '{"appCode": "DPP","userName": "'+this.dr_username+'"}';let resultJson;
-    console.log(json);
-    
+ 
     this.patientService.mockValidate(json).subscribe(
       (res: any) => {
 
@@ -141,7 +140,9 @@ export class ChhAppChangePassPage implements AfterViewInit {
   }
   async alert(data1: any, data2: any,data3:boolean) {
     const alert = await this.alertController.create({cssClass: "my-custom-class",message: data1,buttons: [{ text: data2, handler: () => {
-      if(data3){this.modalController.dismiss();}
+      if(data3){
+        this.modalController.dismiss(data1);
+      }
     } }],});await alert.present();
   }
 
@@ -155,7 +156,6 @@ export class ChhAppChangePassPage implements AfterViewInit {
           bcrypt.hash(this.NewPassword, this.saltRounds).then(
             (hash) => {
               let resJson = '{"appCode": "DPP","userName": "'+this.dr_username+'","oldPassword": "'+this.hashed_oldPassword+'","newPassword":"'+hash+'"}';
-              console.log(resJson);
               
               this.patientService.mockChangePassword(resJson).subscribe(
                 (res: any) => {

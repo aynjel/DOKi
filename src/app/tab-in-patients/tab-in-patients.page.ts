@@ -173,7 +173,6 @@ export class TabInPatientsPage {
         this.inPatients = sampleInPatients1;
       }
     }
-    console.log(JSON.stringify(this.inPatients));
     
   }
 
