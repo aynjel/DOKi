@@ -199,22 +199,22 @@ export class PatientService {
       const url = environment.apiRouterUrl+"Login/HISUser/Get?username="+data1+"&password="+data2;
       return this.http.get(url, options);
   }
-  mockValidate(data: any) {
+  commonValidate(data: any) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredintials: false };
-    const url = "http://10.128.18.132/doctorPortalPwa/api/common/Login/Validate";
+    const url = environment.apiRouterUrl+"common/Login/Validate";
       return this.http.put(url, data, options);
   }
-  mockChangePassword(data: any) {
+  commonChangePassword(data: any) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredintials: false };
-    const url = "http://10.128.18.132/doctorPortalPwa/api/common/Login/ChangePassword";
+    const url = environment.apiRouterUrl+"common/Login/ChangePassword";
       return this.http.put(url, data, options);
   }
-  mockLoginGet(data: any) {
+  commonLoginGet(data: any) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredintials: false };
-    const url = "http://10.128.18.132/doctorPortalPwa/api/common/Login/Get";
+    const url = environment.apiRouterUrl+"common/Login/Get";
       return this.http.put(url, data, options);
   }
 }

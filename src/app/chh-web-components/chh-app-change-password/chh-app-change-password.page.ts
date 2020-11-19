@@ -118,7 +118,7 @@ saltRounds = 10;
         (hash) => {
           hashedPassword = hash;
           let resJson = '{"appCode": "DPP","userName": "'+this.dr_username+'","oldPassword": "1234","newPassword":"'+hash+'"}';let dJson;
-          this.patientService.mockChangePassword(resJson).subscribe(
+          this.patientService.commonChangePassword(resJson).subscribe(
             (res: any) => {dJson = res;},(error)=>{this.functionsService.sorryDoc();},
             () => {
               if(dJson.Message == 'Success'){

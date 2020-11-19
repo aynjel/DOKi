@@ -155,7 +155,7 @@ export class LoginPage implements AfterViewInit {
 
   checkbcrypt(){
     let json = '{"appCode": "DPP","userName": "'+this.postData.username+'"}';let resultJson;
-    this.patientService.mockValidate(json).subscribe(
+    this.patientService.commonValidate(json).subscribe(
       (res: any) => {
         resultJson = res;      
       },(error)=>{this.functionsService.sorryDoc();},
@@ -213,7 +213,7 @@ export class LoginPage implements AfterViewInit {
       (result) => {
         if(result){
             let json = '{"appCode": "DPP","userName": "'+this.postData.username+'","password": "'+this.hashedPassword+'"}';
-            this.patientService.mockLoginGet(json).subscribe(
+            this.patientService.commonLoginGet(json).subscribe(
               (res: any) => {
                 this.loginresponse = res; 
               },(error)=>{

@@ -115,7 +115,7 @@ export class ChhAppChangePassPage implements AfterViewInit {
     this.dr_username = atob(localStorage.getItem("username"));
     let json = '{"appCode": "DPP","userName": "'+this.dr_username+'"}';let resultJson;
  
-    this.patientService.mockValidate(json).subscribe(
+    this.patientService.commonValidate(json).subscribe(
       (res: any) => {
 
         resultJson = res.Data;            
@@ -168,7 +168,7 @@ export class ChhAppChangePassPage implements AfterViewInit {
             (hash) => {
               let resJson = '{"appCode": "DPP","userName": "'+this.dr_username+'","oldPassword": "'+this.hashed_oldPassword+'","newPassword":"'+hash+'"}';
               
-              this.patientService.mockChangePassword(resJson).subscribe(
+              this.patientService.commonChangePassword(resJson).subscribe(
                 (res: any) => {
                   this.serverResponse = res; 
                 },(error)=>{},
