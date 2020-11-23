@@ -12,18 +12,14 @@ export const PasswordStrengthValidator = function (control: AbstractControl): Va
   if (upperCaseCharacters.test(value) === false) {
     return { passwordStrength: `text has to contain UPPERCASE characters.` };
   }
-
   let lowerCaseCharacters = /[a-z]+/g
   if (lowerCaseCharacters.test(value) === false) {
     return { passwordStrength: `text has to contain LOWERCASE characters.` };
   }
-
-
   let numberCharacters = /[0-9]+/g
   if (numberCharacters.test(value) === false) {
     return { passwordStrength: `text has to contain NUMBERS.` };
   }
-
   let specialCharacters = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/
   if (specialCharacters.test(value) === false) {
     return { passwordStrength: `text has to contain SPECIAL character.` };
@@ -31,5 +27,8 @@ export const PasswordStrengthValidator = function (control: AbstractControl): Va
   if(value.length < 8 ){
     return { passwordStrength: `Must be atleast 8 Characters` };
   }
+
+
+  
   return null;
 }

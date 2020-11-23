@@ -11,6 +11,8 @@ import { FunctionsService } from 'src/app/shared/functions/functions.service';
 import { LoginData } from "../../models/login-data.model";
 import { AuthService } from 'src/app/services/auth/auth.service';
 import * as bcrypt from 'bcryptjs';
+
+import { CustomValidators } from '../../shared/custom-validators';
 import { FormBuilder, FormGroup, Validators } from
   "@angular/forms"
 import { PasswordStrengthValidator } from "../../shared/password-strength.validators"
@@ -33,6 +35,7 @@ export class ChhAppChangePasswordPage implements AfterViewInit {
   dr_username;
   errMessage;
   saltRounds = 10;
+  public frmSignup: FormGroup;
   constructor(public modalController: ModalController,
     public constants: Constants,
     private gestureCtrl: GestureController,
@@ -42,11 +45,75 @@ export class ChhAppChangePasswordPage implements AfterViewInit {
     public functionsService: FunctionsService,
     public alertController: AlertController,
     private zone:NgZone,
-    fb: FormBuilder) {
+    private fb: FormBuilder) {
       this.form = fb.group({
         password: ['', [Validators.required, PasswordStrengthValidator]]
       });
+      this.frmSignup = this.createSignupForm();
      }
+
+
+
+
+
+
+
+
+     createSignupForm(): FormGroup {
+      return this.fb.group(
+        {
+         
+          password: [
+            null,
+            Validators.compose([
+              Validators.required,
+              // check whether the entered password has a number
+              CustomValidators.patternValidator(/\d/, {
+                hasNumber: true
+              }),
+              // check whether the entered password has upper case letter
+              CustomValidators.patternValidator(/[A-Z]/, {
+                hasCapitalCase: true
+              }),
+              // check whether the entered password has a lower case letter
+              CustomValidators.patternValidator(/[a-z]/, {
+                hasSmallCase: true
+              }),
+              // check whether the entered password has a special character
+              CustomValidators.patternValidator(
+                /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/,
+                {
+                  hasSpecialCharacters: true
+                }
+              ),
+              Validators.minLength(8)
+            ])
+          ],
+          confirmPassword: [null, Validators.compose([Validators.required])]
+        },
+        {
+          // check whether our password and confirm password match
+          validator: CustomValidators.passwordMatchValidator
+        }
+      );
+    }
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   ngOnInit() {
     this.dr_username = atob(localStorage.getItem("username"));
