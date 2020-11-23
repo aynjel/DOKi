@@ -7,13 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { ChhAppChangePasswordPageRoutingModule } from './chh-app-change-password-routing.module';
 
 import { ChhAppChangePasswordPage } from './chh-app-change-password.page';
-
+import {  ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ChhAppChangePasswordPageRoutingModule
+    ChhAppChangePasswordPageRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [ChhAppChangePasswordPage]
 })

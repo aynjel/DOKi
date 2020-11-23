@@ -24,6 +24,30 @@
       <ion-col>
 
         <ion-card mode="ios"   >
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           <ion-list>
             <ion-item style="padding-top: 10px;">
               <div class="ion-text-wrap" #psWord0 id="pWord0"><b>Old Password</b><i>{{errMessage}}</i><br /></div>
@@ -33,7 +57,31 @@
               <ion-icon  name="eye-off-outline" [name]="getName1()" item-right   class="rectangle1"></ion-icon>
             </ion-item>
           </ion-list>
+
+
+
           <ion-list>
+            <ion-item style="padding-top: 10px;">
+              <div class="ion-text-wrap pWord" #psWord1 id="pWord1" ><b>New Password</b> <i>{{errMessage}}</i><br /></div>
+            </ion-item>
+            <ion-item [formGroup]="form">
+              <ion-input type="password" formControlName="password" placeholder = "New Password" [type]="getType2()"  [(ngModel)]="NewPassword"></ion-input>
+              <ion-icon  name="eye-off-outline" [name]="getName2()"item-right   class="rectangle2"></ion-icon>
+            </ion-item>
+            <ion-item  class="errors" *ngIf="form.get('password').invalid && (form.get('password').touched || form.get('password').dirty)">
+              <div *ngIf="form.get('password').hasError('required')">
+                password is required
+              </div >
+              <div  class="error-text" *ngIf="form.get('password').hasError('passwordStrength')">
+                {{form.get('password').errors['passwordStrength']}}
+              </div >
+            </ion-item >
+          </ion-list>
+
+
+
+
+          <!--ion-list>
             <ion-item style="padding-top: 10px;">
               <div class="ion-text-wrap pWord" #psWord1 id="pWord1" ><b>New Password</b> <i>{{errMessage}}</i><br /></div>
             </ion-item>
@@ -41,7 +89,7 @@
               <ion-input type="password" id="input-password" placeholder = "New Password" [type]="getType2()"  [(ngModel)]="NewPassword"></ion-input>
               <ion-icon  name="eye-off-outline" [name]="getName2()"item-right   class="rectangle2"></ion-icon>
             </ion-item>
-          </ion-list>
+          </ion-list-->
           <ion-list>
             <ion-item style="padding-top: 10px;">
               <div class="ion-text-wrap pWord" id="pWord2" #psWord2 ><b>Confirm Password</b><i>{{errMessage}}</i><br /></div>

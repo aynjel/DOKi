@@ -11,6 +11,9 @@ import { FunctionsService } from 'src/app/shared/functions/functions.service';
 import { LoginData } from "../../models/login-data.model";
 import { AuthService } from 'src/app/services/auth/auth.service';
 import * as bcrypt from 'bcryptjs';
+import { FormBuilder, FormGroup, Validators } from
+  "@angular/forms"
+import { PasswordStrengthValidator } from "../../shared/password-strength.validators"
 @Component({
   selector: 'app-chh-app-change-pass',
   templateUrl: './chh-app-change-pass.page.html',
@@ -18,6 +21,7 @@ import * as bcrypt from 'bcryptjs';
 })
 export class ChhAppChangePassPage implements AfterViewInit {
   public logindata: LoginData;
+  public form: FormGroup;
   OldPassword;
   NewPassword;
   ConfirmPassword;
@@ -40,7 +44,12 @@ export class ChhAppChangePassPage implements AfterViewInit {
     public functionsService: FunctionsService,
     private renderer: Renderer2,
     private authService: AuthService,
-    private zone:NgZone) { }
+    private zone:NgZone,
+    fb: FormBuilder) {
+      this.form = fb.group({
+        password: ['', [Validators.required, PasswordStrengthValidator]]
+      });
+     }
     @ViewChildren('psWord1', {read: ElementRef}) psWord1:QueryList<ElementRef>
     @ViewChildren('psWord2', {read: ElementRef}) psWord2:QueryList<ElementRef>
   async ngAfterViewInit() {

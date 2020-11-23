@@ -11,25 +11,29 @@ import { FunctionsService } from 'src/app/shared/functions/functions.service';
 import { LoginData } from "../../models/login-data.model";
 import { AuthService } from 'src/app/services/auth/auth.service';
 import * as bcrypt from 'bcryptjs';
+import { FormBuilder, FormGroup, Validators } from
+  "@angular/forms"
+import { PasswordStrengthValidator } from "../../shared/password-strength.validators"
 @Component({
   selector: 'app-chh-app-change-password',
   templateUrl: './chh-app-change-password.page.html',
   styleUrls: ['./chh-app-change-password.page.scss'],
 })
 export class ChhAppChangePasswordPage implements AfterViewInit {
-OldPassword;
-NewPassword;
-ConfirmPassword;
-isActiveToggleTextPassword1: Boolean = true;
-isEyeOnOff1: Boolean = true;
-isActiveToggleTextPassword2: Boolean = true;
-isEyeOnOff2: Boolean = true;
-isActiveToggleTextPassword3: Boolean = true;
-isEyeOnOff3: Boolean = true;
-dr_username;
-errMessage;
-saltRounds = 10;
-  constructor(    public modalController: ModalController,
+  public form: FormGroup;
+  OldPassword;
+  NewPassword;
+  ConfirmPassword;
+  isActiveToggleTextPassword1: Boolean = true;
+  isEyeOnOff1: Boolean = true;
+  isActiveToggleTextPassword2: Boolean = true;
+  isEyeOnOff2: Boolean = true;
+  isActiveToggleTextPassword3: Boolean = true;
+  isEyeOnOff3: Boolean = true;
+  dr_username;
+  errMessage;
+  saltRounds = 10;
+  constructor(public modalController: ModalController,
     public constants: Constants,
     private gestureCtrl: GestureController,
     private element: ElementRef,
@@ -37,7 +41,12 @@ saltRounds = 10;
     private patientService: PatientService,
     public functionsService: FunctionsService,
     public alertController: AlertController,
-    private zone:NgZone) { }
+    private zone:NgZone,
+    fb: FormBuilder) {
+      this.form = fb.group({
+        password: ['', [Validators.required, PasswordStrengthValidator]]
+      });
+     }
 
   ngOnInit() {
     this.dr_username = atob(localStorage.getItem("username"));
