@@ -62,10 +62,10 @@ After which, personal data shall be disposed or discarded in a secure manner tha
 I will take full responsibility of the messages/notifications sent to the number I have registered with Chong Hua Hospital. Should the number be lost or changed, I will immediately inform Chong Hua Hospital to avoid unauthorized disclosure. Without the notification, Chong Hua Hospital shall not be liable for any disclosures sent to the registered number. 
 <br /><br />
 Should you agree to the terms and conditions herein, kindly proceed logging-in, otherwise, access will be denied. 
-
+<br />
  
 
- 
+ <br />
               
             </ion-item>
 
@@ -73,7 +73,7 @@ Should you agree to the terms and conditions herein, kindly proceed logging-in, 
                     <!--ion-checkbox id="acceptCheckBox" (ionChange)="accept($event)"></ion-checkbox> Accept-->
                  
   
-                    <ion-item >
+                    <ion-item *ngIf="origin == 'login'">
                       <ion-checkbox id="acceptCheckBox" color="mango"  slot="start" (ionChange)="accept($event)">
                         
                       </ion-checkbox>
