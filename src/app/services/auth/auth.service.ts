@@ -29,7 +29,6 @@ export class AuthService {
 
   getUserData() {
     this.storageService.get(AuthConstants.AUTH).then((res) => {
-      this.functionsService.logToConsole("BehaviorSubject");
       this.userData$.next(res);
     });
   }

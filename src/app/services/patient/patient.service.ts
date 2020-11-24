@@ -181,6 +181,16 @@ export class PatientService {
     const url = environment.apiRouterUrl+"UserSetting/Delete";
     return this.http.delete(url,options)
   }
+  changePassword(data: any) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    const url =
+      environment.apiRouterUrl + "Login/ChangePassword";
+      return this.http.put(url, data, options);
+  }
+
+
+
 
   mocktestlogin(data1:any,data2:any){
       //const headers = new HttpHeaders({ "Content-Type": "application/json" });
@@ -188,5 +198,23 @@ export class PatientService {
       const options = { headers: headers, withCredintials: false };
       const url = environment.apiRouterUrl+"Login/HISUser/Get?username="+data1+"&password="+data2;
       return this.http.get(url, options);
+  }
+  commonValidate(data: any) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"common/Login/Validate";
+      return this.http.put(url, data, options);
+  }
+  commonChangePassword(data: any) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"common/Login/ChangePassword";
+      return this.http.put(url, data, options);
+  }
+  commonLoginGet(data: any) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"common/Login/Get";
+      return this.http.put(url, data, options);
   }
 }

@@ -123,11 +123,11 @@
               <!-- ADMITTED -->
                 <ion-item>
                   <ion-label class="ion-text-wrap"
-                    >Alert me through Push Notifications when my patient is admitted"</ion-label
+                    >{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_PUSH_NOTIFICATIONS_ADMITTED}}</ion-label
                   >
                   <ion-toggle
                     color="mango"
-                    
+                    disabled="true"
                     [(ngModel)]="pushNotiAdmitted"
                     (ionChange)="toggle($event,'pushNotification','patientAdmitted',isset_pushNotiAdmitted)"
                   ></ion-toggle>
@@ -138,11 +138,11 @@
                 <!-- DISCHARGED -->
                 <ion-item>
                   <ion-label class="ion-text-wrap"
-                    >Alert me through Push Notifications when my patient is about to be discharged"</ion-label
+                    >{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_PUSH_NOTIFICATIONS_FOR_DISCHARGE}}</ion-label
                   >
                   <ion-toggle
                     color="mango"
-                    
+                    disabled="true"
                     [(ngModel)]="pushNotiDischarge"
                     (ionChange)="toggle($event,'pushNotification','patientDischarged',isset_pushNotiDischarge)"
                   ></ion-toggle>
@@ -193,9 +193,9 @@
 
                <!-- TERMS & CONDITION -->
                 <!-- POLICY -->
-                <ion-item style="color:RED" (click)="resetUserSettings() ">
+                <ion-item color="danger" (click)="resetUserSettings() ">
                   <ion-icon name="refresh-outline" slot="end"></ion-icon>
-                  <i>Reset User Settings</i>
+                  Reset User Settings
                 </ion-item>
 
                 <ion-item>

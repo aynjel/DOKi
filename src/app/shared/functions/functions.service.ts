@@ -3,7 +3,7 @@ import { AlertController } from "@ionic/angular";
 import { Constants } from "../constants";
 import { ModalController, PopoverController } from "@ionic/angular";
 import { environment } from 'src/environments/environment';
-
+import * as bcrypt from 'bcryptjs';
 @Injectable({
   providedIn: "root",
 })
@@ -219,6 +219,14 @@ export class FunctionsService {
     }
   }
 
+
+
+
+  sorryDoc(){
+    this.alert("Sorry, Doc. We cannot log you in at the moment. Please try again.",
+    "Okay"
+    );
+  }
 
   numberWithCommas(x) {
     return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");

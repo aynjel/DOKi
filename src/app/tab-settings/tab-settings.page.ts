@@ -10,7 +10,7 @@ import { BehaviorSubject } from "rxjs";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
 import { Constants } from "../shared/constants";
 import { FunctionsService } from "../shared/functions/functions.service";
-import { ActionSheetController, ModalController } from "@ionic/angular";
+import { ActionSheetController, AlertController, ModalController } from "@ionic/angular";
 import { ChhAppAddAppointmentsModalPage } from "../chh-web-components/chh-app-add-appointments-modal/chh-app-add-appointments-modal.page";
 import { ChhAppChangePasswordPage } from "../chh-web-components/chh-app-change-password/chh-app-change-password.page";
 import { ChhAppChangePassPage } from "../chh-web-components/chh-app-change-pass/chh-app-change-pass.page";
@@ -60,7 +60,8 @@ export class TabSettingsPage {
     public functionsService: FunctionsService,
     private modalController: ModalController,
     private actionSheetController: ActionSheetController,
-    private patientService: PatientService
+    private patientService: PatientService,
+    public alertController: AlertController
   ) {
     this.privacyPolicy = true;
 
@@ -77,7 +78,7 @@ export class TabSettingsPage {
     });
   }
 
-  async showaddmodal() {
+ /* async showaddmodal() {
     const modal = await this.modalController.create({
       component: ChhAppChangePasswordPage,
       componentProps: {
@@ -86,8 +87,23 @@ export class TabSettingsPage {
     });
     modal.onDidDismiss().then((data) => {});
     return await modal.present();
+  }*/
+  async modalUpdate(header,message,data){
+    const alert = await this.alertController.create({
+      cssClass: "my-custom-class",
+      header:header,
+      message: message,
+      buttons: [{ text: 'Okay', handler: () => {
+          if(data){
+            
+            this.privacyPolicy = true;
+            this.userData$.next("");
+            localStorage.removeItem("_cap_userDataKey");
+            this.router.navigate(["/login"]);
+          }
+      } }],
+    });await alert.present();
   }
-
   async showaddmodal1() {
     const modal = await this.modalController.create({
       component: ChhAppChangePassPage,
@@ -95,10 +111,50 @@ export class TabSettingsPage {
         backdropDismiss: true,
       },
     });
-    modal.onDidDismiss().then((data) => {});
+    modal.onDidDismiss().then((
+      data) => {
+        if(data.data == 'Success'){
+          this.modalUpdate(
+            this.constants.UI_COMPONENT_TEXT_VALUE_PASSWORD_SUCCESS_TITLE,
+            this.constants.UI_COMPONENT_TEXT_VALUE_CHANGE_PASSWORD_SUCCESS_BODY,
+            true );
+        }else if(data.data == 'none'){
+
+        }else{
+          this.modalUpdate(
+            this.constants.UI_COMPONENT_TEXT_VALUE_PASSWORD_FAILED_TITLE,
+            this.constants.UI_COMPONENT_TEXT_VALUE_CHANGE_PASSWORD_FAILED_BODY,
+            false );
+        }
+      }
+      );
     return await modal.present();
   }
 
+
+  async autoLogoutActionSheet(){
+    const actionSheet = await this.actionSheetController.create({
+      mode: "ios",
+      header: "You will be now logged Out",
+      cssClass: "my-custom-class",
+      buttons: [
+        {
+          text: "Okay",
+          role: "destructive",
+          icon: "arrow-undo-outline",
+          handler: () => {
+
+            this.privacyPolicy = true;
+            this.userData$.next("");
+            localStorage.removeItem("_cap_userDataKey");
+            this.router.navigate(["/login"]);
+          },
+        },
+
+      ],
+    });
+    await actionSheet.present();
+  }
   ngOnInit() {}
 
   ionViewWillEnter() {
@@ -223,19 +279,17 @@ export class TabSettingsPage {
     this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
       this.userData$.next("");
       localStorage.removeItem("_cap_userDataKey");
+      localStorage.removeItem("username");
       this.router.navigate(["/login"]);
     });
   }
   //OPT-OUT of PRIVACY POLICY
   async optoutofprivacy(event: { detail: { checked: any } }) {
-    
-    console.log(event.detail.checked);
-    
     if (event.detail.checked) {
     } else {
       const actionSheet = await this.actionSheetController.create({
         mode: "ios",
-        header: "Are you sure you want to opt-out of our privacy Policy?",
+        header: "Are you sure you want to opt-out of our Privacy Policy?",
         cssClass: "my-custom-class",
         buttons: [
           {
