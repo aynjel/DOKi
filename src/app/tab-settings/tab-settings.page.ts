@@ -296,7 +296,7 @@ export class TabSettingsPage {
     } else {
       const actionSheet = await this.actionSheetController.create({
         mode: "ios",
-        header: "Are you sure you want to opt-out of our privacy Policy?",
+        header: "Are you sure you want to opt-out of our Privacy Policy?",
         cssClass: "my-custom-class",
         buttons: [
           {

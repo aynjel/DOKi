@@ -127,7 +127,7 @@
                   >
                   <ion-toggle
                     color="mango"
-                    
+                    disabled="true"
                     [(ngModel)]="pushNotiAdmitted"
                     (ionChange)="toggle($event,'pushNotification','patientAdmitted',isset_pushNotiAdmitted)"
                   ></ion-toggle>
@@ -142,7 +142,7 @@
                   >
                   <ion-toggle
                     color="mango"
-                    
+                    disabled="true"
                     [(ngModel)]="pushNotiDischarge"
                     (ionChange)="toggle($event,'pushNotification','patientDischarged',isset_pushNotiDischarge)"
                   ></ion-toggle>
@@ -193,9 +193,9 @@
 
                <!-- TERMS & CONDITION -->
                 <!-- POLICY -->
-                <ion-item style="color:RED" (click)="resetUserSettings() ">
+                <ion-item color="danger" (click)="resetUserSettings() ">
                   <ion-icon name="refresh-outline" slot="end"></ion-icon>
-                  <i>Reset User Settings</i>
+                  Reset User Settings
                 </ion-item>
 
                 <ion-item>
