@@ -109,8 +109,10 @@ export class LoginPage implements AfterViewInit {
   }
 
   checkInput(){
+    this.btnDisable = true;
     if(this.postData.username == "" || this.postData.password == ""){
       this.functionsService.sorryDoc();
+      this.btnDisable = false;
     }else{
       this.checkbcrypt();
     }
@@ -158,9 +160,10 @@ export class LoginPage implements AfterViewInit {
     this.patientService.commonValidate(json).subscribe(
       (res: any) => {
         resultJson = res;      
-      },(error)=>{this.functionsService.sorryDoc();},
-      ()=>{       
-        if(!(typeof resultJson.ErrorCode !== 'undefined')){
+      },(error)=>{this.btnDisable = false;this.functionsService.sorryDoc();},
+      ()=>{   
+        
+      if(!(typeof resultJson.ErrorCode !== 'undefined')){
           if(resultJson.Data.length <= 10){
             if(this.postData.password == resultJson.Data){
               localStorage.setItem('username', btoa(this.postData.username));
@@ -168,27 +171,15 @@ export class LoginPage implements AfterViewInit {
 
               
             }
-            else{this.functionsService.alert("Invalid Password","Okay");}
-            
-
-/*
-            bcrypt.hash(resultJson.Data, this.saltRounds).then(
-              (hash) => {let resJson = '{"appCode": "DPP","userName": "'+this.postData.username+'","oldPassword": "1234","newPassword":"'+hash+'"}';let dJson;
-                this.patientService.mockChangePassword(resJson).subscribe(
-                  (res: any) => {dJson = res;},(error)=>{this.functionsService.sorryDoc();},
-                  () => {
-                    if(dJson.Message == 'Success'){this.hashedPassword = hash;this.loginUser();}
-                    else{this.functionsService.sorryDoc();}
-                  });
-              }
-            );
-*/
-
+            else{this.functionsService.alert("Invalid Password","Okay");this.btnDisable = false;}
+        
           }else{
+            localStorage.setItem('username', btoa(this.postData.username));
             this.hashedPassword = resultJson.Data;
             this.loginUser();
           }
       }else{
+        this.btnDisable = false;    
         this.functionsService.alert(resultJson.ErrorDescription,"Okay");
       }
 
@@ -217,7 +208,9 @@ export class LoginPage implements AfterViewInit {
               (res: any) => {
                 this.loginresponse = res; 
               },(error)=>{
+                this.btnDisable = false;    
               },()=>{
+                this.btnDisable = false;    
                 if(typeof this.loginresponse.ErrorCode !== 'undefined'){
                   this.functionsService.alert(this.loginresponse.ErrorDescription,"Okay");
                 }else{

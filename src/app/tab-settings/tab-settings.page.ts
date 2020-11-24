@@ -113,8 +113,6 @@ export class TabSettingsPage {
     });
     modal.onDidDismiss().then((
       data) => {
-        console.log(data);
-        
         if(data.data == 'Success'){
           this.modalUpdate(
             this.constants.UI_COMPONENT_TEXT_VALUE_PASSWORD_SUCCESS_TITLE,
@@ -162,8 +160,6 @@ export class TabSettingsPage {
   ionViewWillEnter() {
     this.$gaService.pageView("/Settings", "Settings Tab");
     this.logindata = <LoginData>this.authService.userData$.getValue();
-    console.log(atob(localStorage.getItem("username")));
-    
     this.dr_name = this.logindata[0].last_name;
     this.dr_code = this.logindata[0].dr_code;
     let y = "";
@@ -289,9 +285,6 @@ export class TabSettingsPage {
   }
   //OPT-OUT of PRIVACY POLICY
   async optoutofprivacy(event: { detail: { checked: any } }) {
-    
-    console.log(event.detail.checked);
-    
     if (event.detail.checked) {
     } else {
       const actionSheet = await this.actionSheetController.create({

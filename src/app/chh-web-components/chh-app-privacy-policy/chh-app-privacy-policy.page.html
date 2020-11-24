@@ -68,45 +68,22 @@ Should you agree to the terms and conditions herein, kindly proceed logging-in, 
  
               
             </ion-item>
-            <ion-item>
-              <ion-grid *ngIf="origin == 'login'">
-                <ion-row>
-                  <ion-col size-xs="12">
-                    <ion-checkbox id="acceptCheckBox" (ionChange)="accept($event)"></ion-checkbox> Accept
-                  </ion-col>
-              </ion-row>
-              </ion-grid>
-            </ion-item>
+
+     
+                    <!--ion-checkbox id="acceptCheckBox" (ionChange)="accept($event)"></ion-checkbox> Accept-->
+                 
+  
+                    <ion-item >
+                      <ion-checkbox id="acceptCheckBox" color="mango"  slot="start" (ionChange)="accept($event)">
+                        
+                      </ion-checkbox>
+                        <ion-label >Accept</ion-label>
+                    </ion-item>
+
+
           </ion-list>
 
-          <!--ion-grid *ngIf="origin == 'login'">
-            <ion-row>
-              <ion-col size-xs="6">
-                <ion-button
-                  expand="block"
-                  shape="round"
-                  id="btn-confirm"
-                  [color]="getColor1()"
-                  color="light"
-                  (click)="accept1();"
-                >
-                  Accept
-                </ion-button>
-              </ion-col>
-              <ion-col size-xs="6">
-                <ion-button
-                  expand="block"
-                  shape="round"
-                  id="btn-confirm"
-
-                  [color]="getColor2()"
-                  (click)="decline1();"
-                >
-                  Decline
-                </ion-button>
-              </ion-col>
-            </ion-row>
-          </ion-grid-->
+ 
           <ion-grid *ngIf="origin == 'login'">
             <ion-row>
               <ion-col size-xs="12">

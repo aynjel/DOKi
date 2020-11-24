@@ -81,7 +81,7 @@ export class TabsPage {
         }
       },
       (error)=>{
-        console.log('error connecting');
+       // this.functionsService.sorryDoc();
       },() =>{
       });
   }

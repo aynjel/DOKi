@@ -265,9 +265,6 @@ export class ChhAppChangePassPage implements AfterViewInit {
                     //this.alert(this.serverResponse.ErrorDescription,"Okay",false);
                     this.modalController.dismiss(this.serverResponse.ErrorDescription);
                   }else{
-                    //this.alert(this.serverResponse.Message,"Okay",true);
-                    console.log(this.serverResponse.Message);
-                    
                     this.modalController.dismiss(this.serverResponse.Message);
                   }
 
