@@ -219,6 +219,7 @@ export class LoginPage implements AfterViewInit {
                 }
               });
         }else{
+          this.btnDisable = false;   
           this.functionsService.alert("Invalid Password","Okay");
         }
       }
