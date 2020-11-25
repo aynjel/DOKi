@@ -286,16 +286,12 @@ export class LoginPage  {
 
       let rsmJson;
       let y=0;
-      this.patientService.getUserSettings('DPP',this.logindata.dr_code).subscribe(
+      this.patientService.getUserSettings('DPP',this.postData.username).subscribe(
           (res: any) => {    
             rsmJson = res;   
-
           },
           (error)=>{
-            this.functionsService.alert(
-              "Sorry, Doc. We cannot log you in at the moment. Please try again.",
-              "Okay"
-            );
+            this.functionsService.sorryDoc();
           },() =>{
             if(Object.keys(rsmJson).length >= 1){
               let data = JSON.stringify(rsmJson);data = '['+data+']';let adat = JSON.parse(data);
@@ -341,7 +337,8 @@ export class LoginPage  {
                   if(key == 'privacyPolicy' && lock == 'accepted'){
                     valuex = 1;
                   }
-                  let tempJson = '{"username": "'+this.loginresponse.dr_code+'","appcode": "DPP","setting": "'+key+'","property": "'+lock+'","value": "'+valuex+'"}';
+
+                  let tempJson = '{"username": "'+this.postData.username+'",  "userReference": "'+this.loginresponse.dr_code+'","appcode": "DPP","setting": "'+key+'","property": "'+lock+'","value": "'+valuex+'"}';
                     
                   this.patientService.insertUserSettings(tempJson).subscribe((res2: any) => {});   
                 }
@@ -349,7 +346,8 @@ export class LoginPage  {
             });
         });
       }else if(this.isSetPrivacyPolicy == true){
-        let smpJSON = '{"username": "'+this.loginresponse.dr_code+'","appcode": "DPP","setting": "privacyPolicy","property": "accepted","value": "1"}';
+
+        let smpJSON = '{"username": "'+this.postData.username+'", "userReference": "'+this.loginresponse.dr_code+'","appcode": "DPP","setting": "privacyPolicy","property": "accepted","value": "1"}';
      
         if(!this.isPrivacyPolicy){
           this.patientService.updateUserSettings(smpJSON).subscribe((res1: any) => {});
