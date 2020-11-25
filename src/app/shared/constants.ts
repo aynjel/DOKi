@@ -114,7 +114,7 @@ export class Constants {
    * UI Component Text - Settings 
    */
   public UI_COMPONENT_TEXT__VALUE__SETTINGS_NOTIFICATIONS: string = "Notifications";
-  public UI_COMPONENT_TEXT__VALUE__SETTINGS_SMS_NOTIFICATIONS_ADMITTED: string = "Notify me via SMS if my patient is admitted";
+  public UI_COMPONENT_TEXT__VALUE__SETTINGS_SMS_NOTIFICATIONS_ADMITTED: string = "Notify me via SMS if my patient is admitted, transferred to another room, and about to be discharged.";
   public UI_COMPONENT_TEXT__VALUE__SETTINGS_SMS_NOTIFICATIONS_FOR_DISCHARGE: string = "Notify me via SMS if my patient is about to be discharged";
   public UI_COMPONENT_TEXT__VALUE__SETTINGS_PUSH_NOTIFICATIONS_ADMITTED: string = "Alert me through Push Notifications when my patient is admitted";
   public UI_COMPONENT_TEXT__VALUE__SETTINGS_PUSH_NOTIFICATIONS_FOR_DISCHARGE: string = "Alert me through Push Notifications when my patient is about to be discharged";

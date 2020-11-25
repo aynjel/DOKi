@@ -22,7 +22,7 @@ import { CustomValidators } from '../../shared/custom-validators';
   templateUrl: './chh-app-change-pass.page.html',
   styleUrls: ['./chh-app-change-pass.page.scss'],
 })
-export class ChhAppChangePassPage implements AfterViewInit {
+export class ChhAppChangePassPage {
   public logindata: LoginData;
   public form: FormGroup;
   public frmSignup: FormGroup;
@@ -57,6 +57,22 @@ export class ChhAppChangePassPage implements AfterViewInit {
      }
     @ViewChildren('psWord1', {read: ElementRef}) psWord1:QueryList<ElementRef>
     @ViewChildren('psWord2', {read: ElementRef}) psWord2:QueryList<ElementRef>
+
+
+
+    showPassword1(){
+      this.isActiveToggleTextPassword1 = (this.isActiveToggleTextPassword1==true)?false:true;
+          this.isEyeOnOff1 = (this.isEyeOnOff1==true)?false:true;
+    }
+    showPassword2(){
+      this.isActiveToggleTextPassword2 = (this.isActiveToggleTextPassword2==true)?false:true;
+      this.isEyeOnOff2 = (this.isEyeOnOff2==true)?false:true;
+    }
+    showPassword3(){
+      this.isActiveToggleTextPassword3 = (this.isActiveToggleTextPassword3==true)?false:true;
+      this.isEyeOnOff3 = (this.isEyeOnOff3==true)?false:true;       
+    }
+/*
   async ngAfterViewInit() {
     const rectangle1 = document.querySelector('.rectangle1');
     const rectangle2 = document.querySelector('.rectangle2');
@@ -110,6 +126,7 @@ export class ChhAppChangePassPage implements AfterViewInit {
      gesture2.enable();
      gesture3.enable();
    }
+   */
   public getType1() {return this.isActiveToggleTextPassword1 ? 'password' : 'text';}
   public getType2() {return this.isActiveToggleTextPassword2 ? 'password' : 'text';}
   public getType3() {return this.isActiveToggleTextPassword3 ? 'password' : 'text';}

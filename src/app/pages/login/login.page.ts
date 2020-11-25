@@ -29,7 +29,7 @@ import { tick } from '@angular/core/testing';
   templateUrl: "./login.page.html",
   styleUrls: ["./login.page.scss"],
 })
-export class LoginPage implements AfterViewInit {
+export class LoginPage  {
   public logindata: LoginData;
   saltRounds = 10;
   constructor(
@@ -55,8 +55,11 @@ export class LoginPage implements AfterViewInit {
     hashedPassword:any;
 
 
-
-  async ngAfterViewInit() {
+    showPassword(){
+        this.isActiveToggleTextPassword = (this.isActiveToggleTextPassword==true)?false:true;
+        this.isEyeOnOff = (this.isEyeOnOff==true)?false:true;
+    }
+  /*async ngAfterViewInit() {
    const rectangle = document.querySelector('.rectangle');
      
     const options1: GestureConfig = {
@@ -80,7 +83,7 @@ export class LoginPage implements AfterViewInit {
     };
     const gesture1 = await this.gestureCtrl.create(options1);
     gesture1.enable();
-  }
+  }*/
 
 
   isActiveToggleTextPassword: Boolean = true;
@@ -120,6 +123,7 @@ export class LoginPage implements AfterViewInit {
   
 
   async modalUpdate(header,message,data){
+    this.btnDisable = false;
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
       header:header,
@@ -144,11 +148,13 @@ export class LoginPage implements AfterViewInit {
           this.hashedPassword = data.data;
           this.postData.password = data.role;
           this.modalUpdate(this.constants.UI_COMPONENT_TEXT_VALUE_PASSWORD_SUCCESS_TITLE,this.constants.UI_COMPONENT_TEXT_VALUE_UPDATE_PASSWORD_SUCCESS_BODY,true);
+          this.btnDisable = false;
 
         }else if(data.data == 'Error'){
+          this.btnDisable = false;
           this.modalUpdate(this.constants.UI_COMPONENT_TEXT_VALUE_PASSWORD_FAILED_TITLE,this.constants.UI_COMPONENT_TEXT_VALUE_UPDATE_PASSWORD_FAILED_BODY,false);
         }else{
-
+          this.btnDisable = false;
         }
 
       });
@@ -177,6 +183,7 @@ export class LoginPage implements AfterViewInit {
             localStorage.setItem('username', btoa(this.postData.username));
             this.hashedPassword = resultJson.Data;
             this.loginUser();
+            this.btnDisable = false;
           }
       }else{
         this.btnDisable = false;    

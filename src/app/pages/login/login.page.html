@@ -9,15 +9,16 @@
               <h1><b>{{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN_GREETINGS}}</b></h1>
             </div>
             <ion-item>
-              <ion-label position="fixed">{{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN_USERNAME}}</ion-label>
+              <!--ion-label position="fixed">{{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN_USERNAME}}</ion-label-->
               <ion-input
+                placeholder="Username"
                 type="text"
                 id="input-username"
                 [(ngModel)]="postData.username"
               ></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label position="fixed">{{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN_PASSWORD}}</ion-label>
+              <!--ion-label position="fixed">{{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN_PASSWORD}}</ion-label-->
               <!--ion-input
                 type="password"
                 id="input-password"
@@ -26,8 +27,8 @@
 
               
 
-              <ion-input type="password" id="input-password" [type]="getType()"  (keyup.enter)="checkInput()" [(ngModel)]="postData.password"></ion-input>
-              <ion-icon  name="eye-off-outline" [name]="getName()" item-right   class="rectangle"></ion-icon>
+              <ion-input type="password" id="input-password" placeholder="Password" [type]="getType()"  (keyup.enter)="checkInput()" [(ngModel)]="postData.password"></ion-input>
+              <ion-icon  name="eye-off-outline" [name]="getName()" item-right  (click)="showPassword()"   class="rectangle"></ion-icon>
 
 
 
