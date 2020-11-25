@@ -1,11 +1,21 @@
 var loginUrl = Cypress.env("baseUrlToTest") + Cypress.env("loginUrl");
 var dashboardUrl = Cypress.env("baseUrlToTest") + Cypress.env("dashboardUrl");
 var settingsUrl = Cypress.env("baseUrlToTest") + Cypress.env("settingsUrl");
- 
+
+var userAccount; 
+
 context("Actions", () => {
 
     context("Data Privacy", () => {
       beforeEach(() => {
+
+      // Load Test Data
+      // -------------------------------------------------
+      cy.fixture('testUserAccount').then(function (data) {
+        userAccount = data;
+        });
+      // --------------------------------------------------
+
         cy.jumpToLogin();
       });
 
@@ -13,7 +23,7 @@ context("Actions", () => {
       * Okay as of Nov/09/2020
       */
      it("Initialize Test Data . . .", () => {
-      cy.loginAndTestDataPrivacy('50534','50534');
+      cy.loginAndTestDataPrivacy(userAccount[0].userName,userAccount[0].password);
       cy.whereAmI(dashboardUrl);
 
       cy.goToTabMenu(3);
@@ -38,11 +48,11 @@ context("Actions", () => {
       it("Test Scenario 1 - Decline Data Privacy.", () => {
        cy.get("ion-grid");
         cy.get('ion-input[id="input-username"]')
-          .type("50534")
-          .should("have.value", "50534");
+          .type(userAccount[0].userName)
+          .should("have.value", userAccount[0].userName);
         cy.get('ion-input[id="input-password"]')
-          .type("50534")
-          .should("have.value", "50534");
+          .type(userAccount[0].password)
+          .should("have.value", userAccount[0].password);
 
         cy.doClick("LOG IN");
         cy.wait(2000);
@@ -61,11 +71,11 @@ context("Actions", () => {
       it("Test Scenario 2 - Accept Data Privacy.", () => {
         cy.get("ion-grid");
          cy.get('ion-input[id="input-username"]')
-           .type("50534")
-           .should("have.value", "50534");
+           .type(userAccount[0].userName)
+           .should("have.value", userAccount[0].userName);
          cy.get('ion-input[id="input-password"]')
-           .type("50534")
-           .should("have.value", "50534");
+           .type(userAccount[0].password)
+           .should("have.value", userAccount[0].password);
  
          cy.doClick("LOG IN");
          cy.wait(2000);
@@ -81,7 +91,7 @@ context("Actions", () => {
         * Okay as of Nov/09/2020
        */
        it("Test Scenario 3 - Opt-out.", () => {
-        cy.loginAndTestDataPrivacy('50534','50534');
+        cy.loginAndTestDataPrivacy(userAccount[0].userName,userAccount[0].password);
         cy.whereAmI(dashboardUrl);
 
          cy.goToTabMenu(3);

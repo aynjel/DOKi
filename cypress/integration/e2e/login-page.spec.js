@@ -11,7 +11,7 @@ context("Actions", () => {
       cy.fixture('testUserAccount').then(function (data) {
         userAccount = data;
         });
-     // --------------------------------------------------
+      // --------------------------------------------------
 
       cy.jumpToLogin();
     });
@@ -33,11 +33,11 @@ context("Actions", () => {
       cy.wait(2000);
       cy.get("ion-grid");
       cy.get('ion-input[id="input-username"]')
-        .type("505341")
-        .should("have.value", "505341");
+        .type(userAccount[1].userName)
+        .should("have.value", userAccount[1].userName);
       cy.get('ion-input[id="input-password"]')
-        .type("505341")
-        .should("have.value", "505341");
+        .type(userAccount[1].password)
+        .should("have.value", userAccount[1].password);
         cy.doClick("LOG IN");
         cy.wait(2000);
         cy.doClick('Okay')
@@ -48,7 +48,7 @@ context("Actions", () => {
     * Okay as of Nov/09/2020
     */
     it("Test Scenario 3 - Username and Password are valid.", () => {
-      cy.loginAndTestDataPrivacy(userAccount.userName,userAccount.password);
+      cy.loginAndTestDataPrivacy(userAccount[0].userName,userAccount[0].password);
       cy.whereAmI(dashboardUrl);
     });
 

@@ -140,6 +140,10 @@ Cypress.Commands.add('login', (userName, password) =>{
 
   Cypress.Commands.add('loginAndTestDataPrivacy', (userName, password) =>{
     cy.get("ion-grid");
+
+    //Clear
+    cy.get('ion-input[id="input-username"]').clear();
+
     cy.get('ion-input[id="input-username"]')
         .type(userName)
         .should("have.value", userName);

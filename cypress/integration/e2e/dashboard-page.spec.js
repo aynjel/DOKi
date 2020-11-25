@@ -23,7 +23,7 @@ context("Actions", () => {
     * Okay as of Nov/09/2020
     */ 
     it("Test Scenario 1 - Skip Onboarding, then Login, Load Dashboard and then Click Total Admitted route.", () => {
-      cy.loginAndTestDataPrivacy(userAccount.userName,userAccount.password);
+      cy.loginAndTestDataPrivacy(userAccount[0].userName,userAccount[0].password);
       cy.wait(1000);
       cy.whereAmI(dashboardUrl);
       cy.wait(1000);
@@ -37,7 +37,7 @@ context("Actions", () => {
     * Okay as of Nov/09/2020
     */ 
     it("Test Scenario 2 - Load Dashboard then Click Total For Discharge route.", () => {
-      cy.loginAndTestDataPrivacy(userAccount.userName,userAccount.password);
+      cy.loginAndTestDataPrivacy(userAccount[0].userName,userAccount[0].password);
       cy.wait(1000);
       cy.whereAmI(dashboardUrl);
       cy.get("ion-grid");
