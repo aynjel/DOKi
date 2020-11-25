@@ -22,7 +22,7 @@ import { CustomValidators } from '../../shared/custom-validators';
   templateUrl: './chh-app-change-pass.page.html',
   styleUrls: ['./chh-app-change-pass.page.scss'],
 })
-export class ChhAppChangePassPage implements AfterViewInit {
+export class ChhAppChangePassPage {
   public logindata: LoginData;
   public form: FormGroup;
   public frmSignup: FormGroup;

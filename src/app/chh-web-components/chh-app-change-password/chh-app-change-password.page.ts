@@ -21,7 +21,7 @@ import { PasswordStrengthValidator } from "../../shared/password-strength.valida
   templateUrl: './chh-app-change-password.page.html',
   styleUrls: ['./chh-app-change-password.page.scss'],
 })
-export class ChhAppChangePasswordPage implements AfterViewInit {
+export class ChhAppChangePasswordPage  {
   public form: FormGroup;
   OldPassword;
   NewPassword;
@@ -118,6 +118,15 @@ export class ChhAppChangePasswordPage implements AfterViewInit {
   ngOnInit() {
     this.dr_username = atob(localStorage.getItem("username"));
   }
+  showPassword1(){
+    this.isActiveToggleTextPassword2 = (this.isActiveToggleTextPassword2==true)?false:true;
+    this.isEyeOnOff2 = (this.isEyeOnOff2==true)?false:true;
+  }
+  showPassword2(){
+    this.isActiveToggleTextPassword3 = (this.isActiveToggleTextPassword3==true)?false:true;
+    this.isEyeOnOff3 = (this.isEyeOnOff3==true)?false:true;  
+  }
+/*
   async ngAfterViewInit() {
 
     const rectangle2 = document.querySelector('.rectangle2');
@@ -157,7 +166,7 @@ export class ChhAppChangePasswordPage implements AfterViewInit {
 
      gesture2.enable();
      gesture3.enable();
-   }
+   }*/
 
 
 
