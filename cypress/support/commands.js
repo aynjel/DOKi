@@ -104,7 +104,7 @@ Cypress.Commands.add('rightToLeft', () => {
 
  // Accept Data Privacy Agreement
   Cypress.Commands.add('acceptAgreement', () =>{
-    cy.doClick("Accept");
+    cy.get('ion-checkbox[id="acceptCheckBox"]').click();
     cy.doClick("SAVE");
   });
 
@@ -140,10 +140,6 @@ Cypress.Commands.add('login', (userName, password) =>{
 
   Cypress.Commands.add('loginAndTestDataPrivacy', (userName, password) =>{
     cy.get("ion-grid");
-
-    //Clear
-    cy.get('ion-input[id="input-username"]').clear();
-
     cy.get('ion-input[id="input-username"]')
         .type(userName)
         .should("have.value", userName);
@@ -254,6 +250,7 @@ Cypress.Commands.add("jumpToLogin", () => {
   Cypress.Commands.add('testDataPrivacy', () =>{
     cy.get('body').then(($body => {
       if ($body.find('ion-checkbox[id="acceptCheckBox"]').length) {
+        //cy.get()
         cy.acceptAgreement();
       };
     }));
