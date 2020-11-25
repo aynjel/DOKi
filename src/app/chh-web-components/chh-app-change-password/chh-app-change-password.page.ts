@@ -22,6 +22,7 @@ import { PasswordStrengthValidator } from "../../shared/password-strength.valida
   styleUrls: ['./chh-app-change-password.page.scss'],
 })
 export class ChhAppChangePasswordPage  {
+  @Input() old_password: any;
   public form: FormGroup;
   OldPassword;
   NewPassword;
@@ -202,7 +203,7 @@ export class ChhAppChangePasswordPage  {
       bcrypt.hash(this.NewPassword, this.saltRounds).then(
         (hash) => {
           hashedPassword = hash;
-          let resJson = '{"appCode": "DPP","userName": "'+this.dr_username+'","oldPassword": "1234","newPassword":"'+hash+'"}';let dJson;
+          let resJson = '{"appCode": "DPP","userName": "'+this.dr_username+'","oldPassword": "'+this.old_password+'","newPassword":"'+hash+'"}';let dJson;
           this.patientService.commonChangePassword(resJson).subscribe(
             (res: any) => {dJson = res;},(error)=>{this.functionsService.sorryDoc();},
             () => {

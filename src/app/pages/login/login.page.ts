@@ -32,6 +32,7 @@ import { tick } from '@angular/core/testing';
 export class LoginPage  {
   public logindata: LoginData;
   saltRounds = 10;
+  resultJson;
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -136,9 +137,12 @@ export class LoginPage  {
     });await alert.present();
   }
   async updatePassword(){
+    console.log(this.resultJson.Data);
+    
     const modal = await this.modalController.create({
       component: ChhAppChangePasswordPage,
       componentProps: {
+        old_password: this.resultJson.Data,
         backdropDismiss: true,
       },
     });
@@ -162,16 +166,16 @@ export class LoginPage  {
   }
 
   checkbcrypt(){
-    let json = '{"appCode": "DPP","userName": "'+this.postData.username+'"}';let resultJson;
+    let json = '{"appCode": "DPP","userName": "'+this.postData.username+'"}';
     this.patientService.commonValidate(json).subscribe(
       (res: any) => {
-        resultJson = res;      
+        this.resultJson = res;      
       },(error)=>{this.btnDisable = false;this.functionsService.sorryDoc();},
       ()=>{   
         
-      if(!(typeof resultJson.ErrorCode !== 'undefined')){
-          if(resultJson.Data.length <= 10){
-            if(this.postData.password == resultJson.Data){
+      if(!(typeof this.resultJson.ErrorCode !== 'undefined')){
+          if(this.resultJson.Data.length <= 10){
+            if(this.postData.password == this.resultJson.Data){
               localStorage.setItem('username', btoa(this.postData.username));
               this.updatePassword();
 
@@ -181,13 +185,13 @@ export class LoginPage  {
         
           }else{
             localStorage.setItem('username', btoa(this.postData.username));
-            this.hashedPassword = resultJson.Data;
+            this.hashedPassword = this.resultJson.Data;
             this.loginUser();
             this.btnDisable = false;
           }
       }else{
         this.btnDisable = false;    
-        this.functionsService.alert(resultJson.ErrorDescription,"Okay");
+        this.functionsService.alert(this.resultJson.ErrorDescription,"Okay");
       }
 
       });
@@ -286,16 +290,12 @@ export class LoginPage  {
 
       let rsmJson;
       let y=0;
-      this.patientService.getUserSettings('DPP',this.logindata.dr_code).subscribe(
+      this.patientService.getUserSettings('DPP',this.postData.username).subscribe(
           (res: any) => {    
             rsmJson = res;   
-
           },
           (error)=>{
-            this.functionsService.alert(
-              "Sorry, Doc. We cannot log you in at the moment. Please try again.",
-              "Okay"
-            );
+            this.functionsService.sorryDoc();
           },() =>{
             if(Object.keys(rsmJson).length >= 1){
               let data = JSON.stringify(rsmJson);data = '['+data+']';let adat = JSON.parse(data);
@@ -341,7 +341,8 @@ export class LoginPage  {
                   if(key == 'privacyPolicy' && lock == 'accepted'){
                     valuex = 1;
                   }
-                  let tempJson = '{"username": "'+this.loginresponse.dr_code+'","appcode": "DPP","setting": "'+key+'","property": "'+lock+'","value": "'+valuex+'"}';
+
+                  let tempJson = '{"username": "'+this.postData.username+'",  "userReference": "'+this.loginresponse.dr_code+'","appcode": "DPP","setting": "'+key+'","property": "'+lock+'","value": "'+valuex+'"}';
                     
                   this.patientService.insertUserSettings(tempJson).subscribe((res2: any) => {});   
                 }
@@ -349,7 +350,8 @@ export class LoginPage  {
             });
         });
       }else if(this.isSetPrivacyPolicy == true){
-        let smpJSON = '{"username": "'+this.loginresponse.dr_code+'","appcode": "DPP","setting": "privacyPolicy","property": "accepted","value": "1"}';
+
+        let smpJSON = '{"username": "'+this.postData.username+'", "userReference": "'+this.loginresponse.dr_code+'","appcode": "DPP","setting": "privacyPolicy","property": "accepted","value": "1"}';
      
         if(!this.isPrivacyPolicy){
           this.patientService.updateUserSettings(smpJSON).subscribe((res1: any) => {});

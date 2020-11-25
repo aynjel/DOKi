@@ -41,7 +41,7 @@ export class TabSettingsPage {
 
   draftJson: any;
   draftJson2: any;
-
+  dr_username;
   tmpData;
   isset_smsAdmitted: boolean = false;
   isset_smsDischarge: boolean = false;
@@ -162,12 +162,13 @@ export class TabSettingsPage {
     this.logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_name = this.logindata[0].last_name;
     this.dr_code = this.logindata[0].dr_code;
+    this.dr_username = atob(localStorage.getItem("username"));
     let y = "";
     //PARSE USER SETTINGS
 
     
     this.patientService
-      .getUserSettings("DPP", this.dr_code).subscribe((res: any) => {
+      .getUserSettings("DPP", this.dr_username).subscribe((res: any) => {
         Object.keys(res).forEach((key) => {
           var value = res[key];
           Object.keys(value).forEach((lock) => {
@@ -267,7 +268,7 @@ export class TabSettingsPage {
 
   //UPDATE OR INSERT USER SETTINGS
   updateOrInsert(settings: any, property: any, value: any, flag: boolean) {
-    let smpJSON ='{"username":"'+this.dr_code+'","appcode":"DPP","setting":"'+settings+'","property":"'+property+'","value":"'+value+'"}';
+    let smpJSON ='{"username":"'+this.dr_username+'", "userReference": "'+this.dr_code+'","appcode":"DPP","setting":"'+settings+'","property":"'+property+'","value":"'+value+'"}';
     if (flag) {
       this.patientService.updateUserSettings(smpJSON).subscribe(() => {this.ionViewWillEnter();});
     } else {
@@ -299,7 +300,7 @@ export class TabSettingsPage {
             handler: () => {
               let smpJSON ='{"username": "' +
                 this.dr_code +
-                '","appcode": "DPP","setting": "privacyPolicy","property": "accepted","value": "0"}';
+                '","userReference": "'+this.dr_code+'""appcode": "DPP","setting": "privacyPolicy","property": "accepted","value": "0"}';
               this.updateOrInsert(
                 "privacyPolicy",
                 "accepted",
@@ -338,15 +339,25 @@ export class TabSettingsPage {
           role: "destructive",
           icon: "refresh-outline",
           handler: () => {
-            let smpJSON ='{"username": "'+this.dr_code +'","appcode": "DPP","setting": "string","property":"string","value": "string"}';
+
+            let smpJSON ='{"username": "'+ this.dr_username+'","userReference": "'+this.dr_code+'","appcode": "DPP","setting": "string","property":"string","value": "string"}';
+   
+            
             this.patientService
               .resetUserSettings(JSON.parse(smpJSON))
               .subscribe(
-                (res: any) => {},
+                (res: any) => {
+
+                  console.log(res);
+                  
+                },
                 (error) => {},
                 () => {
                   this.backToDefault();
-                  let smpJSON = '{"username": "' + this.dr_code + '","appcode": "DPP","setting":"privacyPolicy","property": "accepted","value": "1"}';
+                  let smpJSON = '{"username": "' + this.dr_username+ '","userReference": "'+this.dr_code+'","appcode": "DPP","setting":"privacyPolicy","property": "accepted","value": "1"}';
+                  console.log(smpJSON);
+                  
+                  
                   this.patientService
                     .insertUserSettings(smpJSON)
                     .subscribe(() => {
