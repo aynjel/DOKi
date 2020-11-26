@@ -21,6 +21,7 @@ export class TabsPage {
   isDesktop: boolean;
   signalList: any = [];
   dr_code;
+  dr_username;
   constructor(
     private screensizeService: ScreenSizeService,
     private storageService: StorageService,
@@ -62,8 +63,8 @@ export class TabsPage {
 
     this.logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_code = this.logindata[0].dr_code;
-
-    this.patientService.getUserSettings('DPP',this.dr_code).subscribe(
+    this.dr_username = atob(localStorage.getItem("username"));
+    this.patientService.getUserSettings('DPP',this.dr_username).subscribe(
       (res: any) => {       
         if(Object.keys(res).length >= 1){
           let data = JSON.stringify(res);data = '['+data+']';let adat = JSON.parse(data);
