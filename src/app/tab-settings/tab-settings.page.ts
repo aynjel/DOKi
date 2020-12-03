@@ -281,6 +281,7 @@ export class TabSettingsPage {
       this.userData$.next("");
       localStorage.removeItem("_cap_userDataKey");
       localStorage.removeItem("username");
+      localStorage.clear();
       this.router.navigate(["/login"]);
     });
   }

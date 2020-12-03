@@ -57,7 +57,20 @@ export class ChhAppInPatientModalPage implements OnInit {
     site: "string",
     CreatedBy: "string",
     Remarks: "string",
+    DoctorMobileNumber: "string",
+    BillingMobileNumber: "string",
+    RoomNumber: "string",
+    PatientSite: "string",
+    SmsGateWay: [],
+    OldProfFee: "string"
   };
+
+
+
+
+
+
+
 
   coDoctorData = {
     first_name: "string",
@@ -67,7 +80,29 @@ export class ChhAppInPatientModalPage implements OnInit {
     dept_short_desc: "string",
   };
 
+
+  async modalUpdate(header,message){
+
+    const alert = await this.alertController.create({
+      cssClass: "my-custom-class",
+      header:header,
+      message: message,
+      buttons: [{ text: 'Okay', handler: () => {
+        this.modalController.dismiss();
+          
+      } }],
+    });await alert.present();
+  }
+
+
+
+
+
+
   ngOnInit() {
+    console.log('----------');
+    console.log(this.data);
+    console.log('----------');
     this.$gaService.pageView(
       "/In-Patient/Patient Details",
       "Patient Details Modal"
@@ -75,6 +110,9 @@ export class ChhAppInPatientModalPage implements OnInit {
 
     let logindata = <LoginData>this.authService.userData$.getValue();
     let dr_name = logindata[0].last_name;
+    this.postData.DoctorMobileNumber = logindata[0].mobile_no;
+
+    
     this.$gaService.event("Patient Information", "User Flow", dr_name);
 
     this.data.admission_date = this.functionsService.explodeDate(
@@ -82,9 +120,25 @@ export class ChhAppInPatientModalPage implements OnInit {
     );
     if (this.data.site == "C") {
       this.site = "CHHC";
+      this.postData.PatientSite = "CEBU";
+      this.postData.BillingMobileNumber = atob(localStorage.getItem("C"));
     } else {
       this.site = "CHHM";
+      this.postData.PatientSite = "MANDAUE";
+      this.postData.BillingMobileNumber = atob(localStorage.getItem("M"));
     }
+
+    this.postData.RoomNumber = this.data.room_no;
+    let smsgateway = JSON.parse(localStorage.getItem("smsGateway"));
+
+  
+    Object.keys(smsgateway).forEach((key) => {
+      var value = smsgateway[key];
+      let sms =   '{"settings": "smsGateway","property": "'+key+'","value": "'+value+'"}';
+      this.postData.SmsGateWay.push(JSON.parse(sms));
+
+    });
+    
 
     this.professionalFee = this.data.doctor_prof_fee;
     this.remarks = this.data.remarks;
@@ -97,11 +151,19 @@ export class ChhAppInPatientModalPage implements OnInit {
     this.postData.AdmisisonNo = this.data.admission_no;
     this.postData.DoctorCode = this.data.dr_code;
     //this.postData.DoctorCode = this.data.dr_code;
+
+    console.log(this.data.Doctor_Status);
+    
     this.postData.DoctorStatusCode = this.functionsService.getDoctorStatusCode(
       this.data.Doctor_Status
     );
+
+    console.log(  this.postData.DoctorStatusCode);
+    
     this.postData.site = this.data.site;
     this.postData.CreatedBy = this.data.dr_code;
+
+
     let coDoctors1 = [];
     let coDoctors2 = [];
     let coDoctors3 = [];
@@ -239,13 +301,18 @@ export class ChhAppInPatientModalPage implements OnInit {
         this.professionalFee = data.data.professionalFee;
         this.remarks = data.data.remarks;
 
-        this.postData.ProfFee = data.data.professionalFee;
+      
         this.postData.Remarks = data.data.remarks;
         this.postData.DateCreated = this.functionsService.getSystemDateTime();
 
         let x = data.data.method;
+  
+        
+
+        this.postData.ProfFee = data.data.professionalFee;
 
         if (x == "POST") {
+         
           this.doctorService.insertPF(this.postData).subscribe((res: any) => {
             if (res == true) {
               this.professionalFee = data.data.professionalFee;
@@ -254,10 +321,7 @@ export class ChhAppInPatientModalPage implements OnInit {
               this.postData.Remarks = data.data.remarks;
               this.postData.DateCreated = this.functionsService.getSystemDateTime();
               this.data.doctor_prof_fee = data.data.professionalFee;
-              this.functionsService.alert(
-                "Thank you, Doc! You have successfully SAVED your Professional Fee.",
-                "Okay"
-              );
+              this.modalUpdate('SUCCESS','Thank you, Doc! You have successfully SAVED your Professional Fee.');
             } else {
               this.functionsService.alert(
                 "SAVING of Professional Fee was Unsuccessful",
@@ -266,18 +330,17 @@ export class ChhAppInPatientModalPage implements OnInit {
             }
           });
         } else if (x == "PUT") {
+          this.postData.OldProfFee = this.data.doctor_prof_fee;
           this.doctorService.updatePF(this.postData).subscribe((res: any) => {
             if (res == true) {
+      
               this.professionalFee = data.data.professionalFee;
               this.remarks = data.data.remarks;
               this.postData.ProfFee = data.data.professionalFee;
               this.postData.Remarks = data.data.remarks;
               this.postData.DateCreated = this.functionsService.getSystemDateTime();
               this.data.doctor_prof_fee = data.data.professionalFee;
-              this.functionsService.alert(
-                "Successfully UPDATED your Professional Fee.",
-                "Okay"
-              );
+              this.modalUpdate('SUCCESS','Successfully UPDATED your Professional Fee.');
             } else {
               this.functionsService.alert(
                 "UPDATING of Professional Fee was Unsuccessful",
@@ -303,10 +366,7 @@ export class ChhAppInPatientModalPage implements OnInit {
                 this.postData.Remarks = data.data.remarks;
                 this.postData.DateCreated = this.functionsService.getSystemDateTime();
                 this.data.doctor_prof_fee = data.data.professionalFee;
-                this.functionsService.alert(
-                  "Successfully DELETED your Professional Fee.",
-                  "Okay"
-                );
+                this.modalUpdate('SUCCESS','Successfully DELETED your Professional Fee.');
               } else {
                 this.functionsService.alert(
                   "DELETING of Professional Fee was Unsuccessful",
@@ -315,6 +375,11 @@ export class ChhAppInPatientModalPage implements OnInit {
               }
             });
         }
+        
+        console.log(this.postData);
+        console.log(JSON.stringify(this.postData));
+        
+       
       }
     });
   }

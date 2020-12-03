@@ -136,6 +136,9 @@ export class LoginPage  {
       } }],
     });await alert.present();
   }
+
+
+  
   async updatePassword(){
     console.log(this.resultJson.Data);
     
@@ -329,6 +332,8 @@ export class LoginPage  {
     return await modal.present();
   }
   loginAction() {
+    console.log('loginaction');
+    
     if (this.loginresponse.length != "0") {
       if(this.isSetPrivacyPolicy == false){
         this.patientService.getAppSetting('DPP').subscribe(
@@ -341,7 +346,10 @@ export class LoginPage  {
                   if(key == 'privacyPolicy' && lock == 'accepted'){
                     valuex = 1;
                   }
-
+                  if(key == 'billingContact'){
+                    console.log(lock);
+                    
+                  }
                   let tempJson = '{"username": "'+this.postData.username+'",  "userReference": "'+this.loginresponse.dr_code+'","appcode": "DPP","setting": "'+key+'","property": "'+lock+'","value": "'+valuex+'"}';
                     
                   this.patientService.insertUserSettings(tempJson).subscribe((res2: any) => {});   
