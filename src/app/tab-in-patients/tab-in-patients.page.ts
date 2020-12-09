@@ -18,6 +18,7 @@ import { GoogleAnalyticsService } from "ngx-google-analytics";
 import { FunctionsService } from "../shared/functions/functions.service";
 import { Constants } from "../shared/constants";
 import { Messages } from "../shared/messages";
+import { PatientService } from '../services/patient/patient.service';
 
 @Component({
   selector: "app-tab-in-patients",
@@ -54,7 +55,8 @@ export class TabInPatientsPage {
     private renderer: Renderer2,
     protected $gaService: GoogleAnalyticsService,
     public constants: Constants,
-    public messages: Messages
+    public messages: Messages,
+    private patientService:PatientService
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -173,6 +175,7 @@ export class TabInPatientsPage {
         this.inPatients = sampleInPatients1;
       }
     }
+    console.log(this.inPatients);
     
   }
 
@@ -182,6 +185,38 @@ export class TabInPatientsPage {
     this.dr_code = this.logindata[0].dr_code;
     let dr_name = this.logindata[0].last_name;
     this.$gaService.event("In-Patient", "User Flow", dr_name);
+
+
+    let x:boolean = true;
+    this.patientService.getAppSetting('DPP').subscribe(
+      (res: any) => {
+        Object.keys(res).forEach((key) => {
+          var value = res[key];
+          Object.keys(value).forEach((lock) => {
+            var valuex = value[lock];
+            if(key != 'appcode'){
+              if(key == 'billingContact'){
+
+                localStorage.setItem(lock, btoa(valuex));
+              }
+              
+              if(key == 'smsGateway'){
+                localStorage.setItem("smsGateway", JSON.stringify(value));
+             
+              }   
+
+            }
+          });
+        });
+    });
+
+
+
+
+
+
+
+
     this.callPatient(this.site);
   }
 
@@ -199,6 +234,13 @@ export class TabInPatientsPage {
           }
           this.inPatientsDraft = [];
           res.forEach((element) => {
+
+            /*
+            let d = new Date(element.admission_date);
+            element.admission_date = d.toUTCString();
+*/
+
+  
             element.last_name = element.last_name.toUpperCase();
             element.middle_name = this.camelCase(element.middle_name);
             element.first_name = this.camelCase(element.first_name);

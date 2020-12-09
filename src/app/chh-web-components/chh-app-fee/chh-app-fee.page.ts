@@ -136,10 +136,10 @@ export class ChhAppFeePage implements OnInit {
 
       const actionSheet = await this.actionSheetController.create({
         mode:'ios',
-        header: 'Are you sure of the Professional Fee?',
+        header: 'Please review and confirm.',
         cssClass: "my-custom-class",
         buttons: [{
-          text: 'Yes, '+newVal,
+          text: 'Yes. P'+newVal,
           icon: 'share-outline',
           handler: () => {
             this.popover.dismiss(postData);
