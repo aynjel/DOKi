@@ -139,7 +139,7 @@ export class ChhAppFeePage implements OnInit {
         header: 'Please review and confirm.',
         cssClass: "my-custom-class",
         buttons: [{
-          text: 'Yes. P '+newVal,
+          text: 'Yes. P'+newVal,
           icon: 'share-outline',
           handler: () => {
             this.popover.dismiss(postData);
