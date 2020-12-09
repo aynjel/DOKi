@@ -349,14 +349,14 @@ export class TabSettingsPage {
               .subscribe(
                 (res: any) => {
 
-                  console.log(res);
+                  //console.log(res);
                   
                 },
                 (error) => {},
                 () => {
                   this.backToDefault();
                   let smpJSON = '{"username": "' + this.dr_username+ '","userReference": "'+this.dr_code+'","appcode": "DPP","setting":"privacyPolicy","property": "accepted","value": "1"}';
-                  console.log(smpJSON);
+                  //console.log(smpJSON);
                   
                   
                   this.patientService

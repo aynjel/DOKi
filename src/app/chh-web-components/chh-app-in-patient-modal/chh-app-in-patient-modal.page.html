@@ -86,8 +86,9 @@ o888o        `Y888""8o   "888" o888o `Y8bod8P' o888o o888o   "888"
             </div>
             <div>
               <ion-icon name="bed-outline" slot="start"></ion-icon>
-              Room {{data.room_no}}
-
+              Room {{data.room_no}}<br />
+              <ion-icon name="clipboard-outline" slot="start"></ion-icon>
+              as {{data.Doctor_Status}}<br />
               <ion-chip *ngIf="data.admission_status == 'AC'">
                 <ion-label color="mango"><b>Admitted</b></ion-label>
               </ion-chip>
@@ -117,7 +118,7 @@ o888o        `Y888""8o   "888" o888o `Y8bod8P' o888o o888o   "888"
 
           <!-- <ion-text *ngIf="data.admission_status == 'DN'">Status : For Discharge<br /></ion-text> -->
           <ion-icon name="calendar-outline"></ion-icon
-          ><ion-text> Admission Date : {{data.admission_date}}</ion-text>
+          ><ion-text> Admission Date : {{dateAdmitted}}</ion-text>
         </div>
       </ion-item>
     </ion-list>

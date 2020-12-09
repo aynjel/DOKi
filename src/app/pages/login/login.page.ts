@@ -140,7 +140,7 @@ export class LoginPage  {
 
   
   async updatePassword(){
-    console.log(this.resultJson.Data);
+    //console.log(this.resultJson.Data);
     
     const modal = await this.modalController.create({
       component: ChhAppChangePasswordPage,
@@ -332,7 +332,7 @@ export class LoginPage  {
     return await modal.present();
   }
   loginAction() {
-    console.log('loginaction');
+    //console.log('loginaction');
     
     if (this.loginresponse.length != "0") {
       if(this.isSetPrivacyPolicy == false){
@@ -347,7 +347,7 @@ export class LoginPage  {
                     valuex = 1;
                   }
                   if(key == 'billingContact'){
-                    console.log(lock);
+                    //console.log(lock);
                     
                   }
                   let tempJson = '{"username": "'+this.postData.username+'",  "userReference": "'+this.loginresponse.dr_code+'","appcode": "DPP","setting": "'+key+'","property": "'+lock+'","value": "'+valuex+'"}';

@@ -38,6 +38,7 @@ export class ChhAppInPatientModalPage implements OnInit {
   truncating = true;
   truncating1 = true;
   daysOfManage: any;
+  dateAdmitted:any;
   constructor(
     public modalController: ModalController,
     public popover: PopoverController,
@@ -60,7 +61,7 @@ export class ChhAppInPatientModalPage implements OnInit {
     DoctorMobileNumber: "string",
     BillingMobileNumber: "string",
     RoomNumber: "string",
-    PatientSite: "string",
+  //  PatientSite: "string",
     SmsGateWay: [],
     OldProfFee: "string"
   };
@@ -100,9 +101,10 @@ export class ChhAppInPatientModalPage implements OnInit {
 
 
   ngOnInit() {
-    console.log('----------');
-    console.log(this.data);
-    console.log('----------');
+
+    let d = new Date(this.data.admission_date);
+    this.dateAdmitted = d.toUTCString();
+
     this.$gaService.pageView(
       "/In-Patient/Patient Details",
       "Patient Details Modal"
@@ -120,11 +122,11 @@ export class ChhAppInPatientModalPage implements OnInit {
     );
     if (this.data.site == "C") {
       this.site = "CHHC";
-      this.postData.PatientSite = "CEBU";
+      //this.postData.PatientSite = "CEBU";
       this.postData.BillingMobileNumber = atob(localStorage.getItem("C"));
     } else {
       this.site = "CHHM";
-      this.postData.PatientSite = "MANDAUE";
+      //this.postData.PatientSite = "MANDAUE";
       this.postData.BillingMobileNumber = atob(localStorage.getItem("M"));
     }
 
@@ -152,13 +154,11 @@ export class ChhAppInPatientModalPage implements OnInit {
     this.postData.DoctorCode = this.data.dr_code;
     //this.postData.DoctorCode = this.data.dr_code;
 
-    console.log(this.data.Doctor_Status);
-    
-    this.postData.DoctorStatusCode = this.functionsService.getDoctorStatusCode(
-      this.data.Doctor_Status
-    );
 
-    console.log(  this.postData.DoctorStatusCode);
+    
+    this.postData.DoctorStatusCode = this.data.Doctor_Status_code;
+
+
     
     this.postData.site = this.data.site;
     this.postData.CreatedBy = this.data.dr_code;
@@ -172,6 +172,8 @@ export class ChhAppInPatientModalPage implements OnInit {
     this.isFetchDone = false;
     this.doctorService.getCoDoctors(this.data.admission_no).subscribe(
       (res: any) => {
+        console.log(res);
+        
         this.functionsService.logToConsole(res);
         res.forEach((element) => {
           if (element.dr_code == this.data.dr_code) {
@@ -376,9 +378,7 @@ export class ChhAppInPatientModalPage implements OnInit {
             });
         }
         
-        console.log(this.postData);
-        console.log(JSON.stringify(this.postData));
-        
+
        
       }
     });

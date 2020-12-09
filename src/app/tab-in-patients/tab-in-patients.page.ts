@@ -234,6 +234,13 @@ export class TabInPatientsPage {
           }
           this.inPatientsDraft = [];
           res.forEach((element) => {
+
+            /*
+            let d = new Date(element.admission_date);
+            element.admission_date = d.toUTCString();
+*/
+
+  
             element.last_name = element.last_name.toUpperCase();
             element.middle_name = this.camelCase(element.middle_name);
             element.first_name = this.camelCase(element.first_name);
