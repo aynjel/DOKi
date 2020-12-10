@@ -26,7 +26,9 @@ definitions:
       - npm install -g @ionic/cli
       - npm install -g wait-on
       - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
-      - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --parallel
+      - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --spec "cypress/integration/e2e/0-start-test-spec.js"
+      - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --parallel --spec "cypress/integration/e2e/1-login-page.spec.js, cypress/integration/e2e/2-data-privacy.spec.js, cypress/integration/e2e/3-onboarding-pages.spec.js, cypress/integration/e2e/4-dashboard-page.spec.js, cypress/integration/e2e/5-navigate-menu.spec.js, cypress/integration/e2e/6-in-patients-page.spec.js, cypress/integration/e2e/7-logout-page.spec.js, cypress/integration/e2e/8-change-password-spec.js" 
+      - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --spec "cypress/integration/e2e/9-end-test-spec.js"
     artifacts:
       - cypress/screenshots/**
       - cypress/reports/**
@@ -129,30 +131,30 @@ pipelines:
   branches:
     '{dev_branch,develop}':
       - step: *code-linting
-      # - step:
-      #     name: Install, Run, and Test
-      #     script:
-      #       - echo "Parallel Tests about to start..."
-      # - parallel:
-      #     # Run Cypress Tests in parallel (6 machines)
-      #     - step:
-      #         <<: *e2e
-      #         name: Cypress on Machine (1)
-      #     - step:
-      #         <<: *e2e
-      #         name: Cypress on Machine (2)
-      #     - step:
-      #         <<: *e2e
-      #         name: Cypress on Machine (3)
-      #     - step:
-      #         <<: *e2e
-      #         name: Cypress on Machine (4)
-      #     - step:
-      #         <<: *e2e
-      #         name: Cypress on Machine (5)
-      #     - step:
-      #         <<: *e2e
-      #         name: Cypress on Machine (6)
+      - step:
+          name: Install, Run, and Test
+          script:
+            - echo "Parallel Tests about to start..."
+      - parallel:
+          # Run Cypress Tests in parallel (6 machines)
+          - step:
+              <<: *e2e
+              name: Cypress on Machine (1)
+          - step:
+              <<: *e2e
+              name: Cypress on Machine (2)
+          - step:
+              <<: *e2e
+              name: Cypress on Machine (3)
+          - step:
+              <<: *e2e
+              name: Cypress on Machine (4)
+          - step:
+              <<: *e2e
+              name: Cypress on Machine (5)
+          - step:
+              <<: *e2e
+              name: Cypress on Machine (6)
       - step: *build-artifacts
       - step: *deploy-staging-to-firebase
 
