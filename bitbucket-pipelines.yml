@@ -27,7 +27,7 @@ definitions:
       - npm install -g wait-on
       - npm install
       - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
-      - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --parallel --spec "cypress/integration/e2e/*" 
+      - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --parallel --group parallel-tests --spec "cypress/integration/e2e/*" 
     artifacts:
       - cypress/screenshots/**
       - cypress/reports/**
