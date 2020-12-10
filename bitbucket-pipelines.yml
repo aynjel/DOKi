@@ -27,9 +27,9 @@ definitions:
       - npm install -g wait-on
       - npm install
       - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
-      #- npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --spec "cypress/integration/e2e/0-start-test-spec.js"
+      - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --spec "cypress/integration/e2e/0-start-test-spec.js"
       - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --parallel --spec "cypress/integration/e2e/1-login-page.spec.js, cypress/integration/e2e/2-data-privacy.spec.js, cypress/integration/e2e/3-onboarding-pages.spec.js, cypress/integration/e2e/4-dashboard-page.spec.js, cypress/integration/e2e/5-navigate-menu.spec.js, cypress/integration/e2e/6-in-patients-page.spec.js, cypress/integration/e2e/7-logout-page.spec.js, cypress/integration/e2e/8-change-password-spec.js" 
-      #- npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --spec "cypress/integration/e2e/9-end-test-spec.js"
+      - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --spec "cypress/integration/e2e/9-end-test-spec.js"
     artifacts:
       - cypress/screenshots/**
       - cypress/reports/**
