@@ -4,7 +4,7 @@ var dashboardUrl = Cypress.env("baseUrlToTest") + Cypress.env("dashboardUrl");
 var userAccount;
 
 context("Actions", () => {
-  context("Navigate Menu", () => {
+  context("5 - Navigate Menu", () => {
     beforeEach(() => {
 
       // Load Test Data

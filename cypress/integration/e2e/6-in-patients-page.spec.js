@@ -5,7 +5,7 @@ var inpatientsUrl = Cypress.env("baseUrlToTest") + Cypress.env("inpatientsUrl");
 var userAccount; 
 
 context("Actions", () => {
-  context("In-Patients Page", () => {
+  context("6 - In-Patients Page", () => {
     beforeEach(() => {
 
       // Load Test Data

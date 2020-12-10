@@ -6,7 +6,7 @@ var userAccount;
 
 context("Actions", () => {
 
-    context("Data Privacy", () => {
+    context("2 - Data Privacy", () => {
       beforeEach(() => {
 
       // Load Test Data
@@ -90,7 +90,7 @@ context("Actions", () => {
        /**
         * Okay as of Nov/09/2020
        */
-       it("Test Scenario 3 - Opt-out.", () => {
+       /*  it("Test Scenario 3 - Opt-out.", () => {
         cy.loginAndTestDataPrivacy(userAccount[0].userName,userAccount[0].password);
         cy.whereAmI(dashboardUrl);
 
@@ -108,7 +108,7 @@ context("Actions", () => {
         cy.whereAmI(loginUrl);
 
          cy.end();
-       });
+       }); */ 
 
     });
 });

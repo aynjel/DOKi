@@ -6,7 +6,7 @@ var inpatientsDischargedUrl = Cypress.env("baseUrlToTest") + Cypress.env("inpati
 var userAccount;
 
 context("Actions", () => {
-  context("Dashboard Page", () => {
+  context("4 - Dashboard Page", () => {
     beforeEach(() => {
 
       // Load Test Data

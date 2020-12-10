@@ -1,16 +1,16 @@
 [
     {
         "userName": "50534",
-        "password": "1234@bA"
+        "password": "12345!bA"
     },
     {
         "userName": "505341",
         "password": "505341"
     },
     {
-        "oldPassword": "12345@bA",
-        "newPassword": "1234",
-        "confirmPassword": "1234"
+        "oldPassword": "12345!bA",
+        "newPassword": "12345!bB",
+        "confirmPassword": "12345!bB"
     },
     {
         "userName": "50534",

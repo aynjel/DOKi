@@ -3,7 +3,7 @@ var dashboardUrl = Cypress.env("baseUrlToTest") + Cypress.env("dashboardUrl");
 var userAccount;
 
 context("Actions", () => {
-  context("Login Page", () => {
+  context("1 - Login Page", () => {
     beforeEach(() => {
 
       // Load Test Data

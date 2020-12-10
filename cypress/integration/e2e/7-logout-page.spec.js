@@ -4,7 +4,7 @@ var dashboardUrl = Cypress.env("baseUrlToTest") + Cypress.env("dashboardUrl");
 var userAccount;
 
 context("Actions", () => {
-  context("Logout Page", () => {
+  context("7 - Logout Page", () => {
     beforeEach(() => {
 
        // Load Test Data
@@ -21,12 +21,6 @@ context("Actions", () => {
     * Okay as of Nov/09/2020
     */
     it("Test Scenario 1 - Login then Logout", () => {
-
-      /* cy.request('http://10.128.18.132/doctorPortalPwa/api/AppSetting/GetAppSetting/DPP').then((response) => {
-        expect(response.status).to.eq(200);
-      });
-      cy.wait(5000); */
-      
       cy.loginAndTestDataPrivacy(userAccount[0].userName,userAccount[0].password);
       cy.wait(1000);
       cy.whereAmI(dashboardUrl);

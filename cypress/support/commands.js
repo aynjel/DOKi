@@ -255,13 +255,169 @@ Cypress.Commands.add("jumpToLogin", () => {
       };
     }));
   });
+
+  Cypress.Commands.add('testUpdatePassword', (newPassword, confirmPassword1) =>{
+    /* cy.get('body').then(($body => {
+      if ($body.find('ion-input[id="password"]').length) {
+        cy.inputNewConfirmPassword(newPassword, confirmPassword);
+      };
+    })); */
+
+    cy.contains("New Password");
+    cy.contains("Confirm Password");
+
+    cy.inputNewConfirmPassword(newPassword, confirmPassword1);
+  });
+
+  Cypress.Commands.add('inputNewConfirmPassword', (newPassword, confirmPassword2) =>{
+    cy.get("ion-grid");
+
+    cy.wait(500)
+    cy.get('ion-input[id="password"]')
+        .type(newPassword, {parseSpecialCharSequences:false, delay:10})
+        .should("have.value", newPassword);
+   
+    cy.wait(500)
+    cy.get('ion-input[id="confirmPassword"]')
+        .type(confirmPassword2, {parseSpecialCharSequences:false}, {delay:10})
+        .should("have.value", confirmPassword2);
+
+    cy.doClick("SAVE");
+  });
+
+  Cypress.Commands.add('testUpdatePasswordFromSetting', (oldPassword3, newPassword3, confirmPassword3) =>{
+    /* cy.get('body').then(($body => {
+      if ($body.find('ion-input[id="password"]').length) {
+        cy.inputNewConfirmPassword(newPassword, confirmPassword);
+      };
+    })); */
+
+    cy.contains("Old Password");
+    cy.contains("New Password");
+    cy.contains("Confirm Password");
+
+    cy.inputNewConfirmPasswordFromSetting(oldPassword3, newPassword3, confirmPassword3);
+  });
+
+  Cypress.Commands.add('inputNewConfirmPasswordFromSetting', (oldPassword3, newPassword3, confirmPassword3) =>{
+    cy.get("ion-grid");
+
+    cy.wait(500);
+    cy.get('ion-input[id="input-password1"]')
+    .type(oldPassword3, {parseSpecialCharSequences:false, delay:10})
+    .should("have.value", oldPassword3);
+
+    cy.wait(500);
+    cy.get('ion-input[id="password"]')
+        .type(newPassword3, {parseSpecialCharSequences:false, delay:10})
+        .should("have.value", newPassword3);
+   
+    cy.wait(500);
+    cy.get('ion-input[id="confirmPassword"]')
+        .type(confirmPassword3, {parseSpecialCharSequences:false}, {delay:10})
+        .should("have.value", confirmPassword3);
+
+    cy.doClick("SAVE");
+  });
+
+  Cypress.Commands.add('cancelChangePassword', (oldPassword4, newPassword4, confirmPassword4) =>{
+    /* cy.get('body').then(($body => {
+      if ($body.find('ion-input[id="password"]').length) {
+        cy.inputNewConfirmPassword(newPassword, confirmPassword);
+      };
+    })); */
+
+    cy.contains("Old Password");
+    cy.contains("New Password");
+    cy.contains("Confirm Password");
+
+    cy.inputChangePassword(oldPassword4, newPassword4, confirmPassword4);
+  });
+
+  Cypress.Commands.add('inputChangePassword', (oldPassword4, newPassword4, confirmPassword4) =>{
+    cy.get("ion-grid");
+
+    cy.wait(500);
+    cy.get('ion-input[id="input-password1"]')
+    .type(oldPassword4, {parseSpecialCharSequences:false, delay:10})
+    .should("have.value", oldPassword4);
+
+    cy.wait(500);
+    cy.get('ion-input[id="password"]')
+        .type(newPassword4, {parseSpecialCharSequences:false, delay:10})
+        .should("have.value", newPassword4);
+   
+    cy.wait(500);
+    cy.get('ion-input[id="confirmPassword"]')
+        .type(confirmPassword4, {parseSpecialCharSequences:false}, {delay:10})
+        .should("have.value", confirmPassword4);
+
+    cy.doClick("CANCEL");
+  });
 // ===============================================================================
+
 Cypress.Commands.add('getTestUserAccount', () =>{
   var data;
   cy.fixture('testUserAccount').then(function (data) {
     this.data = data;
     return this.getdata;
   });
+});
+
+// API
+// ==============================================================================
+Cypress.Commands.add('expectValidJsonWithMinimumLength', (url, length) => {
+  return cy.request({
+      method: 'GET',
+      url: url,
+      followRedirect: false,
+      headers: {
+          'accept': 'application/json'
+      }
+  })
+  .then((response) => {
+      // Parse JSON the body.
+      let body = JSON.parse(response.body);
+      expect(response.status).to.eq(200);
+      expect(response.headers['content-type']).to.eq('application/vnd.api+json');
+      cy.log(body);
+      expect(response.body).to.not.be.null;
+      expect(body.data).to.have.length.of.at.least(length);
+
+      // Ensure certain properties are present.
+      body.data.forEach(function (item) {
+          expect(item).to.have.all.keys('type', 'id', 'attributes', 'relationships', 'links');
+          ['changed', 'created', 'default_langcode', 'langcode', 'moderation_state', 'nid', 'path', 'promote', 'revision_log', 'revision_timestamp', 'status', 'sticky', 'title', 'uuid', 'vid'].forEach((key) => {
+              expect(item['attributes']).to.have.property(key);
+          });
+      });
+  });
+
+});
+// ==============================================================================
+Cypress.Commands.add("getDataPW", () => {
+
+  cy.request({
+    method : 'PUT',
+    url:"http://10.128.18.132/doctorPortalPwa/api/common/Login/Validate",
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: {
+      "appCode" : "DPP",
+      "userName": "50534"
+    }
+    }).then((response) => {
+      return new Promise(resolve => {        
+          expect(response).property('status').to.equal(200)
+          expect(response.body).property('Data').to.not.be.oneOf([null, ""])
+          const respBody = response.body;
+          const dataPw = respBody['Data'];
+          //cy.log(dataPw);
+          resolve(dataPw);
+      })
+    });
+
 });
 
 var loginUrl = Cypress.env("baseUrlToTest") + Cypress.env("loginUrl");

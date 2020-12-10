@@ -1,7 +1,7 @@
 var loginUrl = Cypress.env("baseUrlToTest") + Cypress.env("loginUrl");
 
 context("Actions", () => {
-  context("Onboarding Pages", () => {
+  context("3 - Onboarding Pages", () => {
     beforeEach(() => {
       cy.visit("/");
     });
