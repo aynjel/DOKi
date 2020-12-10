@@ -216,6 +216,7 @@ export class ChhAppInPatientModalPage implements OnInit {
     //admitting diagnosis
     this.doctorService.getAdmittingDiagnosis(this.data.admission_no).subscribe(
       (res: any) => {
+        /*
         this.admittingDiagnosis = this.functionsService.convertToCamelCase(
           res[0].admitting_diagnosis2
         );
@@ -226,6 +227,16 @@ export class ChhAppInPatientModalPage implements OnInit {
         this.admittingDiagnosis2 = this.functionsService.convertToCamelCase(
           this.admittingDiagnosis
         );
+*/
+        this.admittingDiagnosis = res[0].admitting_diagnosis2.replace(/(\r\n|\n|\r)/gm, "<br />") ;
+        console.log("admittingDiagnosis : " +this.admittingDiagnosis);
+        
+        this.admittingDiagnosis1 = this.functionsService.truncateChar(res[0].admitting_diagnosis2,100);
+        this.admittingDiagnosis1 = this.admittingDiagnosis1.replace(/(\r\n|\n|\r)/gm, "<br />");
+        
+        this.admittingDiagnosis2 = this.admittingDiagnosis.replace(/(,)/gm, ",<br />") ;
+        console.log("admittingDiagnosis2 : "+this.admittingDiagnosis2);
+          
       },
       (error) => {
         this.isFetchDone = true;
@@ -240,10 +251,7 @@ export class ChhAppInPatientModalPage implements OnInit {
       this.doctorService.getFinalDiagnosis(this.data.admission_no).subscribe(
         (res: any) => {
           this.finalDiagnosis = res[0].final_diagnosis;
-          this.finalDiagnosis1 = this.functionsService.truncateChar(
-            this.functionsService.convertToCamelCase(this.finalDiagnosis),
-            50
-          );
+          this.finalDiagnosis1 = this.functionsService.truncateChar(this.finalDiagnosis,50);
           this.finalDiagnosis2 = this.finalDiagnosis
             .replace(/(\r\n|\n|\r)/gm, "")
             .split(".)");
@@ -260,7 +268,7 @@ export class ChhAppInPatientModalPage implements OnInit {
               i +
               1 +
               ".) " +
-              this.functionsService.convertToCamelCase(this.finalDiagnosis2[i]);
+              this.finalDiagnosis2[i];
           }
         },
         (error) => {

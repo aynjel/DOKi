@@ -3,3 +3,10 @@ ion-list.no-last-border {
       --border-style: none !important;
     }
   }
+
+
+ @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&display=swap');
+
+.custom-font{
+  font-family: 'Inconsolata', monospace;
+}

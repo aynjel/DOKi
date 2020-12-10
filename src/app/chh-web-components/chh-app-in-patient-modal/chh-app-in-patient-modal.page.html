@@ -144,21 +144,21 @@ o888o        `Y888""8o   "888" o888o `Y8bod8P' o888o o888o   "888"
       <ion-item style="padding-top: 10px;" lines="none">
         <div class="ion-text-wrap">
 
-          <div *ngIf="admittingDiagnosis">
-            <div *ngIf="admittingDiagnosis.length <= 100">{{admittingDiagnosis}}</div>
-            <div *ngIf="truncating1 && admittingDiagnosis.length > 100">
-              {{admittingDiagnosis1}}
-              <button ion-button (click)="truncating1 = false">show more</button>
+          <div *ngIf="admittingDiagnosis" class="custom-font">
+            <div *ngIf="admittingDiagnosis.length <= 100" [innerHTML]="admittingDiagnosis">
+
             </div>
-            <div *ngIf="!truncating1 && admittingDiagnosis.length > 100">
-              <!--{{admittingDiagnosis}}-->
-             
-                <ion-text class="ion-text-wrap">{{admittingDiagnosis2}}<br
-          /></ion-text>
-        
-              <button ion-button (click)="truncating1 = true">show less</button>
+            <div class="" *ngIf="truncating1 && admittingDiagnosis.length > 100" [innerHTML]="admittingDiagnosis1">
+
+              
             </div>
+            <button *ngIf="truncating1 && admittingDiagnosis.length > 100" ion-button (click)="truncating1 = false">show more</button>
+            <div *ngIf="!truncating1 && admittingDiagnosis.length > 100" [innerHTML]="admittingDiagnosis2">
+              <ion-text class="ion-text-wrap "><br/></ion-text>
+              
             </div>
+            <button *ngIf="!truncating1 && admittingDiagnosis.length > 100" ion-button (click)="truncating1 = true">show less</button>
+          </div>
 
 
             <ng-container>
@@ -192,7 +192,7 @@ o888o        `Y888""8o   "888" o888o `Y8bod8P' o888o o888o   "888"
       <ion-item style="padding-top: 10px;" lines="none">
         <div class="ion-text-wrap">
 
-          <div *ngIf="finalDiagnosis">
+          <div *ngIf="finalDiagnosis" class="custom-font">
             <div *ngIf="finalDiagnosis.length <= limit">{{finalDiagnosis}}</div>
             <div *ngIf="truncating && finalDiagnosis.length > limit">
               {{finalDiagnosis1}}
