@@ -184,9 +184,6 @@ pipelines:
           - step:
               <<: *e2e
               name: Cypress on Machine (5)
-          - step:
-              <<: *e2e
-              name: Cypress on Machine (6)
       - step: *e2e-egress
       - step: *build-artifacts
       - step: *deploy-staging-to-firebase
@@ -211,9 +208,6 @@ pipelines:
           - step:
               <<: *e2e
               name: Cypress on Machine (5)
-          - step:
-              <<: *e2e
-              name: Cypress on Machine (6)
       - step: *e2e-egress
       - step: *build-artifacts
       - step: *deploy-prod-using-sftp
