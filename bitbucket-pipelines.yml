@@ -184,7 +184,7 @@ pipelines:
   branches:
     '{dev_branch,develop,cypress-grouping}':
       - step: *code-linting
-      - step: *e2e-ingress
+      # - step: *e2e-ingress
       - step: *e2e-all-in-one-run
       # - parallel:
       #     # Run Cypress Tests in parallel (6 machines)
@@ -209,7 +209,7 @@ pipelines:
 
     master:
       - step: *code-linting
-      - step: *e2e-ingress
+      # - step: *e2e-ingress
       - step: *e2e-all-in-one-run
       # - parallel:
       #     # Run Cypress Tests in parallel (6 machines)
