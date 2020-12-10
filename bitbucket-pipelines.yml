@@ -65,6 +65,24 @@ definitions:
           - cypress/screenshots/**
           - cypress/reports/**
           - cypress/videos/**
+    - step: &e2e-all-in-one-run
+        name: E2E (non-parallel)
+        caches:
+          - npm
+          - cypress
+          - node # pre-defined cache
+        image: cypress/base:10
+        script:
+          - npm install -g @angular/cli
+          - npm install -g @ionic/cli
+          - npm install -g wait-on
+          - npm install
+          - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
+          - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --group all-in-one-run --spec "cypress/integration/e2e/all/*"
+        artifacts:
+          - cypress/screenshots/**
+          - cypress/reports/**
+          - cypress/videos/**
     - step: &e2e-egress
         name: E2E (Egress)
         caches:
@@ -167,47 +185,49 @@ pipelines:
     '{dev_branch,develop,cypress-grouping}':
       - step: *code-linting
       - step: *e2e-ingress
-      - parallel:
-          # Run Cypress Tests in parallel (6 machines)
-          - step: 
-              <<: *e2e
-              name: Cypress on Machine (1)
-          - step:
-              <<: *e2e
-              name: Cypress on Machine (2)
-          - step:
-              <<: *e2e
-              name: Cypress on Machine (3)
-          - step:
-              <<: *e2e
-              name: Cypress on Machine (4)
-          - step:
-              <<: *e2e
-              name: Cypress on Machine (5)
-      - step: *e2e-egress
+      - step: *e2e-all-in-one-run
+      # - parallel:
+      #     # Run Cypress Tests in parallel (6 machines)
+      #     - step: 
+      #         <<: *e2e
+      #         name: Cypress on Machine (1)
+      #     - step:
+      #         <<: *e2e
+      #         name: Cypress on Machine (2)
+      #     - step:
+      #         <<: *e2e
+      #         name: Cypress on Machine (3)
+      #     - step:
+      #         <<: *e2e
+      #         name: Cypress on Machine (4)
+      #     - step:
+      #         <<: *e2e
+      #         name: Cypress on Machine (5)
+      # - step: *e2e-egress
       - step: *build-artifacts
       - step: *deploy-staging-to-firebase
 
     master:
       - step: *code-linting
       - step: *e2e-ingress
-      - parallel:
-          # Run Cypress Tests in parallel (6 machines)
-          - step:
-              <<: *e2e
-              name: Cypress on Machine (1)
-          - step:
-              <<: *e2e
-              name: Cypress on Machine (2)
-          - step:
-              <<: *e2e
-              name: Cypress on Machine (3)
-          - step:
-              <<: *e2e
-              name: Cypress on Machine (4)
-          - step:
-              <<: *e2e
-              name: Cypress on Machine (5)
-      - step: *e2e-egress
+      - step: *e2e-all-in-one-run
+      # - parallel:
+      #     # Run Cypress Tests in parallel (6 machines)
+      #     - step:
+      #         <<: *e2e
+      #         name: Cypress on Machine (1)
+      #     - step:
+      #         <<: *e2e
+      #         name: Cypress on Machine (2)
+      #     - step:
+      #         <<: *e2e
+      #         name: Cypress on Machine (3)
+      #     - step:
+      #         <<: *e2e
+      #         name: Cypress on Machine (4)
+      #     - step:
+      #         <<: *e2e
+      #         name: Cypress on Machine (5)
+      # - step: *e2e-egress
       - step: *build-artifacts
       - step: *deploy-prod-using-sftp
