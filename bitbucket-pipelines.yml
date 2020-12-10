@@ -27,9 +27,7 @@ definitions:
       - npm install -g wait-on
       - npm install
       - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
-      - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --spec "cypress/integration/e2e/0-start-test-spec.js"
-      - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --parallel --spec "cypress/integration/e2e/1-login-page.spec.js, cypress/integration/e2e/2-data-privacy.spec.js, cypress/integration/e2e/3-onboarding-pages.spec.js, cypress/integration/e2e/4-dashboard-page.spec.js, cypress/integration/e2e/5-navigate-menu.spec.js, cypress/integration/e2e/6-in-patients-page.spec.js, cypress/integration/e2e/7-logout-page.spec.js, cypress/integration/e2e/8-change-password-spec.js" 
-      - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --spec "cypress/integration/e2e/9-end-test-spec.js"
+      - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --parallel --spec "cypress/integration/e2e/*" 
     artifacts:
       - cypress/screenshots/**
       - cypress/reports/**
@@ -49,6 +47,42 @@ definitions:
           - pipe: atlassian/checkstyle-report:0.2.0
         caches:
           - node # pre-defined cache
+    - step: &e2e-ingress
+        name: E2E (Ingress)
+        caches:
+          - npm
+          - cypress
+          - node # pre-defined cache
+        image: cypress/base:10
+        script:
+          - npm install -g @angular/cli
+          - npm install -g @ionic/cli
+          - npm install -g wait-on
+          - npm install
+          - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
+          - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --spec "cypress/integration/e2e/ingress/*"
+        artifacts:
+          - cypress/screenshots/**
+          - cypress/reports/**
+          - cypress/videos/**
+    - step: &e2e-egress
+        name: E2E (Egress)
+        caches:
+          - npm
+          - cypress
+          - node # pre-defined cache
+        image: cypress/base:10
+        script:
+          - npm install -g @angular/cli
+          - npm install -g @ionic/cli
+          - npm install -g wait-on
+          - npm install
+          - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
+          - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --spec "cypress/integration/e2e/egress/*"
+        artifacts:
+          - cypress/screenshots/**
+          - cypress/reports/**
+          - cypress/videos/**
     - step: &build-artifacts
         name: Build PWA Artifacts
         image: cypress/base:10 # Because of Cypress dev dependency.
@@ -130,15 +164,12 @@ definitions:
 
 pipelines:
   branches:
-    '{dev_branch,develop}':
+    '{dev_branch,develop,cypress-grouping}':
       - step: *code-linting
-      - step:
-          name: Install, Run, and Test
-          script:
-            - echo "Parallel Tests about to start..."
+      - step: *e2e-ingress
       - parallel:
           # Run Cypress Tests in parallel (6 machines)
-          - step:
+          - step: 
               <<: *e2e
               name: Cypress on Machine (1)
           - step:
@@ -156,15 +187,13 @@ pipelines:
           - step:
               <<: *e2e
               name: Cypress on Machine (6)
+      - step: *e2e-egress
       - step: *build-artifacts
       - step: *deploy-staging-to-firebase
 
     master:
       - step: *code-linting
-      - step:
-        name: Install, Run, and Test
-        script:
-          - echo "Parallel Tests about to start..."
+      - step: *e2e-ingress
       - parallel:
           # Run Cypress Tests in parallel (6 machines)
           - step:
@@ -185,5 +214,6 @@ pipelines:
           - step:
               <<: *e2e
               name: Cypress on Machine (6)
+      - step: *e2e-egress
       - step: *build-artifacts
       - step: *deploy-prod-using-sftp
