@@ -285,11 +285,11 @@
           </div>
         </ng-template> -->
 
-        <div *ngIf="!objecthandler">
-          <ion-list-header slot="center" mode="ios">
-            {{this.messages.NO_DATA_AVAILABLE}}
-          </ion-list-header>
+        <div *ngIf="!objecthandler" >
           <img src="assets/img/3973477-no-data-concept-illustration-custom.png">
+          <div class="ion-text-center">
+            <h3> {{this.messages.NO_DATA_AVAILABLE}}</h3>
+          </div>
         </div>
       </ion-col>
     </ion-row>
