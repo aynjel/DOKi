@@ -172,8 +172,6 @@ export class ChhAppInPatientModalPage implements OnInit {
     this.isFetchDone = false;
     this.doctorService.getCoDoctors(this.data.admission_no).subscribe(
       (res: any) => {
-        console.log(res);
-        
         this.functionsService.logToConsole(res);
         res.forEach((element) => {
           if (element.dr_code == this.data.dr_code) {
@@ -229,13 +227,13 @@ export class ChhAppInPatientModalPage implements OnInit {
         );
 */
         this.admittingDiagnosis = res[0].admitting_diagnosis2.replace(/(\r\n|\n|\r)/gm, "<br />") ;
-        console.log("admittingDiagnosis : " +this.admittingDiagnosis);
+        this.functionsService.logToConsole("admittingDiagnosis : " +this.admittingDiagnosis);
         
         this.admittingDiagnosis1 = this.functionsService.truncateChar(res[0].admitting_diagnosis2,100);
         this.admittingDiagnosis1 = this.admittingDiagnosis1.replace(/(\r\n|\n|\r)/gm, "<br />");
         
         this.admittingDiagnosis2 = this.admittingDiagnosis.replace(/(,)/gm, ",<br />") ;
-        console.log("admittingDiagnosis2 : "+this.admittingDiagnosis2);
+        this.functionsService.logToConsole("admittingDiagnosis2 : "+this.admittingDiagnosis2);
           
       },
       (error) => {
