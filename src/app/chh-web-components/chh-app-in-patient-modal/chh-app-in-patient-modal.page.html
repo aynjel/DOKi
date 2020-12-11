@@ -46,8 +46,8 @@ o888o        `Y888""8o   "888" o888o `Y8bod8P' o888o o888o   "888"
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-card mode="ios">
-    <ion-list>
+<ion-card mode="ios">
+    <ion-list> 
       <ion-item lines="none">
         <!--ion-avatar slot="start">
       <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg">
@@ -58,7 +58,7 @@ o888o        `Y888""8o   "888" o888o `Y8bod8P' o888o o888o   "888"
         <ion-label>
           <ion-item class="ion-no-padding">
             <h2 class="ion-text-wrap" style="padding-top: 20px;">
-              {{data.last_name}}, {{data.first_name}} {{data.middle_name}}
+              <b>{{data.last_name}}, {{data.first_name}} {{data.middle_name}}</b>
             </h2>
             <ion-badge
               color="warning"
@@ -121,7 +121,7 @@ o888o        `Y888""8o   "888" o888o `Y8bod8P' o888o o888o   "888"
           ><ion-text> Admission Date : {{dateAdmitted}}</ion-text>
         </div>
       </ion-item>
-    </ion-list>
+     </ion-list>
   </ion-card>
 
 
