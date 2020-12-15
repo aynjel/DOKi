@@ -420,6 +420,11 @@ Cypress.Commands.add("getDataPW", () => {
 
 });
 
+Cypress.Commands.add("clearThenType", { prevSubject: true }, (subject, text) => {
+  cy.wrap(subject).clear().type(text);
+}
+);
+
 var loginUrl = Cypress.env("baseUrlToTest") + Cypress.env("loginUrl");
 var dashboardUrl = Cypress.env("baseUrlToTest") + Cypress.env("dashboardUrl");
 var inpatientsUrl = Cypress.env("baseUrlToTest") + Cypress.env("inpatientsUrl");
