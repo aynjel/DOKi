@@ -123,7 +123,7 @@ definitions:
     # --------- Azure Web App Deployment ---------
     - step: &deploy-to-azure
         name: Deploy to Azure
-        deployment: testing
+        deployment: test
         script:
         - pipe: atlassian/azure-web-apps-deploy:1.0.0
           variables:
@@ -220,7 +220,7 @@ pipelines:
       - step: *build-artifacts
       # - step: *deploy-staging-to-firebase
       - step: *deploy-to-azure
-      
+
     master:
       - step: *code-linting
       # - step: *e2e-ingress
