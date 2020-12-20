@@ -109,9 +109,11 @@ definitions:
           - npm install -g @ionic/cli
           - npm ci
           - ionic build --prod
+          - zip -r $ZIP_FILE ./www/*
         artifacts:
           # - node_modules/** # Save modules for next steps
           - www/**
+          - www/$ZIP_FILE
     # --------- Firebase Cloud Deployment ---------
     - step: &deploy-staging-to-firebase
         name: Deploy Staging (Firebase)
