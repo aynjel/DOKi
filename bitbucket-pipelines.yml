@@ -120,6 +120,19 @@ definitions:
           - pipe: atlassian/firebase-deploy:0.6.0
             variables:
               FIREBASE_TOKEN: $DPP_STAGING_FIREBASE_TOKEN
+    # --------- Azure Web App Deployment ---------
+    - step: &deploy-to-azure
+        name: Deploy to Azure
+        deployment: testing
+        script:
+        - pipe: atlassian/azure-web-apps-deploy:1.0.0
+          variables:
+            AZURE_APP_ID: $AZURE_APP_ID
+            AZURE_PASSWORD: $AZURE_PASSWORD
+            AZURE_TENANT_ID: $AZURE_TENANT_ID
+            AZURE_RESOURCE_GROUP: $AZURE_RESOURCE_GROUP
+            AZURE_APP_NAME: $AZURE_APP_NAME
+            ZIP_FILE: $ZIP_FILE
     # --------- SFTP On-Premise Deployment ---------
     - step: &deploy-staging-using-sftp
         name: Deploy Staging (SFTP)
@@ -205,8 +218,9 @@ pipelines:
       #         name: Cypress on Machine (5)
       # - step: *e2e-egress
       - step: *build-artifacts
-      - step: *deploy-staging-to-firebase
-
+      # - step: *deploy-staging-to-firebase
+      - step: *deploy-to-azure
+      
     master:
       - step: *code-linting
       # - step: *e2e-ingress
