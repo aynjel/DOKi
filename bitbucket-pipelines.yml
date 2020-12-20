@@ -2,7 +2,7 @@ image: node:12.19.0-alpine3.10
 # image: coolnumber9/node-ionic-angular:nov2020-v1.0.2
 
 options:
-  max-time: 15
+  max-time: 25
   # docker: true
   size: 2x
 
