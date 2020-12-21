@@ -111,7 +111,7 @@ definitions:
           - npm install -g @ionic/cli
           - npm ci
           - ionic build --prod
-          - zip -r dpp-$BITBUCKET_BUILD_NUMBER.zip ./www/*
+          - zip -r dpp-$BITBUCKET_BUILD_NUMBER.zip ./www/**
         artifacts:
           # - node_modules/** # Save modules for next steps
           - www/**
@@ -136,7 +136,7 @@ definitions:
             AZURE_TENANT_ID: $AZURE_TENANT_ID
             AZURE_RESOURCE_GROUP: $AZURE_RESOURCE_GROUP
             AZURE_APP_NAME: $AZURE_APP_NAME
-            ZIP_FILE: $ZIP_FILE
+            ZIP_FILE: 'dpp-$BITBUCKET_BUILD_NUMBER.zip'
     # --------- SFTP On-Premise Deployment ---------
     - step: &deploy-staging-using-sftp
         name: Deploy Staging (SFTP)
