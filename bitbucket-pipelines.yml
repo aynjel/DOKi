@@ -111,7 +111,7 @@ definitions:
           - npm install -g @ionic/cli
           - npm ci
           - ionic build --prod
-          - zip -r dpp-$BITBUCKET_BUILD_NUMBER.zip ./www/**
+          - zip -r dpp-$BITBUCKET_BUILD_NUMBER.zip www/*
         artifacts:
           # - node_modules/** # Save modules for next steps
           - www/**
