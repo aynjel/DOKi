@@ -106,7 +106,7 @@ definitions:
         image: cypress/base:10 # Because of Cypress dev dependency.
         # image: atlassian/default-image:2  # Image with Zip already installed
         script:
-          - apt-get install -y zip
+          - apt-get update && apt-get install -y zip
           - npm install -g @angular/cli
           - npm install -g @ionic/cli
           - npm ci
