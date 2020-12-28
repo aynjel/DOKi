@@ -42,3 +42,6 @@ npm-debug.log*
 
 # Ignore Firebase cache
 /.firebase
+
+# Ignore VS Code Counter files
+/.VSCodeCounter
