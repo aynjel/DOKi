@@ -47,6 +47,15 @@ definitions:
           - pipe: atlassian/checkstyle-report:0.2.0
         caches:
           - node # pre-defined cache
+    - step: &snyk-security-scan
+        name: Snyk Security Scan
+        script:
+          - pipe: snyk/snyk-scan:0.4.6
+            variables:
+              SNYK_TOKEN: $SNYK_TOKEN
+              LANGUAGE: "npm"
+              CODE_INSIGHTS_RESULTS: "true"
+              MONITOR: "true"
     - step: &e2e-ingress
         name: E2E (Ingress)
         caches:
