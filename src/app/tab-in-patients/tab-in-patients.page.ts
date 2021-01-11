@@ -18,8 +18,10 @@ import { GoogleAnalyticsService } from "ngx-google-analytics";
 import { FunctionsService } from "../shared/functions/functions.service";
 import { Constants } from "../shared/constants";
 import { Messages } from "../shared/messages";
-import { PatientService } from '../services/patient/patient.service';
-
+import { PatientService } from "../services/patient/patient.service";
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: "app-tab-in-patients",
   templateUrl: "tab-in-patients.page.html",
@@ -37,7 +39,7 @@ export class TabInPatientsPage {
   site: any = this.constants.CHH_SITE__CODE__ALL; //"A";
   searchBar: any;
   name: any;
-  admittedOrDischarge = this.constants.ADMISSION_STATUS_SELECTION__VALUE__ALL;//"ALL";
+  admittedOrDischarge = this.constants.ADMISSION_STATUS_SELECTION__VALUE__ALL; //"ALL";
   admittedOrDischargeLabel = "";
   route: string;
   objecthandler: boolean = false;
@@ -56,7 +58,7 @@ export class TabInPatientsPage {
     protected $gaService: GoogleAnalyticsService,
     public constants: Constants,
     public messages: Messages,
-    private patientService:PatientService
+    private patientService: PatientService
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -82,7 +84,47 @@ export class TabInPatientsPage {
       }
     });
   }
+  generatePDF() {
+    let docDefinition = {
+      content: [
+        {
+          text: "ELECTRONIC SHOP",
+          fontSize: 16,
+          alignment: "center",
+          color: "#047886"
 
+        },
+        {
+          text: "INVOICE",
+          fontSize: 20,
+          alignment: "center",
+          decoration: "underline",
+          color: "skyblue"
+        },
+        {
+          text: "INVOICE",
+          fontSize: 20,
+          bold: true,
+          alignment: "center",
+          decoration: "underline",
+          color: "skyblue"
+        },
+        {
+          text: "Customer Details",
+          style: "sectionHeader",
+        },
+      ],    styles: {  
+        sectionHeader: {  
+            bold: true,  
+            decoration: 'underline',  
+            fontSize: 14,  
+            margin: [0, 15, 0, 15]  
+        }  
+    } 
+    };
+
+    pdfMake.createPdf(docDefinition).download();
+  }
   ngOnInit() {
     this.$gaService.pageView("/In-Patient", "In-Patient Tab");
   }
@@ -176,7 +218,6 @@ export class TabInPatientsPage {
       }
     }
     console.log(this.inPatients);
-    
   }
 
   //Fired when the component routing to is about to animate into view.
@@ -186,36 +227,24 @@ export class TabInPatientsPage {
     let dr_name = this.logindata[0].last_name;
     this.$gaService.event("In-Patient", "User Flow", dr_name);
 
-
-    let x:boolean = true;
-    this.patientService.getAppSetting('DPP').subscribe(
-      (res: any) => {
-        Object.keys(res).forEach((key) => {
-          var value = res[key];
-          Object.keys(value).forEach((lock) => {
-            var valuex = value[lock];
-            if(key != 'appcode'){
-              if(key == 'billingContact'){
-
-                localStorage.setItem(lock, btoa(valuex));
-              }
-              
-              if(key == 'smsGateway'){
-                localStorage.setItem("smsGateway", JSON.stringify(value));
-             
-              }   
-
+    let x: boolean = true;
+    this.patientService.getAppSetting("DPP").subscribe((res: any) => {
+      Object.keys(res).forEach((key) => {
+        var value = res[key];
+        Object.keys(value).forEach((lock) => {
+          var valuex = value[lock];
+          if (key != "appcode") {
+            if (key == "billingContact") {
+              localStorage.setItem(lock, btoa(valuex));
             }
-          });
+
+            if (key == "smsGateway") {
+              localStorage.setItem("smsGateway", JSON.stringify(value));
+            }
+          }
         });
+      });
     });
-
-
-
-
-
-
-
 
     this.callPatient(this.site);
   }
@@ -234,13 +263,11 @@ export class TabInPatientsPage {
           }
           this.inPatientsDraft = [];
           res.forEach((element) => {
-
             /*
             let d = new Date(element.admission_date);
             element.admission_date = d.toUTCString();
 */
 
-  
             element.last_name = element.last_name.toUpperCase();
             element.middle_name = this.camelCase(element.middle_name);
             element.first_name = this.camelCase(element.first_name);
@@ -314,9 +341,13 @@ export class TabInPatientsPage {
     //console.log(data1);
     if (data1 == this.constants.CHH_SITE__VALUE__ALL /*"ALL"*/) {
       this.router.navigate(["/menu/in-patients"]);
-    } else if (data1 == this.constants.ADMISSION_STATUS__CODE__ADMITTED /*"AC"*/) {
+    } else if (
+      data1 == this.constants.ADMISSION_STATUS__CODE__ADMITTED /*"AC"*/
+    ) {
       this.router.navigate(["/menu/in-patients/AC"]);
-    } else if (data1 == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE/*"DN"*/) {
+    } else if (
+      data1 == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE /*"DN"*/
+    ) {
       this.router.navigate(["/menu/in-patients/DN"]);
     }
   }

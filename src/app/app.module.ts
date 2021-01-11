@@ -26,6 +26,11 @@ import { ChhAppChangePasswordPageModule } from "../app/chh-web-components/chh-ap
 
 import { ChhAppPrivacyPolicyPageModule } from "./chh-web-components/chh-app-privacy-policy/chh-app-privacy-policy.module"
 import { ChhAppTermsAndConditionsPageModule } from "./chh-web-components/chh-app-terms-and-conditions/chh-app-terms-and-conditions.module"
+import {ChemistryPageModule} from "./chh-web-components/chh-app-test/chemistry/chemistry.module";
+
+import {ChhAppBasePageModule} from "./chh-web-components/chh-app-test/chh-app-base/chh-app-base.module";
+
+
 //import { SliderPageModule } from './components/slider/slider.module';
 //import { defineCustomElements } from '@teamhive/lottie-player/loader';
 
@@ -38,6 +43,7 @@ import { Constants } from "../app/shared/constants";
 import { Variables } from "../app/shared/variables";
 import { Messages } from "../app/shared/messages";
 
+  import { from } from "rxjs";
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -51,6 +57,8 @@ import { Messages } from "../app/shared/messages";
     ChhAppInPatientModalPageModule,
     ChhAppAddAppointmentsModalPageModule,
     ChhAppPrivacyPolicyPageModule,
+    ChemistryPageModule,
+    ChhAppBasePageModule,
     ChhAppTermsAndConditionsPageModule,
     ChhAppChangePasswordPageModule,
     ChhAppChangePassPageModule,

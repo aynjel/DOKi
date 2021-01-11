@@ -1,0 +1,92 @@
+<ion-header mode="md" class="ion-no-border">
+  <ion-toolbar color="mango">
+    <ion-title size="small">{{ExamDetails.Test_Name}}</ion-title>
+
+    
+    <ion-buttons
+      slot="end"
+      class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated"
+    >
+      <ion-button (click)="this.functionsService.closeModal(this._modalController)" color="chh-css-primary2"
+        >Close&nbsp; <ion-icon name="close-outline"></ion-icon
+      ></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+  <!-- HEADER MOBILE-->
+
+
+
+
+  <ion-card mode="ios" >
+    <div *ngFor="let x of Header">
+    <ion-item>
+      <ion-avatar slot="start">
+        <chh-app-text-avatar [text]="x.Last_Name" [color]=""></chh-app-text-avatar>
+      </ion-avatar>
+      <ion-label  class="ion-text-wrap">
+        <h2 style="padding-top: 20px;">
+          <b>{{x.Last_Name}}, {{x.First_Name}} {{x.Middle_Name}}</b>
+        </h2>
+        {{hospitalSite}} - {{x.RoomNo}}<br />
+        Gender : {{x.Gender}}<br />
+        Birthdate : {{x.Birthdate}}
+       <br />
+        <div class="ion-text-wrap">
+          Address : {{x.Address}}
+        </div>
+      </ion-label>
+    </ion-item>
+  <br />
+  <app-chh-app-test-chemistry 
+    [examDetails]="ExamDetails"
+    [site]="hospitalSite"
+    *ngIf="ExamDetails.Exam == 'Chemistry'"></app-chh-app-test-chemistry> 
+    <!--ion-footer>
+      <ion-row>
+        <ion-col center text-center>
+          <button>
+            <ion-icon name="thumbs-up"></ion-icon>
+            <div>1.5k Likes</div>
+          </button>
+        </ion-col>
+        <ion-col center text-center>
+          <button>
+            <ion-icon name="text"></ion-icon>
+            <div>4 Comments</div>
+          </button>
+        </ion-col>
+        <ion-col center text-center>
+          <button>
+            <ion-icon name="time"></ion-icon>
+            <div>11h ago</div>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-footer-->
+  </div>
+  </ion-card>
+
+
+
+
+
+
+
+
+
+
+
+
+</ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title>{{ExamDetails.Exam}}</ion-title>
+  </ion-toolbar>
+</ion-footer>

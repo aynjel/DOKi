@@ -189,8 +189,30 @@ export class PatientService {
       return this.http.put(url, data, options);
   }
 
-
-
+  getExamList(data){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetExamList/"+data;
+    return this.http.get(url, options);
+  }
+  getChemHeader(data){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetChemHeader/"+data;
+    return this.http.get(url, options);
+  }
+  getChemDetails(data){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetChemDetails/"+data;
+    return this.http.get(url, options);
+  }
+  getSeroHeader(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetSeroHeader/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
 
   mocktestlogin(data1:any,data2:any){
       //const headers = new HttpHeaders({ "Content-Type": "application/json" });
