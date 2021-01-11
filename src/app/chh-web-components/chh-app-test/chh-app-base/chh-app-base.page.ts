@@ -52,6 +52,8 @@ export class ChhAppBasePage implements OnInit {
     if(this.ExamDetails.Exam == 'Chemistry'){
       this.patientService.getChemHeader(this.ExamDetails.Request_No).subscribe(
         (res: any) => {
+          console.log('AAAAAAAAAAAAAAAAAAA');
+          console.log(res);
           let x = JSON.stringify(res)
           this.Header = JSON.parse(x);
         },(error) => {},
