@@ -52,30 +52,29 @@ export class ChhAppBasePage implements OnInit {
     if(this.ExamDetails.Exam == 'Chemistry'){
       this.patientService.getChemHeader(this.ExamDetails.Request_No).subscribe(
         (res: any) => {
-          console.log('AAAAAAAAAAAAAAAAAAA');
-          console.log(res);
           let x = JSON.stringify(res)
           this.Header = JSON.parse(x);
         },(error) => {},
         () => {}
       );
     }else if(this.ExamDetails.Exam == 'Serology'){
-      console.log('*****************');
-      console.log(this.ExamDetails.Patient_No +" | "+ this.ExamDetails.Request_No);
-      
       this.patientService.getSeroHeader(this.ExamDetails.Patient_No,this.ExamDetails.Request_No).subscribe(
         (res: any) => {
-          console.log('*****************');
-          
-          console.log(res);
-          
           let x = JSON.stringify(res)
           this.Header = JSON.parse(x);
         },(error) => {},
         () => {}
       );
-    }else{
-
+    }else if(this.ExamDetails.Exam == 'Fecalysis'){
+      console.log(this.ExamDetails.Patient_No+' \ '+this.ExamDetails.Request_No);
+      
+      this.patientService.getFecalHeader(this.ExamDetails.Patient_No,this.ExamDetails.Request_No).subscribe(
+        (res: any) => {
+          let x = JSON.stringify(res)
+          this.Header = JSON.parse(x);
+        },(error) => {},
+        () => {}
+      );
     }
 
 

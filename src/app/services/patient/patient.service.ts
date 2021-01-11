@@ -213,6 +213,69 @@ export class PatientService {
     const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetSeroHeader/"+data1+"/"+data2;
     return this.http.get(url, options);
   }
+  getUrineHeader(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetUrinHeader/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+  getUrineDetails(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetUrinDetails/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+
+
+
+
+  getFecalHeader(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetFecalHeader/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+  getFecalDetails(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetFecalDetails/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+  getFecalDetail(data1:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetFecalDetails/"+data1;
+    return this.http.get(url, options);
+  }
+/**
+ * LAB RESULTS             : Get Cebu Fecal Header (GET)
+ * @example
+ * Sample (Local)          : http://localhost:8090/api/Cebu/CebuLabMain/GetFecalHeader/:patientNo/:requestNo
+ * Sample (Prod, Private)  : http://10.128.18.75:8090/api/Cebu/CebuLabMain/GetFecalHeader/:patientNo/:requestNo
+ * Sample (Prod, Public)   : https://doctorsportal.chonghua.com.ph/api/Cebu/CebuLabMain/GetFecalHeader/:patientNo/:requestNo
+ */
+/**
+ * LAB RESULTS             : Get Cebu Fecal Details (GET)
+ * @example
+ * Sample (Local)          : http://localhost:8090/api/Cebu/CebuLabMain/GetFecalDetails/:requestNo/:examGroup
+ * Sample (Prod, Private)  : http://10.128.18.75:8090/api/Cebu/CebuLabMain/GetFecalDetails/:requestNo/:examGroup
+ * Sample (Prod, Public)   : https://doctorsportal.chonghua.com.ph/api/Cebu/CebuLabMain/GetFecalDetails/:requestNo/:examGroup
+ */
+/**
+ * LAB RESULTS             : Get Cebu Fecal Details (GET)
+ * @example
+ * Sample (Local)          : http://localhost:8090/api/Cebu/CebuLabMain/GetFecalDetails/:requestNo
+ * Sample (Prod, Private)  : http://10.128.18.75:8090/api/Cebu/CebuLabMain/GetFecalDetails/:requestNo
+ * Sample (Prod, Public)   : https://doctorsportal.chonghua.com.ph/api/Cebu/CebuLabMain/GetFecalDetails/:requestNo
+ */
+
+
+
+
+
+
+
+
 
   mocktestlogin(data1:any,data2:any){
       //const headers = new HttpHeaders({ "Content-Type": "application/json" });

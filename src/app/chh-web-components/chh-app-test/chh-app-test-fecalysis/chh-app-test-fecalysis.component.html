@@ -1,0 +1,68 @@
+<ion-item>
+  <ion-grid><ion-row><ion-col size="12"><b>Gross</b></ion-col></ion-row></ion-grid>
+</ion-item>
+<ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" ><b></b></ion-col>
+    </ion-row>
+    <ng-container  *ngFor="let x of resultDetails">
+    <ion-row  *ngIf="x.Exam_Description == 'Color' || x.Exam_Description == 'Consistency' ">
+      <ion-col size="6">{{x.Exam_Description}}</ion-col>
+      <ion-col size="6" >{{x.Result}}</ion-col>
+    </ion-row>
+    </ng-container>
+  </ion-grid>
+</ion-item>
+
+<ion-item>
+  <ion-grid><ion-row><ion-col size="12"><b>&nbsp;</b></ion-col></ion-row></ion-grid>
+</ion-item>
+
+
+<ion-item>
+  <ion-grid><ion-row><ion-col size="12"><b>Microscopic</b></ion-col></ion-row></ion-grid>
+</ion-item>
+<ion-item>
+  <ion-grid>
+
+    <ng-container  *ngFor="let x of resultDetails">
+    <ion-row  *ngIf="x.Exam_Description == 'Red Blood Cell' || x.Exam_Description == 'White Blood Cell'|| x.Exam_Description == 'Bacteria'|| x.Exam_Description == 'Yeast Cells' ">
+      <ion-col size="6">{{x.Exam_Description}}</ion-col>
+      <ion-col size="6" >{{x.Result}}</ion-col>
+    </ion-row>
+    </ng-container>
+
+  </ion-grid>
+</ion-item>
+
+<ion-item>
+  <ion-grid><ion-row><ion-col size="12"><b>&nbsp;</b></ion-col></ion-row></ion-grid>
+</ion-item>
+
+<ion-item>
+  <ion-grid><ion-row><ion-col size="12"><b>Parasites & OVA</b></ion-col></ion-row></ion-grid>
+</ion-item>
+<ion-item>
+  <ion-grid>
+
+    <ng-container  *ngFor="let x of resultDetails">
+    <ion-row  *ngIf="!(x.Exam_Description == 'Red Blood Cell' || x.Exam_Description == 'White Blood Cell'|| x.Exam_Description == 'Bacteria'|| x.Exam_Description == 'Yeast Cells' || x.Exam_Description == 'Color' || x.Exam_Description == 'Consistency' ) ">
+      <ion-col size="6">{{x.Exam_Description}}</ion-col>
+      <ion-col size="6" >{{x.Result}}</ion-col>
+    </ion-row>
+    </ng-container>
+
+  </ion-grid>
+</ion-item>
+
+
+
+
+
+
+
+
+
+
+

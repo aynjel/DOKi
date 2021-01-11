@@ -47,6 +47,13 @@
     [examDetails]="ExamDetails"
     [site]="hospitalSite"
     *ngIf="ExamDetails.Exam == 'Chemistry'"></app-chh-app-test-chemistry> 
+
+    <app-chh-app-test-fecalysis 
+    [examDetails]="ExamDetails"
+    [site]="hospitalSite"
+    *ngIf="ExamDetails.Exam == 'Fecalysis'"></app-chh-app-test-fecalysis> 
+
+    
     <!--ion-footer>
       <ion-row>
         <ion-col center text-center>
