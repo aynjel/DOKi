@@ -7,7 +7,7 @@ import { ChhAppStartComponent } from "./chh-app-start/chh-app-start.component";
 import { ChhAppHospitalComponent } from "./chh-app-hospital/chh-app-hospital.component";
 import { ChhAppTestChemistryComponent } from "./chh-app-test/chh-app-test-chemistry/chh-app-test-chemistry.component";
 import { ChhAppTestFecalysisComponent } from "./chh-app-test/chh-app-test-fecalysis/chh-app-test-fecalysis.component";
-
+import { ChhAppTestSerologyComponent } from "./chh-app-test/chh-app-test-serology/chh-app-test-serology.component";
 
 
 import { ChhAppDateSelectorComponent } from "./chh-app-date-selector/chh-app-date-selector.component";
@@ -28,7 +28,8 @@ import { ChhAppTextAvatarModule } from "./chh-app-text-avatar/chh-app-text-avata
     ChhAppLogoSmComponent,
     ChhAppSliderPage,
     ChhAppTestChemistryComponent,
-    ChhAppTestFecalysisComponent
+    ChhAppTestFecalysisComponent,
+    ChhAppTestSerologyComponent
   ],
   exports: [
     ChhAppLogoComponent,
@@ -40,7 +41,8 @@ import { ChhAppTextAvatarModule } from "./chh-app-text-avatar/chh-app-text-avata
     ChhAppLogoSmComponent,
     ChhAppSliderPage,
     ChhAppTestChemistryComponent,
-    ChhAppTestFecalysisComponent
+    ChhAppTestFecalysisComponent,
+    ChhAppTestSerologyComponent
   ],
   imports: [CommonModule, IonicModule, ChhAppTextAvatarModule],
 })

@@ -113,9 +113,6 @@ export class ChhAppInPatientModalPage implements OnInit {
 
   async examDetails(data: any, site:any) {
 
-    console.log('-----------------------------');
-    
-    console.log(data);
 
       const modal = await this._modalController.create({
         component: ChhAppBasePage,
@@ -177,10 +174,6 @@ export class ChhAppInPatientModalPage implements OnInit {
     this.$gaService.event("Patient Information", "User Flow", dr_name);
     this.getExamList(this.data.patient_no);
 
-    console.log('----------------------');
-    console.log(this.data);
-    
-    
 
     /*this.data.admission_date = this.functionsService.explodeDate(
       this.data.admission_date

@@ -225,9 +225,19 @@ export class PatientService {
     const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetUrinDetails/"+data1+"/"+data2;
     return this.http.get(url, options);
   }
-
-
-
+  getSeroExamno(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetSeroExamno/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+  getSeroDetails(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetSeroDetails/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+  
 
   getFecalHeader(data1:any, data2:any){
     const headers = new HttpHeaders();

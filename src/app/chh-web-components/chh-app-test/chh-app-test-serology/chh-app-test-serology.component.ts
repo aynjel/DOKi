@@ -6,18 +6,19 @@ import { DoctorService } from 'src/app/services/doctor/doctor.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
+
 @Component({
-  selector: 'app-chh-app-base',
-  templateUrl: './chh-app-base.page.html',
-  styleUrls: ['./chh-app-base.page.scss'],
+  selector: 'app-chh-app-test-serology',
+  templateUrl: './chh-app-test-serology.component.html',
+  styleUrls: ['./chh-app-test-serology.component.scss'],
 })
-export class ChhAppBasePage implements OnInit {
-  @Input() ExamDetails: any;
-  @Input() Site: any;
+export class ChhAppTestSerologyComponent implements OnInit {
+
+  @Input() examDetails: any;
+  @Input() site: any;
   isDesktop: boolean;
-  Header:any;
-  chemDetails:any;
-  hospitalSite:any; 
+  resultDetail:any;
+  resultDetails:any;
   constructor(
     public modalController: ModalController,
     public _modalController: ModalController,
@@ -39,43 +40,33 @@ export class ChhAppBasePage implements OnInit {
       });
      }
 
-  ngOnInit() {
-
-
+     ngOnInit() {
+      console.log(this.examDetails);
+      
+      
+        this.patientService.getSeroExamno(this.examDetails.Request_No,this.examDetails.ExamCode).subscribe(
+        (res: any) => {
+          let x = JSON.stringify(res)
+          this.resultDetail = JSON.parse(x);          
+        },(error) => {
+        },() => {         
+          this.patientService.getSeroDetails(this.examDetails.Request_No,this.resultDetail[0].Exam_No).subscribe(
+            (res: any) => {
+              let x = JSON.stringify(res)
+              this.resultDetails = JSON.parse(x);
+              console.log('getSeroDetails -> ');
+              
+              console.log(this.resultDetails);
+              
+            },(error) => {
+            },() => {
     
-    if(this.Site == 'C'){
-      this.hospitalSite = "Chong Hua Hospital";
-    }else{
-      this.hospitalSite = "Chong Hua Hospital Mandaue";
-    }
-    if(this.ExamDetails.Exam == 'Chemistry'){
-      this.patientService.getChemHeader(this.ExamDetails.Request_No).subscribe(
-        (res: any) => {
-          let x = JSON.stringify(res)
-          this.Header = JSON.parse(x);
-        },(error) => {},
-        () => {}
-      );
-    }else if(this.ExamDetails.Exam == 'Serology'){
-      this.patientService.getSeroHeader(this.ExamDetails.Patient_No,this.ExamDetails.Request_No).subscribe(
-        (res: any) => {
-          let x = JSON.stringify(res)
-          this.Header = JSON.parse(x);
-        },(error) => {},
-        () => {}
-      );
-    }else if(this.ExamDetails.Exam == 'Fecalysis'){
-      this.patientService.getFecalHeader(this.ExamDetails.Patient_No,this.ExamDetails.Request_No).subscribe(
-        (res: any) => {
-          let x = JSON.stringify(res)
-          this.Header = JSON.parse(x);
-        },(error) => {},
-        () => {}
+                
+            }
+          );
+
+        }
       );
     }
-
-
-
-  }
 
 }

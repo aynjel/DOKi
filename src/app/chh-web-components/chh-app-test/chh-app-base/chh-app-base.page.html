@@ -43,6 +43,7 @@
       </ion-label>
     </ion-item>
   <br />
+  
   <app-chh-app-test-chemistry 
     [examDetails]="ExamDetails"
     [site]="hospitalSite"
@@ -53,7 +54,10 @@
     [site]="hospitalSite"
     *ngIf="ExamDetails.Exam == 'Fecalysis'"></app-chh-app-test-fecalysis> 
 
-    
+    <app-chh-app-test-serology
+    [examDetails]="ExamDetails"
+    [site]="hospitalSite"
+    *ngIf="ExamDetails.Exam == 'Serology'"></app-chh-app-test-serology>    
     <!--ion-footer>
       <ion-row>
         <ion-col center text-center>
