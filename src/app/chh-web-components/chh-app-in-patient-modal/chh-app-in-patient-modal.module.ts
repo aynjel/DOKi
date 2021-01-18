@@ -5,7 +5,7 @@ import { ChhAppInPatientModalPageRoutingModule } from "../chh-app-in-patient-mod
 import { BrowserModule } from "@angular/platform-browser";
 import { ChhAppInPatientModalPage } from "./chh-app-in-patient-modal.page";
 import { ChhAppTextAvatarModule } from "../chh-app-text-avatar/chh-app-text-avatar.module";
-
+import { ChhWebComponentsModule } from '../chh-web-components.module';
 @NgModule({
   imports: [
     FormsModule,
@@ -13,6 +13,7 @@ import { ChhAppTextAvatarModule } from "../chh-app-text-avatar/chh-app-text-avat
     ChhAppTextAvatarModule,
     BrowserModule,
     ChhAppInPatientModalPageRoutingModule,
+    ChhWebComponentsModule
   ],
   declarations: [ChhAppInPatientModalPage],
 })

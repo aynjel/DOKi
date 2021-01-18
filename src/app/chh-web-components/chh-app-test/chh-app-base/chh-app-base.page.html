@@ -26,23 +26,39 @@
     <div *ngFor="let x of Header">
     <ion-item>
       <ion-avatar slot="start">
-        <chh-app-text-avatar [text]="x.Last_Name" [color]=""></chh-app-text-avatar>
+        <chh-app-text-avatar [text]="x.Last_Name" [color]="" class="ion-padding-vertical"></chh-app-text-avatar>
       </ion-avatar>
-      <ion-label  class="ion-text-wrap">
-        <h2 style="padding-top: 20px;">
+      <ion-label  class="ion-text-wrap ion-padding-vertical">
+        <h2 >
           <b>{{x.Last_Name}}, {{x.First_Name}} {{x.Middle_Name}}</b>
         </h2>
-        {{hospitalSite}} - {{x.RoomNo}}<br />
-        Gender : {{x.Gender}}<br />
-        Birthdate : {{x.Birthdate}}
-        Date Performed : {{x.Date_Performed}}
-       <br />
-        <div class="ion-text-wrap">
-          Address : {{x.Address}}
-        </div>
       </ion-label>
     </ion-item>
-  <br />
+    <ion-item>
+      <ion-grid>
+        <ion-row >
+          <ion-col size="4" class="border-bottom ">Location</ion-col>
+          <ion-col size="8" class="border-bottom  " >{{hospitalSite}}</ion-col>
+
+          <ion-col size="4" class="border-bottom ">Room</ion-col>
+          <ion-col size="8" class="border-bottom  " >{{x.RoomNo}}</ion-col>
+
+          <ion-col size="4" class="border-bottom ">Gender</ion-col>
+          <ion-col size="8" class="border-bottom  " >{{x.Gender}}</ion-col>
+
+          <ion-col size="4" class="border-bottom ">Birthdate</ion-col>
+          <ion-col size="8" class="border-bottom   " >{{x.Birthdate}}</ion-col>
+
+          <ion-col size="4" class="border-bottom ">Date Performed</ion-col>
+          <ion-col size="8" class="border-bottom " >{{x.Date_Performed}}</ion-col>
+
+          <ion-col size="4" class="border-bottom ">Address</ion-col>
+          <ion-col size="8" class="border-bottom " >{{x.Address}}</ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </div>
+ <ion-item><h2>Result</h2></ion-item>
   
   <app-chh-app-test-chemistry 
     [examDetails]="ExamDetails"
@@ -80,7 +96,7 @@
         </ion-col>
       </ion-row>
     </ion-footer-->
-  </div>
+  <br />
   </ion-card>
 
 

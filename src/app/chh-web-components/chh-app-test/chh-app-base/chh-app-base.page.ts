@@ -38,11 +38,7 @@ export class ChhAppBasePage implements OnInit {
         this.isDesktop = isDesktop;
       });
      }
-
   ngOnInit() {
-
-
-    
     if(this.Site == 'C'){
       this.hospitalSite = "Chong Hua Hospital";
     }else{
@@ -62,20 +58,24 @@ export class ChhAppBasePage implements OnInit {
           let x = JSON.stringify(res)
           this.Header = JSON.parse(x);
         },(error) => {},
-        () => {}
+        () => {
+          if(Object.keys(this.Header).length > 1){
+            delete this.Header[1];
+            let x = JSON.stringify(this.Header);
+            x =  x.replace(",null", "");
+            this.Header = JSON.parse(x);
+          }
+        }
       );
     }else if(this.ExamDetails.Exam == 'Fecalysis'){
       this.patientService.getFecalHeader(this.ExamDetails.Patient_No,this.ExamDetails.Request_No).subscribe(
         (res: any) => {
           let x = JSON.stringify(res)
           this.Header = JSON.parse(x);
+          console.log(Object.keys(this.Header).length);
         },(error) => {},
         () => {}
       );
     }
-
-
-
   }
-
 }

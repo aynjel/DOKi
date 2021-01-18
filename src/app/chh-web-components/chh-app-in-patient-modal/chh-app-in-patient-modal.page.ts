@@ -1,4 +1,6 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input,ViewChild, ViewContainerRef,  ComponentFactoryResolver } from "@angular/core";
+
+
 import { ModalController, AlertController } from "@ionic/angular";
 import { ChhAppFeePage } from "../chh-app-fee/chh-app-fee.page";
 import { from } from "rxjs";
@@ -14,8 +16,14 @@ import { logWarnings } from "protractor/built/driverProviders";
 import { ChemistryPage } from "../chh-app-test/chemistry/chemistry.page";
 import { ChhAppBasePage } from "../chh-app-test/chh-app-base/chh-app-base.page";
 import { Messages } from "../../shared/messages";
-
 import { ScreenSizeService } from "../../services/screen-size/screen-size.service";
+import { ChhAppTestChemistryComponent } from "../chh-app-test/chh-app-test-chemistry/chh-app-test-chemistry.component";
+import { ChhAppTestFecalysisComponent } from "../chh-app-test/chh-app-test-fecalysis/chh-app-test-fecalysis.component";
+import { ChhAppTestSerologyComponent } from "../chh-app-test/chh-app-test-serology/chh-app-test-serology.component";
+
+
+
+
 @Component({
   selector: "chh-app-in-patient-modal",
   templateUrl: "./chh-app-in-patient-modal.page.html",
@@ -24,6 +32,10 @@ import { ScreenSizeService } from "../../services/screen-size/screen-size.servic
 export class ChhAppInPatientModalPage implements OnInit {
   public logindata: LoginData;
   @Input() data: any;
+ @ViewChild('processContainer', {read: ViewContainerRef}) container: ViewContainerRef;
+  //@ViewChild('processContainer', {read: ViewContainerRef, static: true}) container;
+
+  
   site: any;
   date: any;
   professionalFee: any;
@@ -48,6 +60,11 @@ export class ChhAppInPatientModalPage implements OnInit {
   currentExamList: any;
   isDesktop: boolean;
   examListSkeleton:boolean = false;
+  ExamData:any = "";
+  hospitalSite:any;
+  serology:boolean = false;
+  chemistry:boolean = false;
+  refresher:boolean = true;
   constructor(
     public modalController: ModalController,
     public _modalController: ModalController,
@@ -59,7 +76,9 @@ export class ChhAppInPatientModalPage implements OnInit {
     public functionsService: FunctionsService,
     private patientService: PatientService,
     private screensizeService: ScreenSizeService,
-    public messages: Messages
+    public messages: Messages,
+    private componentFactory: ComponentFactoryResolver,
+    private viewContainer: ViewContainerRef
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -68,7 +87,25 @@ export class ChhAppInPatientModalPage implements OnInit {
       this.isDesktop = isDesktop;
     });
   }
+  ngAfterViewInit() {
+   // this.loadComponents();
+  }
 
+  loadComponents() {
+
+
+    const factory = this.componentFactory.resolveComponentFactory(ChhAppTestFecalysisComponent);
+    let  componentRef  = this.container.createComponent(factory);
+    componentRef.instance.examDetails = this.ExamData;
+    componentRef.instance.site = this.hospitalSite;
+/*
+    let nodeElement = document.getElementById("processContainer");
+    let compFactory = this.componentFactory.resolveComponentFactory(ChhAppTestFecalysisComponent);
+    let component = compFactory.create(this.container.injector, null, nodeElement);
+    // This is where you pass the @Input
+    component.instance.site = this.hospitalSite;
+*/
+  }
   postData = {
     AdmisisonNo: "string",
     DoctorCode: "string",
@@ -93,6 +130,13 @@ export class ChhAppInPatientModalPage implements OnInit {
     mobile_no: "string",
     dept_short_desc: "string",
   };
+  updateDisplay(data:boolean){
+    if(data){
+      this.refresher = !this.refresher;
+    }else{
+      setTimeout( ()=> this.refresher=true,50);
+    }
+  }
 
   async modalUpdate(header, message) {
     const alert = await this.alertController.create({
@@ -112,8 +156,9 @@ export class ChhAppInPatientModalPage implements OnInit {
   }
 
   async examDetails(data: any, site:any) {
-
-
+    this.ExamData = data;
+    this.hospitalSite = site;
+    if(!this.isDesktop){
       const modal = await this._modalController.create({
         component: ChhAppBasePage,
         componentProps: { ExamDetails: data,Site:site },
@@ -122,7 +167,21 @@ export class ChhAppInPatientModalPage implements OnInit {
       modal.present();
         return await modal.onDidDismiss().then((data: any) => {
       });
-  
+    }else{
+      if(this.ExamData.Exam == 'Serology' ){
+        this.chemistry = false;
+        this.serology = true;
+      }else if(this.ExamData.Exam == 'Chemistry'){
+        this.chemistry = true;
+        this.serology = false;
+      }
+      this.updateDisplay(true);
+      this.updateDisplay(false);
+     // this.loadComponents();
+    }
+
+    console.log( this.ExamData);
+    
     
     
 
@@ -132,9 +191,10 @@ export class ChhAppInPatientModalPage implements OnInit {
     var date1 = new Date(this.data.admission_date);
     var seconds1 = date1.getTime() / 1000; //1440516958
     this.currentExamList = [];
+    this.examListSkeleton = true;
     this.patientService.getExamList(data).subscribe(
       (res: any) => {
-        this.examListSkeleton = true;
+
         res.forEach((element) => {
           var date = new Date(element.RequestDateTime);
           var seconds = date.getTime() / 1000; //1440516958
@@ -162,6 +222,8 @@ export class ChhAppInPatientModalPage implements OnInit {
     );
   }
   ngOnInit() {
+    console.log(this.data);
+    
     let d = new Date(this.data.admission_date);
     this.dateAdmitted = d.toUTCString();
     this.$gaService.pageView(

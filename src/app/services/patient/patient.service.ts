@@ -257,26 +257,14 @@ export class PatientService {
     const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetFecalDetails/"+data1;
     return this.http.get(url, options);
   }
+
+  
 /**
- * LAB RESULTS             : Get Cebu Fecal Header (GET)
  * @example
- * Sample (Local)          : http://localhost:8090/api/Cebu/CebuLabMain/GetFecalHeader/:patientNo/:requestNo
- * Sample (Prod, Private)  : http://10.128.18.75:8090/api/Cebu/CebuLabMain/GetFecalHeader/:patientNo/:requestNo
- * Sample (Prod, Public)   : https://doctorsportal.chonghua.com.ph/api/Cebu/CebuLabMain/GetFecalHeader/:patientNo/:requestNo
- */
-/**
- * LAB RESULTS             : Get Cebu Fecal Details (GET)
- * @example
- * Sample (Local)          : http://localhost:8090/api/Cebu/CebuLabMain/GetFecalDetails/:requestNo/:examGroup
- * Sample (Prod, Private)  : http://10.128.18.75:8090/api/Cebu/CebuLabMain/GetFecalDetails/:requestNo/:examGroup
- * Sample (Prod, Public)   : https://doctorsportal.chonghua.com.ph/api/Cebu/CebuLabMain/GetFecalDetails/:requestNo/:examGroup
- */
-/**
- * LAB RESULTS             : Get Cebu Fecal Details (GET)
- * @example
- * Sample (Local)          : http://localhost:8090/api/Cebu/CebuLabMain/GetFecalDetails/:requestNo
- * Sample (Prod, Private)  : http://10.128.18.75:8090/api/Cebu/CebuLabMain/GetFecalDetails/:requestNo
- * Sample (Prod, Public)   : https://doctorsportal.chonghua.com.ph/api/Cebu/CebuLabMain/GetFecalDetails/:requestNo
+ * Sample (Local)          : http://localhost:8090/api/Cebu/CebuLabMain/GetHEMOtherHeader/:patientNo/:requestNo
+ * Sample (Prod, Private)  : http://10.128.18.75:8090/api/Cebu/CebuLabMain/GetHEMOtherHeader/:patientNo/:requestNo
+ * Sample (Prod, Public)   : https://doctorsportal.chonghua.com.ph/api/Cebu/CebuLabMain/GetHEMOtherHeader/:patientNo/:requestNo
+ 
  */
 
 

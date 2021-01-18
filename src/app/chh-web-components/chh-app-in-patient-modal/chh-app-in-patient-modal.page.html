@@ -244,7 +244,7 @@ o888o        `Y888""8o   "888" o888o `Y8bod8P' o888o o888o   "888"
               </ion-row>
               </ion-grid>
 
-              <ion-item *ngIf="examListSkeleton">
+              <ion-item *ngIf="examListSkeleton" lines="none">
                 <ion-label style="margin-top: -5px;">
                   <ion-item
                   slot="start"
@@ -393,7 +393,9 @@ o888o        d888b    `Y8bod8P' o888o      o888o        `Y8bod8P' `Y8bod8P'
             >Amount : {{professionalFee}}<br
           /></ion-text>
           <ion-text class="ion-text-wrap">Remarks : {{remarks}}</ion-text>
+     
         </div>
+
       </ion-item>
       <ion-item lines="none" style="padding-top: 10px;" style="padding-bottom: 8px;">
         <ion-grid class="ion-no-padding">
@@ -915,10 +917,11 @@ o888o        d888b    `Y8bod8P' o888o      o888o        `Y8bod8P' `Y8bod8P'
           <ion-row>
             <ion-col size="3" class="max-height-500 overflow-scroll">
               <ion-item style="padding-top: 10px;">
+                
                 <div class="ion-text-wrap"><b>Result list</b><br /></div>
               </ion-item>
               <div *ngFor="let x of currentExamList" >
-                <ion-item lines="" (click)="examDetails(x,data.site)">
+                <ion-item lines="" (click)="examDetails(x,data.site)" class="pointer">
                   <div class="ion-text-wrap"  >
                     <ion-text >
                       {{x.Test_Name}}
@@ -934,12 +937,20 @@ o888o        d888b    `Y8bod8P' o888o      o888o        `Y8bod8P' `Y8bod8P'
               </div>
             </ion-col>
             <ion-col size="6">
-              <ion-item style="padding-top: 10px;">
-                <div class="ion-text-wrap"><b>data</b><br /></div>
-              </ion-item>
-              <ion-item>
-                <div #processContainer></div>
-              </ion-item>
+
+          
+                <app-chh-app-test-serology
+                [examDetails]="ExamData"
+                [site]="hospitalSite"
+                *ngIf="serology && refresher"></app-chh-app-test-serology> 
+                
+                <app-chh-app-test-chemistry
+                [examDetails]="ExamData"
+                [site]="hospitalSite"
+                *ngIf="chemistry && refresher"
+                ></app-chh-app-test-chemistry>
+
+   
             </ion-col>
             <!--doctors-->
             <ion-col size="3"  >

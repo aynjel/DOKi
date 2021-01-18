@@ -30,7 +30,9 @@ import {ChemistryPageModule} from "./chh-web-components/chh-app-test/chemistry/c
 
 import {ChhAppBasePageModule} from "./chh-web-components/chh-app-test/chh-app-base/chh-app-base.module";
 
-
+import { ChhAppTestChemistryComponent } from "./chh-web-components/chh-app-test/chh-app-test-chemistry/chh-app-test-chemistry.component";
+import { ChhAppTestFecalysisComponent } from "./chh-web-components/chh-app-test/chh-app-test-fecalysis/chh-app-test-fecalysis.component";
+import { ChhAppTestSerologyComponent } from "./chh-web-components/chh-app-test/chh-app-test-serology/chh-app-test-serology.component";
 //import { SliderPageModule } from './components/slider/slider.module';
 //import { defineCustomElements } from '@teamhive/lottie-player/loader';
 
@@ -46,7 +48,7 @@ import { Messages } from "../app/shared/messages";
   import { from } from "rxjs";
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
+  entryComponents: [ChhAppTestChemistryComponent,ChhAppTestFecalysisComponent,ChhAppTestSerologyComponent],
   imports: [
     FormsModule,
     BrowserModule,
