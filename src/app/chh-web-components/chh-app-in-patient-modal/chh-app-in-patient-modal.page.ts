@@ -64,7 +64,10 @@ export class ChhAppInPatientModalPage implements OnInit {
   hospitalSite:any;
   serology:boolean = false;
   chemistry:boolean = false;
+  fecalysis:boolean = false;
   refresher:boolean = true;
+
+
   constructor(
     public modalController: ModalController,
     public _modalController: ModalController,
@@ -171,10 +174,19 @@ export class ChhAppInPatientModalPage implements OnInit {
       if(this.ExamData.Exam == 'Serology' ){
         this.chemistry = false;
         this.serology = true;
+        this.fecalysis = false;
       }else if(this.ExamData.Exam == 'Chemistry'){
         this.chemistry = true;
         this.serology = false;
+        this.fecalysis = false;
+      }else if(this.ExamData.Exam == 'Fecalysis'){
+        this.chemistry = false;
+        this.serology = false;
+        this.fecalysis = true;
       }
+
+
+      
       this.updateDisplay(true);
       this.updateDisplay(false);
      // this.loadComponents();

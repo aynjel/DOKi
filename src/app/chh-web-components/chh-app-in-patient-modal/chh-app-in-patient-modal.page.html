@@ -710,16 +710,14 @@ o888o        d888b    `Y8bod8P' o888o      o888o        `Y8bod8P' `Y8bod8P'
 
 
 
-
+<!--
 
 <ion-grid ion-grid-width-md *ngIf="isDesktop">
   <ion-row > 
     <ion-col size="12" size-sm >
                 <ion-list> 
                   <ion-item lines="none">
-                    <!--ion-avatar slot="start">
-                  <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg">
-                </ion-avatar-->
+
                     <ion-avatar slot="start">
                       <chh-app-text-avatar [text]="data.last_name" [color]=""></chh-app-text-avatar>
                     </ion-avatar>
@@ -748,30 +746,20 @@ o888o        d888b    `Y8bod8P' o888o      o888o        `Y8bod8P' `Y8bod8P'
                             <ion-label color="mango"><b>Admitted</b></ion-label>
                           </ion-chip>
             
-                          <!-- <ion-badge *ngIf="data.admission_status == 'AC'"
-                        color="mango"
-                        slot="end">
-                        Admitted
-                      </ion-badge> -->
+      
             
                           <ion-chip *ngIf="data.admission_status == 'DN'">
                             <ion-label color="mango"><b>For Discharge</b></ion-label>
                           </ion-chip>
             
-                          <!-- <ion-badge *ngIf="data.admission_status == 'DN'"
-                        color="mango"
-                        slot="end">
-                        For Discharge
-                      </ion-badge> -->
+  
                         </div>
                       </div>
                     </ion-label>
                   </ion-item>
                   <ion-item lines="none" style="padding-bottom: 10px;">
                     <div class="ion-text-wrap">
-                      <!-- <ion-text *ngIf="data.admission_status == 'AC'">Status : Admitted </ion-text>  -->
-            
-                      <!-- <ion-text *ngIf="data.admission_status == 'DN'">Status : For Discharge<br /></ion-text> -->
+
                       <ion-icon name="calendar-outline"></ion-icon
                       ><ion-text> Admission Date : {{dateAdmitted}}</ion-text>
                     </div>
@@ -841,7 +829,7 @@ o888o        d888b    `Y8bod8P' o888o      o888o        `Y8bod8P' `Y8bod8P'
                           <button ion-button (click)="truncating = false">show more</button>
                         </div>
                         <div *ngIf="!truncating && finalDiagnosis.length > limit">
-                          <!--{{finalDiagnosis}}-->
+                    
                           <div *ngFor="let x of finalDiagnosis2">
                             <ion-text style="padding-top: 15px;"
                         >{{x}}<br
@@ -911,6 +899,8 @@ o888o        d888b    `Y8bod8P' o888o      o888o        `Y8bod8P' `Y8bod8P'
   </ion-row>
 </ion-grid>
 
+
+
 <ion-grid ion-grid-width-md *ngIf="isDesktop">
 
         <ion-col>
@@ -936,7 +926,7 @@ o888o        d888b    `Y8bod8P' o888o      o888o        `Y8bod8P' `Y8bod8P'
                 </ion-item>
               </div>
             </ion-col>
-            <ion-col size="6">
+            <ion-col size="6" class="max-height-500 overflow-scroll">
 
           
                 <app-chh-app-test-serology
@@ -950,9 +940,14 @@ o888o        d888b    `Y8bod8P' o888o      o888o        `Y8bod8P' `Y8bod8P'
                 *ngIf="chemistry && refresher"
                 ></app-chh-app-test-chemistry>
 
+                <app-chh-app-test-fecalysis
+                [examDetails]="ExamData"
+                [site]="hospitalSite"
+                *ngIf="fecalysis && refresher"
+                ></app-chh-app-test-fecalysis>
    
             </ion-col>
-            <!--doctors-->
+
             <ion-col size="3"  >
               <ion-item style="padding-top: 10px;">
                 <div class="ion-text-wrap"><b>Doctors</b><br /></div>
@@ -980,7 +975,7 @@ o888o        d888b    `Y8bod8P' o888o      o888o        `Y8bod8P' `Y8bod8P'
                     *ngIf="!objecthandler && !isFetchDone else noDataAvailable"
                     class="ion-padding custom-skeleton"
                   >
-                    <!-- Skeleton  -->
+              
                     <ion-item>
                       <ion-avatar slot="start">
                         <ion-skeleton-text animated></ion-skeleton-text>
@@ -1041,12 +1036,359 @@ o888o        d888b    `Y8bod8P' o888o      o888o        `Y8bod8P' `Y8bod8P'
 
           </ion-row>
         </ion-col>
+      </ion-grid>
+    -->
+
+
+
+
+
+<ion-grid ion-grid-width-md *ngIf="isDesktop">
+  <ion-col>
+
+
+
+
+
+    <ion-row>
+      <ion-col  size-md="3" size-xl="12" style="background-color: RED;">
+        ion-col [size="12"] [size-sm]
+      </ion-col>
+    </ion-row>
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <ion-row>
+      <ion-col size="3" >
+             
+                  <ion-list> 
+                    <ion-item lines="none">
+                      <ion-avatar slot="start">
+                        <chh-app-text-avatar [text]="data.last_name" [color]=""></chh-app-text-avatar>
+                      </ion-avatar>
+                      <ion-label>
+                        <ion-item class="ion-no-padding">
+                          <h2 class="ion-text-wrap">
+                            <b>{{data.last_name}}, {{data.first_name}} {{data.middle_name}}</b>
+                          </h2>
+                    
+                        </ion-item>
+                        <div class="ion-text-wrap" style="padding-top: 5px;">
+                          <div *ngIf="data.site == 'C'">
+                            <ion-icon name="location-outline" slot="start"></ion-icon>
+                            Chong Hua Hospital
+                          </div>
+                          <div *ngIf="data.site == 'M'">
+                            <ion-icon name="location-outline" slot="start"></ion-icon>
+                            Chong Hua Hospital Mandaue
+                          </div>
+                          <div>
+                            <ion-icon name="bed-outline" slot="start"></ion-icon>
+                            Room {{data.room_no}}<br />
+                            <ion-icon name="clipboard-outline" slot="start"></ion-icon>
+                            as {{data.Doctor_Status}}<br />
+                            <ion-chip *ngIf="data.admission_status == 'AC'">
+                              <ion-label color="mango"><b>Admitted</b></ion-label>
+                            </ion-chip>
+                            <ion-chip *ngIf="data.admission_status == 'DN'">
+                              <ion-label color="mango"><b>For Discharge</b></ion-label>
+                            </ion-chip>
+                          </div>
+                        </div>
+                      </ion-label>
+                    </ion-item>
+                    <ion-item lines="none" style="padding-bottom: 10px;">
+                      <div class="ion-text-wrap">
+                        <ion-icon name="calendar-outline"></ion-icon
+                        ><ion-text> Admission Date : {{dateAdmitted}}</ion-text>
+                      </div>
+                    </ion-item>
+                  </ion-list>  
+              
+                  <!---->    
+                  <ion-list>
+                    <ion-item style="padding-top: 10px;">
+                      <div class="ion-text-wrap"><b>Professional Fee</b><br /></div>
+                    </ion-item>
+                    
+                    <ion-item style="padding-top: 10px;" lines="none">
+                      <div class="ion-text-wrap">
+                        <ion-text style="padding-top: 15px;"
+                          >Days Managed: {{daysOfManage}} Days<br/>
+                      </ion-text>
+                        <ion-text style="padding-top: 15px;"
+                          >Amount : {{professionalFee}}<br
+                        /></ion-text>
+                        <ion-text class="ion-text-wrap">Remarks : {{remarks}}</ion-text>
+                      </div>
+                    </ion-item>
+                    <ion-item lines="none" style="padding-top: 10px;" style="padding-bottom: 8px;">
+                      <ion-grid class="ion-no-padding">
+                        <ion-row>
+                          <ion-col size-xs="12">
+                            <ion-button
+                            color="mango"
+                              size="default"
+                              expand="block"
+                              shape="round"
+                              (click)="detail(data.admission_no)"
+                              *ngIf="data.is_posted == 0 || data.is_posted == null"
+                      
+                              >UPDATE</ion-button
+                            >
+                          </ion-col>
+                        </ion-row>
+                      </ion-grid>
+                    </ion-item>
+                  </ion-list>  
+                 
+     </ion-col>
+      <ion-col size="2" class="max-height-500 overflow-scroll border-left">
+                <ion-item style="padding-top: 10px;">
+                  <div class="ion-text-wrap"><b>Result list</b><br /></div>
+                </ion-item>
+                <div *ngFor="let x of currentExamList" >
+                  <ion-item lines="" (click)="examDetails(x,data.site)" class="pointer">
+                    <div class="ion-text-wrap"  >
+                      <ion-text >
+                        {{x.Test_Name}}
+                      </ion-text> <br />
+                      <ion-text >
+                        <b class="fontSize-14 font-weight-bold">{{x.Exam}}</b>
+                      </ion-text><br />
+                      <ion-text >
+                        <b class="fontSize-14 font-weight-bold">{{x.RequestDateTime}}</b>
+                      </ion-text>
+                    </div>
+                  </ion-item>
+                </div>       
+      </ion-col>
+      <ion-col size="4" class="max-height-500 overflow-scroll border-left">
+                <app-chh-app-test-serology
+                [examDetails]="ExamData"
+                [site]="hospitalSite"
+                *ngIf="serology && refresher"></app-chh-app-test-serology> 
+                
+                <app-chh-app-test-chemistry
+                [examDetails]="ExamData"
+                [site]="hospitalSite"
+                *ngIf="chemistry && refresher"
+                ></app-chh-app-test-chemistry>
+
+                <app-chh-app-test-fecalysis
+                [examDetails]="ExamData"
+                [site]="hospitalSite"
+                *ngIf="fecalysis && refresher"
+                ></app-chh-app-test-fecalysis>
+      </ion-col>
+      <ion-col size="3">
+                  <div class="max-height-800 overflow-scroll">
+                    <!---->    
+                    <ion-list>
+                    <ion-item style="padding-top: 10px;">
+                      <div class="ion-text-wrap"><b>Admitting Diagnosis</b><br /></div>
+                      
+                    </ion-item>
+                    <ion-item style="padding-top: 10px;" lines="none">
+                      <div class="ion-text-wrap">
+              
+                        <div *ngIf="admittingDiagnosis" class="custom-font">
+                          <div *ngIf="admittingDiagnosis.length <= 100" [innerHTML]="admittingDiagnosis">
+              
+                          </div>
+                          <div class="" *ngIf="truncating1 && admittingDiagnosis.length > 100" [innerHTML]="admittingDiagnosis1">
+              
+                            
+                          </div>
+                          <button *ngIf="truncating1 && admittingDiagnosis.length > 100" ion-button (click)="truncating1 = false">show more</button>
+                          <div *ngIf="!truncating1 && admittingDiagnosis.length > 100" [innerHTML]="admittingDiagnosis2">
+                            <ion-text class="ion-text-wrap "><br/></ion-text>
+                            
+                          </div>
+                          <button *ngIf="!truncating1 && admittingDiagnosis.length > 100" ion-button (click)="truncating1 = true">show less</button>
+                        </div>
+              
+              
+                          <ng-container>
+                            <div
+                              *ngIf="!objecthandler && !isFetchDone else noDataAvailable"
+                              class=" custom-skeleton">
+                              <ion-item>
+                                <ion-label style="margin-top: -10px;">
+                                  <ion-item  style="padding-bottom: 5px;">
+                                    <ion-skeleton-text animated></ion-skeleton-text>
+                                  </ion-item>
+                                  <ion-skeleton-text animated></ion-skeleton-text>
+                                </ion-label>
+                              </ion-item>
+                            </div>
+                          </ng-container>
+              
+              
+                      </div>
+                    </ion-item>
+              
+                  </ion-list>
+                  <!---->
+                  <ion-list>
+                    <ion-item style="padding-top: 10px;">
+                      <div class="ion-text-wrap"><b>Final Diagnosis</b><br /></div>
+                      
+                    </ion-item>
+                    <ion-item style="padding-top: 10px;" lines="none">
+                      <div class="ion-text-wrap">
+              
+                        <div *ngIf="finalDiagnosis" class="custom-font">
+                          <div *ngIf="finalDiagnosis.length <= limit">{{finalDiagnosis}}</div>
+                          <div *ngIf="truncating && finalDiagnosis.length > limit">
+                            {{finalDiagnosis1}}
+                            <button ion-button (click)="truncating = false">show more</button>
+                          </div>
+                          <div *ngIf="!truncating && finalDiagnosis.length > limit">
+                            <!--{{finalDiagnosis}}-->
+                            <div *ngFor="let x of finalDiagnosis2">
+                              <ion-text style="padding-top: 15px;"
+                          >{{x}}<br
+                        /></ion-text>
+                            </div>
+                            <button ion-button (click)="truncating = true">show less</button>
+                          </div>
+                          </div>
+                          
+                          <ng-container>
+                            <div
+                              *ngIf="!objecthandler && !isFetchDone else noDataAvailable"
+                              class=" custom-skeleton">
+                              <ion-item>
+                                <ion-label style="margin-top: -10px;">
+                                  <ion-item  style="padding-bottom: 5px;">
+                                    <ion-skeleton-text animated></ion-skeleton-text>
+                                  </ion-item>
+                                  <ion-skeleton-text animated></ion-skeleton-text>
+                                </ion-label>
+                              </ion-item>
+                            </div>
+                          </ng-container>
+                      </div>
+                    </ion-item>
+              
+                  </ion-list>
+                  <!----> 
+                  <ion-item style="padding-top: 10px;">
+                    <div class="ion-text-wrap"><b>Doctors</b><br /></div>
+                  </ion-item>
+                  <ion-list >
+
+                    <ng-container class="overflow-scroll max-height-500 overflow-scroll">
+                      <ion-item lines="none" *ngFor="let dr of coDoctors">
+                        <ion-avatar slot="start">
+                          <chh-app-text-avatar [text]="dr.last_name" [color]=""></chh-app-text-avatar>
+                        </ion-avatar>
+                        <ion-label style="margin-top: -10px;">
+                          <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                            <h3 class="ion-text-wrap" style="padding-top: 20px;">
+                              Dr. {{dr.first_name}} {{dr.last_name}}
+                            </h3>
+                          </ion-item>
+                          <ion-badge color="medium"> {{dr.status}}</ion-badge>
+                        </ion-label>
+                      </ion-item>
+                    </ng-container>
+              
+                    <ng-container>
+                      <div
+                        *ngIf="!objecthandler && !isFetchDone else noDataAvailable"
+                        class="ion-padding custom-skeleton"
+                      >
+                        <!-- Skeleton  -->
+                        <ion-item>
+                          <ion-avatar slot="start">
+                            <ion-skeleton-text animated></ion-skeleton-text>
+                          </ion-avatar>
+                          <ion-label style="margin-top: -10px;">
+                            <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                              <ion-skeleton-text animated></ion-skeleton-text>
+                            </ion-item>
+                            <ion-skeleton-text animated></ion-skeleton-text>
+                          </ion-label>
+                        </ion-item>
+                        <ion-item>
+                          <ion-avatar slot="start">
+                            <ion-skeleton-text animated></ion-skeleton-text>
+                          </ion-avatar>
+                          <ion-label style="margin-top: -10px;">
+                            <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                              <ion-skeleton-text animated></ion-skeleton-text>
+                            </ion-item>
+                            <ion-skeleton-text animated></ion-skeleton-text>
+                          </ion-label>
+                        </ion-item>
+                        <ion-item>
+                          <ion-avatar slot="start">
+                            <ion-skeleton-text animated></ion-skeleton-text>
+                          </ion-avatar>
+                          <ion-label style="margin-top: -10px;">
+                            <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                              <ion-skeleton-text animated></ion-skeleton-text>
+                            </ion-item>
+                            <ion-skeleton-text animated></ion-skeleton-text>
+                          </ion-label>
+                        </ion-item>
+                        <ion-item>
+                          <ion-avatar slot="start">
+                            <ion-skeleton-text animated></ion-skeleton-text>
+                          </ion-avatar>
+                          <ion-label style="margin-top: -10px;">
+                            <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                              <ion-skeleton-text animated></ion-skeleton-text>
+                            </ion-item>
+                            <ion-skeleton-text animated></ion-skeleton-text>
+                          </ion-label>
+                        </ion-item>
+                      </div>
+                    </ng-container>
+              
+                    <ng-template #noDataAvailable>
+                      <div *ngIf="!objecthandler && isFetchDone">
+                        <ion-list-header slot="center" mode="ios">
+                          Cannot retrieve list of Doctors at this time. Please retry.
+                        </ion-list-header>
+                      </div>
+                    </ng-template>
+              
+                  </ion-list>
+                  <!---->
+                </div>
+      </ion-col>
+
+
+
+
+    </ion-row>
+
+
+
+
+
+
+
+  </ion-col>
 </ion-grid>
 
 

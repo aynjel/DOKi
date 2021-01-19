@@ -86,7 +86,7 @@
     font-weight: bold;
   }
   .overflow-scroll{
-    overflow-y:scroll;
+    overflow-y:auto;
   }
   .max-height-300{
     max-height: 300px;
@@ -96,6 +96,9 @@
   .max-height-500{
     max-height: 500px;
   }
+  .max-height-800{
+    max-height: 800px;
+  } 
   .border-left{
     border-left: 1px solid rgba(0, 0, 0, 0.3);
   }
