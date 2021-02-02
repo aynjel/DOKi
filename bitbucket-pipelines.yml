@@ -207,6 +207,11 @@ definitions:
           - docker-compose -f docker-compose-cypress.yml up --exit-code-from cypress
 
 pipelines:
+  custom: 
+    view-patients-lab-results:
+      - step: *build-artifacts
+      - step: *deploy-staging-to-firebase
+      
   branches:
     '{dev_branch,develop,cypress-grouping}':
       - step: *code-linting
