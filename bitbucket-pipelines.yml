@@ -208,10 +208,10 @@ definitions:
 
 pipelines:
   custom: 
-    view-patients-lab-results:
+    build-and-deploy:
       - step: *build-artifacts
       - step: *deploy-staging-to-firebase
-      
+
   branches:
     '{dev_branch,develop,cypress-grouping}':
       - step: *code-linting
