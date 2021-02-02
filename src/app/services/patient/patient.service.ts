@@ -258,6 +258,34 @@ export class PatientService {
     return this.http.get(url, options);
   }
 
+
+  restRXCUI(data1:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = 'https://rxnav.nlm.nih.gov/REST/rxcui?caller=RxNav&name='+data1;
+    return this.http.get(url, options);
+  }
+
+  allRelatedGroup(data1:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = 'https://rxnav.nlm.nih.gov/REST/rxcui/'+data1+'/allrelatedextension?caller=RxNav';
+    return this.http.get(url, options);
+  }
+  interactions(data1:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    
+    const url = 'https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis='+data1;
+    //const url = 'https://online.lexi.com/lco/action/interact/v2/analyze?duplicatedrugtherapy=1&drug=Calcium%20Carbonate%7Chf019100&drug=LevoFLOXacin%20(Systemic)%7Chf075756';
+
+
+
+    return this.http.get(url, options);
+  }
+
+
+
   
 /**
  * @example

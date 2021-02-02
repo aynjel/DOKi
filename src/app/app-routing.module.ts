@@ -18,6 +18,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
   {
+    path: 'pharma',
+    loadChildren: () => import('./pages/test/pharma/pharma.module').then( m => m.PharmaPageModule)
+  },
+  {
     path: '',
     canActivate:[IndexGuard], 
     loadChildren: () => import('./pages/index/index.module').then( m => m.IndexPageModule)
@@ -33,6 +37,7 @@ const routes: Routes = [
     path: 'chh-app-terms-and-conditions',
     loadChildren: () => import('./chh-web-components/chh-app-terms-and-conditions/chh-app-terms-and-conditions.module').then( m => m.ChhAppTermsAndConditionsPageModule)
   }
+
 
 
 
