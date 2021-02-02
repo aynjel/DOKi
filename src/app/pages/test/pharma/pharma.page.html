@@ -1,0 +1,172 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>pharma <ion-spinner name="lines" *ngIf="searching"></ion-spinner></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-input 
+    [(ngModel)]="searchBar"
+    ></ion-input><ion-button (click)="filterList()">Search</ion-button>
+
+    <ion-grid *ngIf="tick">
+      <ion-row>
+        <ion-col size="4" class="max-height-500 overflow-scroll">
+
+          
+          <ion-row>
+            <ion-col size="12">
+              <ion-card >
+                <ion-item><b>Brand Name</b></ion-item>
+                  <div *ngFor="let asd of BN.conceptProperties">
+                    <ion-item (click)="onClick(asd)" class="pointer">{{asd.name}} </ion-item>
+                  </div>  
+              </ion-card>
+            </ion-col>
+            <ion-col size="12">
+              <ion-card >
+                <ion-item><b>Ingredient</b></ion-item>
+                  <div *ngFor="let asd of IN.conceptProperties">
+                    <ion-item (click)="onClick(asd)" class="pointer" class="pointer">{{asd.name}}</ion-item>
+                  </div>  
+              </ion-card>
+            </ion-col>
+            <ion-col size="12">
+              <ion-card >
+                <ion-item><b>Precise Ingredient</b></ion-item>
+                  <div *ngFor="let asd of PIN.conceptProperties">
+                    <ion-item (click)="onClick(asd)" class="pointer">{{asd.name}}</ion-item>
+                  </div>  
+              </ion-card>
+            </ion-col>
+            <ion-col size="12">
+              <ion-card >
+                <ion-item><b>Clinical Drug Component</b></ion-item>
+                  <div *ngFor="let asd of SCDC.conceptProperties">
+                    <ion-item (click)="onClick(asd)" class="pointer">{{asd.name}}</ion-item>
+                  </div>  
+              </ion-card>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-card >
+                <ion-item><b>Branded Drug Component</b></ion-item>
+                  <div *ngFor="let asd of SBDC.conceptProperties">
+                    <ion-item (click)="onClick(asd)" class="pointer">{{asd.name}}</ion-item>
+                  </div>  
+              </ion-card>
+            </ion-col>
+            
+            
+            <ion-col size="12">
+              <ion-card >
+                <ion-item><b>Clinical Drug or Pack</b></ion-item>
+                  <div *ngFor="let asd of SCD.conceptProperties">
+                    <ion-item (click)="onClick(asd)" class="pointer">{{asd.name}}</ion-item>
+                  </div>  
+              </ion-card>
+            </ion-col>
+
+
+            <ion-col size="12">
+              <ion-card >
+                <ion-item><b>Branded Drug or Pack</b></ion-item>
+                  <div *ngFor="let asd of SBD.conceptProperties">
+                    <ion-item (click)="onClick(asd)" class="pointer">{{asd.name}}</ion-item>
+                  </div>  
+              </ion-card>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-card >
+                <ion-item><b>Clinical Dose Form Group</b></ion-item>
+                  <div *ngFor="let asd of SCDG.conceptProperties">
+                    <ion-item (click)="onClick(asd)" class="pointer">{{asd.name}}</ion-item>
+                  </div>  
+              </ion-card>
+            </ion-col>
+            
+
+            <ion-col size="12">
+              <ion-card >
+                <ion-item><b>Dose Form Group</b></ion-item>
+                  <div *ngFor="let asd of DFG.conceptProperties">
+                    <ion-item (click)="onClick(asd)" class="pointer">{{asd.name}}</ion-item>
+                  </div>  
+              </ion-card>
+            </ion-col>
+
+
+            <ion-col size="12">
+              <ion-card >
+                <ion-item><b>Branded Dose Form Group</b></ion-item>
+                  <div *ngFor="let asd of SBDG.conceptProperties">
+                    <ion-item (click)="onClick(asd)" class="pointer">{{asd.name}}</ion-item>
+                  </div>  
+              </ion-card>
+            </ion-col>
+
+
+
+
+
+
+
+
+          </ion-row>
+        </ion-col>
+        <ion-col size="3" >
+          <div [innerHTML]="displayDiv"></div>
+          <ion-button (click)="Interaction()">Search</ion-button>
+        </ion-col>
+        <ion-col size="4" >
+
+          <!--div *ngFor="let data of drugInteractionData">
+            <ion-item>
+              COMMENT : {{data.comment}}<br />
+              <div *ngFor="let data1 of data.minConcept">
+                &nbsp;&nbsp;rxcui : {{data1.rxcui}}<br />
+                
+                
+              </div>
+            </ion-item>
+          </div-->
+
+
+
+          <ion-item *ngFor="let data of drugInteractionData">
+            <ion-label class="ion-text-wrap">
+              <h2><b>COMMENT</b></h2>
+              <ion-text>
+                {{data.comment}}<br />
+              </ion-text>
+              <br />
+              <!--<b>minConcept</b>
+              <div *ngFor="let data1 of data.minConcept"> 
+                <ion-text >
+                  <p>&nbsp;&nbsp;rxcui : {{data1.rxcui}}</p>
+                  <p>&nbsp;&nbsp;name : {{data1.name}}<br /></p>
+                  <p>&nbsp;&nbsp;tty : {{data1.tty}}<br /></p>
+                </ion-text>
+              </div>-->
+
+              <b>Severity</b>
+              <div *ngFor="let data2 of data.interactionPair"> 
+                {{data2.description}}
+               <!--- <b>interactionConcept</b>
+                <div *ngFor="let data3 of data2.interactionConcept"> 
+                    {{data3.minConceptItem.rxcui}}
+                </div>
+              -->
+              </div>
+
+            </ion-label>
+          </ion-item>
+
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+</ion-content>
