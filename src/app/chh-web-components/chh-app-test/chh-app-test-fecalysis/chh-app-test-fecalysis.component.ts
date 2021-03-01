@@ -39,7 +39,7 @@ export class ChhAppTestFecalysisComponent implements OnInit {
      }
 
   ngOnInit() {
-    console.log(this.examDetails);
+  
     
     
       this.patientService.getFecalDetail(this.examDetails.Request_No).subscribe(
@@ -47,8 +47,7 @@ export class ChhAppTestFecalysisComponent implements OnInit {
         let x = JSON.stringify(res)
         this.resultDetails = JSON.parse(x);
  
-      console.log(res);
-      console.log('-------------------------------');
+  
       },(error) => {
        
       },() => {

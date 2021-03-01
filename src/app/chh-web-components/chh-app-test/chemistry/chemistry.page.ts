@@ -55,7 +55,6 @@ export class ChemistryPage implements OnInit {
       (res: any) => {
       let x = JSON.stringify(res)
       this.chemHeader = JSON.parse(x);
-      console.log(this.chemHeader);
       
       },(error) => {
        
@@ -63,14 +62,11 @@ export class ChemistryPage implements OnInit {
 
       }
     );
-    console.log('*********************');  
+
     this.patientService.getChemDetails(this.ExamDetails.Request_No).subscribe(
       (res: any) => {
         let x = JSON.stringify(res)
         this.chemDetails = JSON.parse(x);
- 
-      console.log(res);
-      console.log('-------------------------------');
       },(error) => {
        
       },() => {

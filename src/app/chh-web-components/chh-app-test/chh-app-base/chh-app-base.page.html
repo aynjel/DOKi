@@ -74,6 +74,13 @@
     [examDetails]="ExamDetails"
     [site]="hospitalSite"
     *ngIf="ExamDetails.Exam == 'Serology'"></app-chh-app-test-serology>    
+
+
+
+    <app-chh-app-test-cbc
+    [examDetails]="ExamDetails"
+    [site]="hospitalSite"
+    *ngIf="ExamDetails.Exam == 'Hematology' && ExamDetails.ExamType == 'CBC'"></app-chh-app-test-cbc>    
     <!--ion-footer>
       <ion-row>
         <ion-col center text-center>

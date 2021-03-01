@@ -65,6 +65,7 @@ export class ChhAppInPatientModalPage implements OnInit {
   serology:boolean = false;
   chemistry:boolean = false;
   fecalysis:boolean = false;
+  hematology:boolean = false;
   refresher:boolean = true;
 
 
@@ -89,6 +90,10 @@ export class ChhAppInPatientModalPage implements OnInit {
       }
       this.isDesktop = isDesktop;
     });
+
+    this.ClickedRow = function(index){  
+      this.HighlightRow = index;  
+  } 
   }
   ngAfterViewInit() {
    // this.loadComponents();
@@ -157,11 +162,19 @@ export class ChhAppInPatientModalPage implements OnInit {
     });
     await alert.present();
   }
+  HighlightRow:number;
+  ClickedRow:any; 
+  async examDetails(data: any, site:any,i) {
 
-  async examDetails(data: any, site:any) {
+    this.HighlightRow = i;  
     this.ExamData = data;
     this.hospitalSite = site;
+
+    
     if(!this.isDesktop){
+      console.log('EXAM:');
+      console.log(this.ExamData);
+      
       const modal = await this._modalController.create({
         component: ChhAppBasePage,
         componentProps: { ExamDetails: data,Site:site },
@@ -171,18 +184,28 @@ export class ChhAppInPatientModalPage implements OnInit {
         return await modal.onDidDismiss().then((data: any) => {
       });
     }else{
+
+      
       if(this.ExamData.Exam == 'Serology' ){
         this.chemistry = false;
         this.serology = true;
         this.fecalysis = false;
+        this.hematology = false;
       }else if(this.ExamData.Exam == 'Chemistry'){
         this.chemistry = true;
         this.serology = false;
         this.fecalysis = false;
+        this.hematology = false;
       }else if(this.ExamData.Exam == 'Fecalysis'){
         this.chemistry = false;
         this.serology = false;
         this.fecalysis = true;
+        this.hematology = false;
+      }else if(this.ExamData.Exam == 'Hematology' && this.ExamData.ExamType == 'CBC'){
+        this.chemistry = false;
+        this.serology = false;
+        this.fecalysis = false;
+        this.hematology = true
       }
 
 
@@ -192,7 +215,7 @@ export class ChhAppInPatientModalPage implements OnInit {
      // this.loadComponents();
     }
 
-    console.log( this.ExamData);
+ 
     
     
     
@@ -234,7 +257,7 @@ export class ChhAppInPatientModalPage implements OnInit {
     );
   }
   ngOnInit() {
-    console.log(this.data);
+
     
     let d = new Date(this.data.admission_date);
     this.dateAdmitted = d.toUTCString();

@@ -1050,17 +1050,6 @@ o888o        d888b    `Y8bod8P' o888o      o888o        `Y8bod8P' `Y8bod8P'
 
 
 
-    <ion-row>
-      <ion-col  size-md="3" size-xl="12" style="background-color: RED;">
-        ion-col [size="12"] [size-sm]
-      </ion-col>
-    </ion-row>
-
-
-
-
-
-
 
 
 
@@ -1159,12 +1148,13 @@ o888o        d888b    `Y8bod8P' o888o      o888o        `Y8bod8P' `Y8bod8P'
                   </ion-list>  
                  
      </ion-col>
-      <ion-col size="2" class="max-height-500 overflow-scroll border-left">
+      <ion-col size="2" class=" border-left">
+        <div class="max-height-87vh overflow-scroll">
                 <ion-item style="padding-top: 10px;">
                   <div class="ion-text-wrap"><b>Result list</b><br /></div>
                 </ion-item>
-                <div *ngFor="let x of currentExamList" >
-                  <ion-item lines="" (click)="examDetails(x,data.site)" class="pointer">
+                <div *ngFor="let x of currentExamList; let i = index" >
+                  <ion-item lines="" class="nav-primary pointer" (click)="examDetails(x,data.site,i)" [class.active]="i == HighlightRow" >
                     <div class="ion-text-wrap"  >
                       <ion-text >
                         {{x.Test_Name}}
@@ -1177,9 +1167,11 @@ o888o        d888b    `Y8bod8P' o888o      o888o        `Y8bod8P' `Y8bod8P'
                       </ion-text>
                     </div>
                   </ion-item>
-                </div>       
+                </div>    
+          </div>   
       </ion-col>
-      <ion-col size="4" class="max-height-500 overflow-scroll border-left">
+      <ion-col size="4" class=" border-left">
+        <div class="max-height-87vh overflow-scroll">
                 <app-chh-app-test-serology
                 [examDetails]="ExamData"
                 [site]="hospitalSite"
@@ -1196,9 +1188,10 @@ o888o        d888b    `Y8bod8P' o888o      o888o        `Y8bod8P' `Y8bod8P'
                 [site]="hospitalSite"
                 *ngIf="fecalysis && refresher"
                 ></app-chh-app-test-fecalysis>
+                </div>
       </ion-col>
       <ion-col size="3">
-                  <div class="max-height-800 overflow-scroll">
+                  <div class="max-height-87vh overflow-scroll">
                     <!---->    
                     <ion-list>
                     <ion-item style="padding-top: 10px;">

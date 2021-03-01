@@ -9,6 +9,9 @@ import { ChhAppTestChemistryComponent } from "./chh-app-test/chh-app-test-chemis
 import { ChhAppTestFecalysisComponent } from "./chh-app-test/chh-app-test-fecalysis/chh-app-test-fecalysis.component";
 import { ChhAppTestSerologyComponent } from "./chh-app-test/chh-app-test-serology/chh-app-test-serology.component";
 
+import { ChhAppTestHematologyComponent } from "./chh-app-test/chh-app-test-hematology/chh-app-test-hematology.component";
+
+import { ChhAppTestCbcComponent } from "./chh-app-test/chh-app-test-cbc/chh-app-test-cbc.component";
 
 import { ChhAppDateSelectorComponent } from "./chh-app-date-selector/chh-app-date-selector.component";
 import { IonicModule } from "@ionic/angular";
@@ -29,7 +32,9 @@ import { ChhAppTextAvatarModule } from "./chh-app-text-avatar/chh-app-text-avata
     ChhAppSliderPage,
     ChhAppTestChemistryComponent,
     ChhAppTestFecalysisComponent,
-    ChhAppTestSerologyComponent
+    ChhAppTestSerologyComponent,
+    ChhAppTestHematologyComponent,
+    ChhAppTestCbcComponent
   ],
   exports: [
     ChhAppLogoComponent,
@@ -42,7 +47,9 @@ import { ChhAppTextAvatarModule } from "./chh-app-text-avatar/chh-app-text-avata
     ChhAppSliderPage,
     ChhAppTestChemistryComponent,
     ChhAppTestFecalysisComponent,
-    ChhAppTestSerologyComponent
+    ChhAppTestSerologyComponent,
+    ChhAppTestHematologyComponent,
+    ChhAppTestCbcComponent
   ],
   imports: [CommonModule, IonicModule, ChhAppTextAvatarModule],
 })

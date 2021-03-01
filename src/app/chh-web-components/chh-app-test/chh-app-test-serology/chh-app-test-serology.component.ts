@@ -41,8 +41,7 @@ export class ChhAppTestSerologyComponent implements OnInit {
      }
 
      ngOnInit() {
-       console.log(this.examDetails);
-       
+
       
         this.patientService.getSeroExamno(this.examDetails.Request_No,this.examDetails.ExamCode).subscribe(
         (res: any) => {
@@ -54,9 +53,7 @@ export class ChhAppTestSerologyComponent implements OnInit {
             (res: any) => {
               let x = JSON.stringify(res)
               this.resultDetails = JSON.parse(x);
-              console.log('getSeroDetails -> ');
-              
-              console.log(this.resultDetails);
+
               
             },(error) => {
             },() => {

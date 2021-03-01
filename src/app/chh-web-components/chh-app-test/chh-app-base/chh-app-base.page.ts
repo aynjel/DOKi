@@ -44,6 +44,8 @@ export class ChhAppBasePage implements OnInit {
     }else{
       this.hospitalSite = "Chong Hua Hospital Mandaue";
     }
+
+    
     if(this.ExamDetails.Exam == 'Chemistry'){
       this.patientService.getChemHeader(this.ExamDetails.Request_No).subscribe(
         (res: any) => {
@@ -72,7 +74,15 @@ export class ChhAppBasePage implements OnInit {
         (res: any) => {
           let x = JSON.stringify(res)
           this.Header = JSON.parse(x);
-          console.log(Object.keys(this.Header).length);
+
+        },(error) => {},
+        () => {}
+      );
+    }else if(this.ExamDetails.Exam == 'Hematology' && this.ExamDetails.ExamType == 'CBC'){
+      this.patientService.getCBCHeader(this.ExamDetails.Request_No).subscribe(
+        (res: any) => {
+          let x = JSON.stringify(res)
+          this.Header = JSON.parse(x);
         },(error) => {},
         () => {}
       );

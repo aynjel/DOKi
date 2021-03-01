@@ -258,7 +258,35 @@ export class PatientService {
     return this.http.get(url, options);
   }
 
+  getHemaHeader(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetHEMHeader/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+  getHemaDetail(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetHEMDetails/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
 
+
+  getCBCHeader(data1:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetCBCHeader/"+data1;
+    return this.http.get(url, options);
+  }
+  getCBCDetail(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetCBCDetails/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+
+
+ 
   restRXCUI(data1:any){
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };

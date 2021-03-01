@@ -6,17 +6,17 @@ import { DoctorService } from 'src/app/services/doctor/doctor.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
-
 @Component({
-  selector: 'app-chh-app-test-chemistry',
-  templateUrl: './chh-app-test-chemistry.component.html',
-  styleUrls: ['./chh-app-test-chemistry.component.scss'],
+  selector: 'app-chh-app-test-hematology',
+  templateUrl: './chh-app-test-hematology.component.html',
+  styleUrls: ['./chh-app-test-hematology.component.scss'],
 })
-export class ChhAppTestChemistryComponent implements OnInit {
+export class ChhAppTestHematologyComponent implements OnInit {
   @Input() examDetails: any;
   @Input() site: any;
   isDesktop: boolean;
-  chemDetails:any;
+  resultDetail:any;
+  resultDetails:any;
   constructor(
     public modalController: ModalController,
     public _modalController: ModalController,
@@ -29,7 +29,7 @@ export class ChhAppTestChemistryComponent implements OnInit {
     private patientService: PatientService,
     private screensizeService: ScreenSizeService
     ) {
-  
+
       this.screensizeService.isDesktopView().subscribe((isDesktop) => {
         if (this.isDesktop && !isDesktop) {
           window.location.reload();
@@ -40,22 +40,9 @@ export class ChhAppTestChemistryComponent implements OnInit {
 
   ngOnInit() {
 
+
+
     
-
-      this.patientService.getChemDetails(this.examDetails.Request_No).subscribe(
-      (res: any) => {
-        let x = JSON.stringify(res)
-        this.chemDetails = JSON.parse(x);
- 
-
-      },(error) => {
-       
-      },() => {
-
-        
-     
-      }
-    );
   }
 
 }

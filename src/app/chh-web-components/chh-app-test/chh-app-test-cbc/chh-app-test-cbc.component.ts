@@ -8,15 +8,18 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
 
 @Component({
-  selector: 'app-chh-app-test-chemistry',
-  templateUrl: './chh-app-test-chemistry.component.html',
-  styleUrls: ['./chh-app-test-chemistry.component.scss'],
+  selector: 'app-chh-app-test-cbc',
+  templateUrl: './chh-app-test-cbc.component.html',
+  styleUrls: ['./chh-app-test-cbc.component.scss'],
 })
-export class ChhAppTestChemistryComponent implements OnInit {
+export class ChhAppTestCbcComponent implements OnInit {
+
+
   @Input() examDetails: any;
   @Input() site: any;
   isDesktop: boolean;
-  chemDetails:any;
+  resultDetail:any;
+  resultDetails:any;
   constructor(
     public modalController: ModalController,
     public _modalController: ModalController,
@@ -29,7 +32,7 @@ export class ChhAppTestChemistryComponent implements OnInit {
     private patientService: PatientService,
     private screensizeService: ScreenSizeService
     ) {
-  
+
       this.screensizeService.isDesktopView().subscribe((isDesktop) => {
         if (this.isDesktop && !isDesktop) {
           window.location.reload();
@@ -38,24 +41,24 @@ export class ChhAppTestChemistryComponent implements OnInit {
       });
      }
 
+
   ngOnInit() {
 
-    
 
-      this.patientService.getChemDetails(this.examDetails.Request_No).subscribe(
+
+    this.patientService.getCBCDetail(this.examDetails.Request_No,this.examDetails.ExamType).subscribe(
       (res: any) => {
-        let x = JSON.stringify(res)
-        this.chemDetails = JSON.parse(x);
- 
-
-      },(error) => {
-       
-      },() => {
-
+        console.log(res);
         
-     
+        let x = JSON.stringify(res)
+        this.resultDetails = JSON.parse(x);
+      },(error) => {
+      },() => {         
+  
       }
     );
+
+
   }
 
 }
