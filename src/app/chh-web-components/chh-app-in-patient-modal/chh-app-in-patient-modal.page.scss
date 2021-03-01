@@ -13,7 +13,9 @@ ion-list.no-last-border {
 
 
 .nav-primary.active {
-  color: #275228; 
-  font-weight:bolder;
-  font-size: large;
+  color: #275228;
+  font-weight: 1000 !important;
+  background-color: yellow;
+  //font-weight:bolder;
+
 }

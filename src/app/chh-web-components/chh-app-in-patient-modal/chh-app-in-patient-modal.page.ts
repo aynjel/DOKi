@@ -58,6 +58,7 @@ export class ChhAppInPatientModalPage implements OnInit {
   dateAdmitted: any;
   ionSkeleton: boolean = false;
   currentExamList: any;
+  currentExamList_filtered: any = [];
   isDesktop: boolean;
   examListSkeleton:boolean = false;
   ExamData:any = "";
@@ -65,9 +66,9 @@ export class ChhAppInPatientModalPage implements OnInit {
   serology:boolean = false;
   chemistry:boolean = false;
   fecalysis:boolean = false;
-  hematology:boolean = false;
+  cbc:boolean = false;
   refresher:boolean = true;
-
+  searchBar:any;
 
   constructor(
     public modalController: ModalController,
@@ -145,7 +146,27 @@ export class ChhAppInPatientModalPage implements OnInit {
       setTimeout( ()=> this.refresher=true,50);
     }
   }
+  filterList(){
 
+    this.currentExamList_filtered = [];
+    let temp_testname;
+    let temp_examtype;
+    let temp_exam;
+    this.currentExamList.forEach(element => {
+      temp_testname = element.Test_Name.toLowerCase();
+      temp_examtype = element.Exam.toLowerCase();
+      temp_exam = element.ExamType.toLowerCase();
+        if( 
+            (temp_testname.search(this.searchBar) >= 0) || 
+            (temp_examtype.search(this.searchBar) >= 0) || 
+            (temp_exam.search(this.searchBar) >= 0)
+          ){
+          this.currentExamList_filtered.push(element);    
+        }
+    });
+
+    
+  }
   async modalUpdate(header, message) {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
@@ -172,8 +193,7 @@ export class ChhAppInPatientModalPage implements OnInit {
 
     
     if(!this.isDesktop){
-      console.log('EXAM:');
-      console.log(this.ExamData);
+
       
       const modal = await this._modalController.create({
         component: ChhAppBasePage,
@@ -190,22 +210,22 @@ export class ChhAppInPatientModalPage implements OnInit {
         this.chemistry = false;
         this.serology = true;
         this.fecalysis = false;
-        this.hematology = false;
+        this.cbc = false;
       }else if(this.ExamData.Exam == 'Chemistry'){
         this.chemistry = true;
         this.serology = false;
         this.fecalysis = false;
-        this.hematology = false;
+        this.cbc = false;
       }else if(this.ExamData.Exam == 'Fecalysis'){
         this.chemistry = false;
         this.serology = false;
         this.fecalysis = true;
-        this.hematology = false;
+        this.cbc = false;
       }else if(this.ExamData.Exam == 'Hematology' && this.ExamData.ExamType == 'CBC'){
         this.chemistry = false;
         this.serology = false;
         this.fecalysis = false;
-        this.hematology = true
+        this.cbc = true
       }
 
 
@@ -241,6 +261,7 @@ export class ChhAppInPatientModalPage implements OnInit {
               element.Exam
             );
             this.currentExamList.push(element);
+            this.currentExamList_filtered.push(element);
             // console.log(element.Test_Name + ' | '+new Date(element.RequestDateTime));
             //console.log(new Date(element.RequestDateTime));
           }
