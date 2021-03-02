@@ -286,6 +286,37 @@ export class PatientService {
   }
 
 
+
+
+
+  getUrinalysisHeader(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetUrinHeader/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+
+  getUrinalysisDetail(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetUrinDetails/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
   restRXCUI(data1:any){
     const headers = new HttpHeaders();

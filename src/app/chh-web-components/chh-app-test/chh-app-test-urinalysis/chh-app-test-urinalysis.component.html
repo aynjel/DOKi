@@ -10,18 +10,25 @@
 </ion-item>
 
 
+
 <ion-item>
   <ion-grid>
     <ion-row>
       <ion-col size="12" >
-        <h1>COMPLETE BLOOD COUNT </h1>
+        <h1>Physical Characteristics</h1>
       </ion-col>
     </ion-row>
   </ion-grid>
 </ion-item>
-<div *ngFor="let x of resultDetailsCBC">
+
+
+
+<div *ngFor="let x of resultDetailsPHY">
+
   <ion-item>
+  
     <ion-grid>
+
       <ion-row>
         <ion-col size="12">
           <b>{{x.Exam_Description}}</b>
@@ -33,12 +40,17 @@
             <ion-icon name="arrow-up-outline" *ngIf="x.High_Low == 'H'"></ion-icon>
             <ion-icon name="arrow-down-outline" *ngIf="x.High_Low == 'L'"></ion-icon>
            </div>
+
         </ion-col>
         <ion-col size="5" >
           Normal Range <br />{{x.Normal_Range}}
+
         </ion-col>
+
       </ion-row>
       </ion-grid>
+
+
   </ion-item> 
 </div>
 
@@ -47,14 +59,18 @@
   <ion-grid>
     <ion-row>
       <ion-col size="12" >
-        <h1>Blood Indices</h1>
+        <h1>Chemical Characteristics
+        </h1>
       </ion-col>
     </ion-row>
   </ion-grid>
 </ion-item>
-<div *ngFor="let x of resultDetailsBIX">
+<div *ngFor="let x of resultDetailsCHM">
+
   <ion-item>
+  
     <ion-grid>
+
       <ion-row>
         <ion-col size="12">
           <b>{{x.Exam_Description}}</b>
@@ -66,28 +82,39 @@
             <ion-icon name="arrow-up-outline" *ngIf="x.High_Low == 'H'"></ion-icon>
             <ion-icon name="arrow-down-outline" *ngIf="x.High_Low == 'L'"></ion-icon>
            </div>
+
         </ion-col>
         <ion-col size="5" >
           Normal Range <br />{{x.Normal_Range}}
+
         </ion-col>
+
       </ion-row>
       </ion-grid>
+
+
   </ion-item> 
 </div>
-
 
 <ion-item>
   <ion-grid>
     <ion-row>
       <ion-col size="12" >
-        <h1>Relative Differential Count</h1>
+        <h1>Microscopic Findings
+        </h1>
       </ion-col>
     </ion-row>
   </ion-grid>
 </ion-item>
-<div *ngFor="let x of resultDetailsRDC">
+
+
+
+<div *ngFor="let x of resultDetailsMIC">
+
   <ion-item>
+  
     <ion-grid>
+
       <ion-row>
         <ion-col size="12">
           <b>{{x.Exam_Description}}</b>
@@ -99,44 +126,16 @@
             <ion-icon name="arrow-up-outline" *ngIf="x.High_Low == 'H'"></ion-icon>
             <ion-icon name="arrow-down-outline" *ngIf="x.High_Low == 'L'"></ion-icon>
            </div>
+
         </ion-col>
         <ion-col size="5" >
           Normal Range <br />{{x.Normal_Range}}
+
         </ion-col>
+
       </ion-row>
       </ion-grid>
-  </ion-item> 
-</div>
 
 
-<ion-item>
-  <ion-grid>
-    <ion-row>
-      <ion-col size="12" >
-        <h1>Absolute Differential Count</h1>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-item>
-<div *ngFor="let x of resultDetailsADC">
-  <ion-item>
-    <ion-grid>
-      <ion-row>
-        <ion-col size="12">
-          <b>{{x.Exam_Description}}</b>
-        </ion-col>
-        <ion-col size="7" >
-          Result : {{x.Result}} {{x.Units}}<br />
-          <div *ngIf="x.High_Low == 'H' || x.High_Low == 'L'">
-            Remarks : {{x.High_Low}} 
-            <ion-icon name="arrow-up-outline" *ngIf="x.High_Low == 'H'"></ion-icon>
-            <ion-icon name="arrow-down-outline" *ngIf="x.High_Low == 'L'"></ion-icon>
-           </div>
-        </ion-col>
-        <ion-col size="5" >
-          Normal Range <br />{{x.Normal_Range}}
-        </ion-col>
-      </ion-row>
-      </ion-grid>
   </ion-item> 
 </div>

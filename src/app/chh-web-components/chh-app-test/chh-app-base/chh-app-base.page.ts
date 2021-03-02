@@ -86,6 +86,14 @@ export class ChhAppBasePage implements OnInit {
         },(error) => {},
         () => {}
       );
+    }else if(this.ExamDetails.Exam == 'Urinalysis'){
+      this.patientService.getUrinalysisHeader(this.ExamDetails.Patient_No,this.ExamDetails.Request_No).subscribe(
+        (res: any) => {
+          let x = JSON.stringify(res)
+          this.Header = JSON.parse(x);
+        },(error) => {},
+        () => {}
+      );
     }
   }
 }

@@ -8,25 +8,20 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
 
 @Component({
-  selector: 'app-chh-app-test-cbc',
-  templateUrl: './chh-app-test-cbc.component.html',
-  styleUrls: ['./chh-app-test-cbc.component.scss'],
+  selector: 'app-chh-app-test-urinalysis',
+  templateUrl: './chh-app-test-urinalysis.component.html',
+  styleUrls: ['./chh-app-test-urinalysis.component.scss'],
 })
-export class ChhAppTestCbcComponent implements OnInit {
+export class ChhAppTestUrinalysisComponent implements OnInit {
 
 
   @Input() examDetails: any;
   @Input() site: any;
   isDesktop: boolean;
   resultDetail:any;
-  resultDetails:any;
-
-
-  resultDetailsCBC:any;
-  resultDetailsBIX:any;
-  resultDetailsRDC:any;
-  resultDetailsADC:any;
-
+  resultDetailsPHY:any;
+  resultDetailsCHM:any;
+  resultDetailsMIC:any;
   constructor(
     public modalController: ModalController,
     public _modalController: ModalController,
@@ -48,35 +43,35 @@ export class ChhAppTestCbcComponent implements OnInit {
       });
      }
 
-
   ngOnInit() {
+    console.log("URINALYSIS");
+    console.log(this.examDetails);
+    
+    
+    this.patientService.getUrineDetails(this.examDetails.Request_No,'PHY').subscribe(
+      (res: any) => {
+        console.log(res);
+        
+        let x = JSON.stringify(res)
+        this.resultDetailsPHY = JSON.parse(x);          
+      },(error) => {},() => {}
+    );
+    
+    this.patientService.getUrineDetails(this.examDetails.Request_No,'CHM').subscribe(
+      (res: any) => {
+        console.log(res);
+        let x = JSON.stringify(res)
+        this.resultDetailsCHM = JSON.parse(x);          
+      },(error) => {},() => {}
+    );
+    this.patientService.getUrineDetails(this.examDetails.Request_No,'MIC').subscribe(
+      (res: any) => {
+        console.log(res);
+        let x = JSON.stringify(res)
+        this.resultDetailsMIC = JSON.parse(x);          
+      },(error) => {},() => {}
+    );
 
-
-
-    this.patientService.getCBCDetail(this.examDetails.Request_No,this.examDetails.ExamType).subscribe(
-      (res: any) => {
-        let x = JSON.stringify(res)
-        this.resultDetailsCBC = JSON.parse(x);
-      },(error) => {},() => {}
-    );
-    this.patientService.getCBCDetail(this.examDetails.Request_No,'BIX').subscribe(
-      (res: any) => {
-        let x = JSON.stringify(res)
-        this.resultDetailsBIX = JSON.parse(x);
-      },(error) => {},() => {}
-    );
-    this.patientService.getCBCDetail(this.examDetails.Request_No,'RDC').subscribe(
-      (res: any) => {
-        let x = JSON.stringify(res)
-        this.resultDetailsRDC = JSON.parse(x);
-      },(error) => {},() => {}
-    );
-    this.patientService.getCBCDetail(this.examDetails.Request_No,'ADC').subscribe(
-      (res: any) => {
-        let x = JSON.stringify(res)
-        this.resultDetailsADC = JSON.parse(x);
-      },(error) => {},() => {}
-    );
 
   }
 
