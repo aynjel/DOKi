@@ -237,8 +237,10 @@ o888o        `Y888""8o   "888" o888o `Y8bod8P' o888o o888o   "888"
                 <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
                 <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
               </div>
-              <ion-row *ngFor="let x of currentExamList" >
-                <ion-col (click)="examDetails(x,data.site)">
+
+             
+              <ion-row  *ngFor="let x of currentExamList_filtered; let i = index" >
+                <ion-col (click)="examDetails(x,data.site,i)">
                   {{ x.Exam}}
                 </ion-col>
                 <ion-col>
@@ -281,8 +283,8 @@ o888o        `Y888""8o   "888" o888o `Y8bod8P' o888o o888o   "888"
               </ion-item>
 
               <div *ngIf="!isDesktop" class="overflow-scroll max-height-300">
-                <div *ngFor="let x of currentExamList_filtered" >
-                  <ion-item lines="" (click)="examDetails(x,data.site)">
+                <div  *ngFor="let x of currentExamList_filtered; let i = index">
+                  <ion-item lines="" (click)="examDetails(x,data.site,i)">
                     <div class="ion-text-wrap"  >
                       <ion-text >
                         {{x.Test_Name}}
@@ -1185,6 +1187,13 @@ o888o        d888b    `Y8bod8P' o888o      o888o        `Y8bod8P' `Y8bod8P'
                 *ngIf="fecalysis && refresher"
                 ></app-chh-app-test-fecalysis>
 
+
+                
+                <app-chh-app-test-urinalysis
+                [examDetails]="ExamData"
+                [site]="hospitalSite"
+                *ngIf="urinalysis && refresher"
+                ></app-chh-app-test-urinalysis>
 
                 <app-chh-app-test-cbc
                 [examDetails]="ExamData"

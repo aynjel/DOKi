@@ -67,6 +67,7 @@ export class ChhAppInPatientModalPage implements OnInit {
   chemistry:boolean = false;
   fecalysis:boolean = false;
   cbc:boolean = false;
+  urinalysis:boolean = false;
   refresher:boolean = true;
   searchBar:any;
 
@@ -152,14 +153,17 @@ export class ChhAppInPatientModalPage implements OnInit {
     let temp_testname;
     let temp_examtype;
     let temp_exam;
+    let temp_searcbar
+    
     this.currentExamList.forEach(element => {
       temp_testname = element.Test_Name.toLowerCase();
       temp_examtype = element.Exam.toLowerCase();
       temp_exam = element.ExamType.toLowerCase();
+      temp_searcbar = this.searchBar.toLowerCase();
         if( 
-            (temp_testname.search(this.searchBar) >= 0) || 
-            (temp_examtype.search(this.searchBar) >= 0) || 
-            (temp_exam.search(this.searchBar) >= 0)
+            (temp_testname.search(temp_searcbar) >= 0) || 
+            (temp_examtype.search(temp_searcbar) >= 0) || 
+            (temp_exam.search(temp_searcbar) >= 0)
           ){
           this.currentExamList_filtered.push(element);    
         }
@@ -210,21 +214,31 @@ export class ChhAppInPatientModalPage implements OnInit {
         this.chemistry = false;
         this.serology = true;
         this.fecalysis = false;
+        this.urinalysis = false;
         this.cbc = false;
       }else if(this.ExamData.Exam == 'Chemistry'){
         this.chemistry = true;
         this.serology = false;
         this.fecalysis = false;
+        this.urinalysis = false;
         this.cbc = false;
       }else if(this.ExamData.Exam == 'Fecalysis'){
         this.chemistry = false;
         this.serology = false;
         this.fecalysis = true;
+        this.urinalysis = false;
+        this.cbc = false;
+      }else if(this.ExamData.Exam == 'Urinalysis'){
+        this.chemistry = false;
+        this.serology = false;
+        this.fecalysis = false;
+        this.urinalysis = true;
         this.cbc = false;
       }else if(this.ExamData.Exam == 'Hematology' && this.ExamData.ExamType == 'CBC'){
         this.chemistry = false;
         this.serology = false;
         this.fecalysis = false;
+        this.urinalysis = false;
         this.cbc = true
       }
 
