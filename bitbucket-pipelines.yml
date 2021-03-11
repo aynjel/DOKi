@@ -210,7 +210,7 @@ pipelines:
   custom: 
     build-and-deploy:
       - step: *build-artifacts
-      - step: *deploy-staging-to-firebase
+      - step: *deploy-to-azure
 
   branches:
     '{dev_branch,develop,cypress-grouping}':
