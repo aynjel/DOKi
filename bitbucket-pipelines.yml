@@ -227,7 +227,7 @@ pipelines:
       - step: *deploy-to-azure-staging
     build-no-test-and-deploy-to-az-production:
       - step: *build-artifacts
-      - step: *deploy-to-azure-production
+      - step: *deploy-to-azure-prod
 
   branches:
     '{dev_branch,develop,cypress-grouping}':
@@ -281,4 +281,4 @@ pipelines:
       #         name: Cypress on Machine (5)
       # - step: *e2e-egress
       - step: *build-artifacts
-      - step: *deploy-to-azure-production
+      - step: *deploy-to-azure-prod
