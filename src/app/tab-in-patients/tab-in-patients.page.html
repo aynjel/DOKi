@@ -114,9 +114,10 @@
                   </ion-item>
                   <div *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__ADMITTED">
                     <!--Patient Admitted-->
+                    <!--Buffer 0.35 -->
                     <ion-progress-bar
                       value=".25"
-                      buffer="0.35"
+                      buffer="1"
                       color="warning"
                     ></ion-progress-bar>
                   </div>
@@ -124,9 +125,10 @@
                     *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE && (x.is_posted == this.constants.ANY__VALUE__NULL || x.is_posted == this.constants.NUMBER__VALUE__ZERO) && x.doctor_prof_fee == this.constants.ANY__VALUE__NULL"
                   >
                     <!--Patient For Discharge-->
+                    <!--Buffer 0.60 -->
                     <ion-progress-bar
                       value=".50"
-                      buffer="0.60"
+                      buffer="1"
                       color="warning"
                     ></ion-progress-bar>
                   </div>
@@ -134,9 +136,10 @@
                     *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE  && (x.is_posted ==this.constants.ANY__VALUE__NULL|| x.is_posted ==this.constants.NUMBER__VALUE__ZERO ) && x.doctor_prof_fee !=this.constants.ANY__VALUE__NULL"
                   >
                     <!--Patient For Discharge-->
+                    <!--Buffer 0.85 -->
                     <ion-progress-bar
                       value=".75"
-                      buffer="0.85"
+                      buffer="1"
                       color="warning"
                     ></ion-progress-bar>
                   </div>
