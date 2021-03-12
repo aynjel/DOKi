@@ -159,7 +159,7 @@ definitions:
             AZURE_RESOURCE_GROUP: $AZURE_RESOURCE_GROUP
             AZURE_APP_NAME: $AZURE_APP_NAME
             ZIP_FILE: 'doki-$BITBUCKET_BUILD_NUMBER.zip'
-            SLOT: 'doki-apps/staging'
+            SLOT: 'staging'
     # --------- SFTP On-Premise Deployment ---------
     - step: &deploy-staging-using-sftp
         name: Deploy Staging (SFTP)
