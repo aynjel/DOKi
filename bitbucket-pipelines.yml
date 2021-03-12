@@ -120,11 +120,11 @@ definitions:
           - npm install -g @ionic/cli
           - npm ci
           - ionic build --prod
-          - cd www && zip -r ../dpp-$BITBUCKET_BUILD_NUMBER.zip .
+          - cd www && zip -r ../doki-$BITBUCKET_BUILD_NUMBER.zip .
         artifacts:
           # - node_modules/** # Save modules for next steps
           - www/**
-          - dpp-*.zip
+          - doki-*.zip
     # --------- Firebase Cloud Deployment ---------
     - step: &deploy-staging-to-firebase
         name: Deploy Staging (Firebase)
@@ -134,9 +134,9 @@ definitions:
             variables:
               FIREBASE_TOKEN: $DPP_STAGING_FIREBASE_TOKEN
     # --------- Azure Web App Deployment ---------
-    - step: &deploy-to-azure
+    - step: &deploy-to-azure-prod
         name: Deploy to Azure
-        deployment: test
+        deployment: production
         script:
         - pipe: atlassian/azure-web-apps-deploy:1.0.0
           variables:
@@ -145,7 +145,21 @@ definitions:
             AZURE_TENANT_ID: $AZURE_TENANT_ID
             AZURE_RESOURCE_GROUP: $AZURE_RESOURCE_GROUP
             AZURE_APP_NAME: $AZURE_APP_NAME
-            ZIP_FILE: 'dpp-$BITBUCKET_BUILD_NUMBER.zip'
+            ZIP_FILE: 'doki-$BITBUCKET_BUILD_NUMBER.zip'
+            SLOT: 'doki-apps'
+    - step: &deploy-to-azure-staging
+        name: Deploy to Azure
+        deployment: staging
+        script:
+        - pipe: atlassian/azure-web-apps-deploy:1.0.0
+          variables:
+            AZURE_APP_ID: $AZURE_APP_ID
+            AZURE_PASSWORD: $AZURE_PASSWORD
+            AZURE_TENANT_ID: $AZURE_TENANT_ID
+            AZURE_RESOURCE_GROUP: $AZURE_RESOURCE_GROUP
+            AZURE_APP_NAME: $AZURE_APP_NAME
+            ZIP_FILE: 'doki-$BITBUCKET_BUILD_NUMBER.zip'
+            SLOT: 'doki-apps-staging'
     # --------- SFTP On-Premise Deployment ---------
     - step: &deploy-staging-using-sftp
         name: Deploy Staging (SFTP)
@@ -208,9 +222,12 @@ definitions:
 
 pipelines:
   custom: 
-    build-and-deploy:
+    build-no-test-and-deploy-to-az-staging:
       - step: *build-artifacts
-      - step: *deploy-to-azure
+      - step: *deploy-to-azure-staging
+    build-no-test-and-deploy-to-az-production:
+      - step: *build-artifacts
+      - step: *deploy-to-azure-production
 
   branches:
     '{dev_branch,develop,cypress-grouping}':
@@ -238,7 +255,7 @@ pipelines:
       # - step: *e2e-egress
       - step: *build-artifacts
       # - step: *deploy-staging-to-firebase
-      - step: *deploy-to-azure
+      - step: *deploy-to-azure-staging
 
     master:
       - step: *code-linting
@@ -264,4 +281,4 @@ pipelines:
       #         name: Cypress on Machine (5)
       # - step: *e2e-egress
       - step: *build-artifacts
-      - step: *deploy-prod-using-sftp
+      - step: *deploy-to-azure-production
