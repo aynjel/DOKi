@@ -18,10 +18,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'pharma',
-    loadChildren: () => import('./pages/test/pharma/pharma.module').then( m => m.PharmaPageModule)
-  },
-  {
     path: '',
     canActivate:[IndexGuard], 
     loadChildren: () => import('./pages/index/index.module').then( m => m.IndexPageModule)

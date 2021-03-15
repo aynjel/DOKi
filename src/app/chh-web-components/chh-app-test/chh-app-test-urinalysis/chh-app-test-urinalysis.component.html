@@ -37,8 +37,8 @@
           Result : {{x.Result}} {{x.Units}}<br />
           <div *ngIf="x.High_Low == 'H' || x.High_Low == 'L'">
             Remarks : {{x.High_Low}} 
-            <ion-icon name="arrow-up-outline" *ngIf="x.High_Low == 'H'"></ion-icon>
-            <ion-icon name="arrow-down-outline" *ngIf="x.High_Low == 'L'"></ion-icon>
+            <ion-icon name="arrow-up-outline" style="color:red" *ngIf="x.High_Low == 'H'"></ion-icon>
+            <ion-icon name="arrow-down-outline" style="color:red"  *ngIf="x.High_Low == 'L'"></ion-icon>
            </div>
 
         </ion-col>
