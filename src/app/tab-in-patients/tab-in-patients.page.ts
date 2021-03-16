@@ -222,7 +222,11 @@ export class TabInPatientsPage {
 
   //Fired when the component routing to is about to animate into view.
   ionViewWillEnter() {
+
+    
     this.logindata = <LoginData>this.authService.userData$.getValue();
+
+    
     this.dr_code = this.logindata[0].dr_code;
     let dr_name = this.logindata[0].last_name;
     this.$gaService.event("In-Patient", "User Flow", dr_name);
@@ -300,6 +304,10 @@ export class TabInPatientsPage {
   }
 
   async detail(data: any) {
+  this.router.navigate(['menu/in-patients/', data]);
+
+    // this.router.navigate(['in-patient'], {state: {data }});
+    /*
     const modal = await this.modalController.create({
       component: ChhAppInPatientModalPage,
       componentProps: { data: data },
@@ -308,7 +316,7 @@ export class TabInPatientsPage {
     modal.present();
     return await modal.onDidDismiss().then((data: any) => {
       this.callPatient(this.site);
-    });
+    });*/
   }
 
   //location is changed

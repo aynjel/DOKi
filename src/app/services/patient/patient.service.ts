@@ -317,7 +317,7 @@ export class PatientService {
 
 
 
- 
+ /*
   restRXCUI(data1:any){
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
@@ -342,6 +342,7 @@ export class PatientService {
 
     return this.http.get(url, options);
   }
+*/
 
 
 
