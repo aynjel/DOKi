@@ -1,7 +1,7 @@
-import { Component, OnInit, Input,ViewChild, ViewContainerRef,  ComponentFactoryResolver } from "@angular/core";
+import { Component, OnInit, Input,ViewChild, ViewContainerRef,  ComponentFactoryResolver, Renderer2 } from "@angular/core";
 import { Router, ActivatedRoute} from "@angular/router";
 import {Location} from '@angular/common';
-import { ModalController, AlertController } from "@ionic/angular";
+import { ModalController, AlertController, NavController } from "@ionic/angular";
 import { ChhAppFeePage } from "../../../chh-web-components/chh-app-fee/chh-app-fee.page";
 import { from } from "rxjs";
 import { PopoverController } from "@ionic/angular";
@@ -23,6 +23,7 @@ import { ChhAppTestSerologyComponent } from "../../../chh-web-components/chh-app
 import { StorageService } from "../../../services/storage/storage.service";
 import { AuthConstants } from "../../../config/auth-constants";
 import { executionAsyncResource } from "async_hooks";
+import { Constants } from "src/app/shared/constants";
 
 
 
@@ -77,6 +78,7 @@ export class InPatientDetailPage   {
   ClickedRow:any; 
   dr_code:any;
   dr_name:any;
+  patient_name:any;
   postData = {
     AdmisisonNo: "string",
     DoctorCode: "string",
@@ -127,7 +129,10 @@ export class InPatientDetailPage   {
     private patientService: PatientService,
     private screensizeService: ScreenSizeService,
     public messages: Messages,
-    public storageService: StorageService) {
+    public storageService: StorageService,
+    public constants: Constants,
+    private renderer: Renderer2,
+    public nav:NavController) {
 
       this.screensizeService.isDesktopView().subscribe((isDesktop) => {
         if (this.isDesktop && !isDesktop) {
@@ -143,6 +148,8 @@ export class InPatientDetailPage   {
 
  
   ionViewWillEnter(){
+
+    this.checkAppearance();
     console.log('ionViewWillEnter');
 
    /* let logindata = <LoginData>this.authService.userData$.getValue();
@@ -172,6 +179,7 @@ export class InPatientDetailPage   {
           res.forEach(element => {
               if(element.patient_no == this.activatedRoute.snapshot.params.id){
                 this.data.push(element);
+                this.patient_name = element.first_name + ' ' + element.last_name;
               }
           });
         },(error) => {
@@ -705,7 +713,16 @@ export class InPatientDetailPage   {
 
 
   redirecttoPF(){
-    this.router.navigate(['menu/in-patients/'+this.activatedRoute.snapshot.params.id+'/professional-fee']);
+    //this.router.navigate(['menu/in-patients/'+this.activatedRoute.snapshot.params.id+'/professional-fee']);
+
+
+
+    this.nav.navigateForward('menu/in-patients/' + this.activatedRoute.snapshot.params.id+'/professional-fee', {
+      state: {
+        // ...
+      },
+    });
+  
   }
 
 
@@ -715,7 +732,27 @@ export class InPatientDetailPage   {
   back(){
 
   }
+  checkAppearance(){
 
+    let dr_username = atob(localStorage.getItem("username"));
+    this.patientService.getUserSettings('DPP',dr_username).subscribe(
+      (res: any) => {       
+        if(Object.keys(res).length >= 1){
+          let data = JSON.stringify(res);data = '['+data+']';let adat = JSON.parse(data);
+          adat.forEach(el => {
+            if(typeof el.appearance !== 'undefined'){
+              if(el.appearance.darkmode == 1){
+                this.renderer.setAttribute(document.body, "color-theme", "dark");
+              }else{
+                this.renderer.setAttribute(document.body, "color-theme", "light");
+              }
+            }else{
+              this.renderer.setAttribute(document.body, "color-theme", "light");
+            }
+          });
+        }
+      });
+  }
 
 
 

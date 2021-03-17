@@ -93,9 +93,15 @@
   }
 
   .max-height-87vh{
-    max-height: 87vh;
+    max-height: 73vh;
 
   }
+
+  .max-height-34vh{
+    max-height: 32vh;
+
+  }
+
   .max-height-500{
     max-height: 500px;
   }
@@ -350,4 +356,44 @@ body[color-theme="light"] {
   .lightmode{
     display: block;
   }
+}
+
+
+.nav-primary.active {
+  color: #275228;
+  font-weight: 1000 !important;
+  background-color: yellow;
+  //font-weight:bolder;
+
+}
+
+
+/* Breadcrumb */
+.breadcrumb {
+
+list-style: none;
+
+font-weight: normal;
+//color: #FFF;
+overflow: hidden;
+li {
+  display: inline-block;
+  //color: #FFF;
+}
+a {
+  //color:#E9A7A1;
+  text-decoration: none;
+}
+.ion-chevron-right {
+
+  font-size: 13px;
+ // color: #E9A7A1;
+}
+
+.icon-center{
+
+  vertical-align: middle;
+}
+
+
 }

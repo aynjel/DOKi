@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { StorageService } from "../services/storage/storage.service";
 import { AuthConstants } from "../config/auth-constants";
 import { DoctorService } from "../services/doctor/doctor.service";
-import { ModalController, AlertController } from "@ionic/angular";
+import { ModalController, AlertController, NavController } from "@ionic/angular";
 import { ChhAppPatientDetailsPage } from "../chh-web-components/chh-app-patient-details/chh-app-patient-details.page";
 import { ScreenSizeService } from "../services/screen-size/screen-size.service";
 import { PopoverController } from "@ionic/angular";
@@ -58,7 +58,8 @@ export class TabInPatientsPage {
     protected $gaService: GoogleAnalyticsService,
     public constants: Constants,
     public messages: Messages,
-    private patientService: PatientService
+    private patientService: PatientService,
+    public nav:NavController
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -304,7 +305,20 @@ export class TabInPatientsPage {
   }
 
   async detail(data: any) {
+    /*
   this.router.navigate(['menu/in-patients/', data]);
+*/
+  //this.router.navigate(['menu/in-patients/', data]);
+
+ 
+
+  this.nav.navigateForward('menu/in-patients/' + data, {
+    state: {
+      // ...
+    },
+  });
+
+
 
     // this.router.navigate(['in-patient'], {state: {data }});
     /*

@@ -1,13 +1,13 @@
 <ion-header mode="md" class="ion-no-border" *ngIf="!isDesktop">
   <ion-toolbar color="mango">
     <ion-title>
-      Professional Fee
+      {{method}}
     </ion-title>
     <ion-buttons
       slot="end"
       class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated"
     >
-      <ion-button routerLink="{{routerLinkBack}}" routerDirection="backwards" color="chh-css-primary2"
+      <ion-button routerLink="{{routerLinkBack2}}" routerDirection="backwards" color="chh-css-primary2"
         >Close&nbsp; <ion-icon name="close-outline"></ion-icon
       ></ion-button>
     </ion-buttons>
@@ -15,10 +15,6 @@
 </ion-header>
 
 <ion-content *ngIf="!isDesktop">
-
-
-
-
   <ion-card mode="ios" >
 
     <div *ngFor="let x of data">
@@ -101,31 +97,13 @@
     
     
       </ion-card>
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <ion-card>
-    <ion-item  (click)="redirecto('insurance')">
-      <ion-label>Care of Insurance</ion-label>
-    </ion-item>
-    <ion-item (click)="redirecto('charity')">
-      <ion-label>Charity</ion-label>
-    </ion-item>
-    <ion-item (click)="redirecto('philhealth')">
-      <ion-label>Phil Health</ion-label>
-    </ion-item>
-  </ion-card>
 </ion-content>
+
+
+
+
+
+
 
 <!--
 ______          _    _              
@@ -203,31 +181,22 @@ ______          _    _
 <ion-content  *ngIf="isDesktop">
   <ul class="breadcrumb" >
     <li>
-      <a routerLink="{{routerLinkBack}}">{{patient_name}}</a>
+      <a routerLink="{{routerLinkBack1}}">{{patient_name}}</a>
       <ion-icon name="chevron-forward-outline" class="icon-center"></ion-icon>
     </li>
     <li>
-      <a >Professional Fee</a><ion-icon name="chevron-forward-outline" class="icon-center"></ion-icon>
+      <a routerLink="{{routerLinkBack2}}">Professional Fee</a>
+      <ion-icon name="chevron-forward-outline" class="icon-center"></ion-icon>
     </li>
+    <li>
+      <a >{{method}}</a>
+    </li>
+    
   </ul>   
 
   <ion-grid class="ion-no-padding">
     <ion-row>
-      <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
-      <ion-col size-xs="12" size-md="4" size-lg="4">
-        <ion-card>
-          <ion-item  (click)="redirecto('insurance')" class="pointer">
-            <ion-label>Care of Insurance</ion-label>
-          </ion-item>
-          <ion-item (click)="redirecto('charity')" class="pointer">
-            <ion-label>Charity</ion-label>
-          </ion-item>
-          <ion-item (click)="redirecto('philhealth')" class="pointer">
-            <ion-label>Phil Health</ion-label>
-          </ion-item>
-        </ion-card>
-      </ion-col>
-      <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+
     </ion-row>
   </ion-grid>
 

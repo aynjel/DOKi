@@ -25,36 +25,31 @@ import { AuthConstants } from "../../../config/auth-constants";
 import { executionAsyncResource } from "async_hooks";
 import { Constants } from "src/app/shared/constants";
 
-
 @Component({
-  selector: 'app-chh-app-professional-fee',
-  templateUrl: './chh-app-professional-fee.page.html',
-  styleUrls: ['./chh-app-professional-fee.page.scss'],
+  selector: 'app-chh-app-professional-fee-summary',
+  templateUrl: './chh-app-professional-fee-summary.page.html',
+  styleUrls: ['./chh-app-professional-fee-summary.page.scss'],
 })
-export class ChhAppProfessionalFeePage implements OnInit {
-  public logindata: LoginData;
+export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   isDesktop:any;
+  routerLinkBack1:any;
+  routerLinkBack2:any;
+  method:any;
+  id:any;
   dr_name:any;
+
+  public logindata: LoginData;
   dr_code:any;
-  routerLinkBack  :any;
   patient_id  :any;
   data:any;
   patient_name:any;
   dateAdmitted:any;
   postData = {
-    AdmisisonNo: "string",
-    DoctorCode: "string",
-    DoctorStatusCode: "string",
-    ProfFee: 0,
-    DateCreated: "2020-07-01T05:14:48.712Z",
-    site: "string",
-    CreatedBy: "string",
-    Remarks: "string",
-    DoctorMobileNumber: "string",
-    BillingMobileNumber: "string",
-    RoomNumber: "string",
-    SmsGateWay: [],
-    OldProfFee: "string",
+    AdmisisonNo: "string",DoctorCode: "string",DoctorStatusCode: "string",
+    ProfFee: 0,DateCreated: "2020-07-01T05:14:48.712Z",
+    site: "string",CreatedBy: "string",Remarks: "string",
+    DoctorMobileNumber: "string",BillingMobileNumber: "string",
+    RoomNumber: "string",SmsGateWay: [],OldProfFee: "string",
   };
   constructor(
     private router: Router,
@@ -87,9 +82,13 @@ export class ChhAppProfessionalFeePage implements OnInit {
 
   ngOnInit() {
 
+    
 
-    this.routerLinkBack = "/menu/in-patients/"+this.activatedRoute.snapshot.params.id;
-    this.patient_id = this.activatedRoute.snapshot.params.id;
+    this.id = this.activatedRoute.snapshot.params.id;
+    this.method = this.activatedRoute.snapshot.params.method;
+    this.method = this.functionsService.convertAllFirstLetterToUpperCase(this.method);
+    this.routerLinkBack1 = "/menu/in-patients/"+this.id;
+    this.routerLinkBack2 = "/menu/in-patients/"+this.id+"/professional-fee";
   }
 
   ionViewWillEnter(){
@@ -101,6 +100,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     this.dr_code = logindata[0].dr_code;*/
 
     let logindata = <LoginData>this.authService.userData$.getValue();
+    console.log(logindata);
     
     this.dr_name = logindata[0].last_name;
     this.dr_code = logindata[0].dr_code;
@@ -108,7 +108,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     this.data =[];
     this.doctorService.getInPatient(this.dr_code).subscribe(
       (res: any) => {
-
+        console.log(res);
         
         res.forEach(element => {
             if(element.patient_no == this.activatedRoute.snapshot.params.id){
@@ -122,31 +122,18 @@ export class ChhAppProfessionalFeePage implements OnInit {
         
       },
       ()=>{
-        console.log('OPERATE');
         this.checkAppearance();
-        //this.operate();
       });
      
     console.log( this.dr_code );
     
   }
-  redirecto(data){
-    console.log(this.router.url);
-    this.router.navigate([this.router.url+'/'+data]);
-  }
-
   checkAppearance(){
-    
-
     let d = new Date(this.data[0].admission_date);
     this.dateAdmitted = d.toUTCString();
     console.log(this.dateAdmitted);
 
 
-
-
-    this.logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_code = this.logindata[0].dr_code;
     let dr_username = atob(localStorage.getItem("username"));
     this.patientService.getUserSettings('DPP',dr_username).subscribe(
       (res: any) => {       
