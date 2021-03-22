@@ -92,11 +92,14 @@
     max-height: 300px;
   }
 
-  .max-height-87vh{
+  .max-height-73vh{
     max-height: 73vh;
 
   }
+  .max-height-87vh{
+    max-height: 87vh;
 
+  }
   .max-height-34vh{
     max-height: 32vh;
 
@@ -391,9 +394,14 @@ a {
 }
 
 .icon-center{
-
-  vertical-align: middle;
+  vertical-align: middle !important;
 }
 
 
 }
+
+
+
+
+
+

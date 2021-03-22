@@ -198,7 +198,9 @@
       background: #275228; 
       border-radius: 10px;
     }
-
+    .background-lightgray{
+      background-color: red;
+    }
 
 }
 .chh-darkmode {
@@ -287,6 +289,9 @@ body[color-theme="dark"] {
   .highcharts-color-1 {
     fill: #9696ab;
     stroke: #9696ab;
+  }
+  .background-lightgray{
+    background-color: rgb(84, 10, 255);
   }
 }
 
@@ -399,3 +404,34 @@ body[color-theme="dark"] {
 .toolbar-wp {
   min-height: 20px;
 }
+
+
+/*
+.background-lightgray{
+
+
+    body[color-theme="light"] {
+        background-color: red !important;
+    }
+    body[color-theme="dark"] {
+      background-color: #b92d2d !important;
+    }
+
+
+    .md body[color-theme="light"] {
+        background-color: red !important;
+    }
+    .md body[color-theme="dark"] {
+        background-color: #b92d2d !important;
+    }
+
+    .ios body[color-theme="light"] {
+        background-color: red !important;
+    }
+    .ios body[color-theme="dark"] {
+        background-color: #b92d2d !important;
+    }
+
+
+
+  }*/

@@ -12,120 +12,231 @@
       ></ion-button>
     </ion-buttons>
   </ion-toolbar>
+
+
+
+
+
+
 </ion-header>
 
 <ion-content *ngIf="!isDesktop">
+  <ion-grid  *ngIf="!isDesktop"  class="ion-no-padding background-lightgray">
+    <ion-row >
+      <ion-col size="12"  >
+  <!-- HEADER MOBILE-->
+<ion-card mode="ios" *ngIf="!isDesktop" class="card-margin " >
 
-
-
-
-  <ion-card mode="ios" >
-
-    <div *ngFor="let x of data">
-        <ion-list> 
-          <ion-item lines="none">
-            <!--ion-avatar slot="start">
-          <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg">
-        </ion-avatar-->
-            <ion-avatar slot="start">
-              <chh-app-text-avatar [text]="x.last_name" [color]=""></chh-app-text-avatar>
-            </ion-avatar>
-            <ion-label>
-              <ion-item class="ion-no-padding ">
-                <h2 class="ion-text-wrap" style="padding-top: 20px;">
-                  <b>{{x.last_name}}, {{x.first_name}} {{x.middle_name}}</b>
-                </h2>
-                <ion-badge
-                  color="warning"
-                  slot="end"
-                  *ngIf="x.admission_status == 'DN' && x.doctor_prof_fee == null && x.is_posted ==null"
-                >
-                  PF</ion-badge
-                >
-                <ion-badge
-                  color="success"
-                  slot="end"
-                  *ngIf="x.doctor_prof_fee != null && x.is_posted !=null"
-                >
-                  PF OK</ion-badge
-                >
-              </ion-item>
-              <div class="ion-text-wrap" style="padding-top: 5px;">
-                <div *ngIf="x.site == 'C'">
-                  <ion-icon name="location-outline" slot="start"></ion-icon>
-                  Chong Hua Hospital
-                </div>
-                <div *ngIf="x.site == 'M'">
-                  <ion-icon name="location-outline" slot="start"></ion-icon>
-                  Chong Hua Hospital Mandaue
-                </div>
-                <div>
-                  <ion-icon name="bed-outline" slot="start"></ion-icon>
-                  Room {{x.room_no}}<br />
-                  <ion-icon name="clipboard-outline" slot="start"></ion-icon>
-                  as {{x.Doctor_Status}}<br />
-                  <ion-chip *ngIf="x.admission_status == 'AC'">
-                    <ion-label color="mango"><b>Admitted</b></ion-label>
-                  </ion-chip>
-    
-                  <!-- <ion-badge *ngIf="data.admission_status == 'AC'"
-                color="mango"
-                slot="end">
-                Admitted
-              </ion-badge> -->
-    
-                  <ion-chip *ngIf="x.admission_status == 'DN'">
-                    <ion-label color="mango"><b>For Discharge</b></ion-label>
-                  </ion-chip>
-    
-                  <!-- <ion-badge *ngIf="data.admission_status == 'DN'"
-                color="mango"
-                slot="end">
-                For Discharge
-              </ion-badge> -->
-                </div>
-              </div>
-            </ion-label>
+<div *ngFor="let x of data">
+    <ion-list > 
+      <ion-item lines="none">
+        <!--ion-avatar slot="start">
+      <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg">
+    </ion-avatar-->
+    <!--ion-avatar slot="start">
+      <chh-app-text-avatar [text]="x.last_name" [color]=""></chh-app-text-avatar>
+    </ion-avatar-->
+        <ion-label>
+          <ion-item class="ion-no-padding ">
+            <!--h2 class="ion-text-wrap" style="padding-top: 20px;"-->
+            <h2 class="ion-text-wrap" >
+              <b>{{x.last_name}}, {{x.first_name}} {{x.middle_name}}</b>
+            </h2>
+            <ion-badge
+              color="warning"
+              slot="end"
+              *ngIf="x.admission_status == 'DN' && x.doctor_prof_fee == null && x.is_posted ==null"
+            >
+              PF</ion-badge
+            >
+            <ion-badge
+              color="success"
+              slot="end"
+              *ngIf="x.doctor_prof_fee != null && x.is_posted !=null"
+            >
+              PF OK</ion-badge
+            >
           </ion-item>
-          <ion-item lines="none" style="padding-bottom: 10px;">
-            <div class="ion-text-wrap">
-              <!-- <ion-text *ngIf="data.admission_status == 'AC'">Status : Admitted </ion-text>  -->
-    
-              <!-- <ion-text *ngIf="data.admission_status == 'DN'">Status : For Discharge<br /></ion-text> -->
-              <ion-icon name="calendar-outline"></ion-icon
-              ><ion-text> Admission Date : {{dateAdmitted}}</ion-text>
+          <div class="ion-text-wrap" style="padding-top: 5px;">
+            <div *ngIf="x.site == 'C'">
+              <ion-icon name="location-outline" slot="start"></ion-icon>
+              Chong Hua Hospital
             </div>
-          </ion-item>
-         </ion-list>
+            <div *ngIf="x.site == 'M'">
+              <ion-icon name="location-outline" slot="start"></ion-icon>
+              Chong Hua Hospital Mandaue
+            </div>
+            <div>
+              <ion-icon name="bed-outline" slot="start"></ion-icon>
+              Room {{x.room_no}}
+              <!--ion-icon name="clipboard-outline" slot="start"></ion-icon>
+              as {{x.Doctor_Status}}<br />
+              <ion-chip *ngIf="x.admission_status == 'AC'">
+                <ion-label color="mango"><b>Admitted</b></ion-label>
+              </ion-chip>
+              <ion-chip *ngIf="x.admission_status == 'DN'">
+                <ion-label color="mango"><b>For Discharge</b></ion-label>
+              </ion-chip-->
+            </div>
+          </div>
+        </ion-label>
+      </ion-item>
+      <ion-item lines="none" style="padding-bottom: 10px;">
+        <div class="ion-text-wrap">
+          <!-- <ion-text *ngIf="data.admission_status == 'AC'">Status : Admitted </ion-text>  -->
+
+          <!-- <ion-text *ngIf="data.admission_status == 'DN'">Status : For Discharge<br /></ion-text> -->
+          <ion-icon name="calendar-outline"></ion-icon
+          ><ion-text> Admission Date : {{dateAdmitted}}</ion-text>
         </div>
-    
-    
-      </ion-card>
+      </ion-item>
+     </ion-list>
+    </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-  <ion-card>
-    <ion-item  (click)="redirecto('insurance')">
-      <ion-label>Care of Insurance</ion-label>
-    </ion-item>
-    <ion-item (click)="redirecto('charity')">
-      <ion-label>Charity</ion-label>
-    </ion-item>
-    <ion-item (click)="redirecto('philhealth')">
-      <ion-label>Phil Health</ion-label>
-    </ion-item>
   </ion-card>
+</ion-col>
+</ion-row>
+</ion-grid>
+
+    
+
+
+
+
+<app-chh-app-card-newline></app-chh-app-card-newline>
+
+
+<ion-grid  *ngIf="!isDesktop"  class="ion-no-padding background-lightgray" aria-disabled="true">
+  <ion-row >
+    <ion-col size="12"  >
+      <ion-card class="card-margin ">
+
+    <!--ion-list-header>
+      Have You seen this patient?
+    </ion-list-header>
+
+    <ion-item>
+      <ion-toggle  [(ngModel)]="yesnoToggle"  (ionChange)="viewtoggle()"></ion-toggle> {{yesno}}
+    </ion-item-->
+
+   
+    <ion-item>
+      <ion-label  class="ion-text-wrap">Are you a Insurance Coordinator? : ({{insCoor}})</ion-label> 
+      <ion-checkbox color="mango" checked="false" (ionChange)="viewtoggle($event)"></ion-checkbox>
+      </ion-item>
+
+  </ion-card>
+  </ion-col>
+  </ion-row>
+</ion-grid>
+
+<app-chh-app-card-newline></app-chh-app-card-newline>
+
+<ion-grid  *ngIf="!isDesktop"  class="ion-no-padding background-lightgray">
+  <ion-row >
+    <ion-col size="12"  >
+      <ion-card class="card-margin ">
+  <ion-list>
+    <ion-list-header>
+      How do you want to....
+    </ion-list-header>
+
+    <ion-item (click)="redirecto('insurance')">
+      <ion-avatar slot="start">
+        <img src="../../../../assets/img/insurance.JPG">
+      </ion-avatar>
+      <ion-label>
+        <h2>Care of Insurance</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item (click)="redirecto('charity')">
+      <ion-avatar slot="start">
+        <img src="../../../../assets/img/charity.jpg">
+      </ion-avatar>
+      <ion-label>
+        <h2>Charity</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item (click)="redirecto('philhealth')">
+      <ion-avatar slot="start">
+        <img src="../../../../assets/img/philhealth.jpg">
+      </ion-avatar>
+      <ion-label>
+        <h2>Phil Health</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  </ion-card>
+  </ion-col>
+  </ion-row>
+</ion-grid>
+
+
+
+
+<!--
+  <ion-grid  *ngIf="!isDesktop"  class="ion-no-padding background-lightgray">
+    <ion-row >
+      <ion-col size="12"  >
+        <ion-card class="card-margin ">
+          <ion-item  (click)="redirecto('insurance')">
+            <ion-label>Care of Insurance</ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid  *ngIf="!isDesktop"  class="ion-no-padding"><ion-row ><ion-col size="12"><div style="padding: 5px;"></div></ion-col></ion-row></ion-grid>
+  <ion-grid  *ngIf="!isDesktop"  class="ion-no-padding background-lightgray">
+    <ion-row >
+      <ion-col size="12"  >
+        <ion-card class="card-margin ">
+          <ion-item (click)="redirecto('charity')">
+            <ion-label>Charity</ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid  *ngIf="!isDesktop"  class="ion-no-padding"><ion-row ><ion-col size="12"><div style="padding: 5px;"></div></ion-col></ion-row></ion-grid>
+  <ion-grid  *ngIf="!isDesktop"  class="ion-no-padding background-lightgray">
+    <ion-row >
+      <ion-col size="12"  >
+        <ion-card class="card-margin ">
+          <ion-item (click)="redirecto('philhealth')">
+            <ion-label>Phil Health</ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+-->
+
 </ion-content>
+<ion-footer class="ion-no-border" *ngIf="!isDesktop">
+  <ion-toolbar>
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+        <ion-col size-xs="12" size-md="4" size-lg="4">
+          Status
+          <ion-progress-bar value="0.5"></ion-progress-bar>
+        </ion-col>
+        <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+
+</ion-footer>
+
+
 
 <!--
 ______          _    _              
@@ -211,23 +322,125 @@ ______          _    _
     </li>
   </ul>   
 
-  <ion-grid class="ion-no-padding">
+  <ion-grid class="ion-no-padding" >
     <ion-row>
-      <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
-      <ion-col size-xs="12" size-md="4" size-lg="4">
-        <ion-card>
-          <ion-item  (click)="redirecto('insurance')" class="pointer">
-            <ion-label>Care of Insurance</ion-label>
+    <ion-col  size-md="1"></ion-col>
+    <ion-col  size-md="3">
+
+      <app-chh-app-patient-header 
+      [data]="data" [dateAdmitted]="dateAdmitted"
+    ></app-chh-app-patient-header>
+
+    </ion-col>
+    <ion-col  size-md="4">
+    
+
+    <ion-grid class="ion-no-padding " aria-disabled="true">
+      <ion-row >
+        <ion-col size="12"  >
+          <ion-card class="card-margin ">
+    
+        <!--ion-list-header>
+          Have You seen this patient?
+        </ion-list-header>
+    
+        <ion-item>
+          <ion-toggle  [(ngModel)]="yesnoToggle"  (ionChange)="viewtoggle()"></ion-toggle> {{yesno}}
+        </ion-item-->
+    
+       
+        <ion-item>
+          <ion-label  class="ion-text-wrap">Are you a Insurance Coordinator?</ion-label> 
+         
           </ion-item>
-          <ion-item (click)="redirecto('charity')" class="pointer">
-            <ion-label>Charity</ion-label>
-          </ion-item>
-          <ion-item (click)="redirecto('philhealth')" class="pointer">
-            <ion-label>Phil Health</ion-label>
-          </ion-item>
-        </ion-card>
+          <ion-segment >
+            <ion-segment-button value="yes">
+              <ion-label>Yes</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="o" style="width: 1px;" hidden ></ion-segment-button>
+            <ion-segment-button value="n">
+              <ion-label>No</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+      </ion-card>
       </ion-col>
-      <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+      </ion-row>
+    </ion-grid>
+    
+    
+    <app-chh-app-card-newline></app-chh-app-card-newline>
+    
+    <ion-grid    class="ion-no-padding ">
+      <ion-row >
+        <ion-col size="12"  >
+          <ion-card class="card-margin ">
+      <ion-list>
+        <ion-list-header>
+          How do you want to....
+        </ion-list-header>
+    
+        <ion-item (click)="redirecto('insurance')" class="pointer">
+          <ion-avatar slot="start">
+            <img src="../../../../assets/img/insurance.JPG">
+          </ion-avatar>
+          <ion-label>
+            <h2>Care of Insurance</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p>
+          </ion-label>
+        </ion-item>
+    
+        <ion-item (click)="redirecto('charity')" class="pointer">
+          <ion-avatar slot="start">
+            <img src="../../../../assets/img/charity.jpg">
+          </ion-avatar>
+          <ion-label>
+            <h2>Charity</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p>
+          </ion-label>
+        </ion-item>
+    
+        <ion-item (click)="redirecto('philhealth')" class="pointer">
+          <ion-avatar slot="start">
+            <img src="../../../../assets/img/philhealth.jpg">
+          </ion-avatar>
+          <ion-label>
+            <h2>Phil Health</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+      </ion-card>
+      </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        asdasdasdasd
+        
+                </ion-col>
     </ion-row>
   </ion-grid>
 
@@ -239,15 +452,7 @@ ______          _    _
 
 
 <ion-footer class="ion-no-border" *ngIf="isDesktop">
-  <ion-toolbar>
-    <ion-grid class="ion-no-padding">
-      <ion-row>
-        <ion-col size="12" *ngIf="isDesktop">
-          <div class="footer tab-font-family">
-            <span>{{this.constants.CHH_NAME__VALUE__CEBU}}</span>
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-toolbar>
+  <div class="footer tab-font-family"  *ngIf="isDesktop">
+    <span>{{this.constants.CHH_NAME__VALUE__CEBU}}</span>
+  </div>
 </ion-footer>

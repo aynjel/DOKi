@@ -9,3 +9,20 @@
 
     bottom: 0px;
   }
+
+
+  .background-lightgray{
+    background-color: #f8f8f8;
+  }
+  
+  .card-margin{
+    margin:10px;
+  }
+
+
+  .vertical-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }

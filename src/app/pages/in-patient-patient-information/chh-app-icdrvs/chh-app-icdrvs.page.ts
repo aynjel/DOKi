@@ -26,16 +26,15 @@ import { executionAsyncResource } from "async_hooks";
 import { Constants } from "src/app/shared/constants";
 
 @Component({
-  selector: 'app-chh-app-professional-fee-summary',
-  templateUrl: './chh-app-professional-fee-summary.page.html',
-  styleUrls: ['./chh-app-professional-fee-summary.page.scss'],
+  selector: 'app-chh-app-icdrvs',
+  templateUrl: './chh-app-icdrvs.page.html',
+  styleUrls: ['./chh-app-icdrvs.page.scss'],
 })
-export class ChhAppProfessionalFeeSummaryPage implements OnInit {
+export class ChhAppIcdrvsPage implements OnInit {
   isDesktop:any;
   routerLinkBack1:any;
   routerLinkBack2:any;
   method:any;
-  method1:any;
   id:any;
   dr_name:any;
 
@@ -45,7 +44,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   data:any;
   patient_name:any;
   dateAdmitted:any;
-  isPatientSeen : any = "o";
+  caseData:any = '1stcase';
   postData = {
     AdmisisonNo: "string",DoctorCode: "string",DoctorStatusCode: "string",
     ProfFee: 0,DateCreated: "2020-07-01T05:14:48.712Z",
@@ -83,82 +82,80 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     }
 
   ngOnInit() {
-
     
-
-    this.id = this.activatedRoute.snapshot.params.id;
-    this.method = this.method1 = this.activatedRoute.snapshot.params.method;
+    /*this.id = this.activatedRoute.snapshot.params.id;
+    this.method = this.activatedRoute.snapshot.params.method;
     this.method = this.functionsService.convertAllFirstLetterToUpperCase(this.method);
     this.routerLinkBack1 = "/menu/in-patients/"+this.id;
-    this.routerLinkBack2 = "/menu/in-patients/"+this.id+"/professional-fee";
+    this.routerLinkBack2 = "/menu/in-patients/"+this.id+"/professional-fee";*/
   }
-
   ionViewWillEnter(){
  
     
-   /* let logindata = <LoginData>this.authService.userData$.getValue();
-    console.log(logindata);
-    let dr_name = logindata[0].last_name;
-    this.dr_code = logindata[0].dr_code;*/
+    /* let logindata = <LoginData>this.authService.userData$.getValue();
+     console.log(logindata);
+     let dr_name = logindata[0].last_name;
+     this.dr_code = logindata[0].dr_code;*/
+ 
+     let logindata = <LoginData>this.authService.userData$.getValue();
+     console.log(logindata);
+     
+     this.dr_name = logindata[0].last_name;
+     this.dr_code = logindata[0].dr_code;
+     this.postData.DoctorMobileNumber = logindata[0].mobile_no;
+     this.data =[];
+     this.checkAppearance();
+     /*
+     this.doctorService.getInPatient(this.dr_code).subscribe(
+       (res: any) => {
+         console.log(res);
+         
+         res.forEach(element => {
+             if(element.patient_no == this.activatedRoute.snapshot.params.id){
+               this.data.push(element);
+               this.patient_name = element.first_name + ' ' + element.last_name;
+               this.patient_name = this.functionsService.convertAllFirstLetterToUpperCase(this.patient_name);
+             }
+         });
+       },(error) => {
+         console.log(error);
+         
+       },
+       ()=>{
+        let d = new Date(this.data[0].admission_date);
+        this.dateAdmitted = d.toUTCString();
+        console.log(this.dateAdmitted);
+         this.checkAppearance();
+        // this.initialize(this.method);
+       });*/
+   }
+   checkAppearance(){
 
-    let logindata = <LoginData>this.authService.userData$.getValue();
-    console.log(logindata);
-    
-    this.dr_name = logindata[0].last_name;
-    this.dr_code = logindata[0].dr_code;
-    this.postData.DoctorMobileNumber = logindata[0].mobile_no;
-    this.data =[];
-    this.doctorService.getInPatient(this.dr_code).subscribe(
-      (res: any) => {
-        console.log(res);
-        
-        res.forEach(element => {
-            if(element.patient_no == this.activatedRoute.snapshot.params.id){
-              this.data.push(element);
-              this.patient_name = element.first_name + ' ' + element.last_name;
-              this.patient_name = this.functionsService.convertAllFirstLetterToUpperCase(this.patient_name);
-            }
-        });
-      },(error) => {
-        console.log(error);
-        
-      },
-      ()=>{
-        this.checkAppearance();
-        this.initialize(this.method);
-      });
-  }
-  checkAppearance(){
-    let d = new Date(this.data[0].admission_date);
-    this.dateAdmitted = d.toUTCString();
-    console.log(this.dateAdmitted);
+ 
+ 
+     let dr_username = atob(localStorage.getItem("username"));
+     this.patientService.getUserSettings('DPP',dr_username).subscribe(
+       (res: any) => {       
+         if(Object.keys(res).length >= 1){
+           let data = JSON.stringify(res);data = '['+data+']';let adat = JSON.parse(data);
+           adat.forEach(el => {
+             if(typeof el.appearance !== 'undefined'){
+               if(el.appearance.darkmode == 1){
+                 this.renderer.setAttribute(document.body, "color-theme", "dark");
+               }else{
+                 this.renderer.setAttribute(document.body, "color-theme", "light");
+               }
+             }else{
+               this.renderer.setAttribute(document.body, "color-theme", "light");
+             }
+           });
+         }
+       });
+   }
 
+   segmentChanged(e){
+     console.log(e);
+     
 
-    let dr_username = atob(localStorage.getItem("username"));
-    this.patientService.getUserSettings('DPP',dr_username).subscribe(
-      (res: any) => {       
-        if(Object.keys(res).length >= 1){
-          let data = JSON.stringify(res);data = '['+data+']';let adat = JSON.parse(data);
-          adat.forEach(el => {
-            if(typeof el.appearance !== 'undefined'){
-              if(el.appearance.darkmode == 1){
-                this.renderer.setAttribute(document.body, "color-theme", "dark");
-              }else{
-                this.renderer.setAttribute(document.body, "color-theme", "light");
-              }
-            }else{
-              this.renderer.setAttribute(document.body, "color-theme", "light");
-            }
-          });
-        }
-      });
-  }
-
-  initialize(data){
-
-  }
-  segmentChanged(e){
-    console.log(e);
-    
-  }
+   }
 }

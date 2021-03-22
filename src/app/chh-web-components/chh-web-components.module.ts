@@ -22,7 +22,10 @@ import { ChhAppLogoSmComponent } from "./chh-app-logo-sm/chh-app-logo-sm.compone
 import { ChhAppHospitalSelectorWithAllComponent } from "./chh-app-hospital-selector-with-all/chh-app-hospital-selector-with-all.component";
 import { ChhAppTextAvatarModule } from "./chh-app-text-avatar/chh-app-text-avatar.module";
 
+import {ChhAppCardNewlineComponent} from "./chh-app-card-newline/chh-app-card-newline.component";
 
+
+import {ChhAppPatientHeaderComponent} from "./chh-app-patient-header/chh-app-patient-header.component"
 @NgModule({
   declarations: [
     ChhAppLogoComponent,
@@ -38,7 +41,9 @@ import { ChhAppTextAvatarModule } from "./chh-app-text-avatar/chh-app-text-avata
     ChhAppTestSerologyComponent,
     ChhAppTestHematologyComponent,
     ChhAppTestCbcComponent,
-    ChhAppTestUrinalysisComponent
+    ChhAppTestUrinalysisComponent,
+    ChhAppCardNewlineComponent,
+    ChhAppPatientHeaderComponent
   ],
   exports: [
     ChhAppLogoComponent,
@@ -54,7 +59,8 @@ import { ChhAppTextAvatarModule } from "./chh-app-text-avatar/chh-app-text-avata
     ChhAppTestSerologyComponent,
     ChhAppTestHematologyComponent,
     ChhAppTestCbcComponent,
-    ChhAppTestUrinalysisComponent
+    ChhAppTestUrinalysisComponent,
+    ChhAppCardNewlineComponent,ChhAppPatientHeaderComponent
   ],
   imports: [CommonModule, IonicModule, ChhAppTextAvatarModule],
 })

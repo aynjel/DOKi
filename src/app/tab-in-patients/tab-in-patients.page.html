@@ -81,7 +81,10 @@
       <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
         <ng-container>
           <div *ngFor="let x of inPatients">
-            <ion-card (click)="detail(x.patient_no)" mode="ios" class="pointer">
+
+            <ion-grid  class="ion-no-padding ">
+              <ion-row ><ion-col size="12"  >
+            <ion-card (click)="detail(x.patient_no)" mode="ios"  class="card-margin pointer">
               
               <ion-item lines="none">
                 <ion-avatar slot="start">
@@ -184,6 +187,13 @@
                 </ion-label>
               </ion-item>
             </ion-card>
+</ion-col></ion-row></ion-grid>
+
+<app-chh-app-card-newline></app-chh-app-card-newline>
+
+
+
+
           </div>
         </ng-container>
 

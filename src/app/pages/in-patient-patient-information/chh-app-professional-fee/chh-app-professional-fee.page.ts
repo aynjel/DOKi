@@ -41,6 +41,9 @@ export class ChhAppProfessionalFeePage implements OnInit {
   data:any;
   patient_name:any;
   dateAdmitted:any;
+  yesno:any = "Yes";
+  yesnoToggle:boolean = true;
+  insCoor:any = "No";
   postData = {
     AdmisisonNo: "string",
     DoctorCode: "string",
@@ -166,4 +169,24 @@ export class ChhAppProfessionalFeePage implements OnInit {
         }
       });
   }
+
+  viewtoggle(e){
+    //this.yesnoToggle = !this.yesnoToggle;
+/*
+    if(this.yesnoToggle){
+      this.yesno = "Yes";
+    }else{
+      this.yesno = "No";
+    }*/
+      console.log(e.detail.checked);
+      if(e.detail.checked){
+        this.insCoor = "Yes";
+      }else{
+        this.insCoor = "No";
+      }
+  }
+
+
+
+  
 }

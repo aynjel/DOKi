@@ -1,0 +1,28 @@
+.background-lightgray{
+
+
+    body[color-theme="light"] {
+        background-color: red !important;
+    }
+    body[color-theme="dark"] {
+      background-color: #b92d2d !important;
+    }
+
+
+    .md body[color-theme="light"] {
+        background-color: red !important;
+    }
+    .md body[color-theme="dark"] {
+        background-color: #b92d2d !important;
+    }
+
+    .ios body[color-theme="light"] {
+        background-color: red !important;
+    }
+    .ios body[color-theme="dark"] {
+        background-color: #b92d2d !important;
+    }
+
+
+
+  }

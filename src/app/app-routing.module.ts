@@ -26,6 +26,10 @@ const routes: Routes = [
   },{
     path: 'menu/in-patients/:id/professional-fee/:method',
     loadChildren: () => import('./pages/in-patient-patient-information/chh-app-professional-fee-summary/chh-app-professional-fee-summary.module').then( m => m.ChhAppProfessionalFeeSummaryPageModule)
+  },
+  {
+    path: 'icdrvs',
+    loadChildren: () => import('./pages/in-patient-patient-information/chh-app-icdrvs/chh-app-icdrvs.module').then( m => m.ChhAppIcdrvsPageModule)
   },{
     path: '',
     canActivate:[IndexGuard], 
@@ -42,6 +46,7 @@ const routes: Routes = [
     path: 'chh-app-terms-and-conditions',
     loadChildren: () => import('./chh-web-components/chh-app-terms-and-conditions/chh-app-terms-and-conditions.module').then( m => m.ChhAppTermsAndConditionsPageModule)
   }
+
 
 
 

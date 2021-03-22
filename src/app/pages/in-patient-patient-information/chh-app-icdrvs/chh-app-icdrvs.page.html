@@ -1,0 +1,194 @@
+<ion-header mode="md" class="ion-no-border" *ngIf="!isDesktop">
+  <ion-toolbar color="mango">
+    <ion-title>
+      ICD / RVS
+    </ion-title>
+    <ion-buttons
+      slot="end"
+      class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated"
+    >
+      <ion-button routerLink="" routerDirection="backwards" color="chh-css-primary2"
+        >Close&nbsp; <ion-icon name="close-outline"></ion-icon
+      ></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="!isDesktop">
+  <ion-segment mode="ios" (ionChange)="segmentChanged($event)" [(ngModel)]="caseData">
+    <ion-segment-button value="1stcase">
+      <ion-label>1st Case</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="2ndcase">
+      <ion-label>2nd Case</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+<!--
+ _____                                                    
+|_   _|                                                   
+  | |   _ __   ___  _   _  _ __   __ _  _ __    ___   ___ 
+  | |  | '_ \ / __|| | | || '__| / _` || '_ \  / __| / _ \
+ _| |_ | | | |\__ \| |_| || |   | (_| || | | || (__ |  __/
+ \___/ |_| |_||___/ \__,_||_|    \__,_||_| |_| \___| \___|
+                                                          
+                                                          
+-->                                             
+                                               
+  <ion-grid  *ngIf="!isDesktop"  class="ion-no-padding background-lightgray">
+    <ion-row >
+      <ion-col size="12"  >
+        <ion-card mode="ios" *ngIf="!isDesktop" class="card-margin " >
+          <!-- Default List Header 
+          <ion-list-header>
+            <h4>Are you also an Insurance Coordinator?</h4>
+          </ion-list-header>
+          <ion-item>
+            <ion-toggle  ></ion-toggle> 
+          </ion-item>
+            -->
+
+          <ion-item>
+            <ion-label>Are you a Insurance Coordinator?</ion-label> 
+            <ion-checkbox color="mango" checked="false"></ion-checkbox>
+            </ion-item>
+
+
+
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
+
+</ion-content>
+
+<ion-footer class="ion-no-border" *ngIf="!isDesktop">
+  <ion-toolbar>
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+        <ion-col size-xs="12" size-md="4" size-lg="4">
+          Status
+          <ion-progress-bar value="0.5"></ion-progress-bar>
+        </ion-col>
+        <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+
+</ion-footer>
+
+
+
+
+
+
+<!--
+______          _    _              
+|  _  \        | |  | |             
+| | | |___  ___| | _| |_ ___  _ __  
+| | | / _ \/ __| |/ / __/ _ \| '_ \ 
+| |/ /  __/\__ \   <| || (_) | |_) |
+|___/ \___||___/_|\_\\__\___/| .__/ 
+                             | |    
+                             |_|    
+-->
+
+<ion-header *ngIf="isDesktop"  mode="md" class="ion-no-border custom-border-bottom" >
+  <ion-toolbar>
+    <ion-row class="ion-align-items-center"  >
+      <ion-col size="2">
+        <chh-app-logo-sm ></chh-app-logo-sm>
+      </ion-col>
+      <ion-col size="10">
+        <div class="navbar" class="ion-text-center chh-bg">
+          <ion-button
+            id="button-dashboard"
+            fill="clear"
+            routerLink="/menu/dashboard"
+            routerDirection="root"
+            routerLinkActive="active-link"
+            class="link"
+          >
+            {{this.constants.MENU__VALUE__DASHBOARD}}
+          </ion-button>
+          <ion-button
+            id="button-in-patients"
+            fill="clear"
+            routerLink="/menu/in-patients"
+            routerDirection="root"
+            routerLinkActive="active-link"
+            class="link"
+          >
+            {{this.constants.MENU__VALUE__IN_PATIENTS}}
+          </ion-button>
+          <ion-button
+            id="button-appointments"
+            fill="clear"
+            routerLink="/menu/appointments"
+            routerDirection="root"
+            routerLinkActive="active-link"
+            class="link"
+          >
+            {{this.constants.MENU__VALUE__APPOINTMENTS}}
+          </ion-button>
+          <ion-button
+            id="button-settings"
+            fill="clear"
+            routerLink="/menu/settings"
+            routerDirection="root"
+            routerLinkActive="active-link"
+            class="link"
+          >
+          {{this.constants.MENU__VALUE__SETTINGS}}
+          </ion-button>
+          <ion-button
+            id="button-logout"
+            fill="clear"
+            routerDirection="root"
+            routerLinkActive="active-link"
+            class="link"
+          >
+          {{this.constants.MENU__VALUE__LOG_OUT}}
+          </ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+  </ion-header> 
+<ion-content  *ngIf="isDesktop">
+  <ul class="breadcrumb" >
+    <li>
+      <a routerLink="{{routerLinkBack1}}">{{patient_name}}</a>
+      <ion-icon name="chevron-forward-outline" class="icon-center"></ion-icon>
+    </li>
+    <li>
+      <a routerLink="{{routerLinkBack2}}">Professional Fee</a>
+      <ion-icon name="chevron-forward-outline" class="icon-center"></ion-icon>
+    </li>
+    <li>
+      <a >{{method}}</a>
+    </li>
+  </ul>   
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-footer class="ion-no-border" *ngIf="isDesktop">
+  <ion-toolbar>
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col size="12" *ngIf="isDesktop">
+          <div class="footer tab-font-family">
+            <span>{{this.constants.CHH_NAME__VALUE__CEBU}}</span>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>
