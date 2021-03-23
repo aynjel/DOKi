@@ -44,6 +44,8 @@ export class ChhAppProfessionalFeePage implements OnInit {
   yesno:any = "Yes";
   yesnoToggle:boolean = true;
   insCoor:any = "No";
+  showSelection:boolean = false;
+  showSeenPatient:boolean =false;
   postData = {
     AdmisisonNo: "string",
     DoctorCode: "string",
@@ -177,16 +179,50 @@ export class ChhAppProfessionalFeePage implements OnInit {
       this.yesno = "Yes";
     }else{
       this.yesno = "No";
-    }*/
+    }
       console.log(e.detail.checked);
       if(e.detail.checked){
         this.insCoor = "Yes";
       }else{
         this.insCoor = "No";
+      }*/
+
+      //console.log(e);
+      console.log(e.detail.value);
+
+      if(e.detail.value == "y"){
+        this.showSeenPatient = true;
+      }else if(e.detail.value == "n"){
+        this.showSeenPatient = true;
+      }else{
+        this.showSeenPatient = false;
       }
   }
 
+  viewtoggle1(e){
+    //this.yesnoToggle = !this.yesnoToggle;
+/*
+    if(this.yesnoToggle){
+      this.yesno = "Yes";
+    }else{
+      this.yesno = "No";
+    }
+      console.log(e.detail.checked);
+      if(e.detail.checked){
+        this.insCoor = "Yes";
+      }else{
+        this.insCoor = "No";
+      }*/
 
+      //console.log(e);
+      console.log(e.detail.value);
+
+      if(e.detail.value == "y"){
+        this.showSelection = true;
+      }else{
+        this.showSelection = false;
+      }
+  }
 
   
 }

@@ -122,9 +122,34 @@
 
    
     <ion-item>
-      <ion-label  class="ion-text-wrap">Are you a Insurance Coordinator? : ({{insCoor}})</ion-label> 
-      <ion-checkbox color="mango" checked="false" (ionChange)="viewtoggle($event)"></ion-checkbox>
+      <ion-label  class="ion-text-wrap">Are you a Insurance Coordinator?</ion-label> 
+      <!--ion-checkbox color="mango" checked="false" (ionChange)="viewtoggle($event)"></ion-checkbox-->
       </ion-item>
+      <ion-segment (ionChange)="viewtoggle($event)">
+        <ion-segment-button value="y">
+          <ion-label>Yes</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="o" style="width: 1px;" hidden ></ion-segment-button>
+        <ion-segment-button value="n">
+          <ion-label>No</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      <div *ngIf="showSeenPatient">
+      <ion-item  >
+        <ion-label  class="ion-text-wrap">Have you seen this Patient?</ion-label> 
+        <!--ion-checkbox color="mango" checked="false" (ionChange)="viewtoggle($event)"></ion-checkbox-->
+        </ion-item>
+        <ion-segment (ionChange)="viewtoggle1($event)">
+          <ion-segment-button value="y">
+            <ion-label>Yes</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="o" style="width: 1px;" hidden ></ion-segment-button>
+          <ion-segment-button value="n">
+            <ion-label>No</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
 
   </ion-card>
   </ion-col>
@@ -133,7 +158,7 @@
 
 <app-chh-app-card-newline></app-chh-app-card-newline>
 
-<ion-grid  *ngIf="!isDesktop"  class="ion-no-padding ">
+<ion-grid  *ngIf="!isDesktop && showSelection"  class="ion-no-padding " >
   <ion-row >
     <ion-col size="12"  >
       <ion-card class="card-margin ">
@@ -154,7 +179,7 @@
 
     <ion-item (click)="redirecto('charity')">
       <ion-avatar slot="start">
-        <img src="../../../../assets/img/charity.jpg">
+        <img src="../../../../assets/img/charity.JPG">
       </ion-avatar>
       <ion-label>
         <h2>Charity</h2>
@@ -164,7 +189,7 @@
 
     <ion-item (click)="redirecto('philhealth')">
       <ion-avatar slot="start">
-        <img src="../../../../assets/img/philhealth.jpg">
+        <img src="../../../../assets/img/philhealth.JPG">
       </ion-avatar>
       <ion-label>
         <h2>Phil Health</h2>
