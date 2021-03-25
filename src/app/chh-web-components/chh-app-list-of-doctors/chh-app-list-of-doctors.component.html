@@ -1,0 +1,120 @@
+
+  <ion-card mode="ios"    class="card-margin">
+    <ion-list>
+      <ion-item style="padding-top: 10px;">
+        <div class="ion-text-wrap"><b>Doctors</b><br /></div>
+      </ion-item>
+      <ng-container >
+        <ion-item lines="none" *ngFor="let dr of coDoctors">
+          <ion-avatar slot="start">
+            <chh-app-text-avatar [text]="dr.last_name" [color]=""></chh-app-text-avatar>
+          </ion-avatar>
+          <ion-label style="margin-top: -10px;">
+            <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+              <h3 class="ion-text-wrap" style="padding-top: 20px;">
+                Dr. {{dr.first_name}} {{dr.last_name}}
+              </h3>
+            </ion-item>
+            <ion-badge color="medium"> {{dr.status}}</ion-badge>
+          </ion-label>
+        </ion-item>
+      </ng-container>
+
+      <ng-container>
+        <div
+          *ngIf="!objecthandler && !isFetchDone else noDataAvailable"
+          class="ion-padding custom-skeleton"
+        >
+          <!-- Skeleton  -->
+          <ion-item>
+            <ion-avatar slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-avatar>
+            <ion-label style="margin-top: -10px;">
+              <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-item>
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-avatar slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-avatar>
+            <ion-label style="margin-top: -10px;">
+              <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-item>
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-avatar slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-avatar>
+            <ion-label style="margin-top: -10px;">
+              <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-item>
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-avatar slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-avatar>
+            <ion-label style="margin-top: -10px;">
+              <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-item>
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-label>
+          </ion-item>
+        </div>
+      </ng-container>
+
+      <ng-template #noDataAvailable>
+        <div *ngIf="!objecthandler && isFetchDone">
+          <ion-list-header slot="center" mode="ios">
+            Cannot retrieve list of Doctors at this time. Please retry.
+          </ion-list-header>
+        </div>
+      </ng-template>
+
+      <!--ion-item lines="none">
+      <ion-avatar slot="start">
+        <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg">
+      </ion-avatar>
+      <ion-label>
+        <ion-item class="ion-no-padding">
+          <h3 class="ion-text-wrap ">Dr. Reginita Uy</h3>
+        </ion-item>
+        <div class="ion-text-wrap" style="padding-top:5px"><p>Primary Attending Physician</p></div>
+        </ion-label>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-avatar slot="start">
+        <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg">
+      </ion-avatar>
+      <ion-label>
+        <ion-item class="ion-no-padding">
+          <h3 class="ion-text-wrap ">Dr. Joel Yu</h3>
+        </ion-item>
+        <div class="ion-text-wrap" style="padding-top:5px"><p>Co - Manage</p></div>
+        </ion-label>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-avatar slot="start">
+        <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg">
+      </ion-avatar>
+      <ion-label>
+        <ion-item class="ion-no-padding">
+          <h3 class="ion-text-wrap ">Dr. Gary Galon</h3>
+        </ion-item>
+        <div class="ion-text-wrap" style="padding-top:5px"><p>Co - Manage</p></div>
+        </ion-label>
+    </ion-item-->
+    </ion-list>
+  </ion-card>

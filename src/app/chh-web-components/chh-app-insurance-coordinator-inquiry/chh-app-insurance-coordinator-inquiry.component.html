@@ -1,0 +1,13 @@
+<ion-item>
+  <ion-label  class="ion-text-wrap">Are you a Insurance Coordinator?</ion-label> 
+  <!--ion-checkbox color="mango" checked="false" (ionChange)="viewtoggle($event)"></ion-checkbox-->
+  </ion-item>
+  <ion-segment (ionChange)="viewtoggle($event)">
+    <ion-segment-button value="y">
+      <ion-label>Yes</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="o" style="width: 1px;" hidden ></ion-segment-button>
+    <ion-segment-button value="n">
+      <ion-label>No</ion-label>
+    </ion-segment-button>
+  </ion-segment>

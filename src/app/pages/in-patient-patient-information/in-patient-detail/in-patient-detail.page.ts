@@ -381,7 +381,8 @@ export class InPatientDetailPage   {
   }
   ngOnInit() {
     console.log('ngOnInit');
-    
+    let datasend = '{first_name: "string",last_name: "string",status: "string",mobile_no: "string",dept_short_desc: "string"}';
+    sessionStorage.setItem('clickCounter', datasend);
 
   }
   updateDisplay(data:boolean){
@@ -714,12 +715,24 @@ export class InPatientDetailPage   {
 
   redirecttoPF(){
     //this.router.navigate(['menu/in-patients/'+this.activatedRoute.snapshot.params.id+'/professional-fee']);
+    let datasend = {
+      first_name: "string",
+      last_name: "string",
+      status: "string",
+      mobile_no: "string",
+      dept_short_desc: "string"
+    };
 
-
-
+    /*this.router.navigate(['menu/in-patients/' + this.activatedRoute.snapshot.params.id+'/professional-fee',JSON.stringify(datasend)]);*/
+    
+    
     this.nav.navigateForward('menu/in-patients/' + this.activatedRoute.snapshot.params.id+'/professional-fee', {
       state: {
-        // ...
+        first_name: "string",
+        last_name: "string",
+        status: "string",
+        mobile_no: "string",
+        dept_short_desc: "string"
       },
     });
   

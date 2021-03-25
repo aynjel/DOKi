@@ -21,13 +21,14 @@
 </ion-toolbar-->
 
 <!-- 
-ooooooooo.                 .    o8o                            .  
-`888   `Y88.             .o8    `"'                          .o8  
- 888   .d88'  .oooo.   .o888oo oooo   .ooooo.  ooo. .oo.   .o888oo
- 888ooo88P'  `P  )88b    888   `888  d88' `88b `888P"Y88b    888  
- 888          .oP"888    888    888  888ooo888  888   888    888  
- 888         d8(  888    888 .  888  888    .o  888   888    888 .
-o888o        `Y888""8o   "888" o888o `Y8bod8P' o888o o888o   "888" 
+___  ___        _      _  _       
+|  \/  |       | |    (_)| |      
+| .  . |  ___  | |__   _ | |  ___ 
+| |\/| | / _ \ | '_ \ | || | / _ \
+| |  | || (_) || |_) || || ||  __/
+\_|  |_/ \___/ |_.__/ |_||_| \___|
+                                  
+                                  
 -->
 
 <ion-header mode="md" class="ion-no-border" *ngIf="!isDesktop"> 
@@ -45,88 +46,150 @@ o888o        `Y888""8o   "888" o888o `Y8bod8P' o888o o888o   "888"
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content *ngIf="!isDesktop">
 
 
 
-  <ion-grid  *ngIf="!isDesktop"  class="ion-no-padding ">
-    <ion-row >
-      <ion-col size="12"  >
-  <!-- HEADER MOBILE-->
 
-  <app-chh-app-patient-header 
-  [data]="data" [dateAdmitted]="dateAdmitted"
-></app-chh-app-patient-header>
+  <ion-content *ngIf="!isDesktop">
+    <app-chh-app-patient-header
+      [data]="data"
+      [dateAdmitted]="dateAdmitted">
+    </app-chh-app-patient-header>
+    <app-chh-app-card-newline></app-chh-app-card-newline>
+    <app-chh-app-admitting-diagnosis
+      [admittingDiagnosis]="admittingDiagnosis"
+      [admittingDiagnosis1]="admittingDiagnosis1"
+      [admittingDiagnosis2]="admittingDiagnosis2"
+      [truncating1]="truncating1">
+    </app-chh-app-admitting-diagnosis>
+    <app-chh-app-card-newline *ngIf="admittingDiagnosis"></app-chh-app-card-newline>
+    <app-chh-app-final-diagnosis
+      [data]="data"
+      [finalDiagnosis]="finalDiagnosis"
+      [limit]="limit"
+      [truncating]="truncating"
+      [finalDiagnosis1]="finalDiagnosis1"
+      [finalDiagnosis2]="finalDiagnosis2"
+    ></app-chh-app-final-diagnosis>
+    <app-chh-app-card-newline *ngIf="finalDiagnosis"></app-chh-app-card-newline>
+    <app-chh-app-list-of-doctors  
+      [coDoctors]="coDoctors"
+      [objecthandler]="objecthandler"
+      [isFetchDone]="isFetchDone">
+    </app-chh-app-list-of-doctors>
+  </ion-content>
 
 
-</ion-col>
-</ion-row>
-</ion-grid>
+
+<!--
+______          _    _              
+|  _  \        | |  | |             
+| | | |___  ___| | _| |_ ___  _ __  
+| | | / _ \/ __| |/ / __/ _ \| '_ \ 
+| |/ /  __/\__ \   <| || (_) | |_) |
+|___/ \___||___/_|\_\\__\___/| .__/ 
+                             | |    
+                             |_|    
+-->
+
+<app-chh-app-desktop-navigation *ngIf="isDesktop"></app-chh-app-desktop-navigation>
+ 
 
 
-<app-chh-app-card-newline></app-chh-app-card-newline>
 
 
-  <ion-grid  *ngIf="!isDesktop"  class="ion-no-padding ">
-    <ion-row >
-    <ion-col size="12"  >
 
 
-  <ion-card mode="ios"  *ngIf="!isDesktop" class="card-margin">
+<ion-content *ngIf="isDesktop">
+  
+    <ion-grid class="ion-no-padding" >
+      <ion-row>
+        <ion-col  size-md="1"  ></ion-col>
+        <ion-col size-md="3">
+
+
+              <app-chh-app-admitting-diagnosis
+                [admittingDiagnosis]="admittingDiagnosis"
+                [admittingDiagnosis1]="admittingDiagnosis1"
+                [admittingDiagnosis2]="admittingDiagnosis2"
+                [truncating1]="truncating1"
+            ></app-chh-app-admitting-diagnosis>
+
+  
+            <app-chh-app-card-newline *ngIf="admittingDiagnosis"></app-chh-app-card-newline>
+
+
+
+
+              <app-chh-app-final-diagnosis
+                [data]="data"
+                [finalDiagnosis]="finalDiagnosis"
+                [limit]="limit"
+                [truncating]="truncating"
+                [finalDiagnosis1]="finalDiagnosis1"
+                [finalDiagnosis2]="finalDiagnosis2"
+              ></app-chh-app-final-diagnosis>
+
+
+
+       
+        </ion-col>
+        <ion-col  size-md="4"  >
+          <!--app-chh-app-card-newline></app-chh-app-card-newline-->
+          <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted">
+          </app-chh-app-patient-header>
+
+            <ion-button
+            color="mango"
+              size="default"
+              expand="block"
+              shape="round"
+              (click)="redirecttoPF()"
+              *ngIf="data.is_posted == 0 || data.is_posted == null"
+      
+              >Professional Fee</ion-button>
+
+        </ion-col>
+
+        <ion-col  size-md="3"   class=" max-height-82vh overflow-scroll">
+          <app-chh-app-list-of-doctors
+            [coDoctors]="coDoctors"
+            [objecthandler]="objecthandler"
+            [isFetchDone]="isFetchDone"
+          ></app-chh-app-list-of-doctors>
+         
+        </ion-col>
+        <ion-col  size-md="1"  ></ion-col>
+      </ion-row>
+    </ion-grid>
+</ion-content>
+
+<ion-footer class="ion-no-border" >
+  <ion-toolbar *ngIf="!isDesktop">
+    <ion-grid class="ion-no-padding">
+      <ion-row >
+        <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+        <ion-col size-xs="12" size-md="4" size-lg="4">
+          <ion-button
+          color="mango"
+            size="default"
+            expand="block"
+            shape="round"
+            (click)="redirecttoPF()"
+            *ngIf="data.is_posted == 0 || data.is_posted == null"
     
-    <ion-list>
-      <ion-item style="padding-top: 10px;">
-        <div class="ion-text-wrap"><b>Admitting Diagnosis</b><br /></div>
-        
-      </ion-item>
-      <ion-item style="padding-top: 10px;" lines="none">
-        <div class="ion-text-wrap">
+            >Professional Fee</ion-button
+          >
+        </ion-col>
+        <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+  <div class="footer tab-font-family"  *ngIf="isDesktop">
+    <span>{{this.constants.CHH_NAME__VALUE__CEBU}}</span>
+  </div>
+</ion-footer>
 
-          <div *ngIf="admittingDiagnosis" class="custom-font">
-            <div *ngIf="admittingDiagnosis.length <= 100" [innerHTML]="admittingDiagnosis">
-
-            </div>
-            <div class="" *ngIf="truncating1 && admittingDiagnosis.length > 100" [innerHTML]="admittingDiagnosis1">
-
-              
-            </div>
-            <button *ngIf="truncating1 && admittingDiagnosis.length > 100" ion-button (click)="truncating1 = false">show more</button>
-            <div *ngIf="!truncating1 && admittingDiagnosis.length > 100" [innerHTML]="admittingDiagnosis2">
-              <ion-text class="ion-text-wrap "><br/></ion-text>
-              
-            </div>
-            <button *ngIf="!truncating1 && admittingDiagnosis.length > 100" ion-button (click)="truncating1 = true">show less</button>
-          </div>
-
-
-            <!--ng-container>
-              <div
-                *ngIf="!objecthandler && !isFetchDone else noDataAvailable"
-                class=" custom-skeleton">
-                <ion-item>
-                  <ion-label style="margin-top: -10px;">
-                    <ion-item  style="padding-bottom: 5px;">
-                      <ion-skeleton-text animated></ion-skeleton-text>
-                    </ion-item>
-                    <ion-skeleton-text animated></ion-skeleton-text>
-                  </ion-label>
-                </ion-item>
-              </div>
-            </ng-container-->
-
-
-        </div>
-      </ion-item>
-
-    </ion-list>
-  </ion-card>
-
-</ion-col>
-</ion-row>
-</ion-grid>
-
-
-<app-chh-app-card-newline *ngIf="admittingDiagnosis"></app-chh-app-card-newline>
 
 
   <!--ion-card mode="ios"  *ngIf="!isDesktop" >
@@ -243,55 +306,6 @@ o888o        `Y888""8o   "888" o888o `Y8bod8P' o888o o888o   "888"
 
 
 
-  <ion-grid  *ngIf="!isDesktop"  class="ion-no-padding ">
-    <ion-row >
-    <ion-col size="12"  >
-
-  <ion-card mode="ios"  *ngIf="data.admission_status == 'DN' && !isDesktop" >
-    <ion-list>
-      <ion-item style="padding-top: 10px;">
-        <div class="ion-text-wrap"><b>Final Diagnosis</b><br /></div>
-        
-      </ion-item>
-      <ion-item style="padding-top: 10px;" lines="none">
-        <div class="ion-text-wrap">
-
-          <div *ngIf="finalDiagnosis" class="custom-font">
-            <div *ngIf="finalDiagnosis.length <= limit">{{finalDiagnosis}}</div>
-            <div *ngIf="truncating && finalDiagnosis.length > limit">
-              {{finalDiagnosis1}}
-              <button ion-button (click)="truncating = false">show more</button>
-            </div>
-            <div *ngIf="!truncating && finalDiagnosis.length > limit">
-              <!--{{finalDiagnosis}}-->
-              <div *ngFor="let x of finalDiagnosis2">
-                <ion-text style="padding-top: 15px;"
-            >{{x}}<br
-          /></ion-text>
-              </div>
-              <button ion-button (click)="truncating = true">show less</button>
-            </div>
-            </div>
-            
-        </div>
-      </ion-item>
-
-    </ion-list>
-  </ion-card>
-
-</ion-col>
-</ion-row>
-  </ion-grid>
-
-
-
-
-
-
-
-  <app-chh-app-card-newline *ngIf="finalDiagnosis"></app-chh-app-card-newline>
-
-
 
 
 
@@ -354,133 +368,6 @@ o888o        d888b    `Y8bod8P' o888o      o888o        `Y8bod8P' `Y8bod8P'
    888      888 888   888 888         888   888   888  888     `"Y88b. 
    888     d88' 888   888 888   .o8   888 . 888   888  888     o.  )88b
   o888bood8P'   `Y8bod8P' `Y8bod8P'   "888" `Y8bod8P' d888b    8""888P'
--->
-<ion-grid  *ngIf="!isDesktop"  class="ion-no-padding ">
-  <ion-row >
-  <ion-col size="12"  >
-  <ion-card mode="ios"   *ngIf="!isDesktop" class="card-margin">
-    <ion-list>
-      <ion-item style="padding-top: 10px;">
-        <div class="ion-text-wrap"><b>Doctors</b><br /></div>
-      </ion-item>
-      <ng-container>
-        <ion-item lines="none" *ngFor="let dr of coDoctors">
-          <ion-avatar slot="start">
-            <chh-app-text-avatar [text]="dr.last_name" [color]=""></chh-app-text-avatar>
-          </ion-avatar>
-          <ion-label style="margin-top: -10px;">
-            <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
-              <h3 class="ion-text-wrap" style="padding-top: 20px;">
-                Dr. {{dr.first_name}} {{dr.last_name}}
-              </h3>
-            </ion-item>
-            <ion-badge color="medium"> {{dr.status}}</ion-badge>
-          </ion-label>
-        </ion-item>
-      </ng-container>
-
-      <ng-container>
-        <div
-          *ngIf="!objecthandler && !isFetchDone else noDataAvailable"
-          class="ion-padding custom-skeleton"
-        >
-          <!-- Skeleton  -->
-          <ion-item>
-            <ion-avatar slot="start">
-              <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-avatar>
-            <ion-label style="margin-top: -10px;">
-              <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
-                <ion-skeleton-text animated></ion-skeleton-text>
-              </ion-item>
-              <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-avatar slot="start">
-              <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-avatar>
-            <ion-label style="margin-top: -10px;">
-              <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
-                <ion-skeleton-text animated></ion-skeleton-text>
-              </ion-item>
-              <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-avatar slot="start">
-              <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-avatar>
-            <ion-label style="margin-top: -10px;">
-              <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
-                <ion-skeleton-text animated></ion-skeleton-text>
-              </ion-item>
-              <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-avatar slot="start">
-              <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-avatar>
-            <ion-label style="margin-top: -10px;">
-              <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
-                <ion-skeleton-text animated></ion-skeleton-text>
-              </ion-item>
-              <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-label>
-          </ion-item>
-        </div>
-      </ng-container>
-
-      <ng-template #noDataAvailable>
-        <div *ngIf="!objecthandler && isFetchDone">
-          <ion-list-header slot="center" mode="ios">
-            Cannot retrieve list of Doctors at this time. Please retry.
-          </ion-list-header>
-        </div>
-      </ng-template>
-
-      <!--ion-item lines="none">
-      <ion-avatar slot="start">
-        <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg">
-      </ion-avatar>
-      <ion-label>
-        <ion-item class="ion-no-padding">
-          <h3 class="ion-text-wrap ">Dr. Reginita Uy</h3>
-        </ion-item>
-        <div class="ion-text-wrap" style="padding-top:5px"><p>Primary Attending Physician</p></div>
-        </ion-label>
-    </ion-item>
-
-    <ion-item lines="none">
-      <ion-avatar slot="start">
-        <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg">
-      </ion-avatar>
-      <ion-label>
-        <ion-item class="ion-no-padding">
-          <h3 class="ion-text-wrap ">Dr. Joel Yu</h3>
-        </ion-item>
-        <div class="ion-text-wrap" style="padding-top:5px"><p>Co - Manage</p></div>
-        </ion-label>
-    </ion-item>
-
-    <ion-item lines="none">
-      <ion-avatar slot="start">
-        <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg">
-      </ion-avatar>
-      <ion-label>
-        <ion-item class="ion-no-padding">
-          <h3 class="ion-text-wrap ">Dr. Gary Galon</h3>
-        </ion-item>
-        <div class="ion-text-wrap" style="padding-top:5px"><p>Co - Manage</p></div>
-        </ion-label>
-    </ion-item-->
-    </ion-list>
-  </ion-card>
-</ion-col>
-</ion-row>
-</ion-grid>
-  <!--
 
 
 <ion-card>
@@ -990,327 +877,6 @@ o888o        d888b    `Y8bod8P' o888o      o888o        `Y8bod8P' `Y8bod8P'
 
 
 
-
-</ion-content>
-
-
-<!--
-______          _    _              
-|  _  \        | |  | |             
-| | | |___  ___| | _| |_ ___  _ __  
-| | | / _ \/ __| |/ / __/ _ \| '_ \ 
-| |/ /  __/\__ \   <| || (_) | |_) |
-|___/ \___||___/_|\_\\__\___/| .__/ 
-                             | |    
-                             |_|    
--->
-
-  <ion-header *ngIf="isDesktop"  mode="md" class="ion-no-border custom-border-bottom" >
-    <ion-toolbar >
-      <ion-row class="ion-align-items-center" >
-        <ion-col size="2">
-          <chh-app-logo-sm ></chh-app-logo-sm>
-        </ion-col>
-        <ion-col size="10">
-          <div class="navbar" class="ion-text-center chh-bg">
-            <ion-button
-              id="button-dashboard"
-              fill="clear"
-              routerLink="/menu/dashboard"
-              routerDirection="root"
-              routerLinkActive="active-link"
-              class="link"
-            >
-              {{this.constants.MENU__VALUE__DASHBOARD}}
-            </ion-button>
-            <ion-button
-              id="button-in-patients"
-              fill="clear"
-              routerLink="/menu/in-patients"
-              routerDirection="root"
-              routerLinkActive="active-link"
-              class="link"
-            >
-              {{this.constants.MENU__VALUE__IN_PATIENTS}}
-            </ion-button>
-            <ion-button
-              id="button-appointments"
-              fill="clear"
-              routerLink="/menu/appointments"
-              routerDirection="root"
-              routerLinkActive="active-link"
-              class="link"
-            >
-              {{this.constants.MENU__VALUE__APPOINTMENTS}}
-            </ion-button>
-            <ion-button
-              id="button-settings"
-              fill="clear"
-              routerLink="/menu/settings"
-              routerDirection="root"
-              routerLinkActive="active-link"
-              class="link"
-            >
-            {{this.constants.MENU__VALUE__SETTINGS}}
-            </ion-button>
-            <ion-button
-              id="button-logout"
-              fill="clear"
-              routerDirection="root"
-              routerLinkActive="active-link"
-              class="link"
-            >
-            {{this.constants.MENU__VALUE__LOG_OUT}}
-            </ion-button>
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-toolbar>
-    </ion-header> 
- 
-
-        <!--ul class="breadcrumb" *ngIf="isDesktop">
-          <li>
-            <a >{{patient_name}}</a>
-         
-          </li>
-
-        </ul-->   
-
- 
-
-
-
-
-
-<ion-content *ngIf="isDesktop">
-  
-
-
-
-  
-    <ion-grid class="ion-no-padding" >
-      <ion-row>
-        <ion-col  size-md="1"  ></ion-col>
-        <ion-col size-md="3">
-
-          <ion-grid   class="ion-no-padding ">
-            <ion-row >
-            <ion-col size="12"  >
-            <ion-card mode="ios"  class="card-margin">
-            <ion-list>
-            <ion-item style="padding-top: 10px;">
-            <div class="ion-text-wrap"><b>Admitting Diagnosis</b><br /></div>
-            </ion-item>
-            <ion-item style="padding-top: 10px;" lines="none">
-            <div class="ion-text-wrap">
-            <div *ngIf="admittingDiagnosis" class="custom-font">
-            <div *ngIf="admittingDiagnosis.length <= 100" [innerHTML]="admittingDiagnosis">
-            </div>
-            <div class="" *ngIf="truncating1 && admittingDiagnosis.length > 100" [innerHTML]="admittingDiagnosis1">
-            </div>
-            <button *ngIf="truncating1 && admittingDiagnosis.length > 100" ion-button (click)="truncating1 = false">show more</button>
-            <div *ngIf="!truncating1 && admittingDiagnosis.length > 100" [innerHTML]="admittingDiagnosis2">
-            <ion-text class="ion-text-wrap "><br/></ion-text>
-            </div>
-            <button *ngIf="!truncating1 && admittingDiagnosis.length > 100" ion-button (click)="truncating1 = true">show less</button>
-            </div>
-            </div>
-            </ion-item>
-            </ion-list>
-            </ion-card>
-            </ion-col>
-            </ion-row>
-            </ion-grid>
-  
-            <app-chh-app-card-newline *ngIf="admittingDiagnosis"></app-chh-app-card-newline>
-  
-            <ion-grid  *ngIf="!isDesktop"  class="ion-no-padding ">
-            <ion-row >
-            <ion-col size="12"  >
-            <ion-card mode="ios"  *ngIf="data.admission_status == 'DN' && !isDesktop" >
-            <ion-list>
-            <ion-item style="padding-top: 10px;">
-            <div class="ion-text-wrap"><b>Final Diagnosis</b><br /></div>
-            </ion-item>
-            <ion-item style="padding-top: 10px;" lines="none">
-            <div class="ion-text-wrap">
-            <div *ngIf="finalDiagnosis" class="custom-font">
-            <div *ngIf="finalDiagnosis.length <= limit">{{finalDiagnosis}}</div>
-            <div *ngIf="truncating && finalDiagnosis.length > limit">
-            {{finalDiagnosis1}}
-            <button ion-button (click)="truncating = false">show more</button>
-            </div>
-            <div *ngIf="!truncating && finalDiagnosis.length > limit">
-            <div *ngFor="let x of finalDiagnosis2">
-            <ion-text style="padding-top: 15px;"
-            >{{x}}<br
-            /></ion-text>
-            </div>
-            <button ion-button (click)="truncating = true">show less</button>
-            </div>
-            </div>
-            </div>
-            </ion-item>
-            </ion-list>
-            </ion-card>
-            </ion-col>
-            </ion-row>
-            </ion-grid>
-        </ion-col>
-        <ion-col  size-md="4"  >
-          <!--app-chh-app-card-newline></app-chh-app-card-newline-->
-
-
-
-
-
-
-          <app-chh-app-patient-header 
-          [data]="data" [dateAdmitted]="dateAdmitted"
-        ></app-chh-app-patient-header>
-
-
-
-
-        
-
-
-          
-
-
-
-            <ion-button
-            color="mango"
-              size="default"
-              expand="block"
-              shape="round"
-              (click)="redirecttoPF()"
-              *ngIf="data.is_posted == 0 || data.is_posted == null"
-      
-              >Professional Fee</ion-button>
-
-
-
-
-
-
-        </ion-col>
-
-        <ion-col  size-md="3"   class=" max-height-82vh overflow-scroll">
-          <ion-grid   class="ion-no-padding ">
-            <ion-row >
-            <ion-col size="12"  >
-            <ion-card mode="ios"    class="card-margin">
-            <ion-list>
-            <ion-item style="padding-top: 10px;">
-            <div class="ion-text-wrap"><b>Doctors</b><br /></div>
-            </ion-item>
-            <ng-container>
-            <ion-item lines="none" *ngFor="let dr of coDoctors">
-            <ion-avatar slot="start">
-            <chh-app-text-avatar [text]="dr.last_name" [color]=""></chh-app-text-avatar>
-            </ion-avatar>
-            <ion-label style="margin-top: -10px;">
-            <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
-            <h3 class="ion-text-wrap" style="padding-top: 20px;">
-            Dr. {{dr.first_name}} {{dr.last_name}}
-            </h3>
-            </ion-item>
-            <ion-badge color="medium"> {{dr.status}}</ion-badge>
-            </ion-label>
-            </ion-item>
-            </ng-container>
-  
-            <ng-container>
-            <div
-            *ngIf="!objecthandler && !isFetchDone else noDataAvailable"
-            class="ion-padding custom-skeleton"
-            >
-            <ion-item>
-            <ion-avatar slot="start">
-            <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-avatar>
-            <ion-label style="margin-top: -10px;">
-            <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
-            <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-item>
-            <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-label>
-            </ion-item>
-            <ion-item>
-            <ion-avatar slot="start">
-            <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-avatar>
-            <ion-label style="margin-top: -10px;">
-            <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
-            <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-item>
-            <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-label>
-            </ion-item>
-            <ion-item>
-            <ion-avatar slot="start">
-            <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-avatar>
-            <ion-label style="margin-top: -10px;">
-            <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
-            <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-item>
-            <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-label>
-            </ion-item>
-            <ion-item>
-            <ion-avatar slot="start">
-            <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-avatar>
-            <ion-label style="margin-top: -10px;">
-            <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
-            <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-item>
-            <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-label>
-            </ion-item>
-            </div>
-            </ng-container>
-  
-            <ng-template #noDataAvailable>
-            <div *ngIf="!objecthandler && isFetchDone">
-            <ion-list-header slot="center" mode="ios">
-            Cannot retrieve list of Doctors at this time. Please retry.
-            </ion-list-header>
-            </div>
-            </ng-template>
-            </ion-list>
-            </ion-card>
-            </ion-col>
-            </ion-row>
-            </ion-grid>
-        </ion-col>
-        <ion-col  size-md="1"  ></ion-col>
-      </ion-row>
-    </ion-grid>
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <ion-grid ion-grid-width-md *ngIf="isDesktop">
-
-
-  
-  
 
 
 
@@ -1911,66 +1477,3 @@ ______          _    _
   
   
   
-  
-  
-  
-  </ion-grid>
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</ion-content>
-
-
-
-
-
-<ion-footer class="ion-no-border" >
-  <ion-toolbar *ngIf="!isDesktop">
-    <ion-grid class="ion-no-padding">
-      <ion-row >
-        <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
-        <ion-col size-xs="12" size-md="4" size-lg="4">
-          <ion-button
-          color="mango"
-            size="default"
-            expand="block"
-            shape="round"
-            (click)="redirecttoPF()"
-            *ngIf="data.is_posted == 0 || data.is_posted == null"
-    
-            >Professional Fee</ion-button
-          >
-        </ion-col>
-        <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-toolbar>
-  <div class="footer tab-font-family"  *ngIf="isDesktop">
-    <span>{{this.constants.CHH_NAME__VALUE__CEBU}}</span>
-  </div>
-</ion-footer>

@@ -91,8 +91,11 @@ export class ChhAppProfessionalFeePage implements OnInit {
     }
 
   ngOnInit() {
+    let getValue= this.activatedRoute.snapshot.paramMap.get("state");
+    console.log(JSON.parse(getValue));
 
-
+    let dasdas = this.router.getCurrentNavigation().extras.state;
+    console.log(dasdas);
     this.routerLinkBack = "/menu/in-patients/"+this.activatedRoute.snapshot.params.id;
     this.patient_id = this.activatedRoute.snapshot.params.id;
   }
@@ -171,58 +174,20 @@ export class ChhAppProfessionalFeePage implements OnInit {
         }
       });
   }
-
-  viewtoggle(e){
-    //this.yesnoToggle = !this.yesnoToggle;
-/*
-    if(this.yesnoToggle){
-      this.yesno = "Yes";
-    }else{
-      this.yesno = "No";
-    }
-      console.log(e.detail.checked);
-      if(e.detail.checked){
-        this.insCoor = "Yes";
-      }else{
-        this.insCoor = "No";
-      }*/
-
-      //console.log(e);
-      console.log(e.detail.value);
-
-      if(e.detail.value == "y"){
-        this.showSeenPatient = true;
-      }else if(e.detail.value == "n"){
-        this.showSeenPatient = true;
-      }else{
-        this.showSeenPatient = false;
-      }
+  isInsuranceCoordinatorEventEmitter(e){
+    this.showSeenPatient = true;
+    
   }
 
-  viewtoggle1(e){
-    //this.yesnoToggle = !this.yesnoToggle;
-/*
-    if(this.yesnoToggle){
-      this.yesno = "Yes";
+
+  isPatientSeenEventEmitter(e){
+    if(e){
+      this.showSelection = true;
     }else{
-      this.yesno = "No";
+      this.showSelection = false;
     }
-      console.log(e.detail.checked);
-      if(e.detail.checked){
-        this.insCoor = "Yes";
-      }else{
-        this.insCoor = "No";
-      }*/
-
-      //console.log(e);
-      console.log(e.detail.value);
-
-      if(e.detail.value == "y"){
-        this.showSelection = true;
-      }else{
-        this.showSelection = false;
-      }
+    
   }
 
-  
+
 }

@@ -1,0 +1,62 @@
+<ion-header *ngIf="isDesktop"  mode="md" class="ion-no-border custom-border-bottom" >
+  <ion-toolbar >
+    <ion-row class="ion-align-items-center" >
+      <ion-col size="2">
+        <chh-app-logo-sm ></chh-app-logo-sm>
+      </ion-col>
+      <ion-col size="10">
+        <div class="navbar" class="ion-text-center chh-bg">
+          <ion-button
+            id="button-dashboard"
+            fill="clear"
+            routerLink="/menu/dashboard"
+            routerDirection="root"
+            routerLinkActive="active-link"
+            class="link"
+          >
+            {{this.constants.MENU__VALUE__DASHBOARD}}
+          </ion-button>
+          <ion-button
+            id="button-in-patients"
+            fill="clear"
+            routerLink="/menu/in-patients"
+            routerDirection="root"
+            routerLinkActive="active-link"
+            class="link"
+          >
+            {{this.constants.MENU__VALUE__IN_PATIENTS}}
+          </ion-button>
+          <ion-button
+            id="button-appointments"
+            fill="clear"
+            routerLink="/menu/appointments"
+            routerDirection="root"
+            routerLinkActive="active-link"
+            class="link"
+          >
+            {{this.constants.MENU__VALUE__APPOINTMENTS}}
+          </ion-button>
+          <ion-button
+            id="button-settings"
+            fill="clear"
+            routerLink="/menu/settings"
+            routerDirection="root"
+            routerLinkActive="active-link"
+            class="link"
+          >
+          {{this.constants.MENU__VALUE__SETTINGS}}
+          </ion-button>
+          <ion-button
+            id="button-logout"
+            fill="clear"
+            routerDirection="root"
+            routerLinkActive="active-link"
+            class="link"
+          >
+          {{this.constants.MENU__VALUE__LOG_OUT}}
+          </ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+  </ion-header> 

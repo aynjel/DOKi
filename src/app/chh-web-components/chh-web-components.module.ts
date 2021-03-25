@@ -1,5 +1,8 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+
+import {RouterModule} from "@angular/router";
+
 import { ChhAppLogoComponent } from "./chh-app-logo/chh-app-logo.component";
 import { ChhAppSlidesComponent } from "./chh-app-slides/chh-app-slides.component";
 import { ChhAppSliderPage } from "./chh-app-slider/chh-app-slider.page";
@@ -23,9 +26,20 @@ import { ChhAppHospitalSelectorWithAllComponent } from "./chh-app-hospital-selec
 import { ChhAppTextAvatarModule } from "./chh-app-text-avatar/chh-app-text-avatar.module";
 
 import {ChhAppCardNewlineComponent} from "./chh-app-card-newline/chh-app-card-newline.component";
-
-
+import {ChhAppListOfDoctorsComponent} from "./chh-app-list-of-doctors/chh-app-list-of-doctors.component";
+import {ChhAppDesktopNavigationComponent } from "./chh-app-desktop-navigation/chh-app-desktop-navigation.component";
 import {ChhAppPatientHeaderComponent} from "./chh-app-patient-header/chh-app-patient-header.component"
+
+import {ChhAppAdmittingDiagnosisComponent} from "./chh-app-admitting-diagnosis/chh-app-admitting-diagnosis.component";
+
+
+import {ChhAppFinalDiagnosisComponent} from "./chh-app-final-diagnosis/chh-app-final-diagnosis.component"
+
+import {ChhAppInsuranceCoordinatorInquiryComponent} from "./chh-app-insurance-coordinator-inquiry/chh-app-insurance-coordinator-inquiry.component";
+
+
+import {ChhAppIsPatientSeenComponent} from "./chh-app-is-patient-seen/chh-app-is-patient-seen.component";
+
 @NgModule({
   declarations: [
     ChhAppLogoComponent,
@@ -43,7 +57,14 @@ import {ChhAppPatientHeaderComponent} from "./chh-app-patient-header/chh-app-pat
     ChhAppTestCbcComponent,
     ChhAppTestUrinalysisComponent,
     ChhAppCardNewlineComponent,
-    ChhAppPatientHeaderComponent
+    ChhAppPatientHeaderComponent,
+    ChhAppListOfDoctorsComponent,
+    ChhAppDesktopNavigationComponent,
+    ChhAppAdmittingDiagnosisComponent,
+    ChhAppFinalDiagnosisComponent,
+    ChhAppInsuranceCoordinatorInquiryComponent,
+    ChhAppIsPatientSeenComponent
+
   ],
   exports: [
     ChhAppLogoComponent,
@@ -60,9 +81,15 @@ import {ChhAppPatientHeaderComponent} from "./chh-app-patient-header/chh-app-pat
     ChhAppTestHematologyComponent,
     ChhAppTestCbcComponent,
     ChhAppTestUrinalysisComponent,
-    ChhAppCardNewlineComponent,ChhAppPatientHeaderComponent
+    ChhAppCardNewlineComponent,ChhAppPatientHeaderComponent,
+    ChhAppListOfDoctorsComponent,
+    ChhAppDesktopNavigationComponent,
+    ChhAppAdmittingDiagnosisComponent,
+    ChhAppFinalDiagnosisComponent,
+    ChhAppInsuranceCoordinatorInquiryComponent,
+    ChhAppIsPatientSeenComponent
   ],
-  imports: [CommonModule, IonicModule, ChhAppTextAvatarModule],
+  imports: [CommonModule, IonicModule, ChhAppTextAvatarModule,RouterModule],
 })
 
 export class ChhWebComponentsModule {}
