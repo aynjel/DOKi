@@ -98,4 +98,20 @@ export class DoctorService {
     return this.httpService.DoctorsPortalDelete('ProfFee/Delete', x);   
   }
   /* for doctors Portal */
+
+
+
+/*
+ _____                        ______         _              
+/  __ \                       | ___ \       | |             
+| /  \/  __ _  ___   ___      | |_/ /  __ _ | |_   ___  ___ 
+| |     / _` |/ __| / _ \     |    /  / _` || __| / _ \/ __|
+| \__/\| (_| |\__ \|  __/     | |\ \ | (_| || |_ |  __/\__ \
+ \____/ \__,_||___/ \___|     \_| \_| \__,_| \__| \___||___/
+                                                            
+                                                            
+*/
+searchCaseRates(data1:any){
+  return this.httpService.searchCaseRates('https://dokifunctionstest.azurewebsites.net/api/PhilHealthCaseRates', data1);   
+}
 }

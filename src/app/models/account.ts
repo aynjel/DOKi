@@ -7,7 +7,5 @@ export class Aasdccount {
     status:any;
     site:string;
     license_no:string;
-
-
 }
 
