@@ -25,6 +25,13 @@ import { AuthConstants } from "../../../config/auth-constants";
 import { executionAsyncResource } from "async_hooks";
 import { Constants } from "src/app/shared/constants";
 
+import {InPatientData} from "src/app/models/in-patient.model";
+
+
+
+
+
+
 
 @Component({
   selector: 'app-chh-app-professional-fee',
@@ -33,6 +40,7 @@ import { Constants } from "src/app/shared/constants";
 })
 export class ChhAppProfessionalFeePage implements OnInit {
   public logindata: LoginData;
+  postData : InPatientData = new InPatientData();
   isDesktop:any;
   dr_name:any;
   dr_code:any;
@@ -46,7 +54,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
   insCoor:any = "No";
   showSelection:boolean = false;
   showSeenPatient:boolean =false;
-  postData = {
+ /* postData = {
     AdmisisonNo: "string",
     DoctorCode: "string",
     DoctorStatusCode: "string",
@@ -60,7 +68,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     RoomNumber: "string",
     SmsGateWay: [],
     OldProfFee: "string",
-  };
+  };*/
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -79,7 +87,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     public storageService: StorageService,
     public constants: Constants,
     private renderer: Renderer2) {
-
+     // this.postData = new InPatientData();
       this.screensizeService.isDesktopView().subscribe((isDesktop) => {
         if (this.isDesktop && !isDesktop) {
           window.location.reload();
@@ -92,12 +100,18 @@ export class ChhAppProfessionalFeePage implements OnInit {
 
   ngOnInit() {
     let getValue= this.activatedRoute.snapshot.paramMap.get("state");
-    console.log(JSON.parse(getValue));
 
-    let dasdas = this.router.getCurrentNavigation().extras.state;
-    console.log(dasdas);
+
+
     this.routerLinkBack = "/menu/in-patients/"+this.activatedRoute.snapshot.params.id;
     this.patient_id = this.activatedRoute.snapshot.params.id;
+
+
+    this.postData = JSON.parse(sessionStorage.getItem("postData")) as InPatientData;
+    console.log("!!!!!!!!!!!!!");
+    console.log((this.postData));
+    console.log(JSON.stringify(this.postData));
+      // if it's object
   }
 
   ionViewWillEnter(){
@@ -112,7 +126,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     
     this.dr_name = logindata[0].last_name;
     this.dr_code = logindata[0].dr_code;
-    this.postData.DoctorMobileNumber = logindata[0].mobile_no;
+    //this.postData.DoctorMobileNumber = logindata[0].mobile_no;
     this.data =[];
     this.doctorService.getInPatient(this.dr_code).subscribe(
       (res: any) => {
@@ -138,6 +152,9 @@ export class ChhAppProfessionalFeePage implements OnInit {
     console.log( this.dr_code );
     
   }
+
+
+
   redirecto(data){
     console.log(this.router.url);
     this.router.navigate([this.router.url+'/'+data]);

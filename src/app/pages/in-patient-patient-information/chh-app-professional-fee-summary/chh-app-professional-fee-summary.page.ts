@@ -24,7 +24,7 @@ import { StorageService } from "../../../services/storage/storage.service";
 import { AuthConstants } from "../../../config/auth-constants";
 import { executionAsyncResource } from "async_hooks";
 import { Constants } from "src/app/shared/constants";
-
+import { CaseRatesPage } from "../../case-rates/case-rates.page";
 @Component({
   selector: 'app-chh-app-professional-fee-summary',
   templateUrl: './chh-app-professional-fee-summary.page.html',
@@ -91,6 +91,10 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     this.method = this.functionsService.convertAllFirstLetterToUpperCase(this.method);
     this.routerLinkBack1 = "/menu/in-patients/"+this.id;
     this.routerLinkBack2 = "/menu/in-patients/"+this.id+"/professional-fee";
+
+
+    console.log(this.method);
+    
   }
 
   ionViewWillEnter(){
@@ -102,7 +106,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     this.dr_code = logindata[0].dr_code;*/
 
     let logindata = <LoginData>this.authService.userData$.getValue();
-    console.log(logindata);
+
     
     this.dr_name = logindata[0].last_name;
     this.dr_code = logindata[0].dr_code;
@@ -110,7 +114,6 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     this.data =[];
     this.doctorService.getInPatient(this.dr_code).subscribe(
       (res: any) => {
-        console.log(res);
         
         res.forEach(element => {
             if(element.patient_no == this.activatedRoute.snapshot.params.id){
@@ -160,5 +163,14 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   segmentChanged(e){
     console.log(e);
     
+  }
+
+
+  async presentCaseRatesModal() {
+    const modal = await this.modalController.create({
+      component: CaseRatesPage,
+      cssClass: 'my-custom-class'
+    });
+    return await modal.present();
   }
 }

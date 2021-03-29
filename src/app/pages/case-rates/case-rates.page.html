@@ -7,7 +7,7 @@
       slot="end"
       class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated"
     >
-      <ion-button routerLink="/menu/in-patients/" routerDirection="backward" color="chh-css-primary2"
+      <ion-button (click)="dismiss()" color="chh-css-primary2"
         >Close&nbsp; <ion-icon name="close-outline"></ion-icon
       ></ion-button>
     </ion-buttons>
@@ -17,24 +17,70 @@
 <app-chh-app-desktop-navigation *ngIf="isDesktop"></app-chh-app-desktop-navigation>
  
 
-<ion-content>
-  <ion-list>
+<ion-content >
 
+
+
+
+
+  <ion-list *ngIf="!isDesktop">
     <ion-item *ngFor="let x of caseRates" >
       <ion-label>
-        <h2 class="ion-text-wrap">{{x.case_desc}}asdasd</h2>
+        <h2 class="ion-text-wrap">{{x.case_desc}}</h2>
         <h3 class="ion-text-wrap">Case Code : {{x.case_code}}</h3>
         <h3 class="ion-text-wrap">PF : {{x.case_pf}}</h3>
-
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p>
       </ion-label>
     </ion-item>
-    </ion-list>
+  </ion-list>
+  <div *ngIf="isDesktop">
+    <ion-grid class="ion-no-padding" >
+      <ion-row>
+        <ion-col  size-md="1"></ion-col>
+        <ion-col  size-md="2">
+          <ion-segment (ionChange)="segmentChanged($event)" mode="ios" [(ngModel)]="caseRateData.case_class" color="mango">
+            <ion-segment-button value="first">
+              <ion-label>1st Case</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="second">
+              <ion-label>2nd Case</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+          <ion-item>
+            <ion-label position="floating">Code : </ion-label>
+            <ion-input [(ngModel)]="caseRateData.case_search_code"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Description : </ion-label>
+            <ion-input [(ngModel)]="caseRateData.case_search_desc"></ion-input>
+          </ion-item>
+          <ion-button
+          color="mango"
+          size="default"
+          expand="block"
+          shape="round"
+          (click)="search()"
+          >Search</ion-button
+          >
+        </ion-col>
+        <ion-col size-md="8">
+          <ion-item *ngFor="let x of caseRates" >
+            <ion-label>
+              <h2 class="ion-text-wrap">{{x.case_desc}}</h2>
+              <h3 class="ion-text-wrap">Case Code : {{x.case_code}}</h3>
+              <h3 class="ion-text-wrap">PF : {{x.case_pf}}</h3>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 
 </ion-content>
+<ion-footer  class="ion-no-border" color="mango" *ngIf="!isDesktop">
 
 
-<ion-footer  class="ion-no-border" color="mango">
+
+
   <ion-segment (ionChange)="segmentChanged($event)" mode="ios" [(ngModel)]="caseRateData.case_class" color="mango">
     <ion-segment-button value="first">
       <ion-label>1st Case</ion-label>
@@ -43,14 +89,6 @@
       <ion-label>2nd Case</ion-label>
     </ion-segment-button>
   </ion-segment>
-
-
-  <ion-item *ngIf="caseSelect">
-    First Case
-  </ion-item>
-  <ion-item *ngIf="!caseSelect">
-    Second Case
-  </ion-item>
   <ion-item>
     <ion-label position="floating">Code : </ion-label>
     <ion-input [(ngModel)]="caseRateData.case_search_code"></ion-input>
@@ -60,7 +98,6 @@
     <ion-label position="floating">Description : </ion-label>
     <ion-input [(ngModel)]="caseRateData.case_search_desc"></ion-input>
   </ion-item>
-
   <ion-grid class="ion-no-padding" >
     <ion-row >
       <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
@@ -82,3 +119,6 @@
 
 
 </ion-footer>
+
+
+

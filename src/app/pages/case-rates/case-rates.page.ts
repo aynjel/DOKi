@@ -65,6 +65,9 @@ export class CaseRatesPage implements OnInit {
     public nav:NavController) {
       this.caseRateData = new CaseRates();
       this.caseRateData.case_class = "first";
+      console.log( this.caseRateData);
+      
+      sessionStorage.setItem('caseRateData', JSON.stringify(this.caseRateData)); 
       this.screensizeService.isDesktopView().subscribe((isDesktop) => {
         if (this.isDesktop && !isDesktop) {
           window.location.reload();
@@ -77,16 +80,24 @@ export class CaseRatesPage implements OnInit {
   ngOnInit() {
   }
   ionViewWillEnter(){
+    console.log('ionViewWillEnter');
     //let asdasd = "asdklajsdlkajslkd";
     // this.asdasdasdas.case_class = asdasd.toString();
 
 
+   // let user = new CaseRates();
+    let  user = <CaseRates>JSON.parse(sessionStorage.getItem("caseRateData")) ; 
+    
+    console.log(user);
+    
 
 
-
-    let logindata = <LoginData>this.authService.userData$.getValue();
+    
+    let logindata = <LoginData>this.authService.userData$.getValue() ;
     this.dr_name = logindata[0].last_name;
     this.dr_code = logindata[0].dr_code;
+
+    this.checkAppearance();
 
   }
   segmentChanged(e){
@@ -95,13 +106,42 @@ export class CaseRatesPage implements OnInit {
     this.caseRateData.case_class = e.detail.value;
   }
   search(){
-
-    console.log(this.caseRateData);
-    
     this.doctorService.searchCaseRates(this.caseRateData).subscribe(
       (res: any) => {
         this.caseRates = res;
       }
     );
+  }
+
+
+  checkAppearance(){
+    
+    let logindata = <LoginData>this.authService.userData$.getValue();
+    this.dr_code = logindata[0].dr_code;
+    let dr_username = atob(localStorage.getItem("username"));
+    this.patientService.getUserSettings('DPP',dr_username).subscribe(
+      (res: any) => {       
+        if(Object.keys(res).length >= 1){
+          let data = JSON.stringify(res);data = '['+data+']';let adat = JSON.parse(data);
+          adat.forEach(el => {
+            if(typeof el.appearance !== 'undefined'){
+              if(el.appearance.darkmode == 1){
+                this.renderer.setAttribute(document.body, "color-theme", "dark");
+              }else{
+                this.renderer.setAttribute(document.body, "color-theme", "light");
+              }
+            }else{
+              this.renderer.setAttribute(document.body, "color-theme", "light");
+            }
+          });
+        }
+      });
+  }
+  dismiss() {
+    // using the injected ModalController this page
+    // can "dismiss" itself and optionally pass back data
+    this.modalController.dismiss({
+      'dismissed': true
+    });
   }
 }

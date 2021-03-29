@@ -26,6 +26,7 @@ import { executionAsyncResource } from "async_hooks";
 import { Constants } from "src/app/shared/constants";
 
 
+import {InPatientData} from "src/app/models/in-patient.model";
 
 
 
@@ -38,7 +39,6 @@ import { Constants } from "src/app/shared/constants";
 
 export class InPatientDetailPage   {
   public logindata: LoginData;
-  //@Input() data: any;
   data: any=[];
   site: any;
   date: any;
@@ -79,41 +79,7 @@ export class InPatientDetailPage   {
   dr_code:any;
   dr_name:any;
   patient_name:any;
-  postData = {
-    AdmisisonNo: "string",
-    DoctorCode: "string",
-    DoctorStatusCode: "string",
-    ProfFee: 0,
-    DateCreated: "2020-07-01T05:14:48.712Z",
-    site: "string",
-    CreatedBy: "string",
-    Remarks: "string",
-    DoctorMobileNumber: "string",
-    BillingMobileNumber: "string",
-    RoomNumber: "string",
-    SmsGateWay: [],
-    OldProfFee: "string",
-  };
-  coDoctorData = {
-    first_name: "string",
-    last_name: "string",
-    status: "string",
-    mobile_no: "string",
-    dept_short_desc: "string",
-  };
-
-
-
-
-
-
-
-
-
-
-
-
-
+  postData : InPatientData  = new InPatientData();
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -133,7 +99,7 @@ export class InPatientDetailPage   {
     public constants: Constants,
     private renderer: Renderer2,
     public nav:NavController) {
-
+      
       this.screensizeService.isDesktopView().subscribe((isDesktop) => {
         if (this.isDesktop && !isDesktop) {
           window.location.reload();
@@ -142,78 +108,52 @@ export class InPatientDetailPage   {
       });
       this.ClickedRow = function(index){  
         this.HighlightRow = index;  
-    } 
-      console.log('constructor');
+      } 
+
     }
 
  
   ionViewWillEnter(){
-
     this.checkAppearance();
-    console.log('ionViewWillEnter');
-
-   /* let logindata = <LoginData>this.authService.userData$.getValue();
-    console.log(logindata);
-    let dr_name = logindata[0].last_name;
-    this.dr_code = logindata[0].dr_code;*/
-
     let logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_name = logindata[0].last_name;
     this.dr_code = logindata[0].dr_code;
     this.postData.DoctorMobileNumber = logindata[0].mobile_no;
-
-    /*this.doctorService.getInPatient(this.dr_code).subscribe(
-      (res: any) => {
-        console.log(res);
-
+    this.data =[];
+    this.doctorService.getInPatient(this.dr_code).subscribe(
+      (res: any) => {          
         res.forEach(element => {
-          
+            if(element.patient_no == this.activatedRoute.snapshot.params.id){
+              this.data.push(element);
+              this.patient_name = element.first_name + ' ' + element.last_name;
+            }
         });
-        
-      });*/
-      this.data =[];
-      this.doctorService.getInPatient(this.dr_code).subscribe(
-        (res: any) => {
-          console.log(res);
-          
-          res.forEach(element => {
-              if(element.patient_no == this.activatedRoute.snapshot.params.id){
-                this.data.push(element);
-                this.patient_name = element.first_name + ' ' + element.last_name;
-              }
-          });
-        },(error) => {
-          console.log(error);
-          
-        },
-        ()=>{
-          console.log('OPERATE');
-          
-          this.operate();
-        });
+      },(error) => {
+        console.log(error);
+      },
+      ()=>{      
+        this.operate();
+      });
        
 
 
 
   }
   operate(){
-    //console.log(this.data[0].admission_date);
-    
     let d = new Date(this.data[0].admission_date);
-
     this.dateAdmitted = d.toUTCString();
-    console.log(this.dateAdmitted);
-    
     this.$gaService.pageView(
       "/In-Patient/Patient Details",
       "Patient Details Modal"
     );
-
- 
     this.$gaService.event("Patient Information", "User Flow", this.dr_name);
-   this.getExamList(this.data[0].patient_no);
+    this.getExamList(this.data[0].patient_no);
 
-
+      this.postData.IsVAT = "";
+      this.postData.PayVenue = "";
+      this.postData.Remarks = "";
+      this.postData.ProfFee = 0;
+      this.postData.OldProfFee = 0;
     /*this.data.admission_date = this.functionsService.explodeDate(
       this.data.admission_date
     );*/
@@ -228,16 +168,14 @@ export class InPatientDetailPage   {
     }
     this.postData.RoomNumber = this.data[0].room_no;
     let smsgateway = JSON.parse(localStorage.getItem("smsGateway"));
+    let ssms=[];
     Object.keys(smsgateway).forEach((key) => {
       var value = smsgateway[key];
       let sms =
-        '{"settings": "smsGateway","property": "' +
-        key +
-        '","value": "' +
-        value +
-        '"}';
-      this.postData.SmsGateWay.push(JSON.parse(sms));
+        '{"settings": "smsGateway","property": "' +key +'","value": "' +value +'"}';
+        ssms.push(JSON.parse(sms));
     });
+    this.postData.SmsGateWay = ssms;
     this.professionalFee = this.data[0].doctor_prof_fee;
     this.remarks = this.data[0].remarks;
 
@@ -304,10 +242,7 @@ export class InPatientDetailPage   {
       }
     );
     //
-    console.log('admitting diagnosis');
-    
-    console.log(this.data[0].admission_no);
-    
+
     this.doctorService.getAdmittingDiagnosis(this.data[0].admission_no).subscribe(
       (res: any) => {
 
@@ -376,13 +311,13 @@ export class InPatientDetailPage   {
       );
     }
 
+    this.postData.DateCreated = this.functionsService.getSystemDateTime();
+    sessionStorage.setItem('postData', JSON.stringify(this.postData)); 
 
 
   }
   ngOnInit() {
-    console.log('ngOnInit');
-    let datasend = '{first_name: "string",last_name: "string",status: "string",mobile_no: "string",dept_short_desc: "string"}';
-    sessionStorage.setItem('clickCounter', datasend);
+
 
   }
   updateDisplay(data:boolean){
@@ -728,11 +663,7 @@ export class InPatientDetailPage   {
     
     this.nav.navigateForward('menu/in-patients/' + this.activatedRoute.snapshot.params.id+'/professional-fee', {
       state: {
-        first_name: "string",
-        last_name: "string",
-        status: "string",
-        mobile_no: "string",
-        dept_short_desc: "string"
+
       },
     });
   

@@ -85,47 +85,7 @@ export class TabInPatientsPage {
       }
     });
   }
-  generatePDF() {
-    let docDefinition = {
-      content: [
-        {
-          text: "ELECTRONIC SHOP",
-          fontSize: 16,
-          alignment: "center",
-          color: "#047886"
-
-        },
-        {
-          text: "INVOICE",
-          fontSize: 20,
-          alignment: "center",
-          decoration: "underline",
-          color: "skyblue"
-        },
-        {
-          text: "INVOICE",
-          fontSize: 20,
-          bold: true,
-          alignment: "center",
-          decoration: "underline",
-          color: "skyblue"
-        },
-        {
-          text: "Customer Details",
-          style: "sectionHeader",
-        },
-      ],    styles: {  
-        sectionHeader: {  
-            bold: true,  
-            decoration: 'underline',  
-            fontSize: 14,  
-            margin: [0, 15, 0, 15]  
-        }  
-    } 
-    };
-
-    pdfMake.createPdf(docDefinition).download();
-  }
+  
   ngOnInit() {
     this.$gaService.pageView("/In-Patient", "In-Patient Tab");
   }
