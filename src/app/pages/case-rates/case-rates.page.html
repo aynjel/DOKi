@@ -1,7 +1,7 @@
 <ion-header mode="md" class="ion-no-border" > 
   <ion-toolbar color="mango">
     <ion-title>
-      Case Rates
+      Case Rates {{case}}
     </ion-title>
     <ion-buttons
       slot="end"
@@ -19,7 +19,34 @@
 
 <ion-content >
 
+  <div class=" custom-skeleton" *ngIf="ionSkeleton">
+  <ion-list >
+    <ion-item >
+      <ion-label>
+        <h2 class="ion-text-wrap"><ion-skeleton-text animated></ion-skeleton-text></h2>
+        <h3 class="ion-text-wrap"><ion-skeleton-text animated style="width: 88%"></ion-skeleton-text></h3>
+        <h3 class="ion-text-wrap"><ion-skeleton-text animated style="width: 70%"></ion-skeleton-text></h3>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+    <ion-list >
+      <ion-item >
+        <ion-label>
+          <h2 class="ion-text-wrap"><ion-skeleton-text animated style="width: 40%"></ion-skeleton-text></h2>
+          <h3 class="ion-text-wrap"><ion-skeleton-text animated style="width: 30%"></ion-skeleton-text></h3>
+          <h3 class="ion-text-wrap"><ion-skeleton-text animated style="width: 70%"></ion-skeleton-text></h3>
+        </ion-label>
+      </ion-item>
+  </ion-list>
 
+  </div>
+
+  <div  *ngIf ="ionNoData">
+    <img src="assets/img/3973477-no-data-concept-illustration-custom.png">
+    <div class="ion-text-center">
+      <h3> {{this.messages.NO_DATA_AVAILABLE}}</h3>
+    </div>
+  </div>
 
 
 

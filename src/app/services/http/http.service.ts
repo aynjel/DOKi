@@ -150,11 +150,9 @@ export class HttpService {
 
 
   searchCaseRates(data: any) {
-
     const headers = new HttpHeaders({ 'Content-Type': 'application/json;charset=utf-8' });
     const options = { headers: headers, withCredentials: false,data };
-
-    const url = 'http://10.130.21.172:59201/api/PhilHealthCaseRates/Search'+ data;
+    const url = environment.apiRouterUrl + 'PhilHealthCaseRates/Search'+ data;
     return this.http.get(url);
   }
 

@@ -18,6 +18,6 @@ import { ChhAppTextAvatarModule } from "../../../chh-web-components/chh-app-text
     ChhWebComponentsModule,
     ChhAppTextAvatarModule
   ],
-  declarations: [ChhAppProfessionalFeePage]
+  declarations: [ChhAppProfessionalFeePage,]
 })
 export class ChhAppProfessionalFeePageModule {}

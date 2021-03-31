@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-
+import { FormsModule } from '@angular/forms';
 import {RouterModule} from "@angular/router";
 
 import { ChhAppLogoComponent } from "./chh-app-logo/chh-app-logo.component";
@@ -89,7 +89,7 @@ import {ChhAppIsPatientSeenComponent} from "./chh-app-is-patient-seen/chh-app-is
     ChhAppInsuranceCoordinatorInquiryComponent,
     ChhAppIsPatientSeenComponent
   ],
-  imports: [CommonModule, IonicModule, ChhAppTextAvatarModule,RouterModule],
+  imports: [CommonModule, IonicModule, ChhAppTextAvatarModule,RouterModule,FormsModule],
 })
 
 export class ChhWebComponentsModule {}

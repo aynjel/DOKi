@@ -82,7 +82,9 @@ ___  ___        _      _  _
     <ion-list>
       <ion-item style="padding-top: 10px;">
         <div class="ion-text-wrap"><b>Lab Tests</b><br /></div>
+        
       </ion-item>
+
         <ion-searchbar           
         [(ngModel)]="searchBar"
         (ionChange)="filterList()"
@@ -90,6 +92,7 @@ ___  ___        _      _  _
       <ion-item style="padding-top: 10px;" lines="none" *ngIf="currentExamList != ''">
         <div class="ion-text-wrap">
           <div class="navbar" class="ion-text-center" >
+            
             <ion-button id="ion-button-filter-both" fill="clear" class="link" size="small">Current Tests
             </ion-button>
             <ion-button id="ion-button-filter-both" fill="clear" class="link" size="small">All Tests
@@ -138,6 +141,19 @@ ___  ___        _      _  _
           </div>
     </ion-list>
   </ion-card>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <app-chh-app-list-of-doctors  
       [coDoctors]="coDoctors"

@@ -284,6 +284,7 @@ export class TabSettingsPage {
       localStorage.clear();
       this.router.navigate(["/login"]);
     });
+    sessionStorage.clear(); 
   }
   //OPT-OUT of PRIVACY POLICY
   async optoutofprivacy(event: { detail: { checked: any } }) {

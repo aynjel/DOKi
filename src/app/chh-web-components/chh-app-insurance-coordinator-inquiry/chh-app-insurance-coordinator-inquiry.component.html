@@ -2,7 +2,7 @@
   <ion-label  class="ion-text-wrap">Are you a Insurance Coordinator?</ion-label> 
   <!--ion-checkbox color="mango" checked="false" (ionChange)="viewtoggle($event)"></ion-checkbox-->
   </ion-item>
-  <ion-segment (ionChange)="viewtoggle($event)">
+  <ion-segment (ionChange)="viewtoggle($event)"  [(ngModel)]="pfInsCoor">
     <ion-segment-button value="y">
       <ion-label>Yes</ion-label>
     </ion-segment-button>

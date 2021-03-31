@@ -1,4 +1,4 @@
-import { Component, OnInit,Output,EventEmitter } from '@angular/core';
+import { Component, OnInit,Output,EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-chh-app-insurance-coordinator-inquiry',
@@ -7,6 +7,7 @@ import { Component, OnInit,Output,EventEmitter } from '@angular/core';
 })
 export class ChhAppInsuranceCoordinatorInquiryComponent implements OnInit {
   showSeenPatient:any;
+  @Input() pfInsCoor;
   @Output() showSeenPatientEventEmitter: EventEmitter<any> = new EventEmitter();
   constructor() { }
 
@@ -15,7 +16,7 @@ export class ChhAppInsuranceCoordinatorInquiryComponent implements OnInit {
       if(e.detail.value == "y"){
         this.showSeenPatient = true;
       }else if(e.detail.value == "n"){
-        this.showSeenPatient = true;
+        this.showSeenPatient = false;
       }else{
         this.showSeenPatient = false;
       }

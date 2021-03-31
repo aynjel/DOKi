@@ -2,7 +2,7 @@
   <ion-label  class="ion-text-wrap">Have you seen this Patient?</ion-label> 
   <!--ion-checkbox color="mango" checked="false" (ionChange)="viewtoggle($event)"></ion-checkbox-->
   </ion-item>
-  <ion-segment (ionChange)="viewtoggle1($event)">
+  <ion-segment (ionChange)="viewtoggle1($event)"  [(ngModel)]="pfIsPatientSeen">
     <ion-segment-button value="y">
       <ion-label>Yes</ion-label>
     </ion-segment-button>

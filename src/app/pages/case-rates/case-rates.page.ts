@@ -36,13 +36,14 @@ export class CaseRatesPage implements OnInit {
   dr_code:any;
   caseRateData  = new CaseRates();
   caseSelect:boolean = true;
-
+  ionSkeleton : boolean = false;
+  ionNoData : boolean = false;
   caseRateResponse:any;
   case_class : any;
   case_search_code : any;
   case_search_desc : any;
   activedescription:boolean = false;
-
+  case :any = "(first)";
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -81,19 +82,7 @@ export class CaseRatesPage implements OnInit {
   ngOnInit() {
   }
   ionViewWillEnter(){
-    console.log('ionViewWillEnter');
-    //let asdasd = "asdklajsdlkajslkd";
-    // this.asdasdasdas.case_class = asdasd.toString();
-
-
-   // let user = new CaseRates();
     let  user = <CaseRates>JSON.parse(sessionStorage.getItem("caseRateData")) ; 
-    
-    console.log(user);
-    
-
-
-    
     let logindata = <LoginData>this.authService.userData$.getValue() ;
     this.dr_name = logindata[0].last_name;
     this.dr_code = logindata[0].dr_code;
@@ -106,16 +95,31 @@ export class CaseRatesPage implements OnInit {
     this.caseSelect = !this.caseSelect;
     this.caseRateData.CaseClass = e.detail.value;
     // this.caseRateResponse = '123';
+    this.case = "("+e.detail.value+")";
     this.search();
    
   }
   search(){
   
     if(this.caseRateData.CaseSearchDesc != ""){
+      this.caseRateResponse=[];
+      this.ionSkeleton = true;
+      this.ionNoData = false;
       this.activedescription = false;
       this.doctorService.searchCaseRates(this.caseRateData.CaseClass,this.caseRateData.CaseSearchCode,this.caseRateData.CaseSearchDesc).subscribe(
         (res: any) => {
+          console.log(res);
+          
           this.caseRateResponse = res;
+        },(error) =>{
+          this.ionNoData = true;
+        },() => {
+          this.ionSkeleton = false;
+          if(this.functionsService.isEmptyObject(this.caseRateResponse)){
+            this.ionNoData = true;
+          }else{
+            this.ionNoData = false;
+          }
         }
       );
     }else{

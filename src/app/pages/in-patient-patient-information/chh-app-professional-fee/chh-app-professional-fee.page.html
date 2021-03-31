@@ -125,9 +125,11 @@ ______             _     _                        _   _                   _
 
 
         <app-chh-app-insurance-coordinator-inquiry
+          [pfInsCoor]="pfInsCoor"
           (showSeenPatientEventEmitter)="isInsuranceCoordinatorEventEmitter($event)"
         ></app-chh-app-insurance-coordinator-inquiry>
         <app-chh-app-is-patient-seen *ngIf="showSeenPatient"
+        [pfIsPatientSeen]="pfIsPatientSeen"
           (showIsPatientSeenEventEmitter)="isPatientSeenEventEmitter($event)"
         ></app-chh-app-is-patient-seen>
 

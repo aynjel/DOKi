@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 
 @Component({
   selector: 'app-chh-app-is-patient-seen',
@@ -6,6 +6,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./chh-app-is-patient-seen.component.scss'],
 })
 export class ChhAppIsPatientSeenComponent implements OnInit {
+  @Input() pfIsPatientSeen:any;
   @Output() showIsPatientSeenEventEmitter: EventEmitter<any> = new EventEmitter();
   showSelection:any;
   constructor() { }

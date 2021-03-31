@@ -231,5 +231,7 @@ export class FunctionsService {
   numberWithCommas(x) {
     return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   }
-
+  isEmptyObject(obj) {
+    return !Object.keys(obj).length;
+}
 }

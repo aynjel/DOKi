@@ -54,6 +54,8 @@ export class ChhAppProfessionalFeePage implements OnInit {
   insCoor:any = "No";
   showSelection:boolean = false;
   showSeenPatient:boolean =false;
+  pfInsCoor:any ;
+  pfIsPatientSeen:any;
  /* postData = {
     AdmisisonNo: "string",
     DoctorCode: "string",
@@ -88,6 +90,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     public constants: Constants,
     private renderer: Renderer2) {
      // this.postData = new InPatientData();
+   
       this.screensizeService.isDesktopView().subscribe((isDesktop) => {
         if (this.isDesktop && !isDesktop) {
           window.location.reload();
@@ -102,7 +105,8 @@ export class ChhAppProfessionalFeePage implements OnInit {
     let getValue= this.activatedRoute.snapshot.paramMap.get("state");
 
 
-
+  
+    this.initiateSession();
     this.routerLinkBack = "/menu/in-patients/"+this.activatedRoute.snapshot.params.id;
     this.patient_id = this.activatedRoute.snapshot.params.id;
 
@@ -117,10 +121,6 @@ export class ChhAppProfessionalFeePage implements OnInit {
   ionViewWillEnter(){
  
     
-   /* let logindata = <LoginData>this.authService.userData$.getValue();
-    console.log(logindata);
-    let dr_name = logindata[0].last_name;
-    this.dr_code = logindata[0].dr_code;*/
 
     let logindata = <LoginData>this.authService.userData$.getValue();
     
@@ -130,8 +130,6 @@ export class ChhAppProfessionalFeePage implements OnInit {
     this.data =[];
     this.doctorService.getInPatient(this.dr_code).subscribe(
       (res: any) => {
-
-        
         res.forEach(element => {
             if(element.patient_no == this.activatedRoute.snapshot.params.id){
               this.data.push(element);
@@ -141,15 +139,12 @@ export class ChhAppProfessionalFeePage implements OnInit {
         });
       },(error) => {
         console.log(error);
-        
       },
       ()=>{
         console.log('OPERATE');
         this.checkAppearance();
-        //this.operate();
       });
      
-    console.log( this.dr_code );
     
   }
 
@@ -191,13 +186,45 @@ export class ChhAppProfessionalFeePage implements OnInit {
         }
       });
   }
+  initiateSession(){
+   
+    this.pfInsCoor = sessionStorage.getItem("pfInsCoor");
+    this.pfIsPatientSeen = sessionStorage.getItem("pfIsPatientSeen");
+
+    this.checkEmitters();
+  }
+
+  checkEmitters(){
+
+    if(this.pfInsCoor!=""){
+      this.showSeenPatient = true;
+    }else{
+      this.showSeenPatient = false;
+    }
+        if(this.pfIsPatientSeen == "y"){
+      this.showSelection = true;
+    }else{
+      this.showSelection = false;
+    }
+  }
+
   isInsuranceCoordinatorEventEmitter(e){
+    if(e){
+      this.pfInsCoor = "y";
+    }else{
+      this.pfInsCoor = "n";
+    }
+    sessionStorage.setItem('pfInsCoor', this.pfInsCoor); 
     this.showSeenPatient = true;
     
   }
-
-
   isPatientSeenEventEmitter(e){
+    if(e){
+      this.pfIsPatientSeen = "y";
+    }else{
+      this.pfIsPatientSeen = "n";
+    }
+    sessionStorage.setItem('pfIsPatientSeen', this.pfIsPatientSeen); 
     if(e){
       this.showSelection = true;
     }else{
