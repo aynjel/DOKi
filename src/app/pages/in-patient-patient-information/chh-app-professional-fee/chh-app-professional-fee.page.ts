@@ -164,9 +164,21 @@ export class ChhAppProfessionalFeePage implements OnInit {
 
 
 
-  redirecto(data){
-    console.log(this.router.url);
-    this.router.navigate([this.router.url+'/'+data]);
+  redirecto(){
+
+    let data;
+
+
+    if(this.insurance){
+      data = 'insurance';
+    }else if(this.charity){
+      data = 'charity';
+    }else if(this.philhealth){
+      data = 'philhealth';
+    }
+
+    //console.log(this.router.url);
+   this.router.navigate([this.router.url+'/'+data]);
   }
 
   checkAppearance(){
@@ -253,7 +265,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     }
     
   }
-  toPFM(f,e){
+  isPatientSeenf(f,e){
     console.log(f+" | "+e);
     if(f == 'isPatientSeen' && e == false){
       this.toPFMbtn = true;
