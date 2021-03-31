@@ -13,7 +13,7 @@ import { LoginData } from "../../models/login-data.model";
 import { FunctionsService } from "../../shared/functions/functions.service";
 import { PatientService } from "src/app/services/patient/patient.service";
 import { logWarnings } from "protractor/built/driverProviders";
-import { ChemistryPage } from "../../chh-web-components/chh-app-test/chemistry/chemistry.page";
+import { ChemistryPage } from "../../chh-web-components/chh-app-test/chh-app-chemistry/chemistry.page";
 import { ChhAppBasePage } from "../../chh-web-components/chh-app-test/chh-app-base/chh-app-base.page";
 import { Messages } from "../../shared/messages";
 import { ScreenSizeService } from "../../services/screen-size/screen-size.service";
@@ -34,15 +34,14 @@ export class CaseRatesPage implements OnInit {
   isDesktop:any;
   dr_name:any;
   dr_code:any;
-  caseRateData : CaseRates;
+  caseRateData  = new CaseRates();
   caseSelect:boolean = true;
 
-  caseRates:any;
+  caseRateResponse:any;
   case_class : any;
   case_search_code : any;
   case_search_desc : any;
-  jsonData = '[{"case_code":"10060","case_desc":"Incisionanddrainageofabscess(e.g.,carbuncle,suppurativehidradenitis,cutaneousorsubcutaneo","case_type":"Procedure","case_group":"","case_hb":2800,"case_pf":840,"case_total":3640,"case_status":"AC"},{"case_code":"10080","case_desc":"Incisionanddrainageofpilonidalcyst","case_type":"Procedure","case_group":"","case_hb":2800,"case_pf":840,"case_total":3640,"case_status":"AC"},{"case_code":"10120","case_desc":"Incisionandremovalofforeignbody,subcutaneoustissues","case_type":"Procedure","case_group":"","case_hb":2800,"case_pf":840,"case_total":3640,"case_status":"AC"}]';
-
+  activedescription:boolean = false;
 
   constructor(
     private router: Router,
@@ -63,8 +62,10 @@ export class CaseRatesPage implements OnInit {
     public constants: Constants,
     private renderer: Renderer2,
     public nav:NavController) {
-      this.caseRateData = new CaseRates();
-      this.caseRateData.case_class = "first";
+ 
+      this.caseRateData.CaseClass = "first";
+      this.caseRateData.CaseSearchCode ="";
+      this.caseRateData.CaseSearchDesc="";
       console.log( this.caseRateData);
       
       sessionStorage.setItem('caseRateData', JSON.stringify(this.caseRateData)); 
@@ -103,14 +104,24 @@ export class CaseRatesPage implements OnInit {
   segmentChanged(e){
     console.log(e.detail.value);
     this.caseSelect = !this.caseSelect;
-    this.caseRateData.case_class = e.detail.value;
+    this.caseRateData.CaseClass = e.detail.value;
+    // this.caseRateResponse = '123';
+    this.search();
+   
   }
   search(){
-    this.doctorService.searchCaseRates(this.caseRateData).subscribe(
-      (res: any) => {
-        this.caseRates = res;
-      }
-    );
+  
+    if(this.caseRateData.CaseSearchDesc != ""){
+      this.activedescription = false;
+      this.doctorService.searchCaseRates(this.caseRateData.CaseClass,this.caseRateData.CaseSearchCode,this.caseRateData.CaseSearchDesc).subscribe(
+        (res: any) => {
+          this.caseRateResponse = res;
+        }
+      );
+    }else{
+        this.activedescription = true;
+    }
+
   }
 
 

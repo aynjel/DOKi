@@ -111,7 +111,12 @@ export class DoctorService {
                                                             
                                                             
 */
-searchCaseRates(data1:any){
-  return this.httpService.searchCaseRates('https://dokifunctionstest.azurewebsites.net/api/PhilHealthCaseRates', data1);   
+searchCaseRates(data1:any,data2:any,data3:any){
+
+ // http://10.130.21.172:59201/api/PhilHealthCaseRates/Search?phicSearch.caseClass=first&phicSearch.caseDesc=bone
+
+  let data ="?phicSearch.caseClass="+data1+"&phicSearch.caseCode="+data2+"&phicSearch.caseDesc="+data3;
+
+  return this.httpService.searchCaseRates(data);   
 }
 }

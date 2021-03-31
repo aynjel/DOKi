@@ -1,4 +1,4 @@
-<ion-header mode="md" class="ion-no-border" *ngIf="!isDesktop"> 
+<ion-header mode="md" class="ion-no-border" > 
   <ion-toolbar color="mango">
     <ion-title>
       Case Rates
@@ -14,7 +14,7 @@
   </ion-toolbar>
 </ion-header>
 
-<app-chh-app-desktop-navigation *ngIf="isDesktop"></app-chh-app-desktop-navigation>
+<!-- <app-chh-app-desktop-navigation *ngIf="isDesktop"></app-chh-app-desktop-navigation> -->
  
 
 <ion-content >
@@ -23,16 +23,16 @@
 
 
 
-  <ion-list *ngIf="!isDesktop">
-    <ion-item *ngFor="let x of caseRates" >
+  <ion-list >
+    <ion-item *ngFor="let x of caseRateResponse" >
       <ion-label>
         <h2 class="ion-text-wrap">{{x.case_desc}}</h2>
         <h3 class="ion-text-wrap">Case Code : {{x.case_code}}</h3>
-        <h3 class="ion-text-wrap">PF : {{x.case_pf}}</h3>
+        <h3 class="ion-text-wrap">PF : {{x.case_pf  | number}}</h3>
       </ion-label>
     </ion-item>
   </ion-list>
-  <div *ngIf="isDesktop">
+  <!-- <div *ngIf="isDesktop">
     <ion-grid class="ion-no-padding" >
       <ion-row>
         <ion-col  size-md="1"></ion-col>
@@ -73,15 +73,15 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-  </div>
+  </div> -->
 
 </ion-content>
-<ion-footer  class="ion-no-border" color="mango" *ngIf="!isDesktop">
+<ion-footer  class="ion-no-border" color="mango" >
 
 
 
 
-  <ion-segment (ionChange)="segmentChanged($event)" mode="ios" [(ngModel)]="caseRateData.case_class" color="mango">
+  <ion-segment (ionChange)="segmentChanged($event)" mode="ios" [(ngModel)]="caseRateData.CaseClass" color="mango">
     <ion-segment-button value="first">
       <ion-label>1st Case</ion-label>
     </ion-segment-button>
@@ -91,12 +91,12 @@
   </ion-segment>
   <ion-item>
     <ion-label position="floating">Code : </ion-label>
-    <ion-input [(ngModel)]="caseRateData.case_search_code"></ion-input>
+    <ion-input [(ngModel)]="caseRateData.CaseSearchCode"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label position="floating">Description : </ion-label>
-    <ion-input [(ngModel)]="caseRateData.case_search_desc"></ion-input>
+    <ion-label position="floating" [class.activedescription]="activedescription">Description : </ion-label>
+    <ion-input [(ngModel)]="caseRateData.CaseSearchDesc"></ion-input>
   </ion-item>
   <ion-grid class="ion-no-padding" >
     <ion-row >

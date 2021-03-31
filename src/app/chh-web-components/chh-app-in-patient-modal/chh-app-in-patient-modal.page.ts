@@ -13,7 +13,7 @@ import { LoginData } from "../../models/login-data.model";
 import { FunctionsService } from "../../shared/functions/functions.service";
 import { PatientService } from "src/app/services/patient/patient.service";
 import { logWarnings } from "protractor/built/driverProviders";
-import { ChemistryPage } from "../chh-app-test/chemistry/chemistry.page";
+
 import { ChhAppBasePage } from "../chh-app-test/chh-app-base/chh-app-base.page";
 import { Messages } from "../../shared/messages";
 import { ScreenSizeService } from "../../services/screen-size/screen-size.service";
@@ -261,7 +261,7 @@ export class ChhAppInPatientModalPage implements OnInit {
     var seconds1 = date1.getTime() / 1000; //1440516958
     this.currentExamList = [];
     this.examListSkeleton = true;
-    this.patientService.getExamList(data).subscribe(
+    this.patientService.getCebuExamList(data).subscribe(
       (res: any) => {
 
         res.forEach((element) => {

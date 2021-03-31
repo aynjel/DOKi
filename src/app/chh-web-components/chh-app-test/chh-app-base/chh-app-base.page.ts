@@ -47,7 +47,7 @@ export class ChhAppBasePage implements OnInit {
 
     
     if(this.ExamDetails.Exam == 'Chemistry'){
-      this.patientService.getChemHeader(this.ExamDetails.Request_No).subscribe(
+      this.patientService.getCebuChemHeader(this.ExamDetails.Request_No).subscribe(
         (res: any) => {
           let x = JSON.stringify(res)
           this.Header = JSON.parse(x);
@@ -55,7 +55,7 @@ export class ChhAppBasePage implements OnInit {
         () => {}
       );
     }else if(this.ExamDetails.Exam == 'Serology'){
-      this.patientService.getSeroHeader(this.ExamDetails.Patient_No,this.ExamDetails.Request_No).subscribe(
+      this.patientService.getCebuSeroHeader(this.ExamDetails.Patient_No,this.ExamDetails.Request_No).subscribe(
         (res: any) => {
           let x = JSON.stringify(res)
           this.Header = JSON.parse(x);
@@ -70,7 +70,7 @@ export class ChhAppBasePage implements OnInit {
         }
       );
     }else if(this.ExamDetails.Exam == 'Fecalysis'){
-      this.patientService.getFecalHeader(this.ExamDetails.Patient_No,this.ExamDetails.Request_No).subscribe(
+      this.patientService.getCebuFecalHeader(this.ExamDetails.Patient_No,this.ExamDetails.Request_No).subscribe(
         (res: any) => {
           let x = JSON.stringify(res)
           this.Header = JSON.parse(x);
@@ -79,7 +79,7 @@ export class ChhAppBasePage implements OnInit {
         () => {}
       );
     }else if(this.ExamDetails.Exam == 'Hematology' && this.ExamDetails.ExamType == 'CBC'){
-      this.patientService.getCBCHeader(this.ExamDetails.Request_No).subscribe(
+      this.patientService.getCebuCBCHeader(this.ExamDetails.Request_No).subscribe(
         (res: any) => {
           let x = JSON.stringify(res)
           this.Header = JSON.parse(x);
@@ -87,7 +87,7 @@ export class ChhAppBasePage implements OnInit {
         () => {}
       );
     }else if(this.ExamDetails.Exam == 'Urinalysis'){
-      this.patientService.getUrinalysisHeader(this.ExamDetails.Patient_No,this.ExamDetails.Request_No).subscribe(
+      this.patientService.getCebuUrinalysisHeader(this.ExamDetails.Patient_No,this.ExamDetails.Request_No).subscribe(
         (res: any) => {
           let x = JSON.stringify(res)
           this.Header = JSON.parse(x);

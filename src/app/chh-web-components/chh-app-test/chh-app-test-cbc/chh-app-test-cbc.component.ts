@@ -53,25 +53,25 @@ export class ChhAppTestCbcComponent implements OnInit {
 
 
 
-    this.patientService.getCBCDetail(this.examDetails.Request_No,this.examDetails.ExamType).subscribe(
+    this.patientService.getCebuCBCDetail(this.examDetails.Request_No,this.examDetails.ExamType).subscribe(
       (res: any) => {
         let x = JSON.stringify(res)
         this.resultDetailsCBC = JSON.parse(x);
       },(error) => {},() => {}
     );
-    this.patientService.getCBCDetail(this.examDetails.Request_No,'BIX').subscribe(
+    this.patientService.getCebuCBCDetail(this.examDetails.Request_No,'BIX').subscribe(
       (res: any) => {
         let x = JSON.stringify(res)
         this.resultDetailsBIX = JSON.parse(x);
       },(error) => {},() => {}
     );
-    this.patientService.getCBCDetail(this.examDetails.Request_No,'RDC').subscribe(
+    this.patientService.getCebuCBCDetail(this.examDetails.Request_No,'RDC').subscribe(
       (res: any) => {
         let x = JSON.stringify(res)
         this.resultDetailsRDC = JSON.parse(x);
       },(error) => {},() => {}
     );
-    this.patientService.getCBCDetail(this.examDetails.Request_No,'ADC').subscribe(
+    this.patientService.getCebuCBCDetail(this.examDetails.Request_No,'ADC').subscribe(
       (res: any) => {
         let x = JSON.stringify(res)
         this.resultDetailsADC = JSON.parse(x);

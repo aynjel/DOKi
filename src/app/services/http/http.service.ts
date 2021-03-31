@@ -149,13 +149,13 @@ export class HttpService {
 
 
 
-  searchCaseRates(serviceName: string, data: any) {
+  searchCaseRates(data: any) {
 
     const headers = new HttpHeaders({ 'Content-Type': 'application/json;charset=utf-8' });
     const options = { headers: headers, withCredentials: false,data };
-    const url = serviceName;
-    //return this.http.put(url, JSON.stringify(data), options);
-    return this.http.post(url,data,options);
+
+    const url = 'http://10.130.21.172:59201/api/PhilHealthCaseRates/Search'+ data;
+    return this.http.get(url);
   }
 
 }

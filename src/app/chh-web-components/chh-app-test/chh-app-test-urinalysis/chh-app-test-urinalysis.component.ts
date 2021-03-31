@@ -48,7 +48,7 @@ export class ChhAppTestUrinalysisComponent implements OnInit {
     console.log(this.examDetails);
     
     
-    this.patientService.getUrineDetails(this.examDetails.Request_No,'PHY').subscribe(
+    this.patientService.getCebuUrineDetails(this.examDetails.Request_No,'PHY').subscribe(
       (res: any) => {
         console.log(res);
         
@@ -57,14 +57,14 @@ export class ChhAppTestUrinalysisComponent implements OnInit {
       },(error) => {},() => {}
     );
     
-    this.patientService.getUrineDetails(this.examDetails.Request_No,'CHM').subscribe(
+    this.patientService.getCebuUrineDetails(this.examDetails.Request_No,'CHM').subscribe(
       (res: any) => {
         console.log(res);
         let x = JSON.stringify(res)
         this.resultDetailsCHM = JSON.parse(x);          
       },(error) => {},() => {}
     );
-    this.patientService.getUrineDetails(this.examDetails.Request_No,'MIC').subscribe(
+    this.patientService.getCebuUrineDetails(this.examDetails.Request_No,'MIC').subscribe(
       (res: any) => {
         console.log(res);
         let x = JSON.stringify(res)

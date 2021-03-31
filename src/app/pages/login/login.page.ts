@@ -181,8 +181,6 @@ export class LoginPage  {
             if(this.postData.password == this.resultJson.Data){
               localStorage.setItem('username', btoa(this.postData.username));
               this.updatePassword();
-
-              
             }
             else{this.functionsService.alert("Invalid Password","Okay");this.btnDisable = false;}
         

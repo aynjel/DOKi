@@ -13,7 +13,7 @@ import { LoginData } from "../../../models/login-data.model";
 import { FunctionsService } from "../../../shared/functions/functions.service";
 import { PatientService } from "src/app/services/patient/patient.service";
 import { logWarnings } from "protractor/built/driverProviders";
-import { ChemistryPage } from "../../../chh-web-components/chh-app-test/chemistry/chemistry.page";
+import { ChemistryPage } from "../../../chh-web-components/chh-app-test/chh-app-chemistry/chemistry.page";
 import { ChhAppBasePage } from "../../../chh-web-components/chh-app-test/chh-app-base/chh-app-base.page";
 import { Messages } from "../../../shared/messages";
 import { ScreenSizeService } from "../../../services/screen-size/screen-size.service";
@@ -27,7 +27,7 @@ import { Constants } from "src/app/shared/constants";
 
 
 import {InPatientData} from "src/app/models/in-patient.model";
-
+import {LaboratoryTestModalPage} from "../laboratory-test-modal/laboratory-test-modal.page";
 
 
 
@@ -79,6 +79,7 @@ export class InPatientDetailPage   {
   dr_code:any;
   dr_name:any;
   patient_name:any;
+  patient_no:any;
   postData : InPatientData  = new InPatientData();
   constructor(
     private router: Router,
@@ -134,10 +135,6 @@ export class InPatientDetailPage   {
       ()=>{      
         this.operate();
       });
-       
-
-
-
   }
   operate(){
     let d = new Date(this.data[0].admission_date);
@@ -147,16 +144,14 @@ export class InPatientDetailPage   {
       "Patient Details Modal"
     );
     this.$gaService.event("Patient Information", "User Flow", this.dr_name);
+    this.patient_no = this.data[0].patient_no;
     this.getExamList(this.data[0].patient_no);
-
-      this.postData.IsVAT = "";
-      this.postData.PayVenue = "";
-      this.postData.Remarks = "";
-      this.postData.ProfFee = 0;
-      this.postData.OldProfFee = 0;
-    /*this.data.admission_date = this.functionsService.explodeDate(
-      this.data.admission_date
-    );*/
+      //populate empty feild
+    this.postData.IsVAT = "";
+    this.postData.PayVenue = "";
+    this.postData.Remarks = "";
+    this.postData.ProfFee = 0;
+    this.postData.OldProfFee = 0;
     if (this.data[0].site == "C") {
       this.site = "CHHC";
       //this.postData.PatientSite = "CEBU";
@@ -442,7 +437,7 @@ export class InPatientDetailPage   {
     var seconds1 = date1.getTime() / 1000; //1440516958
     this.currentExamList = [];
     this.examListSkeleton = true;
-    this.patientService.getExamList(data).subscribe(
+    this.patientService.getCebuExamList(data).subscribe(
       (res: any) => {
 
         res.forEach((element) => {
@@ -698,7 +693,18 @@ export class InPatientDetailPage   {
       });
   }
 
+  async presentlabtestresult(){
 
+      const modal = await this.modalController.create({
+        component: LaboratoryTestModalPage,
+        cssClass: 'my-custom-modal-css',
+        componentProps: {
+          'patient_no': this.patient_no
+        }
+      });
+      return await modal.present();
+
+  }
 
 
 

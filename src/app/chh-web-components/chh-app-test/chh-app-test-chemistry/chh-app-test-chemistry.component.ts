@@ -42,7 +42,7 @@ export class ChhAppTestChemistryComponent implements OnInit {
 
     
 
-      this.patientService.getChemDetails(this.examDetails.Request_No).subscribe(
+      this.patientService.getCebuChemDetails(this.examDetails.Request_No).subscribe(
       (res: any) => {
         let x = JSON.stringify(res)
         this.chemDetails = JSON.parse(x);

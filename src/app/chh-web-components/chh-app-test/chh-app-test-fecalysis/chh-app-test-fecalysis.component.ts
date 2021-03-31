@@ -42,7 +42,7 @@ export class ChhAppTestFecalysisComponent implements OnInit {
   
     
     
-      this.patientService.getFecalDetail(this.examDetails.Request_No).subscribe(
+      this.patientService.getCebuFecalDetail(this.examDetails.Request_No).subscribe(
       (res: any) => {
         let x = JSON.stringify(res)
         this.resultDetails = JSON.parse(x);

@@ -43,13 +43,13 @@ export class ChhAppTestSerologyComponent implements OnInit {
      ngOnInit() {
 
       
-        this.patientService.getSeroExamno(this.examDetails.Request_No,this.examDetails.ExamCode).subscribe(
+        this.patientService.getCebuSeroExamno(this.examDetails.Request_No,this.examDetails.ExamCode).subscribe(
         (res: any) => {
           let x = JSON.stringify(res)
           this.resultDetail = JSON.parse(x);          
         },(error) => {
         },() => {         
-          this.patientService.getSeroDetails(this.examDetails.Request_No,this.resultDetail[0].Exam_No).subscribe(
+          this.patientService.getCebuSeroDetails(this.examDetails.Request_No,this.resultDetail[0].Exam_No).subscribe(
             (res: any) => {
               let x = JSON.stringify(res)
               this.resultDetails = JSON.parse(x);

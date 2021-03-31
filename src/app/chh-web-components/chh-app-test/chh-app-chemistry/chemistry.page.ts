@@ -51,7 +51,7 @@ export class ChemistryPage implements OnInit {
     //console.log(this.ExamDetails);
     
 
-    this.patientService.getChemHeader(this.ExamDetails.Request_No).subscribe(
+    this.patientService.getCebuChemHeader(this.ExamDetails.Request_No).subscribe(
       (res: any) => {
       let x = JSON.stringify(res)
       this.chemHeader = JSON.parse(x);
@@ -63,7 +63,7 @@ export class ChemistryPage implements OnInit {
       }
     );
 
-    this.patientService.getChemDetails(this.ExamDetails.Request_No).subscribe(
+    this.patientService.getCebuChemDetails(this.ExamDetails.Request_No).subscribe(
       (res: any) => {
         let x = JSON.stringify(res)
         this.chemDetails = JSON.parse(x);

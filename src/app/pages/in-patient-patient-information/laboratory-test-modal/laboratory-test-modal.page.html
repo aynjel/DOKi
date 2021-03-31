@@ -1,0 +1,67 @@
+
+<ion-content>
+  
+  <ion-grid class="ion-no-padding" >
+    <ion-row>
+
+  <ion-col size="3" class=" border-left">
+    <div  class=" max-height-82vh overflow-scroll">
+      <ion-card mode="ios"    class="card-margin">
+            <ion-item style="padding-top: 10px;">
+              <div class="ion-text-wrap"><b>Result list</b><br /></div>
+            </ion-item>
+            <ion-searchbar           
+              [(ngModel)]="searchBar"
+              (ionChange)="filterList()"
+              mode="ios"></ion-searchbar>
+            <div *ngFor="let x of currentExamList_filtered; let i = index" >
+              <ion-item lines="" class="nav-primary pointer" (click)="examDetails(x,data.site,i)" [class.active]="i == HighlightRow" >
+                <div class="ion-text-wrap"  >
+                  <ion-text >
+                    {{x.Test_Name}}
+                  </ion-text> <br />
+                  <ion-text >
+                    <b class="fontSize-14 font-weight-bold">{{x.Exam}}</b>
+                  </ion-text><br />
+                  <ion-text >
+                    <b class="fontSize-14 font-weight-bold">{{x.RequestDateTime}}</b>
+                  </ion-text>
+                </div>
+              </ion-item>
+            </div>  
+            </ion-card>  
+      </div>   
+  </ion-col>
+  <ion-col size="9" class=" border-left">
+    <div  class=" max-height-82vh overflow-scroll">
+      <ion-card mode="ios"    class="card-margin">
+            <app-chh-app-test-serology
+            [examDetails]="ExamData"
+            [site]="hospitalSite"
+            *ngIf="serology && refresher"></app-chh-app-test-serology> 
+            <app-chh-app-test-chemistry
+            [examDetails]="ExamData"
+            [site]="hospitalSite"
+            *ngIf="chemistry && refresher"
+            ></app-chh-app-test-chemistry>
+            <app-chh-app-test-fecalysis
+            [examDetails]="ExamData"
+            [site]="hospitalSite"
+            *ngIf="fecalysis && refresher"
+            ></app-chh-app-test-fecalysis>
+            <app-chh-app-test-urinalysis
+            [examDetails]="ExamData"
+            [site]="hospitalSite"
+            *ngIf="urinalysis && refresher"
+            ></app-chh-app-test-urinalysis>
+            <app-chh-app-test-cbc
+            [examDetails]="ExamData"
+            [site]="hospitalSite"
+            *ngIf="cbc && refresher"
+            ></app-chh-app-test-cbc>
+            </ion-card>
+            </div>
+  </ion-col>
+  </ion-row>
+  </ion-grid>
+</ion-content>

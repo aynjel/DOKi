@@ -189,25 +189,25 @@ export class PatientService {
       return this.http.put(url, data, options);
   }
 
-  getExamList(data){
+  getCebuExamList(data){
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetExamList/"+data;
     return this.http.get(url, options);
   }
-  getChemHeader(data){
+  getCebuChemHeader(data){
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetChemHeader/"+data;
     return this.http.get(url, options);
   }
-  getChemDetails(data){
+  getCebuChemDetails(data){
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetChemDetails/"+data;
     return this.http.get(url, options);
   }
-  getSeroHeader(data1:any, data2:any){
+  getCebuSeroHeader(data1:any, data2:any){
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetSeroHeader/"+data1+"/"+data2;
@@ -219,19 +219,19 @@ export class PatientService {
     const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetUrinHeader/"+data1+"/"+data2;
     return this.http.get(url, options);
   }
-  getUrineDetails(data1:any, data2:any){
+  getCebuUrineDetails(data1:any, data2:any){
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetUrinDetails/"+data1+"/"+data2;
     return this.http.get(url, options);
   }
-  getSeroExamno(data1:any, data2:any){
+  getCebuSeroExamno(data1:any, data2:any){
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetSeroExamno/"+data1+"/"+data2;
     return this.http.get(url, options);
   }
-  getSeroDetails(data1:any, data2:any){
+  getCebuSeroDetails(data1:any, data2:any){
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetSeroDetails/"+data1+"/"+data2;
@@ -239,7 +239,7 @@ export class PatientService {
   }
   
 
-  getFecalHeader(data1:any, data2:any){
+  getCebuFecalHeader(data1:any, data2:any){
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetFecalHeader/"+data1+"/"+data2;
@@ -251,7 +251,7 @@ export class PatientService {
     const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetFecalDetails/"+data1+"/"+data2;
     return this.http.get(url, options);
   }
-  getFecalDetail(data1:any){
+  getCebuFecalDetail(data1:any){
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetFecalDetails/"+data1;
@@ -261,7 +261,7 @@ export class PatientService {
   getHemaHeader(data1:any, data2:any){
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
-    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetHEMHeader/"+data1+"/"+data2;
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/ader/"+data1+"/"+data2;
     return this.http.get(url, options);
   }
   getHemaDetail(data1:any, data2:any){
@@ -272,13 +272,13 @@ export class PatientService {
   }
 
 
-  getCBCHeader(data1:any){
+  getCebuCBCHeader(data1:any){
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetCBCHeader/"+data1;
     return this.http.get(url, options);
   }
-  getCBCDetail(data1:any, data2:any){
+  getCebuCBCDetail(data1:any, data2:any){
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetCBCDetails/"+data1+"/"+data2;
@@ -289,7 +289,7 @@ export class PatientService {
 
 
 
-  getUrinalysisHeader(data1:any, data2:any){
+  getCebuUrinalysisHeader(data1:any, data2:any){
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
     const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetUrinHeader/"+data1+"/"+data2;

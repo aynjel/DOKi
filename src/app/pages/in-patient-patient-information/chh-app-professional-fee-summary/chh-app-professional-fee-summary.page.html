@@ -136,68 +136,31 @@
 
 
 
-<app-chh-app-card-newline></app-chh-app-card-newline>
-
-
-
-
+  <app-chh-app-card-newline></app-chh-app-card-newline>
   <ion-grid  *ngIf="!isDesktop"  class="ion-no-padding ">
     <ion-row >
       <ion-col size="12"  >
         <ion-card mode="ios" *ngIf="!isDesktop" class="card-margin " >
-          <!-- Default List Header 
-          <ion-list-header>
-            <h4>Are you also an Insurance Coordinator?</h4>
-          </ion-list-header>
-          <ion-item>
-            <ion-toggle  ></ion-toggle> 
-          </ion-item>
-            -->
-
           <ion-item>
             <ion-label>Are you a Insurance Coordinator?</ion-label> 
             <ion-checkbox color="mango" checked="false"></ion-checkbox>
             </ion-item>
-
-
-
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
-
-
-
-
-
-
   <app-chh-app-card-newline></app-chh-app-card-newline>
-
-
-
-
-
-
   <ion-grid  *ngIf="!isDesktop"  class="ion-no-padding ">
     <ion-row >
       <ion-col size="12"  >
         <ion-card mode="ios" *ngIf="!isDesktop" class="card-margin " >
-          <!-- Default List Header 
-          <ion-list-header>
-            <h4>Are you also an Insurance Coordinator?</h4>
-          </ion-list-header>
-          <ion-item>
-            <ion-toggle  ></ion-toggle> 
-          </ion-item>
-            -->
-
             <ion-item>
               <ion-label>&#8369; </ion-label>
               <ion-input type="number"></ion-input>
             </ion-item>
-
-
-
+            <ion-button color="mango" size="default" expand="block" shape="round">
+              Save
+            </ion-button>
         </ion-card>
       </ion-col>
     </ion-row>
@@ -223,39 +186,27 @@
 
 </ion-content>
 
-<ion-footer class="ion-no-border" *ngIf="!isDesktop">
-
-  <ion-toolbar>
-   
-    <ion-grid class="ion-no-padding">
-
-
-      <ion-row *ngIf="method == 'Philhealth'">
-        <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
-        <ion-col size-xs="12" size-md="4" size-lg="4">
-    
-          <ion-button expand="block" fill="outline" (click)="presentCaseRatesModal()">view case rates</ion-button>
-
-          
-        </ion-col>
-        <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
-      </ion-row>
-
-
-
-      <ion-row>
-        <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
-        <ion-col size-xs="12" size-md="4" size-lg="4">
-          Status
-          <ion-progress-bar value="0.75"></ion-progress-bar>
-        </ion-col>
-        <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
-
-      </ion-row>
-    </ion-grid>
-  </ion-toolbar>
-
-</ion-footer>
+  <ion-footer class="ion-no-border" *ngIf="!isDesktop">
+    <ion-toolbar>
+      <ion-grid class="ion-no-padding">
+        <ion-row *ngIf="method == 'Philhealth'">
+          <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+          <ion-col size-xs="12" size-md="4" size-lg="4">
+            <ion-button expand="block" fill="outline" (click)="presentCaseRatesModal()">view case rates</ion-button>       
+          </ion-col>
+          <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+          <ion-col size-xs="12" size-md="4" size-lg="4">
+            Status
+            <ion-progress-bar value="0.75"></ion-progress-bar>
+          </ion-col>
+          <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-toolbar>
+  </ion-footer>
 
 
 
@@ -273,7 +224,7 @@ ______          _    _
                              |_|    
 -->
 
-<ion-header *ngIf="isDesktop"  mode="md" class="ion-no-border custom-border-bottom" >
+<!-- <ion-header *ngIf="isDesktop"  mode="md" class="ion-no-border custom-border-bottom" >
   <ion-toolbar>
     <ion-row class="ion-align-items-center"  >
       <ion-col size="2">
@@ -334,7 +285,20 @@ ______          _    _
       </ion-col>
     </ion-row>
   </ion-toolbar>
-  </ion-header> 
+  </ion-header>  -->
+
+
+  <app-chh-app-desktop-navigation *ngIf="isDesktop"></app-chh-app-desktop-navigation>
+
+
+
+
+
+
+
+
+
+  
 <ion-content  *ngIf="isDesktop">
   <ul class="breadcrumb" >
     <li>
@@ -378,23 +342,33 @@ ______          _    _
 
 
 
-
-  
-
-
         <ion-grid class="ion-no-padding " aria-disabled="true">
           <ion-row >
             <ion-col size="12"  >
-              <ion-card class="card-margin ">
+
+
+
+
+
+
+              <ion-card mode="ios"  class="card-margin " >
+                <ion-item>
+                  <ion-label>Are you a Insurance Coordinator?</ion-label> 
+                  <ion-checkbox color="mango" checked="false"></ion-checkbox>
+                  </ion-item>
+              </ion-card>
+
+
+
+
+
+
+
+
+
+              <!-- <ion-card class="card-margin ">
         
-            <!--ion-list-header>
-              Have You seen this patient?
-            </ion-list-header>
-        
-            <ion-item>
-              <ion-toggle  [(ngModel)]="yesnoToggle"  (ionChange)="viewtoggle()"></ion-toggle> {{yesno}}
-            </ion-item-->
-        
+ 
            
             <ion-item>
               <ion-label  class="ion-text-wrap">Have you seen this patient?</ion-label> 
@@ -409,13 +383,54 @@ ______          _    _
                   <ion-label>No</ion-label>
                 </ion-segment-button>
               </ion-segment>
+          </ion-card> -->
 
 
+          <app-chh-app-card-newline></app-chh-app-card-newline>
 
+
+          <ion-card mode="ios"  class="card-margin " >
+
+              <ion-item>
+                <ion-label>&#8369; </ion-label>
+                <ion-input type="number"></ion-input>
+              </ion-item>
+  
+              <ion-button color="mango" size="default" expand="block" shape="round">
+                Save
+              </ion-button>
+  
           </ion-card>
+
+
+
+
+
+
+
           </ion-col>
           </ion-row>
         </ion-grid>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -434,6 +449,7 @@ ______          _    _
               <h3>{{method}}</h3>
             </div>   
           </div>
+          <ion-button expand="block" fill="outline" (click)="presentCaseRatesModal()" >view case rates</ion-button>
           </ion-col>
           </ion-row>
           </ion-grid>
@@ -463,19 +479,6 @@ ______          _    _
 
 </ion-content>
 <ion-footer class="ion-no-border" *ngIf="isDesktop">
-  <!--sion-toolbar>
-    <ion-grid class="ion-no-padding">
-      <ion-row>
-        <ion-col size="12" *ngIf="isDesktop">
-          <div class="footer tab-font-family">
-            <span>{{this.constants.CHH_NAME__VALUE__CEBU}}</span>
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-toolbar-->
-
-
   <div class="footer tab-font-family"  *ngIf="isDesktop">
     <span>{{this.constants.CHH_NAME__VALUE__CEBU}}</span>
   </div>

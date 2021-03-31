@@ -34,6 +34,10 @@ const routes: Routes = [
   {
     path: 'case-rates',
     loadChildren: () => import('./pages/case-rates/case-rates.module').then( m => m.CaseRatesPageModule)
+  },
+  {
+    path: 'laboratorytestmodal',
+    loadChildren: () => import('./pages/in-patient-patient-information/laboratory-test-modal/laboratory-test-modal.module').then( m => m.LaboratoryTestModalPageModule)
   },{
     path: '',
     canActivate:[IndexGuard], 
@@ -50,6 +54,7 @@ const routes: Routes = [
     path: 'chh-app-terms-and-conditions',
     loadChildren: () => import('./chh-web-components/chh-app-terms-and-conditions/chh-app-terms-and-conditions.module').then( m => m.ChhAppTermsAndConditionsPageModule)
   }
+
 
 
 

@@ -26,7 +26,7 @@ import { ChhAppChangePasswordPageModule } from "../app/chh-web-components/chh-ap
 
 import { ChhAppPrivacyPolicyPageModule } from "./chh-web-components/chh-app-privacy-policy/chh-app-privacy-policy.module"
 import { ChhAppTermsAndConditionsPageModule } from "./chh-web-components/chh-app-terms-and-conditions/chh-app-terms-and-conditions.module"
-import {ChemistryPageModule} from "./chh-web-components/chh-app-test/chemistry/chemistry.module";
+import {ChemistryPageModule} from "./chh-web-components/chh-app-test/chh-app-chemistry/chemistry.module";
 
 import {ChhAppBasePageModule} from "./chh-web-components/chh-app-test/chh-app-base/chh-app-base.module";
 
