@@ -115,6 +115,8 @@ export class InPatientDetailPage   {
 
  
   ionViewWillEnter(){
+    sessionStorage.removeItem('pfIsPatientSeen');
+    sessionStorage.removeItem('pfInsCoor');
     this.checkAppearance();
     let logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_name = logindata[0].last_name;

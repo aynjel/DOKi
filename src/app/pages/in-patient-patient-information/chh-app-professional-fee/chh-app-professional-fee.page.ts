@@ -57,6 +57,19 @@ export class ChhAppProfessionalFeePage implements OnInit {
   showSeenPatient:boolean =false;
   pfInsCoor:any ;
   pfIsPatientSeen:any;
+
+  insurance:boolean = false
+  charity:boolean = false
+  philhealth:boolean = false;
+
+  isPatientSeen:boolean = true;
+  insuranceB:boolean;
+  charityB:boolean;
+  philhealthB:boolean;
+  toPFMbtn:boolean = true;
+
+  disabledselection:boolean =false;
+
  /* postData = {
     AdmisisonNo: "string",
     DoctorCode: "string",
@@ -240,6 +253,45 @@ export class ChhAppProfessionalFeePage implements OnInit {
     }
     
   }
+  toPFM(f,e){
+    console.log(f+" | "+e);
+    if(f == 'isPatientSeen' && e == false){
+      this.toPFMbtn = true;
+      console.log("11111111111111");
+      this.disabledselection = false;
+    }else  if(f == 'isPatientSeen' && e == true){
+      this.insurance = this.charity = this.philhealth = false;
+      this.toPFMbtn = false;
+      console.log("2222222222222");
+      this.disabledselection = true;
+    }
+  }
+  buttonclick(f,e){
+    console.log(f+" | "+e);
+    if(f == 'insurance' && e == true){
+      this.charity = this.philhealth = false;
+    }else  if(f == 'insurance' && e == false){
+      this.insurance = this.charity = this.philhealth = false;
+    }
+    if(f == 'charity' && e == true){
+      this.insurance = this.philhealth = false;
+    }else  if(f == 'charity' && e == false){
+      this.insurance = this.charity = this.philhealth = false;
+    }
+    if(f == 'philhealth' && e == true){
+      this.charity = this.insurance = false;
+    }else  if(f == 'philhealth' && e == false){
+      this.insurance = this.charity = this.philhealth = false;
+    }
+
+    if( this.insurance == true || this.charity == true || this.philhealth  == true){
+      this.toPFMbtn = true;
+      console.log(this.toPFMbtn);
+    }else{
+      this.toPFMbtn = false;
+      console.log(this.toPFMbtn);
+    }
 
 
+  }
 }
