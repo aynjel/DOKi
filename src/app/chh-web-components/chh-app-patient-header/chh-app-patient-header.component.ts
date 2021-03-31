@@ -10,7 +10,9 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 export class ChhAppPatientHeaderComponent implements OnInit {
   @Input() data: any;
   @Input() dateAdmitted: any;
+  @Input() forMoreOrLess:boolean;
   isDesktop:any;
+  moreOrLess:boolean = true;
   constructor(       private screensizeService: ScreenSizeService) {
 
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
@@ -21,6 +23,16 @@ export class ChhAppPatientHeaderComponent implements OnInit {
     });
    }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.forMoreOrLess);
+    
+    if(this.forMoreOrLess){
+      this.moreOrLess = !this.forMoreOrLess;
+    }
+    
 
+  }
+  moreorless(data){
+      this.moreOrLess=data;
+  }
 }

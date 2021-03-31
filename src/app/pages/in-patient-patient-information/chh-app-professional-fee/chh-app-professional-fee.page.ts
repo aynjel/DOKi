@@ -26,7 +26,7 @@ import { executionAsyncResource } from "async_hooks";
 import { Constants } from "src/app/shared/constants";
 
 import {InPatientData} from "src/app/models/in-patient.model";
-
+import {PatientNo} from "src/app/models/in-patient.model";
 
 
 
@@ -41,6 +41,7 @@ import {InPatientData} from "src/app/models/in-patient.model";
 export class ChhAppProfessionalFeePage implements OnInit {
   public logindata: LoginData;
   postData : InPatientData = new InPatientData();
+  patientNo : PatientNo = new PatientNo();
   isDesktop:any;
   dr_name:any;
   dr_code:any;
@@ -210,21 +211,28 @@ export class ChhAppProfessionalFeePage implements OnInit {
 
   isInsuranceCoordinatorEventEmitter(e){
     if(e){
+      this.patientNo.pfInsCoor = "y";
       this.pfInsCoor = "y";
     }else{
+      this.patientNo.pfInsCoor = "n";
       this.pfInsCoor = "n";
     }
+    this.patientNo.pfIsPatientSeen="";
     sessionStorage.setItem('pfInsCoor', this.pfInsCoor); 
+    sessionStorage.setItem(this.activatedRoute.snapshot.params.id,JSON.stringify(this.patientNo)); 
     this.showSeenPatient = true;
     
   }
   isPatientSeenEventEmitter(e){
     if(e){
       this.pfIsPatientSeen = "y";
+      this.patientNo.pfIsPatientSeen = "y";
     }else{
       this.pfIsPatientSeen = "n";
+      this.patientNo.pfIsPatientSeen = "y";
     }
     sessionStorage.setItem('pfIsPatientSeen', this.pfIsPatientSeen); 
+    sessionStorage.setItem(this.activatedRoute.snapshot.params.id,JSON.stringify(this.patientNo)); 
     if(e){
       this.showSelection = true;
     }else{

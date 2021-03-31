@@ -67,7 +67,40 @@
       <ion-card mode="ios" *ngIf="!isDesktop" class="card-margin " >
 
         <div *ngFor="let x of data">
-            <ion-list > 
+
+          <ion-list *ngIf="moreOrLess == true"> 
+            <ion-item lines="none">
+              <ion-label>
+                <ion-item class="ion-no-padding ">
+                  <!--h2 class="ion-text-wrap" style="padding-top: 20px;"-->
+                  <h2 class="ion-text-wrap" >
+                    <b>{{x.last_name}}, {{x.first_name}} {{x.middle_name}}</b>
+                  </h2>
+                  <ion-badge color="warning" slot="end" (click)="moreorless(false)">more..</ion-badge
+                  >
+
+                </ion-item>
+                </ion-label>
+                </ion-item>
+          </ion-list>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <ion-list *ngIf="moreOrLess == false"> 
               <ion-item lines="none">
                 <!--ion-avatar slot="start">
               <img src="https://bitbucket.org/chonghuahospital-it/chh-it-ibm-virtual-assistant-images/downloads/kdamora-sample-pic-for-ionic-avatar.jpg">
@@ -128,6 +161,7 @@
                   <ion-icon name="calendar-outline"></ion-icon
                   ><ion-text> Admission Date : {{dateAdmitted}}</ion-text>
                 </div>
+                <ion-badge color="warning" slot="end" (click)="moreorless(true)">less..</ion-badge>
               </ion-item>
              </ion-list>
             </div>

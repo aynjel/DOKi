@@ -53,7 +53,9 @@ ___  ___        _      _  _
   <ion-content *ngIf="!isDesktop">
     <app-chh-app-patient-header
       [data]="data"
-      [dateAdmitted]="dateAdmitted">
+      [dateAdmitted]="dateAdmitted"
+      [forMoreOrLess]="true"
+      >
     </app-chh-app-patient-header>
     <app-chh-app-card-newline></app-chh-app-card-newline>
     <app-chh-app-admitting-diagnosis

@@ -40,4 +40,12 @@ export class InPatientData{
 
 
 
+export class PatientNo{
+    pfInsCoor: string
+    pfIsPatientSeen: string
+
+}
+
+
+
 
