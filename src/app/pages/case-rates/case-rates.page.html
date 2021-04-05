@@ -44,17 +44,22 @@
   <div  *ngIf ="ionNoData">
     <img src="assets/img/3973477-no-data-concept-illustration-custom.png">
     <div class="ion-text-center">
-      <h3> {{this.messages.NO_DATA_AVAILABLE}}</h3>
+      <h3>No results found</h3>
     </div>
   </div>
-
+  <div  *ngIf ="ionStart">
+    <div class="ion-text-center">
+      <br /> <br /> <br /> <br />
+      <h3>Search to see case rates</h3>
+    </div>
+  </div>
 
 
   <ion-list >
     <ion-item *ngFor="let x of caseRateResponse" >
       <ion-label>
         <h2 class="ion-text-wrap">{{x.case_desc}}</h2>
-        <h3 class="ion-text-wrap">Case Code : {{x.case_code}}</h3>
+        <h3 class="ion-text-wrap" slot="end">Case Code : {{x.case_code}}</h3>
         <h3 class="ion-text-wrap">PF : {{x.case_pf  | number}}</h3>
       </ion-label>
     </ion-item>

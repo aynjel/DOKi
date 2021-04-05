@@ -82,9 +82,8 @@
         <ng-container>
           <div *ngFor="let x of inPatients">
 
-            <ion-grid  class="ion-no-padding ">
-              <ion-row ><ion-col size="12"  >
-            <ion-card (click)="detail(x.patient_no)" mode="ios"  class="card-margin pointer">
+         
+            <ion-card (click)="detail(x.patient_no)" mode="ios"  class="pointer">
               
               <ion-item lines="none">
                 <ion-avatar slot="start">
@@ -187,11 +186,6 @@
                 </ion-label>
               </ion-item>
             </ion-card>
-</ion-col></ion-row></ion-grid>
-
-<app-chh-app-card-newline></app-chh-app-card-newline>
-
-
 
 
           </div>

@@ -44,6 +44,7 @@ export class CaseRatesPage implements OnInit {
   case_search_desc : any;
   activedescription:boolean = false;
   case :any = "(first)";
+  ionStart:boolean = true;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -102,6 +103,7 @@ export class CaseRatesPage implements OnInit {
   search(){
   
     if(this.caseRateData.CaseSearchDesc != ""){
+      this.ionStart= false;
       this.caseRateResponse=[];
       this.ionSkeleton = true;
       this.ionNoData = false;

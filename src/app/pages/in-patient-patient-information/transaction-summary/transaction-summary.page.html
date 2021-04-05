@@ -1,0 +1,36 @@
+<ion-header mode="md" class="ion-no-border" *ngIf="!isDesktop">
+  <ion-toolbar color="mango">
+    <ion-title>
+      {{summaryHeader}}
+    </ion-title>
+    <ion-buttons
+      slot="end"
+      class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated"
+    >
+      <ion-button routerLink="{{routerLinkBack}}" routerDirection="backwards" color="chh-css-primary2"
+        >Close&nbsp; <ion-icon name="close-outline"></ion-icon
+      ></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-chh-app-patient-header
+  [data]="data"
+  [dateAdmitted]="dateAdmitted"
+  [forMoreOrLess]="true"
+  >
+</app-chh-app-patient-header>
+<ion-card mode="ios"  *ngIf="!isDesktop" >
+  <ion-list>
+    <ion-item style="padding-top: 10px;">
+
+      
+    {{postData.ProfFee}}<br />
+    {{postData.IsVAT}}<br />
+    {{postData.PayVenue}}
+  </ion-item>
+  </ion-list>
+  </ion-card>
+  
+</ion-content>

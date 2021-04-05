@@ -27,17 +27,18 @@ import { Constants } from "src/app/shared/constants";
 import { CaseRatesPage } from "../../case-rates/case-rates.page";
 import {InPatientData} from "src/app/models/in-patient.model";
 @Component({
-  selector: 'app-chh-app-professional-fee-summary',
-  templateUrl: './chh-app-professional-fee-summary.page.html',
-  styleUrls: ['./chh-app-professional-fee-summary.page.scss'],
+  selector: 'app-transaction-summary',
+  templateUrl: './transaction-summary.page.html',
+  styleUrls: ['./transaction-summary.page.scss'],
 })
-export class ChhAppProfessionalFeeSummaryPage implements OnInit {
+export class TransactionSummaryPage implements OnInit {
+
   isDesktop:any;
   routerLinkBack:any;
   routerLinkBack1:any;
   routerLinkBack2:any;
   routerLinkBack3:any;
-  method:any;
+  method:any = "";
   method1:any;
   id:any;
   dr_name:any;
@@ -57,7 +58,8 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   PhilhealthShowValue:boolean = true;
   IsPhilhealthOnly:boolean = false;
   progressStatus:any = 0.75;
-  summary:any="";
+  summary:any;
+  summaryHeader:any;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -88,15 +90,20 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     }
 
   ngOnInit() {
-
+    console.log("IM AT TRANSACTION SUMMARTY");
     
     this.postData = JSON.parse(sessionStorage.getItem("postData")) as InPatientData;
     this.id = this.activatedRoute.snapshot.params.id;
     this.method = this.method1 = this.activatedRoute.snapshot.params.method;
     this.summary = this.activatedRoute.snapshot.params.summary;
-    console.log(this.id);
-    
-    this.method = this.functionsService.convertAllFirstLetterToUpperCase(this.method);
+    console.log(this.method);
+    if(this.method != null){
+      this.method = this.functionsService.convertAllFirstLetterToUpperCase(this.method);
+      this.summaryHeader = this.method + ' - ' +this.functionsService.convertAllFirstLetterToUpperCase(this.summary);
+    }else{
+      this.summaryHeader = "Transaction Summary";
+    }
+  
     this.routerLinkBack1 = "/menu/in-patients/"+this.id;
     this.routerLinkBack2 = "/menu/in-patients/"+this.id+"/professional-fee";
     this.routerLinkBack3 = "/menu/in-patients/"+this.id+"/professional-fee/"+this.method1;
@@ -106,48 +113,28 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
       this.routerLinkBack = this.routerLinkBack3;
     }
 
-    
+
   }
-
   ionViewWillEnter(){
- 
-    
-   /* let logindata = <LoginData>this.authService.userData$.getValue();
-    console.log(logindata);
-    let dr_name = logindata[0].last_name;
-    this.dr_code = logindata[0].dr_code;*/
-
+    sessionStorage.removeItem('pfIsPatientSeen');
+    sessionStorage.removeItem('pfInsCoor');
+    this.checkAppearance();
     let logindata = <LoginData>this.authService.userData$.getValue();
-
-    
     this.dr_name = logindata[0].last_name;
     this.dr_code = logindata[0].dr_code;
-
+    this.postData.DoctorMobileNumber = logindata[0].mobile_no;
     this.data =[];
     this.doctorService.getInPatient(this.dr_code).subscribe(
-      (res: any) => {
-        
-        res.forEach(element => {
-            if(element.patient_no == this.activatedRoute.snapshot.params.id){
-              this.data.push(element);
-              this.patient_name = element.first_name + ' ' + element.last_name;
-              this.patient_name = this.functionsService.convertAllFirstLetterToUpperCase(this.patient_name);
-            }
+      (res: any) => {res.forEach(element => {if(element.patient_no == this.activatedRoute.snapshot.params.id){this.data.push(element);this.patient_name = element.first_name + ' ' + element.last_name;}
         });
       },(error) => {
         console.log(error);
-        
       },
-      ()=>{
-        this.checkAppearance();
-        this.initialize(this.method);
+      ()=>{      
+        //this.operate();
       });
   }
   checkAppearance(){
-    let d = new Date(this.data[0].admission_date);
-    this.dateAdmitted = d.toUTCString();
-    console.log(this.dateAdmitted);
-
 
     let dr_username = atob(localStorage.getItem("username"));
     this.patientService.getUserSettings('DPP',dr_username).subscribe(
@@ -167,83 +154,6 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
           });
         }
       });
-  }
-
-  initialize(data){
-
-  }
-  segmentChanged(e){
-    console.log(e);
-
-  }
-  async presentCaseRatesModal() {
-    const modal = await this.modalController.create({
-      component: CaseRatesPage,
-      cssClass: 'my-custom-class'
-    });
-    return await modal.present();
-  }
-
-
-
-  isurancePF(){
-    if( this.InsurancePF != null){
-      this.InsuranceShowVat = true;
-    }else{
-      this.InsuranceShowVat = false;
-      this.InsurancePF = 0;
-    }
-  }
-
-  isPhilhealthOnly(){
-    if(this.IsPhilhealthOnly){
-      this.PhilhealthShowValue = false;
-    }else{
-      this.PhilhealthShowValue = true;
-    }
-  }
-
-
-
-
-
-
-
-
-  finishTransaction(){
-    if(this.method == 'Insurance'){
-      if(this.InsurancePF == null || this.InsurancePF == 0){
-        this.postData.ProfFee = 0;
-      }else{
-        this.postData.ProfFee = this.InsurancePF;
-      }
-      if(this.InsuranceVat){
-        this.postData.IsVAT = "Y";
-        this.postData.PayVenue = "H";
-      }else{
-        this.postData.IsVAT = "N";
-        this.postData.PayVenue = "X";
-      }
-      
-    }else if(this.method == 'Philhealth'){
-        if(this.IsPhilhealthOnly){
-          this.postData.ProfFee = 0;
-          this.postData.IsVAT = "Y";
-          this.postData.PayVenue = "H";
-        }else{
-          this.postData.ProfFee = this.PhilhealthPF;
-          this.postData.IsVAT = "N ";
-          this.postData.PayVenue = "W";      
-        }
-    }else if(this.method == 'Charity'){
-      this.postData.ProfFee = 0;
-      this.postData.IsVAT = "N";
-      this.postData.PayVenue = "W";  
-  }
-
-  sessionStorage.setItem('postData', JSON.stringify(this.postData)); 
-
-  this.router.navigate([this.router.url+'/summary']);
   }
 
 }

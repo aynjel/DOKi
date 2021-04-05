@@ -50,8 +50,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
   data:any;
   patient_name:any;
   dateAdmitted:any;
-  yesno:any = "Yes";
-  yesnoToggle:boolean = true;
+
   insCoor:any = "No";
   showSelection:boolean = false;
   showSeenPatient:boolean =false;
@@ -61,7 +60,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
   insurance:boolean = false
   charity:boolean = false
   philhealth:boolean = false;
-
+  isCoordinator:boolean = false;
   isPatientSeen:boolean = true;
   insuranceB:boolean;
   charityB:boolean;
@@ -171,14 +170,41 @@ export class ChhAppProfessionalFeePage implements OnInit {
 
     if(this.insurance){
       data = 'insurance';
-    }else if(this.charity){
+      this.router.navigate([this.router.url+'/'+data]);
+    }else if(this.charity){                
       data = 'charity';
+      this.router.navigate([this.router.url+'/'+data]);
     }else if(this.philhealth){
       data = 'philhealth';
+      this.router.navigate([this.router.url+'/'+data]);
+    }else{    
+      console.log("ELSE");
+      
+        if(this.isCoordinator){
+          console.log(this.isCoordinator);
+          this.postData.ProfFee = 0;
+          this.postData.IsVAT = "N";
+          this.postData.PayVenue = "N"
+          sessionStorage.setItem('postData', JSON.stringify(this.postData)); 
+        }else{
+          this.postData.ProfFee = 0;
+          this.postData.IsVAT = "N";
+          this.postData.PayVenue = "A"
+          sessionStorage.setItem('postData', JSON.stringify(this.postData)); 
+        }
+        console.log("is patient seen :"+this.isPatientSeen);
+        
+        if(this.isPatientSeen==false){
+          console.log("TRANSACTION SUMMARY");
+          //this.router.navigate([this.router.url+'/transaction-summary']);
+          let usrl = "/menu/in-patients/"+this.patient_id+"/professional-fee-transaction-summary";
+          console.log(usrl);
+          
+          this.router.navigate([usrl]);
+        }
     }
 
-    //console.log(this.router.url);
-   this.router.navigate([this.router.url+'/'+data]);
+
   }
 
   checkAppearance(){
@@ -187,10 +213,6 @@ export class ChhAppProfessionalFeePage implements OnInit {
     let d = new Date(this.data[0].admission_date);
     this.dateAdmitted = d.toUTCString();
     console.log(this.dateAdmitted);
-
-
-
-
     this.logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_code = this.logindata[0].dr_code;
     let dr_username = atob(localStorage.getItem("username"));
@@ -213,58 +235,56 @@ export class ChhAppProfessionalFeePage implements OnInit {
       });
   }
   initiateSession(){
-   
-    this.pfInsCoor = sessionStorage.getItem("pfInsCoor");
-    this.pfIsPatientSeen = sessionStorage.getItem("pfIsPatientSeen");
-
-    this.checkEmitters();
+    //this.pfInsCoor = sessionStorage.getItem("pfInsCoor");
+   // this.pfIsPatientSeen = sessionStorage.getItem("pfIsPatientSeen");
+    //this.checkEmitters();
   }
 
-  checkEmitters(){
+  // checkEmitters(){
 
-    if(this.pfInsCoor!=""){
-      this.showSeenPatient = true;
-    }else{
-      this.showSeenPatient = false;
-    }
-        if(this.pfIsPatientSeen == "y"){
-      this.showSelection = true;
-    }else{
-      this.showSelection = false;
-    }
-  }
+  //   if(this.pfInsCoor!=""){
+  //     this.showSeenPatient = true;
+  //   }else{
+  //     this.showSeenPatient = false;
+  //   }
+  //       if(this.pfIsPatientSeen == "y"){
+  //     this.showSelection = true;
+  //   }else{
+  //     this.showSelection = false;
+  //   }
+  // }
 
-  isInsuranceCoordinatorEventEmitter(e){
-    if(e){
-      this.patientNo.pfInsCoor = "y";
-      this.pfInsCoor = "y";
-    }else{
-      this.patientNo.pfInsCoor = "n";
-      this.pfInsCoor = "n";
-    }
-    this.patientNo.pfIsPatientSeen="";
-    sessionStorage.setItem('pfInsCoor', this.pfInsCoor); 
-    sessionStorage.setItem(this.activatedRoute.snapshot.params.id,JSON.stringify(this.patientNo)); 
-    this.showSeenPatient = true;
+  // isInsuranceCoordinatorEventEmitter(e){
+  //   if(e){
+  //     this.patientNo.pfInsCoor = "y";
+  //     this.pfInsCoor = "y";
+  //   }else{
+  //     this.patientNo.pfInsCoor = "n";
+  //     this.pfInsCoor = "n";
+  //   }
+  //   this.patientNo.pfIsPatientSeen="";
+  //   sessionStorage.setItem('pfInsCoor', this.pfInsCoor); 
+  //   sessionStorage.setItem(this.activatedRoute.snapshot.params.id,JSON.stringify(this.patientNo)); 
+  //   this.showSeenPatient = true;
     
-  }
-  isPatientSeenEventEmitter(e){
-    if(e){
-      this.pfIsPatientSeen = "y";
-      this.patientNo.pfIsPatientSeen = "y";
-    }else{
-      this.pfIsPatientSeen = "n";
-      this.patientNo.pfIsPatientSeen = "y";
-    }
-    sessionStorage.setItem('pfIsPatientSeen', this.pfIsPatientSeen); 
-    sessionStorage.setItem(this.activatedRoute.snapshot.params.id,JSON.stringify(this.patientNo)); 
-    if(e){
-      this.showSelection = true;
-    }else{
-      this.showSelection = false;
-    }
+  // }
+  // isPatientSeenEventEmitter(e){
+  //   if(e){
+  //     this.pfIsPatientSeen = "y";
+  //     this.patientNo.pfIsPatientSeen = "y";
+  //   }else{
+  //     this.pfIsPatientSeen = "n";
+  //     this.patientNo.pfIsPatientSeen = "y";
+  //   }
+  //   sessionStorage.setItem('pfIsPatientSeen', this.pfIsPatientSeen); 
+  //   sessionStorage.setItem(this.activatedRoute.snapshot.params.id,JSON.stringify(this.patientNo)); 
+  //   if(e){
+  //     this.showSelection = true;
+  //   }else{
+  //     this.showSelection = false;
+  //   }
     
-  }
+  // }
   isPatientSeenf(f,e){
     console.log(f+" | "+e);
     if(f == 'isPatientSeen' && e == false){

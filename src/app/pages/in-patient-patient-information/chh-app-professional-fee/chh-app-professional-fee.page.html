@@ -100,63 +100,42 @@ ______             _     _                        _   _                   _
 -->
 
 <ion-content *ngIf="!isDesktop">
-  <ion-grid  *ngIf="!isDesktop"  class="ion-no-padding ">
-    <ion-row >
-      <ion-col size="12"  >
-  <!-- HEADER MOBILE-->
+
   <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted">
   </app-chh-app-patient-header>
-</ion-col>
-</ion-row>
-</ion-grid>
-
-    
-
-<app-chh-app-card-newline></app-chh-app-card-newline>
 
 
-<ion-grid  *ngIf="!isDesktop"  class="ion-no-padding " aria-disabled="true">
-  <ion-row >
-    <ion-col size="12"  >
-      <ion-card class="card-margin " mode="ios">
-      <ion-item>
+
+
+      <ion-card  mode="ios">
+      <ion-item lines="none">
         <ion-label>Are you a Insurance Coordinator?</ion-label> 
-        <ion-checkbox color="mango" checked="false"></ion-checkbox>
+        <ion-checkbox color="mango" checked="false"  [(ngModel)]="isCoordinator"></ion-checkbox>
         </ion-item>
       </ion-card>
-  </ion-col>
-  </ion-row>
-</ion-grid>
-<app-chh-app-card-newline></app-chh-app-card-newline>
-<ion-grid  *ngIf="!isDesktop"  class="ion-no-padding " aria-disabled="true">
-  <ion-row >
-    <ion-col size="12"  >
-      <ion-card class="card-margin " mode="ios">
-      <ion-item>
+
+
+
+      <ion-card  mode="ios">
+      <ion-item lines="none">
         <ion-label>Have you seen this Patient?</ion-label> 
         <ion-checkbox color="mango"  value="isPatientSeen" (click)="isPatientSeenf('isPatientSeen',isPatientSeen)"  [(ngModel)]="isPatientSeen"></ion-checkbox>
         </ion-item>
       </ion-card>
-  </ion-col>
-  </ion-row>
-</ion-grid>
-<app-chh-app-card-newline></app-chh-app-card-newline>
 
-<ion-grid  *ngIf="!isDesktop"  class="ion-no-padding " >
-  <ion-row >
-    <ion-col size="12"  >
-      <ion-card class="card-margin " mode="ios">
+
+      <ion-card  mode="ios">
         <ion-list [class.disabled]="disabledselection">
           <ion-list-header>Select Pay Venue</ion-list-header>
-            <ion-item>
+            <ion-item lines="none">
               <ion-label>Care of Insurance</ion-label>
               <ion-checkbox color="mango"  slot="end" value="insurance" [(ngModel)]="insurance" (click)="buttonclick('insurance',insurance)" ></ion-checkbox>
             </ion-item>
-            <ion-item>
+            <ion-item lines="none">
               <ion-label>Charity</ion-label>
               <ion-checkbox color="mango"  slot="end" value="charity" [(ngModel)]="charity"  (click)="buttonclick('charity',charity)" ></ion-checkbox>
             </ion-item>
-            <ion-item>
+            <ion-item lines="none" >
               <ion-label>Phil Health</ion-label>
               <ion-checkbox color="mango"  slot="end" value="philhealth" [(ngModel)]="philhealth"  (click)="buttonclick('philhealth',philhealth)" ></ion-checkbox>
             </ion-item>           
@@ -164,23 +143,14 @@ ______             _     _                        _   _                   _
 
   </ion-card>
 
-  <ion-button color="mango" size="default" expand="block" shape="round" [disabled]="toPFMbtn" (click)="redirecto()"
-  >
-     Next
-   </ion-button>
-
-  </ion-col>
-  </ion-row>
-</ion-grid>
 
 
 
-
-
-
-
-
-
+   <!-- <ion-card  mode="ios" class="card-nb">
+    <ion-button color="mango" size="default" expand="block" shape="round" [disabled]="toPFMbtn" (click)="redirecto()">Next</ion-button>
+  </ion-card>
+     
+   -->
 
 
 
@@ -201,7 +171,7 @@ ______             _     _                        _   _                   _
 
 
 
-      <ion-card class="card-margin ">
+      <ion-card >
 
 
         <app-chh-app-insurance-coordinator-inquiry
@@ -221,12 +191,12 @@ ______             _     _                        _   _                   _
   </ion-row>
 </ion-grid> -->
 
-<app-chh-app-card-newline></app-chh-app-card-newline>
+
 <!-- 
 <ion-grid  *ngIf="!isDesktop && showSelection"  class="ion-no-padding " >
   <ion-row >
     <ion-col size="12"  >
-      <ion-card class="card-margin ">
+      <ion-card >
   <ion-list>
     <ion-list-header>
       How do you want to....
@@ -270,7 +240,7 @@ ______             _     _                        _   _                   _
 
 
 </ion-content>
-<ion-footer class="ion-no-border" *ngIf="!isDesktop">
+<ion-footer *ngIf="!isDesktop">
   <ion-toolbar>
     <ion-grid class="ion-no-padding">
       <ion-row>
@@ -281,6 +251,14 @@ ______             _     _                        _   _                   _
         </ion-col>
         <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
 
+      </ion-row>
+      <ion-row >
+        <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+        <ion-col size-xs="12" size-md="4" size-lg="4">
+          
+          <ion-button color="mango" size="default" expand="block" shape="round" [disabled]="toPFMbtn" (click)="redirecto()">Next</ion-button>
+        </ion-col>
+        <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
       </ion-row>
     </ion-grid>
   </ion-toolbar>
@@ -365,83 +343,57 @@ ______             _     _                       ______             _
 
     </ion-col>
     <ion-col  size-md="4">
+    <ion-card  mode="ios">
+      <ion-item>
+        <ion-label>Are you a Insurance Coordinator?</ion-label> 
+        <ion-checkbox color="mango" checked="false" [(ngModel)]="isCoordinator"></ion-checkbox>
+      </ion-item>
+    </ion-card>
+    <ion-card  mode="ios">
+      <ion-item>
+        <ion-label>Have you seen this Patient?</ion-label> 
+        <ion-checkbox color="mango"  value="isPatientSeen" (click)="isPatientSeenf('isPatientSeen',isPatientSeen)"  [(ngModel)]="isPatientSeen"></ion-checkbox>
+      </ion-item>
+    </ion-card>
+    <ion-card  mode="ios">
+      <ion-list [class.disabled]="disabledselection">
+        <ion-list-header>Select Pay Venue</ion-list-header>
+        <ion-item>
+          <ion-label>Care of Insurance</ion-label>
+          <ion-checkbox color="mango"  slot="end" value="insurance" [(ngModel)]="insurance" (click)="buttonclick('insurance',insurance)" ></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>Charity</ion-label>
+          <ion-checkbox color="mango"  slot="end" value="charity" [(ngModel)]="charity"  (click)="buttonclick('charity',charity)" ></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>Phil Health</ion-label>
+          <ion-checkbox color="mango"  slot="end" value="philhealth" [(ngModel)]="philhealth"  (click)="buttonclick('philhealth',philhealth)" ></ion-checkbox>
+        </ion-item>           
+      </ion-list>
+
+    </ion-card>
+
+    <ion-button color="mango" size="default" expand="block" shape="round" (click)="redirecto()" [disabled]="toPFMbtn"
+    >
+    Next
+    </ion-button>
     
 
-
-
-
-
-
-          <ion-grid   class="ion-no-padding " aria-disabled="true">
-            <ion-row >
-              <ion-col size="12"  >
-                <ion-card class="card-margin " mode="ios">
-                <ion-item>
-                  <ion-label>Are you a Insurance Coordinator?</ion-label> 
-                  <ion-checkbox color="mango" checked="false"></ion-checkbox>
-                  </ion-item>
-                </ion-card>
-            </ion-col>
-            </ion-row>
-          </ion-grid>
-          <app-chh-app-card-newline></app-chh-app-card-newline>
-          <ion-grid  class="ion-no-padding " aria-disabled="true">
-            <ion-row >
-              <ion-col size="12"  >
-                <ion-card class="card-margin " mode="ios">
-                <ion-item>
-                  <ion-label>Have you seen this Patient?</ion-label> 
-                  <ion-checkbox color="mango"  value="isPatientSeen" (click)="isPatientSeenf('isPatientSeen',isPatientSeen)"  [(ngModel)]="isPatientSeen"></ion-checkbox>
-                  </ion-item>
-                </ion-card>
-            </ion-col>
-            </ion-row>
-          </ion-grid>
-          <app-chh-app-card-newline></app-chh-app-card-newline>
-          
-          <ion-grid   class="ion-no-padding " >
-            <ion-row >
-              <ion-col size="12"  >
-                <ion-card class="card-margin " mode="ios">
-                  <ion-list [class.disabled]="disabledselection">
-                    <ion-list-header>Select Pay Venue</ion-list-header>
-                      <ion-item>
-                        <ion-label>Care of Insurance</ion-label>
-                        <ion-checkbox color="mango"  slot="end" value="insurance" [(ngModel)]="insurance" (click)="buttonclick('insurance',insurance)" ></ion-checkbox>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>Charity</ion-label>
-                        <ion-checkbox color="mango"  slot="end" value="charity" [(ngModel)]="charity"  (click)="buttonclick('charity',charity)" ></ion-checkbox>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label>Phil Health</ion-label>
-                        <ion-checkbox color="mango"  slot="end" value="philhealth" [(ngModel)]="philhealth"  (click)="buttonclick('philhealth',philhealth)" ></ion-checkbox>
-                      </ion-item>           
-                    </ion-list>
-          
-            </ion-card>
-          
-            <ion-button color="mango" size="default" expand="block" shape="round" (click)="redirecto()" [disabled]="toPFMbtn"
-            >
-               Next
-             </ion-button>
-          
-            </ion-col>
-            </ion-row>
-          </ion-grid>
-          
+ 
+   
           
 
 
 
 
     
-    <!-- <app-chh-app-card-newline></app-chh-app-card-newline>
+    <!-- 
     
     <ion-grid    class="ion-no-padding " *ngIf="isDesktop && showSelection">
       <ion-row >
         <ion-col size="12"  >
-          <ion-card class="card-margin ">
+          <ion-card >
       <ion-list>
         <ion-list-header>
           How do you want to....

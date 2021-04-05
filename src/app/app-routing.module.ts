@@ -24,8 +24,14 @@ const routes: Routes = [
     path: 'menu/in-patients/:id/professional-fee',
     loadChildren: () => import('./pages/in-patient-patient-information/chh-app-professional-fee/chh-app-professional-fee.module').then( m => m.ChhAppProfessionalFeePageModule)
   },{
+    path: 'menu/in-patients/:id/professional-fee-transaction-summary',
+    loadChildren: () => import('./pages/in-patient-patient-information/transaction-summary/transaction-summary.module').then( m => m.TransactionSummaryPageModule)
+  },{
     path: 'menu/in-patients/:id/professional-fee/:method',
     loadChildren: () => import('./pages/in-patient-patient-information/chh-app-professional-fee-summary/chh-app-professional-fee-summary.module').then( m => m.ChhAppProfessionalFeeSummaryPageModule)
+  },{
+    path: 'menu/in-patients/:id/professional-fee/:method/:summary',
+    loadChildren: () => import('./pages/in-patient-patient-information/transaction-summary/transaction-summary.module').then( m => m.TransactionSummaryPageModule)
   },
   {
     path: 'icdrvs',
@@ -53,7 +59,12 @@ const routes: Routes = [
   {
     path: 'chh-app-terms-and-conditions',
     loadChildren: () => import('./chh-web-components/chh-app-terms-and-conditions/chh-app-terms-and-conditions.module').then( m => m.ChhAppTermsAndConditionsPageModule)
+  },
+  {
+    path: 'transaction-summary',
+    loadChildren: () => import('./pages/in-patient-patient-information/transaction-summary/transaction-summary.module').then( m => m.TransactionSummaryPageModule)
   }
+
 
 
 

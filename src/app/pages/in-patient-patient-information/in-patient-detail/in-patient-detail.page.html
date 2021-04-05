@@ -57,14 +57,14 @@ ___  ___        _      _  _
       [forMoreOrLess]="true"
       >
     </app-chh-app-patient-header>
-    <app-chh-app-card-newline></app-chh-app-card-newline>
+   
     <app-chh-app-admitting-diagnosis
       [admittingDiagnosis]="admittingDiagnosis"
       [admittingDiagnosis1]="admittingDiagnosis1"
       [admittingDiagnosis2]="admittingDiagnosis2"
       [truncating1]="truncating1">
     </app-chh-app-admitting-diagnosis>
-    <app-chh-app-card-newline *ngIf="admittingDiagnosis"></app-chh-app-card-newline>
+   
     <app-chh-app-final-diagnosis
       [data]="data"
       [finalDiagnosis]="finalDiagnosis"
@@ -73,7 +73,7 @@ ___  ___        _      _  _
       [finalDiagnosis1]="finalDiagnosis1"
       [finalDiagnosis2]="finalDiagnosis2"
     ></app-chh-app-final-diagnosis>
-    <app-chh-app-card-newline *ngIf="finalDiagnosis"></app-chh-app-card-newline>
+  
 
 
 
@@ -434,13 +434,15 @@ ______          _    _
 
 </ion-content>
 
-<ion-footer class="ion-no-border" >
+<ion-footer  >
   <ion-toolbar *ngIf="!isDesktop">
     <ion-grid class="ion-no-padding">
       <ion-row >
         <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
         <ion-col size-xs="12" size-md="4" size-lg="4">
+          
           <ion-button
+
           color="mango"
             size="default"
             expand="block"
