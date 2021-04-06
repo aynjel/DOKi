@@ -51,12 +51,14 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   isPatientSeen : any = "o";
   InsurancePF:number;
   InsuranceShowVat:boolean = false;
-  InsuranceVat:boolean = false;
-
+  InsuranceVat:boolean = true;
+  PhilhealthShowVat:boolean = false;
+  PhilhealthVat:boolean = false;
   PhilhealthPF:number;
   PhilhealthShowValue:boolean = true;
   IsPhilhealthOnly:boolean = false;
   progressStatus:any = 0.75;
+  nxtBtn:boolean = false;
   summary:any="";
   constructor(
     private router: Router,
@@ -90,11 +92,15 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   ngOnInit() {
 
     
-    this.postData = JSON.parse(sessionStorage.getItem("postData")) as InPatientData;
+    this.postData = JSON.parse(atob(sessionStorage.getItem("postData"))) as InPatientData;
     this.id = this.activatedRoute.snapshot.params.id;
     this.method = this.method1 = this.activatedRoute.snapshot.params.method;
     this.summary = this.activatedRoute.snapshot.params.summary;
-    console.log(this.id);
+    if(this.method == 'philhealth'){
+      this.nxtBtn = true;
+    }else{
+      this.nxtBtn = false;
+    }
     
     this.method = this.functionsService.convertAllFirstLetterToUpperCase(this.method);
     this.routerLinkBack1 = "/menu/in-patients/"+this.id;
@@ -123,7 +129,11 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     this.dr_name = logindata[0].last_name;
     this.dr_code = logindata[0].dr_code;
 
-    this.data =[];
+   // this.data =[];
+    this.data = JSON.parse(atob(sessionStorage.getItem("patientData")));
+    this.checkAppearance();
+    this.initialize(this.method);
+    /*
     this.doctorService.getInPatient(this.dr_code).subscribe(
       (res: any) => {
         
@@ -141,7 +151,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
       ()=>{
         this.checkAppearance();
         this.initialize(this.method);
-      });
+      });*/
   }
   checkAppearance(){
     let d = new Date(this.data[0].admission_date);
@@ -197,51 +207,80 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
 
   isPhilhealthOnly(){
     if(this.IsPhilhealthOnly){
+      this.nxtBtn = false;
       this.PhilhealthShowValue = false;
     }else{
+      this.nxtBtn = true;
       this.PhilhealthShowValue = true;
+    }
+    console.log(this.IsPhilhealthOnly);
+    
+  }
+
+
+
+  philhealthPF(){
+    this.PhilhealthShowVat = true;
+    if(this.PhilhealthPF>0){
+      this.nxtBtn = false;
+    }else{
+      this.nxtBtn = true;
     }
   }
 
 
 
 
-
-
-
-
   finishTransaction(){
+    console.log(this.method );
+    
     if(this.method == 'Insurance'){
-      if(this.InsurancePF == null || this.InsurancePF == 0){
+      if(this.InsurancePF == null){
         this.postData.ProfFee = 0;
-      }else{
-        this.postData.ProfFee = this.InsurancePF;
-      }
-      if(this.InsuranceVat){
-        this.postData.IsVAT = "Y";
-        this.postData.PayVenue = "H";
-      }else{
         this.postData.IsVAT = "N";
         this.postData.PayVenue = "X";
-      }
-      
-    }else if(this.method == 'Philhealth'){
-        if(this.IsPhilhealthOnly){
-          this.postData.ProfFee = 0;
+      }else{
+        this.postData.ProfFee = this.InsurancePF;
+        if(this.InsuranceVat){
           this.postData.IsVAT = "Y";
           this.postData.PayVenue = "H";
         }else{
-          this.postData.ProfFee = this.PhilhealthPF;
-          this.postData.IsVAT = "N ";
-          this.postData.PayVenue = "W";      
+          this.postData.IsVAT = "N";
+          this.postData.PayVenue = "H";
+        }
+      }
+
+      
+    }else if(this.method == 'Philhealth'){
+      console.log('IsPhilhealthOnly :'+this.IsPhilhealthOnly);
+      
+      
+        if(this.IsPhilhealthOnly){
+          this.postData.ProfFee = 0;
+          this.postData.IsVAT = "N";
+          this.postData.PayVenue = "W";
+  
+        }else{
+          if(this.PhilhealthPF != 0){
+            this.postData.ProfFee = this.PhilhealthPF;
+            if(this.PhilhealthVat){
+              this.postData.IsVAT = "Y";
+              this.postData.PayVenue = "H";   
+            }else{
+              this.postData.IsVAT = "N";
+              this.postData.PayVenue = "H";   
+            }
+    
+          }
+   
         }
     }else if(this.method == 'Charity'){
       this.postData.ProfFee = 0;
       this.postData.IsVAT = "N";
       this.postData.PayVenue = "W";  
   }
-
-  sessionStorage.setItem('postData', JSON.stringify(this.postData)); 
+  sessionStorage.setItem('postData', btoa(JSON.stringify(this.postData))); 
+  //sessionStorage.setItem('postData', JSON.stringify(this.postData)); 
 
   this.router.navigate([this.router.url+'/summary']);
   }

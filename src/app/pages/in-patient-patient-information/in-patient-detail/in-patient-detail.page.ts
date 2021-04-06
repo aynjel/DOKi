@@ -136,6 +136,9 @@ export class InPatientDetailPage   {
       },
       ()=>{      
         this.operate();
+        sessionStorage.setItem('patientData', btoa(JSON.stringify(this.data))); 
+        console.log(this.data);
+        
       });
   }
   operate(){
@@ -309,7 +312,7 @@ export class InPatientDetailPage   {
     }
 
     this.postData.DateCreated = this.functionsService.getSystemDateTime();
-    sessionStorage.setItem('postData', JSON.stringify(this.postData)); 
+    sessionStorage.setItem('postData', btoa(JSON.stringify(this.postData))); 
 
 
   }

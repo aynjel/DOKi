@@ -91,8 +91,11 @@ export class TransactionSummaryPage implements OnInit {
 
   ngOnInit() {
     console.log("IM AT TRANSACTION SUMMARTY");
-    
-    this.postData = JSON.parse(sessionStorage.getItem("postData")) as InPatientData;
+      
+      this.postData = JSON.parse(atob(sessionStorage.getItem("postData"))) as InPatientData;
+      console.log("!!!!!!!!!!!!!");
+      console.log((this.postData));
+      console.log(JSON.stringify(this.postData));
     this.id = this.activatedRoute.snapshot.params.id;
     this.method = this.method1 = this.activatedRoute.snapshot.params.method;
     this.summary = this.activatedRoute.snapshot.params.summary;
@@ -124,15 +127,10 @@ export class TransactionSummaryPage implements OnInit {
     this.dr_code = logindata[0].dr_code;
     this.postData.DoctorMobileNumber = logindata[0].mobile_no;
     this.data =[];
-    this.doctorService.getInPatient(this.dr_code).subscribe(
-      (res: any) => {res.forEach(element => {if(element.patient_no == this.activatedRoute.snapshot.params.id){this.data.push(element);this.patient_name = element.first_name + ' ' + element.last_name;}
-        });
-      },(error) => {
-        console.log(error);
-      },
-      ()=>{      
-        //this.operate();
-      });
+    this.data = JSON.parse(atob(sessionStorage.getItem("patientData")));
+
+ 
+    
   }
   checkAppearance(){
 

@@ -45,6 +45,8 @@
   </ion-col>
   </ion-row>
   </ion-grid>
+
+  
     <div *ngIf="(method=='Insurance')">
       <ion-card mode="ios" *ngIf="!isDesktop " >
         <ion-item>
@@ -71,7 +73,14 @@
       <ion-card mode="ios" *ngIf="!isDesktop  && PhilhealthShowValue" >
         <ion-item>
           <ion-label>&#8369; </ion-label>
-          <ion-input type="number" placeholder="0" [(ngModel)]="PhilhealthPF" ></ion-input>
+          <ion-input type="number" minlength="0" placeholder="0" [(ngModel)]="PhilhealthPF"  (ionChange)="philhealthPF()"></ion-input>
+        </ion-item>
+      </ion-card>
+
+      <ion-card mode="ios" *ngIf="!isDesktop && PhilhealthShowVat" >
+        <ion-item>
+          <ion-label>Add VAT?</ion-label> 
+          <ion-checkbox color="mango" checked="false" [(ngModel)]="PhilhealthVat"></ion-checkbox>
         </ion-item>
       </ion-card>
     </div>
@@ -84,7 +93,7 @@
         <ion-row>
           <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
           <ion-col size-xs="12" size-md="4" size-lg="4">
-            Status
+           PF Submission Status
             <ion-progress-bar value="{{progressStatus}}"></ion-progress-bar>
           </ion-col>
           <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
@@ -92,8 +101,8 @@
         <ion-row >
           <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
           <ion-col size-xs="12" size-md="4" size-lg="4">
-            <ion-button color="mango" size="default" expand="block" shape="round" (click)="finishTransaction()" *ngIf="summary != 'summary'">
-              Save
+            <ion-button color="mango" size="default" expand="block" shape="round" (click)="finishTransaction()" *ngIf="summary != 'summary'" disabled="{{nxtBtn}}">
+              Next
             </ion-button>
 
 
@@ -256,40 +265,47 @@ ______          _    _
 
             
   
-  <div *ngIf="(method=='Insurance')">
-    <ion-card mode="ios" >
-      <ion-item>
-        <ion-label>&#8369; </ion-label>
-        <ion-input type="number" placeholder="0" [(ngModel)]="InsurancePF" (ionChange)="isurancePF()"></ion-input>
-      </ion-item>
-    </ion-card>
-    <ion-card mode="ios" *ngIf=" InsuranceShowVat" >
-      <ion-item>
-        <ion-label>Add VAT?</ion-label> 
-        <ion-checkbox color="mango" checked="false" [(ngModel)]="InsuranceVat"></ion-checkbox>
-      </ion-item>
-    </ion-card>
-  </div>
-      
-  
-  <div *ngIf="(method=='Philhealth')">
+              <div *ngIf="(method=='Insurance')">
+                <ion-card mode="ios" >
+                  <ion-item>
+                    <ion-label>&#8369; </ion-label>
+                    <ion-input type="number" placeholder="0" [(ngModel)]="InsurancePF" (ionChange)="isurancePF()"></ion-input>
+                  </ion-item>
+                </ion-card>
+                <ion-card mode="ios" *ngIf="InsuranceShowVat" >
+                  <ion-item>
+                    <ion-label>Add VAT?</ion-label> 
+                    <ion-checkbox color="mango"  [(ngModel)]="InsuranceVat"></ion-checkbox>
+                  </ion-item>
+                </ion-card>
 
-    <ion-card mode="ios" *ngIf="!isDesktop" >
-      <ion-item>
-        <ion-label>PhilHealth Only?</ion-label> 
-        <ion-checkbox color="mango" checked="false" [(ngModel)]="IsPhilhealthOnly" (ionChange)="isPhilhealthOnly()"></ion-checkbox>
-      </ion-item>
-    </ion-card>
-
-    <ion-card mode="ios" *ngIf=" PhilhealthShowValue" >
-      <ion-item>
-        <ion-label>&#8369; </ion-label>
-        <ion-input type="number" placeholder="0" [(ngModel)]="PhilhealthPF" ></ion-input>
-      </ion-item>
-    </ion-card>
-
-
-  </div>
+                <ion-button color="mango" size="default" expand="block" shape="round" (click)="finishTransaction()" *ngIf="summary != 'summary'">
+                  Save
+                </ion-button>
+              </div>
+                  
+              
+              <div *ngIf="(method=='Philhealth')">
+                <ion-card mode="ios">
+                  <ion-item>
+                    <ion-label>PhilHealth Only?</ion-label> 
+                    <ion-checkbox color="mango"  [(ngModel)]="IsPhilhealthOnly" (ionChange)="isPhilhealthOnly()"></ion-checkbox>
+                  </ion-item>
+                </ion-card>
+                <ion-card mode="ios" *ngIf="PhilhealthShowValue" >
+                  <ion-item>
+                    <ion-label>&#8369; </ion-label>
+                    <ion-input type="number" placeholder="0" [(ngModel)]="PhilhealthPF"  (ionChange)="philhealthPF()"></ion-input>
+                  </ion-item>
+                </ion-card>
+          
+                <ion-card mode="ios" *ngIf="PhilhealthShowVat" >
+                  <ion-item>
+                    <ion-label>Add VAT?</ion-label> 
+                    <ion-checkbox color="mango" checked="false" [(ngModel)]="PhilhealthVat"></ion-checkbox>
+                  </ion-item>
+                </ion-card>
+              </div>
 
 
 

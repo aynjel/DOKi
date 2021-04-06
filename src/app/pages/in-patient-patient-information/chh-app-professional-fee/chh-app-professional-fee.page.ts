@@ -124,7 +124,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     this.patient_id = this.activatedRoute.snapshot.params.id;
 
 
-    this.postData = JSON.parse(sessionStorage.getItem("postData")) as InPatientData;
+    this.postData = JSON.parse(atob(sessionStorage.getItem("postData"))) as InPatientData;
     console.log("!!!!!!!!!!!!!");
     console.log((this.postData));
     console.log(JSON.stringify(this.postData));
@@ -136,11 +136,15 @@ export class ChhAppProfessionalFeePage implements OnInit {
     
 
     let logindata = <LoginData>this.authService.userData$.getValue();
-    
     this.dr_name = logindata[0].last_name;
     this.dr_code = logindata[0].dr_code;
     //this.postData.DoctorMobileNumber = logindata[0].mobile_no;
-    this.data =[];
+    //this.data =[];
+    this.data = JSON.parse(atob(sessionStorage.getItem("patientData")));
+    this.checkAppearance();
+    //console.log(this.data);
+    
+    /*
     this.doctorService.getInPatient(this.dr_code).subscribe(
       (res: any) => {
         res.forEach(element => {
@@ -157,7 +161,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
         console.log('OPERATE');
         this.checkAppearance();
       });
-     
+     */
     
   }
 
@@ -184,13 +188,15 @@ export class ChhAppProfessionalFeePage implements OnInit {
           console.log(this.isCoordinator);
           this.postData.ProfFee = 0;
           this.postData.IsVAT = "N";
-          this.postData.PayVenue = "N"
-          sessionStorage.setItem('postData', JSON.stringify(this.postData)); 
+          this.postData.PayVenue = "A"
+        //  sessionStorage.setItem('postData', JSON.stringify(this.postData)); 
+          sessionStorage.setItem('postData', btoa(JSON.stringify(this.postData))); 
         }else{
           this.postData.ProfFee = 0;
           this.postData.IsVAT = "N";
-          this.postData.PayVenue = "A"
-          sessionStorage.setItem('postData', JSON.stringify(this.postData)); 
+          this.postData.PayVenue = "N"
+          //sessionStorage.setItem('postData', JSON.stringify(this.postData)); 
+          sessionStorage.setItem('postData', btoa(JSON.stringify(this.postData))); 
         }
         console.log("is patient seen :"+this.isPatientSeen);
         

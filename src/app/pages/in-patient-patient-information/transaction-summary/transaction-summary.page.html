@@ -34,3 +34,27 @@
   </ion-card>
   
 </ion-content>
+<ion-footer *ngIf="!isDesktop">
+  <ion-toolbar>
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+        <ion-col size-xs="12" size-md="4" size-lg="4">
+          Status
+          <ion-progress-bar value=".9"></ion-progress-bar>
+        </ion-col>
+        <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+
+      </ion-row>
+      <ion-row >
+        <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+        <ion-col size-xs="12" size-md="4" size-lg="4">
+          
+          <ion-button color="mango" size="default" expand="block" shape="round">Next</ion-button>
+        </ion-col>
+        <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+
+</ion-footer>
