@@ -68,22 +68,14 @@ export class ChhAppProfessionalFeePage implements OnInit {
   toPFMbtn:boolean = true;
 
   disabledselection:boolean =false;
-
- /* postData = {
-    AdmisisonNo: "string",
-    DoctorCode: "string",
-    DoctorStatusCode: "string",
-    ProfFee: 0,
-    DateCreated: "2020-07-01T05:14:48.712Z",
-    site: "string",
-    CreatedBy: "string",
-    Remarks: "string",
-    DoctorMobileNumber: "string",
-    BillingMobileNumber: "string",
-    RoomNumber: "string",
-    SmsGateWay: [],
-    OldProfFee: "string",
-  };*/
+  site:any;
+  daysManaged:any;
+  day:any;
+  withVat:any;
+  data1:any;
+  payvenue:any;
+  ifShowSummary:boolean = false;
+  modifybtn:boolean=false;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -111,7 +103,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
         this.isDesktop = isDesktop;
       });
 
-      console.log('constructor');
+      //console.log('constructor');
     }
 
   ngOnInit() {
@@ -125,9 +117,11 @@ export class ChhAppProfessionalFeePage implements OnInit {
 
 
     this.postData = JSON.parse(atob(sessionStorage.getItem("postData"))) as InPatientData;
-    console.log("!!!!!!!!!!!!!");
-    console.log((this.postData));
-    console.log(JSON.stringify(this.postData));
+    //console.log(this.postData);
+    
+    //console.log("!!!!!!!!!!!!!");
+  //  console.log((this.postData));
+    //console.log(JSON.stringify(this.postData));
       // if it's object
   }
 
@@ -141,6 +135,48 @@ export class ChhAppProfessionalFeePage implements OnInit {
     //this.postData.DoctorMobileNumber = logindata[0].mobile_no;
     //this.data =[];
     this.data = JSON.parse(atob(sessionStorage.getItem("patientData")));
+    this.data1 = this.data[0].doctor_prof_fee;
+    
+    if(this.data[0].is_posted == 0){
+      this.modifybtn = false;
+    }else{
+      this.modifybtn = true;
+    }
+       console.log( this.data);
+       
+    if(this.data[0].IsVAT=="Y"){
+      this.withVat = "Yes";
+    }else{
+      this.withVat = "No"; 
+    }
+    if(this.data[0].payvenue == "W"){
+      this.payvenue = "Charity";
+    }else if(this.data[0].payvenue == "H"){
+      this.payvenue = "c/o Insurance";
+    }else if(this.data[0].payvenue == "X"){
+      this.payvenue = "c/o Insurance";
+    }else if(this.data[0].payvenue == "N"){
+      this.payvenue = "Not Seen ";
+    }else if(this.data[0].payvenue == "A"){
+      this.payvenue = "Coordinator's Fee";
+    }
+    if(this.data[0].site == 'C'){
+      this.site = "Chong Hua Hospital - Fuente";
+    }else{
+      this.site = "Chong Hua Hospital Mandaue";
+    }
+    this.daysManaged = atob(sessionStorage.getItem("daysManaged"));
+    if(this.daysManaged > 1){
+      this.day = "Days";
+    }else{
+      this.day = "Day";
+    }
+    if(this.payvenue == "" || this.payvenue == null){
+      this.ifShowSummary =false;
+    }else{
+      this.ifShowSummary = true;
+    }
+    
     this.checkAppearance();
     //console.log(this.data);
     
@@ -182,10 +218,10 @@ export class ChhAppProfessionalFeePage implements OnInit {
       data = 'philhealth';
       this.router.navigate([this.router.url+'/'+data]);
     }else{    
-      console.log("ELSE");
+      //console.log("ELSE");
       
         if(this.isCoordinator){
-          console.log(this.isCoordinator);
+         // console.log(this.isCoordinator);
           this.postData.ProfFee = 0;
           this.postData.IsVAT = "N";
           this.postData.PayVenue = "A"
@@ -198,13 +234,13 @@ export class ChhAppProfessionalFeePage implements OnInit {
           //sessionStorage.setItem('postData', JSON.stringify(this.postData)); 
           sessionStorage.setItem('postData', btoa(JSON.stringify(this.postData))); 
         }
-        console.log("is patient seen :"+this.isPatientSeen);
+        //console.log("is patient seen :"+this.isPatientSeen);
         
         if(this.isPatientSeen==false){
-          console.log("TRANSACTION SUMMARY");
+         // console.log("TRANSACTION SUMMARY");
           //this.router.navigate([this.router.url+'/transaction-summary']);
           let usrl = "/menu/in-patients/"+this.patient_id+"/professional-fee-transaction-summary";
-          console.log(usrl);
+        //  console.log(usrl);
           
           this.router.navigate([usrl]);
         }
@@ -218,7 +254,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
 
     let d = new Date(this.data[0].admission_date);
     this.dateAdmitted = d.toUTCString();
-    console.log(this.dateAdmitted);
+    //console.log(this.dateAdmitted);
     this.logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_code = this.logindata[0].dr_code;
     let dr_username = atob(localStorage.getItem("username"));
@@ -292,20 +328,20 @@ export class ChhAppProfessionalFeePage implements OnInit {
     
   // }
   isPatientSeenf(f,e){
-    console.log(f+" | "+e);
+    //console.log(f+" | "+e);
     if(f == 'isPatientSeen' && e == false){
       this.toPFMbtn = true;
-      console.log("11111111111111");
+     // console.log("11111111111111");
       this.disabledselection = false;
     }else  if(f == 'isPatientSeen' && e == true){
       this.insurance = this.charity = this.philhealth = false;
-      this.toPFMbtn = false;
+     // this.toPFMbtn = false;
       console.log("2222222222222");
       this.disabledselection = true;
     }
   }
   buttonclick(f,e){
-    console.log(f+" | "+e);
+    //console.log(f+" | "+e);
     if(f == 'insurance' && e == true){
       this.charity = this.philhealth = false;
     }else  if(f == 'insurance' && e == false){
@@ -324,12 +360,15 @@ export class ChhAppProfessionalFeePage implements OnInit {
 
     if( this.insurance == true || this.charity == true || this.philhealth  == true){
       this.toPFMbtn = true;
-      console.log(this.toPFMbtn);
+     // console.log(this.toPFMbtn);
     }else{
       this.toPFMbtn = false;
-      console.log(this.toPFMbtn);
+    //  console.log(this.toPFMbtn);
     }
 
 
+  }
+  modifyProfFee(){
+      this.ifShowSummary = false;
   }
 }

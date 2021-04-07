@@ -25,6 +25,8 @@ import { AuthConstants } from "../../../config/auth-constants";
 import { executionAsyncResource } from "async_hooks";
 import { Constants } from "src/app/shared/constants";
 import { CaseRatesPage } from "../../case-rates/case-rates.page";
+import { TransactionSummaryPage } from "../transaction-summary/transaction-summary.page";
+
 import {InPatientData} from "src/app/models/in-patient.model";
 @Component({
   selector: 'app-chh-app-professional-fee-summary',
@@ -53,13 +55,17 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   InsuranceShowVat:boolean = false;
   InsuranceVat:boolean = true;
   PhilhealthShowVat:boolean = false;
-  PhilhealthVat:boolean = false;
+  PhilhealthVat:boolean = true;
   PhilhealthPF:number;
   PhilhealthShowValue:boolean = true;
   IsPhilhealthOnly:boolean = false;
   progressStatus:any = 0.75;
   nxtBtn:boolean = false;
   summary:any="";
+  txtInsurancePF:boolean = true;
+  txtInsuranceVAT:boolean = true;
+  txtPhilHealthPF:boolean = true;
+  txtPhilHealthVAT:boolean = true;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -86,16 +92,19 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
         this.isDesktop = isDesktop;
       });
 
-      console.log('constructor');
+      //console.log('constructor');
     }
 
   ngOnInit() {
 
     
     this.postData = JSON.parse(atob(sessionStorage.getItem("postData"))) as InPatientData;
+    //console.log(this.postData);
     this.id = this.activatedRoute.snapshot.params.id;
     this.method = this.method1 = this.activatedRoute.snapshot.params.method;
     this.summary = this.activatedRoute.snapshot.params.summary;
+    //console.log( this.method);
+    
     if(this.method == 'philhealth'){
       this.nxtBtn = true;
     }else{
@@ -131,6 +140,12 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
 
    // this.data =[];
     this.data = JSON.parse(atob(sessionStorage.getItem("patientData")));
+
+
+    this.patient_name = this.data[0].first_name + ' ' + this.data[0].last_name;
+    //console.log(this.data);
+    
+    this.patient_name = this.functionsService.convertAllFirstLetterToUpperCase(this.patient_name);
     this.checkAppearance();
     this.initialize(this.method);
     /*
@@ -156,7 +171,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   checkAppearance(){
     let d = new Date(this.data[0].admission_date);
     this.dateAdmitted = d.toUTCString();
-    console.log(this.dateAdmitted);
+    //console.log(this.dateAdmitted);
 
 
     let dr_username = atob(localStorage.getItem("username"));
@@ -203,31 +218,57 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
       this.InsuranceShowVat = false;
       this.InsurancePF = 0;
     }
+    if(this.InsurancePF != null || this.InsurancePF != 0){
+      this.txtInsurancePF = false;
+    }else{
+      this.txtInsurancePF = true;
+    }
   }
-
+  insuranceVat(){
+      this.txtInsuranceVAT = this.InsuranceVat;
+  }
   isPhilhealthOnly(){
+    console.log(this.IsPhilhealthOnly);
+    //this.IsPhilhealthOnly = !this.IsPhilhealthOnly;
     if(this.IsPhilhealthOnly){
       this.nxtBtn = false;
+      this.PhilhealthShowVat = false;
       this.PhilhealthShowValue = false;
+      this.PhilhealthPF;
+      this.txtPhilHealthPF = true;
+      this.txtPhilHealthVAT= false;
+      //this.txtPhilHealthVAT = true;
     }else{
       this.nxtBtn = true;
-      this.PhilhealthShowValue = true;
+    // this.PhilhealthShowVat = true;
+     this.PhilhealthShowValue = true;
     }
-    console.log(this.IsPhilhealthOnly);
+    //console.log(this.PhilhealthShowVat);
     
   }
 
 
 
   philhealthPF(){
-    this.PhilhealthShowVat = true;
+      this.goToBottom();
     if(this.PhilhealthPF>0){
       this.nxtBtn = false;
     }else{
       this.nxtBtn = true;
     }
-  }
 
+    if(this.PhilhealthPF == 0 || this.PhilhealthPF == null){
+        this.PhilhealthShowVat = false;
+        this.txtPhilHealthPF = true;
+    }else{
+      this.PhilhealthShowVat = true;
+      this.txtPhilHealthPF = false;
+    }
+  }
+  philhealthVat(){
+    this.txtPhilHealthVAT=this.PhilhealthVat;
+    
+  }
 
 
 
@@ -279,10 +320,27 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
       this.postData.IsVAT = "N";
       this.postData.PayVenue = "W";  
   }
+  console.log(this.postData);
   sessionStorage.setItem('postData', btoa(JSON.stringify(this.postData))); 
   //sessionStorage.setItem('postData', JSON.stringify(this.postData)); 
-
-  this.router.navigate([this.router.url+'/summary']);
+  if(!this.isDesktop){
+    this.router.navigate([this.router.url+'/summary']);
+  }else{
+      this.presentSummary();
   }
-
+ 
+  }
+  async presentSummary() {
+    const modal = await this.modalController.create({
+      component: TransactionSummaryPage,
+      cssClass: 'my-custom-class'
+    });
+    return await modal.present();
+  }
+  goToBottom(){
+    console.log(document.body.scrollHeight);
+    
+    window.scrollTo(document.body.scrollHeight,document.body.scrollHeight);
+    //window.scrollY(document.body.scrollHeight);
+  }
 }

@@ -14,7 +14,31 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="!isDesktop">
+<ion-content *ngIf="!isDesktop" id="content">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted">
   </app-chh-app-patient-header>
 
@@ -22,17 +46,9 @@
 
 
 
+  <ion-grid  *ngIf="!isDesktop && method == 'Philhealth'"  class="ion-no-padding ">
 
-
-
-  <ion-grid  *ngIf="!isDesktop"  class="ion-no-padding ">
-    <ion-row *ngIf="method == 'Philhealth'">
-      <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
-      <ion-col size-xs="12" size-md="4" size-lg="4">
-        <ion-button expand="block" fill="outline" (click)="presentCaseRatesModal()" *ngIf="method=='Philhealth'">View Case Rates</ion-button>       
-      </ion-col>
-      <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
-    </ion-row>
+    <ion-button expand="block" fill="outline" (click)="presentCaseRatesModal()" *ngIf="method=='Philhealth'">View Case Rates</ion-button> 
   <ion-row >
 
   <ion-col size="6" offset="3"  >
@@ -57,9 +73,21 @@
       <ion-card mode="ios" *ngIf="!isDesktop && InsuranceShowVat" >
         <ion-item>
           <ion-label>Add VAT?</ion-label> 
-          <ion-checkbox color="mango" checked="false" [(ngModel)]="InsuranceVat"></ion-checkbox>
+          <ion-checkbox color="mango" checked="false" [(ngModel)]="InsuranceVat" (ionChange)="insuranceVat()"></ion-checkbox>
         </ion-item>
       </ion-card>
+
+      <ul *ngIf="txtInsurancePF"><li> <ion-text class="fw-i fs-15 ion-text-wrap">Accept HMO insurance rate. </ion-text></li><li><ion-text class="fw-i fs-15 ion-text-wrap">No additional professional fee charge to your patient.</ion-text></li></ul>
+                         
+      <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==true"><li><ion-text class="fw-i fs-15 ion-text-wrap">This is the overall professional fee that will be charged to your patient. </ion-text>
+      </li><li><ion-text class="fw-i fs-15 ion-text-wrap">Net amount will vary after deducting your patient's insurance coverage.</ion-text></li><li><ion-text class="fw-i fs-15 ion-text-wrap">VAT percentage will be added to your overall professional fee.</ion-text></li></ul>
+
+      <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==false"><li><ion-text class="fw-i fs-15 ion-text-wrap">This is the overall professional fee that will be charged to your patient.</ion-text>
+      </li><li><ion-text class="fw-i fs-15 ion-text-wrap">Net amount will vary after deducting your patient's insurance coverage.</ion-text></li><li><ion-text class="fw-i fs-15 ion-text-wrap">No VAT will be added to your overall professional fee.</ion-text></li></ul>
+
+ 
+
+      
     </div>
         
     
@@ -80,10 +108,52 @@
       <ion-card mode="ios" *ngIf="!isDesktop && PhilhealthShowVat" >
         <ion-item>
           <ion-label>Add VAT?</ion-label> 
-          <ion-checkbox color="mango" checked="false" [(ngModel)]="PhilhealthVat"></ion-checkbox>
+          <ion-checkbox color="mango" checked="false" [(ngModel)]="PhilhealthVat" (ionChange)="philhealthVat()"></ion-checkbox>
         </ion-item>
       </ion-card>
+
+      <ul *ngIf="txtPhilHealthPF">
+        <li>
+          <ion-text class="fw-i fs-15 ion-text-wrap">Accept PHIC rate.</ion-text>
+        </li>
+        <li>
+          <ion-text class="fw-i fs-15 ion-text-wrap">No additional professional fee charge to your patient.</ion-text>
+        </li>
+      </ul>
+
+      <ul *ngIf="!txtPhilHealthPF && txtPhilHealthVAT">
+        <li>
+          <ion-text class="fw-i fs-15 ion-text-wrap">This is the overall professional fee that will be charged to your patient.</ion-text>
+        </li>
+        <li>
+          <ion-text class="fw-i fs-15 ion-text-wrap">Net amount will vary after deducting your patient's PhilHealth case coverage.</ion-text>
+        </li>
+        <li>
+          <ion-text class="fw-i fs-15 ion-text-wrap">VAT percentage will be added to your overall professional fee.</ion-text>
+        </li>
+      </ul>
+
+      <ul *ngIf="!txtPhilHealthPF && !txtPhilHealthVAT">
+        <li>
+          <ion-text class="fw-i fs-15 ion-text-wrap">This is the overall professional fee that will be charged to your patient.</ion-text>
+        </li>
+        <li>
+          <ion-text class="fw-i fs-15 ion-text-wrap">Net amount will vary after deducting your patient's PhilHealth case coverage.</ion-text>
+        </li>
+        <li>
+          <ion-text class="fw-i fs-15 ion-text-wrap">No VAT will be added to your overall professional fee.</ion-text>
+        </li>
+      </ul>
+
+      
     </div>
+
+
+    <div *ngIf="(method=='Charity')">thank you
+    </div>
+
+
+
 
 </ion-content>
 
@@ -254,7 +324,7 @@ ______          _    _
 
 
 
-        <ion-grid class="ion-no-padding " aria-disabled="true">
+        <ion-grid class="ion-no-padding " >
           <ion-row >
             <ion-col size="12"  >
 
@@ -275,13 +345,19 @@ ______          _    _
                 <ion-card mode="ios" *ngIf="InsuranceShowVat" >
                   <ion-item>
                     <ion-label>Add VAT?</ion-label> 
-                    <ion-checkbox color="mango"  [(ngModel)]="InsuranceVat"></ion-checkbox>
+                    <ion-checkbox color="mango"  [(ngModel)]="InsuranceVat" (ionChange)="insuranceVat()"></ion-checkbox>
                   </ion-item>
                 </ion-card>
-
-                <ion-button color="mango" size="default" expand="block" shape="round" (click)="finishTransaction()" *ngIf="summary != 'summary'">
-                  Save
-                </ion-button>
+    
+                <ul *ngIf="txtInsurancePF"><li> <ion-text class="fw-i fs-15 ion-text-wrap">Accept HMO insurance rate. </ion-text></li><li><ion-text class="fw-i fs-15 ion-text-wrap">No additional professional fee charge to your patient.</ion-text></li></ul>
+                         
+                <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==true"><li><ion-text class="fw-i fs-15 ion-text-wrap">This is the overall professional fee that will be charged to your patient. </ion-text>
+                </li><li><ion-text class="fw-i fs-15 ion-text-wrap">Net amount will vary after deducting your patient's insurance coverage.</ion-text></li><li><ion-text class="fw-i fs-15 ion-text-wrap">VAT percentage will be added to your overall professional fee.</ion-text></li></ul>
+          
+                <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==false"><li><ion-text class="fw-i fs-15 ion-text-wrap">This is the overall professional fee that will be charged to your patient.</ion-text>
+                </li><li><ion-text class="fw-i fs-15 ion-text-wrap">Net amount will vary after deducting your patient's insurance coverage.</ion-text></li><li><ion-text class="fw-i fs-15 ion-text-wrap">No VAT will be added to your overall professional fee.</ion-text></li></ul>
+          
+         
               </div>
                   
               
@@ -302,12 +378,14 @@ ______          _    _
                 <ion-card mode="ios" *ngIf="PhilhealthShowVat" >
                   <ion-item>
                     <ion-label>Add VAT?</ion-label> 
-                    <ion-checkbox color="mango" checked="false" [(ngModel)]="PhilhealthVat"></ion-checkbox>
+                    <ion-checkbox color="mango"  [(ngModel)]="PhilhealthVat"></ion-checkbox>
                   </ion-item>
                 </ion-card>
               </div>
 
-
+              <ion-button color="mango" size="default" expand="block" shape="round" (click)="finishTransaction()" *ngIf="summary != 'summary'">
+                Save
+              </ion-button>
 
 
           </ion-col>

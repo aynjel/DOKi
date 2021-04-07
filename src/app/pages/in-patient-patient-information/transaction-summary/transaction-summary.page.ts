@@ -47,6 +47,7 @@ export class TransactionSummaryPage implements OnInit {
   dr_code:any;
   patient_id  :any;
   data:any;
+  data1:any;
   patient_name:any;
   dateAdmitted:any;
   isPatientSeen : any = "o";
@@ -60,6 +61,11 @@ export class TransactionSummaryPage implements OnInit {
   progressStatus:any = 0.75;
   summary:any;
   summaryHeader:any;
+  withVat:any;
+  payvenue:any;
+  daysManaged:any;
+  site:any;
+  day:any;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -93,9 +99,37 @@ export class TransactionSummaryPage implements OnInit {
     console.log("IM AT TRANSACTION SUMMARTY");
       
       this.postData = JSON.parse(atob(sessionStorage.getItem("postData"))) as InPatientData;
-      console.log("!!!!!!!!!!!!!");
-      console.log((this.postData));
-      console.log(JSON.stringify(this.postData));
+      console.log(this.postData);
+      this.data1 = this.postData.ProfFee;
+      this.daysManaged = atob(sessionStorage.getItem("daysManaged"));
+
+      
+      if(this.daysManaged > 1){
+        this.day = "Days";
+      }else{
+        this.day = "Day";
+      }
+
+      console.log("Pay Venue : "+this.postData.PayVenue);
+      
+      if(this.postData.IsVAT=="Y"){
+        this.withVat = "Yes";
+      }else{
+        this.withVat = "No"; 
+      }
+      if(this.postData.PayVenue == "W"){
+        this.payvenue = "Charity";
+      }else if(this.postData.PayVenue == "H"){
+        this.payvenue = "c/o Insurance";
+      }else if(this.postData.PayVenue == "X"){
+        this.payvenue = "c/o Insurance";
+      }else if(this.postData.PayVenue == "N"){
+        this.payvenue = "Not Seen ";
+      }else if(this.postData.PayVenue == "A"){
+        this.payvenue = "Coordinator's Fee";
+      }
+
+
     this.id = this.activatedRoute.snapshot.params.id;
     this.method = this.method1 = this.activatedRoute.snapshot.params.method;
     this.summary = this.activatedRoute.snapshot.params.summary;
@@ -123,14 +157,80 @@ export class TransactionSummaryPage implements OnInit {
     sessionStorage.removeItem('pfInsCoor');
     this.checkAppearance();
     let logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_name = logindata[0].last_name;
-    this.dr_code = logindata[0].dr_code;
-    this.postData.DoctorMobileNumber = logindata[0].mobile_no;
-    this.data =[];
+
     this.data = JSON.parse(atob(sessionStorage.getItem("patientData")));
 
+    
+    
+    
+    if(this.data[0].site == 'C'){
+      this.site = "Chong Hua Hospital - Fuente";
+    }else{
+      this.site = "Chong Hua Hospital Mandaue";
+    }
+
+    
+    let d = new Date(this.data[0].admission_date);
+    this.dateAdmitted = d.toUTCString();
+    console.log(this.dateAdmitted);
  
     
+  }
+
+  postSummary(){
+ 
+    console.log(this.data.payvenue);
+    
+
+
+    if(this.data.payvenue == "W" || this.data.payvenue == "H" || this.data.payvenue == "X" || this.data.payvenue == "N" || this.data.payvenue == "A" ){
+      this.postData.OldProfFee = this.data.doctor_prof_fee;
+      this.doctorService.updatePF(this.postData).subscribe((res: any) => {
+        if (res == true) {
+          this.modalUpdate(
+            "SUCCESS",
+            "Successfully UPDATED your Professional Fee."
+          );
+        } else {
+          this.functionsService.alert(
+            "UPDATING of Professional Fee was Unsuccessful",
+            "Okay"
+          );
+        }
+      });
+    }else{
+      this.doctorService.insertPF(this.postData).subscribe((res: any) => {
+        if (res == true) {
+          this.modalUpdate(
+            "SUCCESS",
+            "Thank you, Doc! You have successfully SAVED your Professional Fee."
+          );
+        } else {
+          this.functionsService.alert(
+            "SAVING of Professional Fee was Unsuccessful",
+            "Okay"
+          );
+        }
+      });
+    }
+   
+  }
+  async modalUpdate(header, message) {
+    const alert = await this.alertController.create({
+      cssClass: "my-custom-class",
+      header: header,
+      message: message,
+      buttons: [
+        {
+          text: "Okay",
+          handler: () => {
+            this.modalController.dismiss();
+                this.router.navigate(['menu/in-patients/']);
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
   checkAppearance(){
 

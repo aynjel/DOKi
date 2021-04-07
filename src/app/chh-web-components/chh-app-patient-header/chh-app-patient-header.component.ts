@@ -24,8 +24,7 @@ export class ChhAppPatientHeaderComponent implements OnInit {
    }
 
   ngOnInit() {
-    console.log(this.forMoreOrLess);
-    
+   
     if(this.forMoreOrLess){
       this.moreOrLess = !this.forMoreOrLess;
     }

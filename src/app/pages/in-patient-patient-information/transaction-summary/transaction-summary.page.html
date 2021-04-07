@@ -14,26 +14,94 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<!-- <ion-content>
   <app-chh-app-patient-header
   [data]="data"
   [dateAdmitted]="dateAdmitted"
   [forMoreOrLess]="true"
   >
 </app-chh-app-patient-header>
-<ion-card mode="ios"  *ngIf="!isDesktop" >
+<ion-card mode="ios"   >
   <ion-list>
     <ion-item style="padding-top: 10px;">
+      Transaction Summary<br />
+      Professional Fee :  {{postData.ProfFee}}  <br />
+      With Vat :      {{withVat}}<br />
+      Pay Venue :     {{payvenue}}
 
-      
-    {{postData.ProfFee}}<br />
-    {{postData.IsVAT}}<br />
-    {{postData.PayVenue}}
   </ion-item>
   </ion-list>
   </ion-card>
   
+</ion-content> -->
+
+
+<ion-content>
+  <ion-item lines="none" class="ion-no-margin"><b>Patient Details</b></ion-item>
+  <ion-item class="ion-no-margin">
+    <ion-grid *ngFor="let x of data">
+      <ion-row >
+        <ion-col size="5">Name:     </ion-col>
+        <ion-col size="7">{{x.first_name}} {{x.middle_name}}. {{x.last_name}}</ion-col>
+      </ion-row>
+      <ion-row >
+        <ion-col size="5">Hospital Site:</ion-col>
+        <ion-col size="7">{{site}}</ion-col>
+      </ion-row>
+      <ion-row >
+        <ion-col size="5"> Room:</ion-col>
+        <ion-col size="7">{{x.room_no}}</ion-col>
+      </ion-row>
+      <ion-row >
+        <ion-col size="5">Admission Date:</ion-col>
+        <ion-col size="7">{{dateAdmitted}}</ion-col>
+      </ion-row>
+      <ion-row >
+        <ion-col size="5">Managed this patient for:</ion-col>
+        <ion-col size="7">{{daysManaged}} {{day}}</ion-col>
+      </ion-row>     
+    </ion-grid>
+  </ion-item>
+  <ion-item class="ion-no-margin">
+    <ion-grid >
+      <ion-row >
+        <ion-col size="5">Amount:     </ion-col>
+        <ion-col size="7">{{data1 | number}}</ion-col>
+      </ion-row>
+      <ion-row >
+        <ion-col size="5">Pay Venue:     </ion-col>
+        <ion-col size="7">{{payvenue}}</ion-col>
+      </ion-row>
+      <ion-row >
+        <ion-col size="5">Add VAT?:     </ion-col>
+        <ion-col size="7">{{withVat}}</ion-col>
+      </ion-row>    
+    </ion-grid>
+  </ion-item>
+  <ul>
+    <li>
+      <ion-text class="fw-i fs-15 ion-text-wrap">This is the overall professional fee that will be charged to your patient.</ion-text>
+    </li>
+    <li>
+      <ion-text class="fw-i fs-15 ion-text-wrap">Net amount will vary after deducting your patient's PhilHealth case coverage.</ion-text>
+    </li>
+    <li *ngIf="withVat == 'Yes'">
+      <ion-text class="fw-i fs-15 ion-text-wrap">VAT percentage will be added to your overall professional fee.</ion-text>
+    </li>
+    <li *ngIf="withVat == 'No'">
+      <ion-text class="fw-i fs-15 ion-text-wrap"> No VAT will be added to your overall professional fee.</ion-text>
+    </li>
+
+
+   
+</ul>
+<ion-button *ngIf="isDesktop" color="mango" size="default" expand="block" shape="round" (click)="postSummary()">Submit</ion-button>
+
 </ion-content>
+
+
+
+
 <ion-footer *ngIf="!isDesktop">
   <ion-toolbar>
     <ion-grid class="ion-no-padding">
@@ -50,7 +118,7 @@
         <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
         <ion-col size-xs="12" size-md="4" size-lg="4">
           
-          <ion-button color="mango" size="default" expand="block" shape="round">Next</ion-button>
+          <ion-button color="mango" size="default" expand="block" shape="round" (click)="postSummary()">Submit</ion-button>
         </ion-col>
         <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
       </ion-row>

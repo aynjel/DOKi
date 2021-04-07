@@ -124,7 +124,7 @@ export class InPatientDetailPage   {
     this.postData.DoctorMobileNumber = logindata[0].mobile_no;
     this.data =[];
     this.doctorService.getInPatient(this.dr_code).subscribe(
-      (res: any) => {          
+      (res: any) => {     
         res.forEach(element => {
             if(element.patient_no == this.activatedRoute.snapshot.params.id){
               this.data.push(element);
@@ -132,12 +132,14 @@ export class InPatientDetailPage   {
             }
         });
       },(error) => {
-        console.log(error);
+
       },
       ()=>{      
+        console.log(this.data);
+        
         this.operate();
         sessionStorage.setItem('patientData', btoa(JSON.stringify(this.data))); 
-        console.log(this.data);
+
         
       });
   }
@@ -211,6 +213,7 @@ export class InPatientDetailPage   {
             } else {
               this.daysOfManage = element.no_of_days_manage;
             }
+            sessionStorage.setItem('daysManaged', btoa(this.daysOfManage)); 
           }
           //
         });
@@ -314,6 +317,7 @@ export class InPatientDetailPage   {
     this.postData.DateCreated = this.functionsService.getSystemDateTime();
     sessionStorage.setItem('postData', btoa(JSON.stringify(this.postData))); 
 
+    
 
   }
   ngOnInit() {
@@ -435,8 +439,6 @@ export class InPatientDetailPage   {
 
   }
   getExamList(data) {
-    console.log(data);
-    
     this.ionSkeleton = true;
     var date1 = new Date(this.data[0].admission_date);
     var seconds1 = date1.getTime() / 1000; //1440516958
