@@ -328,15 +328,15 @@ export class ChhAppProfessionalFeePage implements OnInit {
     
   // }
   isPatientSeenf(f,e){
-    //console.log(f+" | "+e);
+    console.log(f+" | "+e);
     if(f == 'isPatientSeen' && e == false){
       this.toPFMbtn = true;
      // console.log("11111111111111");
       this.disabledselection = false;
     }else  if(f == 'isPatientSeen' && e == true){
       this.insurance = this.charity = this.philhealth = false;
-     // this.toPFMbtn = false;
-      console.log("2222222222222");
+      this.toPFMbtn = false;
+      //console.log("2222222222222");
       this.disabledselection = true;
     }
   }
