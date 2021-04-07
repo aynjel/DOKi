@@ -142,9 +142,9 @@ export class ChhAppProfessionalFeePage implements OnInit {
     }else{
       this.modifybtn = true;
     }
-       console.log( this.data);
+
        
-    if(this.data[0].IsVAT=="Y"){
+    if(this.data[0].is_vat=="Y"){
       this.withVat = "Yes";
     }else{
       this.withVat = "No"; 

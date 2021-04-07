@@ -110,7 +110,7 @@ export class TransactionSummaryPage implements OnInit {
         this.day = "Day";
       }
 
-      console.log("Pay Venue : "+this.postData.PayVenue);
+      console.log("VAT : "+this.postData.IsVAT);
       
       if(this.postData.IsVAT=="Y"){
         this.withVat = "Yes";
@@ -118,7 +118,7 @@ export class TransactionSummaryPage implements OnInit {
         this.withVat = "No"; 
       }
       if(this.postData.PayVenue == "W"){
-        this.payvenue = "Charity";
+        this.payvenue = "Charity / PhilHealth";
       }else if(this.postData.PayVenue == "H"){
         this.payvenue = "c/o Insurance";
       }else if(this.postData.PayVenue == "X"){
@@ -179,12 +179,14 @@ export class TransactionSummaryPage implements OnInit {
 
   postSummary(){
  
-    console.log(this.data.payvenue);
+    console.log(this.data[0].payvenue);
     
 
 
-    if(this.data.payvenue == "W" || this.data.payvenue == "H" || this.data.payvenue == "X" || this.data.payvenue == "N" || this.data.payvenue == "A" ){
+    if(this.data[0].payvenue == "W" || this.data[0].payvenue == "H" || this.data[0].payvenue == "X" || this.data[0].payvenue == "N" || this.data[0].payvenue == "A" ){
       this.postData.OldProfFee = this.data.doctor_prof_fee;
+      console.log("uopdate");
+      
       this.doctorService.updatePF(this.postData).subscribe((res: any) => {
         if (res == true) {
           this.modalUpdate(
@@ -199,6 +201,7 @@ export class TransactionSummaryPage implements OnInit {
         }
       });
     }else{
+      console.log("Insert");
       this.doctorService.insertPF(this.postData).subscribe((res: any) => {
         if (res == true) {
           this.modalUpdate(
