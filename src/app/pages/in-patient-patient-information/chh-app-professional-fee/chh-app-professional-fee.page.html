@@ -554,7 +554,7 @@ ______             _     _                       ______             _
     </ion-card>
 
   
-    <ion-button color="mango" size="default" expand="block" shape="round"  (click)="modifyProfFee()" *ngIf="ifShowSummary" [disabled]="modifybtn">Modify</ion-button>
+    <ion-button color="mango" size="default" expand="block" shape="round" [disabled]="toPFMbtn" (click)="redirecto()" *ngIf="ifShowSummary == false">Next</ion-button>
 
     
   </div>
