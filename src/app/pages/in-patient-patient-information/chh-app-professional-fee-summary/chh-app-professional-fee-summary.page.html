@@ -81,11 +81,11 @@
 
       <ul *ngIf="txtInsurancePF"><li> <ion-text class="fs-12 ion-text-wrap" color="danger">Accept HMO insurance rate. </ion-text></li><li><ion-text class="fs-12 ion-text-wrap" color="danger">No additional professional fee charge to your patient.</ion-text></li></ul>
                          
-      <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==true"><li><ion-text class="fs-12 ion-text-wrap">This is the overall professional fee that will be charged to your patient. </ion-text>
-      </li><li><ion-text class="fs-12 ion-text-wrap" color="danger">Net amount will vary after deducting your patient's insurance coverage.</ion-text></li><li><ion-text class="fs-12 ion-text-wrap">VAT percentage will be added to your overall professional fee.</ion-text></li></ul>
+      <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==true"><li><ion-text class="fs-12 ion-text-wrap" color="danger">This is the overall professional fee that will be charged to your patient. </ion-text>
+      </li><li><ion-text class="fs-12 ion-text-wrap" color="danger">Net amount will vary after deducting your patient's insurance coverage.</ion-text></li><li><ion-text class="fs-12 ion-text-wrap" color="danger">VAT percentage will be added to your overall professional fee.</ion-text></li></ul>
 
       <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==false"><li><ion-text class="fs-12 ion-text-wrap">This is the overall professional fee that will be charged to your patient.</ion-text>
-      </li><li><ion-text class="fs-12 ion-text-wrap" color="danger">Net amount will vary after deducting your patient's insurance coverage.</ion-text></li><li><ion-text class="fs-12 ion-text-wrap">No VAT will be added to your overall professional fee.</ion-text></li></ul>
+      </li><li><ion-text class="fs-12 ion-text-wrap" color="danger">Net amount will vary after deducting your patient's insurance coverage.</ion-text></li><li><ion-text class="fs-12 ion-text-wrap" color="danger">No VAT will be added to your overall professional fee.</ion-text></li></ul>
 
  
 
@@ -116,34 +116,34 @@
 
       <ul *ngIf="txtPhilHealthPF">
         <li>
-          <ion-text class="fs-12 ion-text-wrap">Accept PHIC rate.</ion-text>
+          <ion-text class="fs-12 ion-text-wrap" color="danger">Accept PHIC rate.</ion-text>
         </li>
         <li>
-          <ion-text class="fs-12 ion-text-wrap">No additional professional fee charge to your patient.</ion-text>
+          <ion-text class="fs-12 ion-text-wrap" color="danger">No additional professional fee charge to your patient.</ion-text>
         </li>
       </ul>
 
       <ul *ngIf="!txtPhilHealthPF && txtPhilHealthVAT">
         <li>
-          <ion-text class="fs-12 ion-text-wrap">This is the overall professional fee that will be charged to your patient.</ion-text>
+          <ion-text class="fs-12 ion-text-wrap" color="danger">This is the overall professional fee that will be charged to your patient.</ion-text>
         </li>
         <li>
-          <ion-text class="fs-12 ion-text-wrap">Net amount will vary after deducting your patient's PhilHealth case coverage.</ion-text>
+          <ion-text class="fs-12 ion-text-wrap" color="danger">Net amount will vary after deducting your patient's PhilHealth case coverage.</ion-text>
         </li>
         <li>
-          <ion-text class="fs-12 ion-text-wrap">VAT percentage will be added to your overall professional fee.</ion-text>
+          <ion-text class="fs-12 ion-text-wrap" color="danger">VAT percentage will be added to your overall professional fee.</ion-text>
         </li>
       </ul>
 
       <ul *ngIf="!txtPhilHealthPF && !txtPhilHealthVAT">
         <li>
-          <ion-text class="fs-12 ion-text-wrap">This is the overall professional fee that will be charged to your patient.</ion-text>
+          <ion-text class="fs-12 ion-text-wrap" color="danger">This is the overall professional fee that will be charged to your patient.</ion-text>
         </li>
         <li>
-          <ion-text class="fs-12 ion-text-wrap">Net amount will vary after deducting your patient's PhilHealth case coverage.</ion-text>
+          <ion-text class="fs-12 ion-text-wrap" color="danger">Net amount will vary after deducting your patient's PhilHealth case coverage.</ion-text>
         </li>
         <li>
-          <ion-text class="fs-12 ion-text-wrap">No VAT will be added to your overall professional fee.</ion-text>
+          <ion-text class="fs-12 ion-text-wrap" color="danger">No VAT will be added to your overall professional fee.</ion-text>
         </li>
       </ul>
 
@@ -363,13 +363,13 @@ ______          _    _
                   </ion-item>
                 </ion-card>
     
-                <ul *ngIf="txtInsurancePF"><li> <ion-text class="fs-12 ion-text-wrap">Accept HMO insurance rates. </ion-text></li><li><ion-text class="fs-12 ion-text-wrap">No additional professional fee charge to your patient.</ion-text></li></ul>
+                <ul *ngIf="txtInsurancePF"><li> <ion-text class="fs-12 ion-text-wrap" color="danger">Accept HMO insurance rates. </ion-text></li><li><ion-text class="fs-12 ion-text-wrap" color="danger">No additional professional fee charge to your patient.</ion-text></li></ul>
                          
                 <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==true"><li><ion-text class="fs-12 ion-text-wrap">This is the overall professional fee that will be charged to your patient. </ion-text>
-                </li><li><ion-text class="fs-12 ion-text-wrap">Net amount will vary after deducting your patient's insurance coverage.</ion-text></li><li><ion-text class="fs-12 ion-text-wrap">VAT percentage will be added to your overall professional fee.</ion-text></li></ul>
+                </li><li><ion-text class="fs-12 ion-text-wrap" color="danger">Net amount will vary after deducting your patient's insurance coverage.</ion-text></li><li><ion-text class="fs-12 ion-text-wrap" color="danger">VAT percentage will be added to your overall professional fee.</ion-text></li></ul>
           
                 <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==false"><li><ion-text class="fs-12 ion-text-wrap">This is the overall professional fee that will be charged to your patient.</ion-text>
-                </li><li><ion-text class="fs-12 ion-text-wrap">Net amount will vary after deducting your patient's insurance coverage.</ion-text></li><li><ion-text class="fs-12 ion-text-wrap">No VAT will be added to your overall professional fee.</ion-text></li></ul>
+                </li><li><ion-text class="fs-12 ion-text-wrap" color="danger">Net amount will vary after deducting your patient's insurance coverage.</ion-text></li><li><ion-text class="fs-12 ion-text-wrap" color="danger">No VAT will be added to your overall professional fee.</ion-text></li></ul>
           
          
               </div>
