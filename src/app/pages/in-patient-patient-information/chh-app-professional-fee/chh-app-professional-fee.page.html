@@ -191,7 +191,7 @@ ______             _     _                        _   _                   _
   </app-chh-app-patient-header>
       <ion-card  mode="ios">
       <ion-item lines="none">
-      <ion-label>Are you a Insurance Coordinator?</ion-label> 
+      <ion-label>Are you an Insurance Coordinator?</ion-label> 
       <ion-checkbox color="mango" checked="false"  [(ngModel)]="isCoordinator"></ion-checkbox>
       </ion-item>
       </ion-card>
@@ -205,17 +205,17 @@ ______             _     _                        _   _                   _
         <ion-list [class.disabled]="disabledselection">
           <ion-list-header>Select Pay Venue</ion-list-header>
             <ion-item lines="none">
-              <ion-label>Care of Insurance</ion-label>
+              <ion-label>Insurance (HMO)</ion-label>
               <ion-checkbox color="mango"  slot="end" value="insurance" [(ngModel)]="insurance" (click)="buttonclick('insurance',insurance)" ></ion-checkbox>
-            </ion-item>
-            <ion-item lines="none">
-              <ion-label>Charity</ion-label>
-              <ion-checkbox color="mango"  slot="end" value="charity" [(ngModel)]="charity"  (click)="buttonclick('charity',charity)" ></ion-checkbox>
             </ion-item>
             <ion-item lines="none" >
               <ion-label>Phil Health</ion-label>
               <ion-checkbox color="mango"  slot="end" value="philhealth" [(ngModel)]="philhealth"  (click)="buttonclick('philhealth',philhealth)" ></ion-checkbox>
-            </ion-item>           
+            </ion-item>   
+            <ion-item lines="none">
+              <ion-label>Charity</ion-label>
+              <ion-checkbox color="mango"  slot="end" value="charity" [(ngModel)]="charity"  (click)="buttonclick('charity',charity)" ></ion-checkbox>
+            </ion-item>
           </ion-list>
 
   </ion-card>
@@ -524,7 +524,7 @@ ______             _     _                       ______             _
       <div *ngIf="ifShowSummary == false">
     <ion-card  mode="ios">
       <ion-item>
-        <ion-label>Are you a Insurance Coordinator?</ion-label> 
+        <ion-label>Are you an Insurance Coordinator?</ion-label> 
         <ion-checkbox color="mango" checked="false" [(ngModel)]="isCoordinator"></ion-checkbox>
       </ion-item>
     </ion-card>
@@ -538,17 +538,18 @@ ______             _     _                       ______             _
       <ion-list [class.disabled]="disabledselection">
         <ion-list-header>Select Pay Venue</ion-list-header>
         <ion-item>
-          <ion-label>Care of Insurance</ion-label>
+          <ion-label>Insurance (HMO)</ion-label>
           <ion-checkbox color="mango"  slot="end" value="insurance" [(ngModel)]="insurance" (click)="buttonclick('insurance',insurance)" ></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>Phil Health</ion-label>
+          <ion-checkbox color="mango"  slot="end" value="philhealth" [(ngModel)]="philhealth"  (click)="buttonclick('philhealth',philhealth)" ></ion-checkbox>
         </ion-item>
         <ion-item>
           <ion-label>Charity</ion-label>
           <ion-checkbox color="mango"  slot="end" value="charity" [(ngModel)]="charity"  (click)="buttonclick('charity',charity)" ></ion-checkbox>
         </ion-item>
-        <ion-item>
-          <ion-label>Phil Health</ion-label>
-          <ion-checkbox color="mango"  slot="end" value="philhealth" [(ngModel)]="philhealth"  (click)="buttonclick('philhealth',philhealth)" ></ion-checkbox>
-        </ion-item>           
+                   
       </ion-list>
 
     </ion-card>
