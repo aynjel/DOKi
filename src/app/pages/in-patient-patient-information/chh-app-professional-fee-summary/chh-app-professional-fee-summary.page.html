@@ -48,7 +48,7 @@
 
   <ion-grid  *ngIf="!isDesktop && method == 'Philhealth'"  class="ion-no-padding ">
 
-    <ion-button expand="block" fill="outline" (click)="presentCaseRatesModal()" *ngIf="method=='Philhealth'">View Case Rates</ion-button> 
+    <!-- <ion-button expand="block" fill="outline" (click)="presentCaseRatesModal()" *ngIf="method=='Philhealth'">View Case Rates</ion-button>  -->
   <ion-row >
 
   <ion-col size="6" offset="3"  >
@@ -56,6 +56,7 @@
   <div class="vertical-center">
     <div class="center">
       <ion-img src="../../../../assets/img/{{method1}}.jpg" class="ion-align-self-end"></ion-img>
+      <ion-button expand="block" fill="outline" (click)="presentCaseRatesModal()" *ngIf="method=='Philhealth'">View Case Rates</ion-button>
     </div>   
   </div>
   </ion-col>
@@ -64,10 +65,19 @@
 
   
     <div *ngIf="(method=='Insurance')">
+      <img src="assets/img/insurance-pana.png" alt="Care of Insurance">
+      <!-- <img src="assets/img/insurance.png" alt="Care of Insurance"> -->
+      <!-- <div align="center">
+        <lottie-player
+          src="https://assets4.lottiefiles.com/packages/lf20_pk5mpw6j.json"
+          background="transparent"
+          style="width: 300px;"
+        ></lottie-player>
+      </div> -->
       <ion-card mode="ios" *ngIf="!isDesktop " >
         <ion-item>
           <ion-label>&#8369; </ion-label>
-          <ion-input type="number" placeholder="0" [(ngModel)]="InsurancePF" (ionChange)="isurancePF()"></ion-input>
+          <ion-input color="danger" type="number" placeholder="0" [(ngModel)]="InsurancePF" (ionChange)="isurancePF()"></ion-input>
         </ion-item>
       </ion-card>
       <ion-card mode="ios" *ngIf="!isDesktop && InsuranceShowVat" >
@@ -77,13 +87,13 @@
         </ion-item>
       </ion-card>
 
-      <ul *ngIf="txtInsurancePF"><li> <ion-text class="fw-i fs-15 ion-text-wrap">Accept HMO insurance rate. </ion-text></li><li><ion-text class="fw-i fs-15 ion-text-wrap">No additional professional fee charge to your patient.</ion-text></li></ul>
+      <ul *ngIf="txtInsurancePF"><li> <ion-text class="fs-12 ion-text-wrap" color="danger">Accept HMO insurance rate. </ion-text></li><li><ion-text class="fs-12 ion-text-wrap" color="danger">No additional professional fee charge to your patient.</ion-text></li></ul>
                          
-      <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==true"><li><ion-text class="fw-i fs-15 ion-text-wrap">This is the overall professional fee that will be charged to your patient. </ion-text>
-      </li><li><ion-text class="fw-i fs-15 ion-text-wrap">Net amount will vary after deducting your patient's insurance coverage.</ion-text></li><li><ion-text class="fw-i fs-15 ion-text-wrap">VAT percentage will be added to your overall professional fee.</ion-text></li></ul>
+      <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==true"><li><ion-text class="fs-12 ion-text-wrap" color="danger">This is the overall professional fee that will be charged to your patient. </ion-text>
+      </li><li><ion-text class="fs-12 ion-text-wrap" color="danger">Net amount will vary after deducting your patient's insurance coverage.</ion-text></li><li><ion-text class="fs-12 ion-text-wrap" color="danger">VAT percentage will be added to your overall professional fee.</ion-text></li></ul>
 
-      <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==false"><li><ion-text class="fw-i fs-15 ion-text-wrap">This is the overall professional fee that will be charged to your patient.</ion-text>
-      </li><li><ion-text class="fw-i fs-15 ion-text-wrap">Net amount will vary after deducting your patient's insurance coverage.</ion-text></li><li><ion-text class="fw-i fs-15 ion-text-wrap">No VAT will be added to your overall professional fee.</ion-text></li></ul>
+      <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==false"><li><ion-text class="fs-12 ion-text-wrap">This is the overall professional fee that will be charged to your patient.</ion-text>
+      </li><li><ion-text class="fs-12 ion-text-wrap" color="danger">Net amount will vary after deducting your patient's insurance coverage.</ion-text></li><li><ion-text class="fs-12 ion-text-wrap" color="danger">No VAT will be added to your overall professional fee.</ion-text></li></ul>
 
  
 
@@ -94,14 +104,14 @@
     <div *ngIf="(method=='Philhealth')">
       <ion-card mode="ios" *ngIf="!isDesktop" >
         <ion-item>
-          <ion-label>PhilHealth Only?</ion-label> 
+          <ion-label>Accept PhilHealth Only?</ion-label> 
           <ion-checkbox color="mango" checked="false" [(ngModel)]="IsPhilhealthOnly" (ionChange)="isPhilhealthOnly()"></ion-checkbox>
         </ion-item>
       </ion-card>
       <ion-card mode="ios" *ngIf="!isDesktop  && PhilhealthShowValue" >
         <ion-item>
           <ion-label>&#8369; </ion-label>
-          <ion-input type="number" minlength="0" placeholder="0" [(ngModel)]="PhilhealthPF"  (ionChange)="philhealthPF()"></ion-input>
+          <ion-input color="danger" type="number" minlength="0" placeholder="0" [(ngModel)]="PhilhealthPF"  (ionChange)="philhealthPF()"></ion-input>
         </ion-item>
       </ion-card>
 
@@ -114,34 +124,34 @@
 
       <ul *ngIf="txtPhilHealthPF">
         <li>
-          <ion-text class="fw-i fs-15 ion-text-wrap">Accept PHIC rate.</ion-text>
+          <ion-text class="fs-12 ion-text-wrap" color="danger">Accept PHIC rate.</ion-text>
         </li>
         <li>
-          <ion-text class="fw-i fs-15 ion-text-wrap">No additional professional fee charge to your patient.</ion-text>
+          <ion-text class="fs-12 ion-text-wrap" color="danger">No additional professional fee charge to your patient.</ion-text>
         </li>
       </ul>
 
       <ul *ngIf="!txtPhilHealthPF && txtPhilHealthVAT">
         <li>
-          <ion-text class="fw-i fs-15 ion-text-wrap">This is the overall professional fee that will be charged to your patient.</ion-text>
+          <ion-text class="fs-12 ion-text-wrap" color="danger">This is the overall professional fee that will be charged to your patient.</ion-text>
         </li>
         <li>
-          <ion-text class="fw-i fs-15 ion-text-wrap">Net amount will vary after deducting your patient's PhilHealth case coverage.</ion-text>
+          <ion-text class="fs-12 ion-text-wrap" color="danger">Net amount will vary after deducting your patient's PhilHealth case coverage.</ion-text>
         </li>
         <li>
-          <ion-text class="fw-i fs-15 ion-text-wrap">VAT percentage will be added to your overall professional fee.</ion-text>
+          <ion-text class="fs-12 ion-text-wrap" color="danger">VAT percentage will be added to your overall professional fee.</ion-text>
         </li>
       </ul>
 
       <ul *ngIf="!txtPhilHealthPF && !txtPhilHealthVAT">
         <li>
-          <ion-text class="fw-i fs-15 ion-text-wrap">This is the overall professional fee that will be charged to your patient.</ion-text>
+          <ion-text class="fs-12 ion-text-wrap" color="danger">This is the overall professional fee that will be charged to your patient.</ion-text>
         </li>
         <li>
-          <ion-text class="fw-i fs-15 ion-text-wrap">Net amount will vary after deducting your patient's PhilHealth case coverage.</ion-text>
+          <ion-text class="fs-12 ion-text-wrap" color="danger">Net amount will vary after deducting your patient's PhilHealth case coverage.</ion-text>
         </li>
         <li>
-          <ion-text class="fw-i fs-15 ion-text-wrap">No VAT will be added to your overall professional fee.</ion-text>
+          <ion-text class="fs-12 ion-text-wrap" color="danger">No VAT will be added to your overall professional fee.</ion-text>
         </li>
       </ul>
 
@@ -154,8 +164,21 @@
       <ion-text ></ion-text>
 
       <ion-card mode="ios"  >
+        <img src="assets/img/charity-rafiki.png" alt="Charity Thanks">
+        <!-- <img src="assets/img/charity.png" alt="Charity Thanks"> -->
+        <!-- <div align="center">
+          <lottie-player
+            src="https://assets4.lottiefiles.com/packages/lf20_wMezg6.json"
+            mode="bounce"
+            background="transparent"
+            speed="1"
+            style="width: 300px;"
+            loop
+            autoplay
+          ></lottie-player>
+        </div> -->
         <ion-item>
-          <ion-label class="ion-text-wrap">Thank you for your generosity, Dok! We truly appreciate your kindness and heartfelt service!</ion-label> 
+          <ion-label class="ion-text-wrap" >Thank you for your generosity, Dok! &#10084; We truly appreciate your kindness and heartfelt service!</ion-label> 
 
         </ion-item>
       </ion-card>
@@ -174,8 +197,8 @@
         <ion-row>
           <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
           <ion-col size-xs="12" size-md="4" size-lg="4">
-           PF Submission Status
-            <ion-progress-bar value="{{progressStatus}}"></ion-progress-bar>
+           Status
+            <ion-progress-bar value="{{progressStatus}}" color="warning"></ion-progress-bar>
           </ion-col>
           <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
         </ion-row>
@@ -350,7 +373,7 @@ ______          _    _
                 <ion-card mode="ios" >
                   <ion-item>
                     <ion-label>&#8369; </ion-label>
-                    <ion-input type="number" placeholder="0" [(ngModel)]="InsurancePF" (ionChange)="isurancePF()"></ion-input>
+                    <ion-input color="danger" type="number" placeholder="0" [(ngModel)]="InsurancePF" (ionChange)="isurancePF()"></ion-input>
                   </ion-item>
                 </ion-card>
                 <ion-card mode="ios" *ngIf="InsuranceShowVat" >
@@ -360,13 +383,13 @@ ______          _    _
                   </ion-item>
                 </ion-card>
     
-                <ul *ngIf="txtInsurancePF"><li> <ion-text class="fw-i fs-15 ion-text-wrap">Accept HMO insurance rate. </ion-text></li><li><ion-text class="fw-i fs-15 ion-text-wrap">No additional professional fee charge to your patient.</ion-text></li></ul>
+                <ul *ngIf="txtInsurancePF"><li> <ion-text class="fs-12 ion-text-wrap" color="danger">Accept HMO insurance rates. </ion-text></li><li><ion-text class="fs-12 ion-text-wrap" color="danger">No additional professional fee charge to your patient.</ion-text></li></ul>
                          
-                <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==true"><li><ion-text class="fw-i fs-15 ion-text-wrap">This is the overall professional fee that will be charged to your patient. </ion-text>
-                </li><li><ion-text class="fw-i fs-15 ion-text-wrap">Net amount will vary after deducting your patient's insurance coverage.</ion-text></li><li><ion-text class="fw-i fs-15 ion-text-wrap">VAT percentage will be added to your overall professional fee.</ion-text></li></ul>
+                <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==true"><li><ion-text class="fs-12 ion-text-wrap">This is the overall professional fee that will be charged to your patient. </ion-text>
+                </li><li><ion-text class="fs-12 ion-text-wrap" color="danger">Net amount will vary after deducting your patient's insurance coverage.</ion-text></li><li><ion-text class="fs-12 ion-text-wrap" color="danger">VAT percentage will be added to your overall professional fee.</ion-text></li></ul>
           
-                <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==false"><li><ion-text class="fw-i fs-15 ion-text-wrap">This is the overall professional fee that will be charged to your patient.</ion-text>
-                </li><li><ion-text class="fw-i fs-15 ion-text-wrap">Net amount will vary after deducting your patient's insurance coverage.</ion-text></li><li><ion-text class="fw-i fs-15 ion-text-wrap">No VAT will be added to your overall professional fee.</ion-text></li></ul>
+                <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==false"><li><ion-text class="fs-12 ion-text-wrap">This is the overall professional fee that will be charged to your patient.</ion-text>
+                </li><li><ion-text class="fs-12 ion-text-wrap" color="danger">Net amount will vary after deducting your patient's insurance coverage.</ion-text></li><li><ion-text class="fs-12 ion-text-wrap" color="danger">No VAT will be added to your overall professional fee.</ion-text></li></ul>
           
          
               </div>
@@ -382,7 +405,7 @@ ______          _    _
                 <ion-card mode="ios" *ngIf="PhilhealthShowValue" >
                   <ion-item>
                     <ion-label>&#8369; </ion-label>
-                    <ion-input type="number" placeholder="0" [(ngModel)]="PhilhealthPF"  (ionChange)="philhealthPF()"></ion-input>
+                    <ion-input color="danger" type="number" placeholder="0" [(ngModel)]="PhilhealthPF"  (ionChange)="philhealthPF()"></ion-input>
                   </ion-item>
                 </ion-card>
           
