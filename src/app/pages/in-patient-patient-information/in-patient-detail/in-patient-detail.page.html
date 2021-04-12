@@ -435,6 +435,7 @@ ______          _    _
 
 <ion-footer  >
   <ion-toolbar *ngIf="!isDesktop">
+    <ion-item lines="none">
     <ion-grid class="ion-no-padding">
       <ion-row >
         <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
@@ -455,6 +456,7 @@ ______          _    _
         <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
       </ion-row>
     </ion-grid>
+    </ion-item>
   </ion-toolbar>
   <div class="footer tab-font-family"  *ngIf="isDesktop">
     <span>{{this.constants.CHH_NAME__VALUE__CEBU}}</span>
