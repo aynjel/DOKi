@@ -84,10 +84,13 @@ export class TabInPatientsPage {
         this.admittedOrDischargeLabel = "(for Discharge)";
       }
     });
+    console.log("REDIRECT!");
   }
   
   ngOnInit() {
     this.$gaService.pageView("/In-Patient", "In-Patient Tab");
+    console.log("REDIRECT!");
+    
   }
 
   /* async Alert(data1: any, data2: any) {
@@ -183,7 +186,7 @@ export class TabInPatientsPage {
 
   //Fired when the component routing to is about to animate into view.
   ionViewWillEnter() {
-
+    console.log("ionViewWillEnter : REDIRECT!");
     
     this.logindata = <LoginData>this.authService.userData$.getValue();
 
@@ -272,12 +275,12 @@ export class TabInPatientsPage {
 
  
 
-  this.nav.navigateForward('menu/in-patients/' + data, {
-    state: {
-      // ...
-    },
-  });
-
+  // this.nav.navigateForward('menu/in-patients/' + data, {
+  //   state: {
+  //     // ...
+  //   },
+  // });
+  this.nav.navigateForward('menu/in-patients/' + data);
 
 
     // this.router.navigate(['in-patient'], {state: {data }});

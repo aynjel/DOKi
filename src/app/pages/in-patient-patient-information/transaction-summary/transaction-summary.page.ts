@@ -1,7 +1,7 @@
 import { Component, OnInit, Input,ViewChild, ViewContainerRef,  ComponentFactoryResolver, Renderer2 } from "@angular/core";
 import { Router, ActivatedRoute} from "@angular/router";
 import {Location} from '@angular/common';
-import { ModalController, AlertController } from "@ionic/angular";
+import { ModalController, AlertController, NavController } from "@ionic/angular";
 import { ChhAppFeePage } from "../../../chh-web-components/chh-app-fee/chh-app-fee.page";
 import { from } from "rxjs";
 import { PopoverController } from "@ionic/angular";
@@ -66,6 +66,7 @@ export class TransactionSummaryPage implements OnInit {
   daysManaged:any;
   site:any;
   day:any;
+  moreOrLess:boolean = true;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -83,7 +84,8 @@ export class TransactionSummaryPage implements OnInit {
     public messages: Messages,
     public storageService: StorageService,
     public constants: Constants,
-    private renderer: Renderer2) {
+    private renderer: Renderer2,
+    public nav:NavController) {
 
       this.screensizeService.isDesktopView().subscribe((isDesktop) => {
         if (this.isDesktop && !isDesktop) {
@@ -184,9 +186,7 @@ export class TransactionSummaryPage implements OnInit {
 
 
     if(this.data[0].payvenue == "W" || this.data[0].payvenue == "H" || this.data[0].payvenue == "X" || this.data[0].payvenue == "N" || this.data[0].payvenue == "A" ){
-      this.postData.OldProfFee = this.data.doctor_prof_fee;
-      console.log("uopdate");
-      
+      this.postData.OldProfFee = this.data.doctor_prof_fee;  
       this.doctorService.updatePF(this.postData).subscribe((res: any) => {
         if (res == true) {
           this.modalUpdate(
@@ -201,7 +201,6 @@ export class TransactionSummaryPage implements OnInit {
         }
       });
     }else{
-      console.log("Insert");
       this.doctorService.insertPF(this.postData).subscribe((res: any) => {
         if (res == true) {
           this.modalUpdate(
@@ -227,13 +226,34 @@ export class TransactionSummaryPage implements OnInit {
         {
           text: "Okay",
           handler: () => {
-            this.modalController.dismiss();
+
+            if(!this.isDesktop){
+              this.alertController.dismiss();
+              this.router.navigate(['menu/in-patients/']);
+            }else{
+              this.alertController.dismiss();
+                // using the injected ModalController this page
+                // can "dismiss" itself and optionally pass back data
+                this.modalController.dismiss({
+                  'dismissed': true
+                });
                 this.router.navigate(['menu/in-patients/']);
+       
+            }
+            //this.nav.navigateBack('menu/in-patients' );
+
+
           },
         },
       ],
     });
     await alert.present();
+  }
+
+  moreorless(data){
+    this.moreOrLess = !data;
+    console.log(this.moreOrLess);
+    
   }
   checkAppearance(){
 
