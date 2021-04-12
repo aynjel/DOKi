@@ -7,31 +7,30 @@ import { StorageService } from 'src/app/services/storage/storage.service';
   templateUrl: './chh-app-patient-header.component.html',
   styleUrls: ['./chh-app-patient-header.component.scss'],
 })
+
 export class ChhAppPatientHeaderComponent implements OnInit {
   @Input() data: any;
   @Input() dateAdmitted: any;
-  @Input() forMoreOrLess:boolean;
-  isDesktop:any;
-  moreOrLess:boolean = true;
-  constructor(       private screensizeService: ScreenSizeService) {
+  @Input() forMoreOrLess: boolean;
+  isDesktop: any;
+  moreOrLess: boolean = true;
 
+  constructor(private screensizeService: ScreenSizeService) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         window.location.reload();
       }
       this.isDesktop = isDesktop;
     });
-   }
+  }
 
   ngOnInit() {
-   
-    if(this.forMoreOrLess){
+    if (this.forMoreOrLess) {
       this.moreOrLess = !this.forMoreOrLess;
     }
-    
-
   }
-  moreorless(data){
-      this.moreOrLess=data;
+  
+  moreorless(data) {
+    this.moreOrLess = data;
   }
 }

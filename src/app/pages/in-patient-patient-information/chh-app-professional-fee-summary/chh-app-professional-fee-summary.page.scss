@@ -41,14 +41,23 @@
   .fw-i{
     font-style: italic;
   }
+  
   .fs-15{
     font-size: 15px;
   }
 
+  .fs-12{
+    font-size: 12px;
+  }
 
  
   #list ul li {
     text-align: left;
     list-style: disc;
     margin: 10px 0px;
+  }
+
+  ion-input {
+    font-size: x-large;
+    font-weight: 900;
   }
