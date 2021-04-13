@@ -118,9 +118,12 @@ export class ChhAppProfessionalFeePage implements OnInit {
       "/menu/in-patients/" + this.activatedRoute.snapshot.params.id;
     this.patient_id = this.activatedRoute.snapshot.params.id;
 
-    this.postData = JSON.parse(
-      atob(sessionStorage.getItem("postData"))
-    ) as InPatientData;
+    //this.postData = JSON.parse(atob(sessionStorage.getItem("postData"))) as InPatientData;
+    this.postData = JSON.parse(atob(localStorage.getItem("postData"))) as InPatientData;
+
+
+    
+ 
     //console.log(this.postData);
 
     //console.log("!!!!!!!!!!!!!");
@@ -135,7 +138,8 @@ export class ChhAppProfessionalFeePage implements OnInit {
     this.dr_code = logindata[0].dr_code;
     //this.postData.DoctorMobileNumber = logindata[0].mobile_no;
     //this.data =[];
-    this.data = JSON.parse(atob(sessionStorage.getItem("patientData")));
+    //this.data = JSON.parse(atob(sessionStorage.getItem("patientData")));
+    this.data = JSON.parse(atob(localStorage.getItem("patientData")));
     this.data1 = this.data[0].doctor_prof_fee;
 
     if (this.data[0].is_posted == 0) {
@@ -171,7 +175,8 @@ export class ChhAppProfessionalFeePage implements OnInit {
     } else {
       this.site = "Chong Hua Hospital Mandaue";
     }
-    this.daysManaged = atob(sessionStorage.getItem("daysManaged"));
+    //this.daysManaged = atob(sessionStorage.getItem("daysManaged"));
+    this.daysManaged = atob(localStorage.getItem("daysManaged"));
     if (this.daysManaged > 1) {
       this.day = "Days";
     } else {
@@ -212,6 +217,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
   redirecto() {
     let data;
     sessionStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
+    localStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
     if (this.insurance) {
       data = "insurance";
       this.router.navigate([this.router.url + "/" + data]);
@@ -231,13 +237,15 @@ export class ChhAppProfessionalFeePage implements OnInit {
         this.postData.PayVenue = "A";
        
         //  sessionStorage.setItem('postData', JSON.stringify(this.postData));
-        sessionStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
+        //sessionStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
+        localStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
       } else {
         this.postData.ProfFee = 0;
         this.postData.IsVAT = "N";
         this.postData.PayVenue = "N";
         //sessionStorage.setItem('postData', JSON.stringify(this.postData));
-        sessionStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
+        //sessionStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
+        localStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
       }
       //console.log("is patient seen :"+this.isPatientSeen);
 

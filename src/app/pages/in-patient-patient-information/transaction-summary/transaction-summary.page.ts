@@ -100,11 +100,12 @@ export class TransactionSummaryPage implements OnInit {
   ngOnInit() {
     console.log("IM AT TRANSACTION SUMMARTY");
       
-      this.postData = JSON.parse(atob(sessionStorage.getItem("postData"))) as InPatientData;
+      //this.postData = JSON.parse(atob(sessionStorage.getItem("postData"))) as InPatientData;
+      this.postData = JSON.parse(atob(localStorage.getItem("postData"))) as InPatientData;
       console.log(this.postData);
       this.data1 = this.postData.ProfFee;
-      this.daysManaged = atob(sessionStorage.getItem("daysManaged"));
-
+      //this.daysManaged = atob(sessionStorage.getItem("daysManaged"));
+      this.daysManaged = atob(localStorage.getItem("daysManaged"));
       
       if(this.daysManaged > 1){
         this.day = "Days";
@@ -155,13 +156,13 @@ export class TransactionSummaryPage implements OnInit {
 
   }
   ionViewWillEnter(){
-    sessionStorage.removeItem('pfIsPatientSeen');
-    sessionStorage.removeItem('pfInsCoor');
+    //sessionStorage.removeItem('pfIsPatientSeen');
+    //sessionStorage.removeItem('pfInsCoor');
     this.checkAppearance();
     let logindata = <LoginData>this.authService.userData$.getValue();
 
-    this.data = JSON.parse(atob(sessionStorage.getItem("patientData")));
-
+   // this.data = JSON.parse(atob(sessionStorage.getItem("patientData")));
+    this.data = JSON.parse(atob(localStorage.getItem("patientData")));
     
     
     

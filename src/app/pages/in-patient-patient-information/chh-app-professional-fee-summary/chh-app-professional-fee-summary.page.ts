@@ -98,7 +98,11 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   ngOnInit() {
 
     
-    this.postData = JSON.parse(atob(sessionStorage.getItem("postData"))) as InPatientData;
+    //this.postData = JSON.parse(atob(sessionStorage.getItem("postData"))) as InPatientData;
+    this.postData = JSON.parse(atob(localStorage.getItem("postData"))) as InPatientData;
+
+
+
     //console.log(this.postData);
     this.id = this.activatedRoute.snapshot.params.id;
     this.method = this.method1 = this.activatedRoute.snapshot.params.method;
@@ -139,8 +143,8 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     this.dr_code = logindata[0].dr_code;
 
    // this.data =[];
-    this.data = JSON.parse(atob(sessionStorage.getItem("patientData")));
-
+   // this.data = JSON.parse(atob(sessionStorage.getItem("patientData")));
+    this.data = JSON.parse(atob(localStorage.getItem("patientData")));
 
     this.patient_name = this.data[0].first_name + ' ' + this.data[0].last_name;
     //console.log(this.data);
@@ -321,7 +325,8 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
       this.postData.PayVenue = "W";  
   }
   console.log(this.postData);
-  sessionStorage.setItem('postData', btoa(JSON.stringify(this.postData))); 
+  //sessionStorage.setItem('postData', btoa(JSON.stringify(this.postData))); 
+  localStorage.setItem('postData', btoa(JSON.stringify(this.postData))); 
   //sessionStorage.setItem('postData', JSON.stringify(this.postData)); 
   if(!this.isDesktop){
     this.router.navigate([this.router.url+'/summary']);

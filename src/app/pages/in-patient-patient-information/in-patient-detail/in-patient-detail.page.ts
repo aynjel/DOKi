@@ -115,8 +115,8 @@ export class InPatientDetailPage   {
 
  
   ionViewWillEnter(){
-    sessionStorage.removeItem('pfIsPatientSeen');
-    sessionStorage.removeItem('pfInsCoor');
+    //sessionStorage.removeItem('pfIsPatientSeen');
+   // sessionStorage.removeItem('pfInsCoor');
     this.checkAppearance();
     let logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_name = logindata[0].last_name;
@@ -138,8 +138,8 @@ export class InPatientDetailPage   {
         console.log(this.data);
         
         this.operate();
-        sessionStorage.setItem('patientData', btoa(JSON.stringify(this.data))); 
-
+        //sessionStorage.setItem('patientData', btoa(JSON.stringify(this.data))); 
+        localStorage.setItem('patientData',btoa(JSON.stringify(this.data)));
         
       });
   }
@@ -213,7 +213,8 @@ export class InPatientDetailPage   {
             } else {
               this.daysOfManage = element.no_of_days_manage;
             }
-            sessionStorage.setItem('daysManaged', btoa(this.daysOfManage)); 
+            //sessionStorage.setItem('daysManaged', btoa(this.daysOfManage)); 
+            localStorage.setItem('daysManaged',btoa(this.daysOfManage));
           }
           //
         });
@@ -315,8 +316,8 @@ export class InPatientDetailPage   {
     }
 
     this.postData.DateCreated = this.functionsService.getSystemDateTime();
-    sessionStorage.setItem('postData', btoa(JSON.stringify(this.postData))); 
-
+    //sessionStorage.setItem('postData', btoa(JSON.stringify(this.postData))); 
+    localStorage.setItem('postData',btoa(JSON.stringify(this.postData)));
     
 
   }
