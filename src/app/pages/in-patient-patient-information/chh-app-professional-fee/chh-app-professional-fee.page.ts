@@ -150,17 +150,22 @@ export class ChhAppProfessionalFeePage implements OnInit {
     } else {
       this.withVat = "No";
     }
-    if (this.data[0].payvenue == "W") {
-      this.payvenue = "Charity";
-    } else if (this.data[0].payvenue == "H") {
-      this.payvenue = "c/o Insurance";
-    } else if (this.data[0].payvenue == "X") {
-      this.payvenue = "c/o Insurance";
-    } else if (this.data[0].payvenue == "N") {
-      this.payvenue = "Not Seen ";
-    } else if (this.data[0].payvenue == "A") {
-      this.payvenue = "Coordinator's Fee";
-    }
+    // if (this.data[0].payvenue == "W") {
+    //   this.payvenue = "Charity";
+    // } else if (this.data[0].payvenue == "H") {
+    //   this.payvenue = "c/o Insurance";
+    // } else if (this.data[0].payvenue == "X") {
+    //   this.payvenue = "c/o Insurance";
+    // } else if (this.data[0].payvenue == "N") {
+    //   this.payvenue = "Not Seen ";
+    // } else if (this.data[0].payvenue == "A") {
+    //   this.payvenue = "Coordinator's Fee";
+    // }
+    // console.log(this.data[0].selected_payvenue);
+    
+    this.payvenue = this.data[0].selected_payvenue;
+
+
     if (this.data[0].site == "C") {
       this.site = "Chong Hua Hospital - Fuente";
     } else {
@@ -172,7 +177,10 @@ export class ChhAppProfessionalFeePage implements OnInit {
     } else {
       this.day = "Day";
     }
+    console.log( this.payvenue);
     if (this.payvenue == "" || this.payvenue == null) {
+
+      
       this.ifShowSummary = false;
     } else {
       this.ifShowSummary = true;
@@ -203,7 +211,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
 
   redirecto() {
     let data;
-
+    sessionStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
     if (this.insurance) {
       data = "insurance";
       this.router.navigate([this.router.url + "/" + data]);
@@ -215,12 +223,13 @@ export class ChhAppProfessionalFeePage implements OnInit {
       this.router.navigate([this.router.url + "/" + data]);
     } else {
       //console.log("ELSE");
-
+      this.postData.SelectedPayVenue = "Patient Not SEEN";
       if (this.isCoordinator) {
         // console.log(this.isCoordinator);
         this.postData.ProfFee = 0;
         this.postData.IsVAT = "N";
         this.postData.PayVenue = "A";
+       
         //  sessionStorage.setItem('postData', JSON.stringify(this.postData));
         sessionStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
       } else {
@@ -348,6 +357,14 @@ export class ChhAppProfessionalFeePage implements OnInit {
   }
   buttonclick(f, e) {
     //console.log(f+" | "+e);
+    if (f == "insurance") {
+      this.postData.SelectedPayVenue = "Insurance (HMO)";
+    }else if (f == "philhealth") {
+      this.postData.SelectedPayVenue = "PhilHealth";
+    }else if (f == "charity") {
+      this.postData.SelectedPayVenue = "Charity";
+    }
+    
     if (f == "insurance" && e == true) {
       this.charity = this.philhealth = false;
     } else if (f == "insurance" && e == false) {

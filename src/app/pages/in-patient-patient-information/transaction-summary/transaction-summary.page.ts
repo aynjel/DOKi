@@ -130,7 +130,7 @@ export class TransactionSummaryPage implements OnInit {
       }else if(this.postData.PayVenue == "A"){
         this.payvenue = "Coordinator's Fee";
       }
-
+      this.payvenue = this.postData.SelectedPayVenue;
 
     this.id = this.activatedRoute.snapshot.params.id;
     this.method = this.method1 = this.activatedRoute.snapshot.params.method;

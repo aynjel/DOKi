@@ -36,6 +36,7 @@ export class InPatientData{
     OldProfFee: number
     IsVAT:string
     PayVenue:string
+    SelectedPayVenue:string
 }
 
 
