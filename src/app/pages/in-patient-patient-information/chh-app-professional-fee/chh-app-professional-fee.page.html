@@ -11,7 +11,12 @@ ___  ___        _      _  _              _   _                   _
   <ion-toolbar color="mango">
     <ion-title> Professional Fee </ion-title>
     <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
-      <ion-button routerLink="{{routerLinkBack}}" routerDirection="backwards" color="chh-css-primary2">Close&nbsp;
+      <ion-button routerLink="{{routerLinkBack}}" routerDirection="backwards" color="chh-css-primary2" *ngIf="ifShowSummary">Close&nbsp;
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+
+
+      <ion-button  routerDirection="backwards" color="chh-css-primary2" *ngIf="!ifShowSummary" (click)="modifyProfFeeClose()">Close&nbsp;
         <ion-icon name="close-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -100,7 +105,9 @@ ______             _     _                        _   _                   _
         </ion-row>
         <ion-row>
           <ion-col size="5">Pay Venue: </ion-col>
-          <ion-col size="7"><ion-badge>{{payvenue}}</ion-badge></ion-col>
+          <ion-col size="7">
+            <ion-badge>{{payvenue}}</ion-badge>
+          </ion-col>
         </ion-row>
         <!-- <ion-row>
           <ion-col size="5">Add VAT?: </ion-col>
@@ -114,7 +121,8 @@ ______             _     _                        _   _                   _
         <ion-text class="fs-12 ion-text-wrap" color="danger">Accept insurance rate.</ion-text>
       </li>
       <li class="lineheight-80 paddingtop-10">
-        <ion-text class="fs-12 ion-text-wrap" color="danger">No additional professional fee charge to your patient.</ion-text>
+        <ion-text class="fs-12 ion-text-wrap" color="danger">No additional professional fee charge to your patient.
+        </ion-text>
       </li>
 
     </ul>
@@ -365,7 +373,9 @@ ______             _     _                       ______             _
               </ion-row>
               <ion-row>
                 <ion-col size="5">Pay Venue: </ion-col>
-                <ion-col size="7"><ion-badge>{{payvenue}}</ion-badge></ion-col>
+                <ion-col size="7">
+                  <ion-badge>{{payvenue}}</ion-badge>
+                </ion-col>
               </ion-row>
               <!-- <ion-row>
                 <ion-col size="5">Add VAT?: </ion-col>

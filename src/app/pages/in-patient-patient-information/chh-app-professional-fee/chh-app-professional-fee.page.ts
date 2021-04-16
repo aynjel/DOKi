@@ -107,8 +107,6 @@ export class ChhAppProfessionalFeePage implements OnInit {
       }
       this.isDesktop = isDesktop;
     });
-
-    //console.log('constructor');
   }
 
   ngOnInit() {
@@ -118,19 +116,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     this.routerLinkBack =
       "/menu/in-patients/" + this.activatedRoute.snapshot.params.id;
     this.patient_id = this.activatedRoute.snapshot.params.id;
-
-    //this.postData = JSON.parse(atob(sessionStorage.getItem("postData"))) as InPatientData;
     this.postData = JSON.parse(atob(localStorage.getItem("postData"))) as InPatientData;
-
-
-    
- 
-    //console.log(this.postData);
-
-    //console.log("!!!!!!!!!!!!!");
-    //  console.log((this.postData));
-    //console.log(JSON.stringify(this.postData));
-    // if it's object
   }
 
   ionViewWillEnter() {
@@ -148,8 +134,6 @@ export class ChhAppProfessionalFeePage implements OnInit {
     } else {
       this.modifybtn = true;
     }
-    console.log(this.data);
-
     if (this.data[0].is_vat == "Y") {
       this.withVat = "(With VAT)";
     } else {
@@ -184,7 +168,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     } else {
       this.day = "Day";
     }
-    console.log( this.payvenue);
+
     if (this.payvenue == "" || this.payvenue == null) {
 
       
@@ -356,7 +340,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
 
   // }
   isPatientSeenf(f, e) {
-    console.log(f + " | " + e);
+
     if (f == "isPatientSeen" && e == false) {
       this.toPFMbtn = true;
       // console.log("11111111111111");
@@ -370,8 +354,6 @@ export class ChhAppProfessionalFeePage implements OnInit {
   }
   areyouaninsurancecoordinator:boolean = true;
   buttonclick(f, e) {
-    console.log(f+" | "+e);
-
     if (f == "insurance") {
       this.postData.SelectedPayVenue = "Insurance + PhilHealth";
       this.areyouaninsurancecoordinator = true;
@@ -380,7 +362,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
       this.areyouaninsurancecoordinator = true;
     }else if (f == "charity") {
       this.postData.SelectedPayVenue = "Charity";
-      this.areyouaninsurancecoordinator = false;
+      this.areyouaninsurancecoordinator = e;
     }else if (f == "Personalphilhealth") {
       this.postData.SelectedPayVenue = "Personal + Philhealth";
       this.areyouaninsurancecoordinator = true;
@@ -413,17 +395,17 @@ export class ChhAppProfessionalFeePage implements OnInit {
       this.philhealth == true || this.personalphilhealth == true
     ) {
       this.toPFMbtn = true;
-      // console.log(this.toPFMbtn);
     } else {
       this.toPFMbtn = false;
-      //  console.log(this.toPFMbtn);
     }
   }
   modifyProfFee() {
     this.ifShowSummary = false;
   }
+  modifyProfFeeClose() {
+    this.ifShowSummary = true;
+  }
   moreorless(data) {
     this.moreOrLess = !data;
-    console.log(this.moreOrLess);
   }
 }

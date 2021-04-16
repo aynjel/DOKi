@@ -37,14 +37,20 @@ export class CaseRatesPage implements OnInit {
   caseRateData  = new CaseRates();
   caseSelect:boolean = true;
   ionSkeleton : boolean = false;
+  ionSkeleton1 : boolean = false;
   ionNoData : boolean = false;
-  caseRateResponse:any;
+  ionNoData1 : boolean = false;
+  caseRateResponse_first:any;
+  caseRateResponse_second:any;
   case_class : any;
   case_search_code : any;
   case_search_desc : any;
   activedescription:boolean = false;
+  activedescription1:boolean = false;
   case :any = "(first)";
   ionStart:boolean = true;
+  ionStart1:boolean = true;
+  ccCase:any;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -68,7 +74,7 @@ export class CaseRatesPage implements OnInit {
       this.caseRateData.CaseClass = "first";
       this.caseRateData.CaseSearchCode ="";
       this.caseRateData.CaseSearchDesc="";
-      console.log( this.caseRateData);
+
       
       sessionStorage.setItem('caseRateData', JSON.stringify(this.caseRateData)); 
       this.screensizeService.isDesktopView().subscribe((isDesktop) => {
@@ -78,7 +84,9 @@ export class CaseRatesPage implements OnInit {
         this.isDesktop = isDesktop;
       });
 
-      console.log('constructor');
+      this.caseRateResponse_first=[];
+      this.caseRateResponse_second=[];
+      this.ccCase = 'first';
   }
   ngOnInit() {
   }
@@ -92,38 +100,64 @@ export class CaseRatesPage implements OnInit {
 
   }
   segmentChanged(e){
-    console.log(e.detail.value);
+    this.ccCase = e.detail.value;
     this.caseSelect = !this.caseSelect;
     this.caseRateData.CaseClass = e.detail.value;
-    // this.caseRateResponse = '123';
     this.case = "("+e.detail.value+")";
-    this.search();
    
   }
   search(){
   
     if(this.caseRateData.CaseSearchDesc != ""){
-      this.ionStart= false;
-      this.caseRateResponse=[];
-      this.ionSkeleton = true;
-      this.ionNoData = false;
-      this.activedescription = false;
-      this.doctorService.searchCaseRates(this.caseRateData.CaseClass,this.caseRateData.CaseSearchCode,this.caseRateData.CaseSearchDesc).subscribe(
-        (res: any) => {
-          console.log(res);
-          
-          this.caseRateResponse = res;
-        },(error) =>{
-          this.ionNoData = true;
-        },() => {
-          this.ionSkeleton = false;
-          if(this.functionsService.isEmptyObject(this.caseRateResponse)){
+
+      if(this.ccCase == 'first'){
+        this.ionStart= false;
+        this.ionSkeleton = true;
+        this.ionNoData = false;
+        this.activedescription = false;
+        this.doctorService.searchCaseRates(this.caseRateData.CaseClass,this.caseRateData.CaseSearchCode,this.caseRateData.CaseSearchDesc).subscribe(
+          (res: any) => {
+            this.caseRateResponse_first = res;
+          },(error) =>{
             this.ionNoData = true;
-          }else{
-            this.ionNoData = false;
+          },() => {
+            this.ionSkeleton = false;
+            if(this.functionsService.isEmptyObject(this.caseRateResponse_first)){
+              this.ionNoData = true;
+            }else{
+              this.ionNoData = false;
+            }
           }
-        }
-      );
+        );
+      }else{
+        this.ionStart1= false;
+        this.ionSkeleton1 = true;
+        this.ionNoData1 = false;
+        this.activedescription1 = false;
+        this.doctorService.searchCaseRates(this.caseRateData.CaseClass,this.caseRateData.CaseSearchCode,this.caseRateData.CaseSearchDesc).subscribe(
+          (res: any) => {
+            this.caseRateResponse_second = res;
+          },(error) =>{
+            this.ionNoData1 = true;
+          },() => {
+            this.ionSkeleton1 = false;
+            if(this.functionsService.isEmptyObject(this.caseRateResponse_second)){
+              this.ionNoData1 = true;
+            }else{
+              this.ionNoData1 = false;
+            }
+          }
+        );
+      }
+
+
+
+
+
+
+
+
+
     }else{
         this.activedescription = true;
     }

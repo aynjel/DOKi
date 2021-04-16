@@ -84,12 +84,12 @@ export class TabInPatientsPage {
         this.admittedOrDischargeLabel = "(for Discharge)";
       }
     });
-    console.log("REDIRECT!");
+
   }
   
   ngOnInit() {
     this.$gaService.pageView("/In-Patient", "In-Patient Tab");
-    console.log("REDIRECT!");
+
     
   }
 
@@ -181,12 +181,12 @@ export class TabInPatientsPage {
         this.inPatients = sampleInPatients1;
       }
     }
-    console.log(this.inPatients);
+
   }
 
   //Fired when the component routing to is about to animate into view.
   ionViewWillEnter() {
-    console.log("ionViewWillEnter : REDIRECT!");
+
     
     this.logindata = <LoginData>this.authService.userData$.getValue();
 
@@ -295,8 +295,6 @@ export class TabInPatientsPage {
       this.callPatient(this.site);
     });*/
   }
-
-  //location is changed
   locationAction(data: any) {
     if (
       data == this.constants.CHH_SITE__CODE__ALL /*"A"*/ ||
@@ -323,7 +321,6 @@ export class TabInPatientsPage {
   }
 
   onSubmit(data1: any, data2: boolean) {
-    //console.log(data1);
     if (data1 == this.constants.CHH_SITE__VALUE__ALL /*"ALL"*/) {
       this.router.navigate(["/menu/in-patients"]);
     } else if (

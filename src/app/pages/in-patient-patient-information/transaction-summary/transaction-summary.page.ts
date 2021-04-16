@@ -93,27 +93,15 @@ export class TransactionSummaryPage implements OnInit {
         }
         this.isDesktop = isDesktop;
       });
-
-      console.log('constructor');
     }
 
   ngOnInit() {
-    console.log("IM AT TRANSACTION SUMMARTY");
         if(this.isDesktop){
           this.moreOrLess = false;
         }
-      //this.postData = JSON.parse(atob(sessionStorage.getItem("postData"))) as InPatientData;
       this.postData = JSON.parse(atob(localStorage.getItem("postData"))) as InPatientData;
-      console.log(this.postData);
-
-      console.log("Amount : "+this.postData.ProfFee);
-      console.log("VAT : "+this.postData.IsVAT);
-      console.log("Pay Venue : "+this.postData.PayVenue);
-
       this.data1 = this.postData.ProfFee;
-      //this.daysManaged = atob(sessionStorage.getItem("daysManaged"));
       this.daysManaged = atob(localStorage.getItem("daysManaged"));
-      
       if(this.daysManaged > 1){
         this.day = "Days";
       }else{
@@ -181,17 +169,10 @@ export class TransactionSummaryPage implements OnInit {
     
     let d = new Date(this.data[0].admission_date);
     this.dateAdmitted = d.toUTCString();
-    console.log(this.dateAdmitted);
- 
-    
   }
   disableSubmit:boolean = false;
   postSummary(){
     this.disableSubmit = true;
-    console.log(this.data[0].payvenue);
-    
-
-
     if(this.data[0].payvenue == "W" || this.data[0].payvenue == "H" || this.data[0].payvenue == "X" || this.data[0].payvenue == "N" || this.data[0].payvenue == "A" ){
       this.postData.OldProfFee = this.data.doctor_prof_fee;  
       this.doctorService.updatePF(this.postData).subscribe((res: any) => {
@@ -265,8 +246,6 @@ export class TransactionSummaryPage implements OnInit {
 
   moreorless(data){
     this.moreOrLess = !data;
-    //console.log(this.moreOrLess);
-    
   }
   checkAppearance(){
 

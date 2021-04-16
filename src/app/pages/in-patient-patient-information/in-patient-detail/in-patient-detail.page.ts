@@ -55,6 +55,7 @@ export class InPatientDetailPage   {
   admittingDiagnosis1: any;
   admittingDiagnosis2: any;
   text: string;
+  checkmark:boolean = false;
   limit: number = 40;
   truncating = true;
   truncating1 = true;
@@ -129,18 +130,17 @@ export class InPatientDetailPage   {
             if(element.patient_no == this.activatedRoute.snapshot.params.id){
               this.data.push(element);
               this.patient_name = element.first_name + ' ' + element.last_name;
+              if(element.payvenue != null){
+                this.checkmark = true;
+              }
             }
         });
       },(error) => {
 
       },
       ()=>{      
-        console.log(this.data);
-        
         this.operate();
-        //sessionStorage.setItem('patientData', btoa(JSON.stringify(this.data))); 
         localStorage.setItem('patientData',btoa(JSON.stringify(this.data)));
-        
       });
   }
   operate(){
@@ -460,14 +460,10 @@ export class InPatientDetailPage   {
             );
             this.currentExamList.push(element);
             this.currentExamList_filtered.push(element);
-            // console.log(element.Test_Name + ' | '+new Date(element.RequestDateTime));
-            //console.log(new Date(element.RequestDateTime));
           }
         });
-        //console.log(this.currentExamList);
       },
       (error) => {
-        
         this.examListSkeleton = false;
       },
       () => {

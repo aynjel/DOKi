@@ -1,7 +1,7 @@
 <ion-header mode="md" class="ion-no-border" *ngIf="!isDesktop">
   <ion-toolbar color="mango">
-    <ion-title>
-      {{method}}
+    <ion-title >
+      {{headerMethod}}
     </ion-title>
     <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
       <ion-button routerLink="{{routerLinkBack}}" routerDirection="backwards" color="chh-css-primary2">Close&nbsp;
@@ -16,8 +16,8 @@
   <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted">
   </app-chh-app-patient-header>
 
-                                                         
-                                                         
+
+
   <div *ngIf="(method=='Insurance')">
     <div class="vertical-center">
       <div class="center">
@@ -91,10 +91,15 @@
 
 
   <div *ngIf="(method=='Philhealth')">
-    
+
     <div class="vertical-center">
       <div class="center">
         <img src="assets/img/philhealth.png" alt="Care of Insurance + PHIC">
+      </div>
+    </div>
+    <div class="vertical-center">
+      <div class="center">
+        <ion-button expand="block" fill="outline" (click)="presentCaseRatesModal()">View Case Rates</ion-button>
       </div>
     </div>
     <ion-card mode="ios" *ngIf="!isDesktop">
@@ -163,34 +168,15 @@
 
   </div>
   <div *ngIf="(method=='Personal-philhealth')">
-
-
-
     <div class="vertical-center">
       <div class="center">
         <img src="assets/img/perso-philhealth.png" class="ion-text-center" alt="Care of Personal & PHIC">
       </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
     <ion-grid class="ion-no-padding ">
-
       <!-- <ion-button expand="block" fill="outline" (click)="presentCaseRatesModal()" *ngIf="method=='Philhealth'">View Case Rates</ion-button>  -->
       <ion-row>
-
         <ion-col size="12">
-
           <div class="vertical-center">
             <div class="center">
               <ion-button expand="block" fill="outline" (click)="presentCaseRatesModal()">View Case Rates</ion-button>
@@ -199,18 +185,6 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-
-
-
-
-
-
-
-
-
-
-
-
     <!-- <ion-card mode="ios" *ngIf="!isDesktop" >
         <ion-item disabled="true">
           <ion-label>Accept PhilHealth Only?</ion-label> 
@@ -277,23 +251,9 @@
   </div>
 
   <div *ngIf="(method=='Charity')">
-
-    <ion-text></ion-text>
-
     <ion-card mode="ios">
       <img src="assets/img/charity-rafiki.png" alt="Charity Thanks">
-      <!-- <img src="assets/img/charity.png" alt="Charity Thanks"> -->
-      <!-- <div align="center">
-          <lottie-player
-            src="https://assets4.lottiefiles.com/packages/lf20_wMezg6.json"
-            mode="bounce"
-            background="transparent"
-            speed="1"
-            style="width: 300px;"
-            loop
-            autoplay
-          ></lottie-player>
-        </div> -->
+      
       <ion-item>
         <ion-label class="ion-text-wrap">Thank you for your generosity, Dok! &#10084; We truly appreciate your kindness
           and heartfelt service!</ion-label>
@@ -845,7 +805,7 @@ ______          _    _
                 view case rates</ion-button>
             </div>
             <div *ngIf="(method=='Philhealth')">
-              <ion-img src="assets/img/philhealth.png" class="ion-text-center" ></ion-img>
+              <ion-img src="assets/img/philhealth.png" class="ion-text-center"></ion-img>
               <ion-button expand="block" fill="outline" (click)="presentCaseRatesModal()">View Case Rates</ion-button>
             </div>
           </div>
