@@ -99,10 +99,17 @@ export class TransactionSummaryPage implements OnInit {
 
   ngOnInit() {
     console.log("IM AT TRANSACTION SUMMARTY");
-      
+        if(this.isDesktop){
+          this.moreOrLess = false;
+        }
       //this.postData = JSON.parse(atob(sessionStorage.getItem("postData"))) as InPatientData;
       this.postData = JSON.parse(atob(localStorage.getItem("postData"))) as InPatientData;
       console.log(this.postData);
+
+      console.log("Amount : "+this.postData.ProfFee);
+      console.log("VAT : "+this.postData.IsVAT);
+      console.log("Pay Venue : "+this.postData.PayVenue);
+
       this.data1 = this.postData.ProfFee;
       //this.daysManaged = atob(sessionStorage.getItem("daysManaged"));
       this.daysManaged = atob(localStorage.getItem("daysManaged"));
@@ -113,12 +120,11 @@ export class TransactionSummaryPage implements OnInit {
         this.day = "Day";
       }
 
-      console.log("VAT : "+this.postData.IsVAT);
       
       if(this.postData.IsVAT=="Y"){
-        this.withVat = "Yes";
+        this.withVat = "(With VAT)";
       }else{
-        this.withVat = "No"; 
+        this.withVat = "(Without VAT)"; 
       }
       if(this.postData.PayVenue == "W"){
         this.payvenue = "Charity / PhilHealth";
@@ -136,7 +142,7 @@ export class TransactionSummaryPage implements OnInit {
     this.id = this.activatedRoute.snapshot.params.id;
     this.method = this.method1 = this.activatedRoute.snapshot.params.method;
     this.summary = this.activatedRoute.snapshot.params.summary;
-    console.log(this.method);
+  
     if(this.method != null){
       this.method = this.functionsService.convertAllFirstLetterToUpperCase(this.method);
       this.summaryHeader = this.method + ' - ' +this.functionsService.convertAllFirstLetterToUpperCase(this.summary);
@@ -179,9 +185,9 @@ export class TransactionSummaryPage implements OnInit {
  
     
   }
-
+  disableSubmit:boolean = false;
   postSummary(){
- 
+    this.disableSubmit = true;
     console.log(this.data[0].payvenue);
     
 
@@ -200,8 +206,12 @@ export class TransactionSummaryPage implements OnInit {
             "Okay"
           );
         }
-      });
+      },
+      (error) => {this.disableSubmit = false;},
+      () => {}
+      );
     }else{
+      this.postData.OldProfFee = 0;  
       this.doctorService.insertPF(this.postData).subscribe((res: any) => {
         if (res == true) {
           this.modalUpdate(
@@ -214,7 +224,9 @@ export class TransactionSummaryPage implements OnInit {
             "Okay"
           );
         }
-      });
+      },
+      (error) => {this.disableSubmit = false;},
+      () => {});
     }
    
   }
@@ -227,7 +239,7 @@ export class TransactionSummaryPage implements OnInit {
         {
           text: "Okay",
           handler: () => {
-
+            this.disableSubmit = false;
             if(!this.isDesktop){
               this.alertController.dismiss();
               this.router.navigate(['menu/in-patients/']);
@@ -253,7 +265,7 @@ export class TransactionSummaryPage implements OnInit {
 
   moreorless(data){
     this.moreOrLess = !data;
-    console.log(this.moreOrLess);
+    //console.log(this.moreOrLess);
     
   }
   checkAppearance(){

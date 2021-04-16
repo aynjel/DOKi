@@ -55,10 +55,13 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   InsuranceShowVat:boolean = false;
   InsuranceVat:boolean = true;
   PhilhealthShowVat:boolean = false;
+  PersonalPhilhealthShowVat:boolean = false;
   PhilhealthVat:boolean = true;
+  PersonalPhilhealthVat:boolean = true;
   PhilhealthPF:number;
+  PersonalPhilhealthPF:number;
   PhilhealthShowValue:boolean = true;
-  IsPhilhealthOnly:boolean = false;
+  IsPhilhealthOnly:boolean = true;
   progressStatus:any = 0.75;
   nxtBtn:boolean = false;
   summary:any="";
@@ -66,6 +69,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   txtInsuranceVAT:boolean = true;
   txtPhilHealthPF:boolean = true;
   txtPhilHealthVAT:boolean = true;
+  txtPersonalPhilHealthVAT:boolean =true;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -107,15 +111,28 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     this.id = this.activatedRoute.snapshot.params.id;
     this.method = this.method1 = this.activatedRoute.snapshot.params.method;
     this.summary = this.activatedRoute.snapshot.params.summary;
-    //console.log( this.method);
+
     
     if(this.method == 'philhealth'){
       this.nxtBtn = true;
     }else{
       this.nxtBtn = false;
     }
-    
+    if(this.IsPhilhealthOnly){
+      this.nxtBtn = false;
+      this.PhilhealthShowVat = false;
+      this.PhilhealthShowValue = false;
+      this.PhilhealthPF;
+      this.txtPhilHealthPF = true;
+      this.txtPhilHealthVAT= false;
+      //this.txtPhilHealthVAT = true;
+    }else{
+      this.nxtBtn = true;
+    // this.PhilhealthShowVat = true;
+     this.PhilhealthShowValue = true;
+    }
     this.method = this.functionsService.convertAllFirstLetterToUpperCase(this.method);
+    console.log( this.method);
     this.routerLinkBack1 = "/menu/in-patients/"+this.id;
     this.routerLinkBack2 = "/menu/in-patients/"+this.id+"/professional-fee";
     this.routerLinkBack3 = "/menu/in-patients/"+this.id+"/professional-fee/"+this.method1;
@@ -252,9 +269,17 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   }
 
 
-
+  personalPhilhealth(){
+    
+    if(this.PersonalPhilhealthPF == null){
+      this.PersonalPhilhealthShowVat = false;
+      this.txtPhilHealthPF = true;
+    }else{
+      this.PersonalPhilhealthShowVat = true;
+      this.txtPhilHealthPF = false;
+    }
+  }
   philhealthPF(){
-      this.goToBottom();
     if(this.PhilhealthPF>0){
       this.nxtBtn = false;
     }else{
@@ -273,7 +298,9 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     this.txtPhilHealthVAT=this.PhilhealthVat;
     
   }
-
+  personalPhilhealthVat(){
+    this.txtPersonalPhilHealthVAT = this.PersonalPhilhealthVat;
+  }
 
 
   finishTransaction(){
@@ -288,18 +315,41 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
         this.postData.ProfFee = this.InsurancePF;
         if(this.InsuranceVat){
           this.postData.IsVAT = "Y";
-          this.postData.PayVenue = "H";
+          this.postData.PayVenue = "x";
         }else{
           this.postData.IsVAT = "N";
-          this.postData.PayVenue = "H";
+          this.postData.PayVenue = "x";
         }
       }
 
       
-    }else if(this.method == 'Philhealth'){
-      console.log('IsPhilhealthOnly :'+this.IsPhilhealthOnly);
-      
-      
+    }else if(this.method == 'Personal-philhealth'){
+
+      console.log(this.PersonalPhilhealthPF);
+        if(this.PersonalPhilhealthPF == null){
+
+            this.postData.ProfFee = 0;
+            this.postData.IsVAT = "N";
+            this.postData.PayVenue = "W";
+            this.postData.SelectedPayVenue = "PhilHealth"
+    
+        }else{
+          this.postData.ProfFee = this.PersonalPhilhealthPF;
+          this.postData.SelectedPayVenue = "Personal + PhilHealth"
+          if(this.PersonalPhilhealthVat){
+            this.postData.IsVAT = "Y";
+            this.postData.PayVenue = "H";   
+          }else{
+            this.postData.IsVAT = "N";
+            this.postData.PayVenue = "H";   
+          }
+  
+        }
+        console.log(this.postData);
+        
+     
+  }else if(this.method == 'Philhealth'){
+
         if(this.IsPhilhealthOnly){
           this.postData.ProfFee = 0;
           this.postData.IsVAT = "N";
@@ -338,7 +388,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   async presentSummary() {
     const modal = await this.modalController.create({
       component: TransactionSummaryPage,
-      cssClass: 'my-custom-class'
+      cssClass: 'modal-30'
     });
     return await modal.present();
   }

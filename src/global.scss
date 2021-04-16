@@ -62,6 +62,17 @@
      }
    }
  }
+
+ .modal-30 .modal-wrapper{
+  top: 5;
+  position: absolute; 
+  display: block;  
+  width: 30%;
+  min-height: 25%;
+  max-height: 50%;
+  overflow:hidden;
+ }
+
  .my-custom-modal-inpatient-css .modal-wrapper {
   
   --background: transparent !important;

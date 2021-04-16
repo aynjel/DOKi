@@ -63,6 +63,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
   insurance: boolean = false;
   charity: boolean = false;
   philhealth: boolean = false;
+  personalphilhealth: boolean = false;
   isCoordinator: boolean = false;
   isPatientSeen: boolean = true;
   insuranceB: boolean;
@@ -150,10 +151,11 @@ export class ChhAppProfessionalFeePage implements OnInit {
     console.log(this.data);
 
     if (this.data[0].is_vat == "Y") {
-      this.withVat = "Yes";
+      this.withVat = "(With VAT)";
     } else {
-      this.withVat = "No";
+      this.withVat = "(Without VAT)"; 
     }
+
     // if (this.data[0].payvenue == "W") {
     //   this.payvenue = "Charity";
     // } else if (this.data[0].payvenue == "H") {
@@ -216,7 +218,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
 
   redirecto() {
     let data;
-    sessionStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
+    //sessionStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
     localStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
     if (this.insurance) {
       data = "insurance";
@@ -226,6 +228,9 @@ export class ChhAppProfessionalFeePage implements OnInit {
       this.router.navigate([this.router.url + "/" + data]);
     } else if (this.philhealth) {
       data = "philhealth";
+      this.router.navigate([this.router.url + "/" + data]);
+    }else if (this.personalphilhealth) {
+      data = "personal-philhealth";
       this.router.navigate([this.router.url + "/" + data]);
     } else {
       //console.log("ELSE");
@@ -357,42 +362,55 @@ export class ChhAppProfessionalFeePage implements OnInit {
       // console.log("11111111111111");
       this.disabledselection = false;
     } else if (f == "isPatientSeen" && e == true) {
-      this.insurance = this.charity = this.philhealth = false;
+      this.personalphilhealth = this.insurance = this.charity = this.philhealth = false;
       this.toPFMbtn = false;
       //console.log("2222222222222");
       this.disabledselection = true;
     }
   }
+  areyouaninsurancecoordinator:boolean = true;
   buttonclick(f, e) {
-    //console.log(f+" | "+e);
+    console.log(f+" | "+e);
+
     if (f == "insurance") {
-      this.postData.SelectedPayVenue = "Insurance (HMO)";
+      this.postData.SelectedPayVenue = "Insurance + PhilHealth";
+      this.areyouaninsurancecoordinator = true;
     }else if (f == "philhealth") {
-      this.postData.SelectedPayVenue = "PhilHealth";
+      this.postData.SelectedPayVenue = "PhilHealth Only";
+      this.areyouaninsurancecoordinator = true;
     }else if (f == "charity") {
       this.postData.SelectedPayVenue = "Charity";
+      this.areyouaninsurancecoordinator = false;
+    }else if (f == "Personalphilhealth") {
+      this.postData.SelectedPayVenue = "Personal + Philhealth";
+      this.areyouaninsurancecoordinator = true;
     }
     
     if (f == "insurance" && e == true) {
-      this.charity = this.philhealth = false;
+      this.personalphilhealth = this.charity = this.philhealth = false;
     } else if (f == "insurance" && e == false) {
-      this.insurance = this.charity = this.philhealth = false;
+      this.personalphilhealth = this.insurance = this.charity = this.philhealth = false;
     }
     if (f == "charity" && e == true) {
-      this.insurance = this.philhealth = false;
+      this.personalphilhealth = this.insurance = this.philhealth = false;
     } else if (f == "charity" && e == false) {
-      this.insurance = this.charity = this.philhealth = false;
+      this.personalphilhealth = this.insurance = this.charity = this.philhealth = false;
     }
     if (f == "philhealth" && e == true) {
-      this.charity = this.insurance = false;
+      this.personalphilhealth = this.charity = this.insurance = false;
     } else if (f == "philhealth" && e == false) {
-      this.insurance = this.charity = this.philhealth = false;
+      this.personalphilhealth = this.insurance = this.charity = this.philhealth = false;
     }
-
+    if (f == "Personalphilhealth" && e == true) {
+      this.philhealth = this.charity = this.insurance = false ;
+    } else if (f == "Personalphilhealth" && e == false) {
+      this.personalphilhealth = this.insurance = this.charity = this.philhealth = false;
+    }
+    
     if (
       this.insurance == true ||
       this.charity == true ||
-      this.philhealth == true
+      this.philhealth == true || this.personalphilhealth == true
     ) {
       this.toPFMbtn = true;
       // console.log(this.toPFMbtn);

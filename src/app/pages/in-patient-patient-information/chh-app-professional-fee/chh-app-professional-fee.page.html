@@ -94,7 +94,7 @@ ______             _     _                        _   _                   _
           </ion-col>
           <ion-col size="7">
             <b>
-              <ion-text color="danger">&#8369; {{data1 | number}}</ion-text>
+              <ion-text color="danger">&#8369; {{data1 | number}} | <i>{{withVat}}</i></ion-text>
             </b>
           </ion-col>
         </ion-row>
@@ -102,10 +102,10 @@ ______             _     _                        _   _                   _
           <ion-col size="5">Pay Venue: </ion-col>
           <ion-col size="7"><ion-badge>{{payvenue}}</ion-badge></ion-col>
         </ion-row>
-        <ion-row>
+        <!-- <ion-row>
           <ion-col size="5">Add VAT?: </ion-col>
           <ion-col size="7">{{withVat}}</ion-col>
-        </ion-row>
+        </ion-row> -->
       </ion-grid>
     </ion-item>
 
@@ -143,7 +143,7 @@ ______             _     _                        _   _                   _
   <div *ngIf="ifShowSummary == false">
     <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted">
     </app-chh-app-patient-header>
-    <ion-card mode="ios">
+    <ion-card mode="ios" *ngIf="areyouaninsurancecoordinator">
       <ion-item lines="none">
         <ion-label class="ion-text-wrap">Are you an Insurance Coordinator?</ion-label>
         <ion-checkbox color="mango" checked="false" [(ngModel)]="isCoordinator"></ion-checkbox>
@@ -162,12 +162,17 @@ ______             _     _                        _   _                   _
           <ion-icon slot="end" name="wallet-outline"></ion-icon>
         </ion-list-header>
         <ion-item lines="none">
-          <ion-label>Insurance (HMO)</ion-label>
+          <ion-label>Insurance + PhilHealth</ion-label>
           <ion-checkbox color="mango" slot="end" value="insurance" [(ngModel)]="insurance"
             (click)="buttonclick('insurance',insurance)"></ion-checkbox>
         </ion-item>
         <ion-item lines="none">
-          <ion-label>PhilHealth</ion-label>
+          <ion-label>Personal + PhilHealth</ion-label>
+          <ion-checkbox color="mango" slot="end" value="philhealth" [(ngModel)]="personalphilhealth"
+            (click)="buttonclick('Personalphilhealth',personalphilhealth)"></ion-checkbox>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>PhilHealth Only</ion-label>
           <ion-checkbox color="mango" slot="end" value="philhealth" [(ngModel)]="philhealth"
             (click)="buttonclick('philhealth',philhealth)"></ion-checkbox>
         </ion-item>
@@ -355,17 +360,17 @@ ______             _     _                       ______             _
                   </b>
                 </ion-col>
                 <ion-col size="7" color="danger"><b>
-                    <ion-text color="danger">&#8369; {{data1 | number}}</ion-text>
+                    <ion-text color="danger">&#8369; {{data1 | number}} | {{withVat}}</ion-text>
                   </b></ion-col>
               </ion-row>
               <ion-row>
                 <ion-col size="5">Pay Venue: </ion-col>
                 <ion-col size="7"><ion-badge>{{payvenue}}</ion-badge></ion-col>
               </ion-row>
-              <ion-row>
+              <!-- <ion-row>
                 <ion-col size="5">Add VAT?: </ion-col>
                 <ion-col size="7">{{withVat}}</ion-col>
-              </ion-row>
+              </ion-row> -->
             </ion-grid>
           </ion-item>
           <ul>
@@ -413,17 +418,22 @@ ______             _     _                       ______             _
               <ion-list-header>Select Pay Venue
                 <ion-icon slot="end" name="wallet-outline"></ion-icon>
               </ion-list-header>
-              <ion-item>
-                <ion-label>Insurance (HMO)</ion-label>
+              <ion-item lines="none">
+                <ion-label>Insurance + PhilHealth</ion-label>
                 <ion-checkbox color="mango" slot="end" value="insurance" [(ngModel)]="insurance"
                   (click)="buttonclick('insurance',insurance)"></ion-checkbox>
               </ion-item>
-              <ion-item>
-                <ion-label>PhilHealth</ion-label>
+              <ion-item lines="none">
+                <ion-label>Personal + PhilHealth</ion-label>
+                <ion-checkbox color="mango" slot="end" value="philhealth" [(ngModel)]="personalphilhealth"
+                  (click)="buttonclick('Personalphilhealth',personalphilhealth)"></ion-checkbox>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-label>PhilHealth Only</ion-label>
                 <ion-checkbox color="mango" slot="end" value="philhealth" [(ngModel)]="philhealth"
                   (click)="buttonclick('philhealth',philhealth)"></ion-checkbox>
               </ion-item>
-              <ion-item>
+              <ion-item lines="none">
                 <ion-label>Charity</ion-label>
                 <ion-checkbox color="mango" slot="end" value="charity" [(ngModel)]="charity"
                   (click)="buttonclick('charity',charity)"></ion-checkbox>

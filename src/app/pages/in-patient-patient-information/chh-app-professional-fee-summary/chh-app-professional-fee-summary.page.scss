@@ -68,3 +68,10 @@
   .paddingtop-10{
     padding-top: 10px;
   }
+
+  .ripple-parent {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vertical-center{ display: flex; align-items: center; justify-content: center; height: 100%; }
