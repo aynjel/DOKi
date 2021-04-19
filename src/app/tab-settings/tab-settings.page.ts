@@ -173,7 +173,7 @@ export class TabSettingsPage {
           var value = res[key];
           Object.keys(value).forEach((lock) => {
             var valuex = value[lock];
-            if (key != "appcode") {
+            if (key != "appCode") {
               if (key != "username") {
                 //let x = '{"'+key+'":{"'+lock+'":'+valuex+'}}';y = y+x+',';
                 //darkmode
@@ -253,22 +253,22 @@ export class TabSettingsPage {
       this.$gaService.event("Settings - Dark Mode False","User Flow",this.dr_name);
     }
   }
-  toggle(event: { detail: { checked: any } },settings:any,property:any,flag:boolean) {
+  toggle(event: { detail: { checked: any } },setting:any,property:any,flag:boolean) {
     let value: any;
     if (event.detail.checked) {
       value = 1;
     } else {
       value = 0;
     }
-    if (settings == "appearance") {
+    if (setting == "appearance") {
       this.onDarkModeEnable(value);
     }
-    this.updateOrInsert(settings, property, value, flag);
+    this.updateOrInsert(setting, property, value, flag);
   }
 
   //UPDATE OR INSERT USER SETTINGS
-  updateOrInsert(settings: any, property: any, value: any, flag: boolean) {
-    let smpJSON ='{"username":"'+this.dr_username+'", "userReference": "'+this.dr_code+'","appcode":"DPP","setting":"'+settings+'","property":"'+property+'","value":"'+value+'"}';
+  updateOrInsert(setting: any, property: any, value: any, flag: boolean) {
+    let smpJSON ='{"username":"'+this.dr_username+'", "userReference": "'+this.dr_code+'","appCode":"DPP","setting":"'+setting+'","property":"'+property+'","value":"'+value+'"}';
     if (flag) {
       this.patientService.updateUserSettings(smpJSON).subscribe(() => {this.ionViewWillEnter();});
     } else {
@@ -302,7 +302,7 @@ export class TabSettingsPage {
             handler: () => {
               let smpJSON ='{"username": "' +
                 this.dr_code +
-                '","userReference": "'+this.dr_code+'""appcode": "DPP","setting": "privacyPolicy","property": "accepted","value": "0"}';
+                '","userReference": "'+this.dr_code+'""appCode": "DPP","setting": "privacyPolicy","property": "accepted","value": "0"}';
               this.updateOrInsert(
                 "privacyPolicy",
                 "accepted",
@@ -342,7 +342,7 @@ export class TabSettingsPage {
           icon: "refresh-outline",
           handler: () => {
 
-            let smpJSON ='{"username": "'+ this.dr_username+'","userReference": "'+this.dr_code+'","appcode": "DPP","setting": "string","property":"string","value": "string"}';
+            let smpJSON ='{"username": "'+ this.dr_username+'","userReference": "'+this.dr_code+'","appCode": "DPP","setting": "string","property":"string","value": "string"}';
    
             
             this.patientService
@@ -356,7 +356,7 @@ export class TabSettingsPage {
                 (error) => {},
                 () => {
                   this.backToDefault();
-                  let smpJSON = '{"username": "' + this.dr_username+ '","userReference": "'+this.dr_code+'","appcode": "DPP","setting":"privacyPolicy","property": "accepted","value": "1"}';
+                  let smpJSON = '{"username": "' + this.dr_username+ '","userReference": "'+this.dr_code+'","appCode": "DPP","setting":"privacyPolicy","property": "accepted","value": "1"}';
                   //console.log(smpJSON);
                   
                   
@@ -381,7 +381,7 @@ export class TabSettingsPage {
       var value = this.draftJson[key];
       Object.keys(value).forEach((lock) => {
         var valuex = value[lock];
-        if (key != "appcode") {
+        if (key != "appCode") {
           if (key == "appearance") {
             this.isset_darkmode = false;
             this.renderer.setAttribute(document.body, "color-theme", "light");

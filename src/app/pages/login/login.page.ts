@@ -342,7 +342,7 @@ export class LoginPage  {
               var value = res[key];
               Object.keys(value).forEach((lock) => {
                 var valuex = value[lock];
-                if(key != 'appcode'){
+                if(key != 'appCode'){
                   if(key == 'privacyPolicy' && lock == 'accepted'){
                     valuex = 1;
                   }
@@ -350,7 +350,7 @@ export class LoginPage  {
                     //console.log(lock);
                     
                   }
-                  let tempJson = '{"username": "'+this.postData.username+'",  "userReference": "'+this.loginresponse.dr_code+'","appcode": "DPP","setting": "'+key+'","property": "'+lock+'","value": "'+valuex+'"}';
+                  let tempJson = '{"username": "'+this.postData.username+'",  "userReference": "'+this.loginresponse.dr_code+'","appCode": "DPP","setting": "'+key+'","property": "'+lock+'","value": "'+valuex+'"}';
                     
                   this.patientService.insertUserSettings(tempJson).subscribe((res2: any) => {});   
                 }
@@ -359,7 +359,7 @@ export class LoginPage  {
         });
       }else if(this.isSetPrivacyPolicy == true){
 
-        let smpJSON = '{"username": "'+this.postData.username+'", "userReference": "'+this.loginresponse.dr_code+'","appcode": "DPP","setting": "privacyPolicy","property": "accepted","value": "1"}';
+        let smpJSON = '{"username": "'+this.postData.username+'", "userReference": "'+this.loginresponse.dr_code+'","appCode": "DPP","setting": "privacyPolicy","property": "accepted","value": "1"}';
      
         if(!this.isPrivacyPolicy){
           this.patientService.updateUserSettings(smpJSON).subscribe((res1: any) => {});
@@ -409,12 +409,12 @@ export class LoginPage  {
                     var value = res[key];
                     Object.keys(value).forEach((lock) => {
                       var valuex = value[lock];
-                      if(key != 'appcode'){
+                      if(key != 'appCode'){
                         //console.log(key + ':' + lock + ':' + valuex);
                         if(key == 'privacyPolicy' && lock == 'accepted'){
                           valuex = 1;
                         }
-                        let tempJson = '{"username": "'+this.postData.username+'","appcode": "DPP","setting": "'+key+'","property": "'+lock+'","value": "'+valuex+'"}';
+                        let tempJson = '{"username": "'+this.postData.username+'","appCode": "DPP","setting": "'+key+'","property": "'+lock+'","value": "'+valuex+'"}';
                           
                         this.patientService.insertUserSettings(tempJson).subscribe((res2: any) => {});   
                       }
@@ -422,7 +422,7 @@ export class LoginPage  {
                   });
               });
             }else if(this.isSetPrivacyPolicy == true){
-              let smpJSON = '{"username": "'+this.postData.username+'","appcode": "DPP","setting": "privacyPolicy","property": "accepted","value": "1"}';
+              let smpJSON = '{"username": "'+this.postData.username+'","appCode": "DPP","setting": "privacyPolicy","property": "accepted","value": "1"}';
            
               if(!this.isPrivacyPolicy){
                 this.patientService.updateUserSettings(smpJSON).subscribe((res1: any) => {});

@@ -203,7 +203,7 @@ export class TabInPatientsPage {
         var value = res[key];
         Object.keys(value).forEach((lock) => {
           var valuex = value[lock];
-          if (key != "appcode") {
+          if (key != "appCode") {
             if (key == "billingContact") {
               localStorage.setItem(lock, btoa(valuex));
             }
