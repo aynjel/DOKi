@@ -145,7 +145,7 @@ export class LoginPage  {
     const modal = await this.modalController.create({
       component: ChhAppChangePasswordPage,
       componentProps: {
-        old_password: this.resultJson.Data,
+        old_password: this.resultJson.data,
         backdropDismiss: true,
       },
     });
@@ -172,13 +172,15 @@ export class LoginPage  {
     let json = '{"appCode": "DPP","userName": "'+this.postData.username+'"}';
     this.patientService.commonValidate(json).subscribe(
       (res: any) => {
-        this.resultJson = res;      
+        this.resultJson = res;   
+        console.log(res);
+           
       },(error)=>{this.btnDisable = false;this.functionsService.sorryDoc();},
       ()=>{   
         
       if(!(typeof this.resultJson.ErrorCode !== 'undefined')){
-          if(this.resultJson.Data.length <= 10){
-            if(this.postData.password == this.resultJson.Data){
+          if(this.resultJson.data.length <= 10){
+            if(this.postData.password == this.resultJson.data){
               localStorage.setItem('username', btoa(this.postData.username));
               this.updatePassword();
             }
@@ -186,7 +188,7 @@ export class LoginPage  {
         
           }else{
             localStorage.setItem('username', btoa(this.postData.username));
-            this.hashedPassword = this.resultJson.Data;
+            this.hashedPassword = this.resultJson.data;
             this.loginUser();
             this.btnDisable = false;
           }

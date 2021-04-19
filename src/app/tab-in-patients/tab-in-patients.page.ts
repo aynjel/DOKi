@@ -207,6 +207,8 @@ export class TabInPatientsPage {
             }
 
             if (key == "smsGateway") {
+              console.log(value);
+              
               localStorage.setItem("smsGateway", JSON.stringify(value));
             }
           }

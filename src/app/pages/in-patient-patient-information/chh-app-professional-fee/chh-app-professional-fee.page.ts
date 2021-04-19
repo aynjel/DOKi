@@ -78,6 +78,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
   withVat: any;
   data1: any;
   payvenue: any;
+  payvenueTxt:any;
   ifShowSummary: boolean = false;
   modifybtn: boolean = false;
   constructor(
@@ -153,9 +154,10 @@ export class ChhAppProfessionalFeePage implements OnInit {
     // }
     // console.log(this.data[0].selected_payvenue);
     //console.log(this.data);
+    console.log(this.data);
     
     this.payvenue = this.data[0].payvenue;
-
+    this.payvenueTxt = this.data[0].selected_payvenue;
 
     if (this.data[0].site == "C") {
       this.site = "Chong Hua Hospital - Fuente";

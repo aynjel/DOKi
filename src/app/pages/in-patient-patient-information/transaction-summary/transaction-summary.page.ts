@@ -175,22 +175,24 @@ export class TransactionSummaryPage implements OnInit {
     this.disableSubmit = true;
     if(this.data[0].payvenue == "W" || this.data[0].payvenue == "H" || this.data[0].payvenue == "X" || this.data[0].payvenue == "N" || this.data[0].payvenue == "A" ){
       this.postData.OldProfFee = this.data.doctor_prof_fee;  
-      this.doctorService.updatePF(this.postData).subscribe((res: any) => {
-        if (res == true) {
-          this.modalUpdate(
-            "SUCCESS",
-            "Successfully UPDATED your Professional Fee."
-          );
-        } else {
-          this.functionsService.alert(
-            "UPDATING of Professional Fee was Unsuccessful",
-            "Okay"
-          );
-        }
-      },
-      (error) => {this.disableSubmit = false;},
-      () => {}
-      );
+      console.log(this.postData);
+      
+      // this.doctorService.updatePF(this.postData).subscribe((res: any) => {
+      //   if (res == true) {
+      //     this.modalUpdate(
+      //       "SUCCESS",
+      //       "Successfully UPDATED your Professional Fee."
+      //     );
+      //   } else {
+      //     this.functionsService.alert(
+      //       "UPDATING of Professional Fee was Unsuccessful",
+      //       "Okay"
+      //     );
+      //   }
+      // },
+      // (error) => {this.disableSubmit = false;},
+      // () => {}
+      // );
     }else{
       this.postData.OldProfFee = 0;  
       this.doctorService.insertPF(this.postData).subscribe((res: any) => {
