@@ -102,7 +102,8 @@ export class InPatientDetailPage   {
     public constants: Constants,
     private renderer: Renderer2,
     public nav:NavController) {
-      
+        console.log("In-patient detail : Constructor");
+        
       this.screensizeService.isDesktopView().subscribe((isDesktop) => {
         if (this.isDesktop && !isDesktop) {
           window.location.reload();
@@ -117,6 +118,7 @@ export class InPatientDetailPage   {
 
  
   ionViewWillEnter(){
+    console.log("In-patient detail : ionViewWillEnter");
     //sessionStorage.removeItem('pfIsPatientSeen');
    // sessionStorage.removeItem('pfInsCoor');
     this.checkAppearance();
@@ -335,7 +337,7 @@ export class InPatientDetailPage   {
   }
   ngOnInit() {
 
-
+    console.log("In-patient detail : ngOnInit");
   }
   updateDisplay(data:boolean){
     if(data){

@@ -205,8 +205,8 @@ ______          _    _
   </ion-fab> -->
     <ion-grid class="ion-no-padding" >
       <ion-row>
-        <ion-col size-md="1"></ion-col>
-        <ion-col size-md="3">
+        <ion-col size-lg="1" size-md="12"></ion-col>
+        <!-- <ion-col size-lg="3" size-md="4">
               <app-chh-app-admitting-diagnosis
                 [admittingDiagnosis]="admittingDiagnosis"
                 [admittingDiagnosis1]="admittingDiagnosis1"
@@ -222,11 +222,15 @@ ______          _    _
                 [finalDiagnosis1]="finalDiagnosis1"
                 [finalDiagnosis2]="finalDiagnosis2"
               ></app-chh-app-final-diagnosis>
-        </ion-col>
-        <ion-col  size-md="4"  >
+        </ion-col> -->
+        <ion-col  size-lg="4"  size-md="6">
           <!--app-chh-app-card-newline></app-chh-app-card-newline-->
-          <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted">
-          </app-chh-app-patient-header>
+          <app-chh-app-patient-header
+          [data]="data"
+          [dateAdmitted]="dateAdmitted"
+          [forMoreOrLess]="true"
+          >
+        </app-chh-app-patient-header>
             <ion-button
             color="mango"
               size="default"
@@ -235,10 +239,24 @@ ______          _    _
               (click)="redirecttoPF()"
               *ngIf="data.is_posted == 0 || data.is_posted == null"
               ><ion-icon name="checkmark-done-outline" *ngIf="checkmark"></ion-icon>Professional Fee</ion-button>
-
+              <app-chh-app-admitting-diagnosis
+              [admittingDiagnosis]="admittingDiagnosis"
+              [admittingDiagnosis1]="admittingDiagnosis1"
+              [admittingDiagnosis2]="admittingDiagnosis2"
+              [truncating1]="truncating1"
+          ></app-chh-app-admitting-diagnosis>
+          <app-chh-app-card-newline *ngIf="admittingDiagnosis"></app-chh-app-card-newline>
+            <app-chh-app-final-diagnosis
+              [data]="data"
+              [finalDiagnosis]="finalDiagnosis"
+              [limit]="limit"
+              [truncating]="truncating"
+              [finalDiagnosis1]="finalDiagnosis1"
+              [finalDiagnosis2]="finalDiagnosis2"
+            ></app-chh-app-final-diagnosis>
         </ion-col>
 
-        <ion-col  size-md="3"   class=" max-height-82vh overflow-scroll">
+        <ion-col  size-lg="3" size-md="6"  class=" max-height-82vh overflow-scroll">
           <app-chh-app-list-of-doctors
             [coDoctors]="coDoctors"
             [objecthandler]="objecthandler"
@@ -246,7 +264,7 @@ ______          _    _
           ></app-chh-app-list-of-doctors>
          
         </ion-col>
-        <ion-col size-md="1"></ion-col>
+        <ion-col size-lg="1" size-md="12"></ion-col>
       </ion-row>
     </ion-grid>
     <!-- <ion-grid class="ion-no-padding" >

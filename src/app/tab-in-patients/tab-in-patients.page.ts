@@ -61,6 +61,7 @@ export class TabInPatientsPage {
     private patientService: PatientService,
     public nav:NavController
   ) {
+    console.log("In-patient : Constructor");
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         window.location.reload();
@@ -88,6 +89,7 @@ export class TabInPatientsPage {
   }
   
   ngOnInit() {
+    console.log("In-patient : ngOnInit");
     this.$gaService.pageView("/In-Patient", "In-Patient Tab");
 
     
@@ -186,7 +188,7 @@ export class TabInPatientsPage {
 
   //Fired when the component routing to is about to animate into view.
   ionViewWillEnter() {
-
+    console.log("In-patient : ionViewWillEnter");
     
     this.logindata = <LoginData>this.authService.userData$.getValue();
 

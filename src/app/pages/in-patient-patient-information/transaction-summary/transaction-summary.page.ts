@@ -177,22 +177,22 @@ export class TransactionSummaryPage implements OnInit {
       this.postData.OldProfFee = this.data.doctor_prof_fee;  
       console.log(this.postData);
       
-      // this.doctorService.updatePF(this.postData).subscribe((res: any) => {
-      //   if (res == true) {
-      //     this.modalUpdate(
-      //       "SUCCESS",
-      //       "Successfully UPDATED your Professional Fee."
-      //     );
-      //   } else {
-      //     this.functionsService.alert(
-      //       "UPDATING of Professional Fee was Unsuccessful",
-      //       "Okay"
-      //     );
-      //   }
-      // },
-      // (error) => {this.disableSubmit = false;},
-      // () => {}
-      // );
+      this.doctorService.updatePF(this.postData).subscribe((res: any) => {
+        if (res == true) {
+          this.modalUpdate(
+            "SUCCESS",
+            "Successfully UPDATED your Professional Fee."
+          );
+        } else {
+          this.functionsService.alert(
+            "UPDATING of Professional Fee was Unsuccessful",
+            "Okay"
+          );
+        }
+      },
+      (error) => {this.disableSubmit = false;},
+      () => {}
+      );
     }else{
       this.postData.OldProfFee = 0;  
       this.doctorService.insertPF(this.postData).subscribe((res: any) => {

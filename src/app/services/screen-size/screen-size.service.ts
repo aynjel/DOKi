@@ -12,7 +12,7 @@ export class ScreenSizeService {
   constructor() {}
 
   onResize(size) {
-    if (size <= 823) {
+    if (size <= 767) {
       this.isDesktop.next(false);
     } else {
       this.isDesktop.next(true);

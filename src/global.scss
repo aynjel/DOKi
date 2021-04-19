@@ -67,7 +67,8 @@
   top: 5;
   position: absolute; 
   display: block;  
-  width: 30%;
+  min-width: 30%;
+  max-width: 50%;
   min-height: 25%;
   max-height: 50%;
   overflow:hidden;
