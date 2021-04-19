@@ -82,6 +82,7 @@ export class InPatientDetailPage   {
   patient_name:any;
   patient_no:any;
   postData : InPatientData  = new InPatientData();
+  location:boolean;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -139,6 +140,15 @@ export class InPatientDetailPage   {
 
       },
       ()=>{      
+        
+        let n = this.data[0].admission_no.indexOf("IPC");
+        console.log(n);
+        
+        if(n >= 0){
+          this.location = true;
+        }else{
+          this.location = false;
+        }
         this.operate();
         localStorage.setItem('patientData',btoa(JSON.stringify(this.data)));
       });
@@ -159,6 +169,8 @@ export class InPatientDetailPage   {
     this.postData.Remarks = "";
     this.postData.ProfFee = 0;
     this.postData.OldProfFee = 0;
+    console.log(this.data[0].site);
+    
     if (this.data[0].site == "C") {
       this.site = "CHHC";
       //this.postData.PatientSite = "CEBU";
@@ -374,18 +386,20 @@ export class InPatientDetailPage   {
   }
 
   async examDetails(data: any, site:any,i) {
-
+    console.log(site);
+    
     this.HighlightRow = i;  
     this.ExamData = data;
     this.hospitalSite = site;
 
     
     if(!this.isDesktop){
-
+      console.log(this.hospitalSite);
+      
       
       const modal = await this._modalController.create({
         component: ChhAppBasePage,
-        componentProps: { ExamDetails: data,Site:site },
+        componentProps: { ExamDetails: data,Site:this.hospitalSite },
         cssClass: "my-custom-modal-inpatient-css",
       });
       modal.present();
@@ -440,14 +454,23 @@ export class InPatientDetailPage   {
 
   }
   getExamList(data) {
+    console.log(this.data[0].admission_no);
+
+
+
+
+
+
     this.ionSkeleton = true;
     var date1 = new Date(this.data[0].admission_date);
     var seconds1 = date1.getTime() / 1000; //1440516958
     this.currentExamList = [];
     this.examListSkeleton = true;
-    this.patientService.getCebuExamList(data).subscribe(
-      (res: any) => {
 
+
+
+    this.patientService.getExamList(this.location,data).subscribe(
+      (res: any) => {
         res.forEach((element) => {
           var date = new Date(element.RequestDateTime);
           var seconds = date.getTime() / 1000; //1440516958
@@ -470,6 +493,33 @@ export class InPatientDetailPage   {
         this.examListSkeleton = false;
       }
     );
+
+
+    // this.patientService.getCebuExamList(data).subscribe(
+    //   (res: any) => {
+    //     res.forEach((element) => {
+    //       var date = new Date(element.RequestDateTime);
+    //       var seconds = date.getTime() / 1000; //1440516958
+    //       if (seconds >= seconds1) {
+    //         element.RequestDateTime = new Date(
+    //           element.RequestDateTime
+    //         ).toLocaleDateString();
+    //         element.Exam = this.functionsService.convertToCamelCase(
+    //           element.Exam
+    //         );
+    //         this.currentExamList.push(element);
+    //         this.currentExamList_filtered.push(element);
+    //       }
+    //     });
+    //   },
+    //   (error) => {
+    //     this.examListSkeleton = false;
+    //   },
+    //   () => {
+    //     this.examListSkeleton = false;
+    //   }
+    // );
+
   }
 
 

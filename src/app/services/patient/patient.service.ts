@@ -307,10 +307,40 @@ export class PatientService {
 
 
 
+  getManExamList(data){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Mandaue/MandaueLAB/GetExamList/"+data;
+    return this.http.get(url, options);
+  }
 
+  getExamList(location,data){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    let url;
 
+    
+    if(location){
+      url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetExamList/"+data;
+    }else{
+      url = environment.apiRouterUrl+"Mandaue/MandaueLAB/GetExamList/"+data;
+    }
+    
+    return this.http.get(url, options);
+  }
 
-
+  getMandaueHeader(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Mandaue/MandaueLAB/GetLabHeaderFooter/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+  getMandaueLabDetails(data1:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Mandaue/MandaueLAB/GetLabDetails/"+data1;
+    return this.http.get(url, options);
+  }
 
 
 

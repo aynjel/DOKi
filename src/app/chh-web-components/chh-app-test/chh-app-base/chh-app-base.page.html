@@ -22,7 +22,7 @@
 
 
 
-  <ion-card mode="ios" >
+  <ion-card mode="ios" *ngIf="Site == 'C'" >
     <div *ngFor="let x of Header">
     <ion-item>
       <ion-avatar slot="start">
@@ -118,7 +118,82 @@
 
 
 
+  <ion-card mode="ios" *ngIf="Site == 'M'" >
+    <div *ngFor="let x of Header">
+    <ion-item>
+      <ion-avatar slot="start">
+        <chh-app-text-avatar [text]="x.last_name" [color]="" class="ion-padding-vertical"></chh-app-text-avatar>
+      </ion-avatar>
+      <ion-label  class="ion-text-wrap ion-padding-vertical">
+        <h2 >
+          <b>{{x.last_name}}, {{x.first_name}} {{x.middle_name}}</b>
+        </h2>
+      </ion-label>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-grid>
+        <ion-row >
+          <ion-col size="4" class="border-bottom ">Location</ion-col>
+          <ion-col size="8" class="border-bottom  " >{{hospitalSite}}</ion-col>
 
+          <ion-col size="4" class="border-bottom ">Room</ion-col>
+          <ion-col size="8" class="border-bottom  " >{{x.room_no}}</ion-col>
+
+          <ion-col size="4" class="border-bottom ">Gender</ion-col>
+          <ion-col size="8" class="border-bottom  " >{{x.sex}}</ion-col>
+
+          <ion-col size="4" class="border-bottom ">Birthdate</ion-col>
+          <ion-col size="8" class="border-bottom   " >{{x.birthdate}}</ion-col>
+
+          <ion-col size="4" class="border-bottom ">Date Performed</ion-col>
+          <ion-col size="8" class="border-bottom " >{{x.date_requested}}</ion-col>
+
+          <ion-col size="4" class="border-bottom ">Address</ion-col>
+          <ion-col size="8" class="border-bottom " >{{x.address}}</ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </div>
+ <ion-item lines="none"><h2>Result</h2></ion-item>
+  
+
+ <app-mandaue-lab-details     [examDetails]="ExamDetails"
+ [site]="hospitalSite">
+
+ </app-mandaue-lab-details>
+  <!-- <app-chh-app-test-chemistry 
+    [examDetails]="ExamDetails"
+    [site]="hospitalSite"
+    *ngIf="ExamDetails.Exam == 'Chemistry'"></app-chh-app-test-chemistry> 
+
+    <app-chh-app-test-fecalysis 
+    [examDetails]="ExamDetails"
+    [site]="hospitalSite"
+    *ngIf="ExamDetails.Exam == 'Fecalysis'"></app-chh-app-test-fecalysis> 
+
+    <app-chh-app-test-serology
+    [examDetails]="ExamDetails"
+    [site]="hospitalSite"
+    *ngIf="ExamDetails.Exam == 'Serology'"></app-chh-app-test-serology>    
+
+
+
+    <app-chh-app-test-cbc
+    [examDetails]="ExamDetails"
+    [site]="hospitalSite"
+    *ngIf="ExamDetails.Exam == 'Hematology' && ExamDetails.ExamType == 'CBC'"></app-chh-app-test-cbc> 
+
+
+    <app-chh-app-test-urinalysis
+    [examDetails]="ExamDetails"
+    [site]="hospitalSite"
+    *ngIf="ExamDetails.Exam == 'Urinalysis' "></app-chh-app-test-urinalysis>  -->
+    
+
+
+
+  <br />
+  </ion-card>
 
 
 

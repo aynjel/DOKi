@@ -17,6 +17,8 @@ import { ChhAppTestCbcComponent } from "./chh-app-test/chh-app-test-cbc/chh-app-
 import { ChhAppTestUrinalysisComponent } from "./chh-app-test/chh-app-test-urinalysis/chh-app-test-urinalysis.component";
 
 
+import { MandaueLabDetailsComponent } from "./chh-app-test/mandaue-lab-details/mandaue-lab-details.component";
+
 
 
 import { ChhAppDateSelectorComponent } from "./chh-app-date-selector/chh-app-date-selector.component";
@@ -63,7 +65,8 @@ import {ChhAppIsPatientSeenComponent} from "./chh-app-is-patient-seen/chh-app-is
     ChhAppAdmittingDiagnosisComponent,
     ChhAppFinalDiagnosisComponent,
     ChhAppInsuranceCoordinatorInquiryComponent,
-    ChhAppIsPatientSeenComponent
+    ChhAppIsPatientSeenComponent,
+    MandaueLabDetailsComponent
 
   ],
   exports: [
@@ -87,7 +90,8 @@ import {ChhAppIsPatientSeenComponent} from "./chh-app-is-patient-seen/chh-app-is
     ChhAppAdmittingDiagnosisComponent,
     ChhAppFinalDiagnosisComponent,
     ChhAppInsuranceCoordinatorInquiryComponent,
-    ChhAppIsPatientSeenComponent
+    ChhAppIsPatientSeenComponent,
+    MandaueLabDetailsComponent
   ],
   imports: [CommonModule, IonicModule, ChhAppTextAvatarModule,RouterModule,FormsModule],
 })

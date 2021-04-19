@@ -19,11 +19,22 @@
 
 
   <div *ngIf="(method=='Insurance')">
-    <div class="vertical-center">
-      <div class="center">
-        <img src="assets/img/insurance-pana.png" alt="Care of Insurance + PHIC">
-      </div>
-    </div>
+    <ion-grid class="ion-no-padding">
+        <ion-row >
+          <ion-col size="8" offset="2">
+            <div class="vertical-center">
+              <div class="center">
+                <img src="assets/img/insurance-pana.png" alt="Care of Insurance + PHIC">
+              </div>
+            </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+
+
+
+
     <div class="vertical-center">
       <div class="center">
         <ion-button expand="block" fill="outline" (click)="presentCaseRatesModal()">View Case Rates</ion-button>

@@ -15,9 +15,9 @@ export class ChhAppBasePage implements OnInit {
   @Input() ExamDetails: any;
   @Input() Site: any;
   isDesktop: boolean;
-  Header:any;
-  chemDetails:any;
-  hospitalSite:any; 
+  Header: any;
+  chemDetails: any;
+  hospitalSite: any;
   constructor(
     public modalController: ModalController,
     public _modalController: ModalController,
@@ -29,71 +29,87 @@ export class ChhAppBasePage implements OnInit {
     public functionsService: FunctionsService,
     private patientService: PatientService,
     private screensizeService: ScreenSizeService
-    ) {
+  ) {
 
-      this.screensizeService.isDesktopView().subscribe((isDesktop) => {
-        if (this.isDesktop && !isDesktop) {
-          window.location.reload();
-        }
-        this.isDesktop = isDesktop;
-      });
-     }
+    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
+      if (this.isDesktop && !isDesktop) {
+        window.location.reload();
+      }
+      this.isDesktop = isDesktop;
+    });
+  }
   ngOnInit() {
-    if(this.Site == 'C'){
+    console.log(this.Site );
+    
+    if (this.Site == 'C') {
       this.hospitalSite = "Chong Hua Hospital";
-    }else{
+    } else {
       this.hospitalSite = "Chong Hua Hospital Mandaue";
     }
 
-    
-    if(this.ExamDetails.Exam == 'Chemistry'){
-      this.patientService.getCebuChemHeader(this.ExamDetails.Request_No).subscribe(
-        (res: any) => {
-          let x = JSON.stringify(res)
-          this.Header = JSON.parse(x);
-        },(error) => {},
-        () => {}
-      );
-    }else if(this.ExamDetails.Exam == 'Serology'){
-      this.patientService.getCebuSeroHeader(this.ExamDetails.Patient_No,this.ExamDetails.Request_No).subscribe(
-        (res: any) => {
-          let x = JSON.stringify(res)
-          this.Header = JSON.parse(x);
-        },(error) => {},
-        () => {
-          if(Object.keys(this.Header).length > 1){
-            delete this.Header[1];
-            let x = JSON.stringify(this.Header);
-            x =  x.replace(",null", "");
+    if (this.Site == 'C') {
+      if (this.ExamDetails.Exam == 'Chemistry') {
+        this.patientService.getCebuChemHeader(this.ExamDetails.Request_No).subscribe(
+          (res: any) => {
+            let x = JSON.stringify(res)
             this.Header = JSON.parse(x);
+          }, (error) => { },
+          () => { }
+        );
+      } else if (this.ExamDetails.Exam == 'Serology') {
+        this.patientService.getCebuSeroHeader(this.ExamDetails.Patient_No, this.ExamDetails.Request_No).subscribe(
+          (res: any) => {
+            let x = JSON.stringify(res)
+            this.Header = JSON.parse(x);
+          }, (error) => { },
+          () => {
+            if (Object.keys(this.Header).length > 1) {
+              delete this.Header[1];
+              let x = JSON.stringify(this.Header);
+              x = x.replace(",null", "");
+              this.Header = JSON.parse(x);
+            }
           }
-        }
-      );
-    }else if(this.ExamDetails.Exam == 'Fecalysis'){
-      this.patientService.getCebuFecalHeader(this.ExamDetails.Patient_No,this.ExamDetails.Request_No).subscribe(
-        (res: any) => {
-          let x = JSON.stringify(res)
-          this.Header = JSON.parse(x);
+        );
+      } else if (this.ExamDetails.Exam == 'Fecalysis') {
+        this.patientService.getCebuFecalHeader(this.ExamDetails.Patient_No, this.ExamDetails.Request_No).subscribe(
+          (res: any) => {
+            let x = JSON.stringify(res)
+            this.Header = JSON.parse(x);
 
-        },(error) => {},
-        () => {}
-      );
-    }else if(this.ExamDetails.Exam == 'Hematology' && this.ExamDetails.ExamType == 'CBC'){
-      this.patientService.getCebuCBCHeader(this.ExamDetails.Request_No).subscribe(
-        (res: any) => {
-          let x = JSON.stringify(res)
-          this.Header = JSON.parse(x);
-        },(error) => {},
-        () => {}
-      );
-    }else if(this.ExamDetails.Exam == 'Urinalysis'){
-      this.patientService.getCebuUrinalysisHeader(this.ExamDetails.Patient_No,this.ExamDetails.Request_No).subscribe(
-        (res: any) => {
-          let x = JSON.stringify(res)
-          this.Header = JSON.parse(x);
-        },(error) => {},
-        () => {}
-      );
+          }, (error) => { },
+          () => { }
+        );
+      } else if (this.ExamDetails.Exam == 'Hematology' && this.ExamDetails.ExamType == 'CBC') {
+        this.patientService.getCebuCBCHeader(this.ExamDetails.Request_No).subscribe(
+          (res: any) => {
+            let x = JSON.stringify(res)
+            this.Header = JSON.parse(x);
+          }, (error) => { },
+          () => { }
+        );
+      } else if (this.ExamDetails.Exam == 'Urinalysis') {
+        this.patientService.getCebuUrinalysisHeader(this.ExamDetails.Patient_No, this.ExamDetails.Request_No).subscribe(
+          (res: any) => {
+            let x = JSON.stringify(res)
+            this.Header = JSON.parse(x);
+          }, (error) => { },
+          () => { }
+        );
+      }
+    }else{
+    //  if (this.ExamDetails.Exam == 'Hematology') {
+        this.patientService.getMandaueHeader(this.ExamDetails.Patient_No, this.ExamDetails.Request_No).subscribe(
+          (res: any) => {
+            console.log(res);
+            
+            let x = JSON.stringify(res)
+            this.Header = JSON.parse(x);
+          }, (error) => { },
+          () => { }
+        );
+     // }
+      
     }
   }
 }

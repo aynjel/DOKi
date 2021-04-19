@@ -70,7 +70,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
   charityB: boolean;
   philhealthB: boolean;
   toPFMbtn: boolean = true;
-
+  btnclose:boolean;
   disabledselection: boolean = false;
   site: any;
   daysManaged: any;
@@ -152,8 +152,9 @@ export class ChhAppProfessionalFeePage implements OnInit {
     //   this.payvenue = "Coordinator's Fee";
     // }
     // console.log(this.data[0].selected_payvenue);
+    //console.log(this.data);
     
-    this.payvenue = this.data[0].selected_payvenue;
+    this.payvenue = this.data[0].payvenue;
 
 
     if (this.data[0].site == "C") {
@@ -170,13 +171,14 @@ export class ChhAppProfessionalFeePage implements OnInit {
     }
 
     if (this.payvenue == "" || this.payvenue == null) {
-
-      
+      this.btnclose = true;
       this.ifShowSummary = false;
     } else {
+      this.btnclose = true;
       this.ifShowSummary = true;
     }
-
+    console.log(this.payvenue+" : "+ this.ifShowSummary);
+    
     this.checkAppearance();
     //console.log(this.data);
 
@@ -400,9 +402,11 @@ export class ChhAppProfessionalFeePage implements OnInit {
     }
   }
   modifyProfFee() {
+    this.btnclose = false;
     this.ifShowSummary = false;
   }
   modifyProfFeeClose() {
+    this.btnclose = true;
     this.ifShowSummary = true;
   }
   moreorless(data) {

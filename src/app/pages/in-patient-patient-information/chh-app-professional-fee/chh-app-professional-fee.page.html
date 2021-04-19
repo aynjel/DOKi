@@ -11,12 +11,12 @@ ___  ___        _      _  _              _   _                   _
   <ion-toolbar color="mango">
     <ion-title> Professional Fee </ion-title>
     <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
-      <ion-button routerLink="{{routerLinkBack}}" routerDirection="backwards" color="chh-css-primary2" *ngIf="ifShowSummary">Close&nbsp;
+      <ion-button routerLink="{{routerLinkBack}}" routerDirection="backwards" color="chh-css-primary2" *ngIf="btnclose">Close&nbsp;
         <ion-icon name="close-outline"></ion-icon>
       </ion-button>
 
 
-      <ion-button  routerDirection="backwards" color="chh-css-primary2" *ngIf="!ifShowSummary" (click)="modifyProfFeeClose()">Close&nbsp;
+      <ion-button  routerDirection="backwards" color="chh-css-primary2" *ngIf="!btnclose" (click)="modifyProfFeeClose()">Closer&nbsp;
         <ion-icon name="close-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
