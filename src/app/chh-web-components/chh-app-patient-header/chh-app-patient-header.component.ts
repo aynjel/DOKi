@@ -7,7 +7,6 @@ import { StorageService } from 'src/app/services/storage/storage.service';
   templateUrl: './chh-app-patient-header.component.html',
   styleUrls: ['./chh-app-patient-header.component.scss'],
 })
-
 export class ChhAppPatientHeaderComponent implements OnInit {
   @Input() data: any;
   @Input() dateAdmitted: any;
@@ -29,7 +28,7 @@ export class ChhAppPatientHeaderComponent implements OnInit {
       this.moreOrLess = !this.forMoreOrLess;
     }
   }
-  
+
   moreorless(data) {
     this.moreOrLess = data;
   }

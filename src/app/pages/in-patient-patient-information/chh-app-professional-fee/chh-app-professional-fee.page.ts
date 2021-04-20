@@ -6,40 +6,40 @@ import {
   ViewContainerRef,
   ComponentFactoryResolver,
   Renderer2,
-} from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
-import { Location } from "@angular/common";
-import { ModalController, AlertController } from "@ionic/angular";
-import { ChhAppFeePage } from "../../../chh-web-components/chh-app-fee/chh-app-fee.page";
-import { from } from "rxjs";
-import { PopoverController } from "@ionic/angular";
-import { timeStamp } from "console";
-import { DoctorService } from "src/app/services/doctor/doctor.service";
-import { GoogleAnalyticsService } from "ngx-google-analytics";
-import { AuthService } from "src/app/services/auth/auth.service";
-import { LoginData } from "../../../models/login-data.model";
-import { FunctionsService } from "../../../shared/functions/functions.service";
-import { PatientService } from "src/app/services/patient/patient.service";
-import { logWarnings } from "protractor/built/driverProviders";
-import { ChemistryPage } from "../../../chh-web-components/chh-app-test/chh-app-chemistry/chemistry.page";
-import { ChhAppBasePage } from "../../../chh-web-components/chh-app-test/chh-app-base/chh-app-base.page";
-import { Messages } from "../../../shared/messages";
-import { ScreenSizeService } from "../../../services/screen-size/screen-size.service";
-import { ChhAppTestChemistryComponent } from "../../../chh-web-components/chh-app-test/chh-app-test-chemistry/chh-app-test-chemistry.component";
-import { ChhAppTestFecalysisComponent } from "../../../chh-web-components/chh-app-test/chh-app-test-fecalysis/chh-app-test-fecalysis.component";
-import { ChhAppTestSerologyComponent } from "../../../chh-web-components/chh-app-test/chh-app-test-serology/chh-app-test-serology.component";
-import { StorageService } from "../../../services/storage/storage.service";
-import { AuthConstants } from "../../../config/auth-constants";
-import { executionAsyncResource } from "async_hooks";
-import { Constants } from "src/app/shared/constants";
+} from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { ModalController, AlertController } from '@ionic/angular';
+import { ChhAppFeePage } from '../../../chh-web-components/chh-app-fee/chh-app-fee.page';
+import { from } from 'rxjs';
+import { PopoverController } from '@ionic/angular';
+import { timeStamp } from 'console';
+import { DoctorService } from 'src/app/services/doctor/doctor.service';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { LoginData } from '../../../models/login-data.model';
+import { FunctionsService } from '../../../shared/functions/functions.service';
+import { PatientService } from 'src/app/services/patient/patient.service';
+import { logWarnings } from 'protractor/built/driverProviders';
+import { ChemistryPage } from '../../../chh-web-components/chh-app-test/chh-app-chemistry/chemistry.page';
+import { ChhAppBasePage } from '../../../chh-web-components/chh-app-test/chh-app-base/chh-app-base.page';
+import { Messages } from '../../../shared/messages';
+import { ScreenSizeService } from '../../../services/screen-size/screen-size.service';
+import { ChhAppTestChemistryComponent } from '../../../chh-web-components/chh-app-test/chh-app-test-chemistry/chh-app-test-chemistry.component';
+import { ChhAppTestFecalysisComponent } from '../../../chh-web-components/chh-app-test/chh-app-test-fecalysis/chh-app-test-fecalysis.component';
+import { ChhAppTestSerologyComponent } from '../../../chh-web-components/chh-app-test/chh-app-test-serology/chh-app-test-serology.component';
+import { StorageService } from '../../../services/storage/storage.service';
+import { AuthConstants } from '../../../config/auth-constants';
+import { executionAsyncResource } from 'async_hooks';
+import { Constants } from 'src/app/shared/constants';
 
-import { InPatientData } from "src/app/models/in-patient.model";
-import { PatientNo } from "src/app/models/in-patient.model";
+import { InPatientData } from 'src/app/models/in-patient.model';
+import { PatientNo } from 'src/app/models/in-patient.model';
 
 @Component({
-  selector: "app-chh-app-professional-fee",
-  templateUrl: "./chh-app-professional-fee.page.html",
-  styleUrls: ["./chh-app-professional-fee.page.scss"],
+  selector: 'app-chh-app-professional-fee',
+  templateUrl: './chh-app-professional-fee.page.html',
+  styleUrls: ['./chh-app-professional-fee.page.scss'],
 })
 export class ChhAppProfessionalFeePage implements OnInit {
   public logindata: LoginData;
@@ -54,7 +54,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
   patient_name: any;
   dateAdmitted: any;
   moreOrLess: boolean = true;
-  insCoor: any = "No";
+  insCoor: any = 'No';
   showSelection: boolean = false;
   showSeenPatient: boolean = false;
   pfInsCoor: any;
@@ -70,7 +70,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
   charityB: boolean;
   philhealthB: boolean;
   toPFMbtn: boolean = true;
-  btnclose:boolean;
+  btnclose: boolean;
   disabledselection: boolean = false;
   site: any;
   daysManaged: any;
@@ -78,7 +78,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
   withVat: any;
   data1: any;
   payvenue: any;
-  payvenueTxt:any;
+  payvenueTxt: any;
   ifShowSummary: boolean = false;
   modifybtn: boolean = false;
   constructor(
@@ -111,13 +111,15 @@ export class ChhAppProfessionalFeePage implements OnInit {
   }
 
   ngOnInit() {
-    let getValue = this.activatedRoute.snapshot.paramMap.get("state");
+    let getValue = this.activatedRoute.snapshot.paramMap.get('state');
 
     this.initiateSession();
     this.routerLinkBack =
-      "/menu/in-patients/" + this.activatedRoute.snapshot.params.id;
+      '/menu/in-patients/' + this.activatedRoute.snapshot.params.id;
     this.patient_id = this.activatedRoute.snapshot.params.id;
-    this.postData = JSON.parse(atob(localStorage.getItem("postData"))) as InPatientData;
+    this.postData = JSON.parse(
+      atob(localStorage.getItem('postData'))
+    ) as InPatientData;
   }
 
   ionViewWillEnter() {
@@ -127,7 +129,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     //this.postData.DoctorMobileNumber = logindata[0].mobile_no;
     //this.data =[];
     //this.data = JSON.parse(atob(sessionStorage.getItem("patientData")));
-    this.data = JSON.parse(atob(localStorage.getItem("patientData")));
+    this.data = JSON.parse(atob(localStorage.getItem('patientData')));
     this.data1 = this.data[0].doctor_prof_fee;
 
     if (this.data[0].is_posted == 0) {
@@ -135,10 +137,10 @@ export class ChhAppProfessionalFeePage implements OnInit {
     } else {
       this.modifybtn = true;
     }
-    if (this.data[0].is_vat == "Y") {
-      this.withVat = "(With VAT)";
+    if (this.data[0].is_vat == 'Y') {
+      this.withVat = '(+ VAT)';
     } else {
-      this.withVat = "(Without VAT)"; 
+      this.withVat = '(No VAT)';
     }
 
     // if (this.data[0].payvenue == "W") {
@@ -155,32 +157,32 @@ export class ChhAppProfessionalFeePage implements OnInit {
     // console.log(this.data[0].selected_payvenue);
     //console.log(this.data);
     console.log(this.data);
-    
+
     this.payvenue = this.data[0].payvenue;
     this.payvenueTxt = this.data[0].selected_payvenue;
 
-    if (this.data[0].site == "C") {
-      this.site = "Chong Hua Hospital - Fuente";
+    if (this.data[0].site == 'C') {
+      this.site = 'Chong Hua Hospital - Fuente';
     } else {
-      this.site = "Chong Hua Hospital Mandaue";
+      this.site = 'Chong Hua Hospital Mandaue';
     }
     //this.daysManaged = atob(sessionStorage.getItem("daysManaged"));
-    this.daysManaged = atob(localStorage.getItem("daysManaged"));
+    this.daysManaged = atob(localStorage.getItem('daysManaged'));
     if (this.daysManaged > 1) {
-      this.day = "Days";
+      this.day = 'Days';
     } else {
-      this.day = "Day";
+      this.day = 'Day';
     }
 
-    if (this.payvenue == "" || this.payvenue == null) {
+    if (this.payvenue == '' || this.payvenue == null) {
       this.btnclose = true;
       this.ifShowSummary = false;
     } else {
       this.btnclose = true;
       this.ifShowSummary = true;
     }
-    console.log(this.payvenue+" : "+ this.ifShowSummary);
-    
+    console.log(this.payvenue + ' : ' + this.ifShowSummary);
+
     this.checkAppearance();
     //console.log(this.data);
 
@@ -207,38 +209,38 @@ export class ChhAppProfessionalFeePage implements OnInit {
   redirecto() {
     let data;
     //sessionStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
-    localStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
+    localStorage.setItem('postData', btoa(JSON.stringify(this.postData)));
     if (this.insurance) {
-      data = "insurance";
-      this.router.navigate([this.router.url + "/" + data]);
+      data = 'insurance';
+      this.router.navigate([this.router.url + '/' + data]);
     } else if (this.charity) {
-      data = "charity";
-      this.router.navigate([this.router.url + "/" + data]);
+      data = 'charity';
+      this.router.navigate([this.router.url + '/' + data]);
     } else if (this.philhealth) {
-      data = "philhealth";
-      this.router.navigate([this.router.url + "/" + data]);
-    }else if (this.personalphilhealth) {
-      data = "personal-philhealth";
-      this.router.navigate([this.router.url + "/" + data]);
+      data = 'philhealth';
+      this.router.navigate([this.router.url + '/' + data]);
+    } else if (this.personalphilhealth) {
+      data = 'personal-philhealth';
+      this.router.navigate([this.router.url + '/' + data]);
     } else {
       //console.log("ELSE");
-      this.postData.SelectedPayVenue = "Patient Not SEEN";
+      this.postData.SelectedPayVenue = 'Patient NOT SEEN';
       if (this.isCoordinator) {
         // console.log(this.isCoordinator);
         this.postData.ProfFee = 0;
-        this.postData.IsVAT = "N";
-        this.postData.PayVenue = "A";
-       
+        this.postData.IsVAT = 'N';
+        this.postData.PayVenue = 'A';
+
         //  sessionStorage.setItem('postData', JSON.stringify(this.postData));
         //sessionStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
-        localStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
+        localStorage.setItem('postData', btoa(JSON.stringify(this.postData)));
       } else {
         this.postData.ProfFee = 0;
-        this.postData.IsVAT = "N";
-        this.postData.PayVenue = "N";
+        this.postData.IsVAT = 'N';
+        this.postData.PayVenue = 'N';
         //sessionStorage.setItem('postData', JSON.stringify(this.postData));
         //sessionStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
-        localStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
+        localStorage.setItem('postData', btoa(JSON.stringify(this.postData)));
       }
       //console.log("is patient seen :"+this.isPatientSeen);
 
@@ -246,9 +248,9 @@ export class ChhAppProfessionalFeePage implements OnInit {
         // console.log("TRANSACTION SUMMARY");
         //this.router.navigate([this.router.url+'/transaction-summary']);
         let usrl =
-          "/menu/in-patients/" +
+          '/menu/in-patients/' +
           this.patient_id +
-          "/professional-fee-transaction-summary";
+          '/professional-fee-transaction-summary';
         //  console.log(usrl);
 
         this.router.navigate([usrl]);
@@ -262,36 +264,37 @@ export class ChhAppProfessionalFeePage implements OnInit {
     //console.log(this.dateAdmitted);
     this.logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_code = this.logindata[0].dr_code;
-    let dr_username = atob(localStorage.getItem("username"));
+    let dr_username = atob(localStorage.getItem('username'));
     this.patientService
-      .getUserSettings("DPP", dr_username)
+      .getUserSettings('DPP', dr_username)
       .subscribe((res: any) => {
         if (Object.keys(res).length >= 1) {
           let data = JSON.stringify(res);
-          data = "[" + data + "]";
+          data = '[' + data + ']';
           let adat = JSON.parse(data);
           adat.forEach((el) => {
-            if (typeof el.appearance !== "undefined") {
+            if (typeof el.appearance !== 'undefined') {
               if (el.appearance.darkmode == 1) {
                 this.renderer.setAttribute(
                   document.body,
-                  "color-theme",
-                  "dark"
+                  'color-theme',
+                  'dark'
                 );
               } else {
                 this.renderer.setAttribute(
                   document.body,
-                  "color-theme",
-                  "light"
+                  'color-theme',
+                  'light'
                 );
               }
             } else {
-              this.renderer.setAttribute(document.body, "color-theme", "light");
+              this.renderer.setAttribute(document.body, 'color-theme', 'light');
             }
           });
         }
       });
   }
+
   initiateSession() {
     //this.pfInsCoor = sessionStorage.getItem("pfInsCoor");
     // this.pfIsPatientSeen = sessionStorage.getItem("pfIsPatientSeen");
@@ -343,74 +346,80 @@ export class ChhAppProfessionalFeePage implements OnInit {
   //   }
 
   // }
-  isPatientSeenf(f, e) {
 
-    if (f == "isPatientSeen" && e == false) {
+  isPatientSeenf(f, e) {
+    if (f == 'isPatientSeen' && e == false) {
       this.toPFMbtn = true;
       // console.log("11111111111111");
       this.disabledselection = false;
-    } else if (f == "isPatientSeen" && e == true) {
+    } else if (f == 'isPatientSeen' && e == true) {
       this.personalphilhealth = this.insurance = this.charity = this.philhealth = false;
       this.toPFMbtn = false;
       //console.log("2222222222222");
       this.disabledselection = true;
     }
   }
-  areyouaninsurancecoordinator:boolean = true;
+
+  areyouaninsurancecoordinator: boolean = true;
+
   buttonclick(f, e) {
-    if (f == "insurance") {
-      this.postData.SelectedPayVenue = "Insurance + PhilHealth";
+    if (f == 'insurance') {
+      this.postData.SelectedPayVenue = 'Insurance + PhilHealth';
       this.areyouaninsurancecoordinator = true;
-    }else if (f == "philhealth") {
-      this.postData.SelectedPayVenue = "PhilHealth Only";
+    } else if (f == 'philhealth') {
+      this.postData.SelectedPayVenue = 'PhilHealth Only';
       this.areyouaninsurancecoordinator = true;
-    }else if (f == "charity") {
-      this.postData.SelectedPayVenue = "Charity";
+    } else if (f == 'charity') {
+      this.postData.SelectedPayVenue = 'Charity';
       this.areyouaninsurancecoordinator = e;
-    }else if (f == "Personalphilhealth") {
-      this.postData.SelectedPayVenue = "Personal + Philhealth";
+    } else if (f == 'Personalphilhealth') {
+      this.postData.SelectedPayVenue = 'Personal + PhilHealth';
       this.areyouaninsurancecoordinator = true;
     }
-    
-    if (f == "insurance" && e == true) {
+
+    if (f == 'insurance' && e == true) {
       this.personalphilhealth = this.charity = this.philhealth = false;
-    } else if (f == "insurance" && e == false) {
+    } else if (f == 'insurance' && e == false) {
       this.personalphilhealth = this.insurance = this.charity = this.philhealth = false;
     }
-    if (f == "charity" && e == true) {
+    if (f == 'charity' && e == true) {
       this.personalphilhealth = this.insurance = this.philhealth = false;
-    } else if (f == "charity" && e == false) {
+    } else if (f == 'charity' && e == false) {
       this.personalphilhealth = this.insurance = this.charity = this.philhealth = false;
     }
-    if (f == "philhealth" && e == true) {
+    if (f == 'philhealth' && e == true) {
       this.personalphilhealth = this.charity = this.insurance = false;
-    } else if (f == "philhealth" && e == false) {
+    } else if (f == 'philhealth' && e == false) {
       this.personalphilhealth = this.insurance = this.charity = this.philhealth = false;
     }
-    if (f == "Personalphilhealth" && e == true) {
-      this.philhealth = this.charity = this.insurance = false ;
-    } else if (f == "Personalphilhealth" && e == false) {
+    if (f == 'Personalphilhealth' && e == true) {
+      this.philhealth = this.charity = this.insurance = false;
+    } else if (f == 'Personalphilhealth' && e == false) {
       this.personalphilhealth = this.insurance = this.charity = this.philhealth = false;
     }
-    
+
     if (
       this.insurance == true ||
       this.charity == true ||
-      this.philhealth == true || this.personalphilhealth == true
+      this.philhealth == true ||
+      this.personalphilhealth == true
     ) {
       this.toPFMbtn = true;
     } else {
       this.toPFMbtn = false;
     }
   }
+
   modifyProfFee() {
     this.btnclose = false;
     this.ifShowSummary = false;
   }
+
   modifyProfFeeClose() {
     this.btnclose = true;
     this.ifShowSummary = true;
   }
+
   moreorless(data) {
     this.moreOrLess = !data;
   }
