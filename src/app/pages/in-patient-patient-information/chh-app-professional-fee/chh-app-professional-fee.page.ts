@@ -161,6 +161,19 @@ export class ChhAppProfessionalFeePage implements OnInit {
     //console.log(this.data);
 
     this.payvenueN = this.data[0].payvenue;
+
+    console.log(this.data[0].selected_payvenue);
+    
+
+     if(this.data[0].selected_payvenue == "Charity"){
+      this.payvenueN  = "xyz";
+    }
+
+
+
+
+
+
     this.payvenue = this.data[0].payvenue;
     this.payvenueTxt = this.data[0].selected_payvenue;
 

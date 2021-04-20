@@ -130,7 +130,16 @@ export class TransactionSummaryPage implements OnInit {
     }
     this.payvenueN = this.postData.PayVenue;
 
+    if(this.postData.SelectedPayVenue == "Charity"){
+      this.payvenueN  = "xyz";
+    }
 
+
+    console.log(this.postData);
+    
+    console.log("data1 :" + this.data1);
+    console.log("withVatN :" + this.withVatN);
+    console.log("payvenueN :" + this.payvenueN);
     
     
 
@@ -204,8 +213,7 @@ export class TransactionSummaryPage implements OnInit {
       this.data[0].payvenue == 'A'
     ) {
       this.postData.OldProfFee = this.data.doctor_prof_fee;
-
-      
+      console.log(this.postData);
 
       this.doctorService.updatePF(this.postData).subscribe(
         (res: any) => {

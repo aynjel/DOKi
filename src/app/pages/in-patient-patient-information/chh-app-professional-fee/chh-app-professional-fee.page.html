@@ -226,6 +226,11 @@ ______             _     _                        _   _                   _
         <ion-text class="fs-12 ion-text-wrap" color="danger">No professional fee will be collected from this patient.</ion-text>
       </li>
     </ul>
+    <ul *ngIf="payvenueN == 'xyz'">
+      <li class="lineheight-80">
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Receivable: PhilHealth (if patient is a member)</ion-text>
+      </li>
+    </ul>
   </div>
 
   <div *ngIf="ifShowSummary == false">
@@ -602,7 +607,11 @@ ______             _     _                       ______             _
               <ion-text class="fs-12 ion-text-wrap" color="danger">No professional fee will be collected from this patient.</ion-text>
             </li>
           </ul>
-
+          <ul *ngIf="payvenueN == 'xyz'">
+            <li class="lineheight-80">
+              <ion-text class="fs-12 ion-text-wrap" color="danger">Receivable: PhilHealth (if patient is a member)</ion-text>
+            </li>
+          </ul>
           <ion-button
             color="mango"
             size="default"

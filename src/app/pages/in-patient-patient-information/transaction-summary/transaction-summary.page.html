@@ -168,6 +168,14 @@
       <ion-text class="fs-12 ion-text-wrap" color="danger">Receivable: PhilHealth </ion-text>
     </li>
   </ul>
+
+
+  
+  <ul *ngIf="payvenueN == 'xyz'">
+    <li class="lineheight-80">
+      <ion-text class="fs-12 ion-text-wrap" color="danger">Receivable: PhilHealth (if patient is a member)</ion-text>
+    </li>
+  </ul>
   <ul *ngIf="payvenueN == 'N'">
     <li class="lineheight-80">
       <ion-text class="fs-12 ion-text-wrap" color="danger">Patient was not seen so no professional fee will be collected from this patient.</ion-text>
