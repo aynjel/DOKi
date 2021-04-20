@@ -1,28 +1,27 @@
 :root {
-    --ion-safe-area-top: 25px;
-    --ion-safe-area-bottom: 27px;
-    }
-    .ion-slide {
-    height: calc(110vh - 135px);
-    } 
-    .chh-bg{
-        --background: #275228 !important;
-      }
-
-
-
-      .stickem{
-        --background:red; 
-        z-index: 99999;
-
-      }
-
-ion-list-header{
-  
-  position:sticky;
-   top:0px;
-   z-index: 10px ;
+  --ion-safe-area-top: 25px;
+  --ion-safe-area-bottom: 27px;
 }
+
+.ion-slide {
+  height: calc(110vh - 135px);
+}
+
+.chh-bg {
+  --background: #275228 !important;
+}
+
+.stickem {
+  --background: red;
+  z-index: 99999;
+}
+
+ion-list-header {
+  position: sticky;
+  top: 0px;
+  z-index: 10px;
+}
+
 ion-fab-button[data-desc] {
   position: relative;
 }
@@ -37,7 +36,8 @@ ion-fab-button[data-desc]::after {
   padding: 9px;
   border-radius: 15px;
   color: white;
-  box-shadow: 0 3px 5px -1px rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12);
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
 }
 
 /* Custom Skeleton Line Height and Margin */
@@ -49,8 +49,6 @@ ion-fab-button[data-desc]::after {
   margin-bottom: 10px;
 }
 
-
-
-.card-margin{
-  margin:10px;
+.card-margin {
+  margin: 10px;
 }

@@ -10,13 +10,25 @@ ___  ___        _      _  _              _   _                   _
 <ion-header mode="md" class="ion-no-border" *ngIf="!isDesktop">
   <ion-toolbar color="mango">
     <ion-title> Professional Fee </ion-title>
-    <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
-      <ion-button routerLink="{{routerLinkBack}}" routerDirection="backwards" color="chh-css-primary2" *ngIf="btnclose">Close&nbsp;
+    <ion-buttons
+      slot="end"
+      class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated"
+    >
+      <ion-button
+        routerLink="{{routerLinkBack}}"
+        routerDirection="backwards"
+        color="chh-css-primary2"
+        *ngIf="btnclose"
+        >Close&nbsp;
         <ion-icon name="close-outline"></ion-icon>
       </ion-button>
 
-
-      <ion-button  routerDirection="backwards" color="chh-css-primary2" *ngIf="!btnclose" (click)="modifyProfFeeClose()">Close&nbsp;
+      <ion-button
+        routerDirection="backwards"
+        color="chh-css-primary2"
+        *ngIf="!btnclose"
+        (click)="modifyProfFeeClose()"
+        >Close&nbsp;
         <ion-icon name="close-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -33,7 +45,9 @@ ______             _     _                        _   _                   _
                                     | |                                                 
                                     |_|                                                 
 -->
-<app-chh-app-desktop-navigation *ngIf="isDesktop"></app-chh-app-desktop-navigation>
+<app-chh-app-desktop-navigation
+  *ngIf="isDesktop"
+></app-chh-app-desktop-navigation>
 
 <!--
   ___  ___        _      _  _             ______             _        
@@ -49,16 +63,31 @@ ______             _     _                        _   _                   _
 <ion-content *ngIf="!isDesktop">
   <div *ngIf="ifShowSummary == true">
     <img src="assets/img/online-transactions.png" />
-    <ion-item lines="none" class="ion-no-margin"><b>Patient Details</b>
+    <ion-item lines="none" class="ion-no-margin"
+      ><b>Patient Details</b>
 
-      <ion-badge color="warning" slot="end" (click)="moreorless(true)" *ngIf="moreOrLess">more..</ion-badge>
-      <ion-badge color="warning" slot="end" (click)="moreorless(false)" *ngIf="!moreOrLess">less..</ion-badge>
+      <ion-badge
+        color="warning"
+        slot="end"
+        (click)="moreorless(true)"
+        *ngIf="moreOrLess"
+        >more..</ion-badge
+      >
+      <ion-badge
+        color="warning"
+        slot="end"
+        (click)="moreorless(false)"
+        *ngIf="!moreOrLess"
+        >less..</ion-badge
+      >
     </ion-item>
     <ion-item class="ion-no-margin" *ngIf="!moreOrLess">
       <ion-grid *ngFor="let x of data">
         <ion-row>
           <ion-col size="5"><b>Name:</b> </ion-col>
-          <ion-col size="7"><b>{{x.first_name}} {{x.middle_name}}. {{x.last_name}}</b></ion-col>
+          <ion-col size="7"
+            ><b>{{x.first_name}} {{x.middle_name}}. {{x.last_name}}</b></ion-col
+          >
         </ion-row>
         <ion-row>
           <ion-col size="5">Hospital Site:</ion-col>
@@ -82,7 +111,9 @@ ______             _     _                        _   _                   _
       <ion-grid *ngFor="let x of data">
         <ion-row>
           <ion-col size="5"><b>Name:</b> </ion-col>
-          <ion-col size="7"><b>{{x.first_name}} {{x.middle_name}}. {{x.last_name}}</b></ion-col>
+          <ion-col size="7"
+            ><b>{{x.first_name}} {{x.middle_name}}. {{x.last_name}}</b></ion-col
+          >
         </ion-row>
         <ion-row>
           <ion-col size="12">{{site}} | {{x.room_no}}</ion-col>
@@ -99,7 +130,9 @@ ______             _     _                        _   _                   _
           </ion-col>
           <ion-col size="7">
             <b>
-              <ion-text color="danger">&#8369; {{data1 | number}} | <i>{{withVat}}</i></ion-text>
+              <ion-text color="danger"
+                >&#8369; {{data1 | number}} {{withVat}}</ion-text
+              >
             </b>
           </ion-col>
         </ion-row>
@@ -118,32 +151,39 @@ ______             _     _                        _   _                   _
 
     <ul *ngIf="data1 <= 0 ">
       <li class="lineheight-80">
-        <ion-text class="fs-12 ion-text-wrap" color="danger">Accept insurance rate.</ion-text>
+        <ion-text class="fs-12 ion-text-wrap" color="danger"
+          >Accept insurance rate.</ion-text
+        >
       </li>
       <li class="lineheight-80 paddingtop-10">
-        <ion-text class="fs-12 ion-text-wrap" color="danger">No additional professional fee charge to your patient.
+        <ion-text class="fs-12 ion-text-wrap" color="danger"
+          >No additional professional fee charge to your patient.
         </ion-text>
       </li>
-
     </ul>
     <ul *ngIf="data1 >= 1 ">
       <li class="lineheight-80">
-        <ion-text class="fs-12 ion-text-wrap" color="danger">This is the overall professional fee that will be charged
-          to your
-          patient.</ion-text>
+        <ion-text class="fs-12 ion-text-wrap" color="danger"
+          >This is the overall professional fee that will be charged to your
+          patient.</ion-text
+        >
       </li>
       <li class="lineheight-80 paddingtop-10">
-        <ion-text class="fs-12 ion-text-wrap" color="danger">Net amount will vary after deducting your patient's
-          PhilHealth case
-          coverage.</ion-text>
+        <ion-text class="fs-12 ion-text-wrap" color="danger"
+          >Net amount will vary after deducting your patient's PhilHealth case
+          coverage.</ion-text
+        >
       </li>
       <li *ngIf="withVat == 'Yes'" class="lineheight-80 paddingtop-10">
-        <ion-text class="fs-12 ion-text-wrap" color="danger">VAT percentage will be added to your overall professional
-          fee.</ion-text>
+        <ion-text class="fs-12 ion-text-wrap" color="danger"
+          >VAT percentage will be added to your overall professional
+          fee.</ion-text
+        >
       </li>
       <li *ngIf="withVat == 'No'" class="lineheight-80 paddingtop-10">
         <ion-text class="fs-12 ion-text-wrap" color="danger">
-          No VAT will be added to your overall professional fee.</ion-text>
+          No VAT will be added to your overall professional fee.</ion-text
+        >
       </li>
     </ul>
   </div>
@@ -153,41 +193,72 @@ ______             _     _                        _   _                   _
     </app-chh-app-patient-header>
     <ion-card mode="ios" *ngIf="areyouaninsurancecoordinator">
       <ion-item lines="none">
-        <ion-label class="ion-text-wrap">Are you an Insurance Coordinator?</ion-label>
-        <ion-checkbox color="mango" checked="false" [(ngModel)]="isCoordinator"></ion-checkbox>
+        <ion-label class="ion-text-wrap"
+          >Are you an Insurance Coordinator?</ion-label
+        >
+        <ion-checkbox
+          color="mango"
+          checked="false"
+          [(ngModel)]="isCoordinator"
+        ></ion-checkbox>
       </ion-item>
     </ion-card>
     <ion-card mode="ios">
       <ion-item lines="none">
         <ion-label class="ion-text-wrap">Have you seen this Patient?</ion-label>
-        <ion-checkbox color="mango" value="isPatientSeen" (click)="isPatientSeenf('isPatientSeen',isPatientSeen)"
-          [(ngModel)]="isPatientSeen"></ion-checkbox>
+        <ion-checkbox
+          color="mango"
+          value="isPatientSeen"
+          (click)="isPatientSeenf('isPatientSeen',isPatientSeen)"
+          [(ngModel)]="isPatientSeen"
+        ></ion-checkbox>
       </ion-item>
     </ion-card>
     <ion-card mode="ios">
       <ion-list [class.disabled]="disabledselection">
-        <ion-list-header>Select Pay Venue
+        <ion-list-header
+          >Select Pay Venue
           <ion-icon slot="end" name="wallet-outline"></ion-icon>
         </ion-list-header>
         <ion-item lines="none">
           <ion-label>Insurance + PhilHealth</ion-label>
-          <ion-checkbox color="mango" slot="end" value="insurance" [(ngModel)]="insurance"
-            (click)="buttonclick('insurance',insurance)"></ion-checkbox>
+          <ion-checkbox
+            color="mango"
+            slot="end"
+            value="insurance"
+            [(ngModel)]="insurance"
+            (click)="buttonclick('insurance',insurance)"
+          ></ion-checkbox>
         </ion-item>
         <ion-item lines="none">
           <ion-label>Personal + PhilHealth</ion-label>
-          <ion-checkbox color="mango" slot="end" value="philhealth" [(ngModel)]="personalphilhealth"
-            (click)="buttonclick('Personalphilhealth',personalphilhealth)"></ion-checkbox>
+          <ion-checkbox
+            color="mango"
+            slot="end"
+            value="philhealth"
+            [(ngModel)]="personalphilhealth"
+            (click)="buttonclick('Personalphilhealth',personalphilhealth)"
+          ></ion-checkbox>
         </ion-item>
         <ion-item lines="none">
           <ion-label>PhilHealth Only</ion-label>
-          <ion-checkbox color="mango" slot="end" value="philhealth" [(ngModel)]="philhealth"
-            (click)="buttonclick('philhealth',philhealth)"></ion-checkbox>
+          <ion-checkbox
+            color="mango"
+            slot="end"
+            value="philhealth"
+            [(ngModel)]="philhealth"
+            (click)="buttonclick('philhealth',philhealth)"
+          ></ion-checkbox>
         </ion-item>
         <ion-item lines="none">
           <ion-label>Charity</ion-label>
-          <ion-checkbox color="mango" slot="end" value="charity" [(ngModel)]="charity"
-            (click)="buttonclick('charity',charity)"></ion-checkbox>
+          <ion-checkbox
+            color="mango"
+            slot="end"
+            value="charity"
+            [(ngModel)]="charity"
+            (click)="buttonclick('charity',charity)"
+          ></ion-checkbox>
         </ion-item>
       </ion-list>
     </ion-card>
@@ -282,18 +353,38 @@ ______             _     _                        _   _                   _
         <ion-row>
           <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
           <ion-col size-xs="12" size-md="4" size-lg="4">
-            <ion-progress-bar value="0.5" color="warning" *ngIf="ifShowSummary == false"></ion-progress-bar>
+            <ion-progress-bar
+              value="0.5"
+              color="warning"
+              *ngIf="ifShowSummary == false"
+            ></ion-progress-bar>
           </ion-col>
           <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
         </ion-row>
         <ion-row>
           <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
           <ion-col size-xs="12" size-md="4" size-lg="4">
-            <ion-button color="mango" size="default" expand="block" shape="round" [disabled]="toPFMbtn"
-              (click)="redirecto()" *ngIf="ifShowSummary == false">Next</ion-button>
+            <ion-button
+              color="mango"
+              size="default"
+              expand="block"
+              shape="round"
+              [disabled]="toPFMbtn"
+              (click)="redirecto()"
+              *ngIf="ifShowSummary == false"
+              >Next</ion-button
+            >
 
-            <ion-button color="mango" size="default" expand="block" shape="round" (click)="modifyProfFee()"
-              *ngIf="ifShowSummary" [disabled]="modifybtn">Modify</ion-button>
+            <ion-button
+              color="mango"
+              size="default"
+              expand="block"
+              shape="round"
+              (click)="modifyProfFee()"
+              *ngIf="ifShowSummary"
+              [disabled]="modifybtn"
+              >Modify</ion-button
+            >
           </ion-col>
           <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
         </ion-row>
@@ -328,7 +419,10 @@ ______             _     _                       ______             _
     <ion-row>
       <ion-col size-lg="1" size-md="12"></ion-col>
       <ion-col size-lg="3" size-md="6">
-        <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted"></app-chh-app-patient-header>
+        <app-chh-app-patient-header
+          [data]="data"
+          [dateAdmitted]="dateAdmitted"
+        ></app-chh-app-patient-header>
       </ion-col>
       <ion-col size-lg="4" size-md="6">
         <div *ngIf="ifShowSummary == true">
@@ -338,7 +432,11 @@ ______             _     _                       ______             _
             <ion-grid *ngFor="let x of data">
               <ion-row>
                 <ion-col size="5"><b>Name:</b> </ion-col>
-                <ion-col size="7"><b>{{x.first_name}} {{x.middle_name}}. {{x.last_name}}</b></ion-col>
+                <ion-col size="7"
+                  ><b
+                    >{{x.first_name}} {{x.middle_name}}. {{x.last_name}}</b
+                  ></ion-col
+                >
               </ion-row>
               <ion-row>
                 <ion-col size="5">Hospital Site:</ion-col>
@@ -367,9 +465,13 @@ ______             _     _                       ______             _
                     <ion-text color="danger">Amount:</ion-text>
                   </b>
                 </ion-col>
-                <ion-col size="7" color="danger"><b>
-                    <ion-text color="danger">&#8369; {{data1 | number}} | {{withVat}}</ion-text>
-                  </b></ion-col>
+                <ion-col size="7" color="danger"
+                  ><b>
+                    <ion-text color="danger"
+                      >&#8369; {{data1 | number}} {{withVat}}</ion-text
+                    >
+                  </b></ion-col
+                >
               </ion-row>
               <ion-row>
                 <ion-col size="5">Pay Venue: </ion-col>
@@ -385,80 +487,133 @@ ______             _     _                       ______             _
           </ion-item>
           <ul>
             <li class="lineheight-80" style="line-height: 80%">
-              <ion-text class="fs-12 ion-text-wrap" color="danger">This is the overall professional fee that will be
-                charged to
-                your patient.</ion-text>
+              <ion-text class="fs-12 ion-text-wrap" color="danger"
+                >This is the overall professional fee that will be charged to
+                your patient.</ion-text
+              >
             </li>
             <li class="lineheight-80 paddingtop-10">
-              <ion-text class="fs-12 ion-text-wrap" color="danger">Net amount will vary after deducting your patient's
-                PhilHealth
-                case coverage.</ion-text>
+              <ion-text class="fs-12 ion-text-wrap" color="danger"
+                >Net amount will vary after deducting your patient's PhilHealth
+                case coverage.</ion-text
+              >
             </li>
             <li *ngIf="withVat == 'Yes'" class="lineheight-80 paddingtop-10">
-              <ion-text class="fs-12 ion-text-wrap" color="danger">VAT percentage will be added to your overall
-                professional
-                fee.</ion-text>
+              <ion-text class="fs-12 ion-text-wrap" color="danger"
+                >VAT percentage will be added to your overall professional
+                fee.</ion-text
+              >
             </li>
             <li *ngIf="withVat == 'No'" class="lineheight-80 paddingtop-10">
               <ion-text class="fs-12 ion-text-wrap" color="danger">
-                No VAT will be added to your overall professional fee.</ion-text>
+                No VAT will be added to your overall professional fee.</ion-text
+              >
             </li>
           </ul>
 
-          <ion-button color="mango" size="default" expand="block" shape="round" (click)="modifyProfFee()"
-            *ngIf="ifShowSummary" [disabled]="modifybtn">Modify</ion-button>
+          <ion-button
+            color="mango"
+            size="default"
+            expand="block"
+            shape="round"
+            (click)="modifyProfFee()"
+            *ngIf="ifShowSummary"
+            [disabled]="modifybtn"
+            >Modify</ion-button
+          >
         </div>
 
         <div *ngIf="ifShowSummary == false">
           <ion-card mode="ios">
             <ion-item>
-              <ion-label class="ion-text-wrap">Are you an Insurance Coordinator?</ion-label>
-              <ion-checkbox color="mango" checked="false" [(ngModel)]="isCoordinator"></ion-checkbox>
+              <ion-label class="ion-text-wrap"
+                >Are you an Insurance Coordinator?</ion-label
+              >
+              <ion-checkbox
+                color="mango"
+                checked="false"
+                [(ngModel)]="isCoordinator"
+              ></ion-checkbox>
             </ion-item>
           </ion-card>
           <ion-card mode="ios">
             <ion-item>
-              <ion-label class="ion-text-wrap">Have you seen this Patient?</ion-label>
-              <ion-checkbox color="mango" value="isPatientSeen" (click)="isPatientSeenf('isPatientSeen',isPatientSeen)"
-                [(ngModel)]="isPatientSeen"></ion-checkbox>
+              <ion-label class="ion-text-wrap"
+                >Have you seen this Patient?</ion-label
+              >
+              <ion-checkbox
+                color="mango"
+                value="isPatientSeen"
+                (click)="isPatientSeenf('isPatientSeen',isPatientSeen)"
+                [(ngModel)]="isPatientSeen"
+              ></ion-checkbox>
             </ion-item>
           </ion-card>
           <ion-card mode="ios">
             <ion-list [class.disabled]="disabledselection">
-              <ion-list-header>Select Pay Venue
+              <ion-list-header
+                >Select Pay Venue
                 <ion-icon slot="end" name="wallet-outline"></ion-icon>
               </ion-list-header>
               <ion-item lines="none">
                 <ion-label>Insurance + PhilHealth</ion-label>
-                <ion-checkbox color="mango" slot="end" value="insurance" [(ngModel)]="insurance"
-                  (click)="buttonclick('insurance',insurance)"></ion-checkbox>
+                <ion-checkbox
+                  color="mango"
+                  slot="end"
+                  value="insurance"
+                  [(ngModel)]="insurance"
+                  (click)="buttonclick('insurance',insurance)"
+                ></ion-checkbox>
               </ion-item>
               <ion-item lines="none">
                 <ion-label>Personal + PhilHealth</ion-label>
-                <ion-checkbox color="mango" slot="end" value="philhealth" [(ngModel)]="personalphilhealth"
-                  (click)="buttonclick('Personalphilhealth',personalphilhealth)"></ion-checkbox>
+                <ion-checkbox
+                  color="mango"
+                  slot="end"
+                  value="philhealth"
+                  [(ngModel)]="personalphilhealth"
+                  (click)="buttonclick('Personalphilhealth',personalphilhealth)"
+                ></ion-checkbox>
               </ion-item>
               <ion-item lines="none">
                 <ion-label>PhilHealth Only</ion-label>
-                <ion-checkbox color="mango" slot="end" value="philhealth" [(ngModel)]="philhealth"
-                  (click)="buttonclick('philhealth',philhealth)"></ion-checkbox>
+                <ion-checkbox
+                  color="mango"
+                  slot="end"
+                  value="philhealth"
+                  [(ngModel)]="philhealth"
+                  (click)="buttonclick('philhealth',philhealth)"
+                ></ion-checkbox>
               </ion-item>
               <ion-item lines="none">
                 <ion-label>Charity</ion-label>
-                <ion-checkbox color="mango" slot="end" value="charity" [(ngModel)]="charity"
-                  (click)="buttonclick('charity',charity)"></ion-checkbox>
+                <ion-checkbox
+                  color="mango"
+                  slot="end"
+                  value="charity"
+                  [(ngModel)]="charity"
+                  (click)="buttonclick('charity',charity)"
+                ></ion-checkbox>
               </ion-item>
             </ion-list>
           </ion-card>
 
-          <ion-button color="mango" size="default" expand="block" shape="round" [disabled]="toPFMbtn"
-            (click)="redirecto()" *ngIf="ifShowSummary == false">Next</ion-button>
+          <ion-button
+            color="mango"
+            size="default"
+            expand="block"
+            shape="round"
+            [disabled]="toPFMbtn"
+            (click)="redirecto()"
+            *ngIf="ifShowSummary == false"
+            >Next</ion-button
+          >
         </div>
       </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
-        <!-- 
+<!-- 
     
     <ion-grid    class="ion-no-padding " *ngIf="isDesktop && showSelection">
       <ion-row >
@@ -504,7 +659,6 @@ ______             _     _                       ______             _
       </ion-row>
     </ion-grid>
      -->
-
 
 <ion-footer class="ion-no-border" *ngIf="isDesktop">
   <div class="footer tab-font-family" *ngIf="isDesktop">

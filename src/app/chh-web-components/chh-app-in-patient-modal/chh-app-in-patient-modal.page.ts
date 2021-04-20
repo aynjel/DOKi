@@ -1,41 +1,44 @@
-import { Component, OnInit, Input,ViewChild, ViewContainerRef,  ComponentFactoryResolver } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  ViewContainerRef,
+  ComponentFactoryResolver,
+} from '@angular/core';
 
+import { ModalController, AlertController } from '@ionic/angular';
+import { ChhAppFeePage } from '../chh-app-fee/chh-app-fee.page';
+import { from } from 'rxjs';
+import { PopoverController } from '@ionic/angular';
+import { timeStamp } from 'console';
+import { DoctorService } from 'src/app/services/doctor/doctor.service';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { LoginData } from '../../models/login-data.model';
+import { FunctionsService } from '../../shared/functions/functions.service';
+import { PatientService } from 'src/app/services/patient/patient.service';
+import { logWarnings } from 'protractor/built/driverProviders';
 
-import { ModalController, AlertController } from "@ionic/angular";
-import { ChhAppFeePage } from "../chh-app-fee/chh-app-fee.page";
-import { from } from "rxjs";
-import { PopoverController } from "@ionic/angular";
-import { timeStamp } from "console";
-import { DoctorService } from "src/app/services/doctor/doctor.service";
-import { GoogleAnalyticsService } from "ngx-google-analytics";
-import { AuthService } from "src/app/services/auth/auth.service";
-import { LoginData } from "../../models/login-data.model";
-import { FunctionsService } from "../../shared/functions/functions.service";
-import { PatientService } from "src/app/services/patient/patient.service";
-import { logWarnings } from "protractor/built/driverProviders";
-
-import { ChhAppBasePage } from "../chh-app-test/chh-app-base/chh-app-base.page";
-import { Messages } from "../../shared/messages";
-import { ScreenSizeService } from "../../services/screen-size/screen-size.service";
-import { ChhAppTestChemistryComponent } from "../chh-app-test/chh-app-test-chemistry/chh-app-test-chemistry.component";
-import { ChhAppTestFecalysisComponent } from "../chh-app-test/chh-app-test-fecalysis/chh-app-test-fecalysis.component";
-import { ChhAppTestSerologyComponent } from "../chh-app-test/chh-app-test-serology/chh-app-test-serology.component";
-
-
-
+import { ChhAppBasePage } from '../chh-app-test/chh-app-base/chh-app-base.page';
+import { Messages } from '../../shared/messages';
+import { ScreenSizeService } from '../../services/screen-size/screen-size.service';
+import { ChhAppTestChemistryComponent } from '../chh-app-test/chh-app-test-chemistry/chh-app-test-chemistry.component';
+import { ChhAppTestFecalysisComponent } from '../chh-app-test/chh-app-test-fecalysis/chh-app-test-fecalysis.component';
+import { ChhAppTestSerologyComponent } from '../chh-app-test/chh-app-test-serology/chh-app-test-serology.component';
 
 @Component({
-  selector: "chh-app-in-patient-modal",
-  templateUrl: "./chh-app-in-patient-modal.page.html",
-  styleUrls: ["./chh-app-in-patient-modal.page.scss"],
+  selector: 'chh-app-in-patient-modal',
+  templateUrl: './chh-app-in-patient-modal.page.html',
+  styleUrls: ['./chh-app-in-patient-modal.page.scss'],
 })
 export class ChhAppInPatientModalPage implements OnInit {
   public logindata: LoginData;
   @Input() data: any;
- @ViewChild('processContainer', {read: ViewContainerRef}) container: ViewContainerRef;
+  @ViewChild('processContainer', { read: ViewContainerRef })
+  container: ViewContainerRef;
   //@ViewChild('processContainer', {read: ViewContainerRef, static: true}) container;
 
-  
   site: any;
   date: any;
   professionalFee: any;
@@ -60,16 +63,16 @@ export class ChhAppInPatientModalPage implements OnInit {
   currentExamList: any;
   currentExamList_filtered: any = [];
   isDesktop: boolean;
-  examListSkeleton:boolean = false;
-  ExamData:any = "";
-  hospitalSite:any;
-  serology:boolean = false;
-  chemistry:boolean = false;
-  fecalysis:boolean = false;
-  cbc:boolean = false;
-  urinalysis:boolean = false;
-  refresher:boolean = true;
-  searchBar:any;
+  examListSkeleton: boolean = false;
+  ExamData: any = '';
+  hospitalSite: any;
+  serology: boolean = false;
+  chemistry: boolean = false;
+  fecalysis: boolean = false;
+  cbc: boolean = false;
+  urinalysis: boolean = false;
+  refresher: boolean = true;
+  searchBar: any;
 
   constructor(
     public modalController: ModalController,
@@ -93,22 +96,23 @@ export class ChhAppInPatientModalPage implements OnInit {
       this.isDesktop = isDesktop;
     });
 
-    this.ClickedRow = function(index){  
-      this.HighlightRow = index;  
-  } 
+    this.ClickedRow = function (index) {
+      this.HighlightRow = index;
+    };
   }
+
   ngAfterViewInit() {
-   // this.loadComponents();
+    // this.loadComponents();
   }
 
   loadComponents() {
-
-
-    const factory = this.componentFactory.resolveComponentFactory(ChhAppTestFecalysisComponent);
-    let  componentRef  = this.container.createComponent(factory);
+    const factory = this.componentFactory.resolveComponentFactory(
+      ChhAppTestFecalysisComponent
+    );
+    let componentRef = this.container.createComponent(factory);
     componentRef.instance.examDetails = this.ExamData;
     componentRef.instance.site = this.hospitalSite;
-/*
+    /*
     let nodeElement = document.getElementById("processContainer");
     let compFactory = this.componentFactory.resolveComponentFactory(ChhAppTestFecalysisComponent);
     let component = compFactory.create(this.container.injector, null, nodeElement);
@@ -116,69 +120,70 @@ export class ChhAppInPatientModalPage implements OnInit {
     component.instance.site = this.hospitalSite;
 */
   }
+
   postData = {
-    AdmisisonNo: "string",
-    DoctorCode: "string",
-    DoctorStatusCode: "string",
+    AdmisisonNo: 'string',
+    DoctorCode: 'string',
+    DoctorStatusCode: 'string',
     ProfFee: 0,
-    DateCreated: "2020-07-01T05:14:48.712Z",
-    site: "string",
-    CreatedBy: "string",
-    Remarks: "string",
-    DoctorMobileNumber: "string",
-    BillingMobileNumber: "string",
-    RoomNumber: "string",
+    DateCreated: '2020-07-01T05:14:48.712Z',
+    site: 'string',
+    CreatedBy: 'string',
+    Remarks: 'string',
+    DoctorMobileNumber: 'string',
+    BillingMobileNumber: 'string',
+    RoomNumber: 'string',
     //  PatientSite: "string",
     SmsGateWay: [],
-    OldProfFee: "string",
+    OldProfFee: 'string',
   };
 
   coDoctorData = {
-    first_name: "string",
-    last_name: "string",
-    status: "string",
-    mobile_no: "string",
-    dept_short_desc: "string",
+    first_name: 'string',
+    last_name: 'string',
+    status: 'string',
+    mobile_no: 'string',
+    dept_short_desc: 'string',
   };
-  updateDisplay(data:boolean){
-    if(data){
+
+  updateDisplay(data: boolean) {
+    if (data) {
       this.refresher = !this.refresher;
-    }else{
-      setTimeout( ()=> this.refresher=true,50);
+    } else {
+      setTimeout(() => (this.refresher = true), 50);
     }
   }
-  filterList(){
 
+  filterList() {
     this.currentExamList_filtered = [];
     let temp_testname;
     let temp_examtype;
     let temp_exam;
-    let temp_searcbar
-    
-    this.currentExamList.forEach(element => {
+    let temp_searcbar;
+
+    this.currentExamList.forEach((element) => {
       temp_testname = element.Test_Name.toLowerCase();
       temp_examtype = element.Exam.toLowerCase();
       temp_exam = element.ExamType.toLowerCase();
       temp_searcbar = this.searchBar.toLowerCase();
-        if( 
-            (temp_testname.search(temp_searcbar) >= 0) || 
-            (temp_examtype.search(temp_searcbar) >= 0) || 
-            (temp_exam.search(temp_searcbar) >= 0)
-          ){
-          this.currentExamList_filtered.push(element);    
-        }
+      if (
+        temp_testname.search(temp_searcbar) >= 0 ||
+        temp_examtype.search(temp_searcbar) >= 0 ||
+        temp_exam.search(temp_searcbar) >= 0
+      ) {
+        this.currentExamList_filtered.push(element);
+      }
     });
-
-    
   }
+
   async modalUpdate(header, message) {
     const alert = await this.alertController.create({
-      cssClass: "my-custom-class",
+      cssClass: 'my-custom-class',
       header: header,
       message: message,
       buttons: [
         {
-          text: "Okay",
+          text: 'Okay',
           handler: () => {
             this.modalController.dismiss();
           },
@@ -187,74 +192,64 @@ export class ChhAppInPatientModalPage implements OnInit {
     });
     await alert.present();
   }
-  HighlightRow:number;
-  ClickedRow:any; 
-  async examDetails(data: any, site:any,i) {
+  HighlightRow: number;
+  ClickedRow: any;
 
-    this.HighlightRow = i;  
+  async examDetails(data: any, site: any, i) {
+    this.HighlightRow = i;
     this.ExamData = data;
     this.hospitalSite = site;
 
-    
-    if(!this.isDesktop){
-
-      
+    if (!this.isDesktop) {
       const modal = await this._modalController.create({
         component: ChhAppBasePage,
-        componentProps: { ExamDetails: data,Site:site },
-        cssClass: "my-custom-modal-inpatient-css",
+        componentProps: { ExamDetails: data, Site: site },
+        cssClass: 'my-custom-modal-inpatient-css',
       });
       modal.present();
-        return await modal.onDidDismiss().then((data: any) => {
-      });
-    }else{
-
-      
-      if(this.ExamData.Exam == 'Serology' ){
+      return await modal.onDidDismiss().then((data: any) => {});
+    } else {
+      if (this.ExamData.Exam == 'Serology') {
         this.chemistry = false;
         this.serology = true;
         this.fecalysis = false;
         this.urinalysis = false;
         this.cbc = false;
-      }else if(this.ExamData.Exam == 'Chemistry'){
+      } else if (this.ExamData.Exam == 'Chemistry') {
         this.chemistry = true;
         this.serology = false;
         this.fecalysis = false;
         this.urinalysis = false;
         this.cbc = false;
-      }else if(this.ExamData.Exam == 'Fecalysis'){
+      } else if (this.ExamData.Exam == 'Fecalysis') {
         this.chemistry = false;
         this.serology = false;
         this.fecalysis = true;
         this.urinalysis = false;
         this.cbc = false;
-      }else if(this.ExamData.Exam == 'Urinalysis'){
+      } else if (this.ExamData.Exam == 'Urinalysis') {
         this.chemistry = false;
         this.serology = false;
         this.fecalysis = false;
         this.urinalysis = true;
         this.cbc = false;
-      }else if(this.ExamData.Exam == 'Hematology' && this.ExamData.ExamType == 'CBC'){
+      } else if (
+        this.ExamData.Exam == 'Hematology' &&
+        this.ExamData.ExamType == 'CBC'
+      ) {
         this.chemistry = false;
         this.serology = false;
         this.fecalysis = false;
         this.urinalysis = false;
-        this.cbc = true
+        this.cbc = true;
       }
 
-
-      
       this.updateDisplay(true);
       this.updateDisplay(false);
-     // this.loadComponents();
+      // this.loadComponents();
     }
-
- 
-    
-    
-    
-
   }
+
   getExamList(data) {
     this.ionSkeleton = true;
     var date1 = new Date(this.data.admission_date);
@@ -263,7 +258,6 @@ export class ChhAppInPatientModalPage implements OnInit {
     this.examListSkeleton = true;
     this.patientService.getCebuExamList(data).subscribe(
       (res: any) => {
-
         res.forEach((element) => {
           var date = new Date(element.RequestDateTime);
           var seconds = date.getTime() / 1000; //1440516958
@@ -283,7 +277,6 @@ export class ChhAppInPatientModalPage implements OnInit {
         //console.log(this.currentExamList);
       },
       (error) => {
-        
         this.examListSkeleton = false;
       },
       () => {
@@ -291,36 +284,34 @@ export class ChhAppInPatientModalPage implements OnInit {
       }
     );
   }
-  ngOnInit() {
 
-    
+  ngOnInit() {
     let d = new Date(this.data.admission_date);
     this.dateAdmitted = d.toUTCString();
     this.$gaService.pageView(
-      "/In-Patient/Patient Details",
-      "Patient Details Modal"
+      '/In-Patient/Patient Details',
+      'Patient Details Modal'
     );
     let logindata = <LoginData>this.authService.userData$.getValue();
     let dr_name = logindata[0].last_name;
     this.postData.DoctorMobileNumber = logindata[0].mobile_no;
-    this.$gaService.event("Patient Information", "User Flow", dr_name);
+    this.$gaService.event('Patient Information', 'User Flow', dr_name);
     this.getExamList(this.data.patient_no);
-
 
     /*this.data.admission_date = this.functionsService.explodeDate(
       this.data.admission_date
     );*/
-    if (this.data.site == "C") {
-      this.site = "CHHC";
+    if (this.data.site == 'C') {
+      this.site = 'CHHC';
       //this.postData.PatientSite = "CEBU";
-      this.postData.BillingMobileNumber = atob(localStorage.getItem("C"));
+      this.postData.BillingMobileNumber = atob(localStorage.getItem('C'));
     } else {
-      this.site = "CHHM";
+      this.site = 'CHHM';
       //this.postData.PatientSite = "MANDAUE";
-      this.postData.BillingMobileNumber = atob(localStorage.getItem("M"));
+      this.postData.BillingMobileNumber = atob(localStorage.getItem('M'));
     }
     this.postData.RoomNumber = this.data.room_no;
-    let smsgateway = JSON.parse(localStorage.getItem("smsGateway"));
+    let smsgateway = JSON.parse(localStorage.getItem('smsGateway'));
     Object.keys(smsgateway).forEach((key) => {
       var value = smsgateway[key];
       let sms =
@@ -335,9 +326,9 @@ export class ChhAppInPatientModalPage implements OnInit {
     this.remarks = this.data.remarks;
 
     if (this.data.doctor_prof_fee == null) {
-      this.method = "POST";
+      this.method = 'POST';
     } else {
-      this.method = "";
+      this.method = '';
     }
     this.postData.AdmisisonNo = this.data.admission_no;
     this.postData.DoctorCode = this.data.dr_code;
@@ -370,9 +361,9 @@ export class ChhAppInPatientModalPage implements OnInit {
         }
         //this.functionsService.logToConsole(res);
         res.forEach((element) => {
-          if (element.status == "Primary Attending Physician") {
+          if (element.status == 'Primary Attending Physician') {
             coDoctors1.push(element);
-          } else if (element.status == "Co-Manage") {
+          } else if (element.status == 'Co-Manage') {
             coDoctors2.push(element);
           } else {
             coDoctors3.push(element);
@@ -384,7 +375,7 @@ export class ChhAppInPatientModalPage implements OnInit {
       },
       (error) => {
         this.isFetchDone = true;
-        this.functionsService.alert("Server Error", "Okay");
+        this.functionsService.alert('Server Error', 'Okay');
       },
       () => {
         this.isFetchDone = true;
@@ -407,10 +398,10 @@ export class ChhAppInPatientModalPage implements OnInit {
 */
         this.admittingDiagnosis = res[0].admitting_diagnosis2.replace(
           /(\r\n|\n|\r)/gm,
-          "<br />"
+          '<br />'
         );
         this.functionsService.logToConsole(
-          "admittingDiagnosis : " + this.admittingDiagnosis
+          'admittingDiagnosis : ' + this.admittingDiagnosis
         );
         this.admittingDiagnosis1 = this.functionsService.truncateChar(
           res[0].admitting_diagnosis2,
@@ -418,26 +409,26 @@ export class ChhAppInPatientModalPage implements OnInit {
         );
         this.admittingDiagnosis1 = this.admittingDiagnosis1.replace(
           /(\r\n|\n|\r)/gm,
-          "<br />"
+          '<br />'
         );
         this.admittingDiagnosis2 = this.admittingDiagnosis.replace(
           /(,)/gm,
-          ",<br />"
+          ',<br />'
         );
         this.functionsService.logToConsole(
-          "admittingDiagnosis2 : " + this.admittingDiagnosis2
+          'admittingDiagnosis2 : ' + this.admittingDiagnosis2
         );
       },
       (error) => {
         this.isFetchDone = true;
-        this.functionsService.alert("Server Error", "Okay");
+        this.functionsService.alert('Server Error', 'Okay');
       },
       () => {
         this.isFetchDone = true;
       }
     );
     //final diagnosis
-    if (this.data.admission_status == "DN") {
+    if (this.data.admission_status == 'DN') {
       this.doctorService.getFinalDiagnosis(this.data.admission_no).subscribe(
         (res: any) => {
           this.finalDiagnosis = res[0].final_diagnosis;
@@ -446,8 +437,8 @@ export class ChhAppInPatientModalPage implements OnInit {
             50
           );
           this.finalDiagnosis2 = this.finalDiagnosis
-            .replace(/(\r\n|\n|\r)/gm, "")
-            .split(".)");
+            .replace(/(\r\n|\n|\r)/gm, '')
+            .split('.)');
           this.finalDiagnosis2.shift();
           for (let i = 0; i < this.finalDiagnosis2.length - 1; i++) {
             this.finalDiagnosis2[i] = this.finalDiagnosis2[i].substring(
@@ -457,12 +448,12 @@ export class ChhAppInPatientModalPage implements OnInit {
             this.functionsService.logToConsole(this.finalDiagnosis2[i]);
           }
           for (let i = 0; i < this.finalDiagnosis2.length; i++) {
-            this.finalDiagnosis2[i] = i + 1 + ".) " + this.finalDiagnosis2[i];
+            this.finalDiagnosis2[i] = i + 1 + '.) ' + this.finalDiagnosis2[i];
           }
         },
         (error) => {
           this.isFetchDone = true;
-          this.functionsService.alert("Server Error", "Okay");
+          this.functionsService.alert('Server Error', 'Okay');
         },
         () => {
           this.isFetchDone = true;
@@ -470,17 +461,19 @@ export class ChhAppInPatientModalPage implements OnInit {
       );
     }
   }
+
   dateChanged(data1: any) {
     //  this.functionsService.logToConsole("changed data: "+data1);
   }
+
   // Prof Fee Pop Over
   async detail(data: any) {
     //this.functionsService.logToConsole("Detail : " + this.method);
 
     if (this.data.doctor_prof_fee == null) {
-      this.method = "POST";
+      this.method = 'POST';
     } else {
-      this.method = "";
+      this.method = '';
     }
     const popover = await this.popover.create({
       component: ChhAppFeePage,
@@ -501,7 +494,7 @@ export class ChhAppInPatientModalPage implements OnInit {
         this.postData.DateCreated = this.functionsService.getSystemDateTime();
         let x = data.data.method;
         this.postData.ProfFee = data.data.professionalFee;
-        if (x == "POST") {
+        if (x == 'POST') {
           this.doctorService.insertPF(this.postData).subscribe((res: any) => {
             if (res == true) {
               this.professionalFee = data.data.professionalFee;
@@ -511,17 +504,17 @@ export class ChhAppInPatientModalPage implements OnInit {
               this.postData.DateCreated = this.functionsService.getSystemDateTime();
               this.data.doctor_prof_fee = data.data.professionalFee;
               this.modalUpdate(
-                "SUCCESS",
-                "Thank you, Doc! You have successfully SAVED your Professional Fee."
+                'SUCCESS',
+                'Thank you, Dok! You have successfully SAVED your Professional Fee.'
               );
             } else {
               this.functionsService.alert(
-                "SAVING of Professional Fee was Unsuccessful",
-                "Okay"
+                'SAVING of Professional Fee was Unsuccessful',
+                'Okay'
               );
             }
           });
-        } else if (x == "PUT") {
+        } else if (x == 'PUT') {
           this.postData.OldProfFee = this.data.doctor_prof_fee;
           this.doctorService.updatePF(this.postData).subscribe((res: any) => {
             if (res == true) {
@@ -532,18 +525,18 @@ export class ChhAppInPatientModalPage implements OnInit {
               this.postData.DateCreated = this.functionsService.getSystemDateTime();
               this.data.doctor_prof_fee = data.data.professionalFee;
               this.modalUpdate(
-                "SUCCESS",
-                "Successfully UPDATED your Professional Fee."
+                'SUCCESS',
+                'Successfully UPDATED your Professional Fee.'
               );
             } else {
               this.functionsService.alert(
-                "UPDATING of Professional Fee was Unsuccessful",
-                "Okay"
+                'UPDATING of Professional Fee was Unsuccessful',
+                'Okay'
               );
             }
           });
-        } else if (x == "DELETE") {
-          this.functionsService.logToConsole("DELETE: " + this.postData);
+        } else if (x == 'DELETE') {
+          this.functionsService.logToConsole('DELETE: ' + this.postData);
           this.doctorService
             .DeletePf(
               this.postData.AdmisisonNo,
@@ -561,13 +554,13 @@ export class ChhAppInPatientModalPage implements OnInit {
                 this.postData.DateCreated = this.functionsService.getSystemDateTime();
                 this.data.doctor_prof_fee = data.data.professionalFee;
                 this.modalUpdate(
-                  "SUCCESS",
-                  "Successfully DELETED your Professional Fee."
+                  'SUCCESS',
+                  'Successfully DELETED your Professional Fee.'
                 );
               } else {
                 this.functionsService.alert(
-                  "DELETING of Professional Fee was Unsuccessful",
-                  "Okay"
+                  'DELETING of Professional Fee was Unsuccessful',
+                  'Okay'
                 );
               }
             });
