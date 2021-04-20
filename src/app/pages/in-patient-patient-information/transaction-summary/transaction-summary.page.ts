@@ -165,6 +165,7 @@ export class TransactionSummaryPage implements OnInit {
       this.routerLinkBack = this.routerLinkBack3;
     }
   }
+
   ionViewWillEnter() {
     //sessionStorage.removeItem('pfIsPatientSeen');
     //sessionStorage.removeItem('pfInsCoor');
@@ -184,6 +185,7 @@ export class TransactionSummaryPage implements OnInit {
     this.dateAdmitted = d.toUTCString();
   }
   disableSubmit: boolean = false;
+
   postSummary() {
     this.disableSubmit = true;
     if (
@@ -238,6 +240,7 @@ export class TransactionSummaryPage implements OnInit {
       );
     }
   }
+
   async modalUpdate(header, message) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -264,6 +267,7 @@ export class TransactionSummaryPage implements OnInit {
           },
         },
       ],
+      backdropDismiss: false,
     });
     await alert.present();
   }
@@ -271,6 +275,7 @@ export class TransactionSummaryPage implements OnInit {
   moreorless(data) {
     this.moreOrLess = !data;
   }
+
   checkAppearance() {
     let dr_username = atob(localStorage.getItem('username'));
     this.patientService
