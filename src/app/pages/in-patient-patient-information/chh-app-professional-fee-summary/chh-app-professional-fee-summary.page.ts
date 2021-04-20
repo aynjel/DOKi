@@ -320,7 +320,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
 
   finishTransaction() {
     if (this.method == 'Insurance') {
-      if (this.InsurancePF == null) {
+      if (this.InsurancePF <= 0) {
         this.postData.ProfFee = 0;
         this.postData.IsVAT = 'N';
         this.postData.PayVenue = 'X';
@@ -335,7 +335,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
         }
       }
     } else if (this.method == 'Personal-philhealth') {
-      if (this.PersonalPhilhealthPF == null) {
+      if (this.PersonalPhilhealthPF <= 0) {
         this.postData.ProfFee = 0;
         this.postData.IsVAT = 'N';
         this.postData.PayVenue = 'W';

@@ -34,7 +34,21 @@
 
 
 <ion-content>
-  <img *ngIf="!isDesktop" src="assets/img/online-transactions.png">
+
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col size="8" offset="2">
+        <div class="vertical-center">
+          <div class="center">
+            <img
+              src="assets/img/online-transactions.png"
+            
+            />
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <ion-item lines="none" class="ion-no-margin"><b>Patient Details</b>
     <ion-badge color="warning" slot="end" (click)="moreorless(true)" *ngIf="moreOrLess">more..</ion-badge>
     <ion-badge color="warning" slot="end" (click)="moreorless(false)" *ngIf="!moreOrLess">less..</ion-badge>
