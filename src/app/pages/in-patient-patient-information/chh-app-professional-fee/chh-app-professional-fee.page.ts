@@ -224,17 +224,18 @@ export class ChhAppProfessionalFeePage implements OnInit {
       this.router.navigate([this.router.url + '/' + data]);
     } else {
       //console.log("ELSE");
-      this.postData.SelectedPayVenue = 'Patient NOT SEEN';
+      
       if (this.isCoordinator) {
         // console.log(this.isCoordinator);
         this.postData.ProfFee = 0;
         this.postData.IsVAT = 'N';
         this.postData.PayVenue = 'A';
-
+        this.postData.SelectedPayVenue = 'Insurance Coordinators Fee';
         //  sessionStorage.setItem('postData', JSON.stringify(this.postData));
         //sessionStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
         localStorage.setItem('postData', btoa(JSON.stringify(this.postData)));
       } else {
+        this.postData.SelectedPayVenue = 'Patient NOT SEEN';
         this.postData.ProfFee = 0;
         this.postData.IsVAT = 'N';
         this.postData.PayVenue = 'N';
@@ -372,6 +373,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     } else if (f == 'charity') {
       this.postData.SelectedPayVenue = 'Charity';
       this.areyouaninsurancecoordinator = e;
+      this.isCoordinator = false;
     } else if (f == 'Personalphilhealth') {
       this.postData.SelectedPayVenue = 'Personal + PhilHealth';
       this.areyouaninsurancecoordinator = true;

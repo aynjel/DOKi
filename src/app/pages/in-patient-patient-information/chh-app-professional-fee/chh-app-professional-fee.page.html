@@ -191,7 +191,7 @@ ______             _     _                        _   _                   _
   <div *ngIf="ifShowSummary == false">
     <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted">
     </app-chh-app-patient-header>
-    <ion-card mode="ios" *ngIf="areyouaninsurancecoordinator">
+    <ion-card mode="ios" [disabled]="!areyouaninsurancecoordinator">
       <ion-item lines="none">
         <ion-label class="ion-text-wrap"
           >Are you an Insurance Coordinator?</ion-label
