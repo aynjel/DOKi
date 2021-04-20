@@ -73,7 +73,9 @@ export class TransactionSummaryPage implements OnInit {
   summary: any;
   summaryHeader: any;
   withVat: any;
+  withVatN: any;
   payvenue: any;
+  payvenueN: any;
   daysManaged: any;
   site: any;
   day: any;
@@ -120,12 +122,18 @@ export class TransactionSummaryPage implements OnInit {
     } else {
       this.day = 'Day';
     }
-
+    this.withVatN = this.postData.IsVAT;
     if (this.postData.IsVAT == 'Y') {
       this.withVat = '(+ VAT)';
     } else {
       this.withVat = '(No VAT)';
     }
+    this.payvenueN = this.postData.PayVenue;
+
+
+    
+    
+
     if (this.postData.PayVenue == 'W') {
       this.payvenue = 'Charity / PhilHealth';
     } else if (this.postData.PayVenue == 'H') {
@@ -196,7 +204,8 @@ export class TransactionSummaryPage implements OnInit {
       this.data[0].payvenue == 'A'
     ) {
       this.postData.OldProfFee = this.data.doctor_prof_fee;
-      console.log(this.postData);
+
+      
 
       this.doctorService.updatePF(this.postData).subscribe(
         (res: any) => {

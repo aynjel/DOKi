@@ -76,8 +76,10 @@ export class ChhAppProfessionalFeePage implements OnInit {
   daysManaged: any;
   day: any;
   withVat: any;
+  withVatN:any;
   data1: any;
   payvenue: any;
+  payvenueN:any;
   payvenueTxt: any;
   ifShowSummary: boolean = false;
   modifybtn: boolean = false;
@@ -137,6 +139,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     } else {
       this.modifybtn = true;
     }
+    this.withVatN = this.data[0].is_vat;
     if (this.data[0].is_vat == 'Y') {
       this.withVat = '(+ VAT)';
     } else {
@@ -156,8 +159,8 @@ export class ChhAppProfessionalFeePage implements OnInit {
     // }
     // console.log(this.data[0].selected_payvenue);
     //console.log(this.data);
-    console.log(this.data);
 
+    this.payvenueN = this.data[0].payvenue;
     this.payvenue = this.data[0].payvenue;
     this.payvenueTxt = this.data[0].selected_payvenue;
 
@@ -181,7 +184,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
       this.btnclose = true;
       this.ifShowSummary = true;
     }
-    console.log(this.payvenue + ' : ' + this.ifShowSummary);
+ 
 
     this.checkAppearance();
     //console.log(this.data);

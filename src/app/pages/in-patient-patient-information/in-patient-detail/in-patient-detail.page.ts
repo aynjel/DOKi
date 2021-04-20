@@ -111,7 +111,7 @@ export class InPatientDetailPage {
     private renderer: Renderer2,
     public nav: NavController
   ) {
-    console.log('In-patient detail : Constructor');
+    //console.log('In-patient detail : Constructor');
 
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -125,7 +125,7 @@ export class InPatientDetailPage {
   }
 
   ionViewWillEnter() {
-    console.log('In-patient detail : ionViewWillEnter');
+    //console.log('In-patient detail : ionViewWillEnter');
     //sessionStorage.removeItem('pfIsPatientSeen');
     // sessionStorage.removeItem('pfInsCoor');
     this.checkAppearance();
@@ -149,7 +149,7 @@ export class InPatientDetailPage {
       (error) => {},
       () => {
         let n = this.data[0].admission_no.indexOf('IPC');
-        console.log(n);
+        //console.log(n);
 
         if (n >= 0) {
           this.location = true;
@@ -178,7 +178,7 @@ export class InPatientDetailPage {
     this.postData.Remarks = '';
     this.postData.ProfFee = 0;
     this.postData.OldProfFee = 0;
-    console.log(this.data[0].site);
+    //console.log(this.data[0].site);
 
     if (this.data[0].site == 'C') {
       this.site = 'CHHC';
@@ -346,7 +346,7 @@ export class InPatientDetailPage {
   }
 
   ngOnInit() {
-    console.log('In-patient detail : ngOnInit');
+   // console.log('In-patient detail : ngOnInit');
   }
 
   updateDisplay(data: boolean) {
@@ -397,14 +397,14 @@ export class InPatientDetailPage {
   }
 
   async examDetails(data: any, site: any, i) {
-    console.log(site);
+    //console.log(site);
 
     this.HighlightRow = i;
     this.ExamData = data;
     this.hospitalSite = site;
 
     if (!this.isDesktop) {
-      console.log(this.hospitalSite);
+      //console.log(this.hospitalSite);
 
       const modal = await this._modalController.create({
         component: ChhAppBasePage,
@@ -456,7 +456,7 @@ export class InPatientDetailPage {
   }
 
   getExamList(data) {
-    console.log(this.data[0].admission_no);
+    //console.log(this.data[0].admission_no);
 
     this.ionSkeleton = true;
     var date1 = new Date(this.data[0].admission_date);
