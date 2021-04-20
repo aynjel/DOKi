@@ -187,7 +187,7 @@ export class LoginPage {
 
   checkbcrypt() {
     let json =
-      '{"appCode": "DPP","userName": "' + this.postData.username + '"}';
+      '{"appCode": "DPP","username": "' + this.postData.username + '"}';
     this.patientService.commonValidate(json).subscribe(
       (res: any) => {
         this.resultJson = res;
@@ -227,7 +227,7 @@ export class LoginPage {
       .then((result) => {
         if (result) {
           let json =
-            '{"appCode": "DPP","userName": "' +
+            '{"appCode": "DPP","username": "' +
             this.postData.username +
             '","password": "' +
             this.hashedPassword +
@@ -357,7 +357,7 @@ export class LoginPage {
     });
     return await modal.present();
   }
-  
+
   loginAction() {
     //console.log('loginaction');
 

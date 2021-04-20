@@ -136,24 +136,31 @@ export class ChhAppChangePassPage {
      gesture3.enable();
    }
    */
+  
   public getType1() {
     return this.isActiveToggleTextPassword1 ? 'password' : 'text';
   }
+
   public getType2() {
     return this.isActiveToggleTextPassword2 ? 'password' : 'text';
   }
+
   public getType3() {
     return this.isActiveToggleTextPassword3 ? 'password' : 'text';
   }
+
   public getName1() {
     return this.isEyeOnOff1 ? 'eye-off-outline' : 'eye-outline';
   }
+
   public getName2() {
     return this.isEyeOnOff2 ? 'eye-off-outline' : 'eye-outline';
   }
+
   public getName3() {
     return this.isEyeOnOff3 ? 'eye-off-outline' : 'eye-outline';
   }
+
   hashed_newPassword;
   hashed_oldPassword;
   dr_name;
@@ -204,7 +211,7 @@ export class ChhAppChangePassPage {
     this.dr_name = this.logindata[0].last_name;
     this.dr_code = this.logindata[0].dr_code;
     this.dr_username = atob(localStorage.getItem('username'));
-    let json = '{"appCode": "DPP","userName": "' + this.dr_username + '"}';
+    let json = '{"appCode": "DPP","username": "' + this.dr_username + '"}';
     let resultJson;
 
     this.patientService.commonValidate(json).subscribe(
@@ -221,6 +228,7 @@ export class ChhAppChangePassPage {
   async closeModal() {
     await this.modalController.dismiss('none');
   }
+
   async alert(data1: any, data2: any, data3: boolean) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -256,13 +264,13 @@ export class ChhAppChangePassPage {
     });
     await alert.present();
   }
-  
+
   validatePassword() {
     bcrypt.compare(this.OldPassword, this.hashed_oldPassword).then((result) => {
       if (result) {
         bcrypt.hash(this.NewPassword, this.saltRounds).then((hash) => {
           let resJson =
-            '{"appCode": "DPP","userName": "' +
+            '{"appCode": "DPP","username": "' +
             this.dr_username +
             '","oldPassword": "' +
             this.hashed_oldPassword +
@@ -327,7 +335,7 @@ export class ChhAppChangePassPage {
             console.log(hash);
             
          
-            let resJson = '{"appCode": "DPP","userName": "'+this.usename+'","oldPassword": "'+hash+'","newPassword":"'+hash+'"}';
+            let resJson = '{"appCode": "DPP","username": "'+this.usename+'","oldPassword": "'+hash+'","newPassword":"'+hash+'"}';
             console.log(resJson);
             
                /*
