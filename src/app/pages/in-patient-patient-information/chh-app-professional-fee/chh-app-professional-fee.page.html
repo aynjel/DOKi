@@ -62,7 +62,27 @@ ______             _     _                        _   _                   _
 
 <ion-content *ngIf="!isDesktop">
   <div *ngIf="ifShowSummary == true">
-    <img src="assets/img/online-transactions.png" />
+
+
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col size="8" offset="2">
+          <div class="vertical-center">
+            <div class="center">
+              <img
+                src="assets/img/online-transactions.png"
+              
+              />
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+
+
+
     <ion-item lines="none" class="ion-no-margin"
       ><b>Patient Details</b>
 
@@ -471,8 +491,21 @@ ______             _     _                       ______             _
       </ion-col>
       <ion-col size-lg="4" size-md="6">
         <div *ngIf="ifShowSummary == true">
-          <img src="assets/img/online-transactions.png" />
 
+          <ion-grid class="ion-no-padding">
+            <ion-row>
+              <ion-col size="8" offset="2">
+                <div class="vertical-center">
+                  <div class="center">
+                    <img
+                      src="assets/img/online-transactions.png"
+                    
+                    />
+                  </div>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
           <ion-item class="ion-no-margin">
             <ion-grid *ngFor="let x of data">
               <ion-row>
