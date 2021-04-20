@@ -101,7 +101,7 @@ export class ChhAppChangePasswordPage {
   ngOnInit() {
     this.dr_username = atob(localStorage.getItem('username'));
   }
-  
+
   showPassword1() {
     this.isActiveToggleTextPassword2 =
       this.isActiveToggleTextPassword2 == true ? false : true;
@@ -221,7 +221,7 @@ export class ChhAppChangePasswordPage {
       });
     }
     /*
-    bcrypt.hash(resultJson.Data, this.saltRounds).then(
+    bcrypt.hash(resultJson.data, this.saltRounds).then(
       (hash) => {let resJson = '{"appCode": "DPP","username": "'+this.postData.username+'","oldPassword": "1234","newPassword":"'+hash+'"}';let dJson;
         this.patientService.mockChangePassword(resJson).subscribe(
           (res: any) => {dJson = res;},(error)=>{this.functionsService.sorryDoc();},

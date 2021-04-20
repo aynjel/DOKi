@@ -149,7 +149,7 @@ export class LoginPage {
   }
 
   async updatePassword() {
-    //console.log(this.resultJson.Data);
+    //console.log(this.resultJson.data);
 
     const modal = await this.modalController.create({
       component: ChhAppChangePasswordPage,
@@ -357,7 +357,7 @@ export class LoginPage {
     });
     return await modal.present();
   }
-
+  
   loginAction() {
     //console.log('loginaction');
 

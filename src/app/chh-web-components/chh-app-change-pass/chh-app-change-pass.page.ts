@@ -136,7 +136,7 @@ export class ChhAppChangePassPage {
      gesture3.enable();
    }
    */
-  
+
   public getType1() {
     return this.isActiveToggleTextPassword1 ? 'password' : 'text';
   }
@@ -216,7 +216,7 @@ export class ChhAppChangePassPage {
 
     this.patientService.commonValidate(json).subscribe(
       (res: any) => {
-        resultJson = res.Data;
+        resultJson = res.data;
       },
       (error) => {},
       () => {
