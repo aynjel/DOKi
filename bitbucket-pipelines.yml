@@ -260,6 +260,9 @@ pipelines:
     build-no-test-and-deploy-to-az-staging-doc-lasco-uat:
       - step: *build-artifacts
       - step: *deploy-to-azure-doc-lasco-uat
+    build-no-test-and-deploy-to-firebase-staging:
+      - step: *build-artifacts
+      - step: *deploy-staging-to-firebase
 
   branches:
     '{dev_branch,develop,cypress-grouping}':
