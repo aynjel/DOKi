@@ -246,7 +246,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
         this.postData.ProfFee = 0;
         this.postData.IsVAT = 'N';
         this.postData.PayVenue = 'A';
-        this.postData.SelectedPayVenue = 'Insurance Coordinators Fee';
+        this.postData.SelectedPayVenue = 'Insurance Coordinator\'s Fee';
         //  sessionStorage.setItem('postData', JSON.stringify(this.postData));
         //sessionStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
         localStorage.setItem('postData', btoa(JSON.stringify(this.postData)));
