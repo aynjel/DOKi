@@ -160,6 +160,32 @@ definitions:
             AZURE_APP_NAME: $AZURE_APP_NAME
             ZIP_FILE: 'doki-$BITBUCKET_BUILD_NUMBER.zip'
             SLOT: 'staging'
+    - step: &deploy-to-azure-billing-uat
+        name: Deploy to Azure Billing (UAT)
+        deployment: staging
+        script:
+        - pipe: atlassian/azure-web-apps-deploy:1.0.0
+          variables:
+            AZURE_APP_ID: $AZURE_APP_ID
+            AZURE_PASSWORD: $AZURE_PASSWORD
+            AZURE_TENANT_ID: $AZURE_TENANT_ID
+            AZURE_RESOURCE_GROUP: $AZURE_RESOURCE_GROUP
+            AZURE_APP_NAME: $AZURE_APP_NAME
+            ZIP_FILE: 'doki-$BITBUCKET_BUILD_NUMBER.zip'
+            SLOT: 'billing-uat'
+    - step: &deploy-to-azure-doc-lasco-uat
+        name: Deploy to Azure Billing (UAT)
+        deployment: staging
+        script:
+        - pipe: atlassian/azure-web-apps-deploy:1.0.0
+          variables:
+            AZURE_APP_ID: $AZURE_APP_ID
+            AZURE_PASSWORD: $AZURE_PASSWORD
+            AZURE_TENANT_ID: $AZURE_TENANT_ID
+            AZURE_RESOURCE_GROUP: $AZURE_RESOURCE_GROUP
+            AZURE_APP_NAME: $AZURE_APP_NAME
+            ZIP_FILE: 'doki-$BITBUCKET_BUILD_NUMBER.zip'
+            SLOT: 'doc-lasco-uat'
     # --------- SFTP On-Premise Deployment ---------
     - step: &deploy-staging-using-sftp
         name: Deploy Staging (SFTP)
