@@ -365,6 +365,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
   // }
 
   isPatientSeenf(f, e) {
+    this.areyouaninsurancecoordinator = true;
     if (f == 'isPatientSeen' && e == false) {
       this.toPFMbtn = true;
       // console.log("11111111111111");
