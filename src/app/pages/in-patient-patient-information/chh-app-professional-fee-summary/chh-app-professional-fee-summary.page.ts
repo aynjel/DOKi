@@ -249,6 +249,9 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
 
   isurancePF() {
     if (this.InsurancePF > 0) {
+
+      this.InsurancePF = (this.InsurancePF / this.InsurancePF) * this.InsurancePF;
+      
       this.InsuranceShowVat = true;
     } else {
       this.InsuranceShowVat = false;
@@ -259,6 +262,9 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     } else {
       this.txtInsurancePF = true;
     }
+
+
+
 
   }
 
@@ -319,12 +325,22 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   }
 
   finishTransaction() {
+
+
+    console.log(this.method);
+    
+    
     if (this.method == 'Insurance') {
-      if (this.InsurancePF <= 0) {
+      console.log(this.InsurancePF);
+      
+      if (this.InsurancePF <= 0 || this.InsurancePF == null) {
+
+        
         this.postData.ProfFee = 0;
         this.postData.IsVAT = 'N';
         this.postData.PayVenue = 'X';
       } else {
+        console.log("no");
         this.postData.ProfFee = this.InsurancePF;
         if (this.InsuranceVat) {
           this.postData.IsVAT = 'Y';
@@ -335,7 +351,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
         }
       }
     } else if (this.method == 'Personal-philhealth') {
-      if (this.PersonalPhilhealthPF <= 0) {
+      if (this.PersonalPhilhealthPF <= 0 || this.PersonalPhilhealthPF == null) {
         this.postData.ProfFee = 0;
         this.postData.IsVAT = 'N';
         this.postData.PayVenue = 'W';
@@ -374,9 +390,8 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
       this.postData.PayVenue = 'W';
     }
 
-    //sessionStorage.setItem('postData', btoa(JSON.stringify(this.postData)));
+
     localStorage.setItem('postData', btoa(JSON.stringify(this.postData)));
-    //sessionStorage.setItem('postData', JSON.stringify(this.postData));
     if (!this.isDesktop) {
       this.router.navigate([this.router.url + '/summary']);
     } else {
