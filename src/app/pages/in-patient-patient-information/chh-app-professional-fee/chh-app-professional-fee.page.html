@@ -91,14 +91,14 @@ ______             _     _                        _   _                   _
         slot="end"
         (click)="moreorless(true)"
         *ngIf="moreOrLess"
-        >more..</ion-badge
+        ><ion-icon name="chevron-down-outline"></ion-icon></ion-badge
       >
       <ion-badge
         color="warning"
         slot="end"
         (click)="moreorless(false)"
         *ngIf="!moreOrLess"
-        >less..</ion-badge
+        ><ion-icon name="chevron-up-outline"></ion-icon></ion-badge
       >
     </ion-item>
     <ion-item class="ion-no-margin" *ngIf="!moreOrLess">
