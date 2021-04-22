@@ -603,20 +603,18 @@ ______          _    _
 
   <ion-grid class="ion-no-padding">
     <ion-row>
-      <ion-col size-lg="1" size-md="12"></ion-col>
-      <ion-col size-lg="3" size-md="4">
+      <ion-col size-lg="2" size-md="12"></ion-col>
+      <ion-col size-lg="3" size-md="6">
         <app-chh-app-patient-header
           [data]="data"
           [dateAdmitted]="dateAdmitted"
         ></app-chh-app-patient-header>
       </ion-col>
 
-      <ion-col size-lg="4" size-md="4">
+      <ion-col size-lg="4" size-md="6">
         <ion-grid class="ion-no-padding">
           <ion-row>
             <ion-col size="12">
-
-
 
 
 
@@ -638,7 +636,7 @@ ______          _    _
                                                      
  -->                                                
  <div *ngIf="(method=='Insurance')">
-  <!-- <ion-grid class="ion-no-padding">
+  <ion-grid class="ion-no-padding">
     <ion-row>
       <ion-col size="8" offset="2">
         <div class="vertical-center">
@@ -651,7 +649,8 @@ ______          _    _
         </div>
       </ion-col>
     </ion-row>
-  </ion-grid> 
+  </ion-grid>
+
   <div class="vertical-center">
     <div class="center">
       <ion-button
@@ -661,8 +660,7 @@ ______          _    _
         >View Case Rates</ion-button
       >
     </div>
-  </div>-->
-
+  </div>
   <ion-card mode="ios" >
     <ion-item>
       <ion-label>&#8369; </ion-label>
@@ -676,7 +674,7 @@ ______          _    _
       </ion-input>
     </ion-item>
   </ion-card>
-  <ion-card mode="ios" *ngIf=" InsuranceShowVat">
+  <ion-card mode="ios" *ngIf="InsuranceShowVat">
     <ion-item>
       <ion-label>Add VAT?</ion-label>
       <ion-checkbox
@@ -715,7 +713,7 @@ ______          _    _
     </li>
     <li class="lineheight-80 paddingtop-10">
       <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Receivables: Insurance (HMO) + PhilHealth + ~P(excess amount)(+ VAT)</ion-text
+        >Receivables: Insurance (HMO) + PhilHealth + ~&#8369;(excess amount)(+ VAT)</ion-text
       >
     </li>
     <li class="lineheight-80 paddingtop-10">
@@ -738,7 +736,7 @@ ______          _    _
     </li>
     <li class="lineheight-80 paddingtop-10">
       <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Receivables: Insurance (HMO) + PhilHealth + ~P(excess amount)
+        >Receivables: Insurance (HMO) + PhilHealth + ~&#8369;(excess amount)
       </ion-text>
     </li>
     <li class="lineheight-80 paddingtop-10">
@@ -766,7 +764,7 @@ ______   _   _   _____   _____
 
 
 
-  <!-- <ion-grid class="ion-no-padding">
+  <ion-grid class="ion-no-padding">
     <ion-row>
       <ion-col size="8" offset="2">
         <div class="vertical-center">
@@ -782,6 +780,7 @@ ______   _   _   _____   _____
   </ion-grid>
 
 
+
   <div class="vertical-center">
     <div class="center">
       <ion-button
@@ -791,8 +790,7 @@ ______   _   _   _____   _____
         >View Case Rates</ion-button
       >
     </div>
-  </div> -->
-
+  </div>
   <ion-card mode="ios" >
     <ion-item disabled="true" hidden>
       <ion-label>Accept PhilHealth Only?</ion-label>
@@ -903,7 +901,7 @@ ______                         ______   _   _   _____   _____
 
 
 <div *ngIf="(method=='Personal-philhealth')">
-  <!-- <ion-grid class="ion-no-padding">
+  <ion-grid class="ion-no-padding">
     <ion-row>
       <ion-col size="8" offset="2">
         <div class="vertical-center">
@@ -916,9 +914,9 @@ ______                         ______   _   _   _____   _____
         </div>
       </ion-col>
     </ion-row>
-  </ion-grid> 
+  </ion-grid>
   <ion-grid class="ion-no-padding">
-
+    <!-- <ion-button expand="block" fill="outline" (click)="presentCaseRatesModal()" *ngIf="method=='Philhealth'">View Case Rates</ion-button>  -->
     <ion-row>
       <ion-col size="12">
         <div class="vertical-center">
@@ -933,7 +931,7 @@ ______                         ______   _   _   _____   _____
         </div>
       </ion-col>
     </ion-row>
-  </ion-grid>-->
+  </ion-grid>
   <!-- <ion-card mode="ios" *ngIf="!isDesktop" >
       <ion-item disabled="true">
         <ion-label>Accept PhilHealth Only?</ion-label> 
@@ -987,7 +985,7 @@ ______                         ______   _   _   _____   _____
     </li>
     <li class="lineheight-80 paddingtop-10">
       <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Receivables: ~<b>&#8369;{{PersonalPhilhealthPF | number}}</b> (+ VAT) + PhilHealth</ion-text
+        >Receivables: ~P<b>{{PersonalPhilhealthPF | number}}</b> (+ VAT) + PhilHealth</ion-text
       >
     </li>
     <li class="lineheight-80 paddingtop-10">
@@ -1005,7 +1003,7 @@ ______                         ______   _   _   _____   _____
     </li>
     <li class="lineheight-80 paddingtop-10">
       <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Receivables: ~P<b>{{PersonalPhilhealthPF | number}}</b> + PhilHealth</ion-text
+        >Receivables: ~<b>&#8369;{{PersonalPhilhealthPF | number}}</b> + PhilHealth</ion-text
       >
     </li>
     <li class="lineheight-80 paddingtop-10">
@@ -1026,20 +1024,20 @@ _____   _
     -->                          
 <div *ngIf="(method=='Charity')">
   <ion-card mode="ios">
-    <!-- <ion-grid class="ion-no-padding">
+    <ion-grid class="ion-no-padding">
       <ion-row>
         <ion-col size="8" offset="2">
           <div class="vertical-center">
             <div class="center">
               <img
                 src="assets/img/pay-venue-charity-rafiki.png"
-                alt="Care of Insurance + PHIC"
+                alt="Charity"
               />
             </div>
           </div>
         </ion-col>
       </ion-row>
-    </ion-grid> -->
+    </ion-grid>
 
     <ion-item>
       <ion-label class="ion-text-wrap"
@@ -1074,7 +1072,6 @@ _____   _
 
 
 
-
               <ion-button
                 color="mango"
                 size="default"
@@ -1090,7 +1087,7 @@ _____   _
         </ion-grid>
       </ion-col>
 
-      <ion-col size-lg="3" size-md="4">
+      <!-- <ion-col size-lg="3" size-md="4">
         <div class="vertical-center">
           <div class="center">
             <div *ngIf="(method=='Insurance')">
@@ -1155,7 +1152,7 @@ _____   _
 
           </div>
         </div>
-      </ion-col>
+      </ion-col> -->
       <ion-col size-lg="1" size-md="12"></ion-col>
     </ion-row>
   </ion-grid>
