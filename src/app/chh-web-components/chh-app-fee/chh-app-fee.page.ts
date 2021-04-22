@@ -131,8 +131,8 @@ export class ChhAppFeePage implements OnInit {
 
   async actionSheet(feePopOverProfFee:any,postData:any) {
 
-    
-  var newVal = this.functionsService.numberWithCommas(feePopOverProfFee);
+    var newVal = feePopOverProfFee;
+  // var newVal = this.functionsService.numberWithCommas(feePopOverProfFee);
 
       const actionSheet = await this.actionSheetController.create({
         mode:'ios',
