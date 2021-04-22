@@ -57,14 +57,14 @@
                 <ion-icon  name="eye-off-outline" [name]="getName2()"item-right  (click)="showPassword2()" class="rectangle2"></ion-icon>
               </ion-item>
               <ion-list>
-              <ion-item  lines="none" class="ion-text-wrap fontSize-14" [ngClass]="frmSignup.controls['password'].hasError('required') || frmSignup.controls['password'].hasError('minlength')  ? 'text-danger' : 'text-success'">
+              <ion-item  lines="none" class="ion-text-wrap font-size15" [ngClass]="frmSignup.controls['password'].hasError('required') || frmSignup.controls['password'].hasError('minlength')  ? 'text-danger' : 'text-success'">
                 <ion-icon name="{{ frmSignup.controls['password'].hasError('required') ||
                 frmSignup.controls['password'].hasError('minlength') ? 'close-outline' :
                 'checkmark-outline' }}"></ion-icon>
                 Must be at least 8 characters.<br />
               </ion-item>
 
-              <ion-item   lines="none" class="ion-text-wrap fontSize-14"  [ngClass]="frmSignup.controls['password'].hasError('required') || frmSignup.controls['password'].hasError('hasNumber')  ? 'text-danger' : 'text-success'">
+              <ion-item   lines="none" class="ion-text-wrap font-size15"  [ngClass]="frmSignup.controls['password'].hasError('required') || frmSignup.controls['password'].hasError('hasNumber')  ? 'text-danger' : 'text-success'">
                 <ion-icon name="{{ frmSignup.controls['password'].hasError('required') ||
                 frmSignup.controls['password'].hasError('hasNumber') ? 'close-outline' :
                 'checkmark-outline' }}"></ion-icon>
@@ -73,7 +73,7 @@
 
 
 
-              <ion-item lines="none" class="ion-text-wrap fontSize-14"  [ngClass]="frmSignup.controls['password'].hasError('required') || frmSignup.controls['password'].hasError('hasCapitalCase')  ? 'text-danger' : 'text-success'">
+              <ion-item lines="none" class="ion-text-wrap font-size15"  [ngClass]="frmSignup.controls['password'].hasError('required') || frmSignup.controls['password'].hasError('hasCapitalCase')  ? 'text-danger' : 'text-success'">
                 <ion-icon name="{{ frmSignup.controls['password'].hasError('required') ||
                 frmSignup.controls['password'].hasError('hasCapitalCase') ?  'close-outline' :
                 'checkmark-outline' }}"></ion-icon>
@@ -81,7 +81,7 @@
               </ion-item>
 
 
-              <ion-item  lines="none"  class="ion-text-wrap fontSize-14"  [ngClass]="frmSignup.controls['password'].hasError('required') || frmSignup.controls['password'].hasError('hasSmallCase')  ? 'text-danger' : 'text-success'">
+              <ion-item  lines="none"  class="ion-text-wrap font-size15"  [ngClass]="frmSignup.controls['password'].hasError('required') || frmSignup.controls['password'].hasError('hasSmallCase')  ? 'text-danger' : 'text-success'">
                 <ion-icon name="{{ frmSignup.controls['password'].hasError('required') ||
                 frmSignup.controls['password'].hasError('hasSmallCase') ?   'close-outline' :
                 'checkmark-outline' }}"></ion-icon>
@@ -89,7 +89,7 @@
               </ion-item>
 
 
-              <ion-item  class="ion-text-wrap fontSize-14"  [ngClass]="frmSignup.controls['password'].hasError('required') || frmSignup.controls['password'].hasError('hasSpecialCharacters') ? 'text-danger' : 'text-success'">
+              <ion-item  class="ion-text-wrap font-size15"  [ngClass]="frmSignup.controls['password'].hasError('required') || frmSignup.controls['password'].hasError('hasSpecialCharacters') ? 'text-danger' : 'text-success'">
                 <ion-icon name="{{ frmSignup.controls['password'].hasError('required') ||
                 frmSignup.controls['password'].hasError('hasSpecialCharacters') ?  'close-outline' :
                 'checkmark-outline' }}"></ion-icon>
@@ -131,27 +131,76 @@
           <ion-grid>
             <ion-row>
               <ion-col size-xs="6">
-                <ion-button
-                  expand="block"
-                  shape="round"
-                  id="btn-confirm"
-                  (click)="save()"
-                  color="mango"
-                  [disabled]="frmSignup.invalid"
-                >
-                  SAVE
-                </ion-button>
+
+
+
+                <ion-grid class="ion-no-padding">
+                  <ion-row>
+                  <ion-col size-xs="12"></ion-col>
+                  <ion-col size-xs="12">
+                    <ion-button
+                    expand="block"
+                    shape="round"
+                    id="btn-confirm"
+                    (click)="save()"
+                    color="mango"
+                    [disabled]="frmSignup.invalid"
+                  >
+                    SAVE
+                  </ion-button>
+                  </ion-col>
+                  <ion-col size-xs="12"></ion-col></ion-row>
+                  </ion-grid>
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
               </ion-col>
               <ion-col size-xs="6">
-                <ion-button
-                  expand="block"
-                  shape="round"
-                  id="btn-confirm"
-                  (click)="closeModal()"
-                  color="danger"
-                >
-                  CANCEL
-                </ion-button>
+
+
+
+
+                <ion-grid class="ion-no-padding">
+                  <ion-row>
+                  <ion-col size-xs="12"></ion-col>
+                  <ion-col size-xs="12">
+
+                    <ion-button
+                    expand="block"
+                    shape="round"
+                    id="btn-confirm"
+                    (click)="closeModal()"
+                    color="danger"
+                    fill="outline"
+                  >
+                    CANCEL
+                  </ion-button>
+                  </ion-col>
+                  <ion-col size-xs="12"></ion-col></ion-row>
+                  </ion-grid>
+
+
+
+
+
+
+
+
+
+
+
+
               </ion-col>
             </ion-row>
           </ion-grid>

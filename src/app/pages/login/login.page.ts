@@ -191,7 +191,6 @@ export class LoginPage {
     this.patientService.commonValidate(json).subscribe(
       (res: any) => {
         this.resultJson = res;
-        console.log(res);
       },
       (error) => {
         this.btnDisable = false;
@@ -211,7 +210,7 @@ export class LoginPage {
             localStorage.setItem('username', btoa(this.postData.username));
             this.hashedPassword = this.resultJson.data;
             this.loginUser();
-            this.btnDisable = false;
+            //this.btnDisable = false;
           }
         } else {
           this.btnDisable = false;
@@ -240,7 +239,7 @@ export class LoginPage {
               this.btnDisable = false;
             },
             () => {
-              this.btnDisable = false;
+              //this.btnDisable = false;
               if (typeof this.loginresponse.ErrorCode !== 'undefined') {
                 this.functionsService.alert(
                   this.loginresponse.ErrorDescription,
