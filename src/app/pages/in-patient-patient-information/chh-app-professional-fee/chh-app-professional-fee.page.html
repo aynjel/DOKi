@@ -19,8 +19,8 @@ ___  ___        _      _  _              _   _                   _
         routerDirection="backwards"
         color="chh-css-primary2"
         *ngIf="btnclose"
-        >Close&nbsp;
-        <ion-icon name="close-outline"></ion-icon>
+        >Back
+        <ion-icon slot="start" name="arrow-back"></ion-icon>
       </ion-button>
 
       <ion-button
@@ -28,8 +28,8 @@ ___  ___        _      _  _              _   _                   _
         color="chh-css-primary2"
         *ngIf="!btnclose"
         (click)="modifyProfFeeClose()"
-        >Close&nbsp;
-        <ion-icon name="close-outline"></ion-icon>
+        >Back
+        <ion-icon slot="start" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -121,10 +121,10 @@ ______             _     _                        _   _                   _
           <ion-col size="5">Admission Date:</ion-col>
           <ion-col size="7">{{dateAdmitted}}</ion-col>
         </ion-row>
-        <ion-row>
+        <!-- <ion-row>
           <ion-col size="5">Managed this patient for:</ion-col>
           <ion-col size="7">{{daysManaged}} {{day}}</ion-col>
-        </ion-row>
+        </ion-row> -->
       </ion-grid>
     </ion-item>
     <ion-item class="ion-no-margin" *ngIf="moreOrLess">
@@ -677,7 +677,7 @@ ______             _     _                       ______             _
 
         <div *ngIf="ifShowSummary == false">
           <ion-card mode="ios">
-            <ion-item>
+            <ion-item lines="none">
               <ion-label class="ion-text-wrap"
                 >Are you an Insurance Coordinator?</ion-label
               >
@@ -689,7 +689,7 @@ ______             _     _                       ______             _
             </ion-item>
           </ion-card>
           <ion-card mode="ios">
-            <ion-item>
+            <ion-item lines="none">
               <ion-label class="ion-text-wrap"
                 >Have you seen this Patient?</ion-label
               >

@@ -9,8 +9,8 @@
         routerLink="{{routerLinkBack}}"
         routerDirection="backwards"
         color="chh-css-primary2"
-        >Close&nbsp;
-        <ion-icon name="close-outline"></ion-icon>
+        >Back
+        <ion-icon slot="start" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -62,7 +62,7 @@
       </div>
     </div>
     <ion-card mode="ios" *ngIf="!isDesktop ">
-      <ion-item>
+      <ion-item lines="none">
         <ion-label>&#8369; </ion-label>
         <ion-input
           color="danger"
@@ -108,7 +108,7 @@
       </li>
       <li class="lineheight-80 paddingtop-10">
         <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Only the excess amount of <b>&#8369;{{InsurancePF | number}}</b> (+ VAT) - (PhilHealth + Insurance coverage) will be collected from your patient.</ion-text
+          >Only the excess amount of <b>&#8369;{{InsurancePF | number}}</b> (+ VAT) will be collected from your patient.</ion-text
         >
       </li>
       <li class="lineheight-80 paddingtop-10">
@@ -204,7 +204,7 @@ ______   _   _   _____   _____
       </ion-item>
     </ion-card>
     <ion-card mode="ios" *ngIf="!isDesktop  && PhilhealthShowValue">
-      <ion-item>
+      <ion-item lines="none">
         <ion-label>&#8369; </ion-label>
         <ion-input
           color="danger"
@@ -339,7 +339,7 @@ ______                         ______   _   _   _____   _____
         </ion-item>
       </ion-card> -->
     <ion-card mode="ios" *ngIf="!isDesktop">
-      <ion-item>
+      <ion-item lines="none">
         <ion-label>&#8369; </ion-label>
         <ion-input
           color="danger"
@@ -439,7 +439,7 @@ ______                         ______   _   _   _____   _____
         </ion-row>
       </ion-grid>
 
-      <ion-item>
+      <ion-item lines="none">
         <ion-label class="ion-text-wrap"
           >Thank you for your generosity, Dok! &#10084; We truly appreciate your
           kindness and heartfelt service!</ion-label
@@ -662,7 +662,7 @@ ______          _    _
     </div>
   </div>
   <ion-card mode="ios" >
-    <ion-item>
+    <ion-item lines="none">
       <ion-label>&#8369; </ion-label>
       <ion-input
         color="danger"
@@ -708,7 +708,7 @@ ______          _    _
     </li>
     <li class="lineheight-80 paddingtop-10">
       <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Only the excess amount of <b>&#8369;{{InsurancePF | number}}</b> (+ VAT) - (PhilHealth + Insurance coverage) will be collected from your patient.</ion-text
+        >Only the excess amount of <b>&#8369;{{InsurancePF | number}}</b> (+ VAT) will be collected from your patient.</ion-text
       >
     </li>
     <li class="lineheight-80 paddingtop-10">
@@ -804,7 +804,7 @@ ______   _   _   _____   _____
     </ion-item>
   </ion-card>
   <ion-card mode="ios" *ngIf="PhilhealthShowValue">
-    <ion-item>
+    <ion-item lines="none">
       <ion-label>&#8369; </ion-label>
       <ion-input
         color="danger"
@@ -939,7 +939,7 @@ ______                         ______   _   _   _____   _____
       </ion-item>
     </ion-card> -->
   <ion-card mode="ios" >
-    <ion-item>
+    <ion-item lines="none">
       <ion-label>&#8369; </ion-label>
       <ion-input
         color="danger"
@@ -1039,7 +1039,7 @@ _____   _
       </ion-row>
     </ion-grid>
 
-    <ion-item>
+    <ion-item lines="none">
       <ion-label class="ion-text-wrap"
         >Thank you for your generosity, Dok! &#10084; We truly appreciate your
         kindness and heartfelt service!</ion-label
