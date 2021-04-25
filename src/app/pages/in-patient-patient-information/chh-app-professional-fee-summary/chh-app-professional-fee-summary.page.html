@@ -75,7 +75,7 @@
       </ion-item>
     </ion-card>
     <ion-card mode="ios" *ngIf="!isDesktop && InsuranceShowVat">
-      <ion-item>
+      <ion-item lines="none">
         <ion-label>Add VAT?</ion-label>
         <ion-checkbox
           color="mango"
@@ -113,7 +113,7 @@
       </li>
       <li class="lineheight-80 paddingtop-10">
         <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Receivables: Insurance (HMO) + PhilHealth + &#8369;(excess amount)(+ VAT)</ion-text
+          >Receivables: Insurance (HMO) + PhilHealth + <b>&#8369;{{InsurancePF | number}}</b>(+ VAT)</ion-text
         >
       </li>
       <li class="lineheight-80 paddingtop-10">
@@ -136,7 +136,7 @@
       </li>
       <li class="lineheight-80 paddingtop-10">
         <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Receivables: Insurance (HMO) + PhilHealth + &#8369;(excess amount)
+          >Receivables: Insurance (HMO) + PhilHealth + <b>&#8369;{{InsurancePF | number}}</b>
         </ion-text>
       </li>
       <li class="lineheight-80 paddingtop-10">
@@ -218,7 +218,7 @@ ______   _   _   _____   _____
     </ion-card>
 
     <ion-card mode="ios" *ngIf="!isDesktop && PhilhealthShowVat">
-      <ion-item>
+      <ion-item lines="none">
         <ion-label>Add VAT?</ion-label>
         <ion-checkbox
           color="mango"
@@ -353,7 +353,7 @@ ______                         ______   _   _   _____   _____
     </ion-card>
 
     <ion-card mode="ios" *ngIf="!isDesktop && PersonalPhilhealthShowVat">
-      <ion-item>
+      <ion-item lines="none">
         <ion-label>Add VAT?</ion-label>
         <ion-checkbox
           color="mango"
@@ -675,7 +675,7 @@ ______          _    _
     </ion-item>
   </ion-card>
   <ion-card mode="ios" *ngIf="InsuranceShowVat">
-    <ion-item>
+    <ion-item lines="none">
       <ion-label>Add VAT?</ion-label>
       <ion-checkbox
         color="mango"
@@ -713,7 +713,7 @@ ______          _    _
     </li>
     <li class="lineheight-80 paddingtop-10">
       <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Receivables: Insurance (HMO) + PhilHealth + &#8369;(excess amount)(+ VAT)</ion-text
+        >Receivables: Insurance (HMO) + PhilHealth + <b>&#8369;{{InsurancePF | number}}</b>(+ VAT)</ion-text
       >
     </li>
     <li class="lineheight-80 paddingtop-10">
@@ -736,7 +736,7 @@ ______          _    _
     </li>
     <li class="lineheight-80 paddingtop-10">
       <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Receivables: Insurance (HMO) + PhilHealth + &#8369;(excess amount)
+        >Receivables: Insurance (HMO) + PhilHealth + <b>&#8369;{{InsurancePF | number}}</b>
       </ion-text>
     </li>
     <li class="lineheight-80 paddingtop-10">
@@ -818,7 +818,7 @@ ______   _   _   _____   _____
   </ion-card>
 
   <ion-card mode="ios" *ngIf="PhilhealthShowVat">
-    <ion-item>
+    <ion-item lines="none">
       <ion-label>Add VAT?</ion-label>
       <ion-checkbox
         color="mango"
@@ -953,7 +953,7 @@ ______                         ______   _   _   _____   _____
   </ion-card>
 
   <ion-card mode="ios" *ngIf="PersonalPhilhealthShowVat">
-    <ion-item>
+    <ion-item lines="none">
       <ion-label>Add VAT?</ion-label>
       <ion-checkbox
         color="mango"
