@@ -1,18 +1,32 @@
 ion-slide {
-
   @media (max-width: 411px) {
     padding: 5%;
-}
+  }
+
+  display: block;
+
+  img {
     display: block;
-    img {
-      width: 100px;
-    }
-    h2 {
-      font-size: 36px;
-      font-weight: bold;
-    }
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+  }
+
+  .logoContainer {
+    width:auto; 
   }
   
-  ion-slides {
-    --bullet-background-active: #009444;
+  .flexibleImg {
+    width: 100px;
+    height: auto;
   }
+
+  h2 {
+    font-size: 36px;
+    font-weight: bold;
+  }
+}
+
+ion-slides {
+  --bullet-background-active: #009444;
+}

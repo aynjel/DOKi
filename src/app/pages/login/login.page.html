@@ -6,7 +6,11 @@
           <ion-card-content>
             <div class="center">
               <chh-app-logo></chh-app-logo>
-              <h1><b>{{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN_GREETINGS}}</b></h1>
+              <h1>
+                <b
+                  >{{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN_GREETINGS}}</b
+                >
+              </h1>
             </div>
             <ion-item>
               <!--ion-label position="fixed">{{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN_USERNAME}}</ion-label-->
@@ -25,13 +29,21 @@
                 [(ngModel)]="postData.password"
               ></ion-input-->
 
-              
-
-              <ion-input type="password" id="input-password" placeholder="Password" [type]="getType()"  (keyup.enter)="checkInput()" [(ngModel)]="postData.password"></ion-input>
-              <ion-icon  name="eye-off-outline" [name]="getName()" item-right  (click)="showPassword()"   class="rectangle"></ion-icon>
-
-
-
+              <ion-input
+                type="password"
+                id="input-password"
+                placeholder="Password"
+                [type]="getType()"
+                (keyup.enter)="checkInput()"
+                [(ngModel)]="postData.password"
+              ></ion-input>
+              <ion-icon
+                name="eye-off-outline"
+                [name]="getName()"
+                item-right
+                (click)="showPassword()"
+                class="rectangle"
+              ></ion-icon>
             </ion-item>
             <div class="ion-margin-vertical ion-text-right">
               <ion-button
@@ -41,25 +53,32 @@
                 (click)="checkInput()"
                 color="mango"
                 disabled="{{btnDisable}}"
-                
-              ><div *ngIf="!btnDisable">{{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN.toUpperCase()}}</div>
+                ><div *ngIf="!btnDisable">
+                  {{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN.toUpperCase()}}
+                </div>
                 <span *ngIf="!btnDisable"></span
                 ><ion-spinner *ngIf="btnDisable"></ion-spinner>
               </ion-button>
             </div>
           </ion-card-content>
 
-
-
-              
-    <ion-item lines="none" class="fontSize-12">
-      <p>{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO}} (<b><a href="tel: +63322338000">{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_TELEPHONE}}</a></b>). <br/> <br />{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_APP_VERSION}} {{this.constants.DOCTOR_PORTAL__VALUE__VERSION}}</p>
-    </ion-item>
+          <ion-item class="fontSize-12">
+            <p>
+              {{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO}} (<b
+                ><a href="tel: +63322338000"
+                  >{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_TELEPHONE}}</a
+                ></b
+              >). <br />
+              <br />{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_APP_VERSION}}
+              {{this.constants.DOCTOR_PORTAL__VALUE__VERSION}}
+            </p>
+          </ion-item>
+          <ion-item lines="none" class="fontSize-12">
+            <ion-label>( Made by Chong Hua for Chong Hua )</ion-label>
+          </ion-item>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
-<ion-footer class="ion-no-border">
-
-</ion-footer>
+<ion-footer class="ion-no-border"> </ion-footer>

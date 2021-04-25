@@ -246,6 +246,7 @@ export class LoginPage {
                   'Okay'
                 );
               } else {
+                this.btnDisable = true;
                 this.logindata = <LoginData>this.loginresponse;
                 this.checkPrivacyPolicy();
               }
