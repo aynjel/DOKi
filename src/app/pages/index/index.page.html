@@ -5,12 +5,21 @@
         <ion-slides pager="{{!isDesktop}}" #theSlides [options]="slideOpts">
           <ion-slide id="slide1">
             <!-- <app-logo></app-logo> -->
-            <img src="assets/img/LOGOMARK.png" alt="Chong Hua Hospital" />
+            <div class="logoContainer">
+              <img
+                src="assets/img/LOGOMARK.png"
+                class="flexibleImg"
+                alt="Chong Hua Hospital"
+              />
+            </div>
             <h1><b>Welcome aboard, Dok!</b></h1>
-            <img src="assets/img/world-health-day-rafiki.svg" width="300" height="300" alt="frontliners" />
+            <img
+              src="assets/img/world-health-day-rafiki.svg"
+              alt="frontliners"
+            />
             <!-- <div align="center"> -->
-              <!-- <object data="assets/img/world-health-day-rafiki.svg" width="300" height="300"> </object> -->
-              <!-- <lottie-player
+            <!-- <object data="assets/img/world-health-day-rafiki.svg" width="300" height="300"> </object> -->
+            <!-- <lottie-player
                 src="assets/animations/21474-medical-frontliners.json"
                 mode="bounce"
                 background="transparent"
@@ -27,14 +36,20 @@
             <p>Swipe left to see what we've built for you.</p>
             <ion-button
               id="first-slide-button-right"
+              fill="clear"
               *ngIf="isDesktop"
               (click)="moveToNext(theSlides)"
-              ><ion-icon name="chevron-forward-outline"></ion-icon
+              ><ion-icon name="arrow-forward"></ion-icon
             ></ion-button>
           </ion-slide>
           <ion-slide>
             <h1>View your admitted patients.</h1>
-            <img src="assets/img/vaccine-rafiki.svg" width="300" height="300" alt="admitted-patients" />
+            <img
+              src="assets/img/medical-care-rafiki.svg"
+              width="300"
+              height="300"
+              alt="admitted-patients"
+            />
             <!-- <object data="assets/animations/gynecology-consultation-animate.svg" width="300" height="300"> </object> -->
             <!-- <div align="center">
               <lottie-player
@@ -48,25 +63,32 @@
               ></lottie-player>
             </div> -->
             <p>
-              You will be notified via SMS when you have patients admitted in
-              the hospital on both sites (Cebu and Mandaue).
+              You will be notified via SMS when you have patients admitted to
+              the hospital at both sites (Cebu and Mandaue).
             </p>
             <ion-button
               id="second-slide-button-left"
+              fill="clear"
               *ngIf="isDesktop"
               (click)="moveToPrev(theSlides)"
-              ><ion-icon name="chevron-back-outline"></ion-icon
+              ><ion-icon name="arrow-back"></ion-icon
             ></ion-button>
             <ion-button
               id="second-slide-button-right"
+              fill="clear"
               *ngIf="isDesktop"
               (click)="moveToNext(theSlides)"
-              ><ion-icon name="chevron-forward-outline"></ion-icon
+              ><ion-icon name="arrow-forward"></ion-icon
             ></ion-button>
           </ion-slide>
           <ion-slide>
             <h1>View patient appointments.</h1>
-            <img src="assets/img/schedule-rafiki.svg" width="300" height="300" alt="view-appointments" />
+            <img
+              src="assets/img/schedule-rafiki.svg"
+              width="300"
+              height="300"
+              alt="view-appointments"
+            />
             <!-- <object data="assets/animations/schedule-animate.svg" width="300" height="300"> </object> -->
             <!-- <div align="center">
               <lottie-player
@@ -86,20 +108,27 @@
             </p>
             <ion-button
               id="third-slide-button-left"
+              fill="clear"
               *ngIf="isDesktop"
               (click)="moveToPrev(theSlides)"
-              ><ion-icon name="chevron-back-outline"></ion-icon
+              ><ion-icon name="arrow-back"></ion-icon
             ></ion-button>
             <ion-button
               id="third-slide-button-right"
+              fill="clear"
               *ngIf="isDesktop"
               (click)="moveToNext(theSlides)"
-              ><ion-icon name="chevron-forward-outline"></ion-icon
+              ><ion-icon name="arrow-forward"></ion-icon
             ></ion-button>
           </ion-slide>
           <ion-slide>
             <h1>Submit professional fee online.</h1>
-            <img src="assets/img/online-doctor-rafiki.svg" width="300" height="300" alt="online-doctor" />
+            <img
+              src="assets/img/online-doctor-rafiki.svg"
+              width="300"
+              height="300"
+              alt="online-doctor"
+            />
             <!-- <object data="assets/animations/online-doctor-animate.svg" width="300" height="300"> </object> -->
             <!-- <div align="center">
               <lottie-player
@@ -120,12 +149,13 @@
             <ion-row>
               <ion-col size-lg="4" offset-lg="4">
                 <ion-grid class="ion-no-padding">
-                <ion-row>
-                <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
-                <ion-col size-xs="12" size-md="4" size-lg="4">
-                <chh-app-start *ngIf="!android"></chh-app-start>
-                </ion-col>
-                <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col></ion-row>
+                  <ion-row>
+                    <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+                    <ion-col size-xs="12" size-md="4" size-lg="4">
+                      <chh-app-start *ngIf="!android"></chh-app-start>
+                    </ion-col>
+                    <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col
+                  ></ion-row>
                 </ion-grid>
                 <ion-button
                   id="button-lets-go"
@@ -140,9 +170,10 @@
             </ion-row>
             <ion-button
               id="fourth-slide-button-left"
+              fill="clear"
               *ngIf="isDesktop"
               (click)="moveToPrev(theSlides)"
-              ><ion-icon name="chevron-back-outline"></ion-icon
+              ><ion-icon name="arrow-back"></ion-icon
             ></ion-button>
           </ion-slide>
         </ion-slides>

@@ -38,18 +38,22 @@ export class IndexPage implements OnInit {
     speed: 400,
     pager: true,
   };
+
   ngOnInit() {
     this.initPwaPrompt();
     this.$gaService.pageView('/index', 'Index Page');
   }
+
   moveToNext(slides) {
     //console.log(slides);
     slides.slideNext();
   }
+
   moveToPrev(slides) {
     //console.log(slides);
     slides.slidePrev();
   }
+
   initPwaPrompt() {
     this.platform.ready().then(() => {
       if (this.platform.is('android') || this.platform.is('desktop')) {
@@ -78,7 +82,7 @@ export class IndexPage implements OnInit {
       if (!this.ios) {
         this.ios = true;
         this.functionsService.alert(
-          "To install this web app on your device, tap the Share button your browser’s toolbar (that’s the rectangle with an arrow pointing upward). It’s on the bar at the top of the screen on an iPad, and on the bar at the bottom of the screen on an iPhone or iPod Touch. Then, tap the 'Add to Home Screen' icon in the Share menu. Once done, you may now close your browser and launch the app from your home screen.",
+          "To install this web app on your device, tap the Share button on your browser’s toolbar (that’s the rectangle with an arrow pointing upward). It’s on the bar at the top of the screen on an iPad, and on the bar at the bottom of the screen on an iPhone or iPod Touch. Then, tap the 'Add to Home Screen' icon in the Share menu. Once done, you may then close your browser and launch the app from your home screen.",
           'Okay'
         );
       }
@@ -92,7 +96,7 @@ export class IndexPage implements OnInit {
     this.promptEvent.userChoice.then((choiceResult) => {
       if (choiceResult.outcome === 'accepted') {
         this.functionsService.alert(
-          'Great, Dok! You may now close your browser and launch the app from your home screen.',
+          'Great, Dok! Once installation is done, you may then close your browser and launch the app from your home screen.',
           'Okay'
         );
         this.android = false;
