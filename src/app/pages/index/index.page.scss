@@ -1,6 +1,6 @@
 ion-slide {
   @media (max-width: 411px) {
-    padding: 5%;
+    padding-top: 5%;
   }
 
   display: block;
@@ -29,4 +29,9 @@ ion-slide {
 
 ion-slides {
   --bullet-background-active: #009444;
+}
+
+.my-custom-slider {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
