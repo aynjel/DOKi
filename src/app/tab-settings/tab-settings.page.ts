@@ -326,9 +326,14 @@ export class TabSettingsPage {
       localStorage.removeItem('_cap_userDataKey');
       localStorage.removeItem('username');
       localStorage.clear();
-      this.router.navigate(['/login']);
+      sessionStorage.clear();
+      this.router.navigate(['/login']).then( ()=>{
+        window.location.reload();
+      }
+        
+      );
     });
-    sessionStorage.clear();
+
   }
   //OPT-OUT of PRIVACY POLICY
   async optoutofprivacy(event: { detail: { checked: any } }) {
