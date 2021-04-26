@@ -413,14 +413,35 @@ a {
  // color: #E9A7A1;
 }
 
+
+
+}
+
+
 .icon-center{
   vertical-align: middle !important;
 }
-
-
+.padding-left-10{
+  padding-left: 10px !important;
+}
+.vcenter{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.padding-left-30{
+  padding-left: 30px!important;
+}
+.font-weight-500{
+  font-weight: 500 !important;
+}
+.font-size-20{
+  font-size: 20px !important;
 }
 
-
+.my-icon { zoom : 2;}
 
 
 
