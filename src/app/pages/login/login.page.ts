@@ -127,10 +127,11 @@ export class LoginPage {
   async timerExpired() {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
+      header: 'Logged out',
       message: "For you and your patients' security, we logged you out. Please log in again.",
       buttons:  [
         {
-          text: 'OK',
+          text: 'Okay',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
