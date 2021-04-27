@@ -92,6 +92,7 @@ export class TabsPage {
       localStorage.clear();
       //window.location.reload();
       this.router.navigate(['/login']);
+      
     });
   }
 }

@@ -116,8 +116,32 @@ export class LoginPage {
 
   ngOnInit() {
     this.$gaService.pageView('/login', 'Login Page');
-  }
 
+
+    if(localStorage.getItem('promptLogout')=='1'){
+      this.timerExpired();
+    }
+
+
+  }
+  async timerExpired() {
+    const alert = await this.alertController.create({
+      cssClass: "my-custom-class",
+      message: "For you and your patients' security, we logged you out. Please log in again.",
+      buttons:  [
+        {
+          text: 'OK',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            localStorage.clear();
+          }
+        }
+      ],
+
+    });
+    await alert.present();
+  }
   checkInput() {
     this.btnDisable = true;
     if (this.postData.username == '' || this.postData.password == '') {

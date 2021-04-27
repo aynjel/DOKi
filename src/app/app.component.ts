@@ -62,8 +62,10 @@ export class AppComponent {
       () => {
         localStorage.clear();
         this.alertController.dismiss();
-        //window.location.reload();
-        this.router.navigate(['/login']);
+        this.router.navigate(['/login']).then(() => {
+          localStorage.setItem('promptLogout', '1');
+          window.location.reload();
+        });
     
     });
   }
@@ -80,16 +82,34 @@ export class AppComponent {
   async timerExpired() {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
-      message: "Session will end in 10 Seconds",
-      buttons: [
+      message: "Session will end in 3 Minutes",
+      buttons:  [
         {
-          text: "Refresh",
+          text: 'Log me out',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            localStorage.clear();
+            this.alertController.dismiss();
+
+            this.router.navigate(['/login']).then(() => {
+              window.location.reload();
+            });
+
+          }
+        }, {
+          text: ' Keep me logged in',
           handler: () => {
             this.alertController.dismiss();
             this.userIdle.stopTimer();
-          },
-        },
+          }
+        }
       ],
+
+
+
+
+
     });
     await alert.present();
   }
