@@ -414,7 +414,7 @@ export class LoginPage {
       this.logindata = JSON.parse(data);
 
       this.storageService.store(AuthConstants.AUTH, this.logindata);
-
+      localStorage.setItem('isIdle', '1');
       localStorage.setItem('username', btoa(this.postData.username));
       this.router.navigate(['/menu/dashboard']);
     } else {

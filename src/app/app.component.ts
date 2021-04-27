@@ -8,7 +8,8 @@ import { AlertController } from "@ionic/angular";
 import { FunctionsService } from "./shared/functions/functions.service";
 import { Constants } from "./shared/constants";
 import { Messages } from "../app/shared/messages";
-
+import { UserIdleService } from 'angular-user-idle';
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-root",
@@ -26,7 +27,9 @@ export class AppComponent {
     public alertController: AlertController,
     public functionsService: FunctionsService,
     public constants: Constants,
-    public messages: Messages
+    public messages: Messages,
+    private userIdle: UserIdleService,
+    public router:Router
   ) {
     this.initializeApp();
     this.updateClient();
@@ -37,6 +40,31 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.screensizeService.onResize(this.platform.width());
+    });
+    this.userIdle.startWatching();
+    
+    // Start watching when user idle is starting.
+    this.userIdle.onTimerStart().subscribe(count => {
+      if(localStorage.getItem('isIdle')=='1'){
+        console.log(count); 
+        if(count == 1){
+          this.timerExpired();
+           //this.userIdle.stopTimer()
+         }
+      }else{    
+        this.userIdle.stopTimer();
+      }
+
+  });
+    
+    // Start watch when time is up.
+    this.userIdle.onTimeout().subscribe(
+      () => {
+        localStorage.clear();
+        this.alertController.dismiss();
+        //window.location.reload();
+        this.router.navigate(['/login']);
+    
     });
   }
   updateClient() {
@@ -49,7 +77,22 @@ export class AppComponent {
       this.presentAlertConfirm();
     });
   }
-
+  async timerExpired() {
+    const alert = await this.alertController.create({
+      cssClass: "my-custom-class",
+      message: "Session will end in 10 Seconds",
+      buttons: [
+        {
+          text: "Refresh",
+          handler: () => {
+            this.alertController.dismiss();
+            this.userIdle.stopTimer();
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
