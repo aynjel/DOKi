@@ -171,7 +171,7 @@ export class InPatientDetailPage {
     );
     this.$gaService.event('Patient Information', 'User Flow', this.dr_name);
     this.patient_no = this.data[0].patient_no;
-    this.getExamList(this.data[0].patient_no);
+    //this.getExamList(this.data[0].patient_no);
     //populate empty feild
     this.postData.IsVAT = '';
     this.postData.PayVenue = '';
