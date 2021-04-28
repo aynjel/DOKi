@@ -1,0 +1,55 @@
+.footer {
+    width: 100%;
+    color: #fff;
+    font-weight: bold;
+    background: #275228;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+
+    bottom: 0px;
+  }
+
+
+
+  .nav-primary.active {
+    color: #275228;
+    font-weight: 1000 !important;
+    background-color: yellow;
+    //font-weight:bolder;
+  
+  }
+  
+  
+  .background-lightgray{
+    background-color: #f8f8f8;
+  }
+  
+  .card-margin{
+    margin:10px;
+  }
+
+
+  .disabled {
+    pointer-events:none; //This makes it not clickable
+    opacity:0.6;         //This grays it out to look disabled
+}
+
+.card-nb{
+  box-shadow: none !important;
+}
+
+.fs-15{
+  font-size: 15px;
+}
+
+.fs-12{
+  font-size: 12px;
+}
+
+.lineheight-80{
+  line-height: 80%;
+}
+.paddingtop-10{
+  padding-top: 10px;
+}

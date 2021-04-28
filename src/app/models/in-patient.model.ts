@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { LiteralExpr } from '@angular/compiler'
 
-export interface InPatientData{
+export interface InPatientData1{
     Doctor_Status: string
     admission_date: any
     admission_no: string
@@ -17,3 +17,36 @@ export interface InPatientData{
     room_no: string
     site: string
 }
+
+
+
+export class InPatientData{
+    AdmisisonNo: string
+    DoctorCode: string
+    DoctorStatusCode: string
+    ProfFee: number
+    DateCreated: string
+    site: string
+    CreatedBy: string
+    Remarks: string
+    DoctorMobileNumber: string
+    BillingMobileNumber: string
+    RoomNumber: string
+    SmsGateWay: any
+    OldProfFee: number
+    IsVAT:string
+    PayVenue:string
+    SelectedPayVenue:string
+}
+
+
+
+export class PatientNo{
+    pfInsCoor: string
+    pfIsPatientSeen: string
+
+}
+
+
+
+

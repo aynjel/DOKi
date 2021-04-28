@@ -26,6 +26,13 @@ import { ChhAppChangePasswordPageModule } from "../app/chh-web-components/chh-ap
 
 import { ChhAppPrivacyPolicyPageModule } from "./chh-web-components/chh-app-privacy-policy/chh-app-privacy-policy.module"
 import { ChhAppTermsAndConditionsPageModule } from "./chh-web-components/chh-app-terms-and-conditions/chh-app-terms-and-conditions.module"
+import {ChemistryPageModule} from "./chh-web-components/chh-app-test/chh-app-chemistry/chemistry.module";
+
+import {ChhAppBasePageModule} from "./chh-web-components/chh-app-test/chh-app-base/chh-app-base.module";
+
+import { ChhAppTestChemistryComponent } from "./chh-web-components/chh-app-test/chh-app-test-chemistry/chh-app-test-chemistry.component";
+import { ChhAppTestFecalysisComponent } from "./chh-web-components/chh-app-test/chh-app-test-fecalysis/chh-app-test-fecalysis.component";
+import { ChhAppTestSerologyComponent } from "./chh-web-components/chh-app-test/chh-app-test-serology/chh-app-test-serology.component";
 //import { SliderPageModule } from './components/slider/slider.module';
 //import { defineCustomElements } from '@teamhive/lottie-player/loader';
 
@@ -37,10 +44,11 @@ import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-go
 import { Constants } from "../app/shared/constants";
 import { Variables } from "../app/shared/variables";
 import { Messages } from "../app/shared/messages";
-
+import { UserIdleModule } from 'angular-user-idle';
+  import { from } from "rxjs";
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
+  entryComponents: [ChhAppTestChemistryComponent,ChhAppTestFecalysisComponent,ChhAppTestSerologyComponent],
   imports: [
     FormsModule,
     BrowserModule,
@@ -51,6 +59,8 @@ import { Messages } from "../app/shared/messages";
     ChhAppInPatientModalPageModule,
     ChhAppAddAppointmentsModalPageModule,
     ChhAppPrivacyPolicyPageModule,
+    ChemistryPageModule,
+    ChhAppBasePageModule,
     ChhAppTermsAndConditionsPageModule,
     ChhAppChangePasswordPageModule,
     ChhAppChangePassPageModule,
@@ -58,6 +68,7 @@ import { Messages } from "../app/shared/messages";
     NgxGoogleAnalyticsRouterModule,
     //LottieAnimationViewModule,
     //SliderPageModule,
+    UserIdleModule.forRoot({idle: 120, timeout: 180, ping: 20}),
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production,
     }),

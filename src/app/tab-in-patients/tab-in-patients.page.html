@@ -7,7 +7,7 @@
         </ion-text>
       </ion-title>
     </ion-toolbar>
-    <ion-fab horizontal="end" vertical="top" slot="fixed" *ngIf="!isDesktop">
+    <!-- <ion-fab horizontal="end" vertical="top" slot="fixed" *ngIf="!isDesktop">
       <ion-fab-button color="light" class="">
         <ion-icon name="options-outline"></ion-icon>
       </ion-fab-button>
@@ -37,8 +37,10 @@
           <ion-icon name="person-remove-outline"></ion-icon>
         </ion-fab-button>
       </ion-fab-list>
-    </ion-fab>
+    </ion-fab> -->
   </div>
+
+
   <ion-grid class="ion-no-padding chh-darkmode">
     <ion-row>
       <ion-col
@@ -46,7 +48,7 @@
         offset-md="2"
         size-lg="4"
         offset-lg="4"
-        class="custom-border-bottom ion-no-border"
+        class="custom-border-bottom ion-no-border custom-padding"
       >
         <chh-app-hospital-selector-with-all-and-filter
           (hospital)="locationAction($event)"
@@ -75,13 +77,15 @@
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-
+  <!--button (click)="generatePDF()">Generate PDF</button-->  
   <ion-grid class="ion-no-padding">
     <ion-row>
       <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
         <ng-container>
           <div *ngFor="let x of inPatients">
-            <ion-card (click)="detail(x)" mode="ios" class="pointer">
+
+         
+            <ion-card (click)="detail(x.patient_no)" mode="ios"  class="pointer">
               
               <ion-item lines="none">
                 <ion-avatar slot="start">
@@ -114,9 +118,10 @@
                   </ion-item>
                   <div *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__ADMITTED">
                     <!--Patient Admitted-->
+                    <!--Buffer 0.35 -->
                     <ion-progress-bar
                       value=".25"
-                      buffer="0.35"
+                      buffer="1"
                       color="warning"
                     ></ion-progress-bar>
                   </div>
@@ -124,9 +129,10 @@
                     *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE && (x.is_posted == this.constants.ANY__VALUE__NULL || x.is_posted == this.constants.NUMBER__VALUE__ZERO) && x.doctor_prof_fee == this.constants.ANY__VALUE__NULL"
                   >
                     <!--Patient For Discharge-->
+                    <!--Buffer 0.60 -->
                     <ion-progress-bar
                       value=".50"
-                      buffer="0.60"
+                      buffer="1"
                       color="warning"
                     ></ion-progress-bar>
                   </div>
@@ -134,9 +140,10 @@
                     *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE  && (x.is_posted ==this.constants.ANY__VALUE__NULL|| x.is_posted ==this.constants.NUMBER__VALUE__ZERO ) && x.doctor_prof_fee !=this.constants.ANY__VALUE__NULL"
                   >
                     <!--Patient For Discharge-->
+                    <!--Buffer 0.85 -->
                     <ion-progress-bar
                       value=".75"
-                      buffer="0.85"
+                      buffer="1"
                       color="warning"
                     ></ion-progress-bar>
                   </div>
@@ -181,6 +188,8 @@
                 </ion-label>
               </ion-item>
             </ion-card>
+
+
           </div>
         </ng-container>
 
@@ -349,10 +358,20 @@
 
         <ng-template #noDataAvailable>
           <div *ngIf="!objecthandler && isFetchDone">
-            <img src="assets/img/3973477-no-data-concept-illustration-custom.png">
-            <div class="ion-text-center">
-              <h3> {{this.messages.NO_DATA_AVAILABLE}}</h3>
-            </div>
+          <ion-grid >
+            <ion-row>
+              <ion-col size="8" offset="2">
+                <div class="vertical-center">
+                  <div class="center">
+                    <img
+                      src="assets/img/no-data-rafiki.png"
+                    
+                    />
+                  </div>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
           </div>
         </ng-template>
       </ion-col>

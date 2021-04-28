@@ -1,16 +1,16 @@
 [
-    {
+  {
     "username": "MD000175",
-    "appcode": "DPP",
+    "appCode": "DPP",
     "setting": "string",
     "property": "string",
     "value": "string"
-    },
-    {
-        "username": "MD0001751",
-        "appcode": "DPP",
-        "setting": "string",
-        "property": "string",
-        "value": "string"
-        }
+  },
+  {
+    "username": "MD0001751",
+    "appCode": "DPP",
+    "setting": "string",
+    "property": "string",
+    "value": "string"
+  }
 ]

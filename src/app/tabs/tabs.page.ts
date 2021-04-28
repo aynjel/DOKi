@@ -91,7 +91,9 @@ export class TabsPage {
     this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
       localStorage.clear();
       //window.location.reload();
-      this.router.navigate(['/login']);
+      this.router.navigate(['/login']).then(()=>{
+        window.location.reload();
+      });
     });
   }
 }

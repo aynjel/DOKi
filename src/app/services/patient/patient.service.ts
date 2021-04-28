@@ -189,6 +189,207 @@ export class PatientService {
       return this.http.put(url, data, options);
   }
 
+  getCebuExamList(data){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetExamList/"+data;
+    return this.http.get(url, options);
+  }
+  getCebuChemHeader(data){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetChemHeader/"+data;
+    return this.http.get(url, options);
+  }
+  getCebuChemDetails(data){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetChemDetails/"+data;
+    return this.http.get(url, options);
+  }
+  getCebuSeroHeader(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetSeroHeader/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+  getUrineHeader(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetUrinHeader/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+  getCebuUrineDetails(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetUrinDetails/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+  getCebuSeroExamno(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetSeroExamno/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+  getCebuSeroDetails(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetSeroDetails/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+  
+
+  getCebuFecalHeader(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetFecalHeader/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+  getFecalDetails(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetFecalDetails/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+  getCebuFecalDetail(data1:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetFecalDetails/"+data1;
+    return this.http.get(url, options);
+  }
+
+  getHemaHeader(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/ader/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+  getHemaDetail(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetHEMDetails/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+
+
+  getCebuCBCHeader(data1:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetCBCHeader/"+data1;
+    return this.http.get(url, options);
+  }
+  getCebuCBCDetail(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetCBCDetails/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+
+
+
+
+
+  getCebuUrinalysisHeader(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetUrinHeader/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+
+  getUrinalysisDetail(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetUrinDetails/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+
+
+
+
+
+  getManExamList(data){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Mandaue/MandaueLAB/GetExamList/"+data;
+    return this.http.get(url, options);
+  }
+
+  getExamList(location,data){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    let url;
+
+    
+    if(location){
+      url = environment.apiRouterUrl+"Cebu/CebuLabMain/GetExamList/"+data;
+    }else{
+      url = environment.apiRouterUrl+"Mandaue/MandaueLAB/GetExamList/"+data;
+    }
+    
+    return this.http.get(url, options);
+  }
+
+  getMandaueHeader(data1:any, data2:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Mandaue/MandaueLAB/GetLabHeaderFooter/"+data1+"/"+data2;
+    return this.http.get(url, options);
+  }
+  getMandaueLabDetails(data1:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl+"Mandaue/MandaueLAB/GetLabDetails/"+data1;
+    return this.http.get(url, options);
+  }
+
+
+
+
+
+
+ /*
+  restRXCUI(data1:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = 'https://rxnav.nlm.nih.gov/REST/rxcui?caller=RxNav&name='+data1;
+    return this.http.get(url, options);
+  }
+
+  allRelatedGroup(data1:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = 'https://rxnav.nlm.nih.gov/REST/rxcui/'+data1+'/allrelatedextension?caller=RxNav';
+    return this.http.get(url, options);
+  }
+  interactions(data1:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    
+    const url = 'https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis='+data1;
+    //const url = 'https://online.lexi.com/lco/action/interact/v2/analyze?duplicatedrugtherapy=1&drug=Calcium%20Carbonate%7Chf019100&drug=LevoFLOXacin%20(Systemic)%7Chf075756';
+
+
+
+    return this.http.get(url, options);
+  }
+*/
+
+
+
+  
+/**
+ * @example
+ * Sample (Local)          : http://localhost:8090/api/Cebu/CebuLabMain/GetHEMOtherHeader/:patientNo/:requestNo
+ * Sample (Prod, Private)  : http://10.128.18.75:8090/api/Cebu/CebuLabMain/GetHEMOtherHeader/:patientNo/:requestNo
+ * Sample (Prod, Public)   : https://doctorsportal.chonghua.com.ph/api/Cebu/CebuLabMain/GetHEMOtherHeader/:patientNo/:requestNo
+ 
+ */
+
+
+
+
+
+
 
 
 

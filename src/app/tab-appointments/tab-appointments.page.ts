@@ -357,6 +357,8 @@ export class TabAppointmentsPage {
     this.logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_code = this.logindata[0].dr_code;
     let  dr_name = this.logindata[0].last_name;
+    console.log('ionViewWillEnter');
+    console.log(this.logindata);
     this.$gaService.event('Appointments','User Flow',dr_name);
     if (this.selectedDate == null) {
       this.selectedDate = this.functionsService.getSystemDate();
