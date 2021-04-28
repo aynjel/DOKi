@@ -1,4 +1,34 @@
 <ion-header mode="md" class="ion-no-border" *ngIf="!isDesktop">
+
+
+
+
+
+
+  <ion-toolbar color="mango">
+    <span 
+      class="padding-left-10" 
+      routerLink="{{routerLinkBack}}"
+      routerDirection="backwards"
+      color="chh-css-primary2"        
+      >
+      <ion-icon 
+        name="chevron-back-outline" 
+        class="my-icon vcenter">
+      </ion-icon>
+    </span>
+    <span  class="padding-left-30 font-weight-500 font-size-20"> {{headerMethod}}  </span>
+  </ion-toolbar>
+
+
+
+
+
+
+
+
+
+<!-- 
   <ion-toolbar color="mango">
     <ion-title> {{headerMethod}} </ion-title>
     <ion-buttons
@@ -9,11 +39,11 @@
         routerLink="{{routerLinkBack}}"
         routerDirection="backwards"
         color="chh-css-primary2"
-        >Close&nbsp;
-        <ion-icon name="close-outline"></ion-icon>
+        >Back
+        <ion-icon slot="start" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-  </ion-toolbar>
+  </ion-toolbar> -->
 </ion-header>
 
 <ion-content *ngIf="!isDesktop" id="content">
@@ -62,7 +92,7 @@
       </div>
     </div>
     <ion-card mode="ios" *ngIf="!isDesktop ">
-      <ion-item>
+      <ion-item lines="none">
         <ion-label>&#8369; </ion-label>
         <ion-input
           color="danger"
@@ -75,7 +105,7 @@
       </ion-item>
     </ion-card>
     <ion-card mode="ios" *ngIf="!isDesktop && InsuranceShowVat">
-      <ion-item>
+      <ion-item lines="none">
         <ion-label>Add VAT?</ion-label>
         <ion-checkbox
           color="mango"
@@ -103,17 +133,17 @@
     <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==true">
       <li class="lineheight-80">
         <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >By default, PhilHealth and then Insurance (HMO) coverage applies.
+          >Insurance (HMO) and PhilHealth coverage applies.
         </ion-text>
       </li>
       <li class="lineheight-80 paddingtop-10">
         <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Only the excess amount of <b>&#8369;{{InsurancePF | number}}</b> (+ VAT) - (PhilHealth + Insurance coverage) will be collected from your patient.</ion-text
+          >Only the excess amount of <b>&#8369;{{InsurancePF | number}}</b> (+ VAT) will be collected from your patient.</ion-text
         >
       </li>
       <li class="lineheight-80 paddingtop-10">
         <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Receivables: Insurance (HMO) + PhilHealth + ~&#8369;(excess amount)(+ VAT)</ion-text
+          >Receivables: Insurance (HMO) + PhilHealth + <b>&#8369;{{InsurancePF | number}}</b> (+ VAT)</ion-text
         >
       </li>
       <li class="lineheight-80 paddingtop-10">
@@ -126,17 +156,17 @@
     <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==false">
       <li class="lineheight-80">
         <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >By default, PhilHealth and then Insurance (HMO) coverage applies.</ion-text
+          >Insurance (HMO) and PhilHealth coverage applies.</ion-text
         >
       </li>
       <li class="lineheight-80 paddingtop-10">
         <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Only the excess amount of <b>&#8369;{{InsurancePF | number}}</b> - (PhilHealth + Insurance coverage) will be collected from your patient.</ion-text
+          >Only the excess amount of <b>&#8369;{{InsurancePF | number}}</b> will be collected from your patient.</ion-text
         >
       </li>
       <li class="lineheight-80 paddingtop-10">
         <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Receivables: Insurance (HMO) + PhilHealth + ~&#8369;(excess amount)
+          >Receivables: Insurance (HMO) + PhilHealth + <b>&#8369;{{InsurancePF | number}}</b>
         </ion-text>
       </li>
       <li class="lineheight-80 paddingtop-10">
@@ -204,7 +234,7 @@ ______   _   _   _____   _____
       </ion-item>
     </ion-card>
     <ion-card mode="ios" *ngIf="!isDesktop  && PhilhealthShowValue">
-      <ion-item>
+      <ion-item lines="none">
         <ion-label>&#8369; </ion-label>
         <ion-input
           color="danger"
@@ -218,7 +248,7 @@ ______   _   _   _____   _____
     </ion-card>
 
     <ion-card mode="ios" *ngIf="!isDesktop && PhilhealthShowVat">
-      <ion-item>
+      <ion-item lines="none">
         <ion-label>Add VAT?</ion-label>
         <ion-checkbox
           color="mango"
@@ -339,7 +369,7 @@ ______                         ______   _   _   _____   _____
         </ion-item>
       </ion-card> -->
     <ion-card mode="ios" *ngIf="!isDesktop">
-      <ion-item>
+      <ion-item lines="none">
         <ion-label>&#8369; </ion-label>
         <ion-input
           color="danger"
@@ -353,7 +383,7 @@ ______                         ______   _   _   _____   _____
     </ion-card>
 
     <ion-card mode="ios" *ngIf="!isDesktop && PersonalPhilhealthShowVat">
-      <ion-item>
+      <ion-item lines="none">
         <ion-label>Add VAT?</ion-label>
         <ion-checkbox
           color="mango"
@@ -380,12 +410,12 @@ ______                         ______   _   _   _____   _____
     <ul *ngIf="!txtPersonalPhilHealthPF && txtPersonalPhilHealthVAT">
       <li class="lineheight-80">
         <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Total amount of <b>&#8369;{{PersonalPhilhealthPF | number}}</b> (+ VAT) will be collected from your patient NOT including PhilHealth rate.</ion-text
+          >Total amount of <b>&#8369;{{PersonalPhilhealthPF | number}}</b> (+ VAT) will be collected from your patient.</ion-text
         >
       </li>
       <li class="lineheight-80 paddingtop-10">
         <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Receivables: ~P<b>{{PersonalPhilhealthPF | number}}</b> (+ VAT) + PhilHealth</ion-text
+          >Receivables: <b>&#8369;{{PersonalPhilhealthPF | number}}</b> (+ VAT) + PhilHealth</ion-text
         >
       </li>
       <li class="lineheight-80 paddingtop-10">
@@ -398,12 +428,12 @@ ______                         ______   _   _   _____   _____
     <ul *ngIf="!txtPersonalPhilHealthPF && !txtPersonalPhilHealthVAT">
       <li class="lineheight-80">
         <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Total amount of <b>&#8369;{{PersonalPhilhealthPF | number}}</b> will be collected from your patient NOT including PhilHealth rate.</ion-text
+          >Total amount of <b>&#8369;{{PersonalPhilhealthPF | number}}</b> will be collected from your patient.</ion-text
         >
       </li>
       <li class="lineheight-80 paddingtop-10">
         <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Receivables: ~<b>&#8369;{{PersonalPhilhealthPF | number}}</b> + PhilHealth</ion-text
+          >Receivables: <b>&#8369;{{PersonalPhilhealthPF | number}}</b> + PhilHealth</ion-text
         >
       </li>
       <li class="lineheight-80 paddingtop-10">
@@ -439,7 +469,7 @@ ______                         ______   _   _   _____   _____
         </ion-row>
       </ion-grid>
 
-      <ion-item>
+      <ion-item lines="none">
         <ion-label class="ion-text-wrap"
           >Thank you for your generosity, Dok! &#10084; We truly appreciate your
           kindness and heartfelt service!</ion-label
@@ -662,7 +692,7 @@ ______          _    _
     </div>
   </div>
   <ion-card mode="ios" >
-    <ion-item>
+    <ion-item lines="none">
       <ion-label>&#8369; </ion-label>
       <ion-input
         color="danger"
@@ -675,7 +705,7 @@ ______          _    _
     </ion-item>
   </ion-card>
   <ion-card mode="ios" *ngIf="InsuranceShowVat">
-    <ion-item>
+    <ion-item lines="none">
       <ion-label>Add VAT?</ion-label>
       <ion-checkbox
         color="mango"
@@ -703,17 +733,17 @@ ______          _    _
   <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==true">
     <li class="lineheight-80">
       <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >By default, PhilHealth and then Insurance (HMO) coverage applies.
+        >Insurance (HMO) and PhilHealth coverage applies.
       </ion-text>
     </li>
     <li class="lineheight-80 paddingtop-10">
       <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Only the excess amount of <b>&#8369;{{InsurancePF | number}}</b> (+ VAT) - (PhilHealth + Insurance coverage) will be collected from your patient.</ion-text
+        >Only the excess amount of <b>&#8369;{{InsurancePF | number}}</b> (+ VAT) will be collected from your patient.</ion-text
       >
     </li>
     <li class="lineheight-80 paddingtop-10">
       <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Receivables: Insurance (HMO) + PhilHealth + ~&#8369;(excess amount)(+ VAT)</ion-text
+        >Receivables: Insurance (HMO) + PhilHealth + <b>&#8369;{{InsurancePF | number}}</b> (+ VAT)</ion-text
       >
     </li>
     <li class="lineheight-80 paddingtop-10">
@@ -726,17 +756,17 @@ ______          _    _
   <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==false">
     <li class="lineheight-80">
       <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >By default, PhilHealth and then Insurance (HMO) coverage applies.</ion-text
+        >Insurance (HMO) and PhilHealth coverage applies.</ion-text
       >
     </li>
     <li class="lineheight-80 paddingtop-10">
       <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Only the excess amount of <b>&#8369;{{InsurancePF | number}}</b> - (PhilHealth + Insurance coverage) will be collected from your patient.</ion-text
+        >Only the excess amount of <b>&#8369;{{InsurancePF | number}}</b> will be collected from your patient.</ion-text
       >
     </li>
     <li class="lineheight-80 paddingtop-10">
       <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Receivables: Insurance (HMO) + PhilHealth + ~&#8369;(excess amount)
+        >Receivables: Insurance (HMO) + PhilHealth + <b>&#8369;{{InsurancePF | number}}</b>
       </ion-text>
     </li>
     <li class="lineheight-80 paddingtop-10">
@@ -804,7 +834,7 @@ ______   _   _   _____   _____
     </ion-item>
   </ion-card>
   <ion-card mode="ios" *ngIf="PhilhealthShowValue">
-    <ion-item>
+    <ion-item lines="none">
       <ion-label>&#8369; </ion-label>
       <ion-input
         color="danger"
@@ -818,7 +848,7 @@ ______   _   _   _____   _____
   </ion-card>
 
   <ion-card mode="ios" *ngIf="PhilhealthShowVat">
-    <ion-item>
+    <ion-item lines="none">
       <ion-label>Add VAT?</ion-label>
       <ion-checkbox
         color="mango"
@@ -939,7 +969,7 @@ ______                         ______   _   _   _____   _____
       </ion-item>
     </ion-card> -->
   <ion-card mode="ios" >
-    <ion-item>
+    <ion-item lines="none">
       <ion-label>&#8369; </ion-label>
       <ion-input
         color="danger"
@@ -953,7 +983,7 @@ ______                         ______   _   _   _____   _____
   </ion-card>
 
   <ion-card mode="ios" *ngIf="PersonalPhilhealthShowVat">
-    <ion-item>
+    <ion-item lines="none">
       <ion-label>Add VAT?</ion-label>
       <ion-checkbox
         color="mango"
@@ -980,12 +1010,12 @@ ______                         ______   _   _   _____   _____
   <ul *ngIf="!txtPersonalPhilHealthPF && txtPersonalPhilHealthVAT">
     <li class="lineheight-80">
       <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Total amount of <b>&#8369;{{PersonalPhilhealthPF | number}}</b> (+ VAT) will be collected from your patient NOT including PhilHealth rate.</ion-text
+        >Total amount of <b>&#8369;{{PersonalPhilhealthPF | number}}</b> (+ VAT) will be collected from your patient.</ion-text
       >
     </li>
     <li class="lineheight-80 paddingtop-10">
       <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Receivables: ~P<b>{{PersonalPhilhealthPF | number}}</b> (+ VAT) + PhilHealth</ion-text
+        >Receivables: <b>&#8369;{{PersonalPhilhealthPF | number}}</b> (+ VAT) + PhilHealth</ion-text
       >
     </li>
     <li class="lineheight-80 paddingtop-10">
@@ -998,12 +1028,12 @@ ______                         ______   _   _   _____   _____
   <ul *ngIf="!txtPersonalPhilHealthPF && !txtPersonalPhilHealthVAT">
     <li class="lineheight-80">
       <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Total amount of <b>&#8369;{{PersonalPhilhealthPF | number}}</b> will be collected from your patient NOT including PhilHealth rate.</ion-text
+        >Total amount of <b>&#8369;{{PersonalPhilhealthPF | number}}</b> will be collected from your patient.</ion-text
       >
     </li>
     <li class="lineheight-80 paddingtop-10">
       <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Receivables: ~<b>&#8369;{{PersonalPhilhealthPF | number}}</b> + PhilHealth</ion-text
+        >Receivables: <b>&#8369;{{PersonalPhilhealthPF | number}}</b> + PhilHealth</ion-text
       >
     </li>
     <li class="lineheight-80 paddingtop-10">
@@ -1039,7 +1069,7 @@ _____   _
       </ion-row>
     </ion-grid>
 
-    <ion-item>
+    <ion-item lines="none">
       <ion-label class="ion-text-wrap"
         >Thank you for your generosity, Dok! &#10084; We truly appreciate your
         kindness and heartfelt service!</ion-label
