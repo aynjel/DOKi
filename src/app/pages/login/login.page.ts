@@ -366,7 +366,9 @@ export class LoginPage {
         }
       );
   }
-
+  ionViewWillLeave(){
+    this.btnDisable = false;
+  }
   async showPrivacyPolicy() {
     const modal = await this.modalController.create({
       component: ChhAppPrivacyPolicyPage,
