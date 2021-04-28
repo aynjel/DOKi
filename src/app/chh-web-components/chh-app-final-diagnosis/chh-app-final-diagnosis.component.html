@@ -1,0 +1,26 @@
+<ion-card mode="ios"  *ngIf="data.admission_status == 'DN' && !isDesktop" >
+  <ion-list>
+  <ion-item style="padding-top: 10px;">
+  <div class="ion-text-wrap"><b>Final Diagnosis</b><br /></div>
+  </ion-item>
+  <ion-item style="padding-top: 10px;" lines="none">
+  <div class="ion-text-wrap">
+  <div *ngIf="finalDiagnosis" class="custom-font">
+  <div *ngIf="finalDiagnosis.length <= limit">{{finalDiagnosis}}</div>
+  <div *ngIf="truncating && finalDiagnosis.length > limit">
+  {{finalDiagnosis1}}
+  <button ion-button (click)="truncating = false">show more</button>
+  </div>
+  <div *ngIf="!truncating && finalDiagnosis.length > limit">
+  <div *ngFor="let x of finalDiagnosis2">
+  <ion-text style="padding-top: 15px;"
+  >{{x}}<br
+  /></ion-text>
+  </div>
+  <button ion-button (click)="truncating = true">show less</button>
+  </div>
+  </div>
+  </div>
+  </ion-item>
+  </ion-list>
+  </ion-card>

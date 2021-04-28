@@ -7,4 +7,5 @@ export interface LoginData{
     status:any;
     site:string;
     license_no:string;
+    mobile_no:string;
 }

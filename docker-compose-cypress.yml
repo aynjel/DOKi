@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  # this is the web application we are going to test
+  pwa:
+    build: 
+      context: . 
+      dockerfile: Dockerfile 
+    container_name: pwa
+    #restart: unless-stopped
+    ports: 
+      - 80:80
+
+  # Cypress container
+  cypress:
+    # the Docker image to use from https://github.com/cypress-io/cypress-docker-images
+    image: "cypress/included:5.3.0"
+    container_name: cypress
+    #ipc: host
+    entrypoint: "npm run cypress:run:record"
+    depends_on:
+      - pwa
+    environment:
+      # pass base url to test pointing at the web application
+      - CYPRESS_baseUrl=http://pwa
+    # share the current folder as volume to avoid copying
+    working_dir: /e2e
+    volumes:
+      - ./:/e2e
+
+# Just added a comment to test pipeline trigger.
+
+# services: 
+#     # this container will run Cypress test using Chrome browser
+#     e2e-chrome:
+#         image: "cypress/included:5.3.0"
+#         # container_name: cypress
+#         # "cypress/included" images have entrypoint set to globally installed cypress
+#         # so the command can simply add any arguments
+#         command: "--browser chrome"
+#         volumes:
+#             - ./cypress:/cypress
+#             - ./cypress.json:/cypress.json

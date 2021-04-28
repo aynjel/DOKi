@@ -1,15 +1,15 @@
 <div class="navbar" class="ion-text-center" >
-  <ion-button fill="clear" (click)="onSubmit(this.constants.CHH_SITE__CODE__ALL,active3)" 
+  <ion-button id="ion-button-filter-both" fill="clear" (click)="onSubmit(this.constants.CHH_SITE__CODE__ALL,active3)" 
   [ngClass]="{'active-link':active3, 'notactive':!active3}" 
     class="link" size="small">
     {{this.functionsService.convertAllFirstLetterToUpperCase(this.constants.CHH_LABEL__VALUE__BOTH)}}
   </ion-button>
-  <ion-button fill="clear" (click)="onSubmit(this.constants.CHH_SITE__CODE__CEBU,active)" 
+  <ion-button id="ion-button-filter-cebu" fill="clear" (click)="onSubmit(this.constants.CHH_SITE__CODE__CEBU,active)" 
   [ngClass]="{'active-link':active, 'notactive':!active}" 
     class="link" size="small">
     {{this.functionsService.convertAllFirstLetterToUpperCase(this.constants.CHH_LABEL__VALUE__CEBU)}}
   </ion-button>
-  <ion-button fill="clear" (click)="onSubmit(this.constants.CHH_SITE__CODE__MANDAUE,active1)" 
+  <ion-button id="ion-button-filter-mandaue" fill="clear" (click)="onSubmit(this.constants.CHH_SITE__CODE__MANDAUE,active1)" 
   [ngClass]="{'active-link':active1, 'notactive':!active1}"
     class="link" size="small">
     {{this.functionsService.convertAllFirstLetterToUpperCase(this.constants.CHH_LABEL__VALUE__MANDAUE)}}
@@ -39,7 +39,37 @@
       <ion-select-option value="{{this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE}}">{{this.functionsService.convertAllFirstLetterToUpperCase(this.constants.ADMISSION_STATUS__VALUE__FOR_DISCHARGE)}}</ion-select-option>
     </ion-select>
   </ion-button> -->
-  
+  <ion-fab horizontal="end" vertical="top" slot="fixed" *ngIf="!isDesktop">
+    <ion-fab-button color="light" class="">
+      <ion-icon name="options-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="bottom">
+      <ion-fab-button
+        class="tab-font-family"
+        color="light"
+        (click)="onSubmit1(this.constants.ADMISSION_STATUS_SELECTION__VALUE__ALL,true)"
+        data-desc= "All"
+      >
+        <ion-icon name="person-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button
+        class="tab-font-family"
+        color="light"
+        (click)="onSubmit1(this.constants.ADMISSION_STATUS__CODE__ADMITTED,true)"
+        data-desc="Admitted"
+      >
+        <ion-icon name="person-add-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button
+        class="tab-font-family"
+        color="light"
+        (click)="onSubmit1(this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE,true)"
+        data-desc="For Discharge"
+      >
+        <ion-icon name="person-remove-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
 </div>
 
 <!-- BEFORE REFACTORED -->

@@ -1,18 +1,18 @@
 <ion-tabs *ngIf="!isDesktop">
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="dashboard">
+    <ion-tab-button id="button-dashboard" tab="dashboard">
       <ion-icon name="stats-chart-outline"></ion-icon>
       <ion-label class="tab-font-family">{{this.constants.MENU__VALUE__DASHBOARD}}</ion-label>
     </ion-tab-button>
-    <ion-tab-button tab="in-patients">
+    <ion-tab-button id="button-in-patients" tab="in-patients">
       <ion-icon name="person-circle-outline"></ion-icon>
       <ion-label class="tab-font-family">{{this.constants.MENU__VALUE__IN_PATIENTS}}</ion-label>
     </ion-tab-button>
-    <ion-tab-button tab="appointments">
+    <ion-tab-button id="button-appointments" tab="appointments">
       <ion-icon name="calendar-outline"></ion-icon>
       <ion-label class="tab-font-family">{{this.constants.MENU__VALUE__APPOINTMENTS}}</ion-label>
     </ion-tab-button>
-    <ion-tab-button tab="settings">
+    <ion-tab-button id="button-settings" tab="settings">
       <ion-icon name="settings-outline"></ion-icon>
       <ion-label class="tab-font-family">{{this.constants.MENU__VALUE__SETTINGS}}</ion-label>
     </ion-tab-button>
@@ -29,6 +29,7 @@
         <ion-col size="10">
           <div class="navbar" class="ion-text-center chh-bg">
             <ion-button
+              id="button-dashboard"
               fill="clear"
               routerLink="/menu/dashboard"
               routerDirection="root"
@@ -38,6 +39,7 @@
               {{this.constants.MENU__VALUE__DASHBOARD}}
             </ion-button>
             <ion-button
+              id="button-in-patients"
               fill="clear"
               routerLink="/menu/in-patients"
               routerDirection="root"
@@ -47,6 +49,7 @@
               {{this.constants.MENU__VALUE__IN_PATIENTS}}
             </ion-button>
             <ion-button
+              id="button-appointments"
               fill="clear"
               routerLink="/menu/appointments"
               routerDirection="root"
@@ -56,6 +59,7 @@
               {{this.constants.MENU__VALUE__APPOINTMENTS}}
             </ion-button>
             <ion-button
+              id="button-settings"
               fill="clear"
               routerLink="/menu/settings"
               routerDirection="root"
@@ -65,6 +69,7 @@
             {{this.constants.MENU__VALUE__SETTINGS}}
             </ion-button>
             <ion-button
+              id="button-logout"
               fill="clear"
               routerDirection="root"
               routerLinkActive="active-link"
@@ -79,7 +84,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-router-outlet></ion-router-outlet>
+  <ion-router-outlet class="with-header"></ion-router-outlet>
 
   <div class="footer tab-font-family">
     <span>{{this.constants.CHH_NAME__VALUE__CEBU}}</span>

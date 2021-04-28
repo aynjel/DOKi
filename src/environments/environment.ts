@@ -6,6 +6,8 @@ export const environment = {
   production: false,
   apiRouterUrl: 'https://doctorsportal.chonghua.com.ph/api/', /* If possible, dev use this to test the behavior of API calls in PROD env. */
   //apiRouterUrl: 'http://localhost:8085/api/'
+  //apiRouterUrl: 'http://10.128.18.132/doctorPortalPwa/api/',
+
   consoleLog: true
 };
 

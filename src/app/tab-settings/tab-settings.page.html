@@ -50,40 +50,128 @@
                 <ion-item>
                   <br />
                 </ion-item>
+
+
+                <!--div *ngFor="let item of tmpData| keyvalue">
+                  <div *ngFor="let data of item.value | keyvalue">
+                   
+                    <div *ngFor="let value of data.value | keyvalue">
+                      {{ data.key }}:  {{ value.key }} - {{ value.value }}
+
+
+
+                  </div>
+                </div>
+              </div-->
+
+                <!--ion-item *ngFor="let x of tmpData"> 
+                  <ion-icon slot="end" name="notifications-outline"></ion-icon>
+                  <b>{{x.appearance.darkmode}}</b>
+                </ion-item-->
+
+
+
+
+
+
+
+
+
+
+
+
+
                 <ion-item>
                   <ion-icon slot="end" name="notifications-outline"></ion-icon>
                   <b>{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_NOTIFICATIONS}}</b>
                 </ion-item>
+
+
+              <!-- SMS NOTIFICATION -->
+              <!-- ADMITTED -->
                 <ion-item>
                   <ion-label class="ion-text-wrap"
                     >{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_SMS_NOTIFICATIONS_ADMITTED}}</ion-label
                   >
                   <ion-toggle
                     color="mango"
-                    disabled="true"
-                    checked="true"
+                    
+                    [(ngModel)]="smsAdmitted"
+                    (ionChange)="toggle($event,'smsNotification','patientAdmitted',isset_smsAdmitted)"
                   ></ion-toggle>
                 </ion-item>
-                <ion-item>
+
+
+
+
+              <!-- SMS NOTIFICATION -->
+              <!-- DISCHARGE -->
+                <!--ion-item>
                   <ion-label class="ion-text-wrap"
                     >{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_SMS_NOTIFICATIONS_FOR_DISCHARGE}}</ion-label
                   >
                   <ion-toggle
                     color="mango"
+                    
+                    [(ngModel)]="smsDischarge"
+                    (ionChange)="toggle($event,'smsNotification','patientDischarged',isset_smsDischarge)"
+                  ></ion-toggle>
+                </ion-item-->
+
+
+              <!-- PUSH NOTIFICATION -->
+              <!-- ADMITTED -->
+                <ion-item>
+                  <ion-label class="ion-text-wrap"
+                    >{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_PUSH_NOTIFICATIONS_ADMITTED}}</ion-label
+                  >
+                  <ion-toggle
+                    color="mango"
                     disabled="true"
-                    checked="true"
+                    [(ngModel)]="pushNotiAdmitted"
+                    (ionChange)="toggle($event,'pushNotification','patientAdmitted',isset_pushNotiAdmitted)"
+                  ></ion-toggle>
+                </ion-item>
+
+
+                <!-- PUSH NOTIFICATION -->
+                <!-- DISCHARGED -->
+                <ion-item>
+                  <ion-label class="ion-text-wrap"
+                    >{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_PUSH_NOTIFICATIONS_FOR_DISCHARGE}}</ion-label
+                  >
+                  <ion-toggle
+                    color="mango"
+                    disabled="true"
+                    [(ngModel)]="pushNotiDischarge"
+                    (ionChange)="toggle($event,'pushNotification','patientDischarged',isset_pushNotiDischarge)"
+                  ></ion-toggle>
+                </ion-item>
+
+                <!-- PRIVACY POLICY -->
+                <!-- POLICY -->
+                <ion-item>
+                  <ion-icon name="lock-closed-outline" slot="end"></ion-icon>
+                  <b>Privacy Policy</b>
+                </ion-item>
+                <ion-item>
+                  <ion-label class="ion-text-wrap">Privacy Policy</ion-label>
+
+                  <ion-toggle id="dataPrivacyToggle"
+                    color="mango"
+                    [(ngModel)]="privacyPolicy"
+                    (ionChange)="optoutofprivacy($event)"
                   ></ion-toggle>
                 </ion-item>
                 <ion-item>
-                  <ion-label class="ion-text-wrap"
-                    >{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_PUSH_NOTIFICATIONS}}</ion-label
-                  >
-                  <ion-toggle disabled="true"></ion-toggle>
-                </ion-item>
-                <ion-item>
-                  <br />
-                </ion-item>
+                  <ion-label class="ion-text-wrap" (click)="viewPrivacyPolicy() ">View</ion-label>
+         
+                 
+                </ion-item>               
 
+
+               <!-- APPEARANCE -->
+                <!-- POLICY -->
                 <ion-item>
                   <ion-icon slot="end" name="color-palette-outline"></ion-icon>
                   <b>{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_APPEARANCE}}</b>
@@ -94,10 +182,20 @@
                   >
                   <ion-toggle
                     color="mango"
-                    disabled="false"
                     checked = "{{darkmode}}"
-                    (ionChange)="onDarkModeEnable($event)"
+                    (ionChange)="toggle($event,'appearance','darkmode',isset_darkmode)"
                   ></ion-toggle>
+                </ion-item>
+
+                <ion-item>
+                  <br />
+                </ion-item>
+
+               <!-- TERMS & CONDITION -->
+                <!-- POLICY -->
+                <ion-item color="danger" (click)="resetUserSettings() ">
+                  <ion-icon name="refresh-outline" slot="end"></ion-icon>
+                  Reset User Settings
                 </ion-item>
 
                 <ion-item>

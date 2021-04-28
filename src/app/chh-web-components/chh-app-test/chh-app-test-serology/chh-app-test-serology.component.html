@@ -1,0 +1,18 @@
+
+<ion-item class="ion-no-border">
+  <ion-grid>
+    <ion-row *ngIf="isDesktop">
+      <ion-col size="12" >
+          <h1>{{examDetails.Exam}}</h1>
+          <h4>{{examDetails.Test_Name}}</h4>
+      </ion-col>
+    </ion-row>
+    <ng-container  *ngFor="let x of resultDetails">
+    <ion-row >
+      <ion-col size="6" class="border-bottom ">{{x.Exam_Description}}</ion-col>
+      <ion-col size="6" class="border-bottom border-left ion-padding-vertical " >{{x.Result}}</ion-col>
+    </ion-row>
+    </ng-container>
+  </ion-grid>
+</ion-item>
+

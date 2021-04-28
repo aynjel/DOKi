@@ -180,6 +180,28 @@
   --ion-color-mangolight-contrast-rgb: 0, 0, 0;
   --ion-color-mangolight-shade: #275228;
   --ion-color-mangolight-tint: #275228;
+
+
+      /* width */
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 5px grey; 
+      border-radius: 10px;
+    }
+    
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: #275228; 
+      border-radius: 10px;
+    }
+    .background-lightgray{
+      background-color: rgb(255, 255, 255);
+    }
+
 }
 .chh-darkmode {
   background-color: #ffffff;
@@ -267,6 +289,9 @@ body[color-theme="dark"] {
   .highcharts-color-1 {
     fill: #9696ab;
     stroke: #9696ab;
+  }
+  .background-lightgray{
+    background-color: rgb(32, 32, 32);
   }
 }
 
@@ -379,3 +404,34 @@ body[color-theme="dark"] {
 .toolbar-wp {
   min-height: 20px;
 }
+
+
+/*
+.background-lightgray{
+
+
+    body[color-theme="light"] {
+        background-color: red !important;
+    }
+    body[color-theme="dark"] {
+      background-color: #b92d2d !important;
+    }
+
+
+    .md body[color-theme="light"] {
+        background-color: red !important;
+    }
+    .md body[color-theme="dark"] {
+        background-color: #b92d2d !important;
+    }
+
+    .ios body[color-theme="light"] {
+        background-color: red !important;
+    }
+    .ios body[color-theme="dark"] {
+        background-color: #b92d2d !important;
+    }
+
+
+
+  }*/

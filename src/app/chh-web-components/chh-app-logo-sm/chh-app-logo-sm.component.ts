@@ -12,12 +12,7 @@ export class ChhAppLogoSmComponent implements OnInit {
   constructor(public functionsService: FunctionsService) {}
 
   ngOnInit() {
-    if (localStorage.getItem("darkmode") == "true") {
-      this.functionsService.logToConsole("true");
-      this.logo = "assets/img/orgwidelogosupergraphic.png";
-    } else {
-      this.functionsService.logToConsole("false");
-      this.logo = "assets/img/orgwidelogo.png";
-    }
+
+  
   }
 }

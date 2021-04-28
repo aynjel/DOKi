@@ -1,0 +1,14 @@
+{
+    "doctorName": "CABANILLA, Rex Jun Timtiman",
+    "admissionNo": "IPM000204128",
+    "doctorCode": "MD000175",
+    "doctorStatusCode":"AP",
+    "pf": "25000",
+    "remarks": "WITHOUT VAT",
+    "transType": "INSURANCE",
+    "newPf": "50000",
+    "newRemarks": "WITH VAT",
+    "newTransType": "NEW INSURANCE",
+    "deletePf": "0",
+    "initData":"https://doctorsportal.chonghua.com.ph/api/ProfFee/Delete?accountno=IPM000204128&drstatuscode=AP&drcode=MD000175"
+}

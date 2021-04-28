@@ -7,13 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { ChhAppChangePassPageRoutingModule } from './chh-app-change-pass-routing.module';
 
 import { ChhAppChangePassPage } from './chh-app-change-pass.page';
-
+import {  ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ChhAppChangePassPageRoutingModule
+    ChhAppChangePassPageRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [ChhAppChangePassPage]
 })

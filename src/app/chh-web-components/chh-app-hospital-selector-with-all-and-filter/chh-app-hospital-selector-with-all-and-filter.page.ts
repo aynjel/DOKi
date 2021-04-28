@@ -76,7 +76,19 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
     }
     this.hospital.emit(data1);
   }
-
+  onSubmit1(data1: any, data2: boolean) {
+    if (data1 == this.constants.CHH_SITE__VALUE__ALL /*"ALL"*/) {
+      this.router.navigate(['/menu/in-patients']);
+    } else if (
+      data1 == this.constants.ADMISSION_STATUS__CODE__ADMITTED /*"AC"*/
+    ) {
+      this.router.navigate(['/menu/in-patients/AC']);
+    } else if (
+      data1 == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE /*"DN"*/
+    ) {
+      this.router.navigate(['/menu/in-patients/DN']);
+    }
+  }
   changeRedirect(event:any){
     this.functionsService.logToConsole('1');
 

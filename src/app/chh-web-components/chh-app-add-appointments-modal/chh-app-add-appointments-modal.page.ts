@@ -1,19 +1,19 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { ScreenSizeService } from "../../services/screen-size/screen-size.service";
-import { ModalController, AlertController } from "@ionic/angular";
-import { PatientService } from "../../services/patient/patient.service";
-import { LoginData } from "../../models/login-data.model";
-import { AuthService } from "src/app/services/auth/auth.service";
-import { Ionic4DatepickerModalComponent } from "@logisticinfotech/ionic4-datepicker";
-import { ToastService } from "../../services/toast/toast.service";
-import { GoogleAnalyticsService } from "ngx-google-analytics";
-import { Constants } from "../../shared/constants";
-import { FunctionsService } from "../../shared/functions/functions.service";
+import { Component, OnInit, Input } from '@angular/core';
+import { ScreenSizeService } from '../../services/screen-size/screen-size.service';
+import { ModalController, AlertController } from '@ionic/angular';
+import { PatientService } from '../../services/patient/patient.service';
+import { LoginData } from '../../models/login-data.model';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { Ionic4DatepickerModalComponent } from '@logisticinfotech/ionic4-datepicker';
+import { ToastService } from '../../services/toast/toast.service';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { Constants } from '../../shared/constants';
+import { FunctionsService } from '../../shared/functions/functions.service';
 
 @Component({
-  selector: "app-add-appointments-modal",
-  templateUrl: "./chh-app-add-appointments-modal.page.html",
-  styleUrls: ["./chh-app-add-appointments-modal.page.scss"],
+  selector: 'app-add-appointments-modal',
+  templateUrl: './chh-app-add-appointments-modal.page.html',
+  styleUrls: ['./chh-app-add-appointments-modal.page.scss'],
 })
 export class ChhAppAddAppointmentsModalPage implements OnInit {
   @Input() appt_id: any;
@@ -28,8 +28,8 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
   disableWeekDays1 = new Array();
   total = [0, 1, 2, 3, 4, 5, 6];
   mydate1 = this.functionsService.getSystemDate();
-  mydate2 = "1990-01-01";
-  mydate3 = "";
+  mydate2 = '1990-01-01';
+  mydate3 = '';
   fname: any;
   mname: any;
   lname: any;
@@ -82,11 +82,11 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
 
   ngOnInit() {
     this.$gaService.pageView(
-      "/Appointments/Add Appointments",
-      "Add Appointments Modal"
+      '/Appointments/Add Appointments',
+      'Add Appointments Modal'
     );
 
-    this.$gaService.event('Add Appointments','User Flow',this.dr_name);
+    this.$gaService.event('Add Appointments', 'User Flow', this.dr_name);
 
     this.location = this.appt_id;
     this.retriveMTWThFSS(this.dr_code, this.appt_id);
@@ -95,27 +95,28 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
     /*new date picker*/
     this.datePickerObjForDateOfAppointment = {
       inputDate: new Date(),
-      dateFormat: "YYYY-MM-DD",
+      dateFormat: 'YYYY-MM-DD',
       disableWeekDays: this.disableWeekDays1,
       btnProperties: {
-        expand: "block", // "block" | "full"
-        fill: "", // "clear" | "default" | "outline" | "solid"
-        size: "", // "default" | "large" | "small"
-        disabled: "", // boolean (default false)
-        strong: "", // boolean (default false)
-        color: "",
+        expand: 'block', // "block" | "full"
+        fill: '', // "clear" | "default" | "outline" | "solid"
+        size: '', // "default" | "large" | "small"
+        disabled: '', // boolean (default false)
+        strong: '', // boolean (default false)
+        color: '',
       },
     };
     this.datePickerObjForBirthdate = {
       inputDate: this.mydate2,
-      dateFormat: "YYYY-MM-DD",
+      dateFormat: 'YYYY-MM-DD',
+      fromDate: new Date('1900-01-01'), // default null
       btnProperties: {
-        expand: "block", // "block" | "full"
-        fill: "", // "clear" | "default" | "outline" | "solid"
-        size: "", // "default" | "large" | "small"
-        disabled: "", // boolean (default false)
-        strong: "", // boolean (default false)
-        color: "",
+        expand: 'block', // "block" | "full"
+        fill: '', // "clear" | "default" | "outline" | "solid"
+        size: '', // "default" | "large" | "small"
+        disabled: '', // boolean (default false)
+        strong: '', // boolean (default false)
+        color: '',
       },
     };
 
@@ -145,8 +146,8 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
     this.functionsService.logToConsole(this.adrress);
     if (this.adrress != null) {
       this.uxSaveCancel = false;
-    } else if (this.adrress == "") {
-      this.functionsService.logToConsole("--" + this.adrress);
+    } else if (this.adrress == '') {
+      this.functionsService.logToConsole('--' + this.adrress);
       this.uxSaveCancel = true;
     }
   }
@@ -155,12 +156,12 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
   async openDatePickerForDateOfAppointment() {
     const datePickerModal = await this.modalCtrl.create({
       component: Ionic4DatepickerModalComponent,
-      cssClass: "li-ionic4-datePicker",
+      cssClass: 'li-ionic4-datePicker',
       componentProps: { objConfig: this.datePickerObjForDateOfAppointment },
     });
     await datePickerModal.present();
     datePickerModal.onDidDismiss().then((data) => {
-      if (data.data.date != "Invalid date") {
+      if (data.data.date != 'Invalid date') {
         this.mydate1 = data.data.date;
         this.pickTime();
       }
@@ -170,12 +171,12 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
   async openDatePickerForBirthdate() {
     const datePickerModal = await this.modalCtrl.create({
       component: Ionic4DatepickerModalComponent,
-      cssClass: "li-ionic4-datePicker",
+      cssClass: 'li-ionic4-datePicker',
       componentProps: { objConfig: this.datePickerObjForBirthdate },
     });
     await datePickerModal.present();
     datePickerModal.onDidDismiss().then((data) => {
-      if (data.data.date != "Invalid date") {
+      if (data.data.date != 'Invalid date') {
         this.mydate2 = data.data.date;
         this.pickTime();
       }
@@ -193,16 +194,16 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
     // EXAMPLE OBJECT
     this.datePickerObj2 = {
       closeOnSelect: true,
-      todayLabel: "",
-      titleLabel: "Select Birthdate",
-      dateFormat: "YYYY-MM-DD",
+      todayLabel: '',
+      titleLabel: 'Select Birthdate',
+      dateFormat: 'YYYY-MM-DD',
       btnProperties: {
-        expand: "block", // "block" | "full"
-        fill: "clear", // "clear" | "default" | "outline" | "solid"
-        size: "small", // "default" | "large" | "small"
-        disabled: "", // boolean (default false)
+        expand: 'block', // "block" | "full"
+        fill: 'clear', // "clear" | "default" | "outline" | "solid"
+        size: 'small', // "default" | "large" | "small"
+        disabled: '', // boolean (default false)
         strong: true, // boolean (default false)
-        color: "",
+        color: '',
       },
     };
     // EXAMPLE OBJECT
@@ -212,25 +213,25 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
 
       // mondayFirst: true,
       // setLabel: 'Select a Date',
-      todayLabel: "",
+      todayLabel: '',
       // closeLabel: 'Close',
       // disabledDates: [],
-      titleLabel: "Select Date of Appointment",
+      titleLabel: 'Select Date of Appointment',
       // monthsList: ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
       // weeksList: ['S', 'S', 'M', 'T', 'W', 'T', 'F'],
-      dateFormat: "YYYY-MM-DD",
+      dateFormat: 'YYYY-MM-DD',
       // clearButton: false,
       // momentLocale: 'pt-BR',
       // yearInAscending: true,
       // btnCloseSetInReverse: false,
 
       btnProperties: {
-        expand: "block", // "block" | "full"
-        fill: "clear", // "clear" | "default" | "outline" | "solid"
-        size: "small", // "default" | "large" | "small"
-        disabled: "", // boolean (default false)
+        expand: 'block', // "block" | "full"
+        fill: 'clear', // "clear" | "default" | "outline" | "solid"
+        size: 'small', // "default" | "large" | "small"
+        disabled: '', // boolean (default false)
         strong: true, // boolean (default false)
-        color: "",
+        color: '',
         // "primary", "secondary", "tertiary", "success", "warning", "danger", "light", "medium", "dark" , and give color in string
       },
     };
@@ -291,10 +292,10 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
         if (this.disableWeekDays1.length >= 7) {
           this.btnSave = true;
           this.functionsService.alert(
-            "Upon checking, there is no available schedule for " +
+            'Upon checking, there is no available schedule for ' +
               this.mydate1 +
-              ". You may also want to try changing the Hospital site.",
-            "Okay"
+              '. You may also want to try changing the Hospital site.',
+            'Okay'
           );
         }
         this.functionsService.logToConsole(this.disableWeekDays1);
@@ -328,15 +329,15 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
 
   async closeModal() {
     this.$gaService.event(
-      "Add Appointments - CLOSE",
-      "User Flow",
+      'Add Appointments - CLOSE',
+      'User Flow',
       this.dr_name
     );
     await this.modalController.dismiss();
   }
 
   save() {
-    this.$gaService.event("Add Appointments - SAVE", "User Flow", this.dr_name);
+    this.$gaService.event('Add Appointments - SAVE', 'User Flow', this.dr_name);
     this.patientService
       .addAppointments(
         this.dr_code,
@@ -356,22 +357,22 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
         this.functionsService.logToConsole(res);
         if (res) {
           this.functionsService.alert(
-            "Way to go, Doc! Your patient, " +
+            'Way to go, Dok! Your patient, ' +
               this.lname +
-              " , " +
+              ' , ' +
               this.fname +
-              ", has been booked successfully!",
-            "Okay"
+              ', has been booked successfully!',
+            'Okay'
           );
           //this.toast.presentToast('Successfully added ' +this.lname+', '+this.fname);
         } else {
           this.functionsService.alert(
-            "U-oh! We cannot book your patient, " +
+            'U-oh! We cannot book your patient, ' +
               this.lname +
-              ", " +
+              ', ' +
               this.fname +
-              ", at this time. Please try again, Doc.",
-            "Okay"
+              ', at this time. Please try again, Dok.',
+            'Okay'
           );
           //this.toast.presentToast('Error saving ' +this.lname+', '+this.fname);
         }

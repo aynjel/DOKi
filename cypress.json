@@ -1,0 +1,15 @@
+{
+  "baseUrl": "http://localhost:8100",
+  "projectId": "v1wydv",
+  "retries": 2,
+  "env": {
+    "baseUrlToTest": "http://localhost:8100",
+    "loginUrl": "/login",
+    "dashboardUrl": "/menu/dashboard",
+    "inpatientsUrl": "/menu/in-patients",
+    "inpatientsAdmittedUrl": "/menu/in-patients/AC",
+    "inpatientsDischargedUrl": "/menu/in-patients/DN",
+    "appointmentsUrl": "/menu/appointments",
+    "settingsUrl": "/menu/settings"
+  }
+}
