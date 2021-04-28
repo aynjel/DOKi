@@ -4,8 +4,45 @@ version: v1.14.1
 ignore:
   SNYK-JS-LODASH-590103:
     - '@capacitor/cli > inquirer > lodash':
-        reason: >-
-          Prevent incompatibility or breakage with 9 dependencies. Skip for 30
-          days.
-        expires: '2021-02-06T05:56:57.333Z'
+        reason: Possibility of causing breakage
+        expires: '2021-05-28T09:17:32.722Z'
+  SNYK-JS-ANGULARCORE-1070902:
+    - '@angular/core':
+        reason: Possibility of causing breakage
+        expires: '2021-05-28T09:17:32.708Z'
+    - ionic-text-avatar > @angular/core:
+        reason: Possibility of causing breakage
+        expires: '2021-05-28T09:17:32.723Z'
+  SNYK-JS-URLPARSE-1078283:
+    - '@aspnet/signalr > eventsource > original > url-parse':
+        reason: Possibility of causing breakage
+        expires: '2021-05-28T09:17:32.711Z'
+  SNYK-JS-LODASH-1018905:
+    - '@capacitor/cli > inquirer > lodash':
+        reason: Possibility of causing breakage
+        expires: '2021-05-28T09:17:32.721Z'
+    - goog-webfont-dl > lodash:
+        reason: Possibility of causing breakage
+        expires: '2021-05-28T09:17:32.722Z'
+    - wait-on > lodash:
+        reason: Possibility of causing breakage
+        expires: '2021-05-28T09:17:32.722Z'
+  SNYK-JS-LODASH-1040724:
+    - '@capacitor/cli > inquirer > lodash':
+        reason: Possibility of causing breakage
+        expires: '2021-05-28T09:17:32.722Z'
+    - goog-webfont-dl > lodash:
+        reason: Possibility of causing breakage
+        expires: '2021-05-28T09:17:32.722Z'
+    - wait-on > lodash:
+        reason: Possibility of causing breakage
+        expires: '2021-05-28T09:17:32.722Z'
+  SNYK-JS-XMLDOM-1084960:
+    - '@capacitor/cli > plist > xmldom':
+        reason: Possibility of causing breakage
+        expires: '2021-05-28T09:17:32.722Z'
+  SNYK-JS-HIGHCHARTS-1018906:
+    - highcharts:
+        reason: Possibility of causing breakage
+        expires: '2021-05-28T09:17:32.722Z'
 patch: {}

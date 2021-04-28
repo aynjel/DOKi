@@ -269,7 +269,7 @@ pipelines:
       - step: *code-linting
       - step: *snyk-security-scan
       # - step: *e2e-ingress
-      - step: *e2e-all-in-one-run
+      # - step: *e2e-all-in-one-run // ---- v1.7.11
       # - parallel:
       #     # Run Cypress Tests in parallel (6 machines)
       #     - step: 
@@ -296,7 +296,7 @@ pipelines:
       - step: *code-linting
       - step: *snyk-security-scan
       # - step: *e2e-ingress
-      - step: *e2e-all-in-one-run
+      # - step: *e2e-all-in-one-run // ---- v1.7.11
       # - parallel:
       #     # Run Cypress Tests in parallel (6 machines)
       #     - step:
