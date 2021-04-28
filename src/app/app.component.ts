@@ -84,7 +84,7 @@ export class AppComponent {
       animated: true,
       backdropDismiss: false,
       message:
-        "We understand you're busy. For you and your patients' security, we'll automatically log you out in 3 minutes.",
+        "We understand you're busy. For you and your patients' security, we'll automatically log you out in a few minutes.",
       buttons: [
         {
           text: 'Log me out',
