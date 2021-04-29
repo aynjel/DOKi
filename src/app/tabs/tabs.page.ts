@@ -90,6 +90,7 @@ export class TabsPage {
   logout() {
     this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
       localStorage.clear();
+      localStorage.setItem('hasloggedin', '1');
       //window.location.reload();
       this.router.navigate(['/login']).then(()=>{
         window.location.reload();

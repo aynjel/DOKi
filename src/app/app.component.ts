@@ -57,10 +57,12 @@ export class AppComponent {
 
     // Start watch when time is up.
     this.userIdle.onTimeout().subscribe(() => {
-      localStorage.clear();
       this.alertController.dismiss();
+      localStorage.clear();
+     
+      localStorage.setItem('promptLogout', '1');
+      localStorage.setItem('hasloggedin', '1');
       this.router.navigate(['/login']).then(() => {
-        localStorage.setItem('promptLogout', '1');
         window.location.reload();
       });
     });
@@ -92,6 +94,7 @@ export class AppComponent {
           cssClass: 'secondary',
           handler: () => {
             localStorage.clear();
+            localStorage.setItem('hasloggedin', '1');
             this.alertController.dismiss();
             this.router.navigate(['/login']).then(() => {
               window.location.reload();

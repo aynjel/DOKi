@@ -327,6 +327,7 @@ export class TabSettingsPage {
       localStorage.removeItem('username');
       localStorage.clear();
       sessionStorage.clear();
+      localStorage.setItem('hasloggedin', '1');
       this.router.navigate(['/login']).then( ()=>{
         window.location.reload();
       }

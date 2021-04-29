@@ -135,7 +135,7 @@ export class LoginPage {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            localStorage.clear();
+            localStorage.removeItem('promptLogout');
           }
         }
       ],
