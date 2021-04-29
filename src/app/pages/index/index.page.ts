@@ -66,9 +66,14 @@ export class IndexPage implements OnInit {
   }
 
   initPwaPrompt() {
+    console.log('initPwaPrompt');
+    
     this.platform.ready().then(() => {
+      console.log('platform.ready');
       if (this.platform.is('android') || this.platform.is('desktop')) {
+        console.log('platform.ready:android');
         window.addEventListener('beforeinstallprompt', (event: any) => {
+          console.log(' window.addEventListener');
           event.preventDefault();
           this.promptEvent = event;
           this.openPromptComponent('android');
@@ -85,7 +90,9 @@ export class IndexPage implements OnInit {
   }
 
   async openPromptComponent(mobileType: 'ios' | 'android') {
+    console.log('openPromptComponent');
     if (mobileType == 'android') {
+      console.log('mobileType = android');
       if (this.android1 == false) {
         this.android = true;
       }
