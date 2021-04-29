@@ -51,7 +51,9 @@ export class AppComponent {
           //this.userIdle.stopTimer()
         }
       } else {
-       // this.userIdle.stopTimer();
+        console.log("timer stopped");
+        
+        this.userIdle.stopTimer();
       }
     });
 
@@ -59,7 +61,6 @@ export class AppComponent {
     this.userIdle.onTimeout().subscribe(() => {
       this.alertController.dismiss();
       localStorage.clear();
-     
       localStorage.setItem('promptLogout', '1');
       localStorage.setItem('hasloggedin', '1');
       this.router.navigate(['/login']).then(() => {
