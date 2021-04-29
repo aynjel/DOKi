@@ -51,7 +51,7 @@ export class AppComponent {
           //this.userIdle.stopTimer()
         }
       } else {
-        this.userIdle.stopTimer();
+       // this.userIdle.stopTimer();
       }
     });
 
