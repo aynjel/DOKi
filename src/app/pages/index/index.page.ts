@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 //import { Platform } from '@angular/cdk/platform';
 import { AlertController, Platform } from '@ionic/angular';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
@@ -22,8 +23,17 @@ export class IndexPage implements OnInit {
     private platform: Platform,
     public functionsService: FunctionsService,
     protected $gaService: GoogleAnalyticsService,
-    private screensizeService: ScreenSizeService
+    private screensizeService: ScreenSizeService,
+    public router:Router
   ) {
+    if(localStorage.getItem('hasloggedin')=='1'){
+      this.router.navigate(['/login']);
+     // this.timerExpired();
+    }else{
+      this.initPwaPrompt();
+      this.$gaService.pageView('/index', 'Index Page');
+    }
+
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         // Reload because our routing is out of place
@@ -32,6 +42,7 @@ export class IndexPage implements OnInit {
 
       this.isDesktop = isDesktop;
     });
+
   }
   slideOpts = {
     initialSlide: 0,
@@ -40,8 +51,8 @@ export class IndexPage implements OnInit {
   };
 
   ngOnInit() {
-    this.initPwaPrompt();
-    this.$gaService.pageView('/index', 'Index Page');
+
+ 
   }
 
   moveToNext(slides) {
