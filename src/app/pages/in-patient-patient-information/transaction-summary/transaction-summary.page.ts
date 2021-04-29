@@ -193,7 +193,7 @@ export class TransactionSummaryPage implements OnInit {
     this.data = JSON.parse(atob(localStorage.getItem('patientData')));
 
     if (this.data[0].site == 'C') {
-      this.site = 'Chong Hua Hospital - Fuente';
+      this.site = 'Chong Hua Hospital';
     } else {
       this.site = 'Chong Hua Hospital Mandaue';
     }
@@ -212,8 +212,7 @@ export class TransactionSummaryPage implements OnInit {
       this.data[0].payvenue == 'N' ||
       this.data[0].payvenue == 'A'
     ) {
-      this.postData.OldProfFee = this.data.doctor_prof_fee;
-      console.log(this.postData);
+      this.postData.OldProfFee = this.data[0].doctor_prof_fee;
 
       this.doctorService.updatePF(this.postData).subscribe(
         (res: any) => {
