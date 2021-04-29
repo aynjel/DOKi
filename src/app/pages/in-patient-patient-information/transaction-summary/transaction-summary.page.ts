@@ -193,7 +193,7 @@ export class TransactionSummaryPage implements OnInit {
     this.data = JSON.parse(atob(localStorage.getItem('patientData')));
 
     if (this.data[0].site == 'C') {
-      this.site = 'Chong Hua Hospital - Fuente';
+      this.site = 'Chong Hua Hospital';
     } else {
       this.site = 'Chong Hua Hospital Mandaue';
     }

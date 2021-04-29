@@ -178,7 +178,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     this.payvenueTxt = this.data[0].selected_payvenue;
 
     if (this.data[0].site == 'C') {
-      this.site = 'Chong Hua Hospital - Fuente';
+      this.site = 'Chong Hua Hospital';
     } else {
       this.site = 'Chong Hua Hospital Mandaue';
     }
