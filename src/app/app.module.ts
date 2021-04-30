@@ -44,7 +44,7 @@ import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-go
 import { Constants } from "../app/shared/constants";
 import { Variables } from "../app/shared/variables";
 import { Messages } from "../app/shared/messages";
-import { UserIdleModule } from 'angular-user-idle';
+//import { UserIdleModule } from 'angular-user-idle';
   import { from } from "rxjs";
 @NgModule({
   declarations: [AppComponent],
@@ -71,7 +71,7 @@ import { UserIdleModule } from 'angular-user-idle';
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production,
     }),
-    UserIdleModule.forRoot({idle: 120, timeout: 180, ping: 20}),
+    //UserIdleModule.forRoot({idle: 120, timeout: 180, ping: 20}),
 
   ],
   providers: [
