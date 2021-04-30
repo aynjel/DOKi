@@ -68,10 +68,11 @@ import { UserIdleModule } from 'angular-user-idle';
     NgxGoogleAnalyticsRouterModule,
     //LottieAnimationViewModule,
     //SliderPageModule,
-    UserIdleModule.forRoot({idle: 120, timeout: 180, ping: 20}),
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production,
     }),
+    UserIdleModule.forRoot({idle: 120, timeout: 180, ping: 20}),
+
   ],
   providers: [
     Messages,
