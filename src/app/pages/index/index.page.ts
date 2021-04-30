@@ -26,6 +26,8 @@ export class IndexPage implements OnInit {
     private screensizeService: ScreenSizeService,
     public router:Router
   ) {
+    console.log(localStorage.getItem('hasloggedin'));
+    
     if(localStorage.getItem('hasloggedin')=='1'){
       this.router.navigate(['/login']);
      // this.timerExpired();
@@ -66,9 +68,14 @@ export class IndexPage implements OnInit {
   }
 
   initPwaPrompt() {
+    console.log('init PWA prompt');
+    
     this.platform.ready().then(() => {
+      console.log('platform ready');
       if (this.platform.is('android') || this.platform.is('desktop')) {
+        console.log('platform android');
         window.addEventListener('beforeinstallprompt', (event: any) => {
+          console.log('beforeinstallprompt');
           event.preventDefault();
           this.promptEvent = event;
           this.openPromptComponent('android');
