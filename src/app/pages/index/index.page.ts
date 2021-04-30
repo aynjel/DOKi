@@ -29,11 +29,12 @@ export class IndexPage implements OnInit {
     if(localStorage.getItem('hasloggedin')=='1'){
       this.router.navigate(['/login']);
      // this.timerExpired();
-    }else{
-      this.initPwaPrompt();
-      this.$gaService.pageView('/index', 'Index Page');
+    } else{
+      
     }
 
+    this.initPwaPrompt();
+    this.$gaService.pageView('/index', 'Index Page');
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         // Reload because our routing is out of place
