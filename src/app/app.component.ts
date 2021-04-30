@@ -35,13 +35,31 @@ export class AppComponent {
   }
 
   initializeApp() {
+    console.log("initializeApp");
+    
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.screensizeService.onResize(this.platform.width());
     });
-    this.userIdle.startWatching();
 
+
+
+
+    if (localStorage.getItem('isIdle') == '1') {
+    console.log(localStorage.getItem('isIdlestarted'));
+
+      if (localStorage.getItem('isIdlestarted')==null) {
+        console.log("IDLE WATCH");
+        this.userIdle.startWatching();
+        localStorage.setItem('isIdlestarted', '1');
+      }else{
+        console.log("IDLE WATCH ALREADY STARTED");
+       
+      }
+      
+     
+    }
     // Start watching when user idle is starting.
     this.userIdle.onTimerStart().subscribe((count) => {
       if (localStorage.getItem('isIdle') == '1') {
