@@ -444,7 +444,9 @@ export class LoginPage {
       this.storageService.store(AuthConstants.AUTH, this.logindata);
       localStorage.setItem('isIdle', '1');
       localStorage.setItem('username', btoa(this.postData.username));
-      this.router.navigate(['/menu/dashboard']);
+      this.router.navigate(['/menu/dashboard']).then(()=>{
+        window.location.reload();
+      });
     } else {
       this.functionsService.alert(
         'Oops! You might have entered a different username or password. Please try again.',
