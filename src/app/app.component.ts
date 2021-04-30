@@ -40,6 +40,8 @@ export class AppComponent {
       this.splashScreen.hide();
       this.screensizeService.onResize(this.platform.width());
     });
+
+    /*
     this.userIdle.startWatching();
 
     // Start watching when user idle is starting.
@@ -66,7 +68,7 @@ export class AppComponent {
       this.router.navigate(['/login']).then(() => {
         window.location.reload();
       });
-    });
+    });*/
   }
 
   updateClient() {
