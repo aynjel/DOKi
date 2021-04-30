@@ -40,7 +40,6 @@ export class AppComponent {
       this.splashScreen.hide();
       this.screensizeService.onResize(this.platform.width());
     });
-/*
     this.userIdle.startWatching();
 
     // Start watching when user idle is starting.
@@ -68,8 +67,6 @@ export class AppComponent {
         window.location.reload();
       });
     });
-*/
-
   }
 
   updateClient() {
@@ -83,39 +80,39 @@ export class AppComponent {
     });
   }
 
-  // async timerExpired() {
-  //   const alert = await this.alertController.create({
-  //     cssClass: 'my-custom-class',
-  //     header: 'Dok, are you still there?',
-  //     animated: true,
-  //     backdropDismiss: false,
-  //     message:
-  //       "We understand you're busy. For you and your patients' security, we'll automatically log you out in a few minutes.",
-  //     buttons: [
-  //       {
-  //         text: 'Log me out',
-  //         // role: 'cancel',
-  //         cssClass: 'secondary',
-  //         handler: () => {
-  //           localStorage.clear();
-  //           localStorage.setItem('hasloggedin', '1');
-  //           this.alertController.dismiss();
-  //           this.router.navigate(['/login']).then(() => {
-  //             window.location.reload();
-  //           });
-  //         },
-  //       },
-  //       {
-  //         text: 'Keep me in',
-  //         handler: () => {
-  //           this.alertController.dismiss();
-  //           this.userIdle.stopTimer();
-  //         },
-  //       },
-  //     ],
-  //   });
-  //   await alert.present();
-  // }
+  async timerExpired() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Dok, are you still there?',
+      animated: true,
+      backdropDismiss: false,
+      message:
+        "We understand you're busy. For you and your patients' security, we'll automatically log you out in a few minutes.",
+      buttons: [
+        {
+          text: 'Log me out',
+          // role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            localStorage.clear();
+            localStorage.setItem('hasloggedin', '1');
+            this.alertController.dismiss();
+            this.router.navigate(['/login']).then(() => {
+              window.location.reload();
+            });
+          },
+        },
+        {
+          text: 'Keep me in',
+          handler: () => {
+            this.alertController.dismiss();
+            this.userIdle.stopTimer();
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
 
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
