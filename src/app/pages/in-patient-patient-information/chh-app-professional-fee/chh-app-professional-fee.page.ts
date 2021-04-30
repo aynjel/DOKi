@@ -146,6 +146,10 @@ export class ChhAppProfessionalFeePage implements OnInit {
       this.withVat = '(No VAT)';
     }
 
+    if (this.data[0].is_vat == 'Y' && this.data[0].is_posted == '1') {
+      this.withVat = '(with VAT)';
+    }
+    
     // if (this.data[0].payvenue == "W") {
     //   this.payvenue = "Charity";
     // } else if (this.data[0].payvenue == "H") {
