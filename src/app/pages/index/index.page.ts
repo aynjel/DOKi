@@ -27,11 +27,12 @@ export class IndexPage implements OnInit {
     public router:Router
   ) {
     if(localStorage.getItem('hasloggedin')=='1'){
+      console.log('INIT PWA');
+      
       this.router.navigate(['/login']);
      // this.timerExpired();
     }else{
-      this.initPwaPrompt();
-      this.$gaService.pageView('/index', 'Index Page');
+
     }
 
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
@@ -51,7 +52,8 @@ export class IndexPage implements OnInit {
   };
 
   ngOnInit() {
-
+    this.initPwaPrompt();
+    this.$gaService.pageView('/index', 'Index Page');
  
   }
 
