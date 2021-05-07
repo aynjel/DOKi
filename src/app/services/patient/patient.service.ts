@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { HttpService } from "../http/http.service";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
+import { FunctionsService } from "src/app/shared/functions/functions.service";
 
 @Injectable({
   providedIn: "root",
@@ -16,7 +17,8 @@ export class PatientService {
     private httpService: HttpService,
     private storageService: StorageService,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    public functionsService: FunctionsService
   ) {}
 
   retrieveSchedTime(
@@ -146,46 +148,51 @@ export class PatientService {
   getUserSettings(data1:any,data2:any){
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
+    let newLink = this.functionsService.isLocalorLive("AppSetting");
     const url =
-      environment.apiRouterUrl +
-      "AppSetting/GetUserSetting/"+data1+'/'+data2;
+      environment.apiRouterUrl + newLink+ "/GetUserSetting/"+data1+'/'+data2;
     return this.http.get(url, options);
   }
   getAppSetting(data:any){
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
+    let newLink = this.functionsService.isLocalorLive("AppSetting");
     const url =
-      environment.apiRouterUrl +
-      "AppSetting/GetAppSetting/"+data;
+      environment.apiRouterUrl +newLink+
+      "/GetAppSetting/"+data;
     return this.http.get(url, options);
   }
   insertUserSettings(data:any){
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredintials: false };
+    let newLink = this.functionsService.isLocalorLive("UserSetting");
     const url =
-      environment.apiRouterUrl +
-      "UserSetting/Insert";
+      environment.apiRouterUrl +newLink+
+      "/Insert";
     return this.http.post(url,  data, options);
   }
   updateUserSettings(data:any){
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredintials: false };
+    let newLink = this.functionsService.isLocalorLive("UserSetting");
     const url =
-    environment.apiRouterUrl+"UserSetting/Update";
+    environment.apiRouterUrl+newLink+"/Update";
     return this.http.put(url, data, options);
   }
   resetUserSettings(data:any){
     //const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const headers = new HttpHeaders();
     const options = { headers: headers,body:data, withCredentials: false };
-    const url = environment.apiRouterUrl+"UserSetting/Delete";
+    let newLink = this.functionsService.isLocalorLive("UserSetting");
+    const url = environment.apiRouterUrl+newLink+"/Delete";
     return this.http.delete(url,options)
   }
   changePassword(data: any) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredintials: false };
+    let newLink = this.functionsService.isLocalorLive("Login");
     const url =
-      environment.apiRouterUrl + "Login/ChangePassword";
+      environment.apiRouterUrl + ""+newLink+"/ChangePassword";
       return this.http.put(url, data, options);
   }
 
@@ -397,25 +404,29 @@ export class PatientService {
       //const headers = new HttpHeaders({ "Content-Type": "application/json" });
       const headers = new HttpHeaders();
       const options = { headers: headers, withCredintials: false };
-      const url = environment.apiRouterUrl+"Login/HISUser/Get?username="+data1+"&password="+data2;
+      let newLink = this.functionsService.isLocalorLive("Login");
+      const url = environment.apiRouterUrl+""+newLink+"/HISUser/Get?username="+data1+"&password="+data2;
       return this.http.get(url, options);
   }
   commonValidate(data: any) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredintials: false };
-    const url = environment.apiRouterUrl+"common/Login/Validate";
+    let newLink = this.functionsService.isLocalorLive("Login");
+    const url = environment.apiRouterUrl+"common/"+newLink+"/Validate";
       return this.http.put(url, data, options);
   }
   commonChangePassword(data: any) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredintials: false };
-    const url = environment.apiRouterUrl+"common/Login/ChangePassword";
+    let newLink = this.functionsService.isLocalorLive("Login");
+    const url = environment.apiRouterUrl+"common/"+newLink+"/ChangePassword";
       return this.http.put(url, data, options);
   }
   commonLoginGet(data: any) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredintials: false };
-    const url = environment.apiRouterUrl+"common/Login/Get";
+    let newLink = this.functionsService.isLocalorLive("Login");
+    const url = environment.apiRouterUrl+"common/"+newLink+"/Get";
       return this.http.put(url, data, options);
   }
 }

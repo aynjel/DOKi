@@ -103,6 +103,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     private renderer: Renderer2
   ) {
     // this.postData = new InPatientData();
+console.log('1');
 
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -113,11 +114,13 @@ export class ChhAppProfessionalFeePage implements OnInit {
   }
 
   ngOnInit() {
+    console.log('2');
     let getValue = this.activatedRoute.snapshot.paramMap.get('state');
 
     this.initiateSession();
     this.routerLinkBack =
-      '/menu/in-patients/' + this.activatedRoute.snapshot.params.id;
+      '/menu/in-patients/';
+
     this.patient_id = this.activatedRoute.snapshot.params.id;
     this.postData = JSON.parse(
       atob(localStorage.getItem('postData'))
@@ -128,12 +131,12 @@ export class ChhAppProfessionalFeePage implements OnInit {
     let logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_name = logindata[0].last_name;
     this.dr_code = logindata[0].dr_code;
-    //this.postData.DoctorMobileNumber = logindata[0].mobile_no;
-    //this.data =[];
-    //this.data = JSON.parse(atob(sessionStorage.getItem("patientData")));
     this.data = JSON.parse(atob(localStorage.getItem('patientData')));
     this.data1 = this.data[0].doctor_prof_fee;
-
+    this.patient_name = this.data[0].first_name + ' ' + this.data[0].last_name;
+    this.patient_name = this.functionsService.convertAllFirstLetterToUpperCase(
+      this.patient_name
+    );
     if (this.data[0].is_posted == 0) {
       this.modifybtn = false;
     } else {
@@ -151,21 +154,6 @@ export class ChhAppProfessionalFeePage implements OnInit {
     }else if(this.data[0].is_vat == 'N' && this.data[0].is_posted == '1'){
       this.withVat = '(No VAT)';
     }
-    
-    // if (this.data[0].payvenue == "W") {
-    //   this.payvenue = "Charity";
-    // } else if (this.data[0].payvenue == "H") {
-    //   this.payvenue = "c/o Insurance";
-    // } else if (this.data[0].payvenue == "X") {
-    //   this.payvenue = "c/o Insurance";
-    // } else if (this.data[0].payvenue == "N") {
-    //   this.payvenue = "Not Seen ";
-    // } else if (this.data[0].payvenue == "A") {
-    //   this.payvenue = "Coordinator's Fee";
-    // }
-    // console.log(this.data[0].selected_payvenue);
-    //console.log(this.data);
-
     this.payvenueN = this.data[0].payvenue;
 
     console.log(this.data[0].selected_payvenue);

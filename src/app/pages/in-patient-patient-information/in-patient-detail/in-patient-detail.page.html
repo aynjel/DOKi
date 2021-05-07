@@ -198,6 +198,16 @@ ______          _    _
 -->
 <app-chh-app-desktop-navigation *ngIf="isDesktop"></app-chh-app-desktop-navigation>
 <ion-content *ngIf="isDesktop">
+  <ul class="breadcrumb">
+    <li>
+      <a routerLink="{{routerLinkBack}}">In-Patients</a>
+      <ion-icon name="chevron-forward-outline" class="icon-center"></ion-icon>
+    </li>
+    <li>
+      <a>{{patient_name}}</a>
+      <ion-icon name="chevron-forward-outline" class="icon-center"></ion-icon>
+    </li>
+  </ul>
   <!-- <ul class="breadcrumb" >
     <li>
       <a routerLink="/menu/in-patients">In-Patient</a>

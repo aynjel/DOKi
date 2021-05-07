@@ -83,6 +83,7 @@ export class InPatientDetailPage {
   urinalysis: boolean = false;
   refresher: boolean = true;
   searchBar: any;
+  routerLinkBack:any;
   HighlightRow: number;
   ClickedRow: any;
   dr_code: any;
@@ -125,6 +126,8 @@ export class InPatientDetailPage {
   }
 
   ionViewWillEnter() {
+    this.routerLinkBack =
+    '/menu/in-patients/';
     //console.log('In-patient detail : ionViewWillEnter');
     //sessionStorage.removeItem('pfIsPatientSeen');
     // sessionStorage.removeItem('pfInsCoor');
@@ -140,6 +143,9 @@ export class InPatientDetailPage {
           if (element.patient_no == this.activatedRoute.snapshot.params.id) {
             this.data.push(element);
             this.patient_name = element.first_name + ' ' + element.last_name;
+            this.patient_name = this.functionsService.convertAllFirstLetterToUpperCase(
+              this.patient_name
+            );
             if (element.payvenue != null) {
               this.checkmark = true;
             }

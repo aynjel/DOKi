@@ -43,6 +43,7 @@ export class LoginPage {
   public logindata: LoginData;
   saltRounds = 10;
   resultJson;
+  testDB: boolean = false;
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -59,7 +60,7 @@ export class LoginPage {
     private modalController: ModalController,
     private patientService: PatientService,
     public alertController: AlertController
-  ) {}
+  ) { }
   isSetPrivacyPolicy: boolean = false;
   isPrivacyPolicy: boolean = false;
   loginresponse: any;
@@ -116,12 +117,16 @@ export class LoginPage {
 
   ngOnInit() {
     this.$gaService.pageView('/login', 'Login Page');
-
-
-    if(localStorage.getItem('promptLogout')=='1'){
+    if (localStorage.getItem('promptLogout') == '1') {
       this.timerExpired();
     }
 
+
+    if (localStorage.getItem('testdb') == '1') {
+      this.testDB = true;
+    } else {
+      this.testDB = false;
+    }
 
   }
   async timerExpired() {
@@ -129,7 +134,7 @@ export class LoginPage {
       cssClass: "my-custom-class",
       header: 'Logged out',
       message: "For you and your patients' security, we logged you out. Please log in again.",
-      buttons:  [
+      buttons: [
         {
           text: 'Okay',
           role: 'cancel',
@@ -143,8 +148,58 @@ export class LoginPage {
     });
     await alert.present();
   }
+
+
+
+
+
+
+
+  async testdbalert() {
+    const alert = await this.alertController.create({
+      header: 'Alert!',
+      message: 'Admins Only',
+      // inputs: [{type: 'text', placeholder: 'Confirmation code', id: 'code'}],
+      inputs: [
+        {
+          name: 'password',
+          placeholder: 'Password',
+          type: 'password'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Confirm',
+          handler: (blah) => {
+            if (blah.password == '0013969') {
+              this.checkTestDB();
+            } else {
+              this.testDB = !this.testDB;
+            }
+          }
+        },
+        {
+          text: 'Cancel',
+          handler: (blah) => {
+            this.testDB = !this.testDB;
+          }, role: 'cancel'
+        },
+      ],
+    });
+    await alert.present();
+  }
+  checkTestDB() {
+    if (this.testDB) {
+      localStorage.setItem('testdb', '1');
+    } else {
+      localStorage.setItem('testdb', '0');
+    }
+    window.location.reload();
+  }
   checkInput() {
     this.btnDisable = true;
+
+
     if (this.postData.username == '' || this.postData.password == '') {
       this.functionsService.sorryDoc();
       this.btnDisable = false;
@@ -366,7 +421,7 @@ export class LoginPage {
         }
       );
   }
-  ionViewWillLeave(){
+  ionViewWillLeave() {
     this.btnDisable = false;
   }
   async showPrivacyPolicy() {
@@ -384,7 +439,7 @@ export class LoginPage {
     });
     return await modal.present();
   }
-  
+
   loginAction() {
     //console.log('loginaction');
 
@@ -417,7 +472,7 @@ export class LoginPage {
 
                 this.patientService
                   .insertUserSettings(tempJson)
-                  .subscribe((res2: any) => {});
+                  .subscribe((res2: any) => {this.loginaction1(); });
               }
             });
           });
@@ -433,27 +488,29 @@ export class LoginPage {
         if (!this.isPrivacyPolicy) {
           this.patientService
             .updateUserSettings(smpJSON)
-            .subscribe((res1: any) => {});
+            .subscribe((res1: any) => { this.loginaction1();});
         }
       }
 
-      let data = JSON.stringify(this.logindata);
-      data = '[' + data + ']';
-      this.logindata = JSON.parse(data);
 
-      this.storageService.store(AuthConstants.AUTH, this.logindata);
-      localStorage.setItem('isIdle', '1');
-      localStorage.setItem('username', btoa(this.postData.username));
-      this.router.navigate(['/menu/dashboard']).then(()=>{
-        window.location.reload();
-      });
     } else {
       this.functionsService.alert(
         'Oops! You might have entered a different username or password. Please try again.',
         'Okay'
       );
     }
-
+  }
+  loginaction1(){
+    let data = JSON.stringify(this.logindata);
+    data = '[' + data + ']';
+    this.logindata = JSON.parse(data);
+    this.storageService.store(AuthConstants.AUTH, this.logindata);
+    localStorage.setItem('isIdle', '1');
+    localStorage.setItem('username', btoa(this.postData.username));
+    this.router.navigate(['/menu/dashboard']).then(() => {
+      window.location.reload();
+    });
+  }
     /*
     this.authService.doctorsPortalLogin(this.postData.username, this.postData.password).subscribe(
         (res: any) => {
@@ -542,5 +599,5 @@ export class LoginPage {
     /*For Doctors Portal
 
         /*For Doctors Portal */
-  }
+  
 }

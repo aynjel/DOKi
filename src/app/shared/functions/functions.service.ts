@@ -225,6 +225,16 @@ export class FunctionsService {
     );
   }
 
+
+
+  isLocalorLive(data:any){
+
+    if (localStorage.getItem('testdb') == '1') {
+      return data+'Test';
+    } else {
+      return data;
+    }
+  }
   // numberWithCommas(x) {
   //   return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
   // }

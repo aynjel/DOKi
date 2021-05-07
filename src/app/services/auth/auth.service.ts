@@ -97,7 +97,7 @@ export class AuthService {
   }
 
 
-
+/*
   mockGetAppSetting(){
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredentials: false };
@@ -124,5 +124,5 @@ export class AuthService {
     const url = 'http://10.130.21.200:81/api/UserSetting/Update';
     //return this.http.post(url, JSON.stringify(data), options);
     return this.http.put(url, data, options);
-  }
+  }*/
 }
