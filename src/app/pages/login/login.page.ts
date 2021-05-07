@@ -489,6 +489,8 @@ export class LoginPage {
           this.patientService
             .updateUserSettings(smpJSON)
             .subscribe((res1: any) => { this.loginaction1();});
+        }else{
+          this.loginaction1();
         }
       }
 
