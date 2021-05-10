@@ -68,7 +68,7 @@
   <div *ngIf="(method=='Insurance')">
     <ion-grid class="ion-no-padding">
       <ion-row>
-        <ion-col size="8" offset="2">
+        <ion-col size-md="8" offset-md="2" size-sm="6" offset-sm="3" size-xs="6" offset-xs="3">
           <div class="vertical-center">
             <div class="center">
               <img
@@ -196,7 +196,7 @@ ______   _   _   _____   _____
 
     <ion-grid class="ion-no-padding">
       <ion-row>
-        <ion-col size="8" offset="2">
+        <ion-col size-md="8" offset-md="2" size-sm="6" offset-sm="3" size-xs="6" offset-xs="3">
           <div class="vertical-center">
             <div class="center">
               <img
@@ -333,7 +333,7 @@ ______                         ______   _   _   _____   _____
   <div *ngIf="(method=='Personal-philhealth')">
     <ion-grid class="ion-no-padding">
       <ion-row>
-        <ion-col size="8" offset="2">
+        <ion-col size-md="8" offset-md="2" size-sm="6" offset-sm="3" size-xs="6" offset-xs="3">
           <div class="vertical-center">
             <div class="center">
               <img
@@ -456,7 +456,7 @@ ______                         ______   _   _   _____   _____
     <ion-card mode="ios">
       <ion-grid class="ion-no-padding">
         <ion-row>
-          <ion-col size="8" offset="2">
+          <ion-col size-md="8" offset-md="2" size-sm="6" offset-sm="3" size-xs="6" offset-xs="3">
             <div class="vertical-center">
               <div class="center">
                 <img
@@ -650,17 +650,6 @@ ______          _    _
         <ion-grid class="ion-no-padding">
           <ion-row>
             <ion-col size="12">
-
-
-
-
-
-
-
-
-
-
-  
  <!--
   _____                    ______ _   _ _____ _____ 
   |_   _|                   | ___ \ | | |_   _/  __ \
@@ -781,24 +770,15 @@ ______          _    _
     </li>
   </ul>
 </div>
-
-
 <!--
 ______   _   _   _____   _____ 
 | ___ \ | | | | |_   _| /  __ \
 | |_/ / | |_| |   | |   | /  \/
 |  __/  |  _  |   | |   | |    
 | |     | | | |  _| |_  | \__/\
-\_|     \_| |_/  \___/   \____/
-                             
-                                                                          
+\_|     \_| |_/  \___/   \____/                                                               
 -->     
-
-
 <div *ngIf="(method=='Philhealth')">
-
-
-
   <ion-grid class="ion-no-padding">
     <ion-row>
       <ion-col size="8" offset="2">
@@ -813,9 +793,6 @@ ______   _   _   _____   _____
       </ion-col>
     </ion-row>
   </ion-grid>
-
-
-
   <div class="vertical-center">
     <div class="center">
       <ion-button
@@ -851,7 +828,6 @@ ______   _   _   _____   _____
       ></ion-input>
     </ion-item>
   </ion-card>
-
   <ion-card mode="ios" *ngIf="PhilhealthShowVat">
     <ion-item lines="none">
       <ion-label>Add VAT?</ion-label>
@@ -864,7 +840,6 @@ ______   _   _   _____   _____
       </ion-checkbox>
     </ion-item>
   </ion-card>
-
   <ul *ngIf="txtPhilHealthPF">
     <li class="lineheight-80">
       <ion-text class="fs-12 ion-text-wrap" color="danger"
@@ -877,7 +852,6 @@ ______   _   _   _____   _____
       </ion-text>
     </li>
   </ul>
-
   <ul *ngIf="!txtPhilHealthPF && txtPhilHealthVAT">
     <li class="lineheight-80">
       <ion-text class="fs-12 ion-text-wrap" color="danger"
@@ -898,7 +872,6 @@ ______   _   _   _____   _____
       >
     </li>
   </ul>
-
   <ul *ngIf="!txtPhilHealthPF && !txtPhilHealthVAT">
     <li class="lineheight-80">
       <ion-text class="fs-12 ion-text-wrap" color="danger"
@@ -919,22 +892,14 @@ ______   _   _   _____   _____
     </li>
   </ul>
 </div>
-
-
 <!--
 ______                         ______   _   _   _____   _____ 
 | ___ \                        | ___ \ | | | | |_   _| /  __ \
 | |_/ /   ___   _ __   ______  | |_/ / | |_| |   | |   | /  \/
 |  __/   / _ \ | '__| |______| |  __/  |  _  |   | |   | |    
 | |     |  __/ | |             | |     | | | |  _| |_  | \__/\
-\_|      \___| |_|             \_|     \_| |_/  \___/   \____/
-                                                            
-                                                                                   
-                                                                          
--->     
-
-
-
+\_|      \___| |_|             \_|     \_| |_/  \___/   \____/                                                             
+-->
 <div *ngIf="(method=='Personal-philhealth')">
   <ion-grid class="ion-no-padding">
     <ion-row>
@@ -960,8 +925,7 @@ ______                         ______   _   _   _____   _____
               expand="block"
               fill="outline"
               (click)="presentCaseRatesModal()"
-              >View Case Rates</ion-button
-            >
+              >View Case Rates</ion-button>
           </div>
         </div>
       </ion-col>
