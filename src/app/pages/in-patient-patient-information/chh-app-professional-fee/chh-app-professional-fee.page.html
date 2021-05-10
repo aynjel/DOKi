@@ -21,7 +21,7 @@ ___  ___        _      _  _              _   _                   _
       </ion-icon>
     </span>
     <span 
-      class="padding-left-10"         
+      class="padding-left-10 buttonActive"         
       routerDirection="backwards"
       color="chh-css-primary2"
       *ngIf="!btnclose"
@@ -457,6 +457,7 @@ ______             _     _                        _   _                   _
               size="default"
               expand="block"
               shape="round"
+              class="buttonActive"
               [disabled]="toPFMbtn"
               (click)="redirecto()"
               *ngIf="ifShowSummary == false"
@@ -464,6 +465,7 @@ ______             _     _                        _   _                   _
             >
 
             <ion-button
+            class="buttonActive"
               color="mango"
               size="default"
               expand="block"
@@ -694,6 +696,7 @@ ______             _     _                       ______             _
             size="default"
             expand="block"
             shape="round"
+            class="buttonActive"
             (click)="modifyProfFee()"
             *ngIf="ifShowSummary"
             [disabled]="modifybtn"

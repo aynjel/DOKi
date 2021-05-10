@@ -133,15 +133,15 @@ export class TransactionSummaryPage implements OnInit {
     if(this.postData.SelectedPayVenue == "Charity"){
       this.payvenueN  = "xyz";
     }
-
-
+    
+    
     console.log(this.postData);
     
     console.log("data1 :" + this.data1);
     console.log("withVatN :" + this.withVatN);
     console.log("payvenueN :" + this.payvenueN);
-    
-    
+
+
 
     if (this.postData.PayVenue == 'W') {
       this.payvenue = 'Charity / PhilHealth';
