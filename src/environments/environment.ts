@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  //apiRouterUrl: 'https://doctorsportal.chonghua.com.ph/api/', /* If possible, dev use this to test the behavior of API calls in PROD env. */
+  apiRouterUrl: 'https://doctorsportal.chonghua.com.ph/api/', /* If possible, dev use this to test the behavior of API calls in PROD env. */
   //apiRouterUrl: 'http://localhost:8085/api/'
-  apiRouterUrl: 'http://10.130.21.212:59201/api/',
+  //apiRouterUrl: 'http://10.130.21.214:59201/api/',
 
   consoleLog: true
 };
