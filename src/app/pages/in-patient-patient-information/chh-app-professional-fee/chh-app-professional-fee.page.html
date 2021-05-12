@@ -15,10 +15,11 @@ ___  ___        _      _  _              _   _                   _
       routerDirection="backwards"
       color="chh-css-primary2"
       *ngIf="btnclose">
-      <ion-icon 
+      <!-- <ion-icon 
         name="chevron-back-outline" 
         class="my-icon vcenter">
-      </ion-icon>
+      </ion-icon> -->
+      <ion-icon name="arrow-back-outline"  class="my-icon vcenter"></ion-icon>
     </span>
     <span 
       class="padding-left-10 buttonActive"         
@@ -26,13 +27,14 @@ ___  ___        _      _  _              _   _                   _
       color="chh-css-primary2"
       *ngIf="!btnclose"
       (click)="modifyProfFeeClose()">
-      <ion-icon 
+      <!-- <ion-icon 
         name="chevron-back-outline" 
         class="my-icon vcenter">
-      </ion-icon>
+      </ion-icon> -->
+      <ion-icon name="arrow-back-outline"  class="my-icon vcenter"></ion-icon>
     </span>
 
-    <span  class="padding-left-30 font-weight-500 font-size-20"> Professional Fee </span>
+    <span  class="padding-left-30 font-weight-500 font-size-20"> &nbsp;&nbsp;Professional Fee </span>
   </ion-toolbar>
   <!-- <ion-toolbar color="mango">
     <ion-title> Professional Fee </ion-title>
