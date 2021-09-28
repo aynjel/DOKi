@@ -45,6 +45,8 @@ import { Constants } from "../app/shared/constants";
 import { Variables } from "../app/shared/variables";
 import { Messages } from "../app/shared/messages";
 import { UserIdleModule } from 'angular-user-idle';
+import {  HTTP_INTERCEPTORS } from "@angular/common/http";
+import {AuthInterceptor} from "./services/auth/auth.interceptor";
   import { from } from "rxjs";
 @NgModule({
   declarations: [AppComponent],
@@ -81,6 +83,8 @@ import { UserIdleModule } from 'angular-user-idle';
     SplashScreen,
     HttpClientModule,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {provide : HTTP_INTERCEPTORS, useClass :AuthInterceptor, multi:true}
+
   ],
   bootstrap: [AppComponent],
 })

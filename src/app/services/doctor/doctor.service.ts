@@ -105,4 +105,65 @@ export class DoctorService {
 
     return this.httpService.searchCaseRates(data);
   }
+  /////////////////////
+  getYearHistoryGraphV2(postData1: any) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    let newLink = this.functionsService.isLocalorLive("UserSetting");
+    //const url = environment.apiRouterUrl +newLink+ "/Insert";
+    const url = "http://10.128.18.75:8088/api/v2/Inpatients/YearHistory";
+    return this.http.post(url,  postData1, options);
+  }
+  getMonthHistoryGraphV2(postData1: any) {
+   
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    let newLink = this.functionsService.isLocalorLive("UserSetting");
+    //const url = environment.apiRouterUrl +newLink+ "/Insert";
+    const url = "http://10.128.18.75:8088/api/v2/Inpatients/MonthHistory";
+    return this.http.post(url,  postData1, options);
+  }
+  getTotalCountV2(postData1: any) {
+   
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    let newLink = this.functionsService.isLocalorLive("UserSetting");
+    //const url = environment.apiRouterUrl +newLink+ "/Insert";
+    const url = "http://10.128.18.75:8088/api/v2/Inpatients/Total";
+    return this.http.post(url,  postData1, options);
+  }
+  getInPatientV2(postData1: any) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    let newLink = this.functionsService.isLocalorLive("UserSetting");
+    //const url = environment.apiRouterUrl +newLink+ "/Insert";
+    const url = "http://10.128.18.75:8088/api/v2/Inpatients";
+    return this.http.post(url,  postData1, options);
+  }
+  getCoDoctorsV2(postData1: any) {
+    
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    let newLink = this.functionsService.isLocalorLive("UserSetting");
+    //const url = environment.apiRouterUrl +newLink+ "/Insert";
+    const url = "http://10.128.18.75:8088/api/v2/Inpatients/CoDoctors";
+    return this.http.post(url,  postData1, options);
+  }
+  getAdmittingDiagnosisV2(postData1: any) {
+
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    let newLink = this.functionsService.isLocalorLive("UserSetting");
+    //const url = environment.apiRouterUrl +newLink+ "/Insert";
+    const url = "http://10.128.18.75:8088/api/v2/Inpatients/FinalDiagnosis";
+    return this.http.post(url,  postData1, options);
+  }
+  getFinalDiagnosisV2(postData1: any) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    let newLink = this.functionsService.isLocalorLive("UserSetting");
+    //const url = environment.apiRouterUrl +newLink+ "/Insert";
+    const url = "http://10.128.18.75:8088/api/v2/Inpatients/AdmittingDiagnosis";
+    return this.http.post(url,  postData1, options);
+  }
 }

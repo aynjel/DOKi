@@ -62,9 +62,9 @@ export class TabsPage {
     }*/
 
     this.logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_code = this.logindata[0].dr_code;
+    this.dr_code = this.logindata.dr_code;
     this.dr_username = atob(localStorage.getItem("username"));
-    this.patientService.getUserSettings('DPP',this.dr_username).subscribe(
+    this.patientService.getUserSettingsV2(this.dr_username).subscribe(
       (res: any) => {       
         if(Object.keys(res).length >= 1){
           let data = JSON.stringify(res);data = '['+data+']';let adat = JSON.parse(data);

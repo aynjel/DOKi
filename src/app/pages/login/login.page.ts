@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthConstants } from '../../config/auth-constants';
+import { AuthConstants, Consta } from '../../config/auth-constants';
 import { DoctorConstants } from '../../config/auth-constants';
 import { AuthService } from '../../services/auth/auth.service';
 import { DoctorService } from '../../services/doctor/doctor.service';
@@ -10,6 +10,9 @@ import { ToastService } from '../../services/toast/toast.service';
 import { BehaviorSubject } from 'rxjs';
 import { DoctorInfoGlobal } from '../../shared/doctor-info-global';
 import { LoginData } from '../../models/login-data.model';
+import { LoginModel,ChangePasswordModel,LoginResponseModel,InserUSerSettingsModel } from '../../models/patient';
+
+
 import { FunctionsService } from '../../shared/functions/functions.service'; //"@ionic/angular";
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Constants } from '../../shared/constants';
@@ -41,6 +44,9 @@ import { tick } from '@angular/core/testing';
 })
 export class LoginPage {
   public logindata: LoginData;
+  public loginModel: LoginModel;
+  public loginResponseModel: LoginResponseModel;
+  public changePasswordModel: ChangePasswordModel; 
   saltRounds = 10;
   resultJson;
   testDB: boolean = false;
@@ -60,7 +66,10 @@ export class LoginPage {
     private modalController: ModalController,
     private patientService: PatientService,
     public alertController: AlertController
-  ) { }
+  ) { 
+
+
+  }
   isSetPrivacyPolicy: boolean = false;
   isPrivacyPolicy: boolean = false;
   loginresponse: any;
@@ -105,6 +114,7 @@ export class LoginPage {
   }
 
   public getName() {
+    
     return this.isEyeOnOff ? 'eye-off-outline' : 'eye-outline';
   }
 
@@ -116,6 +126,7 @@ export class LoginPage {
   btnDisable: boolean = false;
 
   ngOnInit() {
+    this.loginResponseModel = new LoginResponseModel;
     this.$gaService.pageView('/login', 'Login Page');
     if (localStorage.getItem('promptLogout') == '1') {
       this.timerExpired();
@@ -129,6 +140,119 @@ export class LoginPage {
     }
 
   }
+
+
+
+
+
+
+
+  loginv2(){
+    this.loginModel = new LoginModel();
+    this.loginModel.mode = Consta.mode;
+    this.changePasswordModel = new ChangePasswordModel();
+    this.loginModel.appCode = Consta.appCode;
+    //
+    this.loginModel.username = this.postData.username;
+    this.loginModel.password = this.postData.password;
+    console.log(this.loginModel);
+    localStorage.setItem('username', btoa(this.postData.username));
+    this.patientService.loginv2(this.loginModel).subscribe(
+      (res: any) => {
+        this.loginResponseModel = <LoginResponseModel>res;
+        this.resultJson = res;
+        if(this.loginResponseModel.jwt.length > 100){
+          localStorage.setItem("id_token",this.loginResponseModel.jwt);
+          console.log('token set');
+          
+        }
+      },
+      (error) => {
+       console.log(error);
+      },
+      () => {
+    
+        
+        if (!(typeof this.resultJson.ErrorCode !== 'undefined')) {
+       
+          if (this.resultJson.hl <= 10) {
+            console.log('inside this.resultJson.hl <= 10');
+              
+              this.updatePassword();
+          } else {
+            this.checkPrivacyPolicyV2();
+            /*localStorage.setItem('username', btoa(this.postData.username));
+            this.hashedPassword = this.resultJson.data;
+            this.loginUser();*/
+          } 
+        } else {
+          
+          this.btnDisable = false;
+          this.functionsService.alert(this.resultJson.ErrorDescription, 'Okay');
+          
+        }
+
+       
+     
+
+
+                  /*this.changePasswordModel.appCode = 'DPP';
+                  this.changePasswordModel.mode = 'T';
+                  this.changePasswordModel.newPassword = '@Dell150790';
+                  this.changePasswordModel.oldPassword = '1234abcd';
+                  this.changePasswordModel.username = 'PGALBO';
+                  this.patientService.changePasswordV2(this.changePasswordModel).subscribe(
+                    (res: any) => {
+                     console.log(res);
+                     
+                    },
+                    (error) => {
+                    console.log(error);
+                    },
+                    () => {
+                 
+                    }
+                  );*/
+
+      }
+    );
+    
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   async timerExpired() {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
@@ -204,10 +328,12 @@ export class LoginPage {
       this.functionsService.sorryDoc();
       this.btnDisable = false;
     } else {
-      this.checkbcrypt();
+      //this.checkbcrypt();
+      this.loginv2();
     }
   }
 
+  
   async modalUpdate(header, message, data) {
     this.btnDisable = false;
     const alert = await this.alertController.create({
@@ -219,7 +345,7 @@ export class LoginPage {
           text: 'Okay',
           handler: () => {
             if (data) {
-              this.loginUser();
+              //this.loginAction();
             }
           },
         },
@@ -243,8 +369,9 @@ export class LoginPage {
         typeof data.data !== 'undefined' &&
         typeof data.role !== 'undefined'
       ) {
-        this.hashedPassword = data.data;
-        this.postData.password = data.role;
+        //this.hashedPassword = data.data;
+       // this.postData.password = data.role;
+        this.postData.password = "";
         this.modalUpdate(
           this.constants.UI_COMPONENT_TEXT_VALUE_PASSWORD_SUCCESS_TITLE,
           this.constants.UI_COMPONENT_TEXT_VALUE_UPDATE_PASSWORD_SUCCESS_BODY,
@@ -265,6 +392,9 @@ export class LoginPage {
     return await modal.present();
   }
 
+
+
+/*
   checkbcrypt() {
     let json =
       '{"appCode": "DPP","username": "' + this.postData.username + '"}';
@@ -289,7 +419,7 @@ export class LoginPage {
           } else {
             localStorage.setItem('username', btoa(this.postData.username));
             this.hashedPassword = this.resultJson.data;
-            this.loginUser();
+            //this.loginUser();
             //this.btnDisable = false;
           }
         } else {
@@ -298,8 +428,8 @@ export class LoginPage {
         }
       }
     );
-  }
-
+  }*/
+/*
   loginUser() {
     bcrypt
       .compare(this.postData.password, this.hashedPassword)
@@ -319,7 +449,7 @@ export class LoginPage {
               this.btnDisable = false;
             },
             () => {
-              //this.btnDisable = false;
+          
               if (typeof this.loginresponse.ErrorCode !== 'undefined') {
                 this.functionsService.alert(
                   this.loginresponse.ErrorDescription,
@@ -328,7 +458,7 @@ export class LoginPage {
               } else {
                 this.btnDisable = true;
                 this.logindata = <LoginData>this.loginresponse;
-                this.checkPrivacyPolicy();
+                this.checkPrivacyPolicyV2();
               }
             }
           );
@@ -338,7 +468,7 @@ export class LoginPage {
         }
       });
   }
-
+*/
   /*
   checkUser(){
    
@@ -368,7 +498,7 @@ export class LoginPage {
 
   }*/
 
-  checkPrivacyPolicy() {
+  checkPrivacyPolicyV2() {
     /* get user settings,
       if user settings is empty, promt the privacy policy modal
 
@@ -380,11 +510,12 @@ export class LoginPage {
 
     let rsmJson;
     let y = 0;
-    this.patientService
-      .getUserSettings('DPP', this.postData.username)
+    this.patientService.getUserSettingsV2(this.postData.username)
       .subscribe(
         (res: any) => {
           rsmJson = res;
+      
+          
         },
         (error) => {
           this.functionsService.sorryDoc();
@@ -414,7 +545,7 @@ export class LoginPage {
             this.isSetPrivacyPolicy == false ||
             this.isPrivacyPolicy == false
           ) {
-            this.showPrivacyPolicy();
+           this.showPrivacyPolicy();
           } else {
             this.loginAction();
           }
@@ -441,11 +572,11 @@ export class LoginPage {
   }
 
   loginAction() {
-    //console.log('loginaction');
+    console.log('loginaction');
 
-    if (this.loginresponse.length != '0') {
+
       if (this.isSetPrivacyPolicy == false) {
-        this.patientService.getAppSetting('DPP').subscribe((res: any) => {
+        this.patientService.getAppSettingV2().subscribe((res: any) => {
           Object.keys(res).forEach((key) => {
             var value = res[key];
             Object.keys(value).forEach((lock) => {
@@ -457,37 +588,36 @@ export class LoginPage {
                 if (key == 'billingContact') {
                   //console.log(lock);
                 }
-                let tempJson =
-                  '{"username": "' +
-                  this.postData.username +
-                  '",  "userReference": "' +
-                  this.loginresponse.dr_code +
-                  '","appCode": "DPP","setting": "' +
-                  key +
-                  '","property": "' +
-                  lock +
-                  '","value": "' +
-                  valuex +
-                  '"}';
+
+                let tempJson1 = new InserUSerSettingsModel;
+                tempJson1.username = this.postData.username;
+                tempJson1.userReference = this.loginResponseModel.dr_code;
+                tempJson1.appCode = Consta.appCode;
+                tempJson1.mode = Consta.mode;
+                tempJson1.setting = key;
+                tempJson1.property = lock;
+                tempJson1.value= valuex;
+
 
                 this.patientService
-                  .insertUserSettings(tempJson)
+                  .insertUserSettingsV2(tempJson1)
                   .subscribe((res2: any) => {this.loginaction1(); });
               }
             });
           });
         });
       } else if (this.isSetPrivacyPolicy == true) {
-        let smpJSON =
-          '{"username": "' +
-          this.postData.username +
-          '", "userReference": "' +
-          this.loginresponse.dr_code +
-          '","appCode": "DPP","setting": "privacyPolicy","property": "accepted","value": "1"}';
-
+          let smpJSON1 = new InserUSerSettingsModel;
+          smpJSON1.username = this.postData.username;
+          smpJSON1.userReference = this.loginResponseModel.dr_code;
+          smpJSON1.appCode = Consta.appCode;
+          smpJSON1.mode = Consta.mode;
+          smpJSON1.setting = "privacyPolicy";
+          smpJSON1.property = "accepted";
+          smpJSON1.value= "1";
         if (!this.isPrivacyPolicy) {
           this.patientService
-            .updateUserSettings(smpJSON)
+            .updateUserSettings(smpJSON1)
             .subscribe((res1: any) => { this.loginaction1();});
         }else{
           this.loginaction1();
@@ -495,18 +625,13 @@ export class LoginPage {
       }
 
 
-    } else {
-      this.functionsService.alert(
-        'Oops! You might have entered a different username or password. Please try again.',
-        'Okay'
-      );
-    }
+  
   }
   loginaction1(){
-    let data = JSON.stringify(this.logindata);
-    data = '[' + data + ']';
-    this.logindata = JSON.parse(data);
-    this.storageService.store(AuthConstants.AUTH, this.logindata);
+    // let data = JSON.stringify(this.loginResponseModel);
+    // data = '[' + data + ']';
+    // this.logindata = JSON.parse(data);
+    this.storageService.store(AuthConstants.AUTH, this.loginResponseModel);
     localStorage.setItem('isIdle', '1');
     localStorage.setItem('username', btoa(this.postData.username));
     this.router.navigate(['/menu/dashboard']).then(() => {

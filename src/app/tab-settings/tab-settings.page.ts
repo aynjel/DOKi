@@ -2,7 +2,7 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { StorageService } from '../services/storage/storage.service';
-import { AuthConstants } from '../config/auth-constants';
+import { AuthConstants, Consta } from '../config/auth-constants';
 import { ScreenSizeService } from '../services/screen-size/screen-size.service';
 import { PatientService } from '../services/patient/patient.service';
 import { LoginData } from '../models/login-data.model';
@@ -20,6 +20,7 @@ import { ChhAppChangePasswordPage } from '../chh-web-components/chh-app-change-p
 import { ChhAppChangePassPage } from '../chh-web-components/chh-app-change-pass/chh-app-change-pass.page';
 import { ChhAppPrivacyPolicyPage } from '../chh-web-components/chh-app-privacy-policy/chh-app-privacy-policy.page';
 import { ChhAppTermsAndConditionsPage } from '../chh-web-components/chh-app-terms-and-conditions/chh-app-terms-and-conditions.page';
+import { UserSettingsModel,UserSettingDeletesModel } from '../models/doctor';
 @Component({
   selector: 'app-tab-settings',
   templateUrl: 'tab-settings.page.html',
@@ -34,7 +35,8 @@ export class TabSettingsPage {
   displayUserData: any;
   dr_name: any;
   dr_code: any;
-
+  userSettingsModel = new UserSettingsModel;
+  userSettingDeletesModel = new UserSettingDeletesModel;
   //toggles
   smsAdmitted: boolean = false;
   smsDischarge: boolean = false;
@@ -76,7 +78,7 @@ export class TabSettingsPage {
       this.isDesktop = isDesktop;
     });
 
-    this.patientService.getAppSetting('DPP').subscribe((res: any) => {
+    this.patientService.getAppSettingV2().subscribe((res: any) => {
       this.draftJson = res;
       //let data = JSON.stringify(res);data = '['+data+']';this.draftJson = JSON.parse(data);
     });
@@ -167,23 +169,24 @@ export class TabSettingsPage {
   ionViewWillEnter() {
     this.$gaService.pageView('/Settings', 'Settings Tab');
     this.logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_name = this.logindata[0].last_name;
-    this.dr_code = this.logindata[0].dr_code;
+    this.dr_name = this.logindata.last_name;
+    this.dr_code = this.logindata.dr_code;
+
+
     this.dr_username = atob(localStorage.getItem('username'));
     let y = '';
     //PARSE USER SETTINGS
-
-    this.patientService
-      .getUserSettings('DPP', this.dr_username)
-      .subscribe((res: any) => {
+    console.log('ionViewWillEnter');
+    
+    this.patientService.getUserSettingsV2(this.dr_username).subscribe((res: any) => {
         Object.keys(res).forEach((key) => {
+
           var value = res[key];
           Object.keys(value).forEach((lock) => {
             var valuex = value[lock];
             if (key != 'appCode') {
               if (key != 'username') {
-                //let x = '{"'+key+'":{"'+lock+'":'+valuex+'}}';y = y+x+',';
-                //darkmode
+
                 if (key == 'appearance') {
                   this.isset_darkmode = true;
                   if (valuex == '1') {
@@ -247,6 +250,7 @@ export class TabSettingsPage {
               }
             }
           });
+
         });
 
         //y = '['+y.slice(0, -1)+']';
@@ -256,10 +260,15 @@ export class TabSettingsPage {
     this.$gaService.event('Settings', 'User Flow', this.dr_name);
     this.authService.userData$.subscribe((res: any) => {
       this.account = <LoginData>res;
+      let asdasda = JSON.stringify(res);
+      asdasda = '['+asdasda+']';
+      this.account = JSON.parse(asdasda);
+      
     });
   }
 
   onDarkModeEnable(data: any) {
+    console.log('onDarkModeEnable');
     if (data == '1') {
       this.renderer.setAttribute(document.body, 'color-theme', 'dark');
       this.$gaService.event(
@@ -283,6 +292,8 @@ export class TabSettingsPage {
     property: any,
     flag: boolean
   ) {
+    console.log('toggle');
+    
     let value: any;
     if (event.detail.checked) {
       value = 1;
@@ -297,6 +308,7 @@ export class TabSettingsPage {
 
   //UPDATE OR INSERT USER SETTINGS
   updateOrInsert(setting: any, property: any, value: any, flag: boolean) {
+    console.log('updateOrInsert');
     let smpJSON =
       '{"username":"' +
       this.dr_username +
@@ -309,13 +321,20 @@ export class TabSettingsPage {
       '","value":"' +
       value +
       '"}';
+      this.userSettingsModel.username = this.dr_username;
+      this.userSettingsModel.userReference = this.dr_code;
+      this.userSettingsModel.appCode = Consta.appCode;
+      this.userSettingsModel.setting = setting;
+      this.userSettingsModel.property = property;
+      this.userSettingsModel.value  = value;
+      this.userSettingsModel.mode = Consta.mode;
     if (flag) {
-      this.patientService.updateUserSettings(smpJSON).subscribe(() => {
-        this.ionViewWillEnter();
+      this.patientService.updateUserSettingsV2(this.userSettingsModel).subscribe(() => {
+        //this.ionViewWillEnter();
       });
     } else {
-      this.patientService.insertUserSettings(smpJSON).subscribe(() => {
-        this.ionViewWillEnter();
+      this.patientService.insertUserSettingsV2(this.userSettingsModel).subscribe(() => {
+      //  this.ionViewWillEnter();
       });
     }
   }
@@ -400,9 +419,14 @@ export class TabSettingsPage {
               '","userReference": "' +
               this.dr_code +
               '","appCode": "DPP","setting": "string","property":"string","value": "string"}';
+              this.userSettingDeletesModel.username = this.dr_username;
+              this.userSettingDeletesModel.userReference = this.dr_code;
+              this.userSettingDeletesModel.setting = "string";
+              this.userSettingDeletesModel.appCode = Consta.appCode;
+              this.userSettingDeletesModel.mode = Consta.mode;
 
             this.patientService
-              .resetUserSettings(JSON.parse(smpJSON))
+              .resetUserSettingsV2(this.userSettingDeletesModel)
               .subscribe(
                 (res: any) => {
                   //console.log(res);
@@ -417,9 +441,16 @@ export class TabSettingsPage {
                     this.dr_code +
                     '","appCode": "DPP","setting":"privacyPolicy","property": "accepted","value": "1"}';
                   //console.log(smpJSON);
-
+                  this.userSettingsModel = new UserSettingsModel;
+                  this.userSettingsModel.username = this.dr_username;
+                  this.userSettingsModel.userReference = this.dr_code;
+                  this.userSettingsModel.appCode = Consta.appCode;
+                  this.userSettingsModel.mode = Consta.mode;
+                  this.userSettingsModel.setting = "privacyPolicy";
+                  this.userSettingsModel.property = "accepted";
+                  this.userSettingsModel.value  = "1";
                   this.patientService
-                    .insertUserSettings(smpJSON)
+                    .insertUserSettingsV2(this.userSettingsModel)
                     .subscribe(() => {
                       this.ionViewWillEnter();
                     });

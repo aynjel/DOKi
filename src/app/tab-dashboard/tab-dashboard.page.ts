@@ -10,6 +10,8 @@ import { BehaviorSubject } from "rxjs";
 import { FunctionsService } from "../shared/functions/functions.service";
 import { GoogleAnalyticsService } from "ngx-google-analytics";
 import { Constants } from "../shared/constants";
+import { AuthConstants, Consta } from '../config/auth-constants';
+import { DoctorHistoryModel } from '../models/doctor';
 
 @Component({
   selector: "app-tab-dashboard",
@@ -19,6 +21,7 @@ import { Constants } from "../shared/constants";
 
 export class TabDashboardPage implements OnInit {
   userData$ = new BehaviorSubject<any>([]);
+  public doctorHistoryModel = new DoctorHistoryModel;
   displayUserData: any;
   isDesktop: boolean;
   dr_code = "";
@@ -183,13 +186,18 @@ export class TabDashboardPage implements OnInit {
 
   ionViewWillEnter() {
     this.logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_code = this.logindata[0].dr_code;
-    this.first_name = this.logindata[0].first_name;//this.camelCase(this.logindata[0].first_name);
-    let  dr_name = this.logindata[0].last_name;
+    this.dr_code = this.logindata.dr_code;
+    console.log(this.dr_code);
+    this.doctorHistoryModel.accountNo = 'none';
+    this.doctorHistoryModel.drCode = this.logindata.dr_code;
+    this.doctorHistoryModel.mode = Consta.mode;
+    this.first_name = this.logindata.first_name;//this.camelCase(this.logindata[0].first_name);
+    let  dr_name = this.logindata.last_name;
     this.$gaService.event('Dashboard','User Flow',dr_name);
     let catego = [];
     let totalPatient = [];
-    this.doctorService.getYearHistoryGraph(this.dr_code).subscribe(
+    console.log(this.doctorHistoryModel);
+    this.doctorService.getYearHistoryGraphV2(this.doctorHistoryModel).subscribe(
       (res: any) => {
         var count = Object.keys(res).length / 2;
         let month: any;
@@ -210,7 +218,7 @@ export class TabDashboardPage implements OnInit {
     );
     let Day = [];
     let DayValue = [];
-    this.doctorService.MonthHistoryGraph(this.dr_code).subscribe(
+    this.doctorService.getMonthHistoryGraphV2(this.doctorHistoryModel).subscribe(
       (res: any) => {
         this.functionsService.logToConsole(res);
         let x = JSON.stringify(res);
@@ -236,7 +244,7 @@ export class TabDashboardPage implements OnInit {
         this.lineChartPopulationForMonth();
       }
     );
-    this.doctorService.getTotalCount(this.dr_code).subscribe(
+    this.doctorService.getTotalCountV2(this.doctorHistoryModel).subscribe(
       (res: any) => {
         this.functionsService.logToConsole(JSON.stringify(res));
         if (res) {

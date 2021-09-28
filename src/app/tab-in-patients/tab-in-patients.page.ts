@@ -2,7 +2,8 @@ import { Component, Renderer2 } from '@angular/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { StorageService } from '../services/storage/storage.service';
-import { AuthConstants } from '../config/auth-constants';
+import { AuthConstants, Consta} from '../config/auth-constants';
+
 import { DoctorService } from '../services/doctor/doctor.service';
 import {
   ModalController,
@@ -23,6 +24,7 @@ import { FunctionsService } from '../shared/functions/functions.service';
 import { Constants } from '../shared/constants';
 import { Messages } from '../shared/messages';
 import { PatientService } from '../services/patient/patient.service';
+import { InpatientModelInpatients } from '../models/doctor';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -32,6 +34,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   styleUrls: ['tab-in-patients.page.scss'],
 })
 export class TabInPatientsPage {
+  inpatientModelInpatients = new InpatientModelInpatients;
   public logindata: LoginData;
   public inPatientData: InPatientData;
   isDesktop: boolean;
@@ -189,15 +192,16 @@ export class TabInPatientsPage {
   //Fired when the component routing to is about to animate into view.
   ionViewWillEnter() {
     console.log('In-patient : ionViewWillEnter');
-
     this.logindata = <LoginData>this.authService.userData$.getValue();
-
-    this.dr_code = this.logindata[0].dr_code;
-    let dr_name = this.logindata[0].last_name;
+    this.dr_code = this.logindata.dr_code;
+    this.inpatientModelInpatients.accountNo = "none";
+    this.inpatientModelInpatients.drCode = this.dr_code;
+    this.inpatientModelInpatients.mode = Consta.mode;
+    let dr_name = this.logindata.last_name;
     this.$gaService.event('In-Patient', 'User Flow', dr_name);
 
     let x: boolean = true;
-    this.patientService.getAppSetting('DPP').subscribe((res: any) => {
+    this.patientService.getAppSettingV2().subscribe((res: any) => {
       Object.keys(res).forEach((key) => {
         var value = res[key];
         Object.keys(value).forEach((lock) => {
@@ -225,7 +229,7 @@ export class TabInPatientsPage {
     this.isFetchDone = false;
 
     setTimeout(() => {
-      this.doctorService.getInPatient(this.dr_code).subscribe(
+      this.doctorService.getInPatientV2(this.inpatientModelInpatients).subscribe(
         (res: any) => {
           if (res.length) {
             this.objecthandler = true;

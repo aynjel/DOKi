@@ -33,13 +33,13 @@ import { ChhAppTestChemistryComponent } from '../../../chh-web-components/chh-ap
 import { ChhAppTestFecalysisComponent } from '../../../chh-web-components/chh-app-test/chh-app-test-fecalysis/chh-app-test-fecalysis.component';
 import { ChhAppTestSerologyComponent } from '../../../chh-web-components/chh-app-test/chh-app-test-serology/chh-app-test-serology.component';
 import { StorageService } from '../../../services/storage/storage.service';
-import { AuthConstants } from '../../../config/auth-constants';
+import { AuthConstants, Consta} from '../../../config/auth-constants';
 import { executionAsyncResource } from 'async_hooks';
 import { Constants } from 'src/app/shared/constants';
 
 import { InPatientData } from 'src/app/models/in-patient.model';
 import { LaboratoryTestModalPage } from '../laboratory-test-modal/laboratory-test-modal.page';
-
+import { InpatientModelInpatients } from '../../../models/doctor';
 @Component({
   selector: 'app-in-patient-detail',
   templateUrl: './in-patient-detail.page.html',
@@ -47,6 +47,7 @@ import { LaboratoryTestModalPage } from '../laboratory-test-modal/laboratory-tes
 })
 export class InPatientDetailPage {
   public logindata: LoginData;
+  inpatientModelInpatients = new InpatientModelInpatients;
   data: any = [];
   site: any;
   date: any;
@@ -133,11 +134,14 @@ export class InPatientDetailPage {
     // sessionStorage.removeItem('pfInsCoor');
     this.checkAppearance();
     let logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_name = logindata[0].last_name;
-    this.dr_code = logindata[0].dr_code;
-    this.postData.DoctorMobileNumber = logindata[0].mobile_no;
+    this.dr_name = logindata.last_name;
+    this.dr_code = logindata.dr_code;
+    this.inpatientModelInpatients.accountNo = "none";
+    this.inpatientModelInpatients.drCode = this.dr_code;
+    this.inpatientModelInpatients.mode = Consta.mode;
+    this.postData.DoctorMobileNumber = logindata.mobile_no;
     this.data = [];
-    this.doctorService.getInPatient(this.dr_code).subscribe(
+    this.doctorService.getInPatientV2(this.inpatientModelInpatients).subscribe(
       (res: any) => {
         res.forEach((element) => {
           if (element.patient_no == this.activatedRoute.snapshot.params.id) {
@@ -234,7 +238,7 @@ export class InPatientDetailPage {
     //  | |  _  |  __|    | |        | |     | | | |      | | | | | | | | | |       | |   | | | | |  _  /
     //  | |_| | | |___    | |        | |___  | |_| |      | |_| | | |_| | | |___    | |   | |_| | | | \ \
     //  \_____/ |_____|   |_|        \_____| \_____/      |_____/ \_____/ \_____|   |_|   \_____/ |_|  \_\
-    this.doctorService.getCoDoctors(this.data[0].admission_no).subscribe(
+    this.doctorService.getCoDoctorsV2(this.inpatientModelInpatients).subscribe(
       (res: any) => {
         res.forEach((element) => {
           if (element.dr_code == this.data[0].dr_code) {
@@ -278,31 +282,35 @@ export class InPatientDetailPage {
     //
 
     this.doctorService
-      .getAdmittingDiagnosis(this.data[0].admission_no)
+      .getAdmittingDiagnosisV2(this.inpatientModelInpatients)
       .subscribe(
         (res: any) => {
-          this.admittingDiagnosis = res[0].admitting_diagnosis2.replace(
-            /(\r\n|\n|\r)/gm,
-            '<br />'
-          );
-          this.functionsService.logToConsole(
-            'admittingDiagnosis : ' + this.admittingDiagnosis
-          );
-          this.admittingDiagnosis1 = this.functionsService.truncateChar(
-            res[0].admitting_diagnosis2,
-            100
-          );
-          this.admittingDiagnosis1 = this.admittingDiagnosis1.replace(
-            /(\r\n|\n|\r)/gm,
-            '<br />'
-          );
-          this.admittingDiagnosis2 = this.admittingDiagnosis.replace(
-            /(,)/gm,
-            ',<br />'
-          );
-          this.functionsService.logToConsole(
-            'admittingDiagnosis2 : ' + this.admittingDiagnosis2
-          );
+          if(!Object.keys(res).length){
+            console.log("no data found");
+          }else{
+            this.admittingDiagnosis = res[0].admitting_diagnosis2.replace(
+              /(\r\n|\n|\r)/gm,
+              '<br />'
+            );
+            this.functionsService.logToConsole(
+              'admittingDiagnosis : ' + this.admittingDiagnosis
+            );
+            this.admittingDiagnosis1 = this.functionsService.truncateChar(
+              res[0].admitting_diagnosis2,
+              100
+            );
+            this.admittingDiagnosis1 = this.admittingDiagnosis1.replace(
+              /(\r\n|\n|\r)/gm,
+              '<br />'
+            );
+            this.admittingDiagnosis2 = this.admittingDiagnosis.replace(
+              /(,)/gm,
+              ',<br />'
+            );
+            this.functionsService.logToConsole(
+              'admittingDiagnosis2 : ' + this.admittingDiagnosis2
+            );
+        }
         },
         (error) => {
           this.isFetchDone = true;
@@ -314,26 +322,30 @@ export class InPatientDetailPage {
       );
     //final diagnosis
     if (this.data[0].admission_status == 'DN') {
-      this.doctorService.getFinalDiagnosis(this.data[0].admission_no).subscribe(
+      this.doctorService.getFinalDiagnosisV2(this.inpatientModelInpatients).subscribe(
         (res: any) => {
-          this.finalDiagnosis = res[0].final_diagnosis;
-          this.finalDiagnosis1 = this.functionsService.truncateChar(
-            this.finalDiagnosis,
-            50
-          );
-          this.finalDiagnosis2 = this.finalDiagnosis
-            .replace(/(\r\n|\n|\r)/gm, '')
-            .split('.)');
-          this.finalDiagnosis2.shift();
-          for (let i = 0; i < this.finalDiagnosis2.length - 1; i++) {
-            this.finalDiagnosis2[i] = this.finalDiagnosis2[i].substring(
-              0,
-              this.finalDiagnosis2[i].length - 1
+          if(!Object.keys(res).length){
+            console.log("no data found");
+          }else{
+            this.finalDiagnosis = res[0].final_diagnosis;
+            this.finalDiagnosis1 = this.functionsService.truncateChar(
+              this.finalDiagnosis,
+              50
             );
-            this.functionsService.logToConsole(this.finalDiagnosis2[i]);
-          }
-          for (let i = 0; i < this.finalDiagnosis2.length; i++) {
-            this.finalDiagnosis2[i] = i + 1 + '.) ' + this.finalDiagnosis2[i];
+            this.finalDiagnosis2 = this.finalDiagnosis
+              .replace(/(\r\n|\n|\r)/gm, '')
+              .split('.)');
+            this.finalDiagnosis2.shift();
+            for (let i = 0; i < this.finalDiagnosis2.length - 1; i++) {
+              this.finalDiagnosis2[i] = this.finalDiagnosis2[i].substring(
+                0,
+                this.finalDiagnosis2[i].length - 1
+              );
+              this.functionsService.logToConsole(this.finalDiagnosis2[i]);
+            }
+            for (let i = 0; i < this.finalDiagnosis2.length; i++) {
+              this.finalDiagnosis2[i] = i + 1 + '.) ' + this.finalDiagnosis2[i];
+            }
           }
         },
         (error) => {
@@ -722,7 +734,7 @@ export class InPatientDetailPage {
   checkAppearance() {
     let dr_username = atob(localStorage.getItem('username'));
     this.patientService
-      .getUserSettings('DPP', dr_username)
+      .getUserSettingsV2(dr_username)
       .subscribe((res: any) => {
         if (Object.keys(res).length >= 1) {
           let data = JSON.stringify(res);

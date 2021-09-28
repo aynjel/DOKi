@@ -1,12 +1,13 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { StorageService } from "../storage/storage.service";
-import { AuthConstants } from "../../config/auth-constants";
+import { AuthConstants,Consta } from "../../config/auth-constants";
 import { BehaviorSubject, Observable } from "rxjs";
 import { HttpService } from "../http/http.service";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
 import { FunctionsService } from "src/app/shared/functions/functions.service";
+import { constants } from "buffer";
 
 @Injectable({
   providedIn: "root",
@@ -429,4 +430,67 @@ export class PatientService {
     const url = environment.apiRouterUrl+"common/"+newLink+"/Get";
       return this.http.put(url, data, options);
   }
+
+
+
+
+/////////V2
+
+
+  loginv2(data:any){
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    //const url = environment.apiRouterUrl +newLink+ "/Insert";
+    const url = "http://10.128.18.75:8088/api/v2/Login";
+    return this.http.post(url,  data, options);
+  }
+  changePasswordV2(data: any) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+   // const url = environment.apiRouterUrl+"common/"+newLink+"/Get";
+   const url = "http://10.128.18.75:8088/api/v2/Login/ChangePassword";
+      return this.http.put(url, data, options);
+  }
+
+  getUserSettingsV2(data1:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+   // const url = environment.apiRouterUrl + newLink+ "/GetUserSetting/"+data1+'/'+data2;
+  // const url = 'http://10.128.18.75:8088/api/v2/AppSetting/User/DPP/PGALBO/T';
+   const url = 'http://10.128.18.75:8088/api/v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
+    return this.http.get(url, options);
+  }
+
+  getAppSettingV2(){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    //const url = environment.apiRouterUrl +newLink+ "/GetAppSetting/"+data;
+
+    //http://10.128.18.75:8088/api/v2/AppSetting/DPP/T
+   const url = 'http://10.128.18.75:8088/api/v2/AppSetting/'+Consta.appCode+'/'+Consta.mode;
+    return this.http.get(url, options);
+  }
+  insertUserSettingsV2(data:any){
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    //const url = environment.apiRouterUrl +newLink+ "/Insert";
+    const url = 'http://10.128.18.75:8088/api/v2/UserSetting';
+    return this.http.post(url,  data, options);
+  }
+  updateUserSettingsV2(data:any){
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    //const url =    environment.apiRouterUrl+newLink+"/Update";
+    const url = 'http://10.128.18.75:8088/api/v2/UserSetting';
+    return this.http.put(url, data, options);
+  }
+  resetUserSettingsV2(data:any){
+    //const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const headers = new HttpHeaders();
+    const options = { headers: headers,body:data, withCredentials: false };
+    //const url = environment.apiRouterUrl+newLink+"/Delete";
+    const url = 'http://10.128.18.75:8088/api/v2/UserSetting';
+    return this.http.delete(url,options)
+  }
+
 }
