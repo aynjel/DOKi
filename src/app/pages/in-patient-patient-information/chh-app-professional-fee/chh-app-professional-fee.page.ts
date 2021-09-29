@@ -128,9 +128,11 @@ console.log('1');
   }
 
   ionViewWillEnter() {
+    console.log('ionViewWillEnter');
+    
     let logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_name = logindata[0].last_name;
-    this.dr_code = logindata[0].dr_code;
+    this.dr_name = logindata.last_name;
+    this.dr_code = logindata.dr_code;
     this.data = JSON.parse(atob(localStorage.getItem('patientData')));
     this.data1 = this.data[0].doctor_prof_fee;
     this.patient_name = this.data[0].first_name + ' ' + this.data[0].last_name;
@@ -274,10 +276,10 @@ console.log('1');
     this.dateAdmitted = d.toUTCString();
     //console.log(this.dateAdmitted);
     this.logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_code = this.logindata[0].dr_code;
+    this.dr_code = this.logindata.dr_code;
     let dr_username = atob(localStorage.getItem('username'));
     this.patientService
-      .getUserSettings('DPP', dr_username)
+      .getUserSettingsV2( dr_username)
       .subscribe((res: any) => {
         if (Object.keys(res).length >= 1) {
           let data = JSON.stringify(res);

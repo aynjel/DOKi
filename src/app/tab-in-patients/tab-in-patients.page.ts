@@ -195,7 +195,9 @@ export class TabInPatientsPage {
     this.logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_code = this.logindata.dr_code;
     this.inpatientModelInpatients.accountNo = "none";
-    this.inpatientModelInpatients.drCode = this.dr_code;
+    
+    this.inpatientModelInpatients.drCode = 'MD000175';
+   // this.inpatientModelInpatients.drCode = this.dr_code;
     this.inpatientModelInpatients.mode = Consta.mode;
     let dr_name = this.logindata.last_name;
     this.$gaService.event('In-Patient', 'User Flow', dr_name);
@@ -227,10 +229,12 @@ export class TabInPatientsPage {
   //Get using Doctors API
   callPatient(data: any) {
     this.isFetchDone = false;
+    console.log(JSON.stringify(this.inpatientModelInpatients));
 
-    setTimeout(() => {
       this.doctorService.getInPatientV2(this.inpatientModelInpatients).subscribe(
         (res: any) => {
+          console.log(res);
+          
           if (res.length) {
             this.objecthandler = true;
           } else {
@@ -262,7 +266,7 @@ export class TabInPatientsPage {
           this.isFetchDone = true;
         }
       );
-    }, 1000);
+
   }
 
   //swipe down refresh

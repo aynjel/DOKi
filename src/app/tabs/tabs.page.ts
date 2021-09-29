@@ -32,6 +32,8 @@ export class TabsPage {
     private patientService:PatientService,
     private authService: AuthService
   ) {
+    console.log('constructor');
+    
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         // Reload because our routing is out of place
@@ -82,7 +84,6 @@ export class TabsPage {
         }
       },
       (error)=>{
-       // this.functionsService.sorryDoc();
       },() =>{
       });
   }

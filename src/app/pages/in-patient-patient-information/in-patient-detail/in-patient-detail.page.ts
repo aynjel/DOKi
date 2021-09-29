@@ -137,10 +137,13 @@ export class InPatientDetailPage {
     this.dr_name = logindata.last_name;
     this.dr_code = logindata.dr_code;
     this.inpatientModelInpatients.accountNo = "none";
-    this.inpatientModelInpatients.drCode = this.dr_code;
+    this.inpatientModelInpatients.drCode = 'MD000175';
+   // this.inpatientModelInpatients.drCode = this.dr_code;
     this.inpatientModelInpatients.mode = Consta.mode;
     this.postData.DoctorMobileNumber = logindata.mobile_no;
     this.data = [];
+
+    
     this.doctorService.getInPatientV2(this.inpatientModelInpatients).subscribe(
       (res: any) => {
         res.forEach((element) => {

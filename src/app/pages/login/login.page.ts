@@ -152,32 +152,20 @@ export class LoginPage {
     this.loginModel.mode = Consta.mode;
     this.changePasswordModel = new ChangePasswordModel();
     this.loginModel.appCode = Consta.appCode;
-    //
     this.loginModel.username = this.postData.username;
     this.loginModel.password = this.postData.password;
-    console.log(this.loginModel);
     localStorage.setItem('username', btoa(this.postData.username));
-    this.patientService.loginv2(this.loginModel).subscribe(
-      (res: any) => {
+    this.patientService.loginv2(this.loginModel).subscribe((res: any) => {
         this.loginResponseModel = <LoginResponseModel>res;
         this.resultJson = res;
         if(this.loginResponseModel.jwt.length > 100){
           localStorage.setItem("id_token",this.loginResponseModel.jwt);
-          console.log('token set');
-          
         }
-      },
-      (error) => {
+      },(error) => {
        console.log(error);
-      },
-      () => {
-    
-        
+      },() => {
         if (!(typeof this.resultJson.ErrorCode !== 'undefined')) {
-       
           if (this.resultJson.hl <= 10) {
-            console.log('inside this.resultJson.hl <= 10');
-              
               this.updatePassword();
           } else {
             this.checkPrivacyPolicyV2();
@@ -186,10 +174,8 @@ export class LoginPage {
             this.loginUser();*/
           } 
         } else {
-          
           this.btnDisable = false;
           this.functionsService.alert(this.resultJson.ErrorDescription, 'Okay');
-          
         }
 
        
@@ -322,8 +308,6 @@ export class LoginPage {
   }
   checkInput() {
     this.btnDisable = true;
-
-
     if (this.postData.username == '' || this.postData.password == '') {
       this.functionsService.sorryDoc();
       this.btnDisable = false;
@@ -510,14 +494,10 @@ export class LoginPage {
 
     let rsmJson;
     let y = 0;
-    this.patientService.getUserSettingsV2(this.postData.username)
-      .subscribe(
-        (res: any) => {
+    this.patientService.getUserSettingsV2(this.postData.username).subscribe(
+      (res: any) => {
           rsmJson = res;
-      
-          
-        },
-        (error) => {
+      },(error) => {
           this.functionsService.sorryDoc();
         },
         () => {
@@ -631,6 +611,10 @@ export class LoginPage {
     // let data = JSON.stringify(this.loginResponseModel);
     // data = '[' + data + ']';
     // this.logindata = JSON.parse(data);
+    console.log(this.loginResponseModel);
+    console.log(JSON.stringify(this.loginResponseModel));
+    
+    
     this.storageService.store(AuthConstants.AUTH, this.loginResponseModel);
     localStorage.setItem('isIdle', '1');
     localStorage.setItem('username', btoa(this.postData.username));
