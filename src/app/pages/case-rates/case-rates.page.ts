@@ -21,9 +21,9 @@ import { ChhAppTestChemistryComponent } from "../../chh-web-components/chh-app-t
 import { ChhAppTestFecalysisComponent } from "../../chh-web-components/chh-app-test/chh-app-test-fecalysis/chh-app-test-fecalysis.component";
 import { ChhAppTestSerologyComponent } from "../../chh-web-components/chh-app-test/chh-app-test-serology/chh-app-test-serology.component";
 import { StorageService } from "../../services/storage/storage.service";
-import { AuthConstants } from "../../config/auth-constants";
+import { AuthConstants, Consta} from "../../config/auth-constants";
 import { executionAsyncResource } from "async_hooks";
-import { Constants } from "src/app/shared/constants";
+import { Constants  } from "src/app/shared/constants";
 import { CaseRates } from "../../models/case-rates-search";
 @Component({
   selector: 'app-case-rates',
@@ -34,7 +34,7 @@ export class CaseRatesPage implements OnInit {
   isDesktop:any;
   dr_name:any;
   dr_code:any;
-  caseRateData  = new CaseRates();
+  caseRateData :any;
   caseSelect:boolean = true;
   ionSkeleton : boolean = false;
   ionSkeleton1 : boolean = false;
@@ -50,6 +50,8 @@ export class CaseRatesPage implements OnInit {
   case :any = "(first)";
   ionStart:boolean = true;
   ionStart1:boolean = true;
+  CaseSearchDesc:any;
+  CaseSearchCode:any;
   ccCase:any;
   constructor(
     private router: Router,
@@ -70,11 +72,11 @@ export class CaseRatesPage implements OnInit {
     public constants: Constants,
     private renderer: Renderer2,
     public nav:NavController) {
- 
+      this.caseRateData  = new CaseRates();
       this.caseRateData.CaseClass = "first";
-      this.caseRateData.CaseSearchCode ="";
-      this.caseRateData.CaseSearchDesc="";
-
+      //this.caseRateData.CaseSearchCode ="";
+      //this.caseRateData.CaseSearchDesc="";
+      this.caseRateData.Mode = Consta.mode;
       
       sessionStorage.setItem('caseRateData', JSON.stringify(this.caseRateData)); 
       this.screensizeService.isDesktopView().subscribe((isDesktop) => {
@@ -89,12 +91,16 @@ export class CaseRatesPage implements OnInit {
       this.ccCase = 'first';
   }
   ngOnInit() {
+   // this.caseRateData  = new CaseRates();
+   console.log(this.caseRateData);
+   
   }
   ionViewWillEnter(){
+    console.log(this.caseRateData);
     let  user = <CaseRates>JSON.parse(sessionStorage.getItem("caseRateData")) ; 
     let logindata = <LoginData>this.authService.userData$.getValue() ;
-    this.dr_name = logindata[0].last_name;
-    this.dr_code = logindata[0].dr_code;
+    this.dr_name = logindata.last_name;
+    this.dr_code = logindata.dr_code;
 
     this.checkAppearance();
 
@@ -107,16 +113,32 @@ export class CaseRatesPage implements OnInit {
    
   }
   search(){
-  
+
+
+
+
+    this.caseRateData.CaseSearchCode= (<HTMLInputElement>(
+      document.getElementById("input-code")
+    )).value;
+
+    this.caseRateData.CaseSearchDesc = (<HTMLInputElement>(
+      document.getElementById("input-searchdesc")
+    )).value;
+    console.log(this.caseRateData);
+
     if(this.caseRateData.CaseSearchDesc != ""){
 
       if(this.ccCase == 'first'){
+        console.log('ccCase');
+        
         this.ionStart= false;
         this.ionSkeleton = true;
         this.ionNoData = false;
         this.activedescription = false;
-        this.doctorService.searchCaseRates(this.caseRateData.CaseClass,this.caseRateData.CaseSearchCode,this.caseRateData.CaseSearchDesc).subscribe(
+        this.doctorService.searchCaseRatesV2(this.caseRateData.CaseClass,this.caseRateData.CaseSearchCode,this.caseRateData.CaseSearchDesc,this.caseRateData.Mode).subscribe(
           (res: any) => {
+            console.log(res);
+            
             this.caseRateResponse_first = res;
           },(error) =>{
             this.ionNoData = true;
@@ -127,6 +149,13 @@ export class CaseRatesPage implements OnInit {
             }else{
               this.ionNoData = false;
             }
+
+            console.log('first');
+
+            console.log(this.caseRateResponse_first );
+            let x = JSON.stringify(this.caseRateResponse_first);
+            console.log(x);
+            
           }
         );
       }else{
@@ -134,7 +163,7 @@ export class CaseRatesPage implements OnInit {
         this.ionSkeleton1 = true;
         this.ionNoData1 = false;
         this.activedescription1 = false;
-        this.doctorService.searchCaseRates(this.caseRateData.CaseClass,this.caseRateData.CaseSearchCode,this.caseRateData.CaseSearchDesc).subscribe(
+        this.doctorService.searchCaseRatesV2(this.caseRateData.CaseClass,this.caseRateData.CaseSearchCode,this.caseRateData.CaseSearchDesc,this.caseRateData.Mode).subscribe(
           (res: any) => {
             this.caseRateResponse_second = res;
           },(error) =>{
@@ -168,9 +197,9 @@ export class CaseRatesPage implements OnInit {
   checkAppearance(){
     
     let logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_code = logindata[0].dr_code;
+    this.dr_code = logindata.dr_code;
     let dr_username = atob(localStorage.getItem("username"));
-    this.patientService.getUserSettings('DPP',dr_username).subscribe(
+    this.patientService.getUserSettingsV2(dr_username).subscribe(
       (res: any) => {       
         if(Object.keys(res).length >= 1){
           let data = JSON.stringify(res);data = '['+data+']';let adat = JSON.parse(data);

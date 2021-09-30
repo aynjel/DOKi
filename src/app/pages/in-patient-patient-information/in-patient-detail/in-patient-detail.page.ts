@@ -93,6 +93,8 @@ export class InPatientDetailPage {
   patient_no: any;
   postData: InPatientData = new InPatientData();
   location: boolean;
+  patient_id:any;
+  opd_code:any;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -127,6 +129,8 @@ export class InPatientDetailPage {
   }
 
   ionViewWillEnter() {
+    //console.log();
+    this.patient_id = this.activatedRoute.snapshot.params.id;
     this.routerLinkBack =
     '/menu/in-patients/';
     //console.log('In-patient detail : ionViewWillEnter');
@@ -136,9 +140,9 @@ export class InPatientDetailPage {
     let logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_name = logindata.last_name;
     this.dr_code = logindata.dr_code;
-    this.inpatientModelInpatients.accountNo = "none";
-    this.inpatientModelInpatients.drCode = 'MD000175';
-   // this.inpatientModelInpatients.drCode = this.dr_code;
+
+    //this.inpatientModelInpatients.drCode = 'MD000175';
+    this.inpatientModelInpatients.drCode = this.dr_code;
     this.inpatientModelInpatients.mode = Consta.mode;
     this.postData.DoctorMobileNumber = logindata.mobile_no;
     this.data = [];
@@ -146,9 +150,15 @@ export class InPatientDetailPage {
     
     this.doctorService.getInPatientV2(this.inpatientModelInpatients).subscribe(
       (res: any) => {
+       
+        
         res.forEach((element) => {
           if (element.patient_no == this.activatedRoute.snapshot.params.id) {
+            this.opd_code = element.admission_no;
+            this.inpatientModelInpatients.accountNo = this.opd_code;
             this.data.push(element);
+            //console.log(this.data);
+            
             this.patient_name = element.first_name + ' ' + element.last_name;
             this.patient_name = this.functionsService.convertAllFirstLetterToUpperCase(
               this.patient_name
@@ -289,15 +299,13 @@ export class InPatientDetailPage {
       .subscribe(
         (res: any) => {
           if(!Object.keys(res).length){
-            console.log("no data found");
+            //console.log("no data found");
           }else{
             this.admittingDiagnosis = res[0].admitting_diagnosis2.replace(
               /(\r\n|\n|\r)/gm,
               '<br />'
             );
-            this.functionsService.logToConsole(
-              'admittingDiagnosis : ' + this.admittingDiagnosis
-            );
+            //this.functionsService.logToConsole('admittingDiagnosis : ' + this.admittingDiagnosis);
             this.admittingDiagnosis1 = this.functionsService.truncateChar(
               res[0].admitting_diagnosis2,
               100
@@ -310,9 +318,7 @@ export class InPatientDetailPage {
               /(,)/gm,
               ',<br />'
             );
-            this.functionsService.logToConsole(
-              'admittingDiagnosis2 : ' + this.admittingDiagnosis2
-            );
+            //this.functionsService.logToConsole('admittingDiagnosis2 : ' + this.admittingDiagnosis2);
         }
         },
         (error) => {
@@ -327,10 +333,14 @@ export class InPatientDetailPage {
     if (this.data[0].admission_status == 'DN') {
       this.doctorService.getFinalDiagnosisV2(this.inpatientModelInpatients).subscribe(
         (res: any) => {
+          console.log(res);
+          
           if(!Object.keys(res).length){
-            console.log("no data found");
+           // console.log("no data found");
           }else{
             this.finalDiagnosis = res[0].final_diagnosis;
+            //console.log(this.finalDiagnosis);
+            
             this.finalDiagnosis1 = this.functionsService.truncateChar(
               this.finalDiagnosis,
               50

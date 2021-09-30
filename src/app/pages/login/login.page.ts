@@ -35,6 +35,9 @@ import { IonGrid, IonContent, IonRow } from '@ionic/angular';
 import { ChhAppPrivacyPolicyPage } from './../../chh-web-components/chh-app-privacy-policy/chh-app-privacy-policy.page';
 import * as bcrypt from 'bcryptjs';
 import { ChhAppChangePasswordPage } from '../../chh-web-components/chh-app-change-password/chh-app-change-password.page';
+
+import { ChhAppCaseratesComponent } from '../../chh-web-components/chh-app-caserates/chh-app-caserates.component';
+
 import { tick } from '@angular/core/testing';
 
 @Component({
@@ -158,15 +161,20 @@ export class LoginPage {
     this.patientService.loginv2(this.loginModel).subscribe((res: any) => {
         this.loginResponseModel = <LoginResponseModel>res;
         this.resultJson = res;
-        if(this.loginResponseModel.jwt.length > 100){
-          localStorage.setItem("id_token",this.loginResponseModel.jwt);
+        console.log(res);
+        
+        if (typeof this.loginResponseModel.jwt !== 'undefined') {
+          if(this.loginResponseModel.jwt.length > 100){
+            localStorage.setItem("id_token",this.loginResponseModel.jwt);
+          }
         }
+
       },(error) => {
        console.log(error);
       },() => {
         if (!(typeof this.resultJson.ErrorCode !== 'undefined')) {
-          if (this.resultJson.hl <= 10) {
-              this.updatePassword();
+          if (this.resultJson.hl <= 7) {
+            this.updatePassword();
           } else {
             this.checkPrivacyPolicyV2();
             /*localStorage.setItem('username', btoa(this.postData.username));

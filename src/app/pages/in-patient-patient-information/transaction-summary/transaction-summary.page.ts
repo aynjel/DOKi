@@ -33,9 +33,9 @@ import { ChhAppTestChemistryComponent } from '../../../chh-web-components/chh-ap
 import { ChhAppTestFecalysisComponent } from '../../../chh-web-components/chh-app-test/chh-app-test-fecalysis/chh-app-test-fecalysis.component';
 import { ChhAppTestSerologyComponent } from '../../../chh-web-components/chh-app-test/chh-app-test-serology/chh-app-test-serology.component';
 import { StorageService } from '../../../services/storage/storage.service';
-import { AuthConstants } from '../../../config/auth-constants';
+import { AuthConstants, Consta } from '../../../config/auth-constants';
 import { executionAsyncResource } from 'async_hooks';
-import { Constants } from 'src/app/shared/constants';
+import { Constants, } from 'src/app/shared/constants';
 import { CaseRatesPage } from '../../case-rates/case-rates.page';
 import { InPatientData } from 'src/app/models/in-patient.model';
 @Component({
@@ -205,6 +205,7 @@ export class TransactionSummaryPage implements OnInit {
 
   postSummary() {
     this.disableSubmit = true;
+    this.postData.Mode = Consta.mode;
     if (
       this.data[0].payvenue == 'W' ||
       this.data[0].payvenue == 'H' ||
@@ -213,8 +214,10 @@ export class TransactionSummaryPage implements OnInit {
       this.data[0].payvenue == 'A'
     ) {
       this.postData.OldProfFee = this.data[0].doctor_prof_fee;
-
-      this.doctorService.updatePF(this.postData).subscribe(
+     
+  
+      console.log(this.postData);
+      this.doctorService.updatePFV2(this.postData).subscribe(
         (res: any) => {
           if (res == true) {
             this.modalUpdate(
@@ -235,7 +238,8 @@ export class TransactionSummaryPage implements OnInit {
       );
     } else {
       this.postData.OldProfFee = 0;
-      this.doctorService.insertPF(this.postData).subscribe(
+      console.log(this.postData);
+      this.doctorService.insertPFV2(this.postData).subscribe(
         (res: any) => {
           if (res == true) {
             this.modalUpdate(
@@ -295,7 +299,7 @@ export class TransactionSummaryPage implements OnInit {
   checkAppearance() {
     let dr_username = atob(localStorage.getItem('username'));
     this.patientService
-      .getUserSettings('DPP', dr_username)
+      .getUserSettingsV2(dr_username)
       .subscribe((res: any) => {
         if (Object.keys(res).length >= 1) {
           let data = JSON.stringify(res);

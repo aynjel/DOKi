@@ -196,8 +196,8 @@ export class TabInPatientsPage {
     this.dr_code = this.logindata.dr_code;
     this.inpatientModelInpatients.accountNo = "none";
     
-    this.inpatientModelInpatients.drCode = 'MD000175';
-   // this.inpatientModelInpatients.drCode = this.dr_code;
+    //this.inpatientModelInpatients.drCode = 'MD000175';
+    this.inpatientModelInpatients.drCode = this.dr_code;
     this.inpatientModelInpatients.mode = Consta.mode;
     let dr_name = this.logindata.last_name;
     this.$gaService.event('In-Patient', 'User Flow', dr_name);

@@ -33,6 +33,10 @@ import { AuthConstants } from '../../../config/auth-constants';
 import { executionAsyncResource } from 'async_hooks';
 import { Constants } from 'src/app/shared/constants';
 import { CaseRatesPage } from '../../case-rates/case-rates.page';
+
+import {ChhAppCaseratesComponent } from '../../../chh-web-components/chh-app-caserates/chh-app-caserates.component';
+
+
 import { TransactionSummaryPage } from '../transaction-summary/transaction-summary.page';
 
 import { InPatientData } from 'src/app/models/in-patient.model';
@@ -163,8 +167,8 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
 
     let logindata = <LoginData>this.authService.userData$.getValue();
 
-    this.dr_name = logindata[0].last_name;
-    this.dr_code = logindata[0].dr_code;
+    this.dr_name = logindata.last_name;
+    this.dr_code = logindata.dr_code;
 
     // this.data =[];
     // this.data = JSON.parse(atob(sessionStorage.getItem("patientData")));
@@ -206,7 +210,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
 
     let dr_username = atob(localStorage.getItem('username'));
     this.patientService
-      .getUserSettings('DPP', dr_username)
+      .getUserSettingsV2(dr_username)
       .subscribe((res: any) => {
         if (Object.keys(res).length >= 1) {
           let data = JSON.stringify(res);
@@ -241,7 +245,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
 
   async presentCaseRatesModal() {
     const modal = await this.modalController.create({
-      component: CaseRatesPage,
+      component: ChhAppCaseratesComponent,
       cssClass: 'my-custom-class',
     });
     return await modal.present();

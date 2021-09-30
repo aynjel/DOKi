@@ -37,6 +37,7 @@ export class InPatientData{
     IsVAT:string
     PayVenue:string
     SelectedPayVenue:string
+    Mode:any
 }
 
 

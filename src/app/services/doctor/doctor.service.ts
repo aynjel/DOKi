@@ -148,15 +148,47 @@ export class DoctorService {
 
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredintials: false };
-    const url = environment.apiRouterUrl + "v2/Inpatients/FinalDiagnosis";
+    const url = environment.apiRouterUrl + "v2/Inpatients/AdmittingDiagnosis";
     //const url = "http://10.128.18.75:8088/api/v2/Inpatients/FinalDiagnosis";
     return this.http.post(url,  postData1, options);
   }
   getFinalDiagnosisV2(postData1: any) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredintials: false };
-    const url = environment.apiRouterUrl + "v2/Inpatients/AdmittingDiagnosis";
+    const url = environment.apiRouterUrl + "v2/Inpatients/FinalDiagnosis";
     //const url = "http://10.128.18.75:8088/api/v2/Inpatients/AdmittingDiagnosis";
     return this.http.post(url,  postData1, options);
+  }
+  insertPFV2(data1: any) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl + "v2/ProfFee";
+    return this.http.post(url,  data1, options);
+    
+  }
+  updatePFV2(data1: any) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers: headers, withCredentials: false };
+    const url = environment.apiRouterUrl + "v2/ProfFee";
+    //return this.http.put(url, JSON.stringify(data), options);
+    return this.http.put(url, data1, options);
+  }
+  searchCaseRatesV2(data1: any, data2: any, data3: any, data4: any) {
+    let data =
+      '?phicSearch.caseClass=' +
+      data1 +
+      '&phicSearch.caseCode=' +
+      data2 +
+      '&phicSearch.caseDesc=' +
+      data3+
+      '&phicSearch.mode=' +
+      data4;
+
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json;charset=utf-8',
+      });
+      const options = { headers: headers, withCredentials: false, data };
+      const url = environment.apiRouterUrl+ 'v2/PhilHealthCaseRates/Search' + data;
+      return this.http.get(url);
   }
 }

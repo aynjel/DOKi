@@ -48,10 +48,12 @@ import { UserIdleModule } from 'angular-user-idle';
 import {  HTTP_INTERCEPTORS } from "@angular/common/http";
 import {AuthInterceptor} from "./services/auth/auth.interceptor";
   import { from } from "rxjs";
+import { CommonModule } from "@angular/common";
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [ChhAppTestChemistryComponent,ChhAppTestFecalysisComponent,ChhAppTestSerologyComponent],
   imports: [
+    CommonModule,
     FormsModule,
     BrowserModule,
     IonicModule.forRoot(),
