@@ -252,9 +252,6 @@ export class TabSettingsPage {
           });
 
         });
-
-        //y = '['+y.slice(0, -1)+']';
-        //this.tmpData =JSON.parse(y);
       });
 
     this.$gaService.event('Settings', 'User Flow', this.dr_name);

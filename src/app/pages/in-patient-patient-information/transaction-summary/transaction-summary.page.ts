@@ -186,7 +186,7 @@ export class TransactionSummaryPage implements OnInit {
   ionViewWillEnter() {
     //sessionStorage.removeItem('pfIsPatientSeen');
     //sessionStorage.removeItem('pfInsCoor');
-    this.checkAppearance();
+    //this.checkAppearance();
     let logindata = <LoginData>this.authService.userData$.getValue();
 
     // this.data = JSON.parse(atob(sessionStorage.getItem("patientData")));

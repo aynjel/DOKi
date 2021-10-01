@@ -32,7 +32,7 @@ import { StorageService } from '../../../services/storage/storage.service';
 import { AuthConstants } from '../../../config/auth-constants';
 import { executionAsyncResource } from 'async_hooks';
 import { Constants } from 'src/app/shared/constants';
-import { CaseRatesPage } from '../../case-rates/case-rates.page';
+
 
 import {ChhAppCaseratesComponent } from '../../../chh-web-components/chh-app-caserates/chh-app-caserates.component';
 
@@ -180,7 +180,9 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     this.patient_name = this.functionsService.convertAllFirstLetterToUpperCase(
       this.patient_name
     );
-    this.checkAppearance();
+
+    //this.checkAppearance();
+
     this.initialize(this.method);
     /*
     this.doctorService.getInPatient(this.dr_code).subscribe(

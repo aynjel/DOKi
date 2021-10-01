@@ -15,7 +15,7 @@ export class ChhAppPatientHeaderComponent  {
   moreOrLess: boolean = true;
 
   constructor(private screensizeService: ScreenSizeService) {
-    console.log(this.data);
+   
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         window.location.reload();
@@ -24,11 +24,10 @@ export class ChhAppPatientHeaderComponent  {
     });
   }
   ionViewWillEnter() {
-    console.log("123123123");
+    
   }
   ngOnInit() {
-    console.log(this.data);
-    
+
     if (this.forMoreOrLess) {
       this.moreOrLess = !this.forMoreOrLess;
     }

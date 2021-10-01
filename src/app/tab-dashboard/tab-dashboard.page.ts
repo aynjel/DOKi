@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Renderer2 } from "@angular/core";
 import { AuthService } from "src/app/services/auth/auth.service";
 import { ScreenSizeService } from "../services/screen-size/screen-size.service";
 import { StorageService } from "../services/storage/storage.service";
@@ -12,6 +12,7 @@ import { GoogleAnalyticsService } from "ngx-google-analytics";
 import { Constants } from "../shared/constants";
 import { AuthConstants, Consta } from '../config/auth-constants';
 import { DoctorHistoryModel } from '../models/doctor';
+import { PatientService } from "../services/patient/patient.service";
 
 @Component({
   selector: "app-tab-dashboard",
@@ -46,7 +47,9 @@ export class TabDashboardPage implements OnInit {
     private router: Router,
     public functionsService: FunctionsService,
     protected $gaService: GoogleAnalyticsService,
-    public constants: Constants
+    public constants: Constants,
+    private patientService: PatientService,
+    private renderer: Renderer2
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -55,6 +58,7 @@ export class TabDashboardPage implements OnInit {
       this.isDesktop = isDesktop;
 
     });
+    this.checkAppearance();
   }
 
   doRefresh(event) {
@@ -185,6 +189,7 @@ export class TabDashboardPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    
     this.logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_code = this.logindata.dr_code;
     console.log(this.dr_code);
@@ -266,5 +271,38 @@ export class TabDashboardPage implements OnInit {
     }
     // Directly return the joined string
     return splitStr.join(" ");
+  }
+  checkAppearance() {
+    console.log('checkAppearance');
+    
+    let dr_username = atob(localStorage.getItem('username'));
+    this.patientService
+      .getUserSettingsV2(dr_username)
+      .subscribe((res: any) => {
+        if (Object.keys(res).length >= 1) {
+          let data = JSON.stringify(res);
+          data = '[' + data + ']';
+          let adat = JSON.parse(data);
+          adat.forEach((el) => {
+            if (typeof el.appearance !== 'undefined') {
+              if (el.appearance.darkmode == 1) {
+                this.renderer.setAttribute(
+                  document.body,
+                  'color-theme',
+                  'dark'
+                );
+              } else {
+                this.renderer.setAttribute(
+                  document.body,
+                  'color-theme',
+                  'light'
+                );
+              }
+            } else {
+              this.renderer.setAttribute(document.body, 'color-theme', 'light');
+            }
+          });
+        }
+      });
   }
 }

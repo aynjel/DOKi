@@ -65,17 +65,17 @@ export class ChhAppCaseratesComponent implements OnInit {
 
   ngOnInit() {
     // this.caseRateData  = new CaseRates();
-    console.log(this.caseRateData);
+    //console.log(this.caseRateData);
     
    }
    ionViewWillEnter(){
-     console.log(this.caseRateData);
+     //console.log(this.caseRateData);
      let  user = <CaseRates>JSON.parse(sessionStorage.getItem("caseRateData")) ; 
      let logindata = <LoginData>this.authService.userData$.getValue() ;
      this.dr_name = logindata.last_name;
      this.dr_code = logindata.dr_code;
  
-     this.checkAppearance();
+    // this.checkAppearance();
  
    }
    segmentChanged(e){
@@ -97,12 +97,12 @@ export class ChhAppCaseratesComponent implements OnInit {
      this.caseRateData.CaseSearchDesc = (<HTMLInputElement>(
        document.getElementById("input-searchdesc")
      )).value;
-     console.log(this.caseRateData);
+     //console.log(this.caseRateData);
  
      if(this.caseRateData.CaseSearchDesc != ""){
  
        if(this.ccCase == 'first'){
-         console.log('ccCase');
+        // console.log('ccCase');
          
          this.ionStart= false;
          this.ionSkeleton = true;
@@ -110,7 +110,7 @@ export class ChhAppCaseratesComponent implements OnInit {
          this.activedescription = false;
          this.doctorService.searchCaseRatesV2(this.caseRateData.CaseClass,this.caseRateData.CaseSearchCode,this.caseRateData.CaseSearchDesc,this.caseRateData.Mode).subscribe(
            (res: any) => {
-             console.log(res);
+             //console.log(res);
              
              this.caseRateResponse_first = res;
            },(error) =>{
@@ -123,11 +123,11 @@ export class ChhAppCaseratesComponent implements OnInit {
                this.ionNoData = false;
              }
  
-             console.log('first');
+             //console.log('first');
  
-             console.log(this.caseRateResponse_first );
+             //console.log(this.caseRateResponse_first );
              let x = JSON.stringify(this.caseRateResponse_first);
-             console.log(x);
+            // console.log(x);
              
            }
          );

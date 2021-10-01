@@ -103,7 +103,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     private renderer: Renderer2
   ) {
     // this.postData = new InPatientData();
-console.log('1');
+
 
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -114,7 +114,7 @@ console.log('1');
   }
 
   ngOnInit() {
-    console.log('2');
+
     let getValue = this.activatedRoute.snapshot.paramMap.get('state');
 
     this.initiateSession();
@@ -128,7 +128,7 @@ console.log('1');
   }
 
   ionViewWillEnter() {
-    console.log('ionViewWillEnter');
+
     
     let logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_name = logindata.last_name;
@@ -158,7 +158,7 @@ console.log('1');
     }
     this.payvenueN = this.data[0].payvenue;
 
-    console.log(this.data[0].selected_payvenue);
+
     
 
      if(this.data[0].selected_payvenue == "Charity"){
@@ -195,7 +195,8 @@ console.log('1');
     }
  
 
-    this.checkAppearance();
+    //this.checkAppearance();
+    
     //console.log(this.data);
 
     /*

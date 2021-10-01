@@ -22,13 +22,17 @@ export class ChhAppFinalDiagnosisComponent implements OnInit {
       }
       this.isDesktop = isDesktop;
     });
+   
+    
   }
 
 
   ngOnInit() {
 
-    console.log(this.isDesktop);
+
     
   }
+
+
 
 }

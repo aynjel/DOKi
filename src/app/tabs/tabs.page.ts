@@ -62,12 +62,16 @@ export class TabsPage {
       this.functionsService.logToConsole("false");
       this.renderer.setAttribute(document.body, "color-theme", "light");
     }*/
-
+    console.log('checkAppearance');
+    
     this.logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_code = this.logindata.dr_code;
     this.dr_username = atob(localStorage.getItem("username"));
+/*
     this.patientService.getUserSettingsV2(this.dr_username).subscribe(
       (res: any) => {       
+        console.log(res);
+        
         if(Object.keys(res).length >= 1){
           let data = JSON.stringify(res);data = '['+data+']';let adat = JSON.parse(data);
           adat.forEach(el => {
@@ -86,6 +90,7 @@ export class TabsPage {
       (error)=>{
       },() =>{
       });
+      */
   }
 
   logout() {

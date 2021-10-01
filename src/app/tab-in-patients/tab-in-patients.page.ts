@@ -68,7 +68,7 @@ export class TabInPatientsPage {
     private patientService: PatientService,
     public nav: NavController
   ) {
-    console.log('In-patient : Constructor');
+    
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         window.location.reload();
@@ -95,7 +95,7 @@ export class TabInPatientsPage {
   }
 
   ngOnInit() {
-    console.log('In-patient : ngOnInit');
+
     this.$gaService.pageView('/In-Patient', 'In-Patient Tab');
   }
 
@@ -191,7 +191,7 @@ export class TabInPatientsPage {
 
   //Fired when the component routing to is about to animate into view.
   ionViewWillEnter() {
-    console.log('In-patient : ionViewWillEnter');
+
     this.logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_code = this.logindata.dr_code;
     this.inpatientModelInpatients.accountNo = "none";
@@ -214,8 +214,6 @@ export class TabInPatientsPage {
             }
 
             if (key == 'smsGateway') {
-              console.log(value);
-
               localStorage.setItem('smsGateway', JSON.stringify(value));
             }
           }
@@ -229,11 +227,11 @@ export class TabInPatientsPage {
   //Get using Doctors API
   callPatient(data: any) {
     this.isFetchDone = false;
-    console.log(JSON.stringify(this.inpatientModelInpatients));
+
 
       this.doctorService.getInPatientV2(this.inpatientModelInpatients).subscribe(
         (res: any) => {
-          console.log(res);
+
           
           if (res.length) {
             this.objecthandler = true;

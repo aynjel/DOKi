@@ -95,6 +95,7 @@ export class InPatientDetailPage {
   location: boolean;
   patient_id:any;
   opd_code:any;
+  admissionstatus:any;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -136,7 +137,9 @@ export class InPatientDetailPage {
     //console.log('In-patient detail : ionViewWillEnter');
     //sessionStorage.removeItem('pfIsPatientSeen');
     // sessionStorage.removeItem('pfInsCoor');
-    this.checkAppearance();
+
+    //this.checkAppearance();
+    
     let logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_name = logindata.last_name;
     this.dr_code = logindata.dr_code;
@@ -157,8 +160,7 @@ export class InPatientDetailPage {
             this.opd_code = element.admission_no;
             this.inpatientModelInpatients.accountNo = this.opd_code;
             this.data.push(element);
-            //console.log(this.data);
-            
+            this.admissionstatus = element.admission_status;
             this.patient_name = element.first_name + ' ' + element.last_name;
             this.patient_name = this.functionsService.convertAllFirstLetterToUpperCase(
               this.patient_name
@@ -333,7 +335,7 @@ export class InPatientDetailPage {
     if (this.data[0].admission_status == 'DN') {
       this.doctorService.getFinalDiagnosisV2(this.inpatientModelInpatients).subscribe(
         (res: any) => {
-          console.log(res);
+
           
           if(!Object.keys(res).length){
            // console.log("no data found");
@@ -745,6 +747,8 @@ export class InPatientDetailPage {
   back() {}
 
   checkAppearance() {
+    console.log('checkAppearance');
+    
     let dr_username = atob(localStorage.getItem('username'));
     this.patientService
       .getUserSettingsV2(dr_username)
