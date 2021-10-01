@@ -19,8 +19,9 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import * as bcrypt from 'bcryptjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PasswordStrengthValidator } from '../../shared/password-strength.validators';
-
+import { LoginModel,ChangePasswordModel } from '../../models/patient';
 import { CustomValidators } from '../../shared/custom-validators';
+import { AuthConstants, Consta } from '../../config/auth-constants';
 @Component({
   selector: 'app-chh-app-change-pass',
   templateUrl: './chh-app-change-pass.page.html',
@@ -43,6 +44,7 @@ export class ChhAppChangePassPage {
   isEyeOnOff3: Boolean = true;
   uxSaveCancel: boolean = true;
   serverResponse: any;
+  public changePasswordModel: ChangePasswordModel; 
   constructor(
     public modalController: ModalController,
     private patientService: PatientService,
@@ -60,6 +62,8 @@ export class ChhAppChangePassPage {
       password: ['', [Validators.required, PasswordStrengthValidator]],
     });
     this.frmSignup = this.createSignupForm();
+    this.changePasswordModel = new ChangePasswordModel();
+    this.changePasswordModel.mode = Consta.mode;
   }
   @ViewChildren('psWord1', { read: ElementRef }) psWord1: QueryList<ElementRef>;
   @ViewChildren('psWord2', { read: ElementRef }) psWord2: QueryList<ElementRef>;
@@ -208,8 +212,8 @@ export class ChhAppChangePassPage {
 
   ngOnInit() {
     this.logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_name = this.logindata[0].last_name;
-    this.dr_code = this.logindata[0].dr_code;
+    this.dr_name = this.logindata.last_name;
+    this.dr_code = this.logindata.dr_code;
     this.dr_username = atob(localStorage.getItem('username'));
     let json = '{"appCode": "DPP","username": "' + this.dr_username + '"}';
     let resultJson;
@@ -266,19 +270,24 @@ export class ChhAppChangePassPage {
   }
 
   validatePassword() {
-    bcrypt.compare(this.OldPassword, this.hashed_oldPassword).then((result) => {
-      if (result) {
-        bcrypt.hash(this.NewPassword, this.saltRounds).then((hash) => {
-          let resJson =
+    //bcrypt.compare(this.OldPassword, this.hashed_oldPassword).then((result) => {
+     // if (this.OldPassword == this.NewPassword) {
+        //bcrypt.hash(this.NewPassword, this.saltRounds).then((hash) => {
+         /* let resJson =
             '{"appCode": "DPP","username": "' +
             this.dr_username +
             '","oldPassword": "' +
             this.hashed_oldPassword +
             '","newPassword":"' +
             hash +
-            '"}';
+            '"}';*/
+            this.changePasswordModel.appCode = 'DPP';
+            this.changePasswordModel.username =  this.dr_username;
+            this.changePasswordModel.oldPassword =   this.OldPassword;
+            this.changePasswordModel.newPassword = this.NewPassword;
+            console.log(this.changePasswordModel);
 
-          this.patientService.commonChangePassword(resJson).subscribe(
+          this.patientService.changePasswordV2(this.changePasswordModel).subscribe(
             (res: any) => {
               this.serverResponse = res;
             },
@@ -294,14 +303,16 @@ export class ChhAppChangePassPage {
               }
             }
           );
-        });
+
+       // });
+       /*
       } else {
         this.functionsService.alert(
           "It seems that the current password you entered can't be found in our system.",
           'Okay'
         );
-      }
-    });
+      }*/
+    //});
   }
 
   save() {
