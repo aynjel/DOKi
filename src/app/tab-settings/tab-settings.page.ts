@@ -59,6 +59,10 @@ export class TabSettingsPage {
   isset_pushNotiDischarge: boolean = false;
   isset_darkmode: boolean = false;
   isset_privacyPolicy: boolean = false;
+  prc:any;
+  prcDays:any;
+  phic:any;
+  phicDays:any;
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -193,7 +197,13 @@ export class TabSettingsPage {
     this.doctorService.getProfileExpiry(this.profileExpiry).subscribe(
       (res: any) => {
           console.log(res);
-          
+          var dd    = new Date(res.LicenseExpiryDate);
+          this.prc = dd.getDate()+'/'+(dd.getMonth() + 1)+'/'+dd.getUTCFullYear();
+          this.prcDays = res.LicenseExpiryDaysRemaining;
+
+          var dd    = new Date(res.PhicExpiryDate);
+          this.phic = dd.getDate()+'/'+(dd.getMonth() + 1)+'/'+dd.getUTCFullYear();
+          this.phicDays = res.PhicExpiryDaysRemaining;         
       }
     );
 
