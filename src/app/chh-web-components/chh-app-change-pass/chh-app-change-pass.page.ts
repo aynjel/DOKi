@@ -236,6 +236,7 @@ export class ChhAppChangePassPage {
   async alert(data1: any, data2: any, data3: boolean) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
+      backdropDismiss: false,
       message: data1,
       buttons: [
         {
@@ -254,6 +255,7 @@ export class ChhAppChangePassPage {
   async modalUpdate(header, message, data) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
+      backdropDismiss: false,
       header: header,
       message: message,
       buttons: [

@@ -6,6 +6,9 @@ import { AuthConstants, Consta } from '../config/auth-constants';
 import { ScreenSizeService } from '../services/screen-size/screen-size.service';
 import { PatientService } from '../services/patient/patient.service';
 import { LoginData } from '../models/login-data.model';
+import { ProfileExpiry } from '../models/doctor';
+
+
 import { BehaviorSubject } from 'rxjs';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Constants } from '../shared/constants';
@@ -21,6 +24,7 @@ import { ChhAppChangePassPage } from '../chh-web-components/chh-app-change-pass/
 import { ChhAppPrivacyPolicyPage } from '../chh-web-components/chh-app-privacy-policy/chh-app-privacy-policy.page';
 import { ChhAppTermsAndConditionsPage } from '../chh-web-components/chh-app-terms-and-conditions/chh-app-terms-and-conditions.page';
 import { UserSettingsModel,UserSettingDeletesModel } from '../models/doctor';
+import { DoctorService } from '../services/doctor/doctor.service';
 @Component({
   selector: 'app-tab-settings',
   templateUrl: 'tab-settings.page.html',
@@ -44,7 +48,7 @@ export class TabSettingsPage {
   pushNotiDischarge = false;
   darkmode: boolean = false;
   privacyPolicy: boolean = true;
-
+  profileExpiry:any;
   draftJson: any;
   draftJson2: any;
   dr_username;
@@ -67,7 +71,8 @@ export class TabSettingsPage {
     private modalController: ModalController,
     private actionSheetController: ActionSheetController,
     private patientService: PatientService,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private doctorService: DoctorService
   ) {
     this.privacyPolicy = true;
 
@@ -98,6 +103,7 @@ export class TabSettingsPage {
   async modalUpdate(header, message, data) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
+      backdropDismiss: false,
       header: header,
       message: message,
       buttons: [
@@ -120,6 +126,7 @@ export class TabSettingsPage {
   async showaddmodal1() {
     const modal = await this.modalController.create({
       component: ChhAppChangePassPage,
+
       componentProps: {
         backdropDismiss: true,
       },
@@ -178,6 +185,18 @@ export class TabSettingsPage {
     //PARSE USER SETTINGS
     console.log('ionViewWillEnter');
     
+
+
+    this.profileExpiry = new ProfileExpiry();
+    this.profileExpiry.mode = Consta.mode;
+    this.profileExpiry.drCode = this.dr_code;
+    this.doctorService.getProfileExpiry(this.profileExpiry).subscribe(
+      (res: any) => {
+          console.log(res);
+          
+      }
+    );
+
     this.patientService.getUserSettingsV2(this.dr_username).subscribe((res: any) => {
         Object.keys(res).forEach((key) => {
 

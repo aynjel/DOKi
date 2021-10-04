@@ -30,4 +30,8 @@ export class UserSettingDeletesModel{
     setting: any
     mode: any
 }
+export class ProfileExpiry{
+    drCode: any
+    mode: any
 
+}

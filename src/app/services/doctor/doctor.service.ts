@@ -191,4 +191,12 @@ export class DoctorService {
       const url = environment.apiRouterUrl+ 'v2/PhilHealthCaseRates/Search' + data;
       return this.http.get(url);
   }
+  getProfileExpiry(data1: any) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    //const url = environment.apiRouterUrl + "v2/ProfFee";
+    const url ='http://10.130.21.201:9321/api/DocLicenseExpiry';
+    return this.http.post(url,  data1, options);
+    
+  }
 }

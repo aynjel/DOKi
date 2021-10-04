@@ -505,6 +505,8 @@ export class LoginPage {
     this.patientService.getUserSettingsV2(this.postData.username).subscribe(
       (res: any) => {
           rsmJson = res;
+          console.log(res);
+          
       },(error) => {
           this.functionsService.sorryDoc();
         },
@@ -549,6 +551,8 @@ export class LoginPage {
       componentProps: { backdropDismiss: true, origin: 'login' },
     });
     modal.onDidDismiss().then((data) => {
+      console.log(data);
+      
       if (data.data) {
         this.loginAction();
       } else {
@@ -584,15 +588,23 @@ export class LoginPage {
                 tempJson1.mode = Consta.mode;
                 tempJson1.setting = key;
                 tempJson1.property = lock;
-                tempJson1.value= valuex;
-
-
+                tempJson1.value= valuex;     
+                console.log('tempJson1 :');
+                 console.log(JSON.stringify(tempJson1));
+                            
                 this.patientService
                   .insertUserSettingsV2(tempJson1)
-                  .subscribe((res2: any) => {this.loginaction1(); });
+                  .subscribe((res2: any) => {
+                    console.log(res2);
+                    
+                  
+                  });
               }
             });
           });
+        },(error)=>{},
+        ()=>{
+          this.loginaction1(); 
         });
       } else if (this.isSetPrivacyPolicy == true) {
           let smpJSON1 = new InserUSerSettingsModel;
@@ -619,8 +631,8 @@ export class LoginPage {
     // let data = JSON.stringify(this.loginResponseModel);
     // data = '[' + data + ']';
     // this.logindata = JSON.parse(data);
-    console.log(this.loginResponseModel);
-    console.log(JSON.stringify(this.loginResponseModel));
+    /*console.log(this.loginResponseModel);
+    console.log(JSON.stringify(this.loginResponseModel));*/
     
     
     this.storageService.store(AuthConstants.AUTH, this.loginResponseModel);
