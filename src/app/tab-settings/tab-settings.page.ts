@@ -210,7 +210,12 @@ export class TabSettingsPage {
             this.prcBarColor='mango';
           }else{
             this.prcBar = this.prcDays/365;
-            this.prcBarColor='warning';
+
+            if(this.prcDays < 30){
+              this.prcBarColor='danger';
+            }else{
+              this.prcBarColor='warning';
+            }
           }
           var dd    = new Date(res.PhicExpiryDate);
           this.phic = dd.getDate()+'/'+(dd.getMonth() + 1)+'/'+dd.getUTCFullYear();
@@ -220,8 +225,7 @@ export class TabSettingsPage {
             this.phicBarColor='mango';
           }else{
             this.phicBar = this.phicDays/365;
-            console.log(this.phicBar);
-            if(this.phicBar <= .3){
+            if(this.prcDays < 30){
               this.phicBarColor='danger';
             }else{
               this.phicBarColor='warning';
