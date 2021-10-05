@@ -25,6 +25,7 @@ import { ChhAppPrivacyPolicyPage } from '../chh-web-components/chh-app-privacy-p
 import { ChhAppTermsAndConditionsPage } from '../chh-web-components/chh-app-terms-and-conditions/chh-app-terms-and-conditions.page';
 import { UserSettingsModel,UserSettingDeletesModel } from '../models/doctor';
 import { DoctorService } from '../services/doctor/doctor.service';
+import { element } from 'protractor';
 @Component({
   selector: 'app-tab-settings',
   templateUrl: 'tab-settings.page.html',
@@ -61,8 +62,12 @@ export class TabSettingsPage {
   isset_privacyPolicy: boolean = false;
   prc:any;
   prcDays:any;
+  prcBar:any;
+  prcBarColor:any;
   phic:any;
   phicDays:any;
+  phicBar:any;
+  phicBarColor:any;
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -200,10 +205,29 @@ export class TabSettingsPage {
           var dd    = new Date(res.LicenseExpiryDate);
           this.prc = dd.getDate()+'/'+(dd.getMonth() + 1)+'/'+dd.getUTCFullYear();
           this.prcDays = res.LicenseExpiryDaysRemaining;
-
+          if(this.prcDays >= 365){
+            this.prcBar = 1;
+            this.prcBarColor='mango';
+          }else{
+            this.prcBar = this.prcDays/365;
+            this.prcBarColor='warning';
+          }
           var dd    = new Date(res.PhicExpiryDate);
           this.phic = dd.getDate()+'/'+(dd.getMonth() + 1)+'/'+dd.getUTCFullYear();
-          this.phicDays = res.PhicExpiryDaysRemaining;         
+          this.phicDays = res.PhicExpiryDaysRemaining;    
+          if(this.phicDays >= 365){
+            this.phicBar = 1;
+            this.phicBarColor='mango';
+          }else{
+            this.phicBar = this.phicDays/365;
+            console.log(this.phicBar);
+            if(this.phicBar <= .3){
+              this.phicBarColor='danger';
+            }else{
+              this.phicBarColor='warning';
+            }
+            
+          }     
       }
     );
 

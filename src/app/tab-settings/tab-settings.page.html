@@ -85,13 +85,13 @@
                     <label class="ion-text-left">PRC License Expiry</label>
                     <label slot="end" class="ion-no-margin ion-text-right">
                         {{prc}}<br /> 
-                        <span style="font-size:12px"  class="ion-text-right">{{prcDays}} Days Left</span>
+                        <ion-text style="font-size:12px"  class="ion-text-right"  color="{{prcBarColor}}">{{prcDays}} Days Left</ion-text>
                     </label>
                   </ion-item>
                   <ion-progress-bar
-                  value=".75"
+                  value="{{prcBar}}"
                   buffer="1"
-                  color="warning"
+                  color="{{prcBarColor}}"
                 ></ion-progress-bar>
             
             
@@ -107,13 +107,13 @@
                       <label class="ion-text-left">PHIC Accreditation  Expiry</label>
                       <label slot="end" class="ion-no-margin ion-text-right">
                           {{phic}}<br /> 
-                          <span style="font-size:12px"  class="ion-text-right">{{phicDays}} Days Left</span>
+                          <ion-text style="font-size:12px"  class="ion-text-right" color="{{phicBarColor}}">{{phicDays}} Days Left</ion-text>
                       </label>
                     </ion-item>
                     <ion-progress-bar
-                    value=".75"
+                    value="{{phicBar}}"
                     buffer="1"
-                    color="warning"
+                    color="{{phicBarColor}}"
                   ></ion-progress-bar>
               
               
