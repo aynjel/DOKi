@@ -64,10 +64,12 @@ export class TabSettingsPage {
   prcDays:any;
   prcBar:any;
   prcBarColor:any;
+  prcBarHide:any;
   phic:any;
   phicDays:any;
   phicBar:any;
   phicBarColor:any;
+  phicBarHide:any;
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -205,33 +207,36 @@ export class TabSettingsPage {
           var dd    = new Date(res.LicenseExpiryDate);
           this.prc = dd.getDate()+'/'+(dd.getMonth() + 1)+'/'+dd.getUTCFullYear();
           this.prcDays = res.LicenseExpiryDaysRemaining;
-          if(this.prcDays >= 365){
-            this.prcBar = 1;
-            this.prcBarColor='mango';
+          if(this.prcDays >= 90){
+            this.prcBar = this.prcDays/90;
+            this.prcBarColor='';
+            this.prcBarHide = 'ion-hide';
+          }else if(this.prcDays >= 60 && this.prcDays <= 89 ){
+            this.prcBar = this.prcDays/90;
+            this.prcBarColor='warning';
+            this.prcBarHide = '';          
           }else{
-            this.prcBar = this.prcDays/365;
-
-            if(this.prcDays < 30){
-              this.prcBarColor='danger';
-            }else{
-              this.prcBarColor='warning';
-            }
+            this.prcBar = this.prcDays/90;
+            this.prcBarColor='danger';
+            this.prcBarHide = '';  
           }
+
           var dd    = new Date(res.PhicExpiryDate);
           this.phic = dd.getDate()+'/'+(dd.getMonth() + 1)+'/'+dd.getUTCFullYear();
           this.phicDays = res.PhicExpiryDaysRemaining;    
-          if(this.phicDays >= 365){
-            this.phicBar = 1;
-            this.phicBarColor='mango';
+          if(this.phicDays >= 90){
+            this.phicBar = this.phicDays/90;
+            this.phicBarColor='';
+            this.phicBarHide = 'ion-hide';
+          }else if(this.phicDays >= 60 && this.phicDays <= 89 ){
+            this.phicBar = this.phicDays/90;
+            this.phicBarColor='warning';
+            this.phicBarHide = '';          
           }else{
-            this.phicBar = this.phicDays/365;
-            if(this.prcDays < 30){
-              this.phicBarColor='danger';
-            }else{
-              this.phicBarColor='warning';
-            }
-            
-          }     
+            this.phicBar = this.phicDays/90;
+            this.phicBarColor='danger';
+            this.phicBarHide = '';  
+          }  
       }
     );
 
