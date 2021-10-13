@@ -220,7 +220,8 @@ export class TabInPatientsPage {
         });
       });
     });
-
+    console.log('call patient');
+    
     this.callPatient(this.site);
   }
 

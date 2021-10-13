@@ -207,11 +207,15 @@ export class TabSettingsPage {
           var dd    = new Date(res.LicenseExpiryDate);
           this.prc = dd.getDate()+'/'+(dd.getMonth() + 1)+'/'+dd.getUTCFullYear();
           this.prcDays = res.LicenseExpiryDaysRemaining;
-          if(this.prcDays >= 90){
+          if(this.prcDays > 90){
             this.prcBar = this.prcDays/90;
             this.prcBarColor='';
             this.prcBarHide = 'ion-hide';
-          }else if(this.prcDays >= 60 && this.prcDays <= 89 ){
+          }else if(this.prcDays >= 60 && this.prcDays <= 90 ){
+            this.prcBar = this.prcDays/90;
+            this.prcBarColor='mango';
+            this.prcBarHide = '';          
+          }else if(this.prcDays >= 30 && this.prcDays <= 59 ){
             this.prcBar = this.prcDays/90;
             this.prcBarColor='warning';
             this.prcBarHide = '';          
@@ -224,11 +228,15 @@ export class TabSettingsPage {
           var dd    = new Date(res.PhicExpiryDate);
           this.phic = dd.getDate()+'/'+(dd.getMonth() + 1)+'/'+dd.getUTCFullYear();
           this.phicDays = res.PhicExpiryDaysRemaining;    
-          if(this.phicDays >= 90){
+          if(this.phicDays > 90){
             this.phicBar = this.phicDays/90;
             this.phicBarColor='';
             this.phicBarHide = 'ion-hide';
-          }else if(this.phicDays >= 60 && this.phicDays <= 89 ){
+          }else if(this.phicDays >= 60 && this.phicDays <= 90 ){
+            this.phicBar = this.phicDays/90;
+            this.phicBarColor='mango';
+            this.phicBarHide = '';          
+          }else if(this.phicDays >= 30 && this.phicDays <= 59 ){
             this.phicBar = this.phicDays/90;
             this.phicBarColor='warning';
             this.phicBarHide = '';          
