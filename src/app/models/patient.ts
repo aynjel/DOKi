@@ -9,6 +9,7 @@ export class LoginModel{
 }
 
 
+
 export class LoginResponseModel{
     birthdate: any
     dr_code: any

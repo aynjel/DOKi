@@ -50,7 +50,7 @@ export class TabDashboardPage implements OnInit {
     public constants: Constants,
     private patientService: PatientService,
     private renderer: Renderer2
-  ) {
+  ){
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         window.location.reload();
@@ -202,9 +202,12 @@ export class TabDashboardPage implements OnInit {
     let catego = [];
     let totalPatient = [];
     console.log(this.doctorHistoryModel);
-    this.doctorService.getYearHistoryGraphV2(this.doctorHistoryModel).subscribe(
+    this.doctorService.getYearHistoryGraphV3().subscribe(
       (res: any) => {
+
         var count = Object.keys(res).length / 2;
+        console.log(count);
+        
         let month: any;
         let monthValue: any;
         for (let i = 1; i <= count; i++) {
@@ -274,9 +277,18 @@ export class TabDashboardPage implements OnInit {
   }
   checkAppearance() {
     console.log('checkAppearance');
-    
+    var values = JSON.parse('[' + localStorage.getItem("user_settings")+ ']');
     let dr_username = atob(localStorage.getItem('username'));
-    this.patientService
+    values.forEach(element => {
+      console.log(element.darkmode);
+      if(element.darkmode == 1){
+        this.renderer.setAttribute(document.body,'color-theme','dark');
+      }else{
+        this.renderer.setAttribute(document.body,'color-theme','light');
+      }
+    });
+    
+   /* this.patientService
       .getUserSettingsV2(dr_username)
       .subscribe((res: any) => {
         if (Object.keys(res).length >= 1) {
@@ -303,6 +315,6 @@ export class TabDashboardPage implements OnInit {
             }
           });
         }
-      });
+      });*/
   }
 }

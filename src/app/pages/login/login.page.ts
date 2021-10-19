@@ -11,7 +11,7 @@ import { BehaviorSubject } from 'rxjs';
 import { DoctorInfoGlobal } from '../../shared/doctor-info-global';
 import { LoginData } from '../../models/login-data.model';
 import { LoginModel,ChangePasswordModel,LoginResponseModel,InserUSerSettingsModel } from '../../models/patient';
-
+import { LoginModelv3,LoginResponseModelv3,AppSettingsModelv3,UserSettingsModelv3} from '../../models/doctor';
 
 import { FunctionsService } from '../../shared/functions/functions.service'; //"@ionic/angular";
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
@@ -48,8 +48,12 @@ import { tick } from '@angular/core/testing';
 export class LoginPage {
   public logindata: LoginData;
   public loginModel: LoginModel;
+  public loginModelv3: LoginModelv3;
   public loginResponseModel: LoginResponseModel;
+  public loginResponseModelv3: LoginResponseModelv3;
   public changePasswordModel: ChangePasswordModel; 
+  public appSettingsModelv3: AppSettingsModelv3; 
+  public userSettingsModelv3: UserSettingsModelv3; 
   saltRounds = 10;
   resultJson;
   testDB: boolean = false;
@@ -70,19 +74,289 @@ export class LoginPage {
     private patientService: PatientService,
     public alertController: AlertController
   ) { 
-
-
   }
   isSetPrivacyPolicy: boolean = false;
   isPrivacyPolicy: boolean = false;
   loginresponse: any;
   hashedPassword: any;
-
   showPassword() {
     this.isActiveToggleTextPassword =
       this.isActiveToggleTextPassword == true ? false : true;
     this.isEyeOnOff = this.isEyeOnOff == true ? false : true;
   }
+  isActiveToggleTextPassword: Boolean = true;
+  isEyeOnOff: Boolean = true;
+  public getType() {
+    return this.isActiveToggleTextPassword ? 'password' : 'text';
+  }
+  public getName() {
+    return this.isEyeOnOff ? 'eye-off-outline' : 'eye-outline';
+  }
+
+  public postData = {
+    username: '',
+    password: '',
+  };
+
+  btnDisable: boolean = false;
+
+  ngOnInit() {
+    this.loginResponseModel = new LoginResponseModel;
+
+    this.$gaService.pageView('/login', 'Login Page');
+    if (localStorage.getItem('promptLogout') == '1') {
+      this.timerExpired();
+    }
+    if (localStorage.getItem('testdb') == '1') {
+      this.testDB = true;
+    } else {
+      this.testDB = false;
+    }
+
+  }
+  checkInput() {
+    this.btnDisable = true;
+    if (this.postData.username == '' || this.postData.password == '') {
+      this.functionsService.sorryDoc();
+      this.btnDisable = false;
+    } else {
+      localStorage.setItem('username', btoa(this.postData.username));
+      this.startLoginProcessV3();
+    }
+  }
+
+
+
+
+
+
+  startLoginProcessV3(){
+
+    this.loginModelv3 = new LoginModelv3();
+    this.loginModelv3.userNameOrEmail = this.postData.username;
+    this.loginModelv3.password = this.postData.password;
+    this.loginResponseModelv3 = new LoginResponseModelv3;
+    
+    this.doctorService.loginV3(this.loginModelv3).subscribe((res: any) => {
+        this.loginResponseModelv3 = <LoginResponseModelv3>res;
+      },(error) => {
+       console.log(error);
+       this.functionsService.sorryDoc();
+       this.btnDisable = false;
+      },() => {
+        if(this.loginResponseModelv3.jwt != null){
+          localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
+        }
+        if(this.loginResponseModelv3.isDefaultPasswordChanged){
+          this.getUserSettingsV3();
+        }else{
+          this.getUserSettingsV3();
+          //this.updatePasswordV3();
+        }
+      }
+    );
+    
+
+  }
+
+  getUserSettingsV3(){
+    this.appSettingsModelv3 = new AppSettingsModelv3();
+    this.userSettingsModelv3 = new UserSettingsModelv3();
+    let settingsIndicator:any;
+    let jsonResponse:any;
+ 
+    this.doctorService.getUserSettingsV3().subscribe(
+      (res: any) => {
+        jsonResponse = res;
+        this.userSettingsModelv3 = <UserSettingsModelv3>res;
+        localStorage.setItem("user_settings",JSON.stringify(this.userSettingsModelv3));
+        console.log(this.userSettingsModelv3);
+        
+      },(error) => {
+         // this.functionsService.sorryDoc();
+         this.functionsService.sorryDoc();
+         this.btnDisable = false;
+        },
+        () => {
+          Object.keys(jsonResponse).forEach((key) => {
+              if(jsonResponse[key] == null){
+                settingsIndicator = false;
+              }else{
+                settingsIndicator = true;
+              }
+          }); 
+          console.log(settingsIndicator);
+          if(settingsIndicator){
+            this.checkPrivacyPolicyV3();
+          }else{
+            console.log('settingsIndicator : '+settingsIndicator);
+            console.log(this.userSettingsModelv3);
+            
+            this.doctorService.getAppSettingsV3().subscribe(
+              (resdata: any) => {
+               
+                this.appSettingsModelv3 = <AppSettingsModelv3>resdata;
+                this.userSettingsModelv3 = <UserSettingsModelv3>resdata;
+                localStorage.setItem("user_settings",JSON.stringify(this.userSettingsModelv3));
+                console.log(this.appSettingsModelv3);
+              },(error) => {
+                 // this.functionsService.sorryDoc();
+                 this.functionsService.sorryDoc();
+                 this.btnDisable = false;
+                },
+                () => {
+                  this.doctorService.insertUserSettingsV3(this.appSettingsModelv3).subscribe(
+                    (resInsert: any) => {
+                        console.log('insertUserSettingsV3 : '+resInsert);
+                    },(error) => {
+                       // this.functionsService.sorryDoc();
+                    },() => {
+                      this.checkPrivacyPolicyV3();
+                    }
+                  );
+                }
+              );
+          }
+        }
+      );
+  }
+
+
+
+  checkPrivacyPolicyV3() {
+
+    let settingsIndicator:any;
+    let jsonResponse:any;
+   
+    console.log(this.userSettingsModelv3.privacyPolicy);
+    
+    if(this.userSettingsModelv3.privacyPolicy == 0){
+      this.showPrivacyPolicyV3();
+    }else{
+      console.log('LOGIN');
+      this.loginV3();
+      
+      
+    }
+  }
+
+  async showPrivacyPolicyV3() {
+    const modal = await this.modalController.create({
+      component: ChhAppPrivacyPolicyPage,
+      componentProps: { backdropDismiss: true, origin: 'login' },
+    });
+    modal.onDidDismiss().then((data) => {
+      console.log(data);
+      this.btnDisable = false;
+      if (data.data) {
+        //this.loginAction();
+        this.userSettingsModelv3.privacyPolicy = '1';
+        console.log(this.userSettingsModelv3);
+        this.doctorService.updateUserSettingsV3(this.userSettingsModelv3).subscribe();
+        this.loginV3();
+      }
+    });
+    return await modal.present();
+  }
+
+  async updatePasswordV3() {
+    //console.log(this.resultJson.data);
+
+    const modal = await this.modalController.create({
+      component: ChhAppChangePasswordPage,
+      componentProps: {
+        old_password: this.postData.password,
+        backdropDismiss: true,
+      },
+    });
+    modal.onDidDismiss().then((data) => {
+      if (
+        typeof data.data !== 'undefined' &&
+        typeof data.role !== 'undefined'
+      ) {
+        //this.hashedPassword = data.data;
+       // this.postData.password = data.role;
+        this.postData.password = "";
+        this.modalUpdateV3(
+          this.constants.UI_COMPONENT_TEXT_VALUE_PASSWORD_SUCCESS_TITLE,
+          this.constants.UI_COMPONENT_TEXT_VALUE_UPDATE_PASSWORD_SUCCESS_BODY,
+          true
+        );
+        this.btnDisable = false;
+      } else if (data.data == 'Error') {
+        this.btnDisable = false;
+        this.modalUpdateV3(
+          this.constants.UI_COMPONENT_TEXT_VALUE_PASSWORD_FAILED_TITLE,
+          this.constants.UI_COMPONENT_TEXT_VALUE_UPDATE_PASSWORD_FAILED_BODY,
+          false
+        );
+      } else {
+        this.btnDisable = false;
+      }
+    });
+    return await modal.present();
+  }
+  
+  async modalUpdateV3(header, message, data) {
+    this.btnDisable = false;
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: header,
+      message: message,
+      buttons: [
+        {
+          text: 'Okay',
+          handler: () => {
+            if (data) {
+             this.getUserSettingsV3();
+            }
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
+
+  loginV3(){
+    // let data = JSON.stringify(this.loginResponseModel);
+    // data = '[' + data + ']';
+    // this.logindata = JSON.parse(data);
+    /*console.log(this.loginResponseModel);
+    console.log(JSON.stringify(this.loginResponseModel));*/
+    
+    
+    this.storageService.store(AuthConstants.AUTH, this.loginResponseModelv3);
+    localStorage.setItem('isIdle', '1');
+    localStorage.setItem('username', btoa(this.postData.username));
+    this.router.navigate(['/menu/dashboard']).then(() => {
+      window.location.reload();
+    });
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   /*async ngAfterViewInit() {
    const rectangle = document.querySelector('.rectangle');
      
@@ -109,47 +383,6 @@ export class LoginPage {
     gesture1.enable();
   }*/
 
-  isActiveToggleTextPassword: Boolean = true;
-  isEyeOnOff: Boolean = true;
-
-  public getType() {
-    return this.isActiveToggleTextPassword ? 'password' : 'text';
-  }
-
-  public getName() {
-    
-    return this.isEyeOnOff ? 'eye-off-outline' : 'eye-outline';
-  }
-
-  public postData = {
-    username: '',
-    password: '',
-  };
-
-  btnDisable: boolean = false;
-
-  ngOnInit() {
-    this.loginResponseModel = new LoginResponseModel;
-    this.$gaService.pageView('/login', 'Login Page');
-    if (localStorage.getItem('promptLogout') == '1') {
-      this.timerExpired();
-    }
-
-
-    if (localStorage.getItem('testdb') == '1') {
-      this.testDB = true;
-    } else {
-      this.testDB = false;
-    }
-
-  }
-
-
-
-
-
-
-
   loginv2(){
     this.loginModel = new LoginModel();
     this.loginModel.mode = Consta.mode;
@@ -158,33 +391,42 @@ export class LoginPage {
     this.loginModel.username = this.postData.username;
     this.loginModel.password = this.postData.password;
     localStorage.setItem('username', btoa(this.postData.username));
-    this.patientService.loginv2(this.loginModel).subscribe((res: any) => {
-        this.loginResponseModel = <LoginResponseModel>res;
-        this.resultJson = res;
-        console.log(res);
-        
-        if (typeof this.loginResponseModel.jwt !== 'undefined') {
-          if(this.loginResponseModel.jwt.length > 100){
-            localStorage.setItem("id_token",this.loginResponseModel.jwt);
-          }
+
+    this.loginModelv3 = new LoginModelv3();
+    this.loginModelv3.userNameOrEmail = this.postData.username;
+    this.loginModelv3.password = this.postData.password;
+    console.log(this.loginModelv3);
+    
+    this.patientService.loginv2(this.loginModelv3).subscribe((res: any) => {
+        this.loginResponseModelv3 = <LoginResponseModelv3>res;
+        //this.resultJson = res;
+
+        if(this.loginResponseModelv3.jwt != null){
+          localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
         }
+
 
       },(error) => {
        console.log(error);
       },() => {
+        console.log(this.loginResponseModelv3);
+        console.log(this.loginResponseModelv3.isDefaultPasswordChanged);
+        if(this.loginResponseModelv3.isDefaultPasswordChanged){
+          this.checkPrivacyPolicyV2();
+        }else{
+         //this.updatePassword();
+        }
+        /*
         if (!(typeof this.resultJson.ErrorCode !== 'undefined')) {
           if (this.resultJson.hl <= 7) {
             this.updatePassword();
           } else {
             this.checkPrivacyPolicyV2();
-            /*localStorage.setItem('username', btoa(this.postData.username));
-            this.hashedPassword = this.resultJson.data;
-            this.loginUser();*/
           } 
         } else {
           this.btnDisable = false;
           this.functionsService.alert(this.resultJson.ErrorDescription, 'Okay');
-        }
+        }*/
 
        
      
@@ -213,39 +455,6 @@ export class LoginPage {
     
 
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   async timerExpired() {
     const alert = await this.alertController.create({
@@ -314,16 +523,7 @@ export class LoginPage {
     }
     window.location.reload();
   }
-  checkInput() {
-    this.btnDisable = true;
-    if (this.postData.username == '' || this.postData.password == '') {
-      this.functionsService.sorryDoc();
-      this.btnDisable = false;
-    } else {
-      //this.checkbcrypt();
-      this.loginv2();
-    }
-  }
+
 
   
   async modalUpdate(header, message, data) {
@@ -489,7 +689,7 @@ export class LoginPage {
 
 
   }*/
-
+  
   checkPrivacyPolicyV2() {
     /* get user settings,
       if user settings is empty, promt the privacy policy modal
@@ -590,7 +790,7 @@ export class LoginPage {
                 tempJson1.property = lock;
                 tempJson1.value= valuex;     
                 console.log('tempJson1 :');
-                 console.log(JSON.stringify(tempJson1));
+                console.log(JSON.stringify(tempJson1));
                             
                 this.patientService
                   .insertUserSettingsV2(tempJson1)

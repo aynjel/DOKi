@@ -199,4 +199,56 @@ export class DoctorService {
     return this.http.post(url,  data1, options);
     
   }
+  //////////////////////////////v3/////////////////////////
+  loginV3(data:any){
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    //const url = environment.apiRouterUrl + "v2/Login";
+    const url = "http://10.130.21.190:5002/api/v3/User/Token";
+    return this.http.post(url,  data, options);
+  }
+  getUserSettingsV3(){
+    //const headers = new HttpHeaders();
+    
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json;charset=utf-8',
+    });
+    const options = { headers: headers, withCredintials: false };
+   //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
+   const url = 'http://10.130.21.190:5002/api/v3/UserSettings';
+    return this.http.get(url, options);
+  }
+  getAppSettingsV3(){
+    //const headers = new HttpHeaders();
+    
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json;charset=utf-8',
+    });
+    const options = { headers: headers, withCredintials: false };
+   //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
+   const url = '  http://10.130.21.190:5002/api/v3/AppSettings';
+    return this.http.get(url, options);
+  }
+  insertUserSettingsV3(data:any){
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    //const url = environment.apiRouterUrl + "v2/Login";
+    const url = "http://10.130.21.190:5002/api/v3/UserSettings";
+    return this.http.post(url,  data, options);
+  }
+  updateUserSettingsV3(data:any){
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    //const url =    environment.apiRouterUrl + "v2/UserSetting";
+    const url = "http://10.130.21.190:5002/api/v3/UserSettings";
+    return this.http.put(url, data, options);
+  }
+
+  getYearHistoryGraphV3(){
+    const headers = new HttpHeaders({'Content-Type': 'application/json;charset=utf-8',});
+    const options = { headers: headers, withCredintials: false };
+   //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
+   const url = "http://10.130.21.190:5002/api/v3/InPatients/YearHistory";
+    return this.http.get(url, options);
+  }
 }

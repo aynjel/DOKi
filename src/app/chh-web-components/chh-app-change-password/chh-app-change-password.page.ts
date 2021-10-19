@@ -50,6 +50,7 @@ export class ChhAppChangePasswordPage {
   isEyeOnOff4: Boolean = true;
   dr_username;
   errMessage;
+  btnDisable:boolean = false;
   saltRounds = 10;
   public frmSignup: FormGroup;
   constructor(
@@ -202,6 +203,7 @@ export class ChhAppChangePasswordPage {
   <div id="alert-1-msg" class="alert-message sc-ion-alert-ios">Do you agree to use this lightsaber to do good across the galaxy?</div>*/
 
   save() {
+    this.btnDisable = true;
     if (this.NewPassword != this.ConfirmPassword) {
       this.errMessage = ' (passwords did not Match)';
       let myDiv1 = document.getElementById('pWord1');
@@ -238,6 +240,7 @@ export class ChhAppChangePasswordPage {
           },
           (error) => {
             this.functionsService.sorryDoc();
+            this.btnDisable = false;
           },
           () => {
             if (dJson.Message == 'Success') {
@@ -245,6 +248,7 @@ export class ChhAppChangePasswordPage {
             } else {
               this.modalController.dismiss('Error');
             }
+            this.btnDisable = false;
           }
         );
      // });

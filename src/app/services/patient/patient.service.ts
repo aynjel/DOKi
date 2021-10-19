@@ -489,5 +489,7 @@ export class PatientService {
     //const url = 'http://10.128.18.75:8088/api/v2/UserSetting';
     return this.http.delete(url,options)
   }
+  ////////////////////////V3/////////////////////////
 
+  
 }
