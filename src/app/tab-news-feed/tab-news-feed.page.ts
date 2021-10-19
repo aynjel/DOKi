@@ -26,6 +26,10 @@ import { PatientService } from '../services/patient/patient.service';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { OnInit } from '@angular/core';
+import { ChhAppChangePassPage } from '../chh-web-components/chh-app-change-pass/chh-app-change-pass.page';
+
+import { ChhAppNewsfeedComponent } from '../chh-web-components/chh-app-newsfeed/chh-app-newsfeed.component';
+
 
 @Component({
   selector: 'app-tab-news-feed',
@@ -36,7 +40,8 @@ export class TabNewsFeedPage implements OnInit {
   isDesktop: boolean;
   constructor(
 
-    private screensizeService: ScreenSizeService
+    private screensizeService: ScreenSizeService,
+    private modalController: ModalController
 
   ) {
     console.log('In-patient : Constructor');
@@ -65,4 +70,19 @@ export class TabNewsFeedPage implements OnInit {
       this.items.push(i);  
     }  
   }  
+  async showaddmodal1() {
+    var data = 'xyz';
+    const modal = await this.modalController.create({
+      component: ChhAppNewsfeedComponent,
+
+      componentProps: {
+        backdropDismiss: true,
+        data: data
+      },
+    });
+    modal.onDidDismiss().then((data) => {
+
+    });
+    return await modal.present();
+  }
 }

@@ -43,7 +43,7 @@ import {ChhAppInsuranceCoordinatorInquiryComponent} from "./chh-app-insurance-co
 import {ChhAppIsPatientSeenComponent} from "./chh-app-is-patient-seen/chh-app-is-patient-seen.component";
 
 import {ChhAppCaseratesComponent} from "./chh-app-caserates/chh-app-caserates.component";
-
+import {ChhAppNewsfeedComponent} from "./chh-app-newsfeed/chh-app-newsfeed.component";
 
 
 @NgModule({
@@ -71,7 +71,8 @@ import {ChhAppCaseratesComponent} from "./chh-app-caserates/chh-app-caserates.co
     ChhAppInsuranceCoordinatorInquiryComponent,
     ChhAppIsPatientSeenComponent,
     MandaueLabDetailsComponent,
-    ChhAppCaseratesComponent
+    ChhAppCaseratesComponent,
+    ChhAppNewsfeedComponent
 
   ],
   exports: [
@@ -97,7 +98,8 @@ import {ChhAppCaseratesComponent} from "./chh-app-caserates/chh-app-caserates.co
     ChhAppInsuranceCoordinatorInquiryComponent,
     ChhAppIsPatientSeenComponent,
     MandaueLabDetailsComponent,
-    ChhAppCaseratesComponent
+    ChhAppCaseratesComponent,
+    ChhAppNewsfeedComponent
   ],
   imports: [CommonModule, IonicModule, ChhAppTextAvatarModule,RouterModule,FormsModule],
 })

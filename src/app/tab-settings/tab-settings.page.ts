@@ -249,6 +249,8 @@ export class TabSettingsPage {
     );
 
     this.patientService.getUserSettingsV2(this.dr_username).subscribe((res: any) => {
+        console.log(res);
+        
         Object.keys(res).forEach((key) => {
 
           var value = res[key];
