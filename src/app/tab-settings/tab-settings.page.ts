@@ -26,6 +26,8 @@ import { ChhAppTermsAndConditionsPage } from '../chh-web-components/chh-app-term
 import { UserSettingsModel,UserSettingDeletesModel } from '../models/doctor';
 import { DoctorService } from '../services/doctor/doctor.service';
 import { element } from 'protractor';
+import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
+import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
 @Component({
   selector: 'app-tab-settings',
   templateUrl: 'tab-settings.page.html',
@@ -70,6 +72,8 @@ export class TabSettingsPage {
   phicBar:any;
   phicBarColor:any;
   phicBarHide:any;
+  data1;
+  loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -186,6 +190,7 @@ export class TabSettingsPage {
 
   ionViewWillEnter() {
     this.$gaService.pageView('/Settings', 'Settings Tab');
+    this.professionalFeeModelv3 = JSON.parse(atob(localStorage.getItem('postData1')));
     this.logindata = <LoginData>this.authService.userData$.getValue();
     this.dr_name = this.logindata.last_name;
     this.dr_code = this.logindata.dr_code;
@@ -203,7 +208,6 @@ export class TabSettingsPage {
     this.profileExpiry.drCode = this.dr_code;
     this.doctorService.getProfileExpiry(this.profileExpiry).subscribe(
       (res: any) => {
-          console.log(res);
           var dd    = new Date(res.LicenseExpiryDate);
           this.prc = dd.getDate()+'/'+(dd.getMonth() + 1)+'/'+dd.getUTCFullYear();
           this.prcDays = res.LicenseExpiryDaysRemaining;
@@ -247,6 +251,25 @@ export class TabSettingsPage {
           }  
       }
     );
+
+
+
+
+    this.data1 = JSON.parse('['+localStorage.getItem("user_settings")+']') ;
+    console.log(this.data1);
+
+      this.data1.forEach(element => {
+        console.log(element);
+        
+      });
+
+      this.checkAppearance();
+
+
+
+
+
+
 
     this.patientService.getUserSettingsV2(this.dr_username).subscribe((res: any) => {
         console.log(res);
@@ -326,6 +349,10 @@ export class TabSettingsPage {
         });
       });
 
+
+
+
+
     this.$gaService.event('Settings', 'User Flow', this.dr_name);
     this.authService.userData$.subscribe((res: any) => {
       this.account = <LoginData>res;
@@ -354,7 +381,19 @@ export class TabSettingsPage {
       );
     }
   }
-
+  checkAppearance() {
+    console.log('checkAppearance');
+    var values = JSON.parse('[' + localStorage.getItem("user_settings")+ ']');
+    let dr_username = atob(localStorage.getItem('username'));
+    values.forEach(element => {
+      console.log(element.darkmode);
+      if(element.darkmode == 1){
+        this.renderer.setAttribute(document.body,'color-theme','dark');
+      }else{
+        this.renderer.setAttribute(document.body,'color-theme','light');
+      }
+    });
+  }
   toggle(
     event: { detail: { checked: any } },
     setting: any,

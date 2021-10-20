@@ -21,7 +21,7 @@ import { timeStamp } from 'console';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { LoginData } from '../../../models/login-data.model';
+
 import { FunctionsService } from '../../../shared/functions/functions.service';
 import { PatientService } from 'src/app/services/patient/patient.service';
 import { logWarnings } from 'protractor/built/driverProviders';
@@ -37,18 +37,25 @@ import { AuthConstants, Consta} from '../../../config/auth-constants';
 import { executionAsyncResource } from 'async_hooks';
 import { Constants } from 'src/app/shared/constants';
 
-import { InPatientData } from 'src/app/models/in-patient.model';
+import { InPatientData,ProfessionalFeeModelv3} from 'src/app/models/in-patient.model';
+
+import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
+
 import { LaboratoryTestModalPage } from '../laboratory-test-modal/laboratory-test-modal.page';
-import { InpatientModelInpatients } from '../../../models/doctor';
+import { InpatientModelInpatients,InpatientDetails } from '../../../models/doctor';
 @Component({
   selector: 'app-in-patient-detail',
   templateUrl: './in-patient-detail.page.html',
   styleUrls: ['./in-patient-detail.page.scss'],
 })
 export class InPatientDetailPage {
-  public logindata: LoginData;
+
+
+  
   inpatientModelInpatients = new InpatientModelInpatients;
+
   data: any = [];
+  data1: any;
   site: any;
   date: any;
   professionalFee: any;
@@ -92,6 +99,11 @@ export class InPatientDetailPage {
   patient_name: any;
   patient_no: any;
   postData: InPatientData = new InPatientData();
+  professionalFeeModelv3 : ProfessionalFeeModelv3 = new ProfessionalFeeModelv3();
+  userSettingsModelv3 : UserSettingsModelv3 = new UserSettingsModelv3();
+  loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
+
+  inpatientDetails : InpatientDetails = new InpatientDetails();
   location: boolean;
   patient_id:any;
   opd_code:any;
@@ -130,28 +142,42 @@ export class InPatientDetailPage {
   }
 
   ionViewWillEnter() {
+    this.loginResponseModelv3 = new LoginResponseModelv3();
+    this.inpatientDetails = new InpatientDetails();
     //console.log();
     this.patient_id = this.activatedRoute.snapshot.params.id;
-    this.routerLinkBack =
-    '/menu/in-patients/';
+    this.routerLinkBack =    '/menu/in-patients/';
     //console.log('In-patient detail : ionViewWillEnter');
     //sessionStorage.removeItem('pfIsPatientSeen');
     // sessionStorage.removeItem('pfInsCoor');
 
     //this.checkAppearance();
     
-    let logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_name = logindata.last_name;
-    this.dr_code = logindata.dr_code;
+    //let logindata = <LoginData>this.authService.userData$.getValue();
+    this.loginResponseModelv3 = <LoginResponseModelv3>this.authService.userData$.getValue();
+    this.userSettingsModelv3 = new UserSettingsModelv3;
+    this.userSettingsModelv3 = JSON.parse('['+atob(localStorage.getItem("user_settings"))+']');
 
-    //this.inpatientModelInpatients.drCode = 'MD000175';
+
+
+
+    this.loginResponseModelv3 = this.authService.userData$.getValue();
+    this.dr_name = this.loginResponseModelv3.lastName;
+    this.dr_code = this.loginResponseModelv3.doctorCode;
     this.inpatientModelInpatients.drCode = this.dr_code;
     this.inpatientModelInpatients.mode = Consta.mode;
-    this.postData.DoctorMobileNumber = logindata.mobile_no;
+    this.postData.DoctorMobileNumber = this.loginResponseModelv3.mobileNo;
+    this.professionalFeeModelv3.doctor_mobile_no = this.loginResponseModelv3.mobileNo;
+    this.professionalFeeModelv3.smsGatewayCHH = this.userSettingsModelv3[0].smsGatewayCHH;
+    this.professionalFeeModelv3.smsGatewaySmart = this.userSettingsModelv3[0].smsGatewaySmart;
+
     this.data = [];
 
     
-    this.doctorService.getInPatientV2(this.inpatientModelInpatients).subscribe(
+
+
+
+    /*this.doctorService.getInPatientV2(this.inpatientModelInpatients).subscribe(
       (res: any) => {
        
         
@@ -184,7 +210,38 @@ export class InPatientDetailPage {
         this.operate();
         localStorage.setItem('patientData', btoa(JSON.stringify(this.data)));
       }
-    );
+    );*/
+
+
+    
+    this.data1 = JSON.parse(atob(localStorage.getItem("patientData"))) ;
+    this.data1.forEach((element) => {
+
+        this.opd_code = element.admission_no;
+        this.inpatientModelInpatients.accountNo = this.opd_code;
+        this.inpatientDetails.admission_no = this.opd_code;
+        this.data.push(element);
+        this.admissionstatus = element.admission_status;
+        this.patient_name = element.first_name + ' ' + element.last_name;
+        this.patient_name = this.functionsService.convertAllFirstLetterToUpperCase(
+          this.patient_name
+        );
+        if (element.payvenue != null) {
+          this.checkmark = true;
+        }
+
+    });
+    let n = this.data[0].admission_no.indexOf('IPC');
+    //console.log(n);
+
+    if (n >= 0) {
+      this.location = true;
+    } else {
+      this.location = false;
+    }
+    this.operate();
+    //localStorage.setItem('patientData', btoa(JSON.stringify(this.data)));
+
   }
 
   operate() {
@@ -203,18 +260,36 @@ export class InPatientDetailPage {
     this.postData.Remarks = '';
     this.postData.ProfFee = 0;
     this.postData.OldProfFee = 0;
+
+    this.professionalFeeModelv3.is_vat = '';
+    this.professionalFeeModelv3.payvenue = '';
+    this.professionalFeeModelv3.remarks = '';
+    this.professionalFeeModelv3.doctor_prof_fee = 0;
+    this.professionalFeeModelv3.old_prof_fee = 0;
+
     //console.log(this.data[0].site);
 
+    
+
+    
+    
     if (this.data[0].site == 'C') {
       this.site = 'CHHC';
       //this.postData.PatientSite = "CEBU";
       this.postData.BillingMobileNumber = atob(localStorage.getItem('C'));
+      this.professionalFeeModelv3.billing_mobile_no = this.userSettingsModelv3[0].billingContactCebu;
+
     } else {
       this.site = 'CHHM';
       //this.postData.PatientSite = "MANDAUE";
       this.postData.BillingMobileNumber = atob(localStorage.getItem('M'));
+      this.professionalFeeModelv3.billing_mobile_no = this.userSettingsModelv3[0].billingContactMandaue;
     }
+
+    
     this.postData.RoomNumber = this.data[0].room_no;
+    this.professionalFeeModelv3.room_no = this.data[0].room_no;
+    /*
     let smsgateway = JSON.parse(localStorage.getItem('smsGateway'));
     let ssms = [];
     Object.keys(smsgateway).forEach((key) => {
@@ -227,7 +302,7 @@ export class InPatientDetailPage {
         '"}';
       ssms.push(JSON.parse(sms));
     });
-    this.postData.SmsGateWay = ssms;
+    this.postData.SmsGateWay = ssms;*/
     this.professionalFee = this.data[0].doctor_prof_fee;
     this.remarks = this.data[0].remarks;
 
@@ -237,10 +312,18 @@ export class InPatientDetailPage {
       this.method = '';
     }
     this.postData.AdmisisonNo = this.data[0].admission_no;
+    this.professionalFeeModelv3.admission_no = this.data[0].admission_no;
     this.postData.DoctorCode = this.data[0].dr_code;
+
     //this.postData.DoctorCode = this.data.dr_code;
     this.postData.DoctorStatusCode = this.data[0].Doctor_Status_code;
+    this.professionalFeeModelv3.doctor_status_code = this.data[0].doctor_Status_code;
+
+
     this.postData.site = this.data[0].site;
+    this.professionalFeeModelv3.site = this.data[0].site;
+
+
     this.postData.CreatedBy = this.data[0].dr_code;
     let coDoctors1 = [];
     let coDoctors2 = [];
@@ -253,7 +336,7 @@ export class InPatientDetailPage {
     //  | |  _  |  __|    | |        | |     | | | |      | | | | | | | | | |       | |   | | | | |  _  /
     //  | |_| | | |___    | |        | |___  | |_| |      | |_| | | |_| | | |___    | |   | |_| | | | \ \
     //  \_____/ |_____|   |_|        \_____| \_____/      |_____/ \_____/ \_____|   |_|   \_____/ |_|  \_\
-    this.doctorService.getCoDoctorsV2(this.inpatientModelInpatients).subscribe(
+    this.doctorService.getCoDoctorsV3(this.inpatientDetails).subscribe(
       (res: any) => {
         res.forEach((element) => {
           if (element.dr_code == this.data[0].dr_code) {
@@ -297,19 +380,21 @@ export class InPatientDetailPage {
     //
 
     this.doctorService
-      .getAdmittingDiagnosisV2(this.inpatientModelInpatients)
+      .getAdmittingDiagnosisV3(this.inpatientDetails)
       .subscribe(
         (res: any) => {
+
+          
           if(!Object.keys(res).length){
             //console.log("no data found");
           }else{
-            this.admittingDiagnosis = res[0].admitting_diagnosis2.replace(
+            this.admittingDiagnosis = res.admitting_diagnosis2.replace(
               /(\r\n|\n|\r)/gm,
               '<br />'
             );
             //this.functionsService.logToConsole('admittingDiagnosis : ' + this.admittingDiagnosis);
             this.admittingDiagnosis1 = this.functionsService.truncateChar(
-              res[0].admitting_diagnosis2,
+              res.admitting_diagnosis2,
               100
             );
             this.admittingDiagnosis1 = this.admittingDiagnosis1.replace(
@@ -333,14 +418,14 @@ export class InPatientDetailPage {
       );
     //final diagnosis
     if (this.data[0].admission_status == 'DN') {
-      this.doctorService.getFinalDiagnosisV2(this.inpatientModelInpatients).subscribe(
+      this.doctorService.getFinalDiagnosisV3(this.inpatientDetails).subscribe(
         (res: any) => {
 
           
           if(!Object.keys(res).length){
            // console.log("no data found");
           }else{
-            this.finalDiagnosis = res[0].final_diagnosis;
+            this.finalDiagnosis = res.final_diagnosis;
             //console.log(this.finalDiagnosis);
             
             this.finalDiagnosis1 = this.functionsService.truncateChar(
@@ -375,7 +460,8 @@ export class InPatientDetailPage {
 
     this.postData.DateCreated = this.functionsService.getSystemDateTime();
     //sessionStorage.setItem('postData', btoa(JSON.stringify(this.postData)));
-    localStorage.setItem('postData', btoa(JSON.stringify(this.postData)));
+    //localStorage.setItem('postData', btoa(JSON.stringify(this.postData)));
+    localStorage.setItem('postData1', btoa((JSON.stringify(this.professionalFeeModelv3))));
   }
 
   ngOnInit() {
@@ -747,7 +833,7 @@ export class InPatientDetailPage {
   back() {}
 
   checkAppearance() {
-    console.log('checkAppearance');
+
     
     let dr_username = atob(localStorage.getItem('username'));
     this.patientService

@@ -12,6 +12,10 @@ export class InpatientModelInpatients{
     accountNo: any
     mode: any
 }
+export class InpatientDetails{
+    admission_no: any
+}
+
 
 export class UserSettingsModel{
     username: any

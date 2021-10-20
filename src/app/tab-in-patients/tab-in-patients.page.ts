@@ -24,7 +24,7 @@ import { FunctionsService } from '../shared/functions/functions.service';
 import { Constants } from '../shared/constants';
 import { Messages } from '../shared/messages';
 import { PatientService } from '../services/patient/patient.service';
-import { InpatientModelInpatients } from '../models/doctor';
+import { InpatientModelInpatients,LoginResponseModelv3 } from '../models/doctor';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -35,7 +35,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 })
 export class TabInPatientsPage {
   inpatientModelInpatients = new InpatientModelInpatients;
-  public logindata: LoginData;
+  public logindata: LoginResponseModelv3;
   public inPatientData: InPatientData;
   isDesktop: boolean;
   isFetchDone: boolean = false;
@@ -50,7 +50,7 @@ export class TabInPatientsPage {
   admittedOrDischargeLabel = '';
   route: string;
   objecthandler: boolean = false;
-
+  data: any = [];
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -192,17 +192,21 @@ export class TabInPatientsPage {
   //Fired when the component routing to is about to animate into view.
   ionViewWillEnter() {
 
-    this.logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_code = this.logindata.dr_code;
+    this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
+    console.log(this.logindata);
+
+    this.dr_code = this.logindata.doctorCode;
     this.inpatientModelInpatients.accountNo = "none";
     
     //this.inpatientModelInpatients.drCode = 'MD000175';
     this.inpatientModelInpatients.drCode = this.dr_code;
     this.inpatientModelInpatients.mode = Consta.mode;
-    let dr_name = this.logindata.last_name;
+    let dr_name = this.logindata.lastName;
     this.$gaService.event('In-Patient', 'User Flow', dr_name);
 
     let x: boolean = true;
+    /*
+    deleted by jessie oct 20 2021
     this.patientService.getAppSettingV2().subscribe((res: any) => {
       Object.keys(res).forEach((key) => {
         var value = res[key];
@@ -219,7 +223,7 @@ export class TabInPatientsPage {
           }
         });
       });
-    });
+    });*/
     console.log('call patient');
     
     this.callPatient(this.site);
@@ -230,7 +234,7 @@ export class TabInPatientsPage {
     this.isFetchDone = false;
 
 
-      this.doctorService.getInPatientV2(this.inpatientModelInpatients).subscribe(
+      this.doctorService.getInPatientV3().subscribe(
         (res: any) => {
 
           
@@ -278,6 +282,17 @@ export class TabInPatientsPage {
   }
 
   async detail(data: any) {
+    this.data = [];
+    console.log(data);
+    this.inPatients.forEach(element => {
+       
+        if( element.patient_no == data){
+          this.data.push(element);
+          localStorage.setItem('patientData',btoa(JSON.stringify(this.data)));
+        }
+    });
+    console.log( this.data);
+    
     /*
   this.router.navigate(['menu/in-patients/', data]);
 */

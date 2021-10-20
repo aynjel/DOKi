@@ -204,7 +204,8 @@ export class TabDashboardPage implements OnInit {
     console.log(this.doctorHistoryModel);
     this.doctorService.getYearHistoryGraphV3().subscribe(
       (res: any) => {
-
+        console.log(res);
+        
         var count = Object.keys(res).length / 2;
         console.log(count);
         
@@ -277,7 +278,7 @@ export class TabDashboardPage implements OnInit {
   }
   checkAppearance() {
     console.log('checkAppearance');
-    var values = JSON.parse('[' + localStorage.getItem("user_settings")+ ']');
+    var values = JSON.parse('[' + atob(localStorage.getItem("user_settings"))+ ']');
     let dr_username = atob(localStorage.getItem('username'));
     values.forEach(element => {
       console.log(element.darkmode);

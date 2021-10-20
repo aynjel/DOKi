@@ -5,6 +5,7 @@ import { AuthConstants } from "../../config/auth-constants";
 import { BehaviorSubject, Observable } from "rxjs";
 import { HttpService } from "../http/http.service";
 import { LoginData } from "../../models/login-data.model";
+import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
 import { FunctionsService } from "../../shared/functions/functions.service";
 import {
   HttpClient,
@@ -17,7 +18,7 @@ import {
 })
 
 export class AuthService {
-  userData$ = new BehaviorSubject<LoginData>(null);
+  userData$ = new BehaviorSubject<LoginResponseModelv3>(null);
 
   constructor(
     private httpService: HttpService,

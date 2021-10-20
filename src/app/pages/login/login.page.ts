@@ -155,23 +155,18 @@ export class LoginPage {
         }
       }
     );
-    
-
   }
-
   getUserSettingsV3(){
     this.appSettingsModelv3 = new AppSettingsModelv3();
     this.userSettingsModelv3 = new UserSettingsModelv3();
     let settingsIndicator:any;
     let jsonResponse:any;
- 
     this.doctorService.getUserSettingsV3().subscribe(
       (res: any) => {
         jsonResponse = res;
         this.userSettingsModelv3 = <UserSettingsModelv3>res;
-        localStorage.setItem("user_settings",JSON.stringify(this.userSettingsModelv3));
+        localStorage.setItem("user_settings",btoa(JSON.stringify(this.userSettingsModelv3)));
         console.log(this.userSettingsModelv3);
-        
       },(error) => {
          // this.functionsService.sorryDoc();
          this.functionsService.sorryDoc();
@@ -179,28 +174,19 @@ export class LoginPage {
         },
         () => {
           Object.keys(jsonResponse).forEach((key) => {
-              if(jsonResponse[key] == null){
-                settingsIndicator = false;
-              }else{
-                settingsIndicator = true;
-              }
+              if(jsonResponse[key] == null){settingsIndicator = false;}
+              else{settingsIndicator = true;}
           }); 
-          console.log(settingsIndicator);
           if(settingsIndicator){
             this.checkPrivacyPolicyV3();
           }else{
-            console.log('settingsIndicator : '+settingsIndicator);
-            console.log(this.userSettingsModelv3);
-            
             this.doctorService.getAppSettingsV3().subscribe(
               (resdata: any) => {
-               
                 this.appSettingsModelv3 = <AppSettingsModelv3>resdata;
                 this.userSettingsModelv3 = <UserSettingsModelv3>resdata;
-                localStorage.setItem("user_settings",JSON.stringify(this.userSettingsModelv3));
+                localStorage.setItem("user_settings",btoa(JSON.stringify(this.userSettingsModelv3)));
                 console.log(this.appSettingsModelv3);
               },(error) => {
-                 // this.functionsService.sorryDoc();
                  this.functionsService.sorryDoc();
                  this.btnDisable = false;
                 },

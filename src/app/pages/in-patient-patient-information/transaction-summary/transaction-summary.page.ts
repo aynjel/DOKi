@@ -37,7 +37,9 @@ import { AuthConstants, Consta } from '../../../config/auth-constants';
 import { executionAsyncResource } from 'async_hooks';
 import { Constants, } from 'src/app/shared/constants';
 import { CaseRatesPage } from '../../case-rates/case-rates.page';
-import { InPatientData } from 'src/app/models/in-patient.model';
+
+import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
+import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
 @Component({
   selector: 'app-transaction-summary',
   templateUrl: './transaction-summary.page.html',
@@ -53,7 +55,7 @@ export class TransactionSummaryPage implements OnInit {
   method1: any;
   id: any;
   dr_name: any;
-  postData: InPatientData = new InPatientData();
+  //postData: InPatientData = new InPatientData();
   public logindata: LoginData;
   dr_code: any;
   patient_id: any;
@@ -80,6 +82,9 @@ export class TransactionSummaryPage implements OnInit {
   site: any;
   day: any;
   moreOrLess: boolean = true;
+  professionalFeeModelv3 : ProfessionalFeeModelv3 = new ProfessionalFeeModelv3();
+  userSettingsModelv3 : UserSettingsModelv3 = new UserSettingsModelv3();
+  loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -112,30 +117,31 @@ export class TransactionSummaryPage implements OnInit {
     if (this.isDesktop) {
       this.moreOrLess = false;
     }
-    this.postData = JSON.parse(
-      atob(localStorage.getItem('postData'))
-    ) as InPatientData;
-    this.data1 = this.postData.ProfFee;
+    //this.postData = JSON.parse(atob(localStorage.getItem('postData'))) as InPatientData;
+    this.professionalFeeModelv3 = JSON.parse(atob(localStorage.getItem('postData1')));
+
+
+    this.data1 = this.professionalFeeModelv3.doctor_prof_fee;
     this.daysManaged = atob(localStorage.getItem('daysManaged'));
     if (this.daysManaged > 1) {
       this.day = 'Days';
     } else {
       this.day = 'Day';
     }
-    this.withVatN = this.postData.IsVAT;
-    if (this.postData.IsVAT == 'Y') {
+    this.withVatN = this.professionalFeeModelv3.is_vat;
+    if (this.professionalFeeModelv3.is_vat == 'Y') {
       this.withVat = '(+ VAT)';
     } else {
       this.withVat = '(No VAT)';
     }
-    this.payvenueN = this.postData.PayVenue;
+    this.payvenueN = this.professionalFeeModelv3.payvenue;
 
-    if(this.postData.SelectedPayVenue == "Charity"){
+    if(this.professionalFeeModelv3.selected_payvenue == "Charity"){
       this.payvenueN  = "xyz";
     }
     
     
-    console.log(this.postData);
+    console.log(this.professionalFeeModelv3);
     
     console.log("data1 :" + this.data1);
     console.log("withVatN :" + this.withVatN);
@@ -143,18 +149,18 @@ export class TransactionSummaryPage implements OnInit {
 
 
 
-    if (this.postData.PayVenue == 'W') {
+    if (this.professionalFeeModelv3.payvenue == 'W') {
       this.payvenue = 'Charity / PhilHealth';
-    } else if (this.postData.PayVenue == 'H') {
+    } else if (this.professionalFeeModelv3.payvenue == 'H') {
       this.payvenue = 'c/o Insurance';
-    } else if (this.postData.PayVenue == 'X') {
+    } else if (this.professionalFeeModelv3.payvenue == 'X') {
       this.payvenue = 'c/o Insurance';
-    } else if (this.postData.PayVenue == 'N') {
+    } else if (this.professionalFeeModelv3.payvenue == 'N') {
       this.payvenue = 'Not Seen ';
-    } else if (this.postData.PayVenue == 'A') {
+    } else if (this.professionalFeeModelv3.payvenue == 'A') {
       this.payvenue = "Coordinator's Fee";
     }
-    this.payvenue = this.postData.SelectedPayVenue;
+    this.payvenue = this.professionalFeeModelv3.selected_payvenue;
 
     this.id = this.activatedRoute.snapshot.params.id;
     this.method = this.method1 = this.activatedRoute.snapshot.params.method;
@@ -187,7 +193,7 @@ export class TransactionSummaryPage implements OnInit {
     //sessionStorage.removeItem('pfIsPatientSeen');
     //sessionStorage.removeItem('pfInsCoor');
     //this.checkAppearance();
-    let logindata = <LoginData>this.authService.userData$.getValue();
+    let logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
 
     // this.data = JSON.parse(atob(sessionStorage.getItem("patientData")));
     this.data = JSON.parse(atob(localStorage.getItem('patientData')));
@@ -205,7 +211,7 @@ export class TransactionSummaryPage implements OnInit {
 
   postSummary() {
     this.disableSubmit = true;
-    this.postData.Mode = Consta.mode;
+    //this.postData.Mode = Consta.mode;
     if (
       this.data[0].payvenue == 'W' ||
       this.data[0].payvenue == 'H' ||
@@ -213,11 +219,11 @@ export class TransactionSummaryPage implements OnInit {
       this.data[0].payvenue == 'N' ||
       this.data[0].payvenue == 'A'
     ) {
-      this.postData.OldProfFee = this.data[0].doctor_prof_fee;
+      this.professionalFeeModelv3.old_prof_fee = this.data[0].doctor_prof_fee;
      
   
-      console.log(this.postData);
-      this.doctorService.updatePFV2(this.postData).subscribe(
+      console.log(JSON.stringify(this.professionalFeeModelv3));
+      this.doctorService.updatePFV3(this.professionalFeeModelv3).subscribe(
         (res: any) => {
           if (res == true) {
             this.modalUpdate(
@@ -229,6 +235,7 @@ export class TransactionSummaryPage implements OnInit {
               'UPDATING of Professional Fee was Unsuccessful',
               'Okay'
             );
+            this.disableSubmit = false;
           }
         },
         (error) => {
@@ -237,9 +244,9 @@ export class TransactionSummaryPage implements OnInit {
         () => {}
       );
     } else {
-      this.postData.OldProfFee = 0;
-      console.log(this.postData);
-      this.doctorService.insertPFV2(this.postData).subscribe(
+      this.professionalFeeModelv3.old_prof_fee = 0;
+      console.log(JSON.stringify(this.professionalFeeModelv3));
+      this.doctorService.insertPFV3(this.professionalFeeModelv3).subscribe(
         (res: any) => {
           if (res == true) {
             this.modalUpdate(
@@ -251,6 +258,7 @@ export class TransactionSummaryPage implements OnInit {
               'SAVING of Professional Fee was Unsuccessful',
               'Okay'
             );
+            this.disableSubmit = false;
           }
         },
         (error) => {
@@ -271,6 +279,8 @@ export class TransactionSummaryPage implements OnInit {
           text: 'Okay',
           handler: () => {
             this.disableSubmit = false;
+            console.log(this.isDesktop);
+            
             if (!this.isDesktop) {
               this.alertController.dismiss();
               this.router.navigate(['menu/in-patients/']);

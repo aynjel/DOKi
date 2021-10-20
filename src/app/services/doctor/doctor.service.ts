@@ -204,7 +204,7 @@ export class DoctorService {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredintials: false };
     //const url = environment.apiRouterUrl + "v2/Login";
-    const url = "http://10.130.21.190:5002/api/v3/User/Token";
+    const url = "http://10.130.21.208:5002/api/v3/User/Token";
     return this.http.post(url,  data, options);
   }
   getUserSettingsV3(){
@@ -215,7 +215,7 @@ export class DoctorService {
     });
     const options = { headers: headers, withCredintials: false };
    //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
-   const url = 'http://10.130.21.190:5002/api/v3/UserSettings';
+   const url = 'http://10.130.21.208:5002/api/v3/UserSettings';
     return this.http.get(url, options);
   }
   getAppSettingsV3(){
@@ -226,21 +226,21 @@ export class DoctorService {
     });
     const options = { headers: headers, withCredintials: false };
    //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
-   const url = '  http://10.130.21.190:5002/api/v3/AppSettings';
+   const url = '  http://10.130.21.208:5002/api/v3/AppSettings';
     return this.http.get(url, options);
   }
   insertUserSettingsV3(data:any){
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredintials: false };
     //const url = environment.apiRouterUrl + "v2/Login";
-    const url = "http://10.130.21.190:5002/api/v3/UserSettings";
+    const url = "http://10.130.21.208:5002/api/v3/UserSettings";
     return this.http.post(url,  data, options);
   }
   updateUserSettingsV3(data:any){
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredintials: false };
     //const url =    environment.apiRouterUrl + "v2/UserSetting";
-    const url = "http://10.130.21.190:5002/api/v3/UserSettings";
+    const url = "http://10.130.21.208:5002/api/v3/UserSettings";
     return this.http.put(url, data, options);
   }
 
@@ -248,7 +248,53 @@ export class DoctorService {
     const headers = new HttpHeaders({'Content-Type': 'application/json;charset=utf-8',});
     const options = { headers: headers, withCredintials: false };
    //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
-   const url = "http://10.130.21.190:5002/api/v3/InPatients/YearHistory";
+   const url = "http://10.130.21.208:5002/api/v3/InPatients/YearHistory";
     return this.http.get(url, options);
   }
+  getInPatientV3() {
+    const headers = new HttpHeaders({'Content-Type': 'application/json;charset=utf-8',});
+    const options = { headers: headers, withCredintials: false };
+   //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
+    const url = "http://10.130.21.208:5002/api/v3/InPatients";
+    return this.http.get(url, options);
+  }
+  getCoDoctorsV3(postData1: any) {
+    
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+   // const url = environment.apiRouterUrl + "v2/Inpatients/CoDoctors";
+    const url = "http://10.130.21.208:5002/api/v3/InPatients/CoDoctors";
+    return this.http.post(url,  postData1, options);
+  }
+  getAdmittingDiagnosisV3(postData1: any) {
+
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    //const url = environment.apiRouterUrl + "v2/Inpatients/AdmittingDiagnosis";
+    const url = "http://10.130.21.208:5002/api/v3/InPatients/AdmittingDiagnosis";
+    return this.http.post(url,  postData1, options);
+  }
+  getFinalDiagnosisV3(postData1: any) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    //const url = environment.apiRouterUrl + "v2/Inpatients/FinalDiagnosis";
+    const url = "http://10.130.21.208:5002/api/v3/InPatients/FinalDiagnosis";
+    return this.http.post(url,  postData1, options);
+  }
+  insertPFV3(data1: any) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    //const url = environment.apiRouterUrl + "v2/ProfFee";
+    const url = "http://10.130.21.208:5002/api/v3/ProfessionalFee";
+    return this.http.post(url,  data1, options);
+    
+  }
+  updatePFV3(data1: any) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers: headers, withCredentials: false };
+    //const url = environment.apiRouterUrl + "v2/ProfFee";
+    const url = "http://10.130.21.208:5002/api/v3/ProfessionalFee";
+    return this.http.put(url, data1, options);
+  }
+
 }

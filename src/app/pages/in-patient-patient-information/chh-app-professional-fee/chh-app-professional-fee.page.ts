@@ -32,8 +32,8 @@ import { StorageService } from '../../../services/storage/storage.service';
 import { AuthConstants } from '../../../config/auth-constants';
 import { executionAsyncResource } from 'async_hooks';
 import { Constants } from 'src/app/shared/constants';
-
-import { InPatientData } from 'src/app/models/in-patient.model';
+import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
+import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
 import { PatientNo } from 'src/app/models/in-patient.model';
 
 @Component({
@@ -43,7 +43,7 @@ import { PatientNo } from 'src/app/models/in-patient.model';
 })
 export class ChhAppProfessionalFeePage implements OnInit {
   public logindata: LoginData;
-  postData: InPatientData = new InPatientData();
+ // postData: InPatientData = new InPatientData();
   patientNo: PatientNo = new PatientNo();
   isDesktop: any;
   dr_name: any;
@@ -83,6 +83,9 @@ export class ChhAppProfessionalFeePage implements OnInit {
   payvenueTxt: any;
   ifShowSummary: boolean = false;
   modifybtn: boolean = false;
+  professionalFeeModelv3 : ProfessionalFeeModelv3 = new ProfessionalFeeModelv3();
+  userSettingsModelv3 : UserSettingsModelv3 = new UserSettingsModelv3();
+  loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -102,7 +105,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     public constants: Constants,
     private renderer: Renderer2
   ) {
-    // this.postData = new InPatientData();
+
 
 
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
@@ -122,17 +125,21 @@ export class ChhAppProfessionalFeePage implements OnInit {
       '/menu/in-patients/';
 
     this.patient_id = this.activatedRoute.snapshot.params.id;
-    this.postData = JSON.parse(
-      atob(localStorage.getItem('postData'))
-    ) as InPatientData;
+    /*this.postData = JSON.parse(atob(localStorage.getItem('postData'))) as InPatientData;*/
+    this.professionalFeeModelv3 = JSON.parse(atob(localStorage.getItem('postData1')));
+    console.log(this.professionalFeeModelv3);
+    
+    
   }
 
   ionViewWillEnter() {
 
-    
-    let logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_name = logindata.last_name;
-    this.dr_code = logindata.dr_code;
+    this.userSettingsModelv3 = JSON.parse('['+atob(localStorage.getItem("user_settings"))+']');
+    this.loginResponseModelv3 = <LoginResponseModelv3>this.authService.userData$.getValue();
+   // localStorage.setItem('postData1', (JSON.stringify(this.professionalFeeModelv3)));
+
+    this.dr_name = this.loginResponseModelv3.lastName;
+    this.dr_code = this.loginResponseModelv3.doctorCode;
     this.data = JSON.parse(atob(localStorage.getItem('patientData')));
     this.data1 = this.data[0].doctor_prof_fee;
     this.patient_name = this.data[0].first_name + ' ' + this.data[0].last_name;
@@ -222,7 +229,8 @@ export class ChhAppProfessionalFeePage implements OnInit {
   redirecto() {
     let data;
     //sessionStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
-    localStorage.setItem('postData', btoa(JSON.stringify(this.postData)));
+    //localStorage.setItem('postData', btoa(JSON.stringify(this.postData)));
+    localStorage.setItem('postData1', btoa(JSON.stringify(this.professionalFeeModelv3)));
     if (this.insurance) {
       data = 'insurance';
       this.router.navigate([this.router.url + '/' + data]);
@@ -240,21 +248,36 @@ export class ChhAppProfessionalFeePage implements OnInit {
       
       if (this.isCoordinator) {
         // console.log(this.isCoordinator);
-        this.postData.ProfFee = 0;
+        /*this.postData.ProfFee = 0;
         this.postData.IsVAT = 'N';
         this.postData.PayVenue = 'A';
-        this.postData.SelectedPayVenue = 'Insurance Coordinator\'s Fee';
+        this.postData.SelectedPayVenue = 'Insurance Coordinator\'s Fee';*/
+
+        this.professionalFeeModelv3.doctor_prof_fee = 0;
+        this.professionalFeeModelv3.is_vat = 'N';
+        this.professionalFeeModelv3.payvenue = 'A';
+        this.professionalFeeModelv3.selected_payvenue = 'Insurance Coordinator\'s Fee';
+
+
+
         //  sessionStorage.setItem('postData', JSON.stringify(this.postData));
         //sessionStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
-        localStorage.setItem('postData', btoa(JSON.stringify(this.postData)));
+        /*localStorage.setItem('postData', btoa(JSON.stringify(this.postData)));*/
+        localStorage.setItem('postData1', btoa(JSON.stringify(this.professionalFeeModelv3)));
       } else {
-        this.postData.SelectedPayVenue = 'Patient NOT SEEN';
+        /*this.postData.SelectedPayVenue = 'Patient NOT SEEN';
         this.postData.ProfFee = 0;
         this.postData.IsVAT = 'N';
-        this.postData.PayVenue = 'N';
+        this.postData.PayVenue = 'N';*/
+        this.professionalFeeModelv3.selected_payvenue = 'Patient NOT SEEN';
+        this.professionalFeeModelv3.doctor_prof_fee = 0;
+        this.professionalFeeModelv3.is_vat = 'N';
+        this.professionalFeeModelv3.payvenue = 'N';
+
         //sessionStorage.setItem('postData', JSON.stringify(this.postData));
         //sessionStorage.setItem("postData", btoa(JSON.stringify(this.postData)));
-        localStorage.setItem('postData', btoa(JSON.stringify(this.postData)));
+        /*localStorage.setItem('postData', btoa(JSON.stringify(this.postData)));*/
+        localStorage.setItem('postData1', btoa(JSON.stringify(this.professionalFeeModelv3)));
       }
       //console.log("is patient seen :"+this.isPatientSeen);
 
@@ -276,37 +299,17 @@ export class ChhAppProfessionalFeePage implements OnInit {
     let d = new Date(this.data[0].admission_date);
     this.dateAdmitted = d.toUTCString();
     //console.log(this.dateAdmitted);
-    this.logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_code = this.logindata.dr_code;
+    console.log('checkAppearance');
+    var values = JSON.parse('[' + atob(localStorage.getItem("user_settings"))+ ']');
     let dr_username = atob(localStorage.getItem('username'));
-    this.patientService
-      .getUserSettingsV2( dr_username)
-      .subscribe((res: any) => {
-        if (Object.keys(res).length >= 1) {
-          let data = JSON.stringify(res);
-          data = '[' + data + ']';
-          let adat = JSON.parse(data);
-          adat.forEach((el) => {
-            if (typeof el.appearance !== 'undefined') {
-              if (el.appearance.darkmode == 1) {
-                this.renderer.setAttribute(
-                  document.body,
-                  'color-theme',
-                  'dark'
-                );
-              } else {
-                this.renderer.setAttribute(
-                  document.body,
-                  'color-theme',
-                  'light'
-                );
-              }
-            } else {
-              this.renderer.setAttribute(document.body, 'color-theme', 'light');
-            }
-          });
-        }
-      });
+    values.forEach(element => {
+      console.log(element.darkmode);
+      if(element.darkmode == 1){
+        this.renderer.setAttribute(document.body,'color-theme','dark');
+      }else{
+        this.renderer.setAttribute(document.body,'color-theme','light');
+      }
+    });
   }
 
   initiateSession() {
@@ -379,17 +382,21 @@ export class ChhAppProfessionalFeePage implements OnInit {
 
   buttonclick(f, e) {
     if (f == 'insurance') {
-      this.postData.SelectedPayVenue = 'Insurance + PhilHealth';
+      //this.postData.SelectedPayVenue = 'Insurance + PhilHealth';
+      this.professionalFeeModelv3.selected_payvenue =  'Insurance + PhilHealth';
       this.areyouaninsurancecoordinator = true;
     } else if (f == 'philhealth') {
-      this.postData.SelectedPayVenue = 'PhilHealth Only';
+      //this.postData.SelectedPayVenue = 'PhilHealth Only';
+      this.professionalFeeModelv3.selected_payvenue =  'PhilHealth Only';
       this.areyouaninsurancecoordinator = true;
     } else if (f == 'charity') {
-      this.postData.SelectedPayVenue = 'Charity';
+      //this.postData.SelectedPayVenue = 'Charity';
+      this.professionalFeeModelv3.selected_payvenue =  'Charity';
       this.areyouaninsurancecoordinator = e;
       this.isCoordinator = false;
     } else if (f == 'Personalphilhealth') {
-      this.postData.SelectedPayVenue = 'Personal + PhilHealth';
+      //this.postData.SelectedPayVenue = 'Personal + PhilHealth';
+      this.professionalFeeModelv3.selected_payvenue = 'Personal + PhilHealth';
       this.areyouaninsurancecoordinator = true;
     }
 
