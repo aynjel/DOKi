@@ -13,7 +13,8 @@ import { Constants } from "../shared/constants";
 import { AuthConstants, Consta } from '../config/auth-constants';
 import { DoctorHistoryModel } from '../models/doctor';
 import { PatientService } from "../services/patient/patient.service";
-
+import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
+import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
 @Component({
   selector: "app-tab-dashboard",
   templateUrl: "./tab-dashboard.page.html",
@@ -37,8 +38,8 @@ export class TabDashboardPage implements OnInit {
   discharge = "D";
   getTotalCount = { Admitted: "0", ForDischarge: "0", Total: "0" };
 
-  public logindata: LoginData;
-
+  public logindata: LoginResponseModelv3;
+  loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   constructor(
     private authService: AuthService,
     private screensizeService: ScreenSizeService,
@@ -190,18 +191,18 @@ export class TabDashboardPage implements OnInit {
 
   ionViewWillEnter() {
     
-    this.logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_code = this.logindata.dr_code;
+    this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
+    this.dr_code = this.logindata.doctorCode;
     console.log(this.dr_code);
     this.doctorHistoryModel.accountNo = 'none';
-    this.doctorHistoryModel.drCode = this.logindata.dr_code;
+    this.doctorHistoryModel.drCode = this.logindata.doctorCode;
     this.doctorHistoryModel.mode = Consta.mode;
     this.first_name = this.logindata.first_name;//this.camelCase(this.logindata[0].first_name);
-    let  dr_name = this.logindata.last_name;
+    let  dr_name = this.logindata.lastName;
     this.$gaService.event('Dashboard','User Flow',dr_name);
     let catego = [];
     let totalPatient = [];
-    console.log(this.doctorHistoryModel);
+
     this.doctorService.getYearHistoryGraphV3().subscribe(
       (res: any) => {
         console.log(res);

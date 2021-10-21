@@ -10,13 +10,16 @@ import { Router } from '@angular/router';
 import { PatientService } from '../services/patient/patient.service';
 import { AuthService } from '../services/auth/auth.service';
 import { LoginData } from "../models/login-data.model";
+import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
+import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
 @Component({
   selector: "app-tabs",
   templateUrl: "tabs.page.html",
   styleUrls: ["tabs.page.scss"],
 })
 export class TabsPage {
-  public logindata: LoginData;
+  public logindata: LoginResponseModelv3;
+  loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   badgecount = 0;
   isDesktop: boolean;
   signalList: any = [];
@@ -64,8 +67,8 @@ export class TabsPage {
     }*/
     console.log('checkAppearance');
     
-    this.logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_code = this.logindata.dr_code;
+    this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
+    this.dr_code = this.logindata.doctorCode;
     this.dr_username = atob(localStorage.getItem("username"));
 /*
     this.patientService.getUserSettingsV2(this.dr_username).subscribe(

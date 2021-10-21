@@ -24,7 +24,8 @@ import { StorageService } from "../../../services/storage/storage.service";
 import { AuthConstants } from "../../../config/auth-constants";
 import { executionAsyncResource } from "async_hooks";
 import { Constants } from "src/app/shared/constants";
-
+import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
+import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
 @Component({
   selector: 'app-chh-app-icdrvs',
   templateUrl: './chh-app-icdrvs.page.html',
@@ -38,7 +39,8 @@ export class ChhAppIcdrvsPage implements OnInit {
   id:any;
   dr_name:any;
 
-  public logindata: LoginData;
+  public logindata: LoginResponseModelv3;
+  loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   dr_code:any;
   patient_id  :any;
   data:any;
@@ -97,11 +99,11 @@ export class ChhAppIcdrvsPage implements OnInit {
      let dr_name = logindata[0].last_name;
      this.dr_code = logindata[0].dr_code;*/
  
-     let logindata = <LoginData>this.authService.userData$.getValue();
+     let logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
      console.log(logindata);
      
-     this.dr_name = logindata[0].last_name;
-     this.dr_code = logindata[0].dr_code;
+     this.dr_name = logindata.lastName;
+     this.dr_code = logindata.doctorCode;
      this.postData.DoctorMobileNumber = logindata[0].mobile_no;
      this.data =[];
      this.checkAppearance();

@@ -28,12 +28,12 @@
             <br />
             <ion-item lines="none">
               <ion-avatar slot="start">
-                <chh-app-text-avatar [text]="x.last_name" [color]=""></chh-app-text-avatar>
+                <chh-app-text-avatar [text]="x.lastName" [color]=""></chh-app-text-avatar>
               </ion-avatar>
               <ion-label style="margin-top: -5px;">
                 <ion-item class="ion-no-padding">
                   <h2 class="ion-text-wrap" style="padding-top: 20px;">
-                    {{this.constants.NAME_PREFIX__CODE__DOCTOR.toLocaleUpperCase()}} {{ x.first_name }} {{ x.last_name }}
+                    {{this.constants.NAME_PREFIX__CODE__DOCTOR.toLocaleUpperCase()}} {{ x.firstName }} {{ x.lastName }}
                   </h2>
                 </ion-item>
               </ion-label>
@@ -150,7 +150,7 @@
                     color="mango"
                     
                     [(ngModel)]="smsAdmitted"
-                    (ionChange)="toggle($event,'smsNotification','patientAdmitted',isset_smsAdmitted)"
+                    (ionChange)="toggleV3($event,'smsNotification','patientAdmitted',isset_smsAdmitted)"
                   ></ion-toggle>
                 </ion-item>
 
@@ -182,7 +182,7 @@
                     color="mango"
                     disabled="true"
                     [(ngModel)]="pushNotiAdmitted"
-                    (ionChange)="toggle($event,'pushNotification','patientAdmitted',isset_pushNotiAdmitted)"
+                    (ionChange)="toggleV3($event,'pushNotification','patientAdmitted',isset_pushNotiAdmitted)"
                   ></ion-toggle>
                 </ion-item>
 
@@ -197,7 +197,7 @@
                     color="mango"
                     disabled="true"
                     [(ngModel)]="pushNotiDischarge"
-                    (ionChange)="toggle($event,'pushNotification','patientDischarged',isset_pushNotiDischarge)"
+                    (ionChange)="toggleV3($event,'pushNotification','patientDischarged',isset_pushNotiDischarge)"
                   ></ion-toggle>
                 </ion-item>
 
@@ -236,7 +236,7 @@
                   <ion-toggle
                     color="mango"
                     checked = "{{darkmode}}"
-                    (ionChange)="toggle($event,'appearance','darkmode',isset_darkmode)"
+                    (ionChange)="toggleV3($event,'darkmode','darkmode',isset_darkmode)"
                   ></ion-toggle>
                 </ion-item>
 

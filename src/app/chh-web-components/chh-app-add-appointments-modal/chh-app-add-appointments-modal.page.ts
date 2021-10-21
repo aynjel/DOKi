@@ -9,7 +9,7 @@ import { ToastService } from '../../services/toast/toast.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Constants } from '../../shared/constants';
 import { FunctionsService } from '../../shared/functions/functions.service';
-
+import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
 @Component({
   selector: 'app-add-appointments-modal',
   templateUrl: './chh-app-add-appointments-modal.page.html',
@@ -55,7 +55,8 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
   uxUserInfo = true;
   uxEndpart = true;
   uxSaveCancel = true;
-
+  public logindata: LoginResponseModelv3;
+  loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   constructor(
     private screensizeService: ScreenSizeService,
     public modalController: ModalController,
@@ -73,9 +74,9 @@ export class ChhAppAddAppointmentsModalPage implements OnInit {
       }
       this.isDesktop = isDesktop;
     });
-    let logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_code = logindata[0].dr_code;
-    this.dr_name = logindata[0].last_name;
+    let logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
+    this.dr_code = logindata.doctorCode;
+    this.dr_name = logindata.lastName;
   }
 
   jsonObj2 = [];

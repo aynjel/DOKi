@@ -22,13 +22,16 @@ import { PasswordStrengthValidator } from '../../shared/password-strength.valida
 import { LoginModel,ChangePasswordModel } from '../../models/patient';
 import { CustomValidators } from '../../shared/custom-validators';
 import { AuthConstants, Consta } from '../../config/auth-constants';
+import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
+import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
 @Component({
   selector: 'app-chh-app-change-pass',
   templateUrl: './chh-app-change-pass.page.html',
   styleUrls: ['./chh-app-change-pass.page.scss'],
 })
 export class ChhAppChangePassPage {
-  public logindata: LoginData;
+  public logindata: LoginResponseModelv3;
+  loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   public form: FormGroup;
   public frmSignup: FormGroup;
   OldPassword;
@@ -211,9 +214,9 @@ export class ChhAppChangePassPage {
   }
 
   ngOnInit() {
-    this.logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_name = this.logindata.last_name;
-    this.dr_code = this.logindata.dr_code;
+    this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
+    this.dr_name = this.logindata.lastName;
+    this.dr_code = this.logindata.doctorCode;
     this.dr_username = atob(localStorage.getItem('username'));
     let json = '{"appCode": "DPP","username": "' + this.dr_username + '"}';
     let resultJson;

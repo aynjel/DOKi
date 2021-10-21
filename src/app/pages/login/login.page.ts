@@ -114,6 +114,7 @@ export class LoginPage {
     }
 
   }
+  /*V3 App*/
   checkInput() {
     this.btnDisable = true;
     if (this.postData.username == '' || this.postData.password == '') {
@@ -129,7 +130,7 @@ export class LoginPage {
 
 
 
-
+  /*V3 App*/
   startLoginProcessV3(){
 
     this.loginModelv3 = new LoginModelv3();
@@ -156,6 +157,7 @@ export class LoginPage {
       }
     );
   }
+    /*V3 App*/
   getUserSettingsV3(){
     this.appSettingsModelv3 = new AppSettingsModelv3();
     this.userSettingsModelv3 = new UserSettingsModelv3();
@@ -208,7 +210,7 @@ export class LoginPage {
   }
 
 
-
+    /*V3 App*/
   checkPrivacyPolicyV3() {
 
     let settingsIndicator:any;
@@ -225,7 +227,7 @@ export class LoginPage {
       
     }
   }
-
+  /*V3 App*/
   async showPrivacyPolicyV3() {
     const modal = await this.modalController.create({
       component: ChhAppPrivacyPolicyPage,
@@ -244,7 +246,7 @@ export class LoginPage {
     });
     return await modal.present();
   }
-
+  /*V3 App*/
   async updatePasswordV3() {
     //console.log(this.resultJson.data);
 
@@ -282,7 +284,7 @@ export class LoginPage {
     });
     return await modal.present();
   }
-  
+    /*V3 App*/
   async modalUpdateV3(header, message, data) {
     this.btnDisable = false;
     const alert = await this.alertController.create({
@@ -302,7 +304,7 @@ export class LoginPage {
     });
     await alert.present();
   }
-
+  /*V3 App*/
   loginV3(){
     // let data = JSON.stringify(this.loginResponseModel);
     // data = '[' + data + ']';
@@ -314,9 +316,10 @@ export class LoginPage {
     this.storageService.store(AuthConstants.AUTH, this.loginResponseModelv3);
     localStorage.setItem('isIdle', '1');
     localStorage.setItem('username', btoa(this.postData.username));
-    this.router.navigate(['/menu/dashboard']).then(() => {
+    this.router.navigate(['/menu/dashboard']);
+    /*this.router.navigate(['/menu/dashboard']).then(() => {
       window.location.reload();
-    });
+    });*/
   }
 
 

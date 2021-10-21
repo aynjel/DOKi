@@ -26,8 +26,9 @@ import { ChhAppTermsAndConditionsPage } from '../chh-web-components/chh-app-term
 import { UserSettingsModel,UserSettingDeletesModel } from '../models/doctor';
 import { DoctorService } from '../services/doctor/doctor.service';
 import { element } from 'protractor';
-import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
+import {UserSettingsModelv3,LoginResponseModelv3,AppSettingsModelv3} from 'src/app/models/doctor';
 import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
+
 @Component({
   selector: 'app-tab-settings',
   templateUrl: 'tab-settings.page.html',
@@ -35,8 +36,8 @@ import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.
 })
 export class TabSettingsPage {
   userData$ = new BehaviorSubject<any>([]);
-  public logindata: LoginData;
-  account: LoginData;
+  public logindata:LoginResponseModelv3 ;
+  account: LoginResponseModelv3;
   isDesktop: boolean;
 
   displayUserData: any;
@@ -44,6 +45,7 @@ export class TabSettingsPage {
   dr_code: any;
   userSettingsModel = new UserSettingsModel;
   userSettingDeletesModel = new UserSettingDeletesModel;
+  appSettingsModelv3 = new AppSettingsModelv3; 
   //toggles
   smsAdmitted: boolean = false;
   smsDischarge: boolean = false;
@@ -74,6 +76,7 @@ export class TabSettingsPage {
   phicBarHide:any;
   data1;
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
+    public userSettingsModelv3: UserSettingsModelv3; 
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -186,17 +189,22 @@ export class TabSettingsPage {
     });
     await actionSheet.present();
   }
-  ngOnInit() {}
+  ngOnInit() {
+
+    this.checkAppearance();
+  }
 
   ionViewWillEnter() {
     this.$gaService.pageView('/Settings', 'Settings Tab');
-    this.professionalFeeModelv3 = JSON.parse(atob(localStorage.getItem('postData1')));
-    this.logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_name = this.logindata.last_name;
-    this.dr_code = this.logindata.dr_code;
+    
+    this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
+    console.log(this.logindata);
+    
+    this.dr_name = this.logindata.lastName;
+    this.dr_code = this.logindata.doctorCode;
 
 
-    this.dr_username = atob(localStorage.getItem('username'));
+    this.dr_username =this.logindata.userName;
     let y = '';
     //PARSE USER SETTINGS
     console.log('ionViewWillEnter');
@@ -253,17 +261,22 @@ export class TabSettingsPage {
     );
 
 
+    this.userSettingsModelv3 = JSON.parse('['+atob(localStorage.getItem("user_settings"))+']');
+
+    this.doctorService.getUserSettingsV3().subscribe(
+      (res: any) => {
+        this.userSettingsModelv3 = <UserSettingsModelv3>res;
+        localStorage.setItem("user_settings",btoa(JSON.stringify(this.userSettingsModelv3)));
+      },(error) => {
+      },
+      () => {
+
+        this.checkAppearance();
+      }
+      );
 
 
-    this.data1 = JSON.parse('['+localStorage.getItem("user_settings")+']') ;
-    console.log(this.data1);
-
-      this.data1.forEach(element => {
-        console.log(element);
-        
-      });
-
-      this.checkAppearance();
+     
 
 
 
@@ -271,7 +284,7 @@ export class TabSettingsPage {
 
 
 
-    this.patientService.getUserSettingsV2(this.dr_username).subscribe((res: any) => {
+    /*this.patientService.getUserSettingsV2(this.dr_username).subscribe((res: any) => {
         console.log(res);
         
         Object.keys(res).forEach((key) => {
@@ -347,21 +360,86 @@ export class TabSettingsPage {
           });
 
         });
-      });
-
+      });*/
 
 
 
 
     this.$gaService.event('Settings', 'User Flow', this.dr_name);
     this.authService.userData$.subscribe((res: any) => {
-      this.account = <LoginData>res;
+      this.account = <LoginResponseModelv3>res;
+      console.log(this.account);
+      
       let asdasda = JSON.stringify(res);
       asdasda = '['+asdasda+']';
       this.account = JSON.parse(asdasda);
       
     });
   }
+
+
+
+
+
+
+
+
+  toggleV3(event: { detail: { checked: any } },setting: any,property: any,flag: boolean) {
+    let value: any;
+    if (event.detail.checked) {
+      value = '1';
+    } else {
+      value = '0';
+    }
+    if(setting == 'smsNotification' ){
+      this.userSettingsModelv3.smsNotification = value;
+    }
+    if(setting == 'darkmode' ){
+      this.userSettingsModelv3.darkmode = value;
+    }
+    localStorage.setItem("user_settings",btoa(JSON.stringify(this.userSettingsModelv3)));
+    this.updateUserSettings();
+  }
+  updateUserSettings(){
+    console.log('updateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettings');
+    
+    console.log(this.userSettingsModelv3);
+    
+    this.doctorService.updateUserSettingsV3(this.userSettingsModelv3).subscribe(
+      (res: any) => {
+        console.log(res);
+        
+      },(error) => {
+        
+      },
+      () => {
+
+        this.checkAppearance();
+      }
+
+    );
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   onDarkModeEnable(data: any) {
     console.log('onDarkModeEnable');
@@ -382,70 +460,42 @@ export class TabSettingsPage {
     }
   }
   checkAppearance() {
-    console.log('checkAppearance');
-    var values = JSON.parse('[' + localStorage.getItem("user_settings")+ ']');
+//    console.log('checkAppearance');
+    var values = JSON.parse('[' + atob(localStorage.getItem("user_settings"))+ ']');
+    //console.log(values);
+    
     let dr_username = atob(localStorage.getItem('username'));
     values.forEach(element => {
-      console.log(element.darkmode);
-      if(element.darkmode == 1){
+      if(element.darkmode == '1'){
         this.renderer.setAttribute(document.body,'color-theme','dark');
+        this.isset_darkmode = true;
+        this.darkmode = true;
       }else{
         this.renderer.setAttribute(document.body,'color-theme','light');
+        this.isset_darkmode = false;
+        this.darkmode = false;
       }
+      if(element.privacyPolicy == '1'){
+        this.privacyPolicy = true;
+      }else{
+        this.privacyPolicy = false;
+      }
+      if(element.smsNotification == '1'){
+        this.smsAdmitted = true;
+        this.isset_smsAdmitted = true;
+      }else{
+        this.smsAdmitted = false;
+        this.isset_smsAdmitted = false;
+      }
+      
+
+
+
     });
   }
-  toggle(
-    event: { detail: { checked: any } },
-    setting: any,
-    property: any,
-    flag: boolean
-  ) {
-    console.log('toggle');
-    
-    let value: any;
-    if (event.detail.checked) {
-      value = 1;
-    } else {
-      value = 0;
-    }
-    if (setting == 'appearance') {
-      this.onDarkModeEnable(value);
-    }
-    this.updateOrInsert(setting, property, value, flag);
-  }
 
-  //UPDATE OR INSERT USER SETTINGS
-  updateOrInsert(setting: any, property: any, value: any, flag: boolean) {
-    console.log('updateOrInsert');
-    let smpJSON =
-      '{"username":"' +
-      this.dr_username +
-      '", "userReference": "' +
-      this.dr_code +
-      '","appCode":"DPP","setting":"' +
-      setting +
-      '","property":"' +
-      property +
-      '","value":"' +
-      value +
-      '"}';
-      this.userSettingsModel.username = this.dr_username;
-      this.userSettingsModel.userReference = this.dr_code;
-      this.userSettingsModel.appCode = Consta.appCode;
-      this.userSettingsModel.setting = setting;
-      this.userSettingsModel.property = property;
-      this.userSettingsModel.value  = value;
-      this.userSettingsModel.mode = Consta.mode;
-    if (flag) {
-      this.patientService.updateUserSettingsV2(this.userSettingsModel).subscribe(() => {
-        //this.ionViewWillEnter();
-      });
-    } else {
-      this.patientService.insertUserSettingsV2(this.userSettingsModel).subscribe(() => {
-      //  this.ionViewWillEnter();
-      });
-    }
-  }
+
+  
 
   logout() {
     this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
@@ -477,7 +527,9 @@ export class TabSettingsPage {
             role: 'destructive',
             icon: 'arrow-undo-outline',
             handler: () => {
-              let smpJSON =
+              this.userSettingsModelv3.privacyPolicy = '0';
+              this.updateUserSettings();
+              /*let smpJSON =
                 '{"username": "' +
                 this.dr_code +
                 '","userReference": "' +
@@ -491,7 +543,8 @@ export class TabSettingsPage {
               );
               this.privacyPolicy = true;
               this.userData$.next('');
-              localStorage.removeItem('_cap_userDataKey');
+              */
+              localStorage.clear();
               this.router.navigate(['/login']);
             },
           },
@@ -521,6 +574,21 @@ export class TabSettingsPage {
           role: 'destructive',
           icon: 'refresh-outline',
           handler: () => {
+            this.doctorService.getAppSettingsV3().subscribe(
+              (resdata: any) => {
+                this.appSettingsModelv3 = <AppSettingsModelv3>resdata;
+                this.userSettingsModelv3 = <UserSettingsModelv3>resdata;
+                this.userSettingsModelv3.privacyPolicy = '1';
+                localStorage.setItem("user_settings",btoa(JSON.stringify(this.userSettingsModelv3)));
+              },(error) => {
+                 this.functionsService.sorryDoc();
+                },
+                () => {
+  
+                  this.updateUserSettings();
+                }
+              );
+            /*
             let smpJSON =
               '{"username": "' +
               this.dr_username +
@@ -563,7 +631,7 @@ export class TabSettingsPage {
                       this.ionViewWillEnter();
                     });
                 }
-              );
+              );*/
           },
         },
         { text: 'Cancel', icon: 'close', role: 'cancel', handler: () => {} },

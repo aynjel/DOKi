@@ -25,6 +25,7 @@ import { AuthConstants, Consta} from "../../config/auth-constants";
 import { executionAsyncResource } from "async_hooks";
 import { Constants  } from "src/app/shared/constants";
 import { CaseRates } from "../../models/case-rates-search";
+import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
 @Component({
   selector: 'app-case-rates',
   templateUrl: './case-rates.page.html',
@@ -53,6 +54,8 @@ export class CaseRatesPage implements OnInit {
   CaseSearchDesc:any;
   CaseSearchCode:any;
   ccCase:any;
+  public logindata: LoginResponseModelv3;
+  loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -98,9 +101,9 @@ export class CaseRatesPage implements OnInit {
   ionViewWillEnter(){
     console.log(this.caseRateData);
     let  user = <CaseRates>JSON.parse(sessionStorage.getItem("caseRateData")) ; 
-    let logindata = <LoginData>this.authService.userData$.getValue() ;
-    this.dr_name = logindata.last_name;
-    this.dr_code = logindata.dr_code;
+    let logindata = <LoginResponseModelv3>this.authService.userData$.getValue() ;
+    this.dr_name = logindata.lastName;
+    this.dr_code = logindata.doctorCode;
 
     this.checkAppearance();
 
@@ -196,8 +199,8 @@ export class CaseRatesPage implements OnInit {
 
   checkAppearance(){
     
-    let logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_code = logindata.dr_code;
+    let logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
+    this.dr_code = logindata.doctorCode;
     let dr_username = atob(localStorage.getItem("username"));
     this.patientService.getUserSettingsV2(dr_username).subscribe(
       (res: any) => {       
