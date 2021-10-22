@@ -42,7 +42,7 @@
 
   <ion-list>
     <ion-item *ngFor="let x of caseRateResponse_first">
-      <ion-label>asd
+      <ion-label>
         <h2 class="ion-text-wrap">{{x.case_desc}}</h2>
         <h3 class="ion-text-wrap" slot="end">Case Code : {{x.case_code}}</h3>
         <ion-badge
@@ -215,7 +215,7 @@
   <ion-segment
     (ionChange)="segmentChanged($event)"
     mode="ios"
-    [(ngModel)]="caseRateData.CaseClass"
+    [(ngModel)]="caseRateData.case_class"
     color="mango"
   >
     <ion-segment-button value="first">
@@ -227,14 +227,14 @@
   </ion-segment>
   <ion-item>
     <ion-label position="floating">Code : </ion-label>
-    <ion-input [(ngModel)]="caseRateData.CaseSearchCode" id="input-code"></ion-input>
+    <ion-input [(ngModel)]="caseRateData.case_code" id="input-code"></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label position="floating" [class.activedescription]="activedescription"
       >Description :
     </ion-label>
-    <ion-input [(ngModel)]="caseRateData.CaseSearchDesc" id="input-searchdesc"></ion-input>
+    <ion-input [(ngModel)]="caseRateData.case_desc" id="input-searchdesc"></ion-input>
   </ion-item>
   <ion-grid class="ion-no-padding">
     <ion-row>

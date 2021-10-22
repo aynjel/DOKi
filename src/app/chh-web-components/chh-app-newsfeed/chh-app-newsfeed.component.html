@@ -17,36 +17,24 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
   <ion-grid class="ion-no-padding">
     <ion-row>
       <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
         <ion-card>
-          <img src="assets/img/red-8-1.jpg" />
+          <img *ngIf="data.imageUrl != ''" src="{{data.imageUrl}}" />
           <ion-card-header>
-            <ion-card-title>RED 8</ion-card-title>
+            <ion-card-title class="ion-text-wrap">{{data.title}}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            We were fortunate to have the renowned Dr. Iris Isip-Tan to share insights in keeping up with the challenges in medical practice in this time of pandemic.
-            We were fortunate to have the renowned Dr. Iris Isip-Tan to share insights in keeping up with the challenges in medical practice in this time of pandemic.
-            We were fortunate to have the renowned Dr. Iris Isip-Tan to share insights in keeping up with the challenges in medical practice in this time of pandemic.           
-            We were fortunate to have the renowned Dr. Iris Isip-Tan to share insights in keeping up with the challenges in medical practice in this time of pandemic.
-            We were fortunate to have the renowned Dr. Iris Isip-Tan to share insights in keeping up with the challenges in medical practice in this time of pandemic.
-            We were fortunate to have the renowned Dr. Iris Isip-Tan to share insights in keeping up with the challenges in medical practice in this time of pandemic.
-            We were fortunate to have the renowned Dr. Iris Isip-Tan to share insights in keeping up with the challenges in medical practice in this time of pandemic.
-            We were fortunate to have the renowned Dr. Iris Isip-Tan to share insights in keeping up with the challenges in medical practice in this time of pandemic.
-            We were fortunate to have the renowned Dr. Iris Isip-Tan to share insights in keeping up with the challenges in medical practice in this time of pandemic.
-            We were fortunate to have the renowned Dr. Iris Isip-Tan to share insights in keeping up with the challenges in medical practice in this time of pandemic.
-            We were fortunate to have the renowned Dr. Iris Isip-Tan to share insights in keeping up with the challenges in medical practice in this time of pandemic.
-            We were fortunate to have the renowned Dr. Iris Isip-Tan to share insights in keeping up with the challenges in medical practice in this time of pandemic.
-<br /><br />
-            Thanks,
-            Jessie
+            contentShortDesc<br />
+            <p [innerHTML]="data.contentShortDesc"></p>
+            <br /><br /><br />
+            contentLongDesc<br />
+            <p [innerHTML]="data.contentLongDesc"></p>
           </ion-card-content>
+          
         </ion-card>
-
-
       </ion-col>
     </ion-row>        
   </ion-grid>

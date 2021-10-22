@@ -18,7 +18,7 @@ export class ChhAppCaseratesComponent implements OnInit {
   isDesktop:any;
   dr_name:any;
   dr_code:any;
-  caseRateData :any;
+
   caseSelect:boolean = true;
   ionSkeleton : boolean = false;
   ionSkeleton1 : boolean = false;
@@ -38,7 +38,8 @@ export class ChhAppCaseratesComponent implements OnInit {
   CaseSearchCode:any;
   ccCase:any;
   public logindata: LoginResponseModelv3;
-  loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
+  loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3;
+  caseRateData :CaseRates = new CaseRates;;
   constructor(
     private screensizeService: ScreenSizeService,
     private authService: AuthService,
@@ -47,13 +48,12 @@ export class ChhAppCaseratesComponent implements OnInit {
     private patientService: PatientService,
     private renderer: Renderer2,
     public modalController: ModalController) { 
-    this.caseRateData  = new CaseRates();
-    this.caseRateData.CaseClass = "first";
+
     //this.caseRateData.CaseSearchCode ="";
     //this.caseRateData.CaseSearchDesc="";
-    this.caseRateData.Mode = Consta.mode;
+
     
-    sessionStorage.setItem('caseRateData', JSON.stringify(this.caseRateData)); 
+    //sessionStorage.setItem('caseRateData', JSON.stringify(this.caseRateData)); 
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         window.location.reload();
@@ -67,13 +67,17 @@ export class ChhAppCaseratesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.caseRateData  = new CaseRates;
+    this.caseRateData.case_class = "first";
+    this.caseRateData.case_code = "";
+    this.caseRateData.case_desc = "";
     // this.caseRateData  = new CaseRates();
     //console.log(this.caseRateData);
     
    }
    ionViewWillEnter(){
      //console.log(this.caseRateData);
-     let  user = <CaseRates>JSON.parse(sessionStorage.getItem("caseRateData")) ; 
+     //let  user = <CaseRates>JSON.parse(sessionStorage.getItem("caseRateData")) ; 
      let logindata = <LoginResponseModelv3>this.authService.userData$.getValue() ;
      this.dr_name = logindata.lastName;
      this.dr_code = logindata.doctorCode;
@@ -84,25 +88,18 @@ export class ChhAppCaseratesComponent implements OnInit {
    segmentChanged(e){
      this.ccCase = e.detail.value;
      this.caseSelect = !this.caseSelect;
-     this.caseRateData.CaseClass = e.detail.value;
+     this.caseRateData.case_class = e.detail.value;
      this.case = "("+e.detail.value+")";
-    
+      this.search();
    }
    search(){
  
  
+ console.log(this.caseRateData);
  
- 
-     this.caseRateData.CaseSearchCode= (<HTMLInputElement>(
-       document.getElementById("input-code")
-     )).value;
- 
-     this.caseRateData.CaseSearchDesc = (<HTMLInputElement>(
-       document.getElementById("input-searchdesc")
-     )).value;
-     //console.log(this.caseRateData);
- 
-     if(this.caseRateData.CaseSearchDesc != ""){
+
+
+     if(this.caseRateData.case_desc != ""){
  
        if(this.ccCase == 'first'){
         // console.log('ccCase');
@@ -111,7 +108,7 @@ export class ChhAppCaseratesComponent implements OnInit {
          this.ionSkeleton = true;
          this.ionNoData = false;
          this.activedescription = false;
-         this.doctorService.searchCaseRatesV2(this.caseRateData.CaseClass,this.caseRateData.CaseSearchCode,this.caseRateData.CaseSearchDesc,this.caseRateData.Mode).subscribe(
+         this.doctorService.searchCaseRatesV3(this.caseRateData).subscribe(
            (res: any) => {
              //console.log(res);
              
@@ -139,7 +136,7 @@ export class ChhAppCaseratesComponent implements OnInit {
          this.ionSkeleton1 = true;
          this.ionNoData1 = false;
          this.activedescription1 = false;
-         this.doctorService.searchCaseRatesV2(this.caseRateData.CaseClass,this.caseRateData.CaseSearchCode,this.caseRateData.CaseSearchDesc,this.caseRateData.Mode).subscribe(
+         this.doctorService.searchCaseRatesV3(this.caseRateData).subscribe(
            (res: any) => {
              this.caseRateResponse_second = res;
            },(error) =>{
@@ -175,7 +172,7 @@ export class ChhAppCaseratesComponent implements OnInit {
      let logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
      this.dr_code = logindata.doctorCode;
      let dr_username = atob(localStorage.getItem("username"));
-     this.patientService.getUserSettingsV2(dr_username).subscribe(
+     /*this.patientService.getUserSettingsV2(dr_username).subscribe(
        (res: any) => {       
          if(Object.keys(res).length >= 1){
            let data = JSON.stringify(res);data = '['+data+']';let adat = JSON.parse(data);
@@ -191,7 +188,7 @@ export class ChhAppCaseratesComponent implements OnInit {
              }
            });
          }
-       });
+       });*/
    }
    dismiss() {
      // using the injected ModalController this page

@@ -46,7 +46,8 @@ export class LoginModelv3{
 
 export class LoginResponseModelv3{
     appCode:any
-    birthdate: any
+    appUserStatus:any
+    birthDate: any
     doctorCode: any
     first_name: any
     email:any
@@ -57,6 +58,10 @@ export class LoginResponseModelv3{
     jwt:any
     lastName:any
     licenseNo:any
+    phicNo:any
+    deptCode:any
+    aliasEnabled:any
+    alias:any
     message:any
     middleName:any
     mobileNo:any
@@ -92,4 +97,21 @@ export class AppSettingsModelv3{
     billingContactMandaue: any
     smsGatewayCHH: any
     smsGatewaySmart: any
+}
+
+export class NewsFeed{
+
+    id: any
+    title: any
+    contentShortDesc: any
+    contentLongDesc: any
+    imageUrl: any
+    visibility: any
+    targetDeptCode: any
+    targetUsername: any
+    postFromDate: any
+    postToDate: any
+    createdDateTime: any
+    createdBy: any
+    createdByReference: any
 }

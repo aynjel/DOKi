@@ -248,7 +248,7 @@ export class DoctorService {
     const headers = new HttpHeaders({'Content-Type': 'application/json;charset=utf-8',});
     const options = { headers: headers, withCredintials: false };
    //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
-   const url = "http://10.130.21.217:5002/api/v3/InPatients/YearHistory";
+   const url = "http://10.130.21.217:5002/api/v3/Dashboard/Past12Months";
     return this.http.get(url, options);
   }
   getInPatientV3() {
@@ -296,5 +296,38 @@ export class DoctorService {
     const url = "http://10.130.21.217:5002/api/v3/ProfessionalFee";
     return this.http.put(url, data1, options);
   }
+  getNewsFeedV3() {
+    const headers = new HttpHeaders({'Content-Type': 'application/json;charset=utf-8',});
+    const options = { headers: headers, withCredintials: false };
+   //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
+    const url = "http://10.130.21.217:5002/api/NewsFeed";
+    return this.http.get(url, options);
+  }
+  getMonthHistoryGraphV3() {
+    const headers = new HttpHeaders({'Content-Type': 'application/json;charset=utf-8',});
+    const options = { headers: headers, withCredintials: false };
+   //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
+   const url = "http://10.130.21.217:5002/api/v3/Dashboard/Past30Days";
+    return this.http.get(url, options);
+  }
+  getTotalCountV3(postData1: any) {
+    const headers = new HttpHeaders({'Content-Type': 'application/json;charset=utf-8',});
+    const options = { headers: headers, withCredintials: false };
+   //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
+   const url = "http://10.130.21.217:5002/api/v3/Dashboard/CurrentTotal";
+    return this.http.get(url, options);
+  }
+
+  
+  searchCaseRatesV3(data1: any) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    //const url = environment.apiRouterUrl + "v2/ProfFee";
+    const url = "http://10.130.21.217:5002/api/v3/PhilHealthCaseRates";
+    return this.http.post(url,  data1, options);
+    
+  }
+
 
 }
+

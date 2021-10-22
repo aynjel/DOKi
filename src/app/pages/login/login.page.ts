@@ -139,12 +139,36 @@ export class LoginPage {
     this.loginResponseModelv3 = new LoginResponseModelv3;
     
     this.doctorService.loginV3(this.loginModelv3).subscribe((res: any) => {
+
         this.loginResponseModelv3 = <LoginResponseModelv3>res;
+        
+
+
+        
       },(error) => {
        console.log(error);
        this.functionsService.sorryDoc();
        this.btnDisable = false;
       },() => {
+        this.loginResponseModelv3.roles.forEach(element => {
+          console.log(element);
+          if(element == 'Administrator'){
+            alert("Administrator");
+            localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
+            this.storageService.store(AuthConstants.AUTH, this.loginResponseModelv3);
+          }else{
+            if(this.loginResponseModelv3.jwt != null){
+              localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
+            }
+            if(this.loginResponseModelv3.isDefaultPasswordChanged){
+              this.getUserSettingsV3();
+            }else{
+              this.getUserSettingsV3();
+              //this.updatePasswordV3();
+            }
+          }
+        });
+        /*
         if(this.loginResponseModelv3.jwt != null){
           localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
         }
@@ -153,7 +177,7 @@ export class LoginPage {
         }else{
           this.getUserSettingsV3();
           //this.updatePasswordV3();
-        }
+        }*/
       }
     );
   }

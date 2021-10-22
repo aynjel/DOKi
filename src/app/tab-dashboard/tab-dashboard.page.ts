@@ -36,7 +36,7 @@ export class TabDashboardPage implements OnInit {
   totalForDischarge: any = 0;
   admitted = "A";
   discharge = "D";
-  getTotalCount = { Admitted: "0", ForDischarge: "0", Total: "0" };
+  getTotalCount = { admitted: "0", forDischarge: "0", total: "0" };
 
   public logindata: LoginResponseModelv3;
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
@@ -204,17 +204,13 @@ export class TabDashboardPage implements OnInit {
     let totalPatient = [];
 
     this.doctorService.getYearHistoryGraphV3().subscribe(
-      (res: any) => {
-        console.log(res);
-        
+      (res: any) => {     
         var count = Object.keys(res).length / 2;
-        console.log(count);
-        
         let month: any;
         let monthValue: any;
         for (let i = 1; i <= count; i++) {
-          month = "Month" + i;
-          monthValue = "Month" + i + "Value";
+          month = "month" + i;
+          monthValue = "month" + i + "Value";
           catego.push(res[month]);
           totalPatient.push(Number(res[monthValue]));
         }
@@ -228,33 +224,38 @@ export class TabDashboardPage implements OnInit {
     );
     let Day = [];
     let DayValue = [];
-    this.doctorService.getMonthHistoryGraphV2(this.doctorHistoryModel).subscribe(
+    this.doctorService.getMonthHistoryGraphV3().subscribe(
       (res: any) => {
-        this.functionsService.logToConsole(res);
-        let x = JSON.stringify(res);
-        x = x.replace("[", "").replace("]", "");
-        //x = x.replace("]", "");
-
-        x = JSON.parse(x);
-
-        var count = Object.keys(x).length / 2;
-        let month: any = "";
-        let monthValue: any = "";
-        for (let i = 1; i <= count; i++) {
-          month = "Day" + i;
-          monthValue = "Day" + i + "Value";
-          Day.push(x[month]);
-          DayValue.push(Number(x[monthValue]));
+        console.log(res);
+        
+        if(res != null){
+          let x = JSON.stringify(res);
+          x = x.replace("[", "").replace("]", "");
+          x = JSON.parse(x);
+          var count = Object.keys(x).length / 2;
+          let month: any = "";
+          let monthValue: any = "";
+          for (let i = 1; i <= count; i++) {
+            month = "Day" + i;
+            monthValue = "Day" + i + "Value";
+            Day.push(x[month]);
+            DayValue.push(Number(x[monthValue]));
+          }
         }
+        
       },
-      (error) => {},
+      (error) => {
+          console.log(error);
+          
+        
+      },
       () => {
         this.lineChartxAxisForMonth = Day;
         this.lineChartyAxisForMonth = DayValue;
         this.lineChartPopulationForMonth();
       }
     );
-    this.doctorService.getTotalCountV2(this.doctorHistoryModel).subscribe(
+    this.doctorService.getTotalCountV3(this.doctorHistoryModel).subscribe(
       (res: any) => {
         this.functionsService.logToConsole(JSON.stringify(res));
         if (res) {

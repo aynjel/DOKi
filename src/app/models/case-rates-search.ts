@@ -1,6 +1,5 @@
 export class CaseRates{
-    CaseClass:string;
-    CaseSearchCode:string;
-    CaseSearchDesc:string;
-    Mode:string
+    case_class:string;
+    case_code:string;
+    case_desc:string;
 }

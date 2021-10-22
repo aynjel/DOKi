@@ -38,10 +38,13 @@ import { ChhAppNewsfeedComponent } from '../chh-web-components/chh-app-newsfeed/
 })
 export class TabNewsFeedPage implements OnInit {
   isDesktop: boolean;
+  
+  newsfeed:any;
   constructor(
 
     private screensizeService: ScreenSizeService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private doctorService: DoctorService
 
   ) {
     console.log('In-patient : Constructor');
@@ -56,7 +59,24 @@ export class TabNewsFeedPage implements OnInit {
   items = [];  
   numTimesLeft = 5;  
   ngOnInit() {
+
+
+    this.doctorService.getNewsFeedV3().subscribe(
+      (res: any) => {
+        this.newsfeed = res;
+      },
+      (error) => {},
+      () => {
+
+      }
+    );
+
+
   }
+
+
+
+
   loadData(event) {  
     setTimeout(() => {  
       console.log('Done');  
@@ -70,8 +90,10 @@ export class TabNewsFeedPage implements OnInit {
       this.items.push(i);  
     }  
   }  
-  async showaddmodal1() {
-    var data = 'xyz';
+  async showaddmodal1(x) {
+  
+    
+    var data = x;
     const modal = await this.modalController.create({
       component: ChhAppNewsfeedComponent,
 
