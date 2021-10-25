@@ -107,4 +107,19 @@ export class TabNewsFeedPage implements OnInit {
     });
     return await modal.present();
   }
+  doRefresh(event) {
+    setTimeout(() => {
+      this.doctorService.getNewsFeedV3().subscribe(
+        (res: any) => {
+          this.newsfeed = res;
+        },
+        (error) => {},
+        () => {
+  
+        }
+      );
+      //location.reload();
+      event.target.complete();
+    }, 1000);
+  }
 }
