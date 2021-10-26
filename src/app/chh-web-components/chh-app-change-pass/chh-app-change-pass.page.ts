@@ -19,11 +19,12 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import * as bcrypt from 'bcryptjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PasswordStrengthValidator } from '../../shared/password-strength.validators';
-import { LoginModel,ChangePasswordModel } from '../../models/patient';
+import { LoginModel,ChangePasswordModel,ChangePasswordModelV3 } from '../../models/patient';
 import { CustomValidators } from '../../shared/custom-validators';
 import { AuthConstants, Consta } from '../../config/auth-constants';
 import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
 import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
+import { DoctorService } from 'src/app/services/doctor/doctor.service';
 @Component({
   selector: 'app-chh-app-change-pass',
   templateUrl: './chh-app-change-pass.page.html',
@@ -48,6 +49,7 @@ export class ChhAppChangePassPage {
   uxSaveCancel: boolean = true;
   serverResponse: any;
   public changePasswordModel: ChangePasswordModel; 
+  public changePasswordModelV3: ChangePasswordModelV3; 
   constructor(
     public modalController: ModalController,
     private patientService: PatientService,
@@ -59,13 +61,15 @@ export class ChhAppChangePassPage {
     private renderer: Renderer2,
     private authService: AuthService,
     private zone: NgZone,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private doctorService: DoctorService
   ) {
     this.form = fb.group({
       password: ['', [Validators.required, PasswordStrengthValidator]],
     });
     this.frmSignup = this.createSignupForm();
     this.changePasswordModel = new ChangePasswordModel();
+    this.changePasswordModelV3 = new ChangePasswordModelV3();
     this.changePasswordModel.mode = Consta.mode;
   }
   @ViewChildren('psWord1', { read: ElementRef }) psWord1: QueryList<ElementRef>;
@@ -291,13 +295,20 @@ export class ChhAppChangePassPage {
             this.changePasswordModel.oldPassword =   this.OldPassword;
             this.changePasswordModel.newPassword = this.NewPassword;
             console.log(this.changePasswordModel);
-
-          this.patientService.changePasswordV2(this.changePasswordModel).subscribe(
+            this.changePasswordModelV3.newPassword = this.NewPassword;
+            this.changePasswordModelV3.currentPassword = this.OldPassword;
+          this.doctorService.changePasswordV3(this.changePasswordModelV3).subscribe(
             (res: any) => {
               this.serverResponse = res;
             },
             (error) => {},
             () => {
+              if(this.serverResponse.succeeded){
+                this.modalController.dismiss("Success");
+              }else{
+                this.modalController.dismiss("False");
+              }
+/*
               if (typeof this.serverResponse.ErrorCode !== 'undefined') {
                 //this.alert(this.serverResponse.ErrorDescription,"Okay",false);
                 this.modalController.dismiss(
@@ -305,7 +316,7 @@ export class ChhAppChangePassPage {
                 );
               } else {
                 this.modalController.dismiss(this.serverResponse.Message);
-              }
+              }*/
             }
           );
 

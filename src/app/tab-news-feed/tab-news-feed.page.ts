@@ -109,6 +109,8 @@ export class TabNewsFeedPage implements OnInit {
   }
   doRefresh(event) {
     setTimeout(() => {
+
+      
       this.doctorService.getNewsFeedV3().subscribe(
         (res: any) => {
           this.newsfeed = res;

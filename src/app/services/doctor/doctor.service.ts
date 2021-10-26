@@ -108,7 +108,7 @@ export class DoctorService {
   /////////////////////
   getYearHistoryGraphV2(postData1: any) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: true };
     const url = environment.apiRouterUrl + "v2/Inpatients/YearHistory";
     //const url = "http://10.128.18.75:8088/api/v2/Inpatients/YearHistory";
     return this.http.post(url,  postData1, options);
@@ -116,7 +116,7 @@ export class DoctorService {
   getMonthHistoryGraphV2(postData1: any) {
    
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: true };
     const url = environment.apiRouterUrl + "v2/Inpatients/MonthHistory";
     //const url = "http://10.128.18.75:8088/api/v2/Inpatients/MonthHistory";
     return this.http.post(url,  postData1, options);
@@ -124,14 +124,14 @@ export class DoctorService {
   getTotalCountV2(postData1: any) {
    
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: true };
     const url = environment.apiRouterUrl + "v2/Inpatients/Total";
     //const url = "http://10.128.18.75:8088/api/v2/Inpatients/Total";
     return this.http.post(url,  postData1, options);
   }
   getInPatientV2(postData1: any) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: true };
     const url = environment.apiRouterUrl + "v2/Inpatients";
     //const url = "http://10.128.18.75:8088/api/v2/Inpatients";
     return this.http.post(url,  postData1, options);
@@ -139,7 +139,7 @@ export class DoctorService {
   getCoDoctorsV2(postData1: any) {
     
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: true };
     const url = environment.apiRouterUrl + "v2/Inpatients/CoDoctors";
     //const url = "http://10.128.18.75:8088/api/v2/Inpatients/CoDoctors";
     return this.http.post(url,  postData1, options);
@@ -147,21 +147,21 @@ export class DoctorService {
   getAdmittingDiagnosisV2(postData1: any) {
 
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: true };
     const url = environment.apiRouterUrl + "v2/Inpatients/AdmittingDiagnosis";
     //const url = "http://10.128.18.75:8088/api/v2/Inpatients/FinalDiagnosis";
     return this.http.post(url,  postData1, options);
   }
   getFinalDiagnosisV2(postData1: any) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: true };
     const url = environment.apiRouterUrl + "v2/Inpatients/FinalDiagnosis";
     //const url = "http://10.128.18.75:8088/api/v2/Inpatients/AdmittingDiagnosis";
     return this.http.post(url,  postData1, options);
   }
   insertPFV2(data1: any) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: true };
     const url = environment.apiRouterUrl + "v2/ProfFee";
     return this.http.post(url,  data1, options);
     
@@ -193,18 +193,35 @@ export class DoctorService {
   }
   getProfileExpiry(data1: any) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
-    const options = { headers: headers, withCredintials: false };
-    const url = environment.apiRouterUrl + "DocLicenseExpiry";
-    //const url ='http://10.130.21.201:9321/api/DocLicenseExpiry';
+    const options = { headers: headers, withCredentials: true };
+    //const url = environment.apiRouterUrl + "DocLicenseExpiry";
+    const url ='http://10.128.18.75:8096/api/DocLicenseExpiry';
     return this.http.post(url,  data1, options);
     
   }
   //////////////////////////////v3/////////////////////////
   loginV3(data:any){
-    const headers = new HttpHeaders({ "Content-Type": "application/json" });
-    const options = { headers: headers, withCredintials: false };
+    //const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    //const headers = new HttpHeaders();
+   /* const headers = new HttpHeaders({ "Content-Type": "application/json;charset=utf-8" });
+    const options = { headers: headers, withCredentials: true };*/
+
+
+    
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+     
+    withCredentials: true, 
+    observe: 'response' as 'response'
+    };  
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json;',
+    });
+    const options = { headers: headers, withCredentials: true };
+
     //const url = environment.apiRouterUrl + "v2/Login";
-    const url = "http://10.130.21.165:5002/api/v3/User/Token";
+    const url = "http://10.130.21.184:5002/api/v3/User/Token";
     return this.http.post(url,  data, options);
   }
   getUserSettingsV3(){
@@ -213,9 +230,9 @@ export class DoctorService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json;charset=utf-8',
     });
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: true };
    //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
-   const url = 'http://10.130.21.165:5002/api/v3/UserSettings';
+   const url = 'http://10.130.21.184:5002/api/v3/UserSettings';
     return this.http.get(url, options);
   }
   getAppSettingsV3(){
@@ -224,68 +241,68 @@ export class DoctorService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json;charset=utf-8',
     });
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: true };
    //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
-   const url = '  http://10.130.21.165:5002/api/v3/AppSettings';
+   const url = '  http://10.130.21.184:5002/api/v3/AppSettings';
     return this.http.get(url, options);
   }
   insertUserSettingsV3(data:any){
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: true };
     //const url = environment.apiRouterUrl + "v2/Login";
-    const url = "http://10.130.21.165:5002/api/v3/UserSettings";
+    const url = "http://10.130.21.184:5002/api/v3/UserSettings";
     return this.http.post(url,  data, options);
   }
   updateUserSettingsV3(data:any){
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: true };
     //const url =    environment.apiRouterUrl + "v2/UserSetting";
-    const url = "http://10.130.21.165:5002/api/v3/UserSettings";
+    const url = "http://10.130.21.184:5002/api/v3/UserSettings";
     return this.http.put(url, data, options);
   }
 
   getYearHistoryGraphV3(){
     const headers = new HttpHeaders({'Content-Type': 'application/json;charset=utf-8',});
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: true };
    //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
-   const url = "http://10.130.21.165:5002/api/v3/Dashboard/Past12Months";
+   const url = "http://10.130.21.184:5002/api/v3/Dashboard/Past12Months";
     return this.http.get(url, options);
   }
   getInPatientV3() {
     const headers = new HttpHeaders({'Content-Type': 'application/json;charset=utf-8',});
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: true };
    //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
-    const url = "http://10.130.21.165:5002/api/v3/InPatients";
+    const url = "http://10.130.21.184:5002/api/v3/InPatients";
     return this.http.get(url, options);
   }
   getCoDoctorsV3(postData1: any) {
     
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: true };
    // const url = environment.apiRouterUrl + "v2/Inpatients/CoDoctors";
-    const url = "http://10.130.21.165:5002/api/v3/InPatients/CoDoctors";
+    const url = "http://10.130.21.184:5002/api/v3/InPatients/CoDoctors";
     return this.http.post(url,  postData1, options);
   }
   getAdmittingDiagnosisV3(postData1: any) {
 
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: true };
     //const url = environment.apiRouterUrl + "v2/Inpatients/AdmittingDiagnosis";
-    const url = "http://10.130.21.165:5002/api/v3/InPatients/AdmittingDiagnosis";
+    const url = "http://10.130.21.184:5002/api/v3/InPatients/AdmittingDiagnosis";
     return this.http.post(url,  postData1, options);
   }
   getFinalDiagnosisV3(postData1: any) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: true };
     //const url = environment.apiRouterUrl + "v2/Inpatients/FinalDiagnosis";
-    const url = "http://10.130.21.165:5002/api/v3/InPatients/FinalDiagnosis";
+    const url = "http://10.130.21.184:5002/api/v3/InPatients/FinalDiagnosis";
     return this.http.post(url,  postData1, options);
   }
   insertPFV3(data1: any) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: true };
     //const url = environment.apiRouterUrl + "v2/ProfFee";
-    const url = "http://10.130.21.165:5002/api/v3/ProfessionalFee";
+    const url = "http://10.130.21.184:5002/api/v3/ProfessionalFee";
     return this.http.post(url,  data1, options);
     
   }
@@ -293,49 +310,61 @@ export class DoctorService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers: headers, withCredentials: false };
     //const url = environment.apiRouterUrl + "v2/ProfFee";
-    const url = "http://10.130.21.165:5002/api/v3/ProfessionalFee";
+    const url = "http://10.130.21.184:5002/api/v3/ProfessionalFee";
     return this.http.put(url, data1, options);
   }
   getNewsFeedV3() {
     const headers = new HttpHeaders({'Content-Type': 'application/json;charset=utf-8',});
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: true };
    //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
-    const url = "http://10.130.21.165:5002/api/NewsFeed";
+    const url = "http://10.130.21.184:5002/api/NewsFeed";
     return this.http.get(url, options);
   }
   getMonthHistoryGraphV3() {
     const headers = new HttpHeaders({'Content-Type': 'application/json;charset=utf-8',});
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: true };
    //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
-   const url = "http://10.130.21.165:5002/api/v3/Dashboard/Past30Days";
+   const url = "http://10.130.21.184:5002/api/v3/Dashboard/Past30Days";
     return this.http.get(url, options);
   }
   getTotalCountV3(postData1: any) {
     const headers = new HttpHeaders({'Content-Type': 'application/json;charset=utf-8',});
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: true };
    //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
-   const url = "http://10.130.21.165:5002/api/v3/Dashboard/CurrentTotal";
+   const url = "http://10.130.21.184:5002/api/v3/Dashboard/CurrentTotal";
     return this.http.get(url, options);
   }
 
   
   searchCaseRatesV3(data1: any) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: true };
     //const url = environment.apiRouterUrl + "v2/ProfFee";
-    const url = "http://10.130.21.165:5002/api/v3/PhilHealthCaseRates";
+    const url = "http://10.130.21.184:5002/api/v3/PhilHealthCaseRates";
     return this.http.post(url,  data1, options);
     
   }
   refreshTokenV3() {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
-    const options = { headers: headers, withCredintials: false };
+    const options = { headers: headers, withCredentials: true };
     //const url = environment.apiRouterUrl + "v2/ProfFee";
-    const url = "http://10.130.21.165:5002/api/v3/User/RefreshToken";
+    const url = "http://10.130.21.184:5002/api/v3/User/RefreshToken";
     return this.http.post(url,  options);
     
   }
- 
-
+  changePasswordV3(data: any) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredentials: true };
+    //const url = environment.apiRouterUrl + "v2/ProfFee";
+    const url = "http://10.130.21.184:5002/api/v3/User/ChangePassword";
+    return this.http.post(url, data, options);
+  }
+  revokeTokenV3(data: any) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredentials: true };
+    //const url = environment.apiRouterUrl + "v2/ProfFee";
+    const url = "http://10.130.21.184:5002/api/v3/User/RevokeToken";
+    return this.http.post(url, data, options);
+  }
 }
 

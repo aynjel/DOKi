@@ -94,8 +94,8 @@ export class LoginPage {
   }
 
   public postData = {
-    username: '',
-    password: '',
+    username: 'PGALBO',
+    password: '@Dell150790',
   };
 
   btnDisable: boolean = false;
@@ -150,6 +150,7 @@ export class LoginPage {
        this.functionsService.sorryDoc();
        this.btnDisable = false;
       },() => {
+        if(this.loginResponseModelv3.isAuthenticated == true){
         this.loginResponseModelv3.roles.forEach(element => {
           console.log(element);
           if(element == 'Administrator'){
@@ -160,14 +161,22 @@ export class LoginPage {
             if(this.loginResponseModelv3.jwt != null){
               localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
             }
+            console.log(this.loginResponseModelv3.isDefaultPasswordChanged);
+            console.log(this.loginResponseModelv3);
+            
             if(this.loginResponseModelv3.isDefaultPasswordChanged){
               this.getUserSettingsV3();
             }else{
-              this.getUserSettingsV3();
-              //this.updatePasswordV3();
+              
+             //this.getUserSettingsV3();
+              this.updatePasswordV3();
             }
           }
         });
+      }else{
+        this.functionsService.sorryDoc();
+        this.btnDisable = false;
+      }
         /*
         if(this.loginResponseModelv3.jwt != null){
           localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
@@ -340,6 +349,7 @@ export class LoginPage {
     this.storageService.store(AuthConstants.AUTH, this.loginResponseModelv3);
     localStorage.setItem('isIdle', '1');
     localStorage.setItem('username', btoa(this.postData.username));
+    localStorage.setItem("modaled","0");
     this.router.navigate(['/menu/dashboard']);
     /*this.router.navigate(['/menu/dashboard']).then(() => {
       window.location.reload();

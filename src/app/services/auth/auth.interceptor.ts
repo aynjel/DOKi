@@ -1,5 +1,5 @@
 import { HttpEvent, HttpHandler, HttpInterceptor , HttpRequest,  HttpResponse,HttpErrorResponse} from '@angular/common/http';
-import { tokenName } from '@angular/compiler';
+import { analyzeAndValidateNgModules, tokenName } from '@angular/compiler';
 import { Injectable} from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -15,11 +15,11 @@ export class AuthInterceptor implements HttpInterceptor {
     public alertController: AlertController,
     public router: Router,
     private doctorService: DoctorService) { }
+    modaled:any;
    intercept(req:HttpRequest<any>,next: HttpHandler): Observable<HttpEvent<any>>{
-
         const idToken = localStorage.getItem("id_token");
         if(idToken){
-          console.log('token is alive');
+          //console.log('token is alive');
           
             const cloned = 
             //req.clone({headers:req.headers.set("Authorization",idToken)});
@@ -27,8 +27,7 @@ export class AuthInterceptor implements HttpInterceptor {
            req.clone({
                 setHeaders: {
                   Accept: 'application/json',
-                  'Content-Type': 'application/json',
-                  Authorization: `Bearer ${idToken}`
+                  'Content-Type': 'application/json',Authorization: `Bearer ${idToken}`
                 }
               });
 
@@ -38,7 +37,7 @@ export class AuthInterceptor implements HttpInterceptor {
            return next.handle(cloned).pipe(
             map((event: HttpEvent<any>) => {
                 if (event instanceof HttpResponse) {
-                    console.log('event--->>>', event);
+                    //console.log('event--->>>', event);
                 }
                 return event;
             }),
@@ -49,17 +48,42 @@ export class AuthInterceptor implements HttpInterceptor {
                     status: error.status
                 };
                 this.errorDialogService.openDialog(data);*/
-                console.log('error 401 : token expired --> Jessie');
-                if(error.status == 401){
+                //console.log('error 401 : token expired --> Jessie');
+                this.modaled = localStorage.getItem("modaled");
+
+                if(error.status == 401 && this.modaled != '1'){
                   this.timerExpired();
+                  localStorage.setItem("modaled","1");
                 }
-                console.log(error.status);
+                //console.log(error.status);
                 return throwError(error);
             }));
 
            
         }else{
-            return next.handle(req);
+            return next.handle(req).pipe(
+              map((event: HttpEvent<any>) => {
+                  if (event instanceof HttpResponse) {
+                     // console.log('event--->>>', event);
+                  }
+                  return event;
+              }),
+              catchError((error: HttpErrorResponse) => {
+                  /*let data = {};
+                  data = {
+                      reason: error && error.error && error.error.reason ? error.error.reason : '',
+                      status: error.status
+                  };
+                  this.errorDialogService.openDialog(data);*/
+                  //console.log('error 401 : token expired --> Jessie');
+                  this.modaled = localStorage.getItem("modaled");
+                  if(error.status == 401 && this.modaled != '1'){
+                    this.timerExpired();
+                    localStorage.setItem("modaled","1");
+                  }
+                 // console.log(error.status);
+                  return throwError(error);
+              }));
         }
     }
 
@@ -79,8 +103,7 @@ export class AuthInterceptor implements HttpInterceptor {
             // role: 'cancel',
             cssClass: 'secondary',
             handler: () => {
-              console.log('Log me out');
-              
+              localStorage.setItem("modaled","0");
               /*localStorage.clear();
               localStorage.setItem('hasloggedin', '1');
               this.alertController.dismiss();
@@ -94,11 +117,12 @@ export class AuthInterceptor implements HttpInterceptor {
             handler: () => {
               /*this.alertController.dismiss();*/
               //this.userIdle.stopTimer();
-              console.log('Keep me in');
+        
+          
               this.doctorService.refreshTokenV3().subscribe((res: any) => {
-                console.log(res);
-                
+                //console.log(res);
               });
+              localStorage.setItem("modaled","0");
             },
           },
         ],

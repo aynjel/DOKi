@@ -26,7 +26,7 @@ import { ChhAppTermsAndConditionsPage } from '../chh-web-components/chh-app-term
 import { UserSettingsModel,UserSettingDeletesModel } from '../models/doctor';
 import { DoctorService } from '../services/doctor/doctor.service';
 import { element } from 'protractor';
-import {UserSettingsModelv3,LoginResponseModelv3,AppSettingsModelv3} from 'src/app/models/doctor';
+import {UserSettingsModelv3,LoginResponseModelv3,AppSettingsModelv3,RevokeTokenV3} from 'src/app/models/doctor';
 import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
 
 @Component({
@@ -76,7 +76,9 @@ export class TabSettingsPage {
   phicBarHide:any;
   data1;
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
-    public userSettingsModelv3: UserSettingsModelv3; 
+  public userSettingsModelv3: UserSettingsModelv3; 
+  public revokeTokenV3: RevokeTokenV3; 
+    
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -101,10 +103,7 @@ export class TabSettingsPage {
       this.isDesktop = isDesktop;
     });
 
-    this.patientService.getAppSettingV2().subscribe((res: any) => {
-      this.draftJson = res;
-      //let data = JSON.stringify(res);data = '['+data+']';this.draftJson = JSON.parse(data);
-    });
+
   }
 
   /* async showaddmodal() {
@@ -212,7 +211,7 @@ export class TabSettingsPage {
 
 
     this.profileExpiry = new ProfileExpiry();
-    this.profileExpiry.mode = Consta.mode;
+    this.profileExpiry.mode = "P";
     this.profileExpiry.drCode = this.dr_code;
     this.doctorService.getProfileExpiry(this.profileExpiry).subscribe(
       (res: any) => {
@@ -498,6 +497,17 @@ export class TabSettingsPage {
   
 
   logout() {
+    this.revokeTokenV3 = new RevokeTokenV3();
+    this.revokeTokenV3.jwt = localStorage.getItem("id_token");
+  
+
+   /* 
+    this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
+      console.log(res);
+    });
+    */
+
+
     this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
       this.userData$.next('');
       localStorage.removeItem('_cap_userDataKey');
@@ -505,6 +515,7 @@ export class TabSettingsPage {
       localStorage.clear();
       sessionStorage.clear();
       localStorage.setItem('hasloggedin', '1');
+
       this.router.navigate(['/login']).then( ()=>{
         window.location.reload();
       }

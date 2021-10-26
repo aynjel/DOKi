@@ -85,6 +85,11 @@ export class UserSettingsModelv3{
     smsGatewayCHH: any
     smsGatewaySmart: any
 }
+
+export class RevokeTokenV3{
+    jwt: any
+}
+
 export class AppSettingsModelv3{
 
     smsNotification: any

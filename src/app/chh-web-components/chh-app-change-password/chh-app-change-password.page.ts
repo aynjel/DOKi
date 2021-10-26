@@ -24,7 +24,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PasswordStrengthValidator } from '../../shared/password-strength.validators';
 
 
-import { LoginModel,ChangePasswordModel } from '../../models/patient';
+import { LoginModel,ChangePasswordModel,ChangePasswordModelV3 } from '../../models/patient';
+import { DoctorService } from 'src/app/services/doctor/doctor.service';
 
 
 @Component({
@@ -36,6 +37,7 @@ export class ChhAppChangePasswordPage {
   @Input() old_password: any;
   public form: FormGroup;
   public changePasswordModel: ChangePasswordModel; 
+  public changePasswordModelV3: ChangePasswordModelV3; 
   TESTOldPassword;
   OldPassword;
   NewPassword;
@@ -63,7 +65,8 @@ export class ChhAppChangePasswordPage {
     public functionsService: FunctionsService,
     public alertController: AlertController,
     private zone: NgZone,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private doctorService: DoctorService
   ) {
     this.changePasswordModel = new ChangePasswordModel();
     this.changePasswordModel.mode = Consta.mode;
@@ -225,6 +228,9 @@ export class ChhAppChangePasswordPage {
         this.changePasswordModel.oldPassword =   this.OldPassword;
         this.changePasswordModel.newPassword = this.NewPassword;
         console.log(this.changePasswordModel);
+        this.changePasswordModelV3 = new ChangePasswordModelV3();
+        this.changePasswordModelV3.currentPassword = this.OldPassword;
+        this.changePasswordModelV3.newPassword = this.NewPassword;
        /*  let resJson =
           '{"appCode": "DPP","username": "' +
           this.dr_username +
@@ -234,7 +240,9 @@ export class ChhAppChangePasswordPage {
           hash +
           '"}'; */
         let dJson;
-        this.patientService.changePasswordV2(this.changePasswordModel).subscribe(
+        console.log(this.changePasswordModelV3);
+        
+        this.doctorService.changePasswordV3(this.changePasswordModelV3).subscribe(
           (res: any) => {
             dJson = res;
           },
@@ -243,10 +251,15 @@ export class ChhAppChangePasswordPage {
             this.btnDisable = false;
           },
           () => {
-            if (dJson.Message == 'Success') {
+            /*if (dJson.Message == 'Success') {
               this.modalController.dismiss(hashedPassword, this.NewPassword);
             } else {
               this.modalController.dismiss('Error');
+            }*/
+            if(dJson.succeeded){
+              this.modalController.dismiss("Success");
+            }else{
+              this.modalController.dismiss("False");
             }
             this.btnDisable = false;
           }

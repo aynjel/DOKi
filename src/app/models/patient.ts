@@ -31,7 +31,10 @@ export class ChangePasswordModel{
     newPassword:any
     mode:any
 }
-
+export class ChangePasswordModelV3{
+    currentPassword: any
+    newPassword: any
+}
 
 export class InserUSerSettingsModel{
     username: any
