@@ -106,7 +106,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     private renderer: Renderer2
   ) {
 
-
+    localStorage.setItem("modaled","0");
 
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {

@@ -39,7 +39,7 @@ import { ChhAppChangePasswordPage } from '../../chh-web-components/chh-app-chang
 import { ChhAppCaseratesComponent } from '../../chh-web-components/chh-app-caserates/chh-app-caserates.component';
 
 import { tick } from '@angular/core/testing';
-
+import { ChhAppForgotPasswordComponent } from '../../chh-web-components/chh-app-forgot-password/chh-app-forgot-password.component';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -174,7 +174,7 @@ export class LoginPage {
           }
         });
       }else{
-        this.functionsService.sorryDoc();
+        this.functionsService.alert(this.loginResponseModelv3.message,'Okay');
         this.btnDisable = false;
       }
         /*
@@ -356,7 +356,20 @@ export class LoginPage {
     });*/
   }
 
+  async forgotpassword() {
+    const modal = await this.modalController.create({
+      component: ChhAppForgotPasswordComponent,
 
+      componentProps: {
+        backdropDismiss: true,
+      },
+    });
+    modal.onDidDismiss().then((data) => {
+      console.log(data);
+      
+    });
+    return await modal.present();
+  }
 
 
 

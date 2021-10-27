@@ -35,8 +35,8 @@ export class TabsPage {
     private patientService:PatientService,
     private authService: AuthService
   ) {
-    console.log('constructor');
-    
+
+    localStorage.setItem("modaled","0");
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         // Reload because our routing is out of place

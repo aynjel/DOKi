@@ -12,8 +12,6 @@ export class AdminGuard implements CanActivate {
     return new Promise((resolve) => {
       this.storageService.get(AuthConstants.AUTH).then(
           (res) => {
-            console.log('GUARD GUARD GUARD');
-            console.log(res);
             if (res) {
               resolve(true);
             } else {

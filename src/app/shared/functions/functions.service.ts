@@ -22,6 +22,7 @@ export class FunctionsService {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       message: data1,
+      backdropDismiss: false,
       buttons: [{ text: data2, handler: () => {} }],
     });
     await alert.present();
@@ -221,7 +222,7 @@ export class FunctionsService {
   sorryDoc() {
     this.alert(
       'Sorry, Dok. We cannot log you in at the moment. Please try again.',
-      'Okay'
+      'Okay',
     );
   }
 

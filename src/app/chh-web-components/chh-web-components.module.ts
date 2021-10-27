@@ -45,7 +45,7 @@ import {ChhAppIsPatientSeenComponent} from "./chh-app-is-patient-seen/chh-app-is
 import {ChhAppCaseratesComponent} from "./chh-app-caserates/chh-app-caserates.component";
 import {ChhAppNewsfeedComponent} from "./chh-app-newsfeed/chh-app-newsfeed.component";
 
-
+import {ChhAppForgotPasswordComponent} from "./chh-app-forgot-password/chh-app-forgot-password.component";
 @NgModule({
   declarations: [
     ChhAppLogoComponent,
@@ -72,7 +72,8 @@ import {ChhAppNewsfeedComponent} from "./chh-app-newsfeed/chh-app-newsfeed.compo
     ChhAppIsPatientSeenComponent,
     MandaueLabDetailsComponent,
     ChhAppCaseratesComponent,
-    ChhAppNewsfeedComponent
+    ChhAppNewsfeedComponent,
+    ChhAppForgotPasswordComponent
 
   ],
   exports: [
@@ -99,7 +100,8 @@ import {ChhAppNewsfeedComponent} from "./chh-app-newsfeed/chh-app-newsfeed.compo
     ChhAppIsPatientSeenComponent,
     MandaueLabDetailsComponent,
     ChhAppCaseratesComponent,
-    ChhAppNewsfeedComponent
+    ChhAppNewsfeedComponent,
+    ChhAppForgotPasswordComponent
   ],
   imports: [CommonModule, IonicModule, ChhAppTextAvatarModule,RouterModule,FormsModule],
 })

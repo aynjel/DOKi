@@ -89,7 +89,17 @@ export class UserSettingsModelv3{
 export class RevokeTokenV3{
     jwt: any
 }
-
+export class ForgotPasswordV3{
+    email: any
+    doctorCode: any
+    clientURI: any
+}
+export class ResetPasswordV3{
+    password: any
+    confirmPassword: any
+    email: any
+    token: any
+}
 export class AppSettingsModelv3{
 
     smsNotification: any

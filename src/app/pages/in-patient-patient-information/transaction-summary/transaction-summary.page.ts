@@ -105,6 +105,7 @@ export class TransactionSummaryPage implements OnInit {
     private renderer: Renderer2,
     public nav: NavController
   ) {
+    localStorage.setItem("modaled","0");
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         window.location.reload();

@@ -104,12 +104,12 @@ export class AuthInterceptor implements HttpInterceptor {
             cssClass: 'secondary',
             handler: () => {
               localStorage.setItem("modaled","0");
-              /*localStorage.clear();
+              localStorage.clear();
               localStorage.setItem('hasloggedin', '1');
               this.alertController.dismiss();
               this.router.navigate(['/login']).then(() => {
                 window.location.reload();
-              });*/
+              });
             },
           },
           {

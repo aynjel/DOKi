@@ -129,7 +129,7 @@ export class InPatientDetailPage {
     public nav: NavController
   ) {
     //console.log('In-patient detail : Constructor');
-
+    localStorage.setItem("modaled","0");
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         window.location.reload();
@@ -371,7 +371,7 @@ export class InPatientDetailPage {
       },
       (error) => {
         this.isFetchDone = true;
-        this.functionsService.alert('Server Error', 'Okay');
+        //this.functionsService.alert('Server Error', 'Okay');
       },
       () => {
         this.isFetchDone = true;
@@ -410,7 +410,7 @@ export class InPatientDetailPage {
         },
         (error) => {
           this.isFetchDone = true;
-          this.functionsService.alert('Server Error', 'Okay');
+          //this.functionsService.alert('Server Error', 'Okay');
         },
         () => {
           this.isFetchDone = true;
@@ -450,7 +450,7 @@ export class InPatientDetailPage {
         },
         (error) => {
           this.isFetchDone = true;
-          this.functionsService.alert('Server Error', 'Okay');
+          //this.functionsService.alert('Server Error', 'Okay');
         },
         () => {
           this.isFetchDone = true;

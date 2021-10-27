@@ -197,7 +197,9 @@ export class TabDashboardPage implements OnInit {
     this.doctorHistoryModel.accountNo = 'none';
     this.doctorHistoryModel.drCode = this.logindata.doctorCode;
     this.doctorHistoryModel.mode = Consta.mode;
-    this.first_name = this.logindata.first_name;//this.camelCase(this.logindata[0].first_name);
+    this.first_name = this.logindata.firstName;//this.camelCase(this.logindata[0].first_name);
+    console.log(this.logindata);
+    
     let  dr_name = this.logindata.lastName;
     this.$gaService.event('Dashboard','User Flow',dr_name);
     let catego = [];

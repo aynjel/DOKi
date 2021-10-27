@@ -44,6 +44,10 @@ const routes: Routes = [
   {
     path: 'laboratorytestmodal',
     loadChildren: () => import('./pages/in-patient-patient-information/laboratory-test-modal/laboratory-test-modal.module').then( m => m.LaboratoryTestModalPageModule)
+  },
+  {
+    path: 'resetpassword',
+    loadChildren: () => import('./pages/resetpassword/resetpassword.module').then( m => m.ResetpasswordPageModule)
   },{
     path: '',
     canActivate:[IndexGuard], 
@@ -64,6 +68,7 @@ const routes: Routes = [
     path: 'transaction-summary',
     loadChildren: () => import('./pages/in-patient-patient-information/transaction-summary/transaction-summary.module').then( m => m.TransactionSummaryPageModule)
   }
+
 
 
 

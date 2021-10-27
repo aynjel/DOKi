@@ -366,5 +366,19 @@ export class DoctorService {
     const url = "http://10.130.21.184:5002/api/v3/User/RevokeToken";
     return this.http.post(url, data, options);
   }
+  forgotPasswordV3(data: any) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredentials: true };
+    //const url = environment.apiRouterUrl + "v2/ProfFee";
+    const url = "http://10.130.21.184:5002/api/v3/User/ForgotPassword";
+    return this.http.post(url, data, options);
+  }
+  resetPasswordV3(data: any) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredentials: true };
+    //const url = environment.apiRouterUrl + "v2/ProfFee";
+    const url = "http://10.130.21.184:5002/api/v3/User/ResetPassword";
+    return this.http.post(url, data, options);
+  }
 }
 
