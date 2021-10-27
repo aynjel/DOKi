@@ -160,10 +160,7 @@ export class LoginPage {
           }else{
             if(this.loginResponseModelv3.jwt != null){
               localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
-            }
-            console.log(this.loginResponseModelv3.isDefaultPasswordChanged);
-            console.log(this.loginResponseModelv3);
-            
+            }        
             if(this.loginResponseModelv3.isDefaultPasswordChanged){
               this.getUserSettingsV3();
             }else{
@@ -291,10 +288,7 @@ export class LoginPage {
       },
     });
     modal.onDidDismiss().then((data) => {
-      if (
-        typeof data.data !== 'undefined' &&
-        typeof data.role !== 'undefined'
-      ) {
+      if (data.data == 'Success') {
         //this.hashedPassword = data.data;
        // this.postData.password = data.role;
         this.postData.password = "";
@@ -350,7 +344,7 @@ export class LoginPage {
     localStorage.setItem('isIdle', '1');
     localStorage.setItem('username', btoa(this.postData.username));
     localStorage.setItem("modaled","0");
-    this.router.navigate(['/menu/dashboard']);
+    this.router.navigate(['/menu/in-patients']);
     /*this.router.navigate(['/menu/dashboard']).then(() => {
       window.location.reload();
     });*/

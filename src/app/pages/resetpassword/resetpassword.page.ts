@@ -251,8 +251,11 @@ export class ResetpasswordPage implements OnInit {
           (error) => {
           },
           () => {
-            this.functionsService.alert('Password update successful','Okay');
-            this.router.navigate(['/login']);
+            this.modalUpdate(
+              this.constants.UI_COMPONENT_TEXT_VALUE_PASSWORD_SUCCESS_TITLE,
+              this.constants.UI_COMPONENT_TEXT_VALUE_CHANGE_PASSWORD_SUCCESS_BODY,
+              true
+            );
           }
         );
 
@@ -273,6 +276,25 @@ export class ResetpasswordPage implements OnInit {
       }
     );
 */
+  }
+
+  async modalUpdate(header, message, data) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      backdropDismiss: false,
+      header: header,
+      message: message,
+      buttons: [
+        {
+          text: 'Okay',
+          handler: () => {
+            this.router.navigate(['/login']);
+  
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 
 }
