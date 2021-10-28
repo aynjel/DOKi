@@ -157,7 +157,7 @@ export class LoginPage {
             alert("Administrator");
             localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
             this.storageService.store(AuthConstants.AUTH, this.loginResponseModelv3);
-          }else{
+          }else if(element == 'MedicalConsultant'){
             if(this.loginResponseModelv3.jwt != null){
               localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
             }        
@@ -168,6 +168,8 @@ export class LoginPage {
              //this.getUserSettingsV3();
               this.updatePasswordV3();
             }
+          }else{
+            
           }
         });
       }else{

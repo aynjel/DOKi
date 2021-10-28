@@ -71,6 +71,10 @@ export class LoginResponseModelv3{
     site:any
     status:any
     userName:any
+    prcExpiryDate:any
+    prcRemainingDays:any
+    phicExpiryDate:any
+    phicRemainingDays:any
 }
 
 export class UserSettingsModelv3{

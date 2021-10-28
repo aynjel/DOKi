@@ -213,6 +213,58 @@ export class TabSettingsPage {
     this.profileExpiry = new ProfileExpiry();
     this.profileExpiry.mode = "P";
     this.profileExpiry.drCode = this.dr_code;
+    console.log(this.logindata.phicExpiryDate);
+    console.log(this.logindata.phicRemainingDays);
+    console.log(this.logindata.prcExpiryDate);
+    console.log(this.logindata.prcRemainingDays);
+
+    var dd    = new Date(this.logindata.prcExpiryDate);
+    console.log(dd);
+    
+    this.prc = dd.getDate()+'/'+(dd.getMonth() + 1)+'/'+dd.getUTCFullYear();
+    this.prcDays = this.logindata.prcRemainingDays;
+    console.log(this.prcDays);
+    
+    if(this.prcDays > 90){
+      this.prcBar = this.prcDays/90;
+      this.prcBarColor='';
+      this.prcBarHide = 'ion-hide';
+    }else if(this.prcDays >= 60 && this.prcDays <= 90 ){
+      this.prcBar = this.prcDays/90;
+      this.prcBarColor='mango';
+      this.prcBarHide = '';          
+    }else if(this.prcDays >= 30 && this.prcDays <= 59 ){
+      this.prcBar = this.prcDays/90;
+      this.prcBarColor='warning';
+      this.prcBarHide = '';          
+    }else{
+      this.prcBar = this.prcDays/90;
+      this.prcBarColor='danger';
+      this.prcBarHide = '';  
+    }
+    var cc    = new Date(this.logindata.phicExpiryDate);
+    this.phic = cc.getDate()+'/'+(cc.getMonth() + 1)+'/'+cc.getUTCFullYear();
+    this.phicDays = this.logindata.phicRemainingDays;    
+    if(this.phicDays > 90){
+      this.phicBar = this.phicDays/90;
+      this.phicBarColor='';
+      this.phicBarHide = 'ion-hide';
+    }else if(this.phicDays >= 60 && this.phicDays <= 90 ){
+      this.phicBar = this.phicDays/90;
+      this.phicBarColor='mango';
+      this.phicBarHide = '';          
+    }else if(this.phicDays >= 30 && this.phicDays <= 59 ){
+      this.phicBar = this.phicDays/90;
+      this.phicBarColor='warning';
+      this.phicBarHide = '';          
+    }else{
+      this.phicBar = this.phicDays/90;
+      this.phicBarColor='danger';
+      this.phicBarHide = '';  
+    }  
+
+
+/*
     this.doctorService.getProfileExpiry(this.profileExpiry).subscribe(
       (res: any) => {
           var dd    = new Date(res.LicenseExpiryDate);
@@ -258,7 +310,7 @@ export class TabSettingsPage {
           }  
       }
     );
-
+*/
 
     this.userSettingsModelv3 = JSON.parse('['+atob(localStorage.getItem("user_settings"))+']');
 
@@ -419,27 +471,6 @@ export class TabSettingsPage {
     );
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   onDarkModeEnable(data: any) {
     console.log('onDarkModeEnable');
     if (data == '1') {
@@ -486,10 +517,6 @@ export class TabSettingsPage {
         this.smsAdmitted = false;
         this.isset_smsAdmitted = false;
       }
-      
-
-
-
     });
   }
 
@@ -516,11 +543,7 @@ export class TabSettingsPage {
       sessionStorage.clear();
       localStorage.setItem('hasloggedin', '1');
 
-      this.router.navigate(['/login']).then( ()=>{
-        window.location.reload();
-      }
-        
-      );
+      this.router.navigate(['/login']);
     });
 
   }

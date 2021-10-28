@@ -1,12 +1,9 @@
-<ion-header mode="md" class="ion-no-border">
+<!--ion-header mode="md" class="ion-no-border">
   <ion-toolbar
     class="in-toolbar ios toolbar-title-default hydrated"
     color="mango"
   >
     <ion-title>         <ion-icon name="newspaper-outline"></ion-icon> News Feed</ion-title>
-    <!--ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
-      <ion-button (click)="closeModal()" routerDirection="back" class="ios button button-clear ion-activatable ion-focusable hydrated">Close</ion-button>
-    </ion-buttons-->
     <ion-buttons
       slot="end"
       class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated"
@@ -15,8 +12,55 @@
         >Close&nbsp; <ion-icon name="close-outline"></ion-icon
       ></ion-button>
     </ion-buttons>
+    
   </ion-toolbar>
+</ion-header-->
+
+<ion-header mode="md" class="ion-no-border" >
+  <ion-toolbar color="mango">
+    <span 
+    class="padding-left-10 buttonActive"         
+    routerDirection="backwards"
+    color="chh-css-primary2"
+
+    (click)="closeModal()">
+    <!-- <ion-icon 
+      name="chevron-back-outline" 
+      class="my-icon vcenter">
+    </ion-icon> -->
+    <ion-icon name="arrow-back-outline"  class="my-icon vcenter"></ion-icon>
+  </span>
+
+
+    <span  class="padding-left-30 font-weight-500 font-size-20"> &nbsp;&nbsp;Professional Fee </span>
+  </ion-toolbar>
+  <!-- <ion-toolbar color="mango">
+    <ion-title> Professional Fee </ion-title>
+    <ion-buttons
+      slot="end"
+      class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated"
+    >
+      <ion-button
+        routerLink="{{routerLinkBack}}"
+        routerDirection="backwards"
+        color="chh-css-primary2"
+        *ngIf="btnclose"
+        >Back
+        <ion-icon slot="start" name="arrow-back"></ion-icon>
+      </ion-button>
+
+      <ion-button
+        routerDirection="backwards"
+        color="chh-css-primary2"
+        *ngIf="!btnclose"
+        (click)="modifyProfFeeClose()"
+        >Back
+        <ion-icon slot="start" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar> -->
 </ion-header>
+
 <ion-content>
   <ion-grid class="ion-no-padding">
     <ion-row>
@@ -27,10 +71,7 @@
             <ion-card-title class="ion-text-wrap">{{data.title}}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            contentShortDesc<br />
-            <p [innerHTML]="data.contentShortDesc"></p>
-            <br /><br /><br />
-            contentLongDesc<br />
+
             <p [innerHTML]="data.contentLongDesc"></p>
           </ion-card-content>
           
