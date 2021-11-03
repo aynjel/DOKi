@@ -48,6 +48,10 @@ const routes: Routes = [
   {
     path: 'resetpassword',
     loadChildren: () => import('./pages/resetpassword/resetpassword.module').then( m => m.ResetpasswordPageModule)
+  },
+  {
+    path: 'administrator',
+    loadChildren: () => import('./pages/admin/tabs/tabs.module').then( m => m.TabsPageModule)
   },{
     path: '',
     canActivate:[IndexGuard], 
@@ -59,16 +63,7 @@ const routes: Routes = [
     path        : '**',
     pathMatch   : 'full',
     loadChildren: () => import('../app/chh-web-components/chh-app-error-404/chh-app-error-404.module').then( m => m.ChhAppError404PageModule)
-},
-  {
-    path: 'chh-app-terms-and-conditions',
-    loadChildren: () => import('./chh-web-components/chh-app-terms-and-conditions/chh-app-terms-and-conditions.module').then( m => m.ChhAppTermsAndConditionsPageModule)
-  },
-  {
-    path: 'transaction-summary',
-    loadChildren: () => import('./pages/in-patient-patient-information/transaction-summary/transaction-summary.module').then( m => m.TransactionSummaryPageModule)
-  }
-
+}
 
 
 

@@ -11,8 +11,36 @@ export class HomeGuard implements CanActivate {
   constructor(public storageService: StorageService, public router: Router) {}
   canActivate(): Promise<boolean> {
     return new Promise((resolve) => {
+      let userIdentifier1 = "";
+      let userIdentifier2 = "";
       this.storageService.get(AuthConstants.AUTH).then(
           (res) => {
+            res.roles.forEach(element => {
+              console.log(element);
+              if(element == 'Administrator'){
+                userIdentifier1 = 'Administrator';
+              }else if(element == 'MedicalConsultant'){
+                userIdentifier2 = 'MedicalConsultant';
+              }
+          });
+          if(userIdentifier1 == 'Administrator' ){
+            this.router.navigate(["/administrator"]);
+            resolve(false);
+          }else if (userIdentifier2 == 'MedicalConsultant'){
+            resolve(true);
+          }else{
+            this.router.navigate(["/"]);
+            resolve(false);
+          }
+          /*
+          if (userIdentifier  == 'Administrator') {
+            this.router.navigate(["/Administrator"]);
+            resolve(false);
+          } else {
+            this.router.navigate(["/"]);
+            resolve(false);
+          }*/
+            
             if (res) {
               resolve(true);
             } else {

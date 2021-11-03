@@ -137,12 +137,19 @@ export class LoginPage {
     this.loginModelv3.userNameOrEmail = this.postData.username;
     this.loginModelv3.password = this.postData.password;
     this.loginResponseModelv3 = new LoginResponseModelv3;
-    
+    let userIndentifier;
     this.doctorService.loginV3(this.loginModelv3).subscribe((res: any) => {
 
         this.loginResponseModelv3 = <LoginResponseModelv3>res;
         
-
+        if(this.loginResponseModelv3.isAuthenticated == true){
+          this.loginResponseModelv3.roles.forEach(element => {
+            if(element == 'Administrator'){
+              userIndentifier = 'Administrator';
+            }
+            
+          });
+        }
 
         
       },(error) => {
@@ -151,27 +158,29 @@ export class LoginPage {
        this.btnDisable = false;
       },() => {
         if(this.loginResponseModelv3.isAuthenticated == true){
-        this.loginResponseModelv3.roles.forEach(element => {
-          console.log(element);
-          if(element == 'Administrator'){
-            alert("Administrator");
+
+          if(userIndentifier == 'Administrator'){
             localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
             this.storageService.store(AuthConstants.AUTH, this.loginResponseModelv3);
-          }else if(element == 'MedicalConsultant'){
-            if(this.loginResponseModelv3.jwt != null){
-              localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
-            }        
-            if(this.loginResponseModelv3.isDefaultPasswordChanged){
-              this.getUserSettingsV3();
-            }else{
-              
-             //this.getUserSettingsV3();
-              this.updatePasswordV3();
-            }
+            this.getAppsettingsV3();
+            this.router.navigate(['/administrator']);
           }else{
-            
+            this.loginResponseModelv3.roles.forEach(element => {
+                if(this.loginResponseModelv3.jwt != null){
+                  localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
+                }        
+                if(this.loginResponseModelv3.isDefaultPasswordChanged){
+                  this.getUserSettingsV3();
+                }else{
+                  this.updatePasswordV3();
+                }
+ 
+            });
           }
-        });
+
+
+
+        
       }else{
         this.functionsService.alert(this.loginResponseModelv3.message,'Okay');
         this.btnDisable = false;
@@ -241,7 +250,30 @@ export class LoginPage {
       );
   }
 
-
+  getAppsettingsV3(){
+    this.doctorService.getAppSettingsV3().subscribe(
+      (resdata: any) => {
+        this.appSettingsModelv3 = <AppSettingsModelv3>resdata;
+        this.userSettingsModelv3 = <UserSettingsModelv3>resdata;
+        localStorage.setItem("user_settings",btoa(JSON.stringify(this.userSettingsModelv3)));
+        console.log(this.appSettingsModelv3);
+      },(error) => {
+         this.functionsService.sorryDoc();
+         this.btnDisable = false;
+        },
+        () => {
+          this.doctorService.insertUserSettingsV3(this.appSettingsModelv3).subscribe(
+            (resInsert: any) => {
+                console.log('insertUserSettingsV3 : '+resInsert);
+            },(error) => {
+               // this.functionsService.sorryDoc();
+            },() => {
+              //this.checkPrivacyPolicyV3();
+            }
+          );
+        }
+      );
+  }
     /*V3 App*/
   checkPrivacyPolicyV3() {
 

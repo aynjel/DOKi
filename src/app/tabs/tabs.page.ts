@@ -12,6 +12,7 @@ import { AuthService } from '../services/auth/auth.service';
 import { LoginData } from "../models/login-data.model";
 import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
 import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
+import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: "app-tabs",
   templateUrl: "tabs.page.html",
@@ -20,6 +21,7 @@ import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.
 export class TabsPage {
   public logindata: LoginResponseModelv3;
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
+  userData$ = new BehaviorSubject<any>([]);
   badgecount = 0;
   isDesktop: boolean;
   signalList: any = [];
@@ -97,13 +99,27 @@ export class TabsPage {
   }
 
   logout() {
-    this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
-      localStorage.clear();
-      localStorage.setItem('hasloggedin', '1');
-      //window.location.reload();
-      this.router.navigate(['/login']).then(()=>{
-        window.location.reload();
-      });
+    //this.revokeTokenV3 = new RevokeTokenV3();
+    //this.revokeTokenV3.jwt = localStorage.getItem("id_token");
+  
+
+      /*
+    this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
+      console.log(res);
     });
+    */
+
+ 
+    this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
+      this.userData$.next('');
+      localStorage.removeItem('_cap_userDataKey');
+      localStorage.removeItem('username');
+      localStorage.clear();
+      sessionStorage.clear();
+      localStorage.setItem('hasloggedin', '1');
+
+      this.router.navigate(['/login']);
+    });
+
   }
 }

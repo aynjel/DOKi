@@ -10,9 +10,18 @@ export class AdminGuard implements CanActivate {
   constructor(public storageService: StorageService, public router: Router) {}
   canActivate(): Promise<boolean> {
     return new Promise((resolve) => {
+      let userIdentifier;
       this.storageService.get(AuthConstants.AUTH).then(
           (res) => {
-            if (res) {
+
+            res.roles.forEach(element => {
+                console.log(element);
+                if(element == 'Administrator'){
+                  userIdentifier = 'Administrator';
+                }
+            });
+            
+            if (userIdentifier  == 'Administrator') {
               resolve(true);
             } else {
               this.router.navigate(["/"]);
