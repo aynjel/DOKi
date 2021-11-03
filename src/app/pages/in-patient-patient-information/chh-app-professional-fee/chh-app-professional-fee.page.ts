@@ -117,7 +117,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
   }
 
   ngOnInit() {
-
+    this.checkAppearance();
     let getValue = this.activatedRoute.snapshot.paramMap.get('state');
 
     this.initiateSession();
@@ -296,10 +296,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
   }
 
   checkAppearance() {
-    let d = new Date(this.data[0].admission_date);
-    this.dateAdmitted = d.toUTCString();
-    //console.log(this.dateAdmitted);
-    console.log('checkAppearance');
+
     var values = JSON.parse('[' + atob(localStorage.getItem("user_settings"))+ ']');
     let dr_username = atob(localStorage.getItem('username'));
     values.forEach(element => {

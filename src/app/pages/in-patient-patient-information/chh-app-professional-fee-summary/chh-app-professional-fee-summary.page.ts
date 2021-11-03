@@ -123,6 +123,8 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   }
 
   ngOnInit() {
+     this.checkAppearance();
+         console.log('checkAppearance');console.log('checkAppearance');console.log('checkAppearance');console.log('checkAppearance');console.log('checkAppearance');
     //this.postData = JSON.parse(atob(sessionStorage.getItem("postData"))) as InPatientData;
    // this.postData = JSON.parse(atob(localStorage.getItem('postData'))) as InPatientData;
     this.professionalFeeModelv3 = JSON.parse(atob(localStorage.getItem('postData1')));
@@ -214,39 +216,17 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   }
 
   checkAppearance() {
-    let d = new Date(this.data[0].admission_date);
-    this.dateAdmitted = d.toUTCString();
-    //console.log(this.dateAdmitted);
-
+    console.log('checkAppearance');
+    var values = JSON.parse('[' + atob(localStorage.getItem("user_settings"))+ ']');
     let dr_username = atob(localStorage.getItem('username'));
-    this.patientService
-      .getUserSettingsV2(dr_username)
-      .subscribe((res: any) => {
-        if (Object.keys(res).length >= 1) {
-          let data = JSON.stringify(res);
-          data = '[' + data + ']';
-          let adat = JSON.parse(data);
-          adat.forEach((el) => {
-            if (typeof el.appearance !== 'undefined') {
-              if (el.appearance.darkmode == 1) {
-                this.renderer.setAttribute(
-                  document.body,
-                  'color-theme',
-                  'dark'
-                );
-              } else {
-                this.renderer.setAttribute(
-                  document.body,
-                  'color-theme',
-                  'light'
-                );
-              }
-            } else {
-              this.renderer.setAttribute(document.body, 'color-theme', 'light');
-            }
-          });
-        }
-      });
+    values.forEach(element => {
+      console.log(element.darkmode);
+      if(element.darkmode == 1){
+        this.renderer.setAttribute(document.body,'color-theme','dark');
+      }else{
+        this.renderer.setAttribute(document.body,'color-theme','light');
+      }
+    });
   }
 
   initialize(data) {}

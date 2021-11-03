@@ -95,7 +95,7 @@ export class TabInPatientsPage {
   }
 
   ngOnInit() {
-
+    this.checkAppearance();
     this.$gaService.pageView('/In-Patient', 'In-Patient Tab');
   }
 
@@ -355,5 +355,47 @@ export class TabInPatientsPage {
     ) {
       this.router.navigate(['/menu/in-patients/DN']);
     }
+  }
+  checkAppearance() {
+    console.log('checkAppearance');
+    var values = JSON.parse('[' + atob(localStorage.getItem("user_settings"))+ ']');
+    let dr_username = atob(localStorage.getItem('username'));
+    values.forEach(element => {
+      console.log(element.darkmode);
+      if(element.darkmode == 1){
+        this.renderer.setAttribute(document.body,'color-theme','dark');
+      }else{
+        this.renderer.setAttribute(document.body,'color-theme','light');
+      }
+    });
+    
+   /* this.patientService
+      .getUserSettingsV2(dr_username)
+      .subscribe((res: any) => {
+        if (Object.keys(res).length >= 1) {
+          let data = JSON.stringify(res);
+          data = '[' + data + ']';
+          let adat = JSON.parse(data);
+          adat.forEach((el) => {
+            if (typeof el.appearance !== 'undefined') {
+              if (el.appearance.darkmode == 1) {
+                this.renderer.setAttribute(
+                  document.body,
+                  'color-theme',
+                  'dark'
+                );
+              } else {
+                this.renderer.setAttribute(
+                  document.body,
+                  'color-theme',
+                  'light'
+                );
+              }
+            } else {
+              this.renderer.setAttribute(document.body, 'color-theme', 'light');
+            }
+          });
+        }
+      });*/
   }
 }

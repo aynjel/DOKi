@@ -44,7 +44,7 @@ export class TabNewsFeedPage implements OnInit {
 
     private screensizeService: ScreenSizeService,
     private modalController: ModalController,
-    private doctorService: DoctorService
+    private doctorService: DoctorService,    private renderer: Renderer2
 
   ) {
     console.log('In-patient : Constructor');
@@ -59,7 +59,7 @@ export class TabNewsFeedPage implements OnInit {
   items = [];  
   numTimesLeft = 5;  
   ngOnInit() {
-
+    this.checkAppearance();
 
     this.doctorService.getNewsFeedV3().subscribe(
       (res: any) => {
@@ -123,5 +123,19 @@ export class TabNewsFeedPage implements OnInit {
       //location.reload();
       event.target.complete();
     }, 1000);
+  }
+  checkAppearance() {
+    console.log('checkAppearance');
+    var values = JSON.parse('[' + atob(localStorage.getItem("user_settings"))+ ']');
+    let dr_username = atob(localStorage.getItem('username'));
+    values.forEach(element => {
+      console.log(element.darkmode);
+      if(element.darkmode == 1){
+        this.renderer.setAttribute(document.body,'color-theme','dark');
+      }else{
+        this.renderer.setAttribute(document.body,'color-theme','light');
+      }
+    });
+   
   }
 }
