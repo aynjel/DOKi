@@ -5,6 +5,8 @@ import { AlertController, ModalController } from '@ionic/angular';
 import { FunctionsService } from 'src/app/shared/functions/functions.service';
 import { ForgotPasswordV3} from '../../models/doctor';
 import { DoctorService } from '../../services/doctor/doctor.service';
+import { environment } from '../../../environments/environment';
+import { Constants } from '../../shared/constants';
 @Component({
   selector: 'app-chh-app-forgot-password',
   templateUrl: './chh-app-forgot-password.component.html',
@@ -18,7 +20,8 @@ export class ChhAppForgotPasswordComponent implements OnInit {
     private doctorService: DoctorService,
     public functionsService: FunctionsService,
     private router: Router,
-    public alertController: AlertController
+    public alertController: AlertController,
+    public constants: Constants
     
     ) {  this.forgotPasswordV3 = new ForgotPasswordV3();}
 
@@ -32,7 +35,7 @@ export class ChhAppForgotPasswordComponent implements OnInit {
   }
   forgotpassword(){
     this.btnDisable = true;
-    this.forgotPasswordV3.clientURI = 'http://localhost:8100/resetpassword';
+    this.forgotPasswordV3.clientURI = environment.linkRouterUrl+'resetpassword';
     this.doctorService.forgotPasswordV3(this.forgotPasswordV3).subscribe((res: any) => {
       console.log(res);
       

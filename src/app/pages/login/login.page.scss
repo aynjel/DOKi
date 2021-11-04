@@ -4,7 +4,7 @@ ion-content {
   #header {
     height: 33%;
     // background: #275228; 
-    background: linear-gradient(120deg, rgba(0,148,68,1) 25%, rgba(39,82,40,1) 100%);
+    background: linear-gradient(120deg, rgb(56, 119, 57) 25%, rgb(39, 83, 40) 100%);
     border-radius: 0 0 20px 20px;
     display: flex;
     flex-direction: column;
@@ -80,4 +80,8 @@ ion-content {
       }
     }
   }
+}
+
+.cs-wrapper {
+  --background: #e0dfe6;
 }

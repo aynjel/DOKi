@@ -70,6 +70,10 @@
         </ion-button>
 
 
+          <p align="justify" class="fontSize-12"    (click)="forgotpassword()">
+            Forgot Password
+          </p>
+ 
    
 
 
@@ -82,5 +86,25 @@
   </ion-col>
 </ion-row>
 </ion-grid>
+
   </div>
 </ion-content>
+<ion-item class="cs-wrapper">
+  <p align="justify" class="fontSize-12">
+    {{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO}} (<b
+      ><a href="tel: +63322338000"
+        >{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_TELEPHONE}}</a
+      ></b
+    >). <br />
+    <br />{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_APP_VERSION}}
+    {{this.constants.DOCTOR_PORTAL__VALUE__VERSION}}
+  </p>
+</ion-item>
+<ion-footer class="ion-no-border">
+  
+
+  <ion-item lines="none" class="fontSize-12">
+    <ion-label>( Made by Chong Hua for Chong Hua )</ion-label>
+  </ion-item>
+</ion-footer>
+
