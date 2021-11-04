@@ -94,8 +94,10 @@ export class LoginPage {
   }
 
   public postData = {
-    username: 'PGALBO',
-    password: '@Dell150790',
+    username: '',
+    password: '',
+    // username: 'PGALBO',
+    // password: '@Dell150790',
   };
 
   btnDisable: boolean = false;
