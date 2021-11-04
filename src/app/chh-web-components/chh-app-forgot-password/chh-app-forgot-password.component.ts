@@ -36,18 +36,21 @@ export class ChhAppForgotPasswordComponent implements OnInit {
   forgotpassword(){
     this.btnDisable = true;
     this.forgotPasswordV3.clientURI = environment.linkRouterUrl+'resetpassword';
-    this.doctorService.forgotPasswordV3(this.forgotPasswordV3).subscribe((res: any) => {
-      console.log(res);
-      
-    },(error) => {
-      this.btnDisable = false;
-    },() => {
-      this.btnDisable = false;
-      this.alert('We have received your request, Kindly check your E-mail','Okay');
-
-    }
-    );
+    console.log(this.forgotPasswordV3);
     
+    if(this.forgotPasswordV3.doctorCode == null || this.forgotPasswordV3.email == null){
+      this.alert('Email and Doctor Code is needed to recover your access','Okay');
+    }else{
+      this.doctorService.forgotPasswordV3(this.forgotPasswordV3).subscribe(
+        (res: any) => {
+        },(error) => {
+          this.btnDisable = false;
+        },() => {
+          this.btnDisable = false;
+          this.alert('We have received your request, Kindly check your E-mail','Okay');
+        }
+      );
+    }
   }
   async alert(data1: any, data2: any) {
     const alert = await this.alertController.create({
