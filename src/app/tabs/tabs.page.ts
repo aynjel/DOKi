@@ -109,7 +109,7 @@ export class TabsPage {
  
     //this.revokeTokenV3 = new RevokeTokenV3();
     //this.revokeTokenV3.jwt = localStorage.getItem("id_token");
-    console.log('Logging out -- 1');
+    console.log('Logging out');
     
     console.log(this.functionsService.get('refreshToken'));
 
