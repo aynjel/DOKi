@@ -64,11 +64,7 @@ const routes: Routes = [
     pathMatch   : 'full',
     loadChildren: () => import('../app/chh-web-components/chh-app-error-404/chh-app-error-404.module').then( m => m.ChhAppError404PageModule)
 }
-// ,
-//   {
-//     path: 'chh-app-login-v2',
-//     loadChildren: () => import('./src/app/chh-web-components/chh-app-login-v2/chh-app-login-v2.module').then( m => m.ChhAppLoginV2PageModule)
-//   }
+
 
 
 
