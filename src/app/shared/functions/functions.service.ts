@@ -4,14 +4,22 @@ import { Constants } from '../constants';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import * as bcrypt from 'bcryptjs';
+import { Inject, PLATFORM_ID, InjectionToken, Component } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 @Injectable({
   providedIn: 'root',
 })
 export class FunctionsService {
+  private readonly documentIsAccessible: boolean;
   constructor(
     public alertController: AlertController,
-    public constants: Constants
-  ) {}
+    public constants: Constants,
+    @Inject( DOCUMENT ) private document: any,
+    @Inject( PLATFORM_ID ) private platformId: InjectionToken<Object>
+  ) {
+
+    this.documentIsAccessible = isPlatformBrowser( this.platformId );
+  }
 
   /**
    * Alert
@@ -242,5 +250,37 @@ export class FunctionsService {
   
   isEmptyObject(obj) {
     return !Object.keys(obj).length;
+  }
+
+
+
+  check( name: string ): boolean {
+    if ( !this.documentIsAccessible ) {
+      return false;
+    }
+
+    name = encodeURIComponent( name );
+
+    const regExp: RegExp = this.getCookieRegExp( name );
+    const exists: boolean = regExp.test( this.document.cookie );
+
+    return exists;
+  }
+  get( name: string ): string {
+    if ( this.documentIsAccessible && this.check( name ) ) {
+      name = encodeURIComponent( name );
+
+      const regExp: RegExp = this.getCookieRegExp( name );
+      const result: RegExpExecArray = regExp.exec( this.document.cookie );
+
+      return decodeURIComponent( result[ 1 ] );
+    } else {
+      return '';
+    }
+  }
+  private getCookieRegExp( name: string ): RegExp {
+    const escapedName: string = name.replace( /([\[\]\{\}\(\)\|\=\;\+\?\,\.\*\^\$])/ig, '\\$1' );
+
+    return new RegExp( '(?:^' + escapedName + '|;\\s*' + escapedName + ')=(.*?)(?:;|$)', 'g' );
   }
 }

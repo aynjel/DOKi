@@ -12,7 +12,7 @@ import { StorageService } from '../storage/storage.service';
 import { AuthConstants, Consta } from '../../config/auth-constants';
 
 import { BehaviorSubject } from 'rxjs';
-import { CookieService } from 'ngx-cookie-service';
+
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   userData$ = new BehaviorSubject<any>([]);
@@ -21,8 +21,7 @@ export class AuthInterceptor implements HttpInterceptor {
     public alertController: AlertController,
     public router: Router,
     private doctorService: DoctorService,
-    private storageService: StorageService,
-    private cookieService: CookieService) { }
+    private storageService: StorageService) { }
     modaled:any;
     jwthas:any;
     public revokeTokenV3: RevokeTokenV3; 
@@ -160,7 +159,7 @@ export class AuthInterceptor implements HttpInterceptor {
       await alert.present();
     }
     logout(){
-      this.revokeTokenV3.jwt = this.cookieService.get('refreshToken');
+      this.revokeTokenV3.jwt = "";
       this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
         console.log(res);
       });
