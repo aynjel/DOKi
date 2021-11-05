@@ -113,6 +113,12 @@ export class TabsPage {
     console.log(this.functionsService.get('refreshToken'));
     
 
+    const _name = 'refreshToken';
+    let value = `; ${document.cookie}`.match(`;\\s*${_name}=([^;]+)`);
+
+    console.log(value);
+    
+
     this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
       console.log(res);
     });
