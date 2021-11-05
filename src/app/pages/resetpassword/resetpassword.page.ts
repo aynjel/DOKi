@@ -219,6 +219,7 @@ export class ResetpasswordPage implements OnInit {
       let myDiv2 = document.getElementById('pWord2');
       myDiv1.style.color = 'red';
       myDiv2.style.color = 'red';
+      this.btnDisable = false;
     } else {
 
       this.errMessage = '';
@@ -249,6 +250,12 @@ export class ResetpasswordPage implements OnInit {
 
           },
           (error) => {
+            this.btnDisable = false;
+            this.modalUpdate(
+              this.constants.UI_COMPONENT_TEXT_VALUE_PASSWORD_FAILED_TITLE,
+              this.constants.UI_COMPONENT_TEXT_VALUE_UPDATE_PASSWORD_FAILED_BODY,
+              true
+            );
           },
           () => {
             this.modalUpdate(
