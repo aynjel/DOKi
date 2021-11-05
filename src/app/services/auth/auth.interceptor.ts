@@ -58,6 +58,8 @@ export class AuthInterceptor implements HttpInterceptor {
                 this.jwthas = localStorage.getItem("jwthas");
 
                   if(error.status == 401 && this.modaled != '1'){
+                    console.log('jwthas = '+this.jwthas);
+                    
                     if(this.jwthas == '1'){
                       console.log("jwt has = 1");
                       
@@ -153,21 +155,29 @@ export class AuthInterceptor implements HttpInterceptor {
     }
     logout(){
       this.revokeTokenV3.jwt = this.functionsService.get('refreshToken');
-
-      this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
-        console.log(res);
-      });
+      localStorage.setItem("torevoketoken","1");
+      this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe(
+        (res: any) => {
+          console.log(res);
+        },(error) => {
       
-      this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
-        this.userData$.next('');
-        localStorage.removeItem('_cap_userDataKey');
-        localStorage.removeItem('username');
-        localStorage.clear();
-        sessionStorage.clear();
-        localStorage.setItem('hasloggedin', '1');
-  
-        this.router.navigate(['/login']);
-      });
+         },
+         () => {
+
+          this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
+            this.userData$.next('');
+            localStorage.removeItem('_cap_userDataKey');
+            localStorage.removeItem('username');
+            localStorage.clear();
+            sessionStorage.clear();
+            localStorage.setItem('hasloggedin', '1');
+      
+            this.router.navigate(['/login']);
+          });
+         }
+      );
+      
+      
     }
 
 
