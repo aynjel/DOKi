@@ -56,8 +56,11 @@ export class AuthInterceptor implements HttpInterceptor {
 
                   if(error.status == 401 && this.modaled != '1'){
                     if(this.jwthas == '1'){
+                      console.log("jwt has = 1");
+                      
                       this.logout();
                     }else{
+                      console.log("show pop-up");
                       this.timerExpired();
                       localStorage.setItem("modaled","1");
                       localStorage.setItem("jwthas","1");
@@ -68,6 +71,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
            
         }else{
+          return next.handle(req);
+          /*
             return next.handle(req).pipe(
               map((event: HttpEvent<any>) => {
                   if (event instanceof HttpResponse) {
@@ -90,7 +95,7 @@ export class AuthInterceptor implements HttpInterceptor {
                     }
                  // console.log(error.status);
                   return throwError(error);
-              }));
+              }));*/
         }
     }
 
