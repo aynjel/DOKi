@@ -12,6 +12,7 @@ import { StorageService } from '../storage/storage.service';
 import { AuthConstants, Consta } from '../../config/auth-constants';
 
 import { BehaviorSubject } from 'rxjs';
+import { FunctionsService } from 'src/app/shared/functions/functions.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -21,7 +22,8 @@ export class AuthInterceptor implements HttpInterceptor {
     public alertController: AlertController,
     public router: Router,
     private doctorService: DoctorService,
-    private storageService: StorageService) { }
+    private storageService: StorageService,
+    public functionsService: FunctionsService) { }
     modaled:any;
     jwthas:any;
     public revokeTokenV3: RevokeTokenV3; 
@@ -116,6 +118,13 @@ export class AuthInterceptor implements HttpInterceptor {
             // role: 'cancel',
             cssClass: 'secondary',
             handler: () => {
+              this.revokeTokenV3 = new RevokeTokenV3(); 
+              this.revokeTokenV3.jwt = this.functionsService.get('refreshToken');
+          
+              this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
+                console.log(res);
+              });
+              
               localStorage.setItem("modaled","0");
               localStorage.clear();
               localStorage.setItem('hasloggedin', '1');
@@ -140,6 +149,13 @@ export class AuthInterceptor implements HttpInterceptor {
                 window.location.reload();
                
               },(error) =>{
+                this.revokeTokenV3 = new RevokeTokenV3(); 
+                this.revokeTokenV3.jwt = this.functionsService.get('refreshToken');
+            
+                this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
+                  console.log(res);
+                });
+                
                 localStorage.setItem("modaled","0");
                 
                 localStorage.clear();

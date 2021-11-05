@@ -525,15 +525,12 @@ export class TabSettingsPage {
 
   logout() {
     this.revokeTokenV3 = new RevokeTokenV3(); 
-    this.revokeTokenV3.jwt = "";
-  
+    this.revokeTokenV3.jwt = this.functionsService.get('refreshToken');
 
-      
     this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
       console.log(res);
     });
     
-
  
     this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
       this.userData$.next('');
