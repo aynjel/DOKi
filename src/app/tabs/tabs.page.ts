@@ -4,7 +4,7 @@ import { ScreenSizeService } from "../services/screen-size/screen-size.service";
 import { StorageService } from "../services/storage/storage.service";
 import { AuthConstants } from "../config/auth-constants";
 import { Constants } from "../shared/constants";
-import { CookieService } from "../shared/cookie.service"; 
+
 import { FunctionsService } from "../shared/functions/functions.service"
 import { Route } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
