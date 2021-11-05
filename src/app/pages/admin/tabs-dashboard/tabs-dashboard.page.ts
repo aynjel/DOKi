@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Constants } from '../../../shared/constants';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
+import { DoctorService } from 'src/app/services/doctor/doctor.service';
 
 @Component({
   selector: 'app-tabs-dashboard',
@@ -17,7 +18,8 @@ export class TabsDashboardPage implements OnInit {
   constructor(    private storageService: StorageService,
     private router: Router,
     public constants: Constants,
-    private screensizeService: ScreenSizeService
+    private screensizeService: ScreenSizeService,
+    private doctorService: DoctorService
     ) { 
 
       this.screensizeService.isDesktopView().subscribe((isDesktop) => {
@@ -34,5 +36,9 @@ export class TabsDashboardPage implements OnInit {
 
   ngOnInit() {
   }
-
+  checkInput(){
+    this.doctorService.refreshTokenV3().subscribe((res: any) => {
+      console.log(res);
+    });
+  }
 }

@@ -39,7 +39,7 @@ export class ChhAppForgotPasswordComponent implements OnInit {
     console.log(this.forgotPasswordV3);
     
     if(this.forgotPasswordV3.doctorCode == null || this.forgotPasswordV3.email == null){
-      this.alert('Email and Doctor Code is needed to recover your access','Okay');
+      this.alert('Email and Doctor Code are needed to recover your access.','Okay');
     }else{
       this.doctorService.forgotPasswordV3(this.forgotPasswordV3).subscribe(
         (res: any) => {
@@ -47,7 +47,7 @@ export class ChhAppForgotPasswordComponent implements OnInit {
           this.btnDisable = false;
         },() => {
           this.btnDisable = false;
-          this.alert('We have received your request, Kindly check your E-mail','Okay');
+          this.alert('We have received your request. Kindly check your email.','Okay');
         }
       );
     }

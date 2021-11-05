@@ -10,6 +10,11 @@ import { Constants } from './shared/constants';
 import { Messages } from '../app/shared/messages';
 import { UserIdleService } from 'angular-user-idle';
 import { Router } from '@angular/router';
+import {UserSettingsModelv3,LoginResponseModelv3,RevokeTokenV3} from 'src/app/models/doctor';
+import { DoctorService } from './services/doctor/doctor.service';
+import { StorageService } from './services/storage/storage.service';
+import { AuthConstants, Consta } from './config/auth-constants';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -28,13 +33,17 @@ export class AppComponent {
     public constants: Constants,
     public messages: Messages,
     private userIdle: UserIdleService,
-    public router: Router
+    public router: Router,
+    private doctorService: DoctorService,
+    private storageService: StorageService
   ) {
     this.initializeApp();
     this.updateClient();
   }
-
+  userData$ = new BehaviorSubject<any>([]);
+  public revokeTokenV3: RevokeTokenV3; 
   initializeApp() {
+    this.revokeTokenV3 = new RevokeTokenV3();
     console.log("initializeApp");
     
     this.platform.ready().then(() => {
@@ -112,12 +121,7 @@ export class AppComponent {
           // role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            localStorage.clear();
-            localStorage.setItem('hasloggedin', '1');
-            this.alertController.dismiss();
-            this.router.navigate(['/login']).then(() => {
-              window.location.reload();
-            });
+            this.logout();
           },
         },
         {
@@ -147,7 +151,32 @@ export class AppComponent {
     });
     await alert.present();
   }
+  logout(){
+    this.revokeTokenV3.jwt = this.functionsService.get('refreshToken');
+    localStorage.setItem("torevoketoken","1");
+    this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe(
+      (res: any) => {
+        console.log(res);
+      },(error) => {
+    
+       },
+       () => {
 
+        this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
+          this.userData$.next('');
+          localStorage.removeItem('_cap_userDataKey');
+          localStorage.removeItem('username');
+          localStorage.clear();
+          sessionStorage.clear();
+          localStorage.setItem('hasloggedin', '1');
+    
+          this.router.navigate(['/login']);
+        });
+       }
+    );
+    
+    
+  }
   @HostListener('window:resize', ['$event'])
   private onResize(event) {
     this.screensizeService.onResize(event.target.innerWidth);

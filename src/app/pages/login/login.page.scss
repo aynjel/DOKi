@@ -4,7 +4,8 @@ ion-content {
   #header {
     height: 33%;
     // background: #275228; 
-    background: linear-gradient(120deg, rgb(56, 119, 57) 25%, rgb(39, 83, 40) 100%);
+    // background: linear-gradient(160deg, rgb(56, 119, 57) 25%, rgb(39, 83, 40) 100%);
+    background: linear-gradient(180deg, rgba(39,82,40,1) 0%, rgba(0,148,68,1) 100%);
     border-radius: 0 0 20px 20px;
     display: flex;
     flex-direction: column;
@@ -35,7 +36,7 @@ ion-content {
 
     h1 {
       font-size: 19px;
-      margin-bottom: 0px; // 5px
+      margin-bottom: 5px; // 5px
     }
 
     p {
@@ -80,6 +81,11 @@ ion-content {
       }
     }
   }
+
+  // ion-label {
+  //   font-size: 12px;
+  //   font-weight: 600;
+  // }
 }
 
 .cs-wrapper {

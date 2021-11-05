@@ -4,15 +4,19 @@ import { ScreenSizeService } from "../services/screen-size/screen-size.service";
 import { StorageService } from "../services/storage/storage.service";
 import { AuthConstants } from "../config/auth-constants";
 import { Constants } from "../shared/constants";
+
 import { FunctionsService } from "../shared/functions/functions.service"
 import { Route } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
 import { PatientService } from '../services/patient/patient.service';
 import { AuthService } from '../services/auth/auth.service';
 import { LoginData } from "../models/login-data.model";
-import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
+import {UserSettingsModelv3,LoginResponseModelv3,RevokeTokenV3} from 'src/app/models/doctor';
 import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
 import { BehaviorSubject } from 'rxjs';
+import { DoctorService } from "../services/doctor/doctor.service";
+
+
 @Component({
   selector: "app-tabs",
   templateUrl: "tabs.page.html",
@@ -27,6 +31,7 @@ export class TabsPage {
   signalList: any = [];
   dr_code;
   dr_username;
+  public revokeTokenV3: RevokeTokenV3; 
   constructor(
     private screensizeService: ScreenSizeService,
     private storageService: StorageService,
@@ -35,7 +40,8 @@ export class TabsPage {
     public functionsService: FunctionsService,
     public router:Router,
     private patientService:PatientService,
-    private authService: AuthService
+    private authService: AuthService,
+    private doctorService: DoctorService
   ) {
 
     localStorage.setItem("modaled","0");
@@ -99,15 +105,20 @@ export class TabsPage {
   }
 
   logout() {
+    this.revokeTokenV3 = new RevokeTokenV3();
+ 
     //this.revokeTokenV3 = new RevokeTokenV3();
     //this.revokeTokenV3.jwt = localStorage.getItem("id_token");
-  
+    console.log('Logging out');
+    
+    console.log(this.functionsService.get('refreshToken'));
 
-      /*
+    this.revokeTokenV3.jwt = this.functionsService.get('refreshToken');
+
     this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
       console.log(res);
     });
-    */
+    
 
  
     this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
