@@ -124,21 +124,25 @@ export class AuthInterceptor implements HttpInterceptor {
           {
             text: 'Keep me in',
             handler: () => {
+              let xdata : any;
               /*this.alertController.dismiss();*/
               //this.userIdle.stopTimer();
-        
-          
+              
+              console.log('call refresh token');
+              
               this.doctorService.refreshTokenV3().subscribe(
               (res: any) => {
-                console.log(res.jwt);
-                localStorage.setItem("id_token",res.jwt);
-                localStorage.setItem("modaled","0");
-                window.location.reload();
+                xdata=res;
+
                
               },(error) =>{
                 this.logout();
               }, () => {
-
+                console.log('refresh token response');
+                console.log(xdata.jwt);
+                localStorage.setItem("id_token",xdata.jwt);
+                localStorage.setItem("modaled","0");
+                window.location.reload();
               });
               
             },
