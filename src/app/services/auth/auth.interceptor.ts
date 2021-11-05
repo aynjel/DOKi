@@ -120,7 +120,8 @@ export class AuthInterceptor implements HttpInterceptor {
         
           
               this.doctorService.refreshTokenV3().subscribe((res: any) => {
-                console.log(res);
+                console.log(res.jwt);
+                localStorage.setItem("id_token",res.jwt);
               });
               localStorage.setItem("modaled","0");
             },
