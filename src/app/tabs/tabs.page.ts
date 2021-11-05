@@ -4,6 +4,7 @@ import { ScreenSizeService } from "../services/screen-size/screen-size.service";
 import { StorageService } from "../services/storage/storage.service";
 import { AuthConstants } from "../config/auth-constants";
 import { Constants } from "../shared/constants";
+import { CookieService } from "../shared/cookie.service"; 
 import { FunctionsService } from "../shared/functions/functions.service"
 import { Route } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
@@ -36,6 +37,7 @@ export class TabsPage {
     private storageService: StorageService,
     private renderer: Renderer2,
     public constants: Constants,
+    public cookieService:CookieService,
     public functionsService: FunctionsService,
     public router:Router,
     private patientService:PatientService,
@@ -108,9 +110,11 @@ export class TabsPage {
     this.revokeTokenV3.jwt = "";
     //this.revokeTokenV3 = new RevokeTokenV3();
     //this.revokeTokenV3.jwt = localStorage.getItem("id_token");
-    console.log('Logging out');
+    console.log('Logging out -- 1');
     
     console.log(this.functionsService.get('refreshToken'));
+    console.log('Logging out -- 2');
+    console.log(this.cookieService.getCookie('refreshToken'));
     
 
     const _name = 'refreshToken';
