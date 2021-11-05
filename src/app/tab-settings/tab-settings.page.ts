@@ -8,7 +8,7 @@ import { PatientService } from '../services/patient/patient.service';
 import { LoginData } from '../models/login-data.model';
 import { ProfileExpiry } from '../models/doctor';
 
-
+import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject } from 'rxjs';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Constants } from '../shared/constants';
@@ -92,7 +92,8 @@ export class TabSettingsPage {
     private actionSheetController: ActionSheetController,
     private patientService: PatientService,
     public alertController: AlertController,
-    private doctorService: DoctorService
+    private doctorService: DoctorService,
+    private cookieService: CookieService
   ) {
     this.privacyPolicy = true;
 
@@ -524,8 +525,8 @@ export class TabSettingsPage {
   
 
   logout() {
-    this.revokeTokenV3 = new RevokeTokenV3();
-    this.revokeTokenV3.jwt = localStorage.getItem("id_token");
+    this.revokeTokenV3 = new RevokeTokenV3(); 
+    this.revokeTokenV3.jwt = this.cookieService.get('refreshToken');
   
 
       

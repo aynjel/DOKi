@@ -14,6 +14,7 @@ import {UserSettingsModelv3,LoginResponseModelv3,RevokeTokenV3} from 'src/app/mo
 import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
 import { BehaviorSubject } from 'rxjs';
 import { DoctorService } from "../services/doctor/doctor.service";
+import { CookieService } from "ngx-cookie-service";
 
 @Component({
   selector: "app-tabs",
@@ -39,7 +40,8 @@ export class TabsPage {
     public router:Router,
     private patientService:PatientService,
     private authService: AuthService,
-    private doctorService: DoctorService
+    private doctorService: DoctorService,
+    private cookieService: CookieService
   ) {
 
     localStorage.setItem("modaled","0");
@@ -104,7 +106,7 @@ export class TabsPage {
 
   logout() {
     this.revokeTokenV3 = new RevokeTokenV3();
-    this.revokeTokenV3.jwt = localStorage.getItem("id_token");
+    this.revokeTokenV3.jwt = this.cookieService.get('refreshToken');
     //this.revokeTokenV3 = new RevokeTokenV3();
     //this.revokeTokenV3.jwt = localStorage.getItem("id_token");
   
