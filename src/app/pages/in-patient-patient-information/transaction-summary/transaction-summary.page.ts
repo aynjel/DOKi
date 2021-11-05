@@ -249,6 +249,8 @@ export class TransactionSummaryPage implements OnInit {
       console.log(JSON.stringify(this.professionalFeeModelv3));
       this.doctorService.insertPFV3(this.professionalFeeModelv3).subscribe(
         (res: any) => {
+          console.log(res);
+          
           if (res == true) {
             this.modalUpdate(
               'SUCCESS',

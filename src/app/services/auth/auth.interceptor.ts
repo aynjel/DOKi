@@ -40,8 +40,7 @@ export class AuthInterceptor implements HttpInterceptor {
                     //console.log('event--->>>', event);
                 }
                 return event;
-            }),
-            catchError((error: HttpErrorResponse) => {
+            }),catchError((error: HttpErrorResponse) => {
                 /*let data = {};
                 data = {
                     reason: error && error.error && error.error.reason ? error.error.reason : '',
@@ -69,13 +68,6 @@ export class AuthInterceptor implements HttpInterceptor {
                   return event;
               }),
               catchError((error: HttpErrorResponse) => {
-                  /*let data = {};
-                  data = {
-                      reason: error && error.error && error.error.reason ? error.error.reason : '',
-                      status: error.status
-                  };
-                  this.errorDialogService.openDialog(data);*/
-                  //console.log('error 401 : token expired --> Jessie');
                   this.modaled = localStorage.getItem("modaled");
                   if(error.status == 401 && this.modaled != '1'){
                     this.timerExpired();
@@ -119,11 +111,24 @@ export class AuthInterceptor implements HttpInterceptor {
               //this.userIdle.stopTimer();
         
           
-              this.doctorService.refreshTokenV3().subscribe((res: any) => {
+              this.doctorService.refreshTokenV3().subscribe(
+              (res: any) => {
                 console.log(res.jwt);
                 localStorage.setItem("id_token",res.jwt);
+                localStorage.setItem("modaled","0");
+                window.location.reload();
+              },(error) =>{
+                localStorage.setItem("modaled","0");
+                localStorage.clear();
+                localStorage.setItem('hasloggedin', '1');
+                this.alertController.dismiss();
+                this.router.navigate(['/login']).then(() => {
+                  window.location.reload();
+                });
+              }, () => {
+
               });
-              localStorage.setItem("modaled","0");
+              
             },
           },
         ],
