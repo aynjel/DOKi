@@ -5,8 +5,11 @@
     </div-->
 
     <div id="logo">
-      <h1>DOKi <br /> <p>v{{this.constants.DOCTOR_PORTAL__VALUE__VERSION}}</p></h1>
-      
+      <h1>
+        DOKi <br />
+        <p>v{{this.constants.DOCTOR_PORTAL__VALUE__VERSION}}</p>
+      </h1>
+
       <!-- <p>v{{this.constants.DOCTOR_PORTAL__VALUE__VERSION}}</p> -->
       <img src="assets/img/doctors-rafiki-simple-wo-shadow.svg" alt="doctors" />
     </div>
@@ -18,93 +21,86 @@
     </p> -->
   </div>
 
-  <div class="wrapper" >
+  <div class="wrapper">
     <ion-grid>
       <ion-row>
-        <ion-col size-lg="4" offset-lg="4 " size-md="8" offset-md="2 " size-sm="6" size="12" class="my-custom-slider ">
+        <ion-col
+          size-lg="4"
+          offset-lg="4 "
+          size-md="4"
+          offset-md="4 "
+          size-sm="6"
+          size="12"
+          class="my-custom-slider"
+        >
+          <ion-card class="form-wrapper">
+            <ion-card-content>
+              <ion-item>
+                <ion-icon name="mail"></ion-icon>
+                <ion-input
+                  type="text"
+                  placeholder="Username or Email"
+                  id="input-username"
+                  [(ngModel)]="postData.username"
+                >
+                </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-icon name="lock-closed"></ion-icon>
+                <ion-input
+                  type="password"
+                  placeholder="Password"
+                  id="input-password"
+                  [type]="getType()"
+                  (keyup.enter)="checkInput()"
+                  [(ngModel)]="postData.password"
+                >
+                </ion-input>
+                <ion-icon
+                  name="eye-off-outline"
+                  [name]="getName()"
+                  item-right
+                  (click)="showPassword()"
+                  class="rectangle"
+                ></ion-icon>
+              </ion-item>
+              <ion-button
+                expand="block"
+                id="btn-confirm"
+                (click)="checkInput()"
+                disabled="{{btnDisable}}"
+                ><div *ngIf="!btnDisable">
+                  {{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN.toUpperCase()}}
+                </div>
+                <span *ngIf="!btnDisable"></span
+                ><ion-spinner *ngIf="btnDisable"></ion-spinner>
+              </ion-button>
 
-
-    <ion-card class="form-wrapper">
-      <ion-card-content>
-
-
-        <ion-item>
-          <ion-icon name="mail"></ion-icon>
-          <ion-input
-            type="text"
-            placeholder="Username or Email"
-            id="input-username"
-            [(ngModel)]="postData.username"
-          >
-          </ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="lock-closed"></ion-icon>
-          <ion-input
-            type="password"
-            placeholder="Password"
-            id="input-password"
-            [type]="getType()"
-            (keyup.enter)="checkInput()"
-            [(ngModel)]="postData.password"
-          >
-          </ion-input>
-          <ion-icon
-            name="eye-off-outline"
-            [name]="getName()"
-            item-right
-            (click)="showPassword()"
-            class="rectangle"
-          ></ion-icon>
-        </ion-item>
-        <ion-button
-          expand="block"
-          id="btn-confirm"
-          (click)="checkInput()"
-          disabled="{{btnDisable}}"
-          ><div *ngIf="!btnDisable">
-            {{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN.toUpperCase()}}
-          </div>
-          <span *ngIf="!btnDisable"></span
-          ><ion-spinner *ngIf="btnDisable"></ion-spinner>
-        </ion-button>
-
-
-          <p align="justify" class="fontSize-12"    (click)="forgotpassword()">
-            Forgot Password
-          </p>
- 
-   
-
-
-      </ion-card-content>
-
-
-
-
-    </ion-card>
-  </ion-col>
-</ion-row>
-</ion-grid>
-
+              <br />
+              <p align="center" class="fontSize-12" (click)="forgotpassword()">
+                Don't remember your password?
+              </p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
 </ion-content>
 <ion-item class="cs-wrapper">
   <p align="justify" class="fontSize-12">
-    {{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO}} (<b
+    {{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO}} <br />(<b
       ><a href="tel: +63322338000"
         >{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_TELEPHONE}}</a
       ></b
-    >). <br />
+    >). 
+    <!-- <br />
     <br />{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_APP_VERSION}}
-    {{this.constants.DOCTOR_PORTAL__VALUE__VERSION}}
+    {{this.constants.DOCTOR_PORTAL__VALUE__VERSION}} -->
   </p>
 </ion-item>
 <ion-footer class="ion-no-border">
-  
-
   <ion-item lines="none" class="fontSize-12">
-    <ion-label>( Made by Chong Hua for Chong Hua )</ion-label>
+    <ion-label class="ion-text-center">( Made by Chong Hua for Chong Hua )</ion-label>
   </ion-item>
 </ion-footer>
-
