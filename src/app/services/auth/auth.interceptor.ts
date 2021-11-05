@@ -118,20 +118,7 @@ export class AuthInterceptor implements HttpInterceptor {
             // role: 'cancel',
             cssClass: 'secondary',
             handler: () => {
-              this.revokeTokenV3 = new RevokeTokenV3(); 
-              this.revokeTokenV3.jwt = this.functionsService.get('refreshToken');
-          
-              this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
-                console.log(res);
-              });
-              
-              localStorage.setItem("modaled","0");
-              localStorage.clear();
-              localStorage.setItem('hasloggedin', '1');
-              this.alertController.dismiss();
-              this.router.navigate(['/login']).then(() => {
-                window.location.reload();
-              });
+              this.logout();
             },
           },
           {
@@ -149,21 +136,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 window.location.reload();
                
               },(error) =>{
-                this.revokeTokenV3 = new RevokeTokenV3(); 
-                this.revokeTokenV3.jwt = this.functionsService.get('refreshToken');
-            
-                this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
-                  console.log(res);
-                });
-                
-                localStorage.setItem("modaled","0");
-                
-                localStorage.clear();
-                localStorage.setItem('hasloggedin', '1');
-                this.alertController.dismiss();
-                this.router.navigate(['/login']).then(() => {
-                  window.location.reload();
-                });
+                this.logout();
               }, () => {
 
               });
@@ -175,10 +148,12 @@ export class AuthInterceptor implements HttpInterceptor {
       await alert.present();
     }
     logout(){
-      this.revokeTokenV3.jwt = "";
+      this.revokeTokenV3.jwt = this.functionsService.get('refreshToken');
+
       this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
         console.log(res);
       });
+      
       this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
         this.userData$.next('');
         localStorage.removeItem('_cap_userDataKey');
