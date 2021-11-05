@@ -37,7 +37,6 @@ export class TabsPage {
     private storageService: StorageService,
     private renderer: Renderer2,
     public constants: Constants,
-    public cookieService:CookieService,
     public functionsService: FunctionsService,
     public router:Router,
     private patientService:PatientService,
@@ -107,21 +106,14 @@ export class TabsPage {
 
   logout() {
     this.revokeTokenV3 = new RevokeTokenV3();
-    this.revokeTokenV3.jwt = "";
+ 
     //this.revokeTokenV3 = new RevokeTokenV3();
     //this.revokeTokenV3.jwt = localStorage.getItem("id_token");
     console.log('Logging out -- 1');
     
     console.log(this.functionsService.get('refreshToken'));
-    console.log('Logging out -- 2');
-    console.log(this.cookieService.getCookie('refreshToken'));
-    
 
-    const _name = 'refreshToken';
-    let value = `; ${document.cookie}`.match(`;\\s*${_name}=([^;]+)`);
-
-    console.log(value);
-    
+    this.revokeTokenV3.jwt = this.functionsService.get('refreshToken');
 
     this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
       console.log(res);
