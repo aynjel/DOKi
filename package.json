@@ -1,8 +1,8 @@
 {
-  "name": "doctorsportal",
-  "version": "2.0.0",
+  "name": "doki",
+  "version": "2.0.1",
   "author": "Chong Hua Hospital",
-  "homepage": "https://doctorsportal.chonghua.com.ph",
+  "homepage": "https://doki.chonghua.com.ph",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

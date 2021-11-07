@@ -1,11 +1,13 @@
 {
-  "name": "DOKi",
+  "name": "DOKi Web App",
   "short_name": "DOKi",
   "theme_color": "#275228",
-  "background_color": "#fafafa",
+  "background_color": "#275228",
   "display": "standalone",
   "scope": "./",
-  "start_url": "./",
+  "start_url": "./login",
+  "app_name": "DOKi App",
+  "description": "DOKi App from Chong Hua Hospital. Made by Chong Hua Hospital for Chong Hua Hospital",
   "icons": [
     {
       "src": "assets/icons/icon-72x72.png",
@@ -54,6 +56,53 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "assets/screenshots/dashboard-screenshot.png",
+      "sizes": "720x1280",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/screenshots/inpatients-screenshot.png",
+      "sizes": "720x1280",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/screenshots/news-feed-screenshot.png",
+      "sizes": "720x1280",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/screenshots/patient-diagnoses-screenshot.png",
+      "sizes": "720x1280",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/screenshots/payvenue-screenshot.png",
+      "sizes": "720x1280",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/screenshots/phic-case-rates-screenshot.png",
+      "sizes": "720x1280",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/screenshots/prc-phic-reminder-screenshot.png",
+      "sizes": "720x1280",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/screenshots/prof-fee-screenshot.png",
+      "sizes": "720x1280",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/screenshots/user-settings-screenshot.png",
+      "sizes": "720x1280",
+      "type": "image/png"
     }
   ]
 }
