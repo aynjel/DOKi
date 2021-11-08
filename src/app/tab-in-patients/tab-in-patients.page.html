@@ -148,7 +148,7 @@
                     ></ion-progress-bar>
                   </div>
                   <div
-                    *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE  && x.is_posted !=this.constants.NUMBER__VALUE__ZERO && x.doctor_prof_fee !=this.constants.ANY__VALUE__NULL"
+                    *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE  && x.is_posted == '1' && x.doctor_prof_fee !=this.constants.ANY__VALUE__NULL"
                   >
                     <!--Patient For Discharge-->
                     <ion-progress-bar

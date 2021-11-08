@@ -208,6 +208,7 @@ export class ChhAppChangePasswordPage {
   save() {
     this.btnDisable = true;
     if (this.NewPassword != this.ConfirmPassword) {
+      this.btnDisable = false;
       this.errMessage = ' (passwords did not Match)';
       let myDiv1 = document.getElementById('pWord1');
       let myDiv2 = document.getElementById('pWord2');
