@@ -312,10 +312,12 @@ export class TabSettingsPage {
     );
 */
 
-    this.userSettingsModelv3 = JSON.parse('['+atob(localStorage.getItem("user_settings"))+']');
+    this.userSettingsModelv3 = JSON.parse(atob(localStorage.getItem("user_settings")));
 
     this.doctorService.getUserSettingsV3().subscribe(
       (res: any) => {
+        console.log(res);
+        
         this.userSettingsModelv3 = <UserSettingsModelv3>res;
         localStorage.setItem("user_settings",btoa(JSON.stringify(this.userSettingsModelv3)));
       },(error) => {
@@ -452,8 +454,8 @@ export class TabSettingsPage {
     this.updateUserSettings();
   }
   updateUserSettings(){
-    this.functionsService.logToConsole('updateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettings');
-    
+
+    this.functionsService.logToConsole('updateUserSettings : ');
     this.functionsService.logToConsole(this.userSettingsModelv3);
     
     this.doctorService.updateUserSettingsV3(this.userSettingsModelv3).subscribe(
