@@ -142,11 +142,11 @@ export class TransactionSummaryPage implements OnInit {
     }
     
     
-    console.log(this.professionalFeeModelv3);
+    this.functionsService.logToConsole(this.professionalFeeModelv3);
     
-    console.log("data1 :" + this.data1);
-    console.log("withVatN :" + this.withVatN);
-    console.log("payvenueN :" + this.payvenueN);
+    this.functionsService.logToConsole("data1 :" + this.data1);
+    this.functionsService.logToConsole("withVatN :" + this.withVatN);
+    this.functionsService.logToConsole("payvenueN :" + this.payvenueN);
 
 
 
@@ -223,7 +223,7 @@ export class TransactionSummaryPage implements OnInit {
       this.professionalFeeModelv3.old_prof_fee = this.data[0].doctor_prof_fee;
      
   
-      console.log(JSON.stringify(this.professionalFeeModelv3));
+      this.functionsService.logToConsole(JSON.stringify(this.professionalFeeModelv3));
       this.doctorService.updatePFV3(this.professionalFeeModelv3).subscribe(
         (res: any) => {
           if (res == true) {
@@ -246,10 +246,10 @@ export class TransactionSummaryPage implements OnInit {
       );
     } else {
       this.professionalFeeModelv3.old_prof_fee = 0;
-      console.log(JSON.stringify(this.professionalFeeModelv3));
+      this.functionsService.logToConsole(JSON.stringify(this.professionalFeeModelv3));
       this.doctorService.insertPFV3(this.professionalFeeModelv3).subscribe(
         (res: any) => {
-          console.log(res);
+          this.functionsService.logToConsole(res);
           
           if (res == true) {
             this.modalUpdate(
@@ -282,7 +282,7 @@ export class TransactionSummaryPage implements OnInit {
           text: 'Okay',
           handler: () => {
             this.disableSubmit = false;
-            console.log(this.isDesktop);
+            this.functionsService.logToConsole(this.isDesktop);
             
             if (!this.isDesktop) {
               this.alertController.dismiss();

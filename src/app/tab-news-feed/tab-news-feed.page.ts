@@ -44,10 +44,11 @@ export class TabNewsFeedPage implements OnInit {
 
     private screensizeService: ScreenSizeService,
     private modalController: ModalController,
-    private doctorService: DoctorService,    private renderer: Renderer2
+    private doctorService: DoctorService,    private renderer: Renderer2,
+    public functionsService: FunctionsService
 
   ) {
-    console.log('In-patient : Constructor');
+    this.functionsService.logToConsole('In-patient : Constructor');
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         window.location.reload();
@@ -79,7 +80,7 @@ export class TabNewsFeedPage implements OnInit {
 
   loadData(event) {  
     setTimeout(() => {  
-      console.log('Done');  
+      this.functionsService.logToConsole('Done');  
       this.addMoreItems();  
       //this.numTimesLeft -= 1;  
       event.target.complete();  
@@ -125,11 +126,11 @@ export class TabNewsFeedPage implements OnInit {
     }, 1000);
   }
   checkAppearance() {
-    console.log('checkAppearance');
+    this.functionsService.logToConsole('checkAppearance');
     var values = JSON.parse('[' + atob(localStorage.getItem("user_settings"))+ ']');
     let dr_username = atob(localStorage.getItem('username'));
     values.forEach(element => {
-      console.log(element.darkmode);
+      this.functionsService.logToConsole(element.darkmode);
       if(element.darkmode == 1){
         this.renderer.setAttribute(document.body,'color-theme','dark');
       }else{

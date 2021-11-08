@@ -127,7 +127,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     this.patient_id = this.activatedRoute.snapshot.params.id;
     /*this.postData = JSON.parse(atob(localStorage.getItem('postData'))) as InPatientData;*/
     this.professionalFeeModelv3 = JSON.parse(atob(localStorage.getItem('postData1')));
-    console.log(this.professionalFeeModelv3);
+    this.functionsService.logToConsole(this.professionalFeeModelv3);
     
     
   }
@@ -204,7 +204,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
 
     //this.checkAppearance();
     
-    //console.log(this.data);
+    //this.functionsService.logToConsole(this.data);
 
     /*
     this.doctorService.getInPatient(this.dr_code).subscribe(
@@ -217,10 +217,10 @@ export class ChhAppProfessionalFeePage implements OnInit {
             }
         });
       },(error) => {
-        console.log(error);
+        this.functionsService.logToConsole(error);
       },
       ()=>{
-        console.log('OPERATE');
+        this.functionsService.logToConsole('OPERATE');
         this.checkAppearance();
       });
      */
@@ -244,10 +244,10 @@ export class ChhAppProfessionalFeePage implements OnInit {
       data = 'personal-philhealth';
       this.router.navigate([this.router.url + '/' + data]);
     } else {
-      //console.log("ELSE");
+      //this.functionsService.logToConsole("ELSE");
       
       if (this.isCoordinator) {
-        // console.log(this.isCoordinator);
+        // this.functionsService.logToConsole(this.isCoordinator);
         /*this.postData.ProfFee = 0;
         this.postData.IsVAT = 'N';
         this.postData.PayVenue = 'A';
@@ -279,16 +279,16 @@ export class ChhAppProfessionalFeePage implements OnInit {
         /*localStorage.setItem('postData', btoa(JSON.stringify(this.postData)));*/
         localStorage.setItem('postData1', btoa(JSON.stringify(this.professionalFeeModelv3)));
       }
-      //console.log("is patient seen :"+this.isPatientSeen);
+      //this.functionsService.logToConsole("is patient seen :"+this.isPatientSeen);
 
       if (this.isPatientSeen == false) {
-        // console.log("TRANSACTION SUMMARY");
+        // this.functionsService.logToConsole("TRANSACTION SUMMARY");
         //this.router.navigate([this.router.url+'/transaction-summary']);
         let usrl =
           '/menu/in-patients/' +
           this.patient_id +
           '/professional-fee-transaction-summary';
-        //  console.log(usrl);
+        //  this.functionsService.logToConsole(usrl);
 
         this.router.navigate([usrl]);
       }
@@ -300,7 +300,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     var values = JSON.parse('[' + atob(localStorage.getItem("user_settings"))+ ']');
     let dr_username = atob(localStorage.getItem('username'));
     values.forEach(element => {
-      console.log(element.darkmode);
+      this.functionsService.logToConsole(element.darkmode);
       if(element.darkmode == 1){
         this.renderer.setAttribute(document.body,'color-theme','dark');
       }else{
@@ -365,12 +365,12 @@ export class ChhAppProfessionalFeePage implements OnInit {
     this.areyouaninsurancecoordinator = true;
     if (f == 'isPatientSeen' && e == false) {
       this.toPFMbtn = true;
-      // console.log("11111111111111");
+      // this.functionsService.logToConsole("11111111111111");
       this.disabledselection = false;
     } else if (f == 'isPatientSeen' && e == true) {
       this.personalphilhealth = this.insurance = this.charity = this.philhealth = false;
       this.toPFMbtn = false;
-      //console.log("2222222222222");
+      //this.functionsService.logToConsole("2222222222222");
       this.disabledselection = true;
     }
   }

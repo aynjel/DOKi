@@ -197,7 +197,7 @@ export class TabSettingsPage {
     this.$gaService.pageView('/Settings', 'Settings Tab');
     
     this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
-    console.log(this.logindata);
+    this.functionsService.logToConsole(this.logindata);
     
     this.dr_name = this.logindata.lastName;
     this.dr_code = this.logindata.doctorCode;
@@ -206,24 +206,24 @@ export class TabSettingsPage {
     this.dr_username =this.logindata.userName;
     let y = '';
     //PARSE USER SETTINGS
-    console.log('ionViewWillEnter');
+    this.functionsService.logToConsole('ionViewWillEnter');
     
 
 
     this.profileExpiry = new ProfileExpiry();
     this.profileExpiry.mode = "P";
     this.profileExpiry.drCode = this.dr_code;
-    console.log(this.logindata.phicExpiryDate);
-    console.log(this.logindata.phicRemainingDays);
-    console.log(this.logindata.prcExpiryDate);
-    console.log(this.logindata.prcRemainingDays);
+    this.functionsService.logToConsole(this.logindata.phicExpiryDate);
+    this.functionsService.logToConsole(this.logindata.phicRemainingDays);
+    this.functionsService.logToConsole(this.logindata.prcExpiryDate);
+    this.functionsService.logToConsole(this.logindata.prcRemainingDays);
 
     var dd    = new Date(this.logindata.prcExpiryDate);
-    console.log(dd);
+    this.functionsService.logToConsole(dd);
     
     this.prc = dd.getDate()+'/'+(dd.getMonth() + 1)+'/'+dd.getUTCFullYear();
     this.prcDays = this.logindata.prcRemainingDays;
-    console.log(this.prcDays);
+    this.functionsService.logToConsole(this.prcDays);
     
     if(this.prcDays > 90){
       this.prcBar = this.prcDays/90;
@@ -336,7 +336,7 @@ export class TabSettingsPage {
 
 
     /*this.patientService.getUserSettingsV2(this.dr_username).subscribe((res: any) => {
-        console.log(res);
+        this.functionsService.logToConsole(res);
         
         Object.keys(res).forEach((key) => {
 
@@ -419,7 +419,7 @@ export class TabSettingsPage {
     this.$gaService.event('Settings', 'User Flow', this.dr_name);
     this.authService.userData$.subscribe((res: any) => {
       this.account = <LoginResponseModelv3>res;
-      console.log(this.account);
+      this.functionsService.logToConsole(this.account);
       
       let asdasda = JSON.stringify(res);
       asdasda = '['+asdasda+']';
@@ -452,13 +452,13 @@ export class TabSettingsPage {
     this.updateUserSettings();
   }
   updateUserSettings(){
-    console.log('updateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettings');
+    this.functionsService.logToConsole('updateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettingsupdateUserSettings');
     
-    console.log(this.userSettingsModelv3);
+    this.functionsService.logToConsole(this.userSettingsModelv3);
     
     this.doctorService.updateUserSettingsV3(this.userSettingsModelv3).subscribe(
       (res: any) => {
-        console.log(res);
+        this.functionsService.logToConsole(res);
         
       },(error) => {
         
@@ -472,7 +472,7 @@ export class TabSettingsPage {
   }
 
   onDarkModeEnable(data: any) {
-    console.log('onDarkModeEnable');
+    this.functionsService.logToConsole('onDarkModeEnable');
     if (data == '1') {
       this.renderer.setAttribute(document.body, 'color-theme', 'dark');
       this.$gaService.event(
@@ -490,9 +490,9 @@ export class TabSettingsPage {
     }
   }
   checkAppearance() {
-//    console.log('checkAppearance');
+//    this.functionsService.logToConsole('checkAppearance');
     var values = JSON.parse('[' + atob(localStorage.getItem("user_settings"))+ ']');
-    //console.log(values);
+    //this.functionsService.logToConsole(values);
     
     let dr_username = atob(localStorage.getItem('username'));
     values.forEach(element => {
@@ -528,7 +528,7 @@ export class TabSettingsPage {
     this.revokeTokenV3.jwt = this.functionsService.getcookie('refreshToken');
 
     this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
-      console.log(res);
+      this.functionsService.logToConsole(res);
     });
     
  
@@ -636,7 +636,7 @@ export class TabSettingsPage {
               .resetUserSettingsV2(this.userSettingDeletesModel)
               .subscribe(
                 (res: any) => {
-                  //console.log(res);
+                  //this.functionsService.logToConsole(res);
                 },
                 (error) => {},
                 () => {
@@ -647,7 +647,7 @@ export class TabSettingsPage {
                     '","userReference": "' +
                     this.dr_code +
                     '","appCode": "DPP","setting":"privacyPolicy","property": "accepted","value": "1"}';
-                  //console.log(smpJSON);
+                  //this.functionsService.logToConsole(smpJSON);
                   this.userSettingsModel = new UserSettingsModel;
                   this.userSettingsModel.username = this.dr_username;
                   this.userSettingsModel.userReference = this.dr_code;

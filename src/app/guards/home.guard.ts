@@ -2,13 +2,14 @@ import { Injectable } from "@angular/core";
 import { CanActivate, Router } from "@angular/router";
 import { AuthConstants } from "../config/auth-constants";
 import { StorageService } from "../services/storage/storage.service";
+import { FunctionsService } from "../shared/functions/functions.service";
 
 @Injectable({
   providedIn: "root",
 })
 
 export class HomeGuard implements CanActivate {
-  constructor(public storageService: StorageService, public router: Router) {}
+  constructor(public storageService: StorageService, public router: Router,    public functionsService: FunctionsService) {}
   canActivate(): Promise<boolean> {
     return new Promise((resolve) => {
       let userIdentifier1 = "";
@@ -16,7 +17,7 @@ export class HomeGuard implements CanActivate {
       this.storageService.get(AuthConstants.AUTH).then(
           (res) => {
             res.roles.forEach(element => {
-              console.log(element);
+              this.functionsService.logToConsole(element);
               if(element == 'Administrator'){
                 userIdentifier1 = 'Administrator';
               }else if(element == 'MedicalConsultant'){

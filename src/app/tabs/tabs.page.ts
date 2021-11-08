@@ -13,10 +13,11 @@ import { AuthService } from '../services/auth/auth.service';
 import { LoginData } from "../models/login-data.model";
 import {UserSettingsModelv3,LoginResponseModelv3,RevokeTokenV3} from 'src/app/models/doctor';
 import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, fromEvent } from 'rxjs';
 import { DoctorService } from "../services/doctor/doctor.service";
 import { UserIdleService } from "angular-user-idle";
 import { AlertController } from "@ionic/angular";
+import { merge } from "highcharts";
 
 
 @Component({
@@ -47,10 +48,18 @@ export class TabsPage {
     private userIdle: UserIdleService,
     public alertController: AlertController
   ) {
-    console.log('constructor');
+    this.functionsService.logToConsole('constructor');
+    this.userIdle.setCustomActivityEvents(
     
+      fromEvent(document, 'touchstart')
+  );
+  this.userIdle.setCustomActivityEvents(
+    
+    fromEvent(document, 'touchend')
+);
 
-    localStorage.setItem("modaled","0");
+    localStorage.setItem('promptLogout', '1');
+    localStorage.removeItem("isIdlestarted");
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         // Reload because our routing is out of place
@@ -68,30 +77,33 @@ export class TabsPage {
 
   ngOnInit() {
 
-
+   
+    
     if (localStorage.getItem('isIdle') == '1') {
-      console.log(localStorage.getItem('isIdlestarted'));
-  
-        //if (localStorage.getItem('isIdlestarted')==null) {
-          console.log("IDLE WATCH");
+        if (localStorage.getItem('isIdlestarted')==null) {
+          this.functionsService.logToConsole("IDLE WATCH : "+localStorage.getItem('isIdlestarted'));
           this.userIdle.startWatching();
+          
           localStorage.setItem('isIdlestarted', '1');
-        //}else{
-        //  console.log("IDLE WATCH ALREADY STARTED");
-        //}
+        }else{
+         this.functionsService.logToConsole("IDLE WATCH ALREADY STARTED");
+        }
         
        
       }
+
+
       // Start watching when user idle is starting.
       this.userIdle.onTimerStart().subscribe((count) => {
         if (localStorage.getItem('isIdle') == '1') {
-          console.log(count);
+          this.functionsService.logToConsole(count);
           if (count == 1) {
-            this.timerExpired();
-            //this.userIdle.stopTimer()
+            if (localStorage.getItem('timerPrompt')==null) {
+              this.timerExpired();
+            }
           }
         } else {
-          console.log("timer stopped");
+          this.functionsService.logToConsole("timer stopped");
           
           this.userIdle.stopTimer();
           this.userIdle.stopWatching();
@@ -100,6 +112,7 @@ export class TabsPage {
   
       // Start watch when time is up.
       this.userIdle.onTimeout().subscribe(() => {
+        this.userIdle.stopWatching();
         this.alertController.dismiss();
         localStorage.clear();
         localStorage.setItem('promptLogout', '1');
@@ -116,6 +129,7 @@ export class TabsPage {
   }
 
   async timerExpired() {
+    localStorage.setItem('timerPrompt', '1');
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Dok, are you still there?',
@@ -135,6 +149,7 @@ export class TabsPage {
         {
           text: 'Keep me in',
           handler: () => {
+            localStorage.removeItem("timerPrompt");
             this.alertController.dismiss();
             this.userIdle.stopTimer();
           },
@@ -186,7 +201,7 @@ export class TabsPage {
       this.functionsService.logToConsole("false");
       this.renderer.setAttribute(document.body, "color-theme", "light");
     }*/
-    console.log('checkAppearance');
+    this.functionsService.logToConsole('checkAppearance');
     
     this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
     this.dr_code = this.logindata.doctorCode;
@@ -194,7 +209,7 @@ export class TabsPage {
 /*
     this.patientService.getUserSettingsV2(this.dr_username).subscribe(
       (res: any) => {       
-        console.log(res);
+        this.functionsService.logToConsole(res);
         
         if(Object.keys(res).length >= 1){
           let data = JSON.stringify(res);data = '['+data+']';let adat = JSON.parse(data);
@@ -222,14 +237,14 @@ export class TabsPage {
  
     //this.revokeTokenV3 = new RevokeTokenV3();
     //this.revokeTokenV3.jwt = localStorage.getItem("id_token");
-    console.log('Logging out');
+    this.functionsService.logToConsole('Logging out');
     
-    console.log(this.functionsService.getcookie('refreshToken'));
+    this.functionsService.logToConsole(this.functionsService.getcookie('refreshToken'));
 
     this.revokeTokenV3.jwt = this.functionsService.getcookie('refreshToken');
 
     this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
-      console.log(res);
+      this.functionsService.logToConsole(res);
     });
     
 
@@ -241,7 +256,7 @@ export class TabsPage {
       localStorage.clear();
       sessionStorage.clear();
       localStorage.setItem('hasloggedin', '1');
-
+      this.userIdle.stopWatching();
       this.router.navigate(['/login']);
     });
 

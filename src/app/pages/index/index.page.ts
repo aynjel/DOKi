@@ -26,7 +26,7 @@ export class IndexPage implements OnInit {
     private screensizeService: ScreenSizeService,
     public router:Router
   ) {
-    console.log(localStorage.getItem('hasloggedin'));
+    this.functionsService.logToConsole(localStorage.getItem('hasloggedin'));
     
     if(localStorage.getItem('hasloggedin')=='1'){
       this.router.navigate(['/login']);
@@ -58,24 +58,24 @@ export class IndexPage implements OnInit {
   }
 
   moveToNext(slides) {
-    //console.log(slides);
+    //this.functionsService.logToConsole(slides);
     slides.slideNext();
   }
 
   moveToPrev(slides) {
-    //console.log(slides);
+    //this.functionsService.logToConsole(slides);
     slides.slidePrev();
   }
 
   initPwaPrompt() {
-    console.log('init PWA prompt');
+    this.functionsService.logToConsole('init PWA prompt');
     
     this.platform.ready().then(() => {
-      console.log('platform ready');
+      this.functionsService.logToConsole('platform ready');
       if (this.platform.is('android') || this.platform.is('desktop')) {
-        console.log('platform android');
+        this.functionsService.logToConsole('platform android');
         window.addEventListener('beforeinstallprompt', (event: any) => {
-          console.log('beforeinstallprompt');
+          this.functionsService.logToConsole('beforeinstallprompt');
           event.preventDefault();
           this.promptEvent = event;
           this.openPromptComponent('android');
