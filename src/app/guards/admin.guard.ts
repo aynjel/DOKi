@@ -3,11 +3,12 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree,Route
 import { Observable } from 'rxjs';
 import { StorageService } from "../services/storage/storage.service";
 import { AuthConstants } from "../config/auth-constants";
+import { FunctionsService } from '../shared/functions/functions.service';
 @Injectable({
   providedIn: 'root'
 })
 export class AdminGuard implements CanActivate {
-  constructor(public storageService: StorageService, public router: Router) {}
+  constructor(public storageService: StorageService, public router: Router,  public functionsService: FunctionsService) {}
   canActivate(): Promise<boolean> {
     return new Promise((resolve) => {
       let userIdentifier;
@@ -15,7 +16,7 @@ export class AdminGuard implements CanActivate {
           (res) => {
 
             res.roles.forEach(element => {
-                console.log(element);
+                this.functionsService.logToConsole(element);
                 if(element == 'Administrator'){
                   userIdentifier = 'Administrator';
                 }

@@ -44,7 +44,7 @@ export class AppComponent {
   public revokeTokenV3: RevokeTokenV3; 
   initializeApp() {
     this.revokeTokenV3 = new RevokeTokenV3();
-    console.log("initializeApp");
+    this.functionsService.logToConsole("initializeApp");
     
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
@@ -56,14 +56,14 @@ export class AppComponent {
 
 /*
     if (localStorage.getItem('isIdle') == '1') {
-    console.log(localStorage.getItem('isIdlestarted'));
+    this.functionsService.logToConsole(localStorage.getItem('isIdlestarted'));
 
      // if (localStorage.getItem('isIdlestarted')==null) {
-        console.log("IDLE WATCH");
+        this.functionsService.logToConsole("IDLE WATCH");
         this.userIdle.startWatching();
         localStorage.setItem('isIdlestarted', '1');
       //}else{
-        //console.log("IDLE WATCH ALREADY STARTED");
+        //this.functionsService.logToConsole("IDLE WATCH ALREADY STARTED");
      // }
       
      
@@ -71,13 +71,13 @@ export class AppComponent {
     // Start watching when user idle is starting.
     this.userIdle.onTimerStart().subscribe((count) => {
       if (localStorage.getItem('isIdle') == '1') {
-        console.log(count);
+        this.functionsService.logToConsole(count);
         if (count == 1) {
           this.timerExpired();
           //this.userIdle.stopTimer()
         }
       } else {
-        console.log("timer stopped");
+        this.functionsService.logToConsole("timer stopped");
         
         this.userIdle.stopTimer();
       }
@@ -161,7 +161,7 @@ export class AppComponent {
     localStorage.setItem("torevoketoken","1");
     this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe(
       (res: any) => {
-        console.log(res);
+        this.functionsService.logToConsole(res);
       },(error) => {
     
        },

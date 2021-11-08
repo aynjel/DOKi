@@ -155,7 +155,7 @@ export class LoginPage {
 
         
       },(error) => {
-       console.log(error);
+       this.functionsService.logToConsole(error);
        this.functionsService.sorryDoc();
        this.btnDisable = false;
       },() => {
@@ -211,7 +211,7 @@ export class LoginPage {
         jsonResponse = res;
         this.userSettingsModelv3 = <UserSettingsModelv3>res;
         localStorage.setItem("user_settings",btoa(JSON.stringify(this.userSettingsModelv3)));
-        console.log(this.userSettingsModelv3);
+        this.functionsService.logToConsole(this.userSettingsModelv3);
       },(error) => {
          // this.functionsService.sorryDoc();
          this.functionsService.sorryDoc();
@@ -230,7 +230,7 @@ export class LoginPage {
                 this.appSettingsModelv3 = <AppSettingsModelv3>resdata;
                 this.userSettingsModelv3 = <UserSettingsModelv3>resdata;
                 localStorage.setItem("user_settings",btoa(JSON.stringify(this.userSettingsModelv3)));
-                console.log(this.appSettingsModelv3);
+                this.functionsService.logToConsole(this.appSettingsModelv3);
               },(error) => {
                  this.functionsService.sorryDoc();
                  this.btnDisable = false;
@@ -238,7 +238,7 @@ export class LoginPage {
                 () => {
                   this.doctorService.insertUserSettingsV3(this.appSettingsModelv3).subscribe(
                     (resInsert: any) => {
-                        console.log('insertUserSettingsV3 : '+resInsert);
+                        this.functionsService.logToConsole('insertUserSettingsV3 : '+resInsert);
                     },(error) => {
                        // this.functionsService.sorryDoc();
                     },() => {
@@ -258,7 +258,7 @@ export class LoginPage {
         this.appSettingsModelv3 = <AppSettingsModelv3>resdata;
         this.userSettingsModelv3 = <UserSettingsModelv3>resdata;
         localStorage.setItem("user_settings",btoa(JSON.stringify(this.userSettingsModelv3)));
-        console.log(this.appSettingsModelv3);
+        this.functionsService.logToConsole(this.appSettingsModelv3);
       },(error) => {
          this.functionsService.sorryDoc();
          this.btnDisable = false;
@@ -266,7 +266,7 @@ export class LoginPage {
         () => {
           this.doctorService.insertUserSettingsV3(this.appSettingsModelv3).subscribe(
             (resInsert: any) => {
-                console.log('insertUserSettingsV3 : '+resInsert);
+                this.functionsService.logToConsole('insertUserSettingsV3 : '+resInsert);
             },(error) => {
                // this.functionsService.sorryDoc();
             },() => {
@@ -282,12 +282,12 @@ export class LoginPage {
     let settingsIndicator:any;
     let jsonResponse:any;
    
-    console.log(this.userSettingsModelv3.privacyPolicy);
+    this.functionsService.logToConsole(this.userSettingsModelv3.privacyPolicy);
     
     if(this.userSettingsModelv3.privacyPolicy == 0){
       this.showPrivacyPolicyV3();
     }else{
-      console.log('LOGIN');
+      this.functionsService.logToConsole('LOGIN');
       this.loginV3();
       
       
@@ -300,12 +300,12 @@ export class LoginPage {
       componentProps: { backdropDismiss: true, origin: 'login' },
     });
     modal.onDidDismiss().then((data) => {
-      console.log(data);
+      this.functionsService.logToConsole(data);
       this.btnDisable = false;
       if (data.data) {
         //this.loginAction();
         this.userSettingsModelv3.privacyPolicy = '1';
-        console.log(this.userSettingsModelv3);
+        this.functionsService.logToConsole(this.userSettingsModelv3);
         this.doctorService.updateUserSettingsV3(this.userSettingsModelv3).subscribe();
         this.loginV3();
       }
@@ -314,7 +314,7 @@ export class LoginPage {
   }
   /*V3 App*/
   async updatePasswordV3() {
-    //console.log(this.resultJson.data);
+    //this.functionsService.logToConsole(this.resultJson.data);
 
     const modal = await this.modalController.create({
       component: ChhAppChangePasswordPage,
@@ -372,8 +372,8 @@ export class LoginPage {
     // let data = JSON.stringify(this.loginResponseModel);
     // data = '[' + data + ']';
     // this.logindata = JSON.parse(data);
-    /*console.log(this.loginResponseModel);
-    console.log(JSON.stringify(this.loginResponseModel));*/
+    /*this.functionsService.logToConsole(this.loginResponseModel);
+    this.functionsService.logToConsole(JSON.stringify(this.loginResponseModel));*/
     
     
     this.storageService.store(AuthConstants.AUTH, this.loginResponseModelv3);
@@ -395,7 +395,7 @@ export class LoginPage {
       },
     });
     modal.onDidDismiss().then((data) => {
-      console.log(data);
+      this.functionsService.logToConsole(data);
       
     });
     return await modal.present();
@@ -461,7 +461,7 @@ export class LoginPage {
     this.loginModelv3 = new LoginModelv3();
     this.loginModelv3.userNameOrEmail = this.postData.username;
     this.loginModelv3.password = this.postData.password;
-    console.log(this.loginModelv3);
+    this.functionsService.logToConsole(this.loginModelv3);
     
     this.patientService.loginv2(this.loginModelv3).subscribe((res: any) => {
         this.loginResponseModelv3 = <LoginResponseModelv3>res;
@@ -473,10 +473,10 @@ export class LoginPage {
 
 
       },(error) => {
-       console.log(error);
+       this.functionsService.logToConsole(error);
       },() => {
-        console.log(this.loginResponseModelv3);
-        console.log(this.loginResponseModelv3.isDefaultPasswordChanged);
+        this.functionsService.logToConsole(this.loginResponseModelv3);
+        this.functionsService.logToConsole(this.loginResponseModelv3.isDefaultPasswordChanged);
         if(this.loginResponseModelv3.isDefaultPasswordChanged){
           this.checkPrivacyPolicyV2();
         }else{
@@ -505,11 +505,11 @@ export class LoginPage {
                   this.changePasswordModel.username = 'PGALBO';
                   this.patientService.changePasswordV2(this.changePasswordModel).subscribe(
                     (res: any) => {
-                     console.log(res);
+                     this.functionsService.logToConsole(res);
                      
                     },
                     (error) => {
-                    console.log(error);
+                    this.functionsService.logToConsole(error);
                     },
                     () => {
                  
@@ -613,7 +613,7 @@ export class LoginPage {
   }
 
   async updatePassword() {
-    //console.log(this.resultJson.data);
+    //this.functionsService.logToConsole(this.resultJson.data);
 
     const modal = await this.modalController.create({
       component: ChhAppChangePasswordPage,
@@ -771,7 +771,7 @@ export class LoginPage {
     this.patientService.getUserSettingsV2(this.postData.username).subscribe(
       (res: any) => {
           rsmJson = res;
-          console.log(res);
+          this.functionsService.logToConsole(res);
           
       },(error) => {
           this.functionsService.sorryDoc();
@@ -817,7 +817,7 @@ export class LoginPage {
       componentProps: { backdropDismiss: true, origin: 'login' },
     });
     modal.onDidDismiss().then((data) => {
-      console.log(data);
+      this.functionsService.logToConsole(data);
       
       if (data.data) {
         this.loginAction();
@@ -830,7 +830,7 @@ export class LoginPage {
   }
 
   loginAction() {
-    console.log('loginaction');
+    this.functionsService.logToConsole('loginaction');
 
 
       if (this.isSetPrivacyPolicy == false) {
@@ -844,7 +844,7 @@ export class LoginPage {
                   valuex = 1;
                 }
                 if (key == 'billingContact') {
-                  //console.log(lock);
+                  //this.functionsService.logToConsole(lock);
                 }
 
                 let tempJson1 = new InserUSerSettingsModel;
@@ -855,13 +855,13 @@ export class LoginPage {
                 tempJson1.setting = key;
                 tempJson1.property = lock;
                 tempJson1.value= valuex;     
-                console.log('tempJson1 :');
-                console.log(JSON.stringify(tempJson1));
+                this.functionsService.logToConsole('tempJson1 :');
+                this.functionsService.logToConsole(JSON.stringify(tempJson1));
                             
                 this.patientService
                   .insertUserSettingsV2(tempJson1)
                   .subscribe((res2: any) => {
-                    console.log(res2);
+                    this.functionsService.logToConsole(res2);
                     
                   
                   });
@@ -897,8 +897,8 @@ export class LoginPage {
     // let data = JSON.stringify(this.loginResponseModel);
     // data = '[' + data + ']';
     // this.logindata = JSON.parse(data);
-    /*console.log(this.loginResponseModel);
-    console.log(JSON.stringify(this.loginResponseModel));*/
+    /*this.functionsService.logToConsole(this.loginResponseModel);
+    this.functionsService.logToConsole(JSON.stringify(this.loginResponseModel));*/
     
     
     this.storageService.store(AuthConstants.AUTH, this.loginResponseModel);
@@ -929,7 +929,7 @@ export class LoginPage {
                     Object.keys(value).forEach((lock) => {
                       var valuex = value[lock];
                       if(key != 'appCode'){
-                        //console.log(key + ':' + lock + ':' + valuex);
+                        //this.functionsService.logToConsole(key + ':' + lock + ':' + valuex);
                         if(key == 'privacyPolicy' && lock == 'accepted'){
                           valuex = 1;
                         }

@@ -193,7 +193,7 @@ export class TabInPatientsPage {
   ionViewWillEnter() {
 
     this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
-    console.log(this.logindata);
+    this.functionsService.logToConsole(this.logindata);
 
     this.dr_code = this.logindata.doctorCode;
     this.inpatientModelInpatients.accountNo = "none";
@@ -224,7 +224,7 @@ export class TabInPatientsPage {
         });
       });
     });*/
-    console.log('call patient');
+    this.functionsService.logToConsole('call patient');
     
     this.callPatient(this.site);
   }
@@ -283,7 +283,7 @@ export class TabInPatientsPage {
 
   async detail(data: any) {
     this.data = [];
-    console.log(data);
+    this.functionsService.logToConsole(data);
     this.inPatients.forEach(element => {
        
         if( element.patient_no == data){
@@ -291,7 +291,7 @@ export class TabInPatientsPage {
           localStorage.setItem('patientData',btoa(JSON.stringify(this.data)));
         }
     });
-    console.log( this.data);
+    this.functionsService.logToConsole( this.data);
     
     /*
   this.router.navigate(['menu/in-patients/', data]);
@@ -357,11 +357,11 @@ export class TabInPatientsPage {
     }
   }
   checkAppearance() {
-    console.log('checkAppearance');
+    this.functionsService.logToConsole('checkAppearance');
     var values = JSON.parse('[' + atob(localStorage.getItem("user_settings"))+ ']');
     let dr_username = atob(localStorage.getItem('username'));
     values.forEach(element => {
-      console.log(element.darkmode);
+      this.functionsService.logToConsole(element.darkmode);
       if(element.darkmode == 1){
         this.renderer.setAttribute(document.body,'color-theme','dark');
       }else{

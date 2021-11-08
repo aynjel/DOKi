@@ -128,7 +128,7 @@ export class InPatientDetailPage {
     private renderer: Renderer2,
     public nav: NavController
   ) {
-    //console.log('In-patient detail : Constructor');
+    //this.functionsService.logToConsole('In-patient detail : Constructor');
     localStorage.setItem("modaled","0");
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -144,10 +144,10 @@ export class InPatientDetailPage {
   ionViewWillEnter() {
     this.loginResponseModelv3 = new LoginResponseModelv3();
     this.inpatientDetails = new InpatientDetails();
-    //console.log();
+    //this.functionsService.logToConsole();
     this.patient_id = this.activatedRoute.snapshot.params.id;
     this.routerLinkBack =    '/menu/in-patients/';
-    //console.log('In-patient detail : ionViewWillEnter');
+    //this.functionsService.logToConsole('In-patient detail : ionViewWillEnter');
     //sessionStorage.removeItem('pfIsPatientSeen');
     // sessionStorage.removeItem('pfInsCoor');
 
@@ -200,7 +200,7 @@ export class InPatientDetailPage {
       (error) => {},
       () => {
         let n = this.data[0].admission_no.indexOf('IPC');
-        //console.log(n);
+        //this.functionsService.logToConsole(n);
 
         if (n >= 0) {
           this.location = true;
@@ -232,7 +232,7 @@ export class InPatientDetailPage {
 
     });
     let n = this.data[0].admission_no.indexOf('IPC');
-    //console.log(n);
+    //this.functionsService.logToConsole(n);
 
     if (n >= 0) {
       this.location = true;
@@ -267,7 +267,7 @@ export class InPatientDetailPage {
     this.professionalFeeModelv3.doctor_prof_fee = 0;
     this.professionalFeeModelv3.old_prof_fee = 0;
 
-    //console.log(this.data[0].site);
+    //this.functionsService.logToConsole(this.data[0].site);
 
     
 
@@ -386,7 +386,7 @@ export class InPatientDetailPage {
 
           
           if(!Object.keys(res).length){
-            //console.log("no data found");
+            //this.functionsService.logToConsole("no data found");
           }else{
             this.admittingDiagnosis = res.admitting_diagnosis2.replace(
               /(\r\n|\n|\r)/gm,
@@ -423,10 +423,10 @@ export class InPatientDetailPage {
 
           
           if(!Object.keys(res).length){
-           // console.log("no data found");
+           // this.functionsService.logToConsole("no data found");
           }else{
             this.finalDiagnosis = res.final_diagnosis;
-            //console.log(this.finalDiagnosis);
+            //this.functionsService.logToConsole(this.finalDiagnosis);
             
             this.finalDiagnosis1 = this.functionsService.truncateChar(
               this.finalDiagnosis,
@@ -466,7 +466,7 @@ export class InPatientDetailPage {
 
   ngOnInit() {
     this.checkAppearance();
-   // console.log('In-patient detail : ngOnInit');
+   // this.functionsService.logToConsole('In-patient detail : ngOnInit');
   }
 
   updateDisplay(data: boolean) {
@@ -517,14 +517,14 @@ export class InPatientDetailPage {
   }
 
   async examDetails(data: any, site: any, i) {
-    //console.log(site);
+    //this.functionsService.logToConsole(site);
 
     this.HighlightRow = i;
     this.ExamData = data;
     this.hospitalSite = site;
 
     if (!this.isDesktop) {
-      //console.log(this.hospitalSite);
+      //this.functionsService.logToConsole(this.hospitalSite);
 
       const modal = await this._modalController.create({
         component: ChhAppBasePage,
@@ -576,7 +576,7 @@ export class InPatientDetailPage {
   }
 
   getExamList(data) {
-    //console.log(this.data[0].admission_no);
+    //this.functionsService.logToConsole(this.data[0].admission_no);
 
     this.ionSkeleton = true;
     var date1 = new Date(this.data[0].admission_date);
@@ -834,11 +834,11 @@ export class InPatientDetailPage {
   back() {}
 
   checkAppearance() {
-    console.log('checkAppearance');
+    this.functionsService.logToConsole('checkAppearance');
     var values = JSON.parse('[' + atob(localStorage.getItem("user_settings"))+ ']');
     let dr_username = atob(localStorage.getItem('username'));
     values.forEach(element => {
-      console.log(element.darkmode);
+      this.functionsService.logToConsole(element.darkmode);
       if(element.darkmode == 1){
         this.renderer.setAttribute(document.body,'color-theme','dark');
       }else{

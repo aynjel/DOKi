@@ -193,12 +193,12 @@ export class TabDashboardPage implements OnInit {
     
     this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
     this.dr_code = this.logindata.doctorCode;
-    console.log(this.dr_code);
+    this.functionsService.logToConsole(this.dr_code);
     this.doctorHistoryModel.accountNo = 'none';
     this.doctorHistoryModel.drCode = this.logindata.doctorCode;
     this.doctorHistoryModel.mode = Consta.mode;
     this.first_name = this.logindata.firstName;//this.camelCase(this.logindata[0].first_name);
-    console.log(this.logindata);
+    this.functionsService.logToConsole(this.logindata);
     
     let  dr_name = this.logindata.lastName;
     this.$gaService.event('Dashboard','User Flow',dr_name);
@@ -228,7 +228,7 @@ export class TabDashboardPage implements OnInit {
     let DayValue = [];
     this.doctorService.getMonthHistoryGraphV3().subscribe(
       (res: any) => {
-        console.log(res);
+        this.functionsService.logToConsole(res);
         
         if(res != null){
           let x = JSON.stringify(res);
@@ -247,7 +247,7 @@ export class TabDashboardPage implements OnInit {
         
       },
       (error) => {
-          console.log(error);
+          this.functionsService.logToConsole(error);
           
         
       },
@@ -281,11 +281,11 @@ export class TabDashboardPage implements OnInit {
     return splitStr.join(" ");
   }
   checkAppearance() {
-    console.log('checkAppearance');
+    this.functionsService.logToConsole('checkAppearance');
     var values = JSON.parse('[' + atob(localStorage.getItem("user_settings"))+ ']');
     let dr_username = atob(localStorage.getItem('username'));
     values.forEach(element => {
-      console.log(element.darkmode);
+      this.functionsService.logToConsole(element.darkmode);
       if(element.darkmode == 1){
         this.renderer.setAttribute(document.body,'color-theme','dark');
       }else{

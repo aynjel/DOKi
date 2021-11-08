@@ -119,12 +119,12 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
       this.isDesktop = isDesktop;
     });
 
-    //console.log('constructor');
+    //this.functionsService.logToConsole('constructor');
   }
 
   ngOnInit() {
      this.checkAppearance();
-         console.log('checkAppearance');console.log('checkAppearance');console.log('checkAppearance');console.log('checkAppearance');console.log('checkAppearance');
+         this.functionsService.logToConsole('checkAppearance');this.functionsService.logToConsole('checkAppearance');this.functionsService.logToConsole('checkAppearance');this.functionsService.logToConsole('checkAppearance');this.functionsService.logToConsole('checkAppearance');
     //this.postData = JSON.parse(atob(sessionStorage.getItem("postData"))) as InPatientData;
    // this.postData = JSON.parse(atob(localStorage.getItem('postData'))) as InPatientData;
     this.professionalFeeModelv3 = JSON.parse(atob(localStorage.getItem('postData1')));
@@ -171,7 +171,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
 
   ionViewWillEnter() {
     /* let logindata = <LoginData>this.authService.userData$.getValue();
-    console.log(logindata);
+    this.functionsService.logToConsole(logindata);
     let dr_name = logindata[0].last_name;
     this.dr_code = logindata[0].dr_code;*/
 
@@ -185,7 +185,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     this.data = JSON.parse(atob(localStorage.getItem('patientData')));
 
     this.patient_name = this.data[0].first_name + ' ' + this.data[0].last_name;
-    //console.log(this.data);
+    //this.functionsService.logToConsole(this.data);
 
     this.patient_name = this.functionsService.convertAllFirstLetterToUpperCase(
       this.patient_name
@@ -206,7 +206,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
             }
         });
       },(error) => {
-        console.log(error);
+        this.functionsService.logToConsole(error);
         
       },
       ()=>{
@@ -216,11 +216,11 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   }
 
   checkAppearance() {
-    console.log('checkAppearance');
+    this.functionsService.logToConsole('checkAppearance');
     var values = JSON.parse('[' + atob(localStorage.getItem("user_settings"))+ ']');
     let dr_username = atob(localStorage.getItem('username'));
     values.forEach(element => {
-      console.log(element.darkmode);
+      this.functionsService.logToConsole(element.darkmode);
       if(element.darkmode == 1){
         this.renderer.setAttribute(document.body,'color-theme','dark');
       }else{
@@ -281,7 +281,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
       // this.PhilhealthShowVat = true;
       this.PhilhealthShowValue = true;
     }
-    //console.log(this.PhilhealthShowVat);
+    //this.functionsService.logToConsole(this.PhilhealthShowVat);
   }
   txtPersonalPhilHealthPF:boolean = true;
   personalPhilhealth() {
@@ -321,11 +321,11 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   finishTransaction() {
 
 
-    console.log(this.method);
+    this.functionsService.logToConsole(this.method);
     
     
     if (this.method == 'Insurance') {
-      console.log(this.InsurancePF);
+      this.functionsService.logToConsole(this.InsurancePF);
       
       if (this.InsurancePF <= 0 || this.InsurancePF == null) {
 
@@ -336,7 +336,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
         this.professionalFeeModelv3.is_vat = 'N';
         this.professionalFeeModelv3.payvenue = 'X'
       } else {
-        console.log("no");
+        this.functionsService.logToConsole("no");
         //this.postData.ProfFee = this.InsurancePF;
         this.professionalFeeModelv3.doctor_prof_fee = this.InsurancePF;
         if (this.InsuranceVat) {
