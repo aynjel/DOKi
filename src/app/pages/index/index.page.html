@@ -87,6 +87,7 @@
       </ion-slide> -->
       <ion-button
         id="button-lets-go"
+        *ngIf="android"
         expand="block"
         (click)="addToHomeScreen()"
         color="primary"
