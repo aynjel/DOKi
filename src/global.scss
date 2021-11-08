@@ -362,8 +362,25 @@ body {
 }
 
 .swiper-pagination {
-  bottom: 97% !important;
+  //bottom: 97% !important;
+  width: 50% !important;
+  left: 25% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.swiper-pagination-bullet {
+  transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+}
+
+.swiper-pagination-bullet-active {
+   width: 12px;
+   height: 12px;
+   background: var(--ion-color-primary);
+   border: 2px solid var(--bullet-backround-active);
+}
+
 body[color-theme="dark"] {
   .darkmode{
     display: block;
