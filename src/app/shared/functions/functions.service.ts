@@ -266,7 +266,7 @@ export class FunctionsService {
 
     return exists;
   }
-  get( name: string ): string {
+  getcookie( name: string ): string {
     if ( this.documentIsAccessible && this.check( name ) ) {
       name = encodeURIComponent( name );
 

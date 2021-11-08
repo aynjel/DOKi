@@ -15,6 +15,8 @@ import {UserSettingsModelv3,LoginResponseModelv3,RevokeTokenV3} from 'src/app/mo
 import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
 import { BehaviorSubject } from 'rxjs';
 import { DoctorService } from "../services/doctor/doctor.service";
+import { UserIdleService } from "angular-user-idle";
+import { AlertController } from "@ionic/angular";
 
 
 @Component({
@@ -41,8 +43,12 @@ export class TabsPage {
     public router:Router,
     private patientService:PatientService,
     private authService: AuthService,
-    private doctorService: DoctorService
+    private doctorService: DoctorService,
+    private userIdle: UserIdleService,
+    public alertController: AlertController
   ) {
+    console.log('constructor');
+    
 
     localStorage.setItem("modaled","0");
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
@@ -59,6 +65,112 @@ export class TabsPage {
       this.signalList.push(signal);
     });*/
   }
+
+  ngOnInit() {
+
+
+    if (localStorage.getItem('isIdle') == '1') {
+      console.log(localStorage.getItem('isIdlestarted'));
+  
+        //if (localStorage.getItem('isIdlestarted')==null) {
+          console.log("IDLE WATCH");
+          this.userIdle.startWatching();
+          localStorage.setItem('isIdlestarted', '1');
+        //}else{
+        //  console.log("IDLE WATCH ALREADY STARTED");
+        //}
+        
+       
+      }
+      // Start watching when user idle is starting.
+      this.userIdle.onTimerStart().subscribe((count) => {
+        if (localStorage.getItem('isIdle') == '1') {
+          console.log(count);
+          if (count == 1) {
+            this.timerExpired();
+            //this.userIdle.stopTimer()
+          }
+        } else {
+          console.log("timer stopped");
+          
+          this.userIdle.stopTimer();
+        }
+      });
+  
+      // Start watch when time is up.
+      this.userIdle.onTimeout().subscribe(() => {
+        this.alertController.dismiss();
+        localStorage.clear();
+        localStorage.setItem('promptLogout', '1');
+        localStorage.setItem('hasloggedin', '1');
+        this.router.navigate(['/login']).then(() => {
+          window.location.reload();
+        });
+      });
+  
+  
+  
+  
+
+  }
+
+  async timerExpired() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Dok, are you still there?',
+      animated: true,
+      backdropDismiss: false,
+      message:
+        "We understand you're busy. For you and your patients' security, we'll automatically log you out in a few minutes.",
+      buttons: [
+        {
+          text: 'Log me out',
+          // role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            this.logout();
+          },
+        },
+        {
+          text: 'Keep me in',
+          handler: () => {
+            this.alertController.dismiss();
+            this.userIdle.stopTimer();
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   ionViewWillEnter() {
     /*
@@ -111,9 +223,9 @@ export class TabsPage {
     //this.revokeTokenV3.jwt = localStorage.getItem("id_token");
     console.log('Logging out');
     
-    console.log(this.functionsService.get('refreshToken'));
+    console.log(this.functionsService.getcookie('refreshToken'));
 
-    this.revokeTokenV3.jwt = this.functionsService.get('refreshToken');
+    this.revokeTokenV3.jwt = this.functionsService.getcookie('refreshToken');
 
     this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
       console.log(res);

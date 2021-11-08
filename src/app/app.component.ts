@@ -54,18 +54,17 @@ export class AppComponent {
 
 
 
-
+/*
     if (localStorage.getItem('isIdle') == '1') {
     console.log(localStorage.getItem('isIdlestarted'));
 
-      if (localStorage.getItem('isIdlestarted')==null) {
+     // if (localStorage.getItem('isIdlestarted')==null) {
         console.log("IDLE WATCH");
         this.userIdle.startWatching();
         localStorage.setItem('isIdlestarted', '1');
-      }else{
-        console.log("IDLE WATCH ALREADY STARTED");
-       
-      }
+      //}else{
+        //console.log("IDLE WATCH ALREADY STARTED");
+     // }
       
      
     }
@@ -94,6 +93,12 @@ export class AppComponent {
         window.location.reload();
       });
     });
+*/
+
+
+
+
+
   }
 
   updateClient() {
@@ -152,7 +157,7 @@ export class AppComponent {
     await alert.present();
   }
   logout(){
-    this.revokeTokenV3.jwt = this.functionsService.get('refreshToken');
+    this.revokeTokenV3.jwt = this.functionsService.getcookie('refreshToken');
     localStorage.setItem("torevoketoken","1");
     this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe(
       (res: any) => {
