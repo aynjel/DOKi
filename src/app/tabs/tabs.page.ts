@@ -94,6 +94,7 @@ export class TabsPage {
           console.log("timer stopped");
           
           this.userIdle.stopTimer();
+          this.userIdle.stopWatching();
         }
       });
   
