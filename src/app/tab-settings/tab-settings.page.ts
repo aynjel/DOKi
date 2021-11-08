@@ -28,6 +28,7 @@ import { DoctorService } from '../services/doctor/doctor.service';
 import { element } from 'protractor';
 import {UserSettingsModelv3,LoginResponseModelv3,AppSettingsModelv3,RevokeTokenV3} from 'src/app/models/doctor';
 import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tab-settings',
@@ -190,7 +191,7 @@ export class TabSettingsPage {
   }
   ngOnInit() {
 
-    this.checkAppearance();
+    //this.checkAppearance();
   }
 
   ionViewWillEnter() {
@@ -316,7 +317,7 @@ export class TabSettingsPage {
 
     this.doctorService.getUserSettingsV3().subscribe(
       (res: any) => {
-        console.log(res);
+
         
         this.userSettingsModelv3 = <UserSettingsModelv3>res;
         localStorage.setItem("user_settings",btoa(JSON.stringify(this.userSettingsModelv3)));
@@ -445,13 +446,20 @@ export class TabSettingsPage {
       value = '0';
     }
     if(setting == 'smsNotification' ){
-      this.userSettingsModelv3.smsNotification = value;
+      if(this.userSettingsModelv3.smsNotification != value){
+        this.userSettingsModelv3.smsNotification = value;
+        this.updateUserSettings();
+        console.log('toggleV3 - smsNotification');
+      }
+
     }
     if(setting == 'darkmode' ){
       this.userSettingsModelv3.darkmode = value;
+      this.updateUserSettings();
+      console.log('toggleV3 - darkmode');
     }
     localStorage.setItem("user_settings",btoa(JSON.stringify(this.userSettingsModelv3)));
-    this.updateUserSettings();
+ 
   }
   updateUserSettings(){
 
@@ -512,6 +520,8 @@ export class TabSettingsPage {
       }else{
         this.privacyPolicy = false;
       }
+
+      
       if(element.smsNotification == '1'){
         this.smsAdmitted = true;
         this.isset_smsAdmitted = true;
