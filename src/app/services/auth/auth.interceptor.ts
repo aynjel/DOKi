@@ -154,7 +154,7 @@ export class AuthInterceptor implements HttpInterceptor {
       await alert.present();
     }
     logout(){
-      this.revokeTokenV3.jwt = this.functionsService.get('refreshToken');
+      this.revokeTokenV3.jwt = this.functionsService.getcookie('refreshToken');
       localStorage.setItem("torevoketoken","1");
       this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe(
         (res: any) => {
