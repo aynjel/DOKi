@@ -238,8 +238,8 @@ export class TabDashboardPage implements OnInit {
           let month: any = "";
           let monthValue: any = "";
           for (let i = 1; i <= count; i++) {
-            month = "Day" + i;
-            monthValue = "Day" + i + "Value";
+            month = "day" + i;
+            monthValue = "day" + i + "Value";
             Day.push(x[month]);
             DayValue.push(Number(x[monthValue]));
           }
