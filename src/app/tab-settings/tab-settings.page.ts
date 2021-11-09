@@ -107,16 +107,6 @@ export class TabSettingsPage {
 
   }
 
-  /* async showaddmodal() {
-    const modal = await this.modalController.create({
-      component: ChhAppChangePasswordPage,
-      componentProps: {
-        backdropDismiss: true,
-      },
-    });
-    modal.onDidDismiss().then((data) => {});
-    return await modal.present();
-  }*/
 
   async modalUpdate(header, message, data) {
     const alert = await this.alertController.create({
@@ -265,55 +255,7 @@ export class TabSettingsPage {
     }  
 
 
-/*
-    this.doctorService.getProfileExpiry(this.profileExpiry).subscribe(
-      (res: any) => {
-          var dd    = new Date(res.LicenseExpiryDate);
-          this.prc = dd.getDate()+'/'+(dd.getMonth() + 1)+'/'+dd.getUTCFullYear();
-          this.prcDays = res.LicenseExpiryDaysRemaining;
-          if(this.prcDays > 90){
-            this.prcBar = this.prcDays/90;
-            this.prcBarColor='';
-            this.prcBarHide = 'ion-hide';
-          }else if(this.prcDays >= 60 && this.prcDays <= 90 ){
-            this.prcBar = this.prcDays/90;
-            this.prcBarColor='mango';
-            this.prcBarHide = '';          
-          }else if(this.prcDays >= 30 && this.prcDays <= 59 ){
-            this.prcBar = this.prcDays/90;
-            this.prcBarColor='warning';
-            this.prcBarHide = '';          
-          }else{
-            this.prcBar = this.prcDays/90;
-            this.prcBarColor='danger';
-            this.prcBarHide = '';  
-          }
-
-          var dd    = new Date(res.PhicExpiryDate);
-          this.phic = dd.getDate()+'/'+(dd.getMonth() + 1)+'/'+dd.getUTCFullYear();
-          this.phicDays = res.PhicExpiryDaysRemaining;    
-          if(this.phicDays > 90){
-            this.phicBar = this.phicDays/90;
-            this.phicBarColor='';
-            this.phicBarHide = 'ion-hide';
-          }else if(this.phicDays >= 60 && this.phicDays <= 90 ){
-            this.phicBar = this.phicDays/90;
-            this.phicBarColor='mango';
-            this.phicBarHide = '';          
-          }else if(this.phicDays >= 30 && this.phicDays <= 59 ){
-            this.phicBar = this.phicDays/90;
-            this.phicBarColor='warning';
-            this.phicBarHide = '';          
-          }else{
-            this.phicBar = this.phicDays/90;
-            this.phicBarColor='danger';
-            this.phicBarHide = '';  
-          }  
-      }
-    );
-*/
-
-    this.userSettingsModelv3 = JSON.parse(atob(localStorage.getItem("user_settings")));
+    //this.userSettingsModelv3 = JSON.parse(atob(localStorage.getItem("user_settings")));
 
     this.doctorService.getUserSettingsV3().subscribe(
       (res: any) => {
