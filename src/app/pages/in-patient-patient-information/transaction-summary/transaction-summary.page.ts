@@ -286,7 +286,10 @@ export class TransactionSummaryPage implements OnInit {
             
             if (!this.isDesktop) {
               this.alertController.dismiss();
-              this.router.navigate(['menu/in-patients/']);
+              //this.router.navigate(['menu/in-patients/']);
+              this.router.navigate(['menu/in-patients/']).then(() => {
+              window.location.reload();
+              });
             } else {
               this.alertController.dismiss();
               // using the injected ModalController this page
@@ -294,7 +297,10 @@ export class TransactionSummaryPage implements OnInit {
               this.modalController.dismiss({
                 dismissed: true,
               });
-              this.router.navigate(['menu/in-patients/']);
+              //this.router.navigate(['menu/in-patients/']);
+              this.router.navigate(['menu/in-patients/']).then(() => {
+                window.location.reload();
+              });
             }
             //this.nav.navigateBack('menu/in-patients' );
           },
