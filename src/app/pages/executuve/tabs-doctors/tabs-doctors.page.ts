@@ -22,7 +22,8 @@ export class TabsDoctorsPage implements OnInit {
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   public logindata: LoginResponseModelv3;
   listOfDoctors:any;
-  searchBar: any;
+  searchBar: any = "";
+  listOfDoctorsTemp: any;
   constructor(    private storageService: StorageService,
     private router: Router,
     public constants: Constants,
@@ -51,14 +52,20 @@ export class TabsDoctorsPage implements OnInit {
     
   }
   filterList() {
-
+    this.listOfDoctors = [];
     console.log(this.searchBar);
-    this.listOfDoctors.forEach(element => {
-      console.log(element.doctorName);
+    this.listOfDoctorsTemp.forEach(element => {
+ 
       
+      if (element.doctorName.toLowerCase().includes(this.searchBar.toLowerCase())) {
+        this.listOfDoctors.push(element);
+      }
+
       
     });
-    
+    if(this.searchBar == ""){
+      this.listOfDoctors = this.listOfDoctorsTemp;
+    }
   }
   doRefresh(event) {
     setTimeout(() => {
@@ -74,13 +81,13 @@ export class TabsDoctorsPage implements OnInit {
     
     this.executiveService.getDoctors().subscribe(
       (res: any) => {   
-        this.listOfDoctors = res;  
+        this.listOfDoctorsTemp = res;  
           console.log(res);
      
       },
       (error) => {},
       () => {
-      
+        this.filterList();
       }
     );
 
