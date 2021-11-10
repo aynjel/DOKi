@@ -7,7 +7,7 @@
   "scope": "./",
   "start_url": "./login",
   "app_name": "DOKi App",
-  "description": "Get notified on the status of your patients, be informed on hospital announcements, and submit your professional fees online.",
+  "description": "Get notified of the status of your admitted patients, be informed of hospital announcements, and submit your professional fees online.",
   "icons": [
     {
       "src": "assets/icons/windows11/SmallTile.scale-100.png",
