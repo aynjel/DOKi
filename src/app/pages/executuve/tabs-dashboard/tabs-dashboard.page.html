@@ -1,0 +1,171 @@
+<ion-header mode="md" class="ion-no-border" *ngIf="!isDesktop">
+  <div>
+    <ion-toolbar color="mango">
+      <ion-title>
+        <ion-icon name="stats-chart-outline"></ion-icon> {{this.constants.MENU__VALUE__DASHBOARD}}
+      </ion-title>
+    </ion-toolbar>
+  </div>
+</ion-header>
+
+<ion-content>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-grid class="ion-no-padding">
+    <ion-row class="custom-padding">
+      <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3" class="custom-border-bottom ion-no-border ">
+        <ion-item lines="none">
+          <h2 class="ion-no-padding">Welcome, {{userName}}!</h2>
+        </ion-item>
+
+
+        <!--ion-grid>
+          <ion-row>
+            <ion-col size-xs="12"  size-md="8" offset-md="2">
+
+
+
+
+              <ion-card>
+                <ion-item>
+                  <ion-label class="ion-text-center">
+                    <h2 ><b>Admissions</b></h2>
+                  </ion-label>
+             
+                 
+                </ion-item>
+                <ion-item>
+                  <ion-label> <b> Cebu </b> </ion-label>
+                  <ion-label> {{totalAdmissionsC}} </ion-label>
+                </ion-item>
+                <ion-item>
+                  <ion-label> <b> Mandaue </b> </ion-label>
+                  <ion-label> {{totalAdmissionsM}} </ion-label>
+                 
+                </ion-item>
+                <ion-item>
+                  <ion-label> <b>  </b> </ion-label>
+                  <ion-label> <b>{{totalAdmissions}}</b> </ion-label>
+                </ion-item>
+              
+
+              </ion-card>
+            </ion-col>
+  
+
+          </ion-row>
+        </ion-grid-->
+        <ion-grid>
+
+            </ion-grid>
+
+ 
+        <ion-grid>
+          <ion-row>
+            <ion-col size-xs="12" class="ion-text-center">
+              <h3>Total Admissions : <b>{{totalAdmissions}}</b></h3>
+            </ion-col>
+            <ion-col size-xs="6" >
+                <ion-item id="ion-item-ac" lines="none" routerLink='/' routerDirection="back">
+                  <ion-avatar slot="start">
+                    <chh-app-text-avatar [text]='tTC' [color]=""></chh-app-text-avatar>
+                  </ion-avatar>
+                  
+                  <ion-label>
+                    <h1><b>{{totalAdmissionsC}}</b></h1>
+                    <!--p>{{this.functionsService.convertToCamelCase(this.constants.ADMISSION_STATUS__VALUE__ADMITTED)}}</p-->
+                  </ion-label>
+                </ion-item>
+            </ion-col>
+            <ion-col size-xs="6" >
+                <ion-item id="ion-item-dn" lines="none" routerLink='/' routerDirection="back">
+                  <ion-avatar slot="start">
+                    <chh-app-text-avatar [text]='tTM' [color]=""></chh-app-text-avatar>
+                  </ion-avatar>
+                  <ion-label>
+                    <h1><b>{{totalAdmissionsM}}</b></h1>
+                    <!--p class="ion-text-wrap" >{{this.functionsService.convertToCamelCase(this.constants.ADMISSION_STATUS__VALUE__FOR_DISCHARGE)}}</p-->
+                  </ion-label>
+                </ion-item>
+            </ion-col>
+
+          </ion-row>
+          <ion-row>
+            <ion-col size-xs="12" class="ion-text-center">
+              <ion-item></ion-item>
+              </ion-col>
+            </ion-row>
+          <ion-row>
+            <ion-col size-xs="12" class="ion-text-center">
+              <h3>New Admissions Today : <b>{{totalAdmissionstoday}}</b></h3>
+            </ion-col>
+            <ion-col size-xs="6" >
+                <ion-item id="ion-item-ac" lines="none" routerLink='/' routerDirection="back">
+                  <ion-avatar slot="start">
+                    <chh-app-text-avatar [text]='tTC' [color]=""></chh-app-text-avatar>
+                  </ion-avatar>
+                  
+                  <ion-label>
+                    <h1><b>{{totalAdmissionstodayC}}</b></h1>
+                    <!--p>{{this.functionsService.convertToCamelCase(this.constants.ADMISSION_STATUS__VALUE__ADMITTED)}}</p-->
+                  </ion-label>
+                </ion-item>
+            </ion-col>
+            <ion-col size-xs="6" >
+                <ion-item id="ion-item-dn" lines="none" routerLink='/' routerDirection="back">
+                  <ion-avatar slot="start">
+                    <chh-app-text-avatar [text]='tTM' [color]=""></chh-app-text-avatar>
+                  </ion-avatar>
+                  <ion-label>
+                    <h1><b>{{totalAdmissionstodayM}}</b></h1>
+                    <!--p class="ion-text-wrap" >{{this.functionsService.convertToCamelCase(this.constants.ADMISSION_STATUS__VALUE__FOR_DISCHARGE)}}</p-->
+                  </ion-label>
+                </ion-item>
+            </ion-col>
+
+          </ion-row>
+          <ion-row>
+            <ion-col size-xs="12" class="ion-text-center">
+              <ion-item></ion-item>
+              </ion-col>
+            </ion-row>
+          <ion-row>
+            <ion-col size-xs="12" class="ion-text-center">
+              <h3>For Discharge : <b>{{forDischarge}}</b></h3>
+            </ion-col>
+            <ion-col size-xs="6" >
+                <ion-item id="ion-item-ac" lines="none" routerLink='/' routerDirection="back">
+                  <ion-avatar slot="start">
+                    <chh-app-text-avatar [text]='tTC' [color]=""></chh-app-text-avatar>
+                  </ion-avatar>
+                  
+                  <ion-label>
+                    <h1><b>{{forDischargeC}}</b></h1>
+                    <!--p>{{this.functionsService.convertToCamelCase(this.constants.ADMISSION_STATUS__VALUE__ADMITTED)}}</p-->
+                  </ion-label>
+                </ion-item>
+            </ion-col>
+            <ion-col size-xs="6" >
+                <ion-item id="ion-item-dn" lines="none" routerLink='/' routerDirection="back">
+                  <ion-avatar slot="start">
+                    <chh-app-text-avatar [text]='tTM' [color]=""></chh-app-text-avatar>
+                  </ion-avatar>
+                  <ion-label>
+                    <h1><b>{{forDischargeM}}</b></h1>
+                    <!--p class="ion-text-wrap" >{{this.functionsService.convertToCamelCase(this.constants.ADMISSION_STATUS__VALUE__FOR_DISCHARGE)}}</p-->
+                  </ion-label>
+                </ion-item>
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+
+
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

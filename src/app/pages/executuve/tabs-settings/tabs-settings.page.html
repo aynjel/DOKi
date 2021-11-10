@@ -1,0 +1,139 @@
+<ion-header mode="md" class="ion-no-border">
+  <div *ngIf="!isDesktop">
+    <ion-toolbar color="mango">
+      <ion-title>
+        <ion-icon name="settings-outline"></ion-icon> {{this.constants.MENU__VALUE__SETTINGS}}
+      </ion-title>
+      <ion-buttons
+        slot="end"
+        class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated"
+      >
+        <ion-button
+          (click)="logout()"
+          color="chh-css-primary2"
+          class="ios button button-clear ion-activatable ion-focusable hydrated"
+          >{{this.constants.MENU__VALUE__LOG_OUT}}&nbsp; <ion-icon name="log-out-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </div>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="my-backbround ion-no-padding">
+    <ion-row>
+      <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
+        <div *ngFor="let x of account">
+          <ion-card mode="ios">
+            <br />
+            <ion-item lines="none">
+              <ion-avatar slot="start">
+                <chh-app-text-avatar [text]="x.lastName" [color]=""></chh-app-text-avatar>
+              </ion-avatar>
+              <ion-label style="margin-top: -5px;">
+                <ion-item class="ion-no-padding">
+                  <h2 class="ion-text-wrap" style="padding-top: 20px;">
+                    {{this.constants.NAME_PREFIX__CODE__DOCTOR.toLocaleUpperCase()}} {{ x.firstName }} {{ x.lastName }}
+                  </h2>
+                </ion-item>
+              </ion-label>
+            </ion-item>
+
+            <ion-card-content class="ion-no-padding">
+              <ion-list>
+                <!--ion-item>W
+                  <p (click)="showaddmodal()" class="pointer">Change Password</p>
+                </ion-item-->
+                <ion-item>
+                  <p (click)="showaddmodal1()" class="pointer">Change Password</p>
+                </ion-item>
+                <ion-item>
+                  <br />
+                </ion-item>
+
+
+                <!--div *ngFor="let item of tmpData| keyvalue">
+                  <div *ngFor="let data of item.value | keyvalue">
+                   
+                    <div *ngFor="let value of data.value | keyvalue">
+                      {{ data.key }}:  {{ value.key }} - {{ value.value }}
+
+
+
+                  </div>
+                </div>
+              </div-->
+
+                <!--ion-item *ngFor="let x of tmpData"> 
+                  <ion-icon slot="end" name="notifications-outline"></ion-icon>
+                  <b>{{x.appearance.darkmode}}</b>
+                </ion-item-->
+
+        
+             
+                                    
+
+
+                <ion-item>
+                  <ion-icon name="lock-closed-outline" slot="end"></ion-icon>
+                  <b>Privacy Policy</b>
+                </ion-item>
+                <ion-item>
+                  <ion-label class="ion-text-wrap">Privacy Policy</ion-label>
+
+                  <!--ion-toggle id="dataPrivacyToggle"
+                    color="mango"
+                    [(ngModel)]="privacyPolicy"
+                    (ionChange)="optoutofprivacy($event)"
+                  ></ion-toggle-->
+                </ion-item>
+                <ion-item>
+                  <ion-label class="ion-text-wrap" (click)="viewPrivacyPolicy() ">View</ion-label>
+         
+                 
+                </ion-item>               
+
+
+               <!-- APPEARANCE -->
+                <!-- POLICY -->
+                <ion-item>
+                  <ion-icon slot="end" name="color-palette-outline"></ion-icon>
+                  <b>{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_APPEARANCE}}</b>
+                </ion-item>
+                <ion-item>
+                  <ion-label class="ion-text-wrap"
+                    >{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_APPEARANCE_DARK_MODE}}</ion-label
+                  >
+                  <ion-toggle
+                    color="mango"
+                    checked = "{{darkmode}}"
+                    (ionChange)="toggleV3($event,'darkmode','darkmode',isset_darkmode)"
+                  ></ion-toggle>
+                </ion-item>
+
+                <ion-item>
+                  <br />
+                </ion-item>
+
+               <!-- TERMS & CONDITION -->
+                <!-- POLICY -->
+                <ion-item color="danger" (click)="resetUserSettings() ">
+                  <ion-icon name="refresh-outline" slot="end"></ion-icon>
+                  Reset User Settings
+                </ion-item>
+
+                <ion-item>
+                  <br />
+                </ion-item>
+
+                <ion-item lines="none">
+                  <p>{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO}} (<b><a href="tel: +63322338000">{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_TELEPHONE}}</a></b>). <br/> <br />{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_APP_VERSION}} {{this.constants.DOCTOR_PORTAL__VALUE__VERSION}}</p>
+                </ion-item>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

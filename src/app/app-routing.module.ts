@@ -53,6 +53,9 @@ const routes: Routes = [
     path: 'administrator',
     loadChildren: () => import('./pages/admin/tabs/tabs.module').then( m => m.TabsPageModule)
   },{
+    path: 'executive',
+    loadChildren: () => import('./pages/executuve/tabs/tabs.module').then( m => m.TabsPageModule)
+  },{
     path: '',
     canActivate:[IndexGuard], 
     loadChildren: () => import('./pages/index/index.module').then( m => m.IndexPageModule)
@@ -63,8 +66,34 @@ const routes: Routes = [
     path        : '**',
     pathMatch   : 'full',
     loadChildren: () => import('../app/chh-web-components/chh-app-error-404/chh-app-error-404.module').then( m => m.ChhAppError404PageModule)
-}
+},/*  {
+    path: 'tabs-doctors',
+    loadChildren: () => import('./pages/executuve/tabs-doctors/tabs-doctors.module').then( m => m.TabsDoctorsPageModule)
+  },
+*  {
+    path: 'tabs-settings',
+    loadChildren: () => import('./pages/executuve/tabs-settings/tabs-settings.module').then( m => m.TabsSettingsPageModule)
+  },
+  {
+    path: 'tabs-settings',
+    loadChildren: () => import('./pages/executuve/tabs-settings/tabs-settings.module').then( m => m.TabsSettingsPageModule)
+  },
+ {
+    path: 'tabs-settings',
+    loadChildren: () => import('./pages/executive/tabs-settings/tabs-settings.module').then( m => m.TabsSettingsPageModule)
+  }
+,
+  
+  {
+    path: 'tabs-dashboard',
+    loadChildren: () => import('./pages/executuve/tabs-dashboard/tabs-dashboard.module').then( m => m.TabsDashboardPageModule)
+  },
+  {
+    path: 'tabs-settings',
+    loadChildren: () => import('./pages/executuve/tabs-settings/tabs-settings.module').then( m => m.TabsSettingsPageModule)
+  }
 
+*/
 
 
 

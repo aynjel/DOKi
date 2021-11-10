@@ -1,0 +1,99 @@
+<ion-header mode="md" class="ion-no-border">
+  <div *ngIf="!isDesktop">
+    <ion-toolbar color="mango">
+      <ion-title>
+        <ion-icon name="git-network-outline"></ion-icon> Doctors
+      </ion-title>
+    </ion-toolbar>
+   
+  </div>
+
+
+  <ion-grid class="ion-no-padding chh-darkmode">
+    <ion-row>
+      <ion-col
+        size-md="8"
+        offset-md="2"
+        size-lg="4"
+        offset-lg="4"
+        class="custom-border-bottom ion-no-border custom-padding"
+      >
+
+      </ion-col>
+    </ion-row>
+    <ion-row class="">
+      <ion-col
+        size-md="8"
+        offset-md="2"
+        size-lg="4"
+        offset-lg="4"
+        class="ion-no-border"
+      >
+        <ion-searchbar
+          [(ngModel)]="searchBar"
+          (ionChange)="filterList()"
+          mode="ios"
+        ></ion-searchbar>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-header>
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
+        <ng-container>
+          <div *ngFor="let x of listOfDoctors">
+
+         
+            <ion-card (click)="detail(x.patient_no)" mode="ios"  class="pointer">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <chh-app-text-avatar [text]="x.doctorName" [color]=""></chh-app-text-avatar>
+                </ion-avatar>
+                <ion-label style="margin-top: -5px;">
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="padding-bottom: 5px;"
+                  >
+                    <h2 class="ion-text-wrap" style="padding-top: 20px;">
+                      {{ x.doctorName }}
+                    </h2>
+
+                  </ion-item>
+
+
+
+                  <ion-row
+                    class="ion-no-padding"
+                    lines="none"
+                    style="padding-top: 10px !important;"
+                  >
+                    <p>
+
+                      <span >
+                        <ion-icon
+                          name="location-outline"
+                          slot="start"
+                        ></ion-icon
+                        > {{x.deptName}} </span
+                      >
+                    </p>
+                    <br />
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+          </div>
+        </ng-container>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

@@ -143,14 +143,24 @@ export class LoginPage {
     this.doctorService.loginV3(this.loginModelv3).subscribe((res: any) => {
 
         this.loginResponseModelv3 = <LoginResponseModelv3>res;
-        
+        let execflag:boolean = true;
         if(this.loginResponseModelv3.isAuthenticated == true){
           this.loginResponseModelv3.roles.forEach(element => {
-            if(element == 'Administrator'){
-              userIndentifier = 'Administrator';
-            }
+            console.log(element);
             
+            if(execflag){
+              if(element == 'Administrator'){
+                userIndentifier = 'Administrator';
+              }else  if(element == 'Executive'){
+                userIndentifier = 'Executive';
+                execflag = false;
+              }else{
+
+              }
+            }
+              
           });
+          console.log("userIndentifier : "+userIndentifier);
         }
 
         
@@ -161,11 +171,18 @@ export class LoginPage {
       },() => {
         if(this.loginResponseModelv3.isAuthenticated == true){
 
+
+          
           if(userIndentifier == 'Administrator'){
             localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
             this.storageService.store(AuthConstants.AUTH, this.loginResponseModelv3);
-            this.getAppsettingsV3();
-            this.router.navigate(['/administrator']);
+            this.userRolegetUserSettingsV3('administrator');
+
+          }else if(userIndentifier == 'Executive'){
+            localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
+            this.storageService.store(AuthConstants.AUTH, this.loginResponseModelv3);
+            this.userRolegetUserSettingsV3('executive');
+
           }else{
             this.loginResponseModelv3.roles.forEach(element => {
                 if(this.loginResponseModelv3.jwt != null){
@@ -201,6 +218,49 @@ export class LoginPage {
     );
   }
     /*V3 App*/
+
+  userRolegetUserSettingsV3(linkTo:any){
+    let jsonResponse:any;
+            let settingsIndicator:any;
+            this.doctorService.getUserSettingsV3().subscribe(
+              (res: any) => {
+                jsonResponse = res;
+                jsonResponse = <UserSettingsModelv3>res;
+                localStorage.setItem("user_settings",btoa(JSON.stringify(jsonResponse)));
+              },(error) => {
+              },
+              () => {
+                Object.keys(jsonResponse).forEach((key) => {
+                  if(jsonResponse[key] == null){settingsIndicator = false;}
+                  else{settingsIndicator = true;}
+                 
+                  //this.storageService.store(AuthConstants.AUTH, this.loginResponseModelv3);
+                  if(settingsIndicator){
+                    //this.getAppsettingsV3();
+                    this.router.navigate(['/'+linkTo]);
+                  }else{
+
+                    this.getAppsettingsV3();
+                    this.router.navigate(['/'+linkTo]);
+                  }
+                }); 
+              }
+              );
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   getUserSettingsV3(){
     this.appSettingsModelv3 = new AppSettingsModelv3();
     this.userSettingsModelv3 = new UserSettingsModelv3();
@@ -262,7 +322,7 @@ export class LoginPage {
       },(error) => {
          this.functionsService.sorryDoc();
          this.btnDisable = false;
-        },
+      },
         () => {
           this.doctorService.insertUserSettingsV3(this.appSettingsModelv3).subscribe(
             (resInsert: any) => {
