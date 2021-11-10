@@ -47,13 +47,14 @@
     <ion-row>
       <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
         <ng-container>
-          <div *ngFor="let x of listOfDoctors">
+          <div *ngFor="let x of listOfPatients">
 
          
-            <ion-card (click)="detail(x.patient_no)" mode="ios"  class="pointer">
+            <ion-card (click)="detail(x.patientName)" mode="ios"  class="pointer">
+              
               <ion-item lines="none">
                 <ion-avatar slot="start">
-                  <chh-app-text-avatar [text]="x.doctorName" [color]=""></chh-app-text-avatar>
+                  <chh-app-text-avatar [text]="x.patientName" [color]=""></chh-app-text-avatar>
                 </ion-avatar>
                 <ion-label style="margin-top: -5px;">
                   <ion-item
@@ -63,33 +64,67 @@
                     style="padding-bottom: 5px;"
                   >
                     <h2 class="ion-text-wrap" style="padding-top: 20px;">
-                      {{ x.doctorName }}
+                      {{ x.patientName }}
                     </h2>
-
+ 
                   </ion-item>
-
-
-
+ 
+                  <div
+                    *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE  && (x.is_posted ==this.constants.ANY__VALUE__NULL|| x.is_posted ==this.constants.NUMBER__VALUE__ZERO ) && x.doctor_prof_fee !=this.constants.ANY__VALUE__NULL"
+                  >
+                    <!--Patient For Discharge-->
+                    <!--Buffer 0.85 -->
+                    <ion-progress-bar
+                      value=".75"
+                      buffer="1"
+                      color="warning"
+                    ></ion-progress-bar>
+                  </div>
+                  <div
+                    *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE  && x.is_posted == '1' && x.doctor_prof_fee !=this.constants.ANY__VALUE__NULL"
+                  >
+                    <!--Patient For Discharge-->
+                    <ion-progress-bar
+                      value="1"
+                      color="mango"
+                    ></ion-progress-bar>
+                  </div>
                   <ion-row
                     class="ion-no-padding"
                     lines="none"
                     style="padding-top: 10px !important;"
                   >
                     <p>
-
-                      <span >
+                      <span *ngIf="x.site ==siteC ">
                         <ion-icon
                           name="location-outline"
                           slot="start"
                         ></ion-icon
-                        > {{x.deptName}} </span
-                      >
+                        > {{this.constants.CHH_NAME__VALUE__CEBU}}
+                      </span>
+                      <span *ngIf="x.site == siteM">
+                        <ion-icon
+                          name="location-outline"
+                          slot="start"
+                        ></ion-icon
+                        > {{this.constants.CHH_NAME__VALUE__MANDAUE}} </span
+                      ><br />
+                      <ion-icon name="bed-outline" slot="start"></ion-icon> Room
+                      {{x.roomNo}}<br />
+                 
+      
+                      <!--ion-icon name="body-outline"></ion-icon>Patient Journey<br /-->
                     </p>
                     <br />
                   </ion-row>
                 </ion-label>
               </ion-item>
             </ion-card>
+
+
+
+
+
           </div>
         </ng-container>
       </ion-col>
@@ -99,5 +134,4 @@
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
-
 </ion-content>

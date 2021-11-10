@@ -67,6 +67,18 @@ const routes: Routes = [
     pathMatch   : 'full',
     loadChildren: () => import('../app/chh-web-components/chh-app-error-404/chh-app-error-404.module').then( m => m.ChhAppError404PageModule)
 },/*  {
+    path: 'tabs-allpatients',
+    loadChildren: () => import('./pages/executuve/tabs-allpatients/tabs-allpatients.module').then( m => m.TabsAllpatientsPageModule)
+  },
+* {
+    path: 'tabs-patients',
+    loadChildren: () => import('./pages/executuve/tabs-patients/tabs-patients.module').then( m => m.TabsPatientsPageModule)
+  },
+*  {
+    path: 'tabs-patients',
+    loadChildren: () => import('./executuve/tabs-patients/tabs-patients.module').then( m => m.TabsPatientsPageModule)
+  },
+  {
     path: 'tabs-doctors',
     loadChildren: () => import('./pages/executuve/tabs-doctors/tabs-doctors.module').then( m => m.TabsDoctorsPageModule)
   },

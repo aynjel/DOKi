@@ -11,18 +11,20 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { ExecutiveService } from 'src/app/services/executive/executive.service';
 
 @Component({
-  selector: 'app-tabs-doctors',
-  templateUrl: './tabs-doctors.page.html',
-  styleUrls: ['./tabs-doctors.page.scss'],
+  selector: 'app-tabs-allpatients',
+  templateUrl: './tabs-allpatients.page.html',
+  styleUrls: ['./tabs-allpatients.page.scss'],
 })
-export class TabsDoctorsPage implements OnInit {
+export class TabsAllpatientsPage implements OnInit {
   isDesktop: boolean;
   userData$ = new BehaviorSubject<any>([]);
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   public logindata: LoginResponseModelv3;
-  listOfDoctors:any;
+  listOfPatients:any;
   searchBar: any = "";
-  listOfDoctorsTemp: any;
+  listOfPatientsTemp: any;
+  siteC = "Cebu";
+  siteM = "Mandaue";
   refreshcounter:any;
   constructor(    private storageService: StorageService,
     private router: Router,
@@ -46,22 +48,61 @@ export class TabsDoctorsPage implements OnInit {
 
 
   ngOnInit() {
-    this.listOfDoctors = [];
+
+    this.listOfPatients = [];
     this.refreshcounter=1;  
 
-    console.log(this.refreshcounter);
     
   }
+  initialload(){
+    let i=1;
+    this.listOfPatientsTemp.forEach(element => {
+      if(i<=10){this.listOfPatients.push(element);}
+      
+      i++;
+    }
+    );
+  }
+  loadData(event) {
+    this.refreshcounter++;
+    // Using settimeout to simulate api call 
+    setTimeout(() => {
+
+      // load more data
+
+
+      let i =1;
+      this.listOfPatientsTemp.forEach(element => {
+        if(i > ((this.refreshcounter*10)-10) && i<= (this.refreshcounter*10)){
+          this.listOfPatients.push(element);
+        }
+        i++;
+      });
+
+
+      //Hide Infinite List Loader on Complete
+      event.target.complete();
+
+      // App logic to determine if all data is loaded
+      // and disable the infinite scroll
+      if (this.listOfPatients.length == 1000) {
+        event.target.disabled = true;
+      }
+    }, 500);
+  }
   filterList() {
+    console.log('filterList');
     
     if(this.searchBar == ""){
-      this.listOfDoctors = [];
+      console.log('empty');
+      
+      this.listOfPatients = [];
       this.initialload();
     }else{
-      this.listOfDoctors = [];
-      this.listOfDoctorsTemp.forEach(element => {
-        if (element.doctorName.toLowerCase().includes(this.searchBar.toLowerCase())) {
-            this.listOfDoctors.push(element);
+      this.listOfPatients = [];
+      this.listOfPatientsTemp.forEach(element => {
+        if (element.patientName.toLowerCase().includes(this.searchBar.toLowerCase())) {
+            this.listOfPatients.push(element);
         }
       });
     }
@@ -74,10 +115,14 @@ export class TabsDoctorsPage implements OnInit {
     }, 1000);
   }
   ionViewWillEnter() {
+
+
     this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
-    this.executiveService.getDoctors().subscribe(
+
+    this.listOfPatients = [];
+    this.executiveService.getPatients().subscribe(
       (res: any) => {   
-        this.listOfDoctorsTemp = res;  
+        this.listOfPatientsTemp = res;  
           console.log(res);
      
       },
@@ -96,40 +141,6 @@ export class TabsDoctorsPage implements OnInit {
   detail(data:any){
 
   }
-  initialload(){
-    let i=1;
-    this.listOfDoctorsTemp.forEach(element => {
-      if(i<=10){this.listOfDoctors.push(element);}
-      
-      i++;
-    }
-    );
-  }
-  loadData(event) {
-    this.refreshcounter++;
-    // Using settimeout to simulate api call 
-    setTimeout(() => {
-
-      // load more data
 
 
-      let i =1;
-      this.listOfDoctorsTemp.forEach(element => {
-        if(i > ((this.refreshcounter*10)-10) && i<= (this.refreshcounter*10)){
-          this.listOfDoctors.push(element);
-        }
-        i++;
-      });
-
-
-      //Hide Infinite List Loader on Complete
-      event.target.complete();
-
-      // App logic to determine if all data is loaded
-      // and disable the infinite scroll
-      if (this.listOfDoctors.length == 1000) {
-        event.target.disabled = true;
-      }
-    }, 500);
-  }
 }

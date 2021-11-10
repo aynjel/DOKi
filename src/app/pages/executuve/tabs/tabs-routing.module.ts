@@ -23,6 +23,12 @@ const routes: Routes = [
         path: 'doctors',
         loadChildren: () => import('../tabs-doctors/tabs-doctors.module').then(m => m.TabsDoctorsPageModule)
       },{
+        path: 'patients',
+        loadChildren: () => import('../tabs-patients/tabs-patients.module').then(m => m.TabsPatientsPageModule)
+      },{
+        path: 'allpatients',
+        loadChildren: () => import('../tabs-allpatients/tabs-allpatients.module').then(m => m.TabsAllpatientsPageModule)
+      },{
         path: 'settings',
         loadChildren: () => import('../tabs-settings/tabs-settings.module').then(m => m.TabsSettingsPageModule)
       },
