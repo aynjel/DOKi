@@ -31,18 +31,27 @@ export class HomeGuard implements CanActivate {
               }
 
           });
-          if(userIdentifier1 == 'Administrator' ){
-            this.router.navigate(["/administrator"]);
-            resolve(false);
-          }else if(userIdentifier1 == 'Executive' ){
+          console.log(localStorage.getItem('role_flag'));
+          if(localStorage.getItem('role_flag') == 'medcons'){
+            resolve(true);
+          }else if(localStorage.getItem('role_flag') == 'exec'){
             this.router.navigate(["/executive"]);
             resolve(false);
-          }else if (userIdentifier2 == 'MedicalConsultant'){
-            resolve(true);
           }else{
-            this.router.navigate(["/"]);
-            resolve(false);
+            if(userIdentifier1 == 'Administrator' ){
+              this.router.navigate(["/administrator"]);
+              resolve(false);
+            }else if(userIdentifier1 == 'Executive' ){
+              this.router.navigate(["/executive"]);
+              resolve(false);
+            }else if (userIdentifier2 == 'MedicalConsultant'){
+              resolve(true);
+            }else{
+              this.router.navigate(["/"]);
+              resolve(false);
+            }
           }
+
           /*
           if (userIdentifier  == 'Administrator') {
             this.router.navigate(["/Administrator"]);

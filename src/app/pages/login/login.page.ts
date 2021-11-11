@@ -140,13 +140,17 @@ export class LoginPage {
     this.loginModelv3.password = this.postData.password;
     this.loginResponseModelv3 = new LoginResponseModelv3;
     let userIndentifier;
+    let dualFlag1:boolean = false;
+    let dualFlag2:boolean = false;
     this.doctorService.loginV3(this.loginModelv3).subscribe((res: any) => {
 
         this.loginResponseModelv3 = <LoginResponseModelv3>res;
         let execflag:boolean = true;
+
         if(this.loginResponseModelv3.isAuthenticated == true){
           this.loginResponseModelv3.roles.forEach(element => {
-            console.log(element);
+      
+            
             
             if(execflag){
               if(element == 'Administrator'){
@@ -158,6 +162,13 @@ export class LoginPage {
 
               }
             }
+            
+           if(element == 'Executive'){
+              dualFlag1 = true;
+           }
+           if(element == 'MedicalConsultant'){
+             dualFlag2 = true;
+           }
               
           });
           console.log("userIndentifier : "+userIndentifier);
@@ -171,31 +182,37 @@ export class LoginPage {
       },() => {
         if(this.loginResponseModelv3.isAuthenticated == true){
 
-
-          
-          if(userIndentifier == 'Administrator'){
-            localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
-            this.storageService.store(AuthConstants.AUTH, this.loginResponseModelv3);
-            this.userRolegetUserSettingsV3('administrator');
-
-          }else if(userIndentifier == 'Executive'){
-            localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
-            this.storageService.store(AuthConstants.AUTH, this.loginResponseModelv3);
-            this.userRolegetUserSettingsV3('executive');
-
+          if(dualFlag1 == true && dualFlag2 == true){
+           
+            
+              this.loginAsMedExec();
           }else{
-            this.loginResponseModelv3.roles.forEach(element => {
-                if(this.loginResponseModelv3.jwt != null){
-                  localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
-                }        
-                if(this.loginResponseModelv3.isDefaultPasswordChanged){
-                  this.getUserSettingsV3();
-                }else{
-                  this.updatePasswordV3();
-                }
- 
-            });
+                      
+            if(userIndentifier == 'Administrator'){
+              localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
+              this.storageService.store(AuthConstants.AUTH, this.loginResponseModelv3);
+              this.userRolegetUserSettingsV3('administrator');
+
+            }else if(userIndentifier == 'Executive'){
+              localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
+              this.storageService.store(AuthConstants.AUTH, this.loginResponseModelv3);
+              this.userRolegetUserSettingsV3('executive');
+
+            }else{
+             // this.loginResponseModelv3.roles.forEach(element => {
+                  if(this.loginResponseModelv3.jwt != null){
+                    localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
+                  }        
+                  if(this.loginResponseModelv3.isDefaultPasswordChanged){
+                    this.getUserSettingsV3();
+                  }else{
+                    this.updatePasswordV3();
+                  }
+  
+             // });
+            }
           }
+
 
 
 
@@ -250,7 +267,49 @@ export class LoginPage {
 
 
 
+  async loginAsMedExec() {
+    this.alertController.create({
+      header: 'Confirm Login',
+      message: 'Login As',
+      buttons: [
+        {
+          text: 'Medical Consultant',
+          handler: () => {
+            localStorage.setItem("role_flag",'medcons');
+            let xFlag:boolean = false;
+            //this.loginResponseModelv3.roles.forEach(element => {
+              console.log('check flag');
+              if(this.loginResponseModelv3.jwt != null){
+                localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
+              }       
+              //if(!xFlag){
+                if(this.loginResponseModelv3.isDefaultPasswordChanged){
+                  this.getUserSettingsV3();
+                  xFlag=true;
+                }else{
+                  this.updatePasswordV3();
+                  xFlag=true;
+                }
+              //} 
 
+
+         // });
+          }
+        },
+        {
+          text: 'Executive',
+          handler: () => {
+            localStorage.setItem("role_flag",'exec');
+            localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
+            this.storageService.store(AuthConstants.AUTH, this.loginResponseModelv3);
+            this.userRolegetUserSettingsV3('executive');
+          }
+        }
+      ]
+    }).then(res => {
+      res.present();
+    });
+  }
 
 
 

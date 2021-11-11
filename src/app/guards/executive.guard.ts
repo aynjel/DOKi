@@ -26,16 +26,23 @@ export class ExecutiveGuard implements CanActivate {
                     }
                 });
                 //console.log('2');
-                if (userIdentifier  == 'Executive') {
-                  //console.log('3');
-                  //console.log('Executive');
-                  resolve(true);
-                } else {
-                  //console.log('executive');
-                  //console.log('4');
-                  this.router.navigate(["/login"]);
+
+                console.log(localStorage.getItem('role_flag'));
+                if(localStorage.getItem('role_flag') == 'medcons'){
+                  this.router.navigate(["/menu/dashboard"]);
                   resolve(false);
+                }else if(localStorage.getItem('role_flag') == 'exec'){
+                  
+                  resolve(true);
+                }else{
+                  if (userIdentifier  == 'Executive') {
+                    resolve(true);
+                  } else {
+                    this.router.navigate(["/login"]);
+                    resolve(false);
+                  }
                 }
+
               }else{
                 //console.log('false');
                this.router.navigate(["/login"]);
