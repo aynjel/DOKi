@@ -35,7 +35,10 @@ export class TabsDashboardPage implements OnInit {
   tTC = 'C';
   tTM = 'M';
   totalAdmissionsV3:any;
+  totalAdmissionsV33:boolean = true;
   totalAdmissionsTodayV3:any;
+  totalAdmissionsTodayV33:boolean = true;
+  forDischargeV33:boolean = true;
   constructor(    private storageService: StorageService,
     private router: Router,
     public constants: Constants,
@@ -82,6 +85,10 @@ export class TabsDashboardPage implements OnInit {
     this.forDischarge = 0; 
     this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
 
+    this.totalAdmissionsV33 = true;
+    this.totalAdmissionsTodayV33 = true;
+    this.forDischargeV33 = true;
+
     //console.log(this.logindata);
     this.userName = this.logindata.userName;
     this.executiveService.totalAdmissionsV3().subscribe(
@@ -89,9 +96,10 @@ export class TabsDashboardPage implements OnInit {
           //console.log(res);
           this.totalAdmissionsV3 = res;
       },
-      (error) => {},
+      (error) => { this.totalAdmissionsV33 = false;},
       () => {
         this.totalAdmissionsV3.forEach(element => {
+          this.totalAdmissionsV33 = false;
           this.totalAdmissions = this.totalAdmissions +element.totalAdmissions;
           //console.log(this.totalAdmissions);
           
@@ -110,10 +118,11 @@ export class TabsDashboardPage implements OnInit {
         //console.log(res);
         this.totalAdmissionsTodayV3 = res;
     },
-    (error) => {},
+    (error) => {this.totalAdmissionsTodayV33 = false;},
     () => {
       
       this.totalAdmissionsTodayV3.forEach(element => {
+        this.totalAdmissionsTodayV33 = false;
         //console.log(element.totalAdmissions);
         this.totalAdmissionstoday = this.totalAdmissionstoday +element.totalNewAdmissions;
         if(element.site == 'C'){
@@ -132,10 +141,11 @@ export class TabsDashboardPage implements OnInit {
         //console.log(res);
         this.forDischargeV3 = res;
     },
-    (error) => {},
+    (error) => {this.forDischargeV33 = false;},
     () => {
       this.forDischargeV3.forEach(element => {
-
+        
+        this.forDischargeV33 = false;
         this.forDischarge = this.forDischarge +element.totalForDischarge;
         if(element.site == 'C'){
             this.forDischargeC = element.totalForDischarge;
