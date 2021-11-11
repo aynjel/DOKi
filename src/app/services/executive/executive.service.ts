@@ -56,4 +56,11 @@ export class ExecutiveService {
    const url =    environment.apiRouterUrl + "v3/Dashboard/Admin/AllInPatients";
     return this.http.get(url, options);
   }
+  getTotalAdmissionsByDept() {
+    const headers = new HttpHeaders({'Content-Type': 'application/json;charset=utf-8',});
+    const options = { headers: headers, withCredentials: true };
+   //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
+   const url =    environment.apiRouterUrl + "v3/Dashboard/Admin/TotalAdmissionsByDept";
+    return this.http.get(url, options);
+  }
 }

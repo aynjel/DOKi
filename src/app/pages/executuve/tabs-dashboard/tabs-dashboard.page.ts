@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { ExecutiveService } from 'src/app/services/executive/executive.service';
 import { throwIfEmpty } from 'rxjs/operators';
 import { runInThisContext } from 'vm';
+import * as HighCharts from "highcharts";
 @Component({
   selector: 'app-tabs-dashboard',
   templateUrl: './tabs-dashboard.page.html',
@@ -39,6 +40,12 @@ export class TabsDashboardPage implements OnInit {
   totalAdmissionsTodayV3:any;
   totalAdmissionsTodayV33:boolean = true;
   forDischargeV33:boolean = true;
+  chhgreen :any = '#275228';
+  chhred : any = '#d12027';
+  chhtextcolor:any = '#ffffff';
+  getTotalAdmissionsByDept:any;
+  getTotalAdmissionsByDeptData:any;
+  dumpTotalAdmissions:any;
   constructor(    private storageService: StorageService,
     private router: Router,
     public constants: Constants,
@@ -156,6 +163,27 @@ export class TabsDashboardPage implements OnInit {
     }
 
     );
+
+
+    this.getTotalAdmissionsByDeptData = [];
+    this.executiveService.getTotalAdmissionsByDept().subscribe(
+      (res: any) => {     
+       
+      this.getTotalAdmissionsByDept = res;
+    },
+    (error) => {},
+    () => {
+      this.getTotalAdmissionsByDept.forEach(element => {
+        this.getTotalAdmissionsByDeptData.push({name:element.deptName,y:element.numOfAdmissions});
+      });
+      this.populatePieChart();
+    }
+
+    );
+
+
+  
+
   }
 
   checkInput(){
@@ -163,4 +191,65 @@ export class TabsDashboardPage implements OnInit {
       //console.log(res);
     });
   }
+
+
+  populatePieChart(){
+    HighCharts.setOptions({
+      chart: {
+        style: {
+          fontFamily: "Nunito", // fontFamily: 'Inter'
+        },
+      },
+    });
+    HighCharts.chart("PieChart", {
+
+      chart: {
+        renderTo: "container",
+        height: 300,
+        type: "pie",
+        styledMode: true,
+      },
+      title: { text: "Admissions by Department" },
+      accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+      plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.y} <br /> {point.percentage:.1f} %'
+            }
+        }
+    },
+      series: [
+        {
+          type: undefined,
+          name: "Department",
+          data: this.getTotalAdmissionsByDeptData
+        },
+      ],
+      responsive: {
+        rules: [
+          {
+            condition: { minWidth: 300 },
+            chartOptions: {
+              legend: {
+                layout: "horizontal",
+                align: "center",
+                verticalAlign: "bottom",
+              },
+            },
+          },
+        ],
+      },
+      credits: { enabled: false },
+    });
+  }
+
+
+
 }

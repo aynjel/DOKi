@@ -16,57 +16,16 @@
   <ion-grid class="ion-no-padding">
     <ion-row class="custom-padding">
       <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3" class="custom-border-bottom ion-no-border ">
-        <ion-item lines="none">
-          <h2 class="ion-no-padding">Welcome, {{userName}}!</h2>
-        </ion-item>
-
-
-        <!--ion-grid>
-          <ion-row>
-            <ion-col size-xs="12"  size-md="8" offset-md="2">
-
-
-
-
-              <ion-card>
-                <ion-item>
-                  <ion-label class="ion-text-center">
-                    <h2 ><b>Admissions</b></h2>
-                  </ion-label>
-             
-                 
-                </ion-item>
-                <ion-item>
-                  <ion-label> <b> Cebu </b> </ion-label>
-                  <ion-label> {{totalAdmissionsC}} </ion-label>
-                </ion-item>
-                <ion-item>
-                  <ion-label> <b> Mandaue </b> </ion-label>
-                  <ion-label> {{totalAdmissionsM}} </ion-label>
-                 
-                </ion-item>
-                <ion-item>
-                  <ion-label> <b>  </b> </ion-label>
-                  <ion-label> <b>{{totalAdmissions}}</b> </ion-label>
-                </ion-item>
-              
-
-              </ion-card>
-            </ion-col>
-  
-
-          </ion-row>
-        </ion-grid-->
-        <ion-grid>
-
-            </ion-grid>
 
  
         <ion-grid>
+          
+          <ion-card  mode="ios"  class="pointer">
            <!-- Total ADMISSION -->
           <ion-row>
+            
             <ion-col size-xs="12" class="ion-text-center">
-              <h3>Total Admissions : 
+              <h3 style="color:black">Total Admissions : 
                 <b *ngIf="!totalAdmissionsV33">{{totalAdmissions}}</b>
                 <ion-spinner name="crescent" *ngIf="totalAdmissionsV33"></ion-spinner>
               </h3>
@@ -80,14 +39,14 @@
             <ion-col size-xs="6" >
                 <ion-item id="ion-item-ac" lines="none" routerLink='/' routerDirection="back">
                   <ion-avatar slot="start">
-                    <chh-app-text-avatar [text]='tTC' [color]=""></chh-app-text-avatar>
+                    <chh-app-text-avatar [text]='tTC' [color]="chhgreen" [textColor]="chhtextcolor"></chh-app-text-avatar>
                   </ion-avatar>
                   
                   <ion-label>
-                    <h1>
+                    <h2>
                       <b *ngIf="!totalAdmissionsV33">{{totalAdmissionsC}}</b>
                       <ion-spinner name="crescent" *ngIf="totalAdmissionsV33"></ion-spinner>
-                    </h1>
+                    </h2>
 
                   </ion-label>
                 </ion-item>
@@ -97,28 +56,30 @@
             <ion-col size-xs="6" >
                 <ion-item id="ion-item-dn" lines="none" routerLink='/' routerDirection="back">
                   <ion-avatar slot="start">
-                    <chh-app-text-avatar [text]='tTM' [color]=""></chh-app-text-avatar>
+                    <chh-app-text-avatar [text]='tTM' [color]="chhred" [textColor]="chhtextcolor"></chh-app-text-avatar>
                   </ion-avatar>
                   <ion-label>
-                    <h1>
+                    <h2>
                         <b *ngIf="!totalAdmissionsV33">{{totalAdmissionsM}}</b>
                         <ion-spinner name="crescent" *ngIf="totalAdmissionsV33"></ion-spinner>
-                    </h1>
+                    </h2>
 
                   </ion-label>
                 </ion-item>
             </ion-col>
 
           </ion-row>
-          <ion-row>
-            <ion-col size-xs="12" class="ion-text-center">
-              <ion-item></ion-item>
-              </ion-col>
-            </ion-row>
+
+
+      
+              <ion-item class="ion-no-padding ion-no-margin" ></ion-item>
+
+
+
                         <!-- NEW ADMISSION -->
           <ion-row>
             <ion-col size-xs="12" class="ion-text-center">
-              <h3>
+              <h3 style="color:black">
                 New Admissions Today : 
                 <b *ngIf="!totalAdmissionsTodayV33">{{totalAdmissionstoday}}</b>
                 <ion-spinner name="crescent" *ngIf="totalAdmissionsTodayV33"></ion-spinner>
@@ -127,14 +88,14 @@
             <ion-col size-xs="6" >
                 <ion-item id="ion-item-ac" lines="none" routerLink='/' routerDirection="back">
                   <ion-avatar slot="start">
-                    <chh-app-text-avatar [text]='tTC' [color]=""></chh-app-text-avatar>
+                    <chh-app-text-avatar [text]='tTC' [color]="chhgreen" [textColor]="chhtextcolor"></chh-app-text-avatar>
                   </ion-avatar>
                   
                   <ion-label>
-                    <h1>
+                    <h2>
                       <b *ngIf="!totalAdmissionsTodayV33">{{totalAdmissionstodayC}}</b>
                       <ion-spinner name="crescent" *ngIf="totalAdmissionsTodayV33"></ion-spinner>
-                    </h1>
+                    </h2>
 
                   </ion-label>
                 </ion-item>
@@ -142,28 +103,24 @@
             <ion-col size-xs="6" >
                 <ion-item id="ion-item-dn" lines="none" routerLink='/' routerDirection="back">
                   <ion-avatar slot="start">
-                    <chh-app-text-avatar [text]='tTM' [color]=""></chh-app-text-avatar>
+                    <chh-app-text-avatar [text]='tTM' [color]="chhred" [textColor]="chhtextcolor"></chh-app-text-avatar>
                   </ion-avatar>
                   <ion-label>
-                    <h1>
+                    <h2>
                       <b *ngIf="!totalAdmissionsTodayV33">{{totalAdmissionstodayM}}</b>
                       <ion-spinner name="crescent" *ngIf="totalAdmissionsTodayV33"></ion-spinner>
-                    </h1>
+                    </h2>
                     <!--p class="ion-text-wrap" >{{this.functionsService.convertToCamelCase(this.constants.ADMISSION_STATUS__VALUE__FOR_DISCHARGE)}}</p-->
                   </ion-label>
                 </ion-item>
             </ion-col>
 
           </ion-row>
-          <ion-row>
-            <ion-col size-xs="12" class="ion-text-center">
-              <ion-item></ion-item>
-              </ion-col>
-            </ion-row>
+          <ion-item class="ion-no-padding ion-no-margin" ></ion-item>
             <!-- FOR DISCHARGE -->
           <ion-row>
             <ion-col size-xs="12" class="ion-text-center">
-              <h3>For Discharge : 
+              <h3 style="color:black">For Discharge : 
                 <b *ngIf="!forDischargeV33">{{forDischarge}}</b>
                 <ion-spinner name="crescent" *ngIf="forDischargeV33"></ion-spinner>
               </h3>
@@ -171,14 +128,14 @@
             <ion-col size-xs="6" >
                 <ion-item id="ion-item-ac" lines="none" routerLink='/' routerDirection="back">
                   <ion-avatar slot="start">
-                    <chh-app-text-avatar [text]='tTC' [color]=""></chh-app-text-avatar>
+                    <chh-app-text-avatar [text]='tTC' [color]="chhgreen" [textColor]="chhtextcolor"></chh-app-text-avatar>
                   </ion-avatar>
                   
                   <ion-label>
-                    <h1>
+                    <h2>
                       <b *ngIf="!forDischargeV33">{{forDischargeC}}</b>
                       <ion-spinner name="crescent" *ngIf="forDischargeV33"></ion-spinner>
-                    </h1>
+                    </h2>
                     <!--p>{{this.functionsService.convertToCamelCase(this.constants.ADMISSION_STATUS__VALUE__ADMITTED)}}</p-->
                   </ion-label>
                 </ion-item>
@@ -186,19 +143,27 @@
             <ion-col size-xs="6" >
                 <ion-item id="ion-item-dn" lines="none" routerLink='/' routerDirection="back">
                   <ion-avatar slot="start">
-                    <chh-app-text-avatar [text]='tTM' [color]=""></chh-app-text-avatar>
+                    <chh-app-text-avatar [text]='tTM' [color]="chhred" [textColor]="chhtextcolor"></chh-app-text-avatar>
                   </ion-avatar>
                   <ion-label>
-                    <h1>
+                    <h2>
                       <b *ngIf="!forDischargeV33">{{forDischargeM}}</b>
                       <ion-spinner name="crescent" *ngIf="forDischargeV33"></ion-spinner>
-                    </h1>
+                    </h2>
                     <!--p class="ion-text-wrap" >{{this.functionsService.convertToCamelCase(this.constants.ADMISSION_STATUS__VALUE__FOR_DISCHARGE)}}</p-->
                   </ion-label>
                 </ion-item>
             </ion-col>
 
           </ion-row>
+          <ion-item class="ion-no-padding ion-no-margin" lines="none"></ion-item>
+          </ion-card>
+
+
+
+          <ion-card   mode="ios"  class="pointer">
+            <div id="PieChart"></div>
+          </ion-card>
         </ion-grid>
 
 

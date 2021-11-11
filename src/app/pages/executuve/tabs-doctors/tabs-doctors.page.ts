@@ -24,6 +24,7 @@ export class TabsDoctorsPage implements OnInit {
   searchBar: any = "";
   listOfDoctorsTemp: any;
   refreshcounter:any;
+  deptFilter:boolean = false;
   constructor(    private storageService: StorageService,
     private router: Router,
     public constants: Constants,
@@ -66,6 +67,24 @@ export class TabsDoctorsPage implements OnInit {
       });
     }
   }
+  segmentChanged(da){
+    console.log();
+    if(da.detail.value == 'ALL'){
+      this.listOfDoctors = [];
+      this.initialload();
+    }else{
+
+    }
+    /*
+    this.listOfDoctors = [];
+    this.listOfDoctorsTemp.forEach(element => {
+      if (element.doctorName.toLowerCase().includes(this.searchBar.toLowerCase())) {
+          this.listOfDoctors.push(element);
+      }
+    });*/
+
+  }
+
   doRefresh(event) {
     setTimeout(() => {
       this.ngOnInit();
@@ -78,7 +97,10 @@ export class TabsDoctorsPage implements OnInit {
     this.executiveService.getDoctors().subscribe(
       (res: any) => {   
         this.listOfDoctorsTemp = res;  
-          console.log(res);
+         
+          res.forEach(element => {
+            console.log(element.deptCode);
+          });
      
       },
       (error) => {},
@@ -96,6 +118,7 @@ export class TabsDoctorsPage implements OnInit {
   detail(data:any){
 
   }
+
   initialload(){
     let i=1;
     this.listOfDoctorsTemp.forEach(element => {
