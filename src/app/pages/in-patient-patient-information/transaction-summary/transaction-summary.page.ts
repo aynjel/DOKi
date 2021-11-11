@@ -240,6 +240,10 @@ export class TransactionSummaryPage implements OnInit {
           }
         },
         (error) => {
+          this.functionsService.alert(
+            'SAVING of Professional Fee was Unsuccessful',
+            'Okay'
+          );
           this.disableSubmit = false;
         },
         () => {}
@@ -265,6 +269,10 @@ export class TransactionSummaryPage implements OnInit {
           }
         },
         (error) => {
+          this.functionsService.alert(
+            'SAVING of Professional Fee was Unsuccessful',
+            'Okay'
+          );
           this.disableSubmit = false;
         },
         () => {}
