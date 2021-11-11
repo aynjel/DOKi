@@ -54,10 +54,10 @@ export class TabsPatientsPage implements OnInit {
     
   }
   filterList() {
-    console.log('filterList');
+    //console.log('filterList');
     
     if(this.searchBar == ""){
-      console.log('empty');
+      //console.log('empty');
       
       this.listOfPatients = [];
       this.initialload();
@@ -80,6 +80,8 @@ export class TabsPatientsPage implements OnInit {
   initialload(){
     let i=1;
     this.listOfPatientsTemp.forEach(element => {
+      console.log(element.status);
+      
       if(i<=10){this.listOfPatients.push(element);}
       
       i++;
@@ -123,7 +125,7 @@ export class TabsPatientsPage implements OnInit {
     this.executiveService.getPatients().subscribe(
       (res: any) => {   
         this.listOfPatientsTemp = res;  
-          console.log(res);
+          //console.log(res);
      
       },
       (error) => {},
@@ -135,7 +137,7 @@ export class TabsPatientsPage implements OnInit {
   }
   checkInput(){
     this.doctorService.refreshTokenV3().subscribe((res: any) => {
-      //console.log(res);
+      ////console.log(res);
     });
   }
   detail(data:any){

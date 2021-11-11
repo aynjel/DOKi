@@ -5,17 +5,7 @@
         <ion-icon name="git-network-outline"></ion-icon> Doctors
         
       </ion-title>
-      <ion-buttons
-      slot="end"
-      class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated"
-    >
-      <ion-button
-
-        color="chh-css-primary2"
-        class="ios button button-clear ion-activatable ion-focusable hydrated"
-        >&nbsp; <ion-icon name="reorder-four-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+  
     </ion-toolbar>
    
   </div>
@@ -46,7 +36,7 @@
           (ionChange)="filterList()"
           mode="ios"
         ></ion-searchbar>
-        <ion-segment scrollable value="heart" class="scrollable-element" (ionChange)="segmentChanged($event)" value="ALL">
+        <ion-segment scrollable value="heart" class="scrollable-element" (ionChange)="segmentChanged()" value="ALL" [(ngModel)]="segmentModel" >
           <ion-segment-button value="ALL" >
             All
           </ion-segment-button>

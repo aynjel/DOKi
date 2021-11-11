@@ -34,6 +34,18 @@
           (ionChange)="filterList()"
           mode="ios"
         ></ion-searchbar>
+        <ion-segment scrollable value="heart" class="scrollable-element" (ionChange)="segmentChanged()" [(ngModel)]="segmentModel" value="ALL">
+          <ion-segment-button value="ALL" >
+            All
+          </ion-segment-button>
+          <ion-segment-button value="Admitted">
+            Admitted
+          </ion-segment-button>
+          <ion-segment-button value="For Discharge">
+            For Discharge
+          </ion-segment-button>
+         
+        </ion-segment>
       </ion-col>
     </ion-row>
   </ion-grid>

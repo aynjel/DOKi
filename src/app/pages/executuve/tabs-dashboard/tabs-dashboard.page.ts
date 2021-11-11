@@ -11,7 +11,29 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { ExecutiveService } from 'src/app/services/executive/executive.service';
 import { throwIfEmpty } from 'rxjs/operators';
 import { runInThisContext } from 'vm';
+/*
 import * as HighCharts from "highcharts";
+import More from 'highcharts/highcharts-more';
+import Tree from 'highcharts/modules/treemap';
+import Heatmap from 'highcharts/modules/heatmap';
+More(HighCharts);
+Tree(HighCharts);
+Heatmap(HighCharts);*/
+
+import * as HighCharts from 'highcharts';
+import More from 'highcharts/highcharts-more';
+More(HighCharts);
+import Tree from 'highcharts/modules/treemap';
+Tree(HighCharts);
+import Heatmap from 'highcharts/modules/heatmap';
+Heatmap(HighCharts);
+// Load the exporting module.
+import Exporting from 'highcharts/modules/exporting';
+// Initialize exporting module.
+//Exporting(HighCharts);
+
+
+
 @Component({
   selector: 'app-tabs-dashboard',
   templateUrl: './tabs-dashboard.page.html',
@@ -45,6 +67,12 @@ export class TabsDashboardPage implements OnInit {
   chhtextcolor:any = '#ffffff';
   getTotalAdmissionsByDept:any;
   getTotalAdmissionsByDeptData:any;
+  getTotalAdmissionsByDeptDataTM:any;
+
+  TotalAdmissionsByDeptAndSite:any;
+  TotalAdmissionsByDeptAndSiteData:any;
+  TotalAdmissionsByDeptAndSiteDataTM:any;
+  jsonForPopulate:any;
   dumpTotalAdmissions:any;
   constructor(    private storageService: StorageService,
     private router: Router,
@@ -166,6 +194,7 @@ export class TabsDashboardPage implements OnInit {
 
 
     this.getTotalAdmissionsByDeptData = [];
+    this.getTotalAdmissionsByDeptDataTM = [];
     this.executiveService.getTotalAdmissionsByDept().subscribe(
       (res: any) => {     
        
@@ -175,17 +204,74 @@ export class TabsDashboardPage implements OnInit {
     () => {
       this.getTotalAdmissionsByDept.forEach(element => {
         this.getTotalAdmissionsByDeptData.push({name:element.deptName,y:element.numOfAdmissions});
+        this.getTotalAdmissionsByDeptDataTM.push(
+          {
+            name:element.deptName,
+            value:element.numOfAdmissions,
+            colorValue:element.numOfAdmissions
+          });
       });
-      this.populatePieChart();
+      this.populatePieChart();     
+      //this.treeMap();
     }
 
     );
 
 
+    this.TotalAdmissionsByDeptAndSiteData = [];
+    this.TotalAdmissionsByDeptAndSiteDataTM = [];
+    this.executiveService.getTotalAdmissionsByDeptAndSite().subscribe(
+      (res: any) => {     
+       
+      this.TotalAdmissionsByDeptAndSite = res;
+      console.log(res);
+      
+    },
+    (error) => {},
+    () => {
+      /*
+      this.TotalAdmissionsByDeptAndSite.forEach(element => {
+        this.TotalAdmissionsByDeptAndSiteData.push({name:element.deptName,y:element.numOfAdmissions});
+        this.TotalAdmissionsByDeptAndSiteDataTM.push(
+          {
+            name:element.deptName,
+            value:element.numOfAdmissions,
+            colorValue:element.numOfAdmissions
+          });
+      });
+
+
+      
+      this.treeMap1();
+      console.log(JSON.stringify(this.TotalAdmissionsByDeptAndSiteDataTM));*/
+
+      this.famTotal=0;this.famPer=0;this.famC = 0;this.famM = 0;
+      this.inmTotal=0;this.inmPer=0;this.inmC = 0;this.inmM = 0;
+
+      this.jsonForPopulate=[];
+      this.TotalAdmissionsByDeptAndSite.forEach(element => {
+
+          if(element.deptName == "FAM - C" || element.deptName == "FAM - M"){
+              this.famTotal = this.famTotal + element.numOfAdmissions;
+              this.famPer = (this.famTotal / this.totalAdmissions)*100;
+              if(element.deptName == "FAM - C"){
+                this.famC = element.numOfAdmissions;
+              }else{
+                this.famM = element.numOfAdmissions;
+              }
+
+          }
+
+      });
+    }
+
+    );
   
 
   }
 
+  famTotal:any;famPer:any;famC:any;famM:any;
+  inmTotal:any;inmPer:any;inmC:any;inmM:any;
   checkInput(){
     this.doctorService.refreshTokenV3().subscribe((res: any) => {
       //console.log(res);
@@ -249,7 +335,125 @@ export class TabsDashboardPage implements OnInit {
       credits: { enabled: false },
     });
   }
+  treeMap1(){
+    HighCharts.chart('TreeMap1', {
+      chart: {
+        renderTo: "container",
+        styledMode: true,
+      },
+      series: [{
+        type: "treemap",
+        layoutAlgorithm: 'stripes',
+        alternateStartingDirection: true,
+        levels: [{
+          level: 1,
+          layoutAlgorithm: 'sliceAndDice',
+          dataLabels: {
+            enabled: true,
+            align: 'left',
+            verticalAlign: 'top',
+            style: {
+              fontSize: '12px'
+            }
+          }
+        }],
+        data: [{
+          id: 'A',
+          name: 'IM',
+          color: "#013759"
+        }, {
+          id: 'B',
+          name: 'PEDIA',
+          color: "#c5f5f0 "
+        }, {
+          id: 'C',
+          name: 'SUR',
+          color: '#EC9800'
+        },{
+          id: 'D',
+          name: 'OBG',
+          color: "#EC2500"
+        }, {
+          id: 'E',
+          name: 'FAM',
+          color: "#ECE100"
+        }, {
+          id: 'F',
+          name: 'ORT',
+          color: '#EC9800'
+        }, {
+          name: 'Cebu',
+          parent: 'A',
+          value: 5
+        }, {
+          name: 'mandaui',
+          parent: 'A',
+          value: 3
+        }, {
+          name: 'Peter',
+          parent: 'A',
+          value: 4
+        }, {
+          name: 'Anne',
+          parent: 'B',
+          value: 4
+        }, {
+          name: 'Rick',
+          parent: 'B',
+          value: 10
+        }, {
+          name: 'Peter',
+          parent: 'B',
+          value: 1
+        }, {
+          name: 'Anne',
+          parent: 'O',
+          value: 1
+        }, {
+          name: 'Rick',
+          parent: 'O',
+          value: 3
+        }, {
+          name: 'Peter',
+          parent: 'O',
+          value: 3
+        }, {
+          name: 'Susanne',
+          parent: 'Kiwi',
+          value: 2,
+          color: '#9EDE00'
+        }]
+      }],
+      title: {
+        text: 'Admissions by Department'
+      }
+    });
+  }
+  treeMap(){
 
+    HighCharts.chart("TreeMap", {
 
+      chart: {
+        renderTo: "container",
+        type: "treemap",
+        styledMode: true,
+      },
+      colorAxis: {
+        minColor: '#FFFFFF',
+        maxColor: '#009444',
+      },
+      series: [
+        {
+          type: 'treemap',
+          layoutAlgorithm: 'squarified',
+          data: [{"name":"FAM","value":14,"colorValue":1},{"name":"INM","value":187,"colorValue":187},{"name":"OBG","value":27,"colorValue":27},{"name":"ORT","value":12,"colorValue":12},{"name":"PED","value":39,"colorValue":39},{"name":"SUR","value":33,"colorValue":33}],
+        },
+      ],
+      title: {
+        text: 'Admissions by Department',
+      },
+    });
+  }
+  
 
 }

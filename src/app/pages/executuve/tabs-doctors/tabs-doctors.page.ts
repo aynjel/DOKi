@@ -23,8 +23,10 @@ export class TabsDoctorsPage implements OnInit {
   listOfDoctors:any;
   searchBar: any = "";
   listOfDoctorsTemp: any;
+  listOfDoctorsTemp1: any;
   refreshcounter:any;
   deptFilter:boolean = false;
+  segmentModel:any;
   constructor(    private storageService: StorageService,
     private router: Router,
     public constants: Constants,
@@ -50,7 +52,7 @@ export class TabsDoctorsPage implements OnInit {
     this.listOfDoctors = [];
     this.refreshcounter=1;  
 
-    console.log(this.refreshcounter);
+    //console.log(this.refreshcounter);
     
   }
   filterList() {
@@ -60,28 +62,56 @@ export class TabsDoctorsPage implements OnInit {
       this.initialload();
     }else{
       this.listOfDoctors = [];
+      this.listOfDoctorsTemp1=[];
       this.listOfDoctorsTemp.forEach(element => {
+ 
         if (element.doctorName.toLowerCase().includes(this.searchBar.toLowerCase())) {
             this.listOfDoctors.push(element);
+            this.listOfDoctorsTemp1.push(element);
         }
       });
     }
   }
-  segmentChanged(da){
-    console.log();
-    if(da.detail.value == 'ALL'){
+  segmentChanged(){
+
+    
+    //console.log(da.detail.value);
+    if(this.segmentModel == 'ALL'){
       this.listOfDoctors = [];
       this.initialload();
     }else{
+      this.listOfDoctors = [];
+      this.listOfDoctorsTemp1 = [];
+      let x =1;
+      this.listOfDoctorsTemp.forEach(element => {
 
+        if(this.segmentModel == 'SUR'){
+          if (element.deptCode.toLowerCase() == 'sura' || element.deptCode.toLowerCase() == 'surp') {
+            if(x<=10){   
+              this.listOfDoctors.push(element);
+            }   
+            this.listOfDoctorsTemp1.push(element);   
+            x++;
+          }
+        }else{
+          if (element.deptCode == this.segmentModel) {
+            if(x<=10){   
+              this.listOfDoctors.push(element);
+            }   
+            this.listOfDoctorsTemp1.push(element);   
+            x++;
+          }
+        }
+
+
+
+
+
+
+      });
     }
-    /*
-    this.listOfDoctors = [];
-    this.listOfDoctorsTemp.forEach(element => {
-      if (element.doctorName.toLowerCase().includes(this.searchBar.toLowerCase())) {
-          this.listOfDoctors.push(element);
-      }
-    });*/
+    
+
 
   }
 
@@ -93,26 +123,26 @@ export class TabsDoctorsPage implements OnInit {
     }, 1000);
   }
   ionViewWillEnter() {
+    console.log('ionViewWillEnter');
+
     this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
     this.executiveService.getDoctors().subscribe(
       (res: any) => {   
-        this.listOfDoctorsTemp = res;  
-         
-          res.forEach(element => {
-            console.log(element.deptCode);
-          });
-     
+        this.listOfDoctorsTemp = this.listOfDoctorsTemp1 = res;  
+    
       },
       (error) => {},
       () => {
         this.filterList();
+        this.segmentModel = 'ALL';
+        this.segmentChanged();
       }
     );
 
   }
   checkInput(){
     this.doctorService.refreshTokenV3().subscribe((res: any) => {
-      //console.log(res);
+      //////console.log(res);
     });
   }
   detail(data:any){
@@ -120,9 +150,18 @@ export class TabsDoctorsPage implements OnInit {
   }
 
   initialload(){
+    //console.log('initialload');
+   
+    
     let i=1;
+    this.listOfDoctorsTemp1=[];
+    this.listOfDoctorsTemp1 = this.listOfDoctorsTemp;
     this.listOfDoctorsTemp.forEach(element => {
-      if(i<=10){this.listOfDoctors.push(element);}
+      //console.log(element.deptCode);
+      if(i<=10){
+        this.listOfDoctors.push(element);
+
+      }
       
       i++;
     }
@@ -137,7 +176,7 @@ export class TabsDoctorsPage implements OnInit {
 
 
       let i =1;
-      this.listOfDoctorsTemp.forEach(element => {
+      this.listOfDoctorsTemp1.forEach(element => {
         if(i > ((this.refreshcounter*10)-10) && i<= (this.refreshcounter*10)){
           this.listOfDoctors.push(element);
         }

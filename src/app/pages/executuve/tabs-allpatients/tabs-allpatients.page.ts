@@ -23,8 +23,10 @@ export class TabsAllpatientsPage implements OnInit {
   listOfPatients:any;
   searchBar: any = "";
   listOfPatientsTemp: any;
+  listOfPatientsTemp1: any;
   siteC = "Cebu";
   siteM = "Mandaue";
+  segmentModel:any;
   refreshcounter:any;
   constructor(    private storageService: StorageService,
     private router: Router,
@@ -56,12 +58,47 @@ export class TabsAllpatientsPage implements OnInit {
   }
   initialload(){
     let i=1;
+    this.listOfPatientsTemp1=[];
+    this.listOfPatientsTemp1 = this.listOfPatientsTemp;
     this.listOfPatientsTemp.forEach(element => {
+      //console.log(element.status);
       if(i<=10){this.listOfPatients.push(element);}
       
       i++;
     }
     );
+  }
+  segmentChanged(){
+    //console.log(da.detail.value);
+    if(this.segmentModel == 'ALL'){
+      this.listOfPatients = [];
+      this.initialload();
+    }else{
+      this.listOfPatients = [];
+      this.listOfPatientsTemp1 = [];
+      let x =1;
+      this.listOfPatientsTemp.forEach(element => {
+
+ 
+          if (element.status == this.segmentModel) {
+            if(x<=10){   
+              this.listOfPatients.push(element);
+            }   
+            this.listOfPatientsTemp1.push(element);   
+            x++;
+          }
+      
+
+
+
+
+
+
+      });
+    }
+    
+
+
   }
   loadData(event) {
     this.refreshcounter++;
@@ -72,7 +109,7 @@ export class TabsAllpatientsPage implements OnInit {
 
 
       let i =1;
-      this.listOfPatientsTemp.forEach(element => {
+      this.listOfPatientsTemp1.forEach(element => {
         if(i > ((this.refreshcounter*10)-10) && i<= (this.refreshcounter*10)){
           this.listOfPatients.push(element);
         }
@@ -91,16 +128,18 @@ export class TabsAllpatientsPage implements OnInit {
     }, 500);
   }
   filterList() {
-    console.log('filterList');
+    ////console.log('filterList');
     
     if(this.searchBar == ""){
-      console.log('empty');
+      ////console.log('empty');
       
       this.listOfPatients = [];
       this.initialload();
     }else{
       this.listOfPatients = [];
       this.listOfPatientsTemp.forEach(element => {
+     
+        
         if (element.patientName.toLowerCase().includes(this.searchBar.toLowerCase())) {
             this.listOfPatients.push(element);
         }
@@ -122,20 +161,22 @@ export class TabsAllpatientsPage implements OnInit {
     this.listOfPatients = [];
     this.executiveService.getPatients().subscribe(
       (res: any) => {   
-        this.listOfPatientsTemp = res;  
-          console.log(res);
+        this.listOfPatientsTemp1 = this.listOfPatientsTemp = res;  
+          ////console.log(res);
      
       },
       (error) => {},
       () => {
         this.filterList();
+        this.segmentModel = 'ALL';
+        this.segmentChanged();
       }
     );
 
   }
   checkInput(){
     this.doctorService.refreshTokenV3().subscribe((res: any) => {
-      //console.log(res);
+      //////console.log(res);
     });
   }
   detail(data:any){
