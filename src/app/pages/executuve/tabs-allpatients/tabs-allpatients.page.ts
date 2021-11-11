@@ -69,18 +69,22 @@ export class TabsAllpatientsPage implements OnInit {
     );
   }
   segmentChanged(){
+    this.refreshcounter=1;  
     //console.log(da.detail.value);
+    this.listOfPatientsTemp1 = [];
     if(this.segmentModel == 'ALL'){
       this.listOfPatients = [];
       this.initialload();
     }else{
       this.listOfPatients = [];
-      this.listOfPatientsTemp1 = [];
+    
       let x =1;
       this.listOfPatientsTemp.forEach(element => {
 
  
           if (element.status == this.segmentModel) {
+            console.log(element.status);
+            
             if(x<=10){   
               this.listOfPatients.push(element);
             }   
@@ -95,6 +99,8 @@ export class TabsAllpatientsPage implements OnInit {
 
 
       });
+      
+       
     }
     
 
@@ -109,9 +115,12 @@ export class TabsAllpatientsPage implements OnInit {
 
 
       let i =1;
+      console.log(this.listOfPatientsTemp1.length);
       this.listOfPatientsTemp1.forEach(element => {
         if(i > ((this.refreshcounter*10)-10) && i<= (this.refreshcounter*10)){
           this.listOfPatients.push(element);
+          console.log(element.status);
+          
         }
         i++;
       });
@@ -122,9 +131,7 @@ export class TabsAllpatientsPage implements OnInit {
 
       // App logic to determine if all data is loaded
       // and disable the infinite scroll
-      if (this.listOfPatients.length == 1000) {
-        event.target.disabled = true;
-      }
+ 
     }, 500);
   }
   filterList() {

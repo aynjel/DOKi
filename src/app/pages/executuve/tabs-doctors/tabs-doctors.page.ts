@@ -73,7 +73,7 @@ export class TabsDoctorsPage implements OnInit {
     }
   }
   segmentChanged(){
-
+    this.refreshcounter=1;  
     
     //console.log(da.detail.value);
     if(this.segmentModel == 'ALL'){
