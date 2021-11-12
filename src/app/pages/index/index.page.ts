@@ -115,7 +115,7 @@ export class IndexPage implements OnInit {
         this.android = true;
       }
     } else {
-      //this.iosVerifier = true;
+      this.iosVerifier = true;
       console.log('2nd iosVerifier : '+this.iosVerifier);
       if (!this.ios) {
         this.ios = true;
