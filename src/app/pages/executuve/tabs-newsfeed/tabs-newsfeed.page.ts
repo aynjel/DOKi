@@ -45,7 +45,8 @@ export class TabsNewsfeedPage implements OnInit {
     private screensizeService: ScreenSizeService,
     private modalController: ModalController,
     private doctorService: DoctorService,    private renderer: Renderer2,
-    public functionsService: FunctionsService
+    public functionsService: FunctionsService,
+    public router:Router
 
   ) {
     this.functionsService.logToConsole('In-patient : Constructor');
@@ -59,6 +60,9 @@ export class TabsNewsfeedPage implements OnInit {
   }
   items = [];  
   numTimesLeft = 5;  
+  settings(){
+    this.router.navigate(['/executive/settings']);
+  }
   ngOnInit() {
     this.checkAppearance();
 

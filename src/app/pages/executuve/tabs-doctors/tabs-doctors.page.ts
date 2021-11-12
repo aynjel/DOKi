@@ -47,7 +47,9 @@ export class TabsDoctorsPage implements OnInit {
 
     }
 
-
+    settings(){
+      this.router.navigate(['/executive/settings']);
+    }
   ngOnInit() {
     this.listOfDoctors = [];
     this.refreshcounter=1;  

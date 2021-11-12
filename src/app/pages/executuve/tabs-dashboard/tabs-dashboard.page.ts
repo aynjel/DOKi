@@ -107,6 +107,9 @@ export class TabsDashboardPage implements OnInit {
       event.target.complete();
     }, 1000);
   }
+  settings(){
+    this.router.navigate(['/executive/settings']);
+  }
   ionViewWillEnter() {
 
     this.totalAdmissions = 0;

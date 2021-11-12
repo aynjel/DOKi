@@ -153,6 +153,9 @@ export class TabsAllpatientsPage implements OnInit {
       });
     }
   }
+  settings(){
+    this.router.navigate(['/executive/settings']);
+  }
   doRefresh(event) {
     this.searchBar = "";
     setTimeout(() => {
