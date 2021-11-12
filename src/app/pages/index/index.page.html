@@ -93,11 +93,115 @@
         color="primary"
         >INSTALL</ion-button
       >
-      <div class="navigator">
+      <div class="navigator" *ngIf="!iosVerifier">
         <ion-button color="primary" fill="clear" (click)="goback()"
           >GO BACK</ion-button
         >
       </div>
+      <div class="navigator" *ngIf="iosVerifier">
+        <ion-button color="primary" fill="clear" (click)="skip()"
+          >SKIP</ion-button
+        >
+        <ion-button color="primary" fill="clear" (click)="next()"
+          >NEXT</ion-button
+        >
+      </div>
     </ion-slide>
+
+
+
+
+    <ion-slide class="ion-padding" *ngIf="iosVerifier">
+      <!-- <img src="assets/onboarding/3-onboarding-notifications.png"> -->
+      <img src="assets/onboarding/iOS-10.png" />
+      <div class="slider-text">
+        <h2>how to install DOKi on your Iphone</h2>
+        <!--p>
+          Get notified via SMS when your patients are about to be discharged.
+          Then, submission of professional fees can be done anytime, anywhere.
+        </p-->
+      </div>
+
+      <div class="navigator">
+        <ion-button color="primary" fill="clear" (click)="skip()"
+          >SKIP</ion-button
+        >
+        <ion-button color="primary" fill="clear" (click)="next()"
+          >NEXT</ion-button
+        >
+      </div>
+    </ion-slide>
+    
+    <ion-slide class="ion-padding" *ngIf="iosVerifier">
+      <img src="assets/onboarding/iOS-1.png" />
+      <div class="slider-text">
+        <p>Visit <a href="doki.chonghua.com.ph">doki.chonghua.com.ph</a> on SAFARI<br /> if Your already on safari click next</p>
+      </div>
+      <div class="navigator">
+        <ion-button color="primary" fill="clear" (click)="skip()">SKIP</ion-button>
+        <ion-button color="primary" fill="clear" (click)="next()">NEXT</ion-button>
+      </div>
+    </ion-slide>
+
+
+    <ion-slide class="ion-padding" *ngIf="iosVerifier">
+      <img src="assets/onboarding/iOS-6.png" />
+      <div class="slider-text">
+        <p>Tap the “Share” button 
+          found at the bottom of the screen</p>
+      </div>
+      <div class="navigator">
+        <ion-button color="primary" fill="clear" (click)="skip()">SKIP</ion-button>
+        <ion-button color="primary" fill="clear" (click)="next()">NEXT</ion-button>
+      </div>
+    </ion-slide>
+
+    <ion-slide class="ion-padding" *ngIf="iosVerifier">
+      <img src="assets/onboarding/iOS-7.png" />
+      <div class="slider-text">
+        <p>Tap Add to Home Screen  
+        </p>
+      </div>
+      <div class="navigator">
+        <ion-button color="primary" fill="clear" (click)="skip()">SKIP</ion-button>
+        <ion-button color="primary" fill="clear" (click)="next()">NEXT</ion-button>
+      </div>
+    </ion-slide>
+
+    <ion-slide class="ion-padding" *ngIf="iosVerifier">
+      <img src="assets/onboarding/iOS-8.png" />
+      <div class="slider-text">
+        <p>Type in the preferred label of the app. “DOKi” is the default.  
+        </p>
+      </div>
+      <div class="navigator">
+        <ion-button color="primary" fill="clear" (click)="skip()">SKIP</ion-button>
+        <ion-button color="primary" fill="clear" (click)="next()">NEXT</ion-button>
+      </div>
+    </ion-slide>
+    <ion-slide class="ion-padding" *ngIf="iosVerifier">
+      <img src="assets/onboarding/iOS-8.png" />
+      <div class="slider-text">
+        <p>Tap Add.</p>
+      </div>
+      <div class="navigator">
+        <ion-button color="primary" fill="clear" (click)="skip()">SKIP</ion-button>
+        <ion-button color="primary" fill="clear" (click)="next()">NEXT</ion-button>
+      </div>
+    </ion-slide>
+
+    <ion-slide class="ion-padding" *ngIf="iosVerifier">
+      <img src="assets/onboarding/iOS-9.png" />
+      <div class="slider-text">
+        <p>DOKi is the latest app installed.</p>
+      </div>
+      <div class="navigator">
+        <ion-button color="primary" fill="clear" (click)="skip()">SKIP</ion-button>
+        <!--ion-button color="primary" fill="clear" (click)="next()">NEXT</ion-button-->
+      </div>
+    </ion-slide>
+
+
+
   </ion-slides>
 </ion-content>

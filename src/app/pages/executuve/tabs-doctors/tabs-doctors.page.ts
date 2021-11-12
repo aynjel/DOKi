@@ -116,6 +116,7 @@ export class TabsDoctorsPage implements OnInit {
   }
 
   doRefresh(event) {
+    this.searchBar = "";
     setTimeout(() => {
       this.ngOnInit();
       this.ionViewWillEnter();

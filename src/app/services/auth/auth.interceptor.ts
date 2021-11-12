@@ -58,14 +58,14 @@ export class AuthInterceptor implements HttpInterceptor {
                 this.jwthas = localStorage.getItem("jwthas");
 
                   if(error.status == 401 && this.modaled != '1'){
-                    console.log('jwthas = '+this.jwthas);
+                    //console.log('jwthas = '+this.jwthas);
                     
                     if(this.jwthas == '1'){
-                      console.log("jwt has = 1");
+                      //console.log("jwt has = 1");
                       
                       this.logout();
                     }else{
-                      console.log("show pop-up");
+                      //console.log("show pop-up");
                       this.timerExpired();
                       localStorage.setItem("modaled","1");
                       localStorage.setItem("jwthas","1");
@@ -81,7 +81,7 @@ export class AuthInterceptor implements HttpInterceptor {
             return next.handle(req).pipe(
               map((event: HttpEvent<any>) => {
                   if (event instanceof HttpResponse) {
-                     // console.log('event--->>>', event);
+                     // //console.log('event--->>>', event);
                   }
                   return event;
               }),
@@ -98,7 +98,7 @@ export class AuthInterceptor implements HttpInterceptor {
                         localStorage.setItem("jwthas","1");
                       }
                     }
-                 // console.log(error.status);
+                 // //console.log(error.status);
                   return throwError(error);
               }));*/
         }
@@ -127,24 +127,20 @@ export class AuthInterceptor implements HttpInterceptor {
             text: 'Keep me in',
             handler: () => {
               let xdata : any;
-              /*this.alertController.dismiss();*/
-              //this.userIdle.stopTimer();
-              
-              console.log('call refresh token');
-              
               this.doctorService.refreshTokenV3().subscribe(
               (res: any) => {
+                console.log(xdata);
                 xdata=res;
-
-               
               },(error) =>{
-                this.logout();
+                this.logoutPopup();
               }, () => {
-                console.log('refresh token response');
-                console.log(xdata.jwt);
+                if(xdata.isAuthenticated){
                 localStorage.setItem("id_token",xdata.jwt);
                 localStorage.setItem("modaled","0");
                 window.location.reload();
+              }else{
+                this.logoutPopup();
+              }
               });
               
             },
@@ -158,7 +154,7 @@ export class AuthInterceptor implements HttpInterceptor {
       localStorage.setItem("torevoketoken","1");
       this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe(
         (res: any) => {
-          console.log(res);
+          //console.log(res);
         },(error) => {
           this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
             this.userData$.next('');
@@ -188,7 +184,22 @@ export class AuthInterceptor implements HttpInterceptor {
       
       
     }
-
+    async logoutPopup(){
+      const alert = await this.alertController.create({
+        cssClass: 'my-custom-class',
+        header: 'Your session has expired.',
+        message: '',
+        buttons: [
+          {
+            text: 'Ok',
+            handler: () => {
+              this.logout();
+            },
+          },
+        ],
+      });
+      await alert.present();
+    }
 
 
 

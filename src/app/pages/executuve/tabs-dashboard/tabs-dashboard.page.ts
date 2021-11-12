@@ -133,17 +133,22 @@ export class TabsDashboardPage implements OnInit {
       },
       (error) => { this.totalAdmissionsV33 = false;},
       () => {
-        this.totalAdmissionsV3.forEach(element => {
+       
+        if(this.totalAdmissionsV3){
+          this.totalAdmissionsV3.forEach(element => {
+            this.totalAdmissionsV33 = false;
+            this.totalAdmissions = this.totalAdmissions +element.totalAdmissions;
+            if(element.site == 'C'){
+                this.totalAdmissionsC = element.totalAdmissions;
+            }else if(element.site == 'M'){
+              this.totalAdmissionsM = element.totalAdmissions;
+            }
+          });
+        }else{
           this.totalAdmissionsV33 = false;
-          this.totalAdmissions = this.totalAdmissions +element.totalAdmissions;
-          //console.log(this.totalAdmissions);
-          
-          if(element.site == 'C'){
-              this.totalAdmissionsC = element.totalAdmissions;
-          }else if(element.site == 'M'){
-            this.totalAdmissionsM = element.totalAdmissions;
-          }
-        });
+          //this.totalAdmissions = this.totalAdmissionsC = this.totalAdmissionsM= 0;
+        }
+  
       }
     );
 
@@ -155,17 +160,21 @@ export class TabsDashboardPage implements OnInit {
     },
     (error) => {this.totalAdmissionsTodayV33 = false;},
     () => {
-      
-      this.totalAdmissionsTodayV3.forEach(element => {
+
+      if(this.totalAdmissionsTodayV3){
+        this.totalAdmissionsTodayV3.forEach(element => {
+          this.totalAdmissionsTodayV33 = false;
+          this.totalAdmissionstoday = this.totalAdmissionstoday +element.totalNewAdmissions;
+          if(element.site == 'C'){
+              this.totalAdmissionstodayC = element.totalNewAdmissions;
+          }else if(element.site == 'M'){
+            this.totalAdmissionstodayM = element.totalNewAdmissions;
+          }
+        });       
+      }else{
         this.totalAdmissionsTodayV33 = false;
-        //console.log(element.totalAdmissions);
-        this.totalAdmissionstoday = this.totalAdmissionstoday +element.totalNewAdmissions;
-        if(element.site == 'C'){
-            this.totalAdmissionstodayC = element.totalNewAdmissions;
-        }else if(element.site == 'M'){
-          this.totalAdmissionstodayM = element.totalNewAdmissions;
-        }
-      });
+      }
+
     }
 
     );
@@ -178,16 +187,23 @@ export class TabsDashboardPage implements OnInit {
     },
     (error) => {this.forDischargeV33 = false;},
     () => {
-      this.forDischargeV3.forEach(element => {
-        
+
+      if(this.forDischargeV3){
+        this.forDischargeV3.forEach(element => {
+          this.forDischargeV33 = false;
+          this.forDischarge = this.forDischarge +element.totalForDischarge;
+          if(element.site == 'C'){
+              this.forDischargeC = element.totalForDischarge;
+          }else if(element.site == 'M'){
+            this.forDischargeM = element.totalForDischarge;
+          }
+        });
+      }else{
         this.forDischargeV33 = false;
-        this.forDischarge = this.forDischarge +element.totalForDischarge;
-        if(element.site == 'C'){
-            this.forDischargeC = element.totalForDischarge;
-        }else if(element.site == 'M'){
-          this.forDischargeM = element.totalForDischarge;
-        }
-      });
+      }
+
+
+
     }
 
     );
@@ -202,6 +218,9 @@ export class TabsDashboardPage implements OnInit {
     },
     (error) => {},
     () => {
+      if(this.getTotalAdmissionsByDept){
+
+     
       this.getTotalAdmissionsByDept.forEach(element => {
         this.getTotalAdmissionsByDeptData.push({name:element.deptName,y:element.numOfAdmissions});
         this.getTotalAdmissionsByDeptDataTM.push(
@@ -211,40 +230,25 @@ export class TabsDashboardPage implements OnInit {
             colorValue:element.numOfAdmissions
           });
       });
-      this.populatePieChart();     
+      this.populatePieChart(); 
+    }    
       //this.treeMap();
     }
 
     );
 
-
+/*
     this.TotalAdmissionsByDeptAndSiteData = [];
     this.TotalAdmissionsByDeptAndSiteDataTM = [];
     this.executiveService.getTotalAdmissionsByDeptAndSite().subscribe(
       (res: any) => {     
        
       this.TotalAdmissionsByDeptAndSite = res;
-      console.log(res);
+ 
       
     },
     (error) => {},
     () => {
-      /*
-      this.TotalAdmissionsByDeptAndSite.forEach(element => {
-        this.TotalAdmissionsByDeptAndSiteData.push({name:element.deptName,y:element.numOfAdmissions});
-        this.TotalAdmissionsByDeptAndSiteDataTM.push(
-          {
-            name:element.deptName,
-            value:element.numOfAdmissions,
-            colorValue:element.numOfAdmissions
-          });
-      });
-
-
-      
-      this.treeMap1();
-      console.log(JSON.stringify(this.TotalAdmissionsByDeptAndSiteDataTM));*/
-
       this.famTotal=0;this.famPer=0;this.famC = 0;this.famM = 0;
       this.inmTotal=0;this.inmPer=0;this.inmC = 0;this.inmM = 0;
 
@@ -265,7 +269,7 @@ export class TabsDashboardPage implements OnInit {
       });
     }
 
-    );
+    );*/
   
 
   }

@@ -337,9 +337,17 @@ export class LoginPage {
          this.btnDisable = false;
         },
         () => {
+          let x=true;
           Object.keys(jsonResponse).forEach((key) => {
-              if(jsonResponse[key] == null){settingsIndicator = false;}
-              else{settingsIndicator = true;}
+            if(x){
+              if(jsonResponse[key] == null){
+                settingsIndicator = false;
+                x=false;
+              }
+              else{
+                settingsIndicator = true;
+              }
+            }
           }); 
           if(settingsIndicator){
             this.checkPrivacyPolicyV3();
