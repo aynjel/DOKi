@@ -141,6 +141,10 @@ export class ChhAppProfessionalFeePage implements OnInit {
     this.dr_name = this.loginResponseModelv3.lastName;
     this.dr_code = this.loginResponseModelv3.doctorCode;
     this.data = JSON.parse(atob(localStorage.getItem('patientData')));
+    let d = new Date(this.data[0].admission_date);
+    this.dateAdmitted = d.toUTCString();
+
+    
     this.data1 = this.data[0].doctor_prof_fee;
     this.patient_name = this.data[0].first_name + ' ' + this.data[0].last_name;
     this.patient_name = this.functionsService.convertAllFirstLetterToUpperCase(

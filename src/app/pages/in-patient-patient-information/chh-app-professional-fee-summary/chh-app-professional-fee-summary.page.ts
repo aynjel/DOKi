@@ -183,7 +183,8 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     // this.data =[];
     // this.data = JSON.parse(atob(sessionStorage.getItem("patientData")));
     this.data = JSON.parse(atob(localStorage.getItem('patientData')));
-
+    let d = new Date(this.data[0].admission_date);
+    this.dateAdmitted = d.toUTCString();
     this.patient_name = this.data[0].first_name + ' ' + this.data[0].last_name;
     //this.functionsService.logToConsole(this.data);
 
