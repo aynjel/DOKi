@@ -93,7 +93,7 @@
           <div *ngFor="let x of listOfDoctors">
 
          
-            <ion-card (click)="detail(x.patient_no)" mode="ios"  class="pointer">
+            <ion-card (click)="detail(x)" mode="ios"  class="pointer">
               <ion-item lines="none">
                 <ion-avatar slot="start">
                   <chh-app-text-avatar [text]="x.doctorName" [color]=""></chh-app-text-avatar>

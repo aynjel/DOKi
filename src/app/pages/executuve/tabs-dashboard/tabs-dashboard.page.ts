@@ -29,6 +29,7 @@ import Heatmap from 'highcharts/modules/heatmap';
 Heatmap(HighCharts);
 // Load the exporting module.
 import Exporting from 'highcharts/modules/exporting';
+import { ThrowStmt } from '@angular/compiler';
 // Initialize exporting module.
 //Exporting(HighCharts);
 
@@ -74,6 +75,14 @@ export class TabsDashboardPage implements OnInit {
   TotalAdmissionsByDeptAndSiteDataTM:any;
   jsonForPopulate:any;
   dumpTotalAdmissions:any;
+  criticalTV33:boolean = true;
+  criticalT:any;
+  criticalC:any;
+  criticalM:any;
+  noncriticalT:any;
+  noncriticalC:any;
+  noncriticalM:any;
+
   constructor(    private storageService: StorageService,
     private router: Router,
     public constants: Constants,
@@ -239,6 +248,47 @@ export class TabsDashboardPage implements OnInit {
     }
 
     );
+
+    let getTotalPxTypesBySite:any;
+    this.criticalT = 0;
+    this.noncriticalT = 0;
+    this.executiveService.getTotalPxTypesBySite().subscribe(
+      (res: any) => {     
+       console.log(res);
+       getTotalPxTypesBySite = res;
+      },
+      (error) => {
+        this.criticalTV33= false;
+      },
+      () => {
+        this.criticalTV33= false;
+        getTotalPxTypesBySite.forEach(element => {
+            console.log(element);
+            if((element.site == 'C' || element.site == 'M') && element.patientType =='Critical'){
+              this.criticalT = this.criticalT + element.totalAdmissions;
+              if(element.site == 'C'){
+                this.criticalC = element.totalAdmissions;
+              }
+              if(element.site == 'M'){
+                this.criticalM = element.totalAdmissions;
+              }
+            }
+            if((element.site == 'C' || element.site == 'M') && element.patientType =='Non-Critical'){
+              this.noncriticalT = this.noncriticalT + element.totalAdmissions;
+              if(element.site == 'C'){
+                this.noncriticalC = element.totalAdmissions;
+              }
+              if(element.site == 'M'){
+                this.noncriticalM = element.totalAdmissions;
+              }
+            }
+        });
+      }
+
+    );
+
+
+
 
 /*
     this.TotalAdmissionsByDeptAndSiteData = [];

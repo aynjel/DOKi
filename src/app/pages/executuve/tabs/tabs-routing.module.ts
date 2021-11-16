@@ -31,6 +31,12 @@ const routes: Routes = [
       },{
         path: 'settings',
         loadChildren: () => import('../tabs-settings/tabs-settings.module').then(m => m.TabsSettingsPageModule)
+      },{
+        path: 'doctors/:id', 
+        loadChildren: () => import('../pages/doctordetails/doctordetails.module').then( m => m.DoctordetailsPageModule)
+      },{
+        path: 'patient/:id', 
+        loadChildren: () => import('../pages/patient-detail/patient-detail.module').then( m => m.PatientDetailPageModule)
       },
       {
         path: '',

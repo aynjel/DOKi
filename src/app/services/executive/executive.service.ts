@@ -70,4 +70,32 @@ export class ExecutiveService {
    const url =    environment.apiRouterUrl + "v3/Dashboard/Admin/TotalAdmissionsByDeptAndSite ";
     return this.http.get(url, options);
   }
+  getTotalPxTypesBySite () {
+    const headers = new HttpHeaders({'Content-Type': 'application/json;charset=utf-8',});
+    const options = { headers: headers, withCredentials: true };
+   //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
+   const url =    environment.apiRouterUrl + "v3/Dashboard/Admin/TotalPxTypesBySite";
+    return this.http.get(url, options);
+  }
+  geInpatients(data: any) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredentials: true };
+    //const url = environment.apiRouterUrl + "v2/ProfFee";
+    const url =    environment.apiRouterUrl + "v3/Admin/Doctors/InPatients";
+    return this.http.post(url, data, options);
+  }
+  getAdmittingDiagnosis(data: any) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredentials: true };
+    //const url = environment.apiRouterUrl + "v2/ProfFee";
+    const url =    environment.apiRouterUrl + "v3/Admin/Doctors/InPatients/AdmittingDiagnosis";
+    return this.http.post(url, data, options);
+  }
+  getFinalDiagnosis(data: any) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredentials: true };
+    //const url = environment.apiRouterUrl + "v2/ProfFee";
+    const url =    environment.apiRouterUrl + "v3/Admin/Doctors/InPatients/FinalDiagnosis";
+    return this.http.post(url, data, options);
+  }
 }

@@ -16,7 +16,9 @@ export class InpatientDetails{
     admission_no: any
 }
 
-
+export class DoctorDetails{
+    doctorCode: any
+}
 export class UserSettingsModel{
     username: any
     userReference: any

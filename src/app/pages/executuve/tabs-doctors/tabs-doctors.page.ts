@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { Constants } from '../../../shared/constants';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
-import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
+import {UserSettingsModelv3,LoginResponseModelv3,InpatientDetails,DoctorDetails} from 'src/app/models/doctor';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ExecutiveService } from 'src/app/services/executive/executive.service';
 
@@ -27,6 +27,8 @@ export class TabsDoctorsPage implements OnInit {
   refreshcounter:any;
   deptFilter:boolean = false;
   segmentModel:any;
+  inpatientDetails:InpatientDetails = new InpatientDetails();
+  doctorDetails:DoctorDetails = new DoctorDetails(); 
   constructor(    private storageService: StorageService,
     private router: Router,
     public constants: Constants,
@@ -126,8 +128,10 @@ export class TabsDoctorsPage implements OnInit {
     }, 1000);
   }
   ionViewWillEnter() {
-    console.log('ionViewWillEnter');
 
+    localStorage.removeItem("drdetails");
+    localStorage.removeItem("patientdetails");
+    
     this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
     this.executiveService.getDoctors().subscribe(
       (res: any) => {   
@@ -149,7 +153,9 @@ export class TabsDoctorsPage implements OnInit {
     });
   }
   detail(data:any){
-
+    console.log(data);
+    localStorage.setItem('drdetails',btoa(JSON.stringify(data)));
+    this.router.navigate(['executive/doctors/'+data.doctorCode]);
   }
 
   initialload(){
