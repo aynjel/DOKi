@@ -29,6 +29,7 @@ export class TabsAllpatientsPage implements OnInit {
   siteM = "Mandaue";
   segmentModel:any;
   refreshcounter:any;
+  isReady:boolean = false;
   constructor(    private storageService: StorageService,
     private router: Router,
     public constants: Constants,
@@ -53,10 +54,29 @@ export class TabsAllpatientsPage implements OnInit {
 
 
   ngOnInit() {
-
+    console.log('ngOnInit');
     this.listOfPatients = [];
     this.refreshcounter=1;  
+    this.isReady = false;
 
+
+    this.listOfPatients = [];
+    this.executiveService.getPatients().subscribe(
+      (res: any) => {   
+        this.listOfPatientsTemp1 = this.listOfPatientsTemp = res;  
+          ////console.log(res);
+     
+      },
+      (error) => {
+        this.isReady = true;
+      },
+      () => {
+        this.isReady = true;
+        this.filterList();
+        this.segmentModel = 'ALL';
+        this.segmentChanged();
+      }
+    );
     
   }
   initialload(){
@@ -168,24 +188,8 @@ export class TabsAllpatientsPage implements OnInit {
     }, 1000);
   }
   ionViewWillEnter() {
+    console.log('ionViewWillEnter');
 
-
-    this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
-
-    this.listOfPatients = [];
-    this.executiveService.getPatients().subscribe(
-      (res: any) => {   
-        this.listOfPatientsTemp1 = this.listOfPatientsTemp = res;  
-          ////console.log(res);
-     
-      },
-      (error) => {},
-      () => {
-        this.filterList();
-        this.segmentModel = 'ALL';
-        this.segmentChanged();
-      }
-    );
 
   }
   checkInput(){

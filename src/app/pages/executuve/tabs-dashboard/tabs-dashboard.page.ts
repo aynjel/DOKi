@@ -106,21 +106,6 @@ export class TabsDashboardPage implements OnInit {
 
   ngOnInit() {
 
-      
-
-    
-  }
-  doRefresh(event) {
-    setTimeout(() => {
-      this.ionViewWillEnter();
-      event.target.complete();
-    }, 1000);
-  }
-  settings(){
-    this.router.navigate(['/executive/settings']);
-  }
-  ionViewWillEnter() {
-
     this.totalAdmissions = 0;
     this.totalAdmissionsC = 0;
     this.totalAdmissionsM = 0;
@@ -130,14 +115,14 @@ export class TabsDashboardPage implements OnInit {
     this.forDischargeC = 0;
     this.forDischargeM = 0; 
     this.forDischarge = 0; 
-    this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
+
 
     this.totalAdmissionsV33 = true;
     this.totalAdmissionsTodayV33 = true;
     this.forDischargeV33 = true;
 
     //console.log(this.logindata);
-    this.userName = this.logindata.userName;
+
     this.executiveService.totalAdmissionsV3().subscribe(
       (res: any) => {     
           //console.log(res);
@@ -442,6 +427,21 @@ export class TabsDashboardPage implements OnInit {
 
     );*/
   
+
+      
+
+    
+  }
+  doRefresh(event) {
+    setTimeout(() => {
+      this.ngOnInit();
+      event.target.complete();
+    }, 1000);
+  }
+  settings(){
+    this.router.navigate(['/executive/settings']);
+  }
+  ionViewWillEnter() {
 
   }
 

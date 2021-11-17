@@ -2,14 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { AuthConstants, Consta } from '../../../config/auth-constants';
 import { BehaviorSubject } from 'rxjs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Constants } from '../../../shared/constants';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
 import {UserSettingsModelv3,LoginResponseModelv3,InpatientDetails,DoctorDetails} from 'src/app/models/doctor';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ExecutiveService } from 'src/app/services/executive/executive.service';
-
+import { ModalController } from '@ionic/angular';
+import {DoctordetailComponent} from "../components/doctordetail/doctordetail.component";
 @Component({
   selector: 'app-tabs-doctors',
   templateUrl: './tabs-doctors.page.html',
@@ -35,7 +36,9 @@ export class TabsDoctorsPage implements OnInit {
     private screensizeService: ScreenSizeService,
     private doctorService: DoctorService,
     private authService: AuthService,
-    private executiveService: ExecutiveService
+    private executiveService: ExecutiveService,
+    private modalController:ModalController,
+    private activatedRoute: ActivatedRoute
     ) { 
 
       this.screensizeService.isDesktopView().subscribe((isDesktop) => {
@@ -53,9 +56,26 @@ export class TabsDoctorsPage implements OnInit {
       this.router.navigate(['/executive/settings']);
     }
   ngOnInit() {
+    console.log('ngOnInit');
     this.listOfDoctors = [];
     this.refreshcounter=1;  
-
+    this.isReady = false;
+ 
+    this.executiveService.getDoctors().subscribe(
+      (res: any) => {   
+        this.listOfDoctorsTemp = this.listOfDoctorsTemp1 = res;  
+        //localStorage.setItem('listOfDoctors',JSON.stringify(this.listOfDoctorsTemp));
+      },
+      (error) => {
+        this.isReady = true;
+      },
+      () => {
+        this.isReady = true;
+        this.filterList();
+        this.segmentModel = 'ALL';
+        this.segmentChanged();
+      }
+    );
     //console.log(this.refreshcounter);
     
   }
@@ -127,24 +147,13 @@ export class TabsDoctorsPage implements OnInit {
       event.target.complete();
     }, 1000);
   }
+  isReady:boolean = false;
   ionViewWillEnter() {
-
+    console.log('ionViewWillEnter');
+    
     localStorage.removeItem("drdetails");
     localStorage.removeItem("patientdetails");
-    
-    this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
-    this.executiveService.getDoctors().subscribe(
-      (res: any) => {   
-        this.listOfDoctorsTemp = this.listOfDoctorsTemp1 = res;  
-        //localStorage.setItem('listOfDoctors',JSON.stringify(this.listOfDoctorsTemp));
-      },
-      (error) => {},
-      () => {
-        this.filterList();
-        this.segmentModel = 'ALL';
-        this.segmentChanged();
-      }
-    );
+
 
   }
   checkInput(){
@@ -152,10 +161,24 @@ export class TabsDoctorsPage implements OnInit {
       //////console.log(res);
     });
   }
-  detail(data:any){
-    console.log(data);
+  async detail(data:any){
+    /*console.log(data);
     localStorage.setItem('drdetails',btoa(JSON.stringify(data)));
-    this.router.navigate(['executive/doctors/'+data.doctorCode]);
+    this.router.navigate(['executive/doctors/'+data.doctorCode]);*/
+    //console.log( this.activatedRoute.snapshot.params.id);
+    console.log(data);
+    
+    
+    //localStorage.setItem('patientdetails',btoa(JSON.stringify(x)));
+    const modal = await this.modalController.create({
+      component: DoctordetailComponent,
+      cssClass: 'my-custom-modal',
+      componentProps: {
+        'doctorDetail': data,
+        'drcode':this.activatedRoute.snapshot.params.id,
+      }
+    });
+    return await modal.present();
   }
 
   initialload(){

@@ -131,6 +131,63 @@
 
           </div>
         </ng-container>
+        <ng-container *ngIf="!isReady">
+          <div
+            class="ion-padding custom-skeleton"
+          >
+          <ion-card mode="ios" class="pointer">
+            <ion-item lines="none">
+              <ion-avatar slot="start">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-avatar>
+              <ion-label style="margin-top: -10px;">
+                <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-item>
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-label>
+            </ion-item>
+          </ion-card>
+          <ion-card mode="ios" class="pointer">
+            <ion-item lines="none">
+              <ion-avatar slot="start">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-avatar>
+              <ion-label style="margin-top: -10px;">
+                <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-item>
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-label>
+            </ion-item>
+          </ion-card>
+          <ion-card mode="ios" class="pointer">
+            <ion-item lines="none">
+              <ion-avatar slot="start">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-avatar>
+              <ion-label style="margin-top: -10px;">
+                <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-item>
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-label>
+            </ion-item>
+          </ion-card>            <ion-card mode="ios" class="pointer">
+            <ion-item lines="none">
+              <ion-avatar slot="start">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-avatar>
+              <ion-label style="margin-top: -10px;">
+                <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-item>
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-label>
+            </ion-item>
+          </ion-card>
+          </div>
+        </ng-container>
       </ion-col>
     </ion-row>
   </ion-grid>

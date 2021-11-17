@@ -3,49 +3,30 @@
     <ion-toolbar color="mango">
       <ion-title>
         <ion-icon name="git-network-outline"></ion-icon> Doctors
-        
+
       </ion-title>
-      <ion-buttons
-      slot="end"
-      class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated"
-    >
-    <ion-button
-    (click)="settings()"
-      >&nbsp; <ion-icon name="settings-outline" class="icon–big"></ion-icon>
-    </ion-button>
-  </ion-buttons>
+      <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
+        <ion-button (click)="settings()">&nbsp; <ion-icon name="settings-outline" class="icon–big"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
-   
+
   </div>
 
 
   <ion-grid class="ion-no-padding chh-darkmode">
     <ion-row>
-      <ion-col
-        size-md="8"
-        offset-md="2"
-        size-lg="4"
-        offset-lg="4"
-        class="custom-border-bottom ion-no-border custom-padding"
-      >
+      <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4"
+        class="custom-border-bottom ion-no-border custom-padding">
 
       </ion-col>
     </ion-row>
     <ion-row class="">
-      <ion-col
-        size-md="8"
-        offset-md="2"
-        size-lg="4"
-        offset-lg="4"
-        class="ion-no-border"
-      >
-        <ion-searchbar
-          [(ngModel)]="searchBar"
-          (ionChange)="filterList()"
-          mode="ios"
-        ></ion-searchbar>
-        <ion-segment scrollable value="heart" class="scrollable-element" (ionChange)="segmentChanged()" value="ALL" [(ngModel)]="segmentModel" >
-          <ion-segment-button value="ALL" >
+      <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4" class="ion-no-border">
+        <ion-searchbar [(ngModel)]="searchBar" (ionChange)="filterList()" mode="ios"></ion-searchbar>
+        <ion-segment scrollable value="heart" class="scrollable-element" (ionChange)="segmentChanged()" value="ALL"
+          [(ngModel)]="segmentModel">
+          <ion-segment-button value="ALL">
             All
           </ion-segment-button>
           <ion-segment-button value="ANES">
@@ -92,41 +73,25 @@
 
           <div *ngFor="let x of listOfDoctors">
 
-         
-            <ion-card (click)="detail(x)" mode="ios"  class="pointer">
+
+            <ion-card (click)="detail(x)" mode="ios" class="pointer">
               <ion-item lines="none">
                 <ion-avatar slot="start">
                   <chh-app-text-avatar [text]="x.doctorName" [color]=""></chh-app-text-avatar>
                 </ion-avatar>
                 <ion-label style="margin-top: -5px;">
-                  <ion-item
-                    slot="start"
-                    lines="none"
-                    class="ion-no-padding"
-                    style="padding-bottom: 5px;"
-                  >
+                  <ion-item slot="start" lines="none" class="ion-no-padding" style="padding-bottom: 5px;">
                     <h2 class="ion-text-wrap" style="padding-top: 20px;">
                       {{ x.doctorName }}
                     </h2>
 
                   </ion-item>
-
-
-
-                  <ion-row
-                    class="ion-no-padding"
-                    lines="none"
-                    style="padding-top: 10px !important;"
-                  >
+                  <ion-row class="ion-no-padding" lines="none" style="padding-top: 10px !important;">
                     <p>
-
-                      <span >
-                        <ion-icon
-                          name="location-outline"
-                          slot="start"
-                        ></ion-icon
-                        > {{x.deptName}} </span
-                      >
+  
+                      <span>
+                        <ion-icon name="newspaper-outline" slot="start"></ion-icon> {{x.deptName}}
+                      </span>
                     </p>
                     <br />
                   </ion-row>
@@ -135,6 +100,109 @@
             </ion-card>
           </div>
         </ng-container>
+
+
+
+        <ng-container *ngIf="!isReady">
+          <div class="ion-padding custom-skeleton">
+            <!-- Skeleton  -->
+
+
+
+
+            <ion-card mode="ios" class="pointer">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="margin-top: -10px;">
+                  <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+            <ion-card mode="ios" class="pointer">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="margin-top: -10px;">
+                  <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+            <ion-card mode="ios" class="pointer">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="margin-top: -10px;">
+                  <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-label>
+              </ion-item>
+            </ion-card>            <ion-card mode="ios" class="pointer">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="margin-top: -10px;">
+                  <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          </div>
+        </ng-container>
+
+
+
+
+
+
+
+
+
+
+
+
+
       </ion-col>
     </ion-row>
   </ion-grid>
