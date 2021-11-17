@@ -2,14 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { AuthConstants, Consta } from '../../../config/auth-constants';
 import { BehaviorSubject } from 'rxjs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Constants } from '../../../shared/constants';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
 import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ExecutiveService } from 'src/app/services/executive/executive.service';
-
+import { ModalController } from '@ionic/angular';
+import {PatientdetailComponent} from "../components/patientdetail/patientdetail.component";
 @Component({
   selector: 'app-tabs-allpatients',
   templateUrl: './tabs-allpatients.page.html',
@@ -34,7 +35,9 @@ export class TabsAllpatientsPage implements OnInit {
     private screensizeService: ScreenSizeService,
     private doctorService: DoctorService,
     private authService: AuthService,
-    private executiveService: ExecutiveService
+    private executiveService: ExecutiveService,
+    private modalController:ModalController,
+    private activatedRoute: ActivatedRoute
     ) { 
 
       this.screensizeService.isDesktopView().subscribe((isDesktop) => {
@@ -190,8 +193,22 @@ export class TabsAllpatientsPage implements OnInit {
       //////console.log(res);
     });
   }
-  detail(data:any){
-
+  async detail(x:any){
+    /*
+    console.log( this.activatedRoute.snapshot.params.id);
+    console.log(x);
+    
+    
+    localStorage.setItem('patientdetails',btoa(JSON.stringify(x)));
+    const modal = await this.modalController.create({
+      component: PatientdetailComponent,
+      cssClass: 'my-custom-modal-css',
+      componentProps: {
+        'patientdetail': x,
+        'drcode':this.activatedRoute.snapshot.params.id,
+      }
+    });
+    return await modal.present();*/
   }
 
 

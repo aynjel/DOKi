@@ -47,6 +47,9 @@ import {ChhAppNewsfeedComponent} from "./chh-app-newsfeed/chh-app-newsfeed.compo
 
 import {ChhAppForgotPasswordComponent} from "./chh-app-forgot-password/chh-app-forgot-password.component";
 import{ChhAppExecutiveDeptComponent} from "./chh-app-executive-dept/chh-app-executive-dept.component"
+
+import{PatientdetailComponent} from "../pages/executuve/components/patientdetail/patientdetail.component";
+
 @NgModule({
   declarations: [
     ChhAppLogoComponent,
@@ -75,7 +78,8 @@ import{ChhAppExecutiveDeptComponent} from "./chh-app-executive-dept/chh-app-exec
     ChhAppCaseratesComponent,
     ChhAppNewsfeedComponent,
     ChhAppForgotPasswordComponent,
-    ChhAppExecutiveDeptComponent
+    ChhAppExecutiveDeptComponent,
+    PatientdetailComponent
 
   ],
   exports: [
@@ -104,7 +108,8 @@ import{ChhAppExecutiveDeptComponent} from "./chh-app-executive-dept/chh-app-exec
     ChhAppCaseratesComponent,
     ChhAppNewsfeedComponent,
     ChhAppForgotPasswordComponent,
-    ChhAppExecutiveDeptComponent
+    ChhAppExecutiveDeptComponent,
+    PatientdetailComponent
   ],
   imports: [CommonModule, IonicModule, ChhAppTextAvatarModule,RouterModule,FormsModule],
 })

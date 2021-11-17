@@ -44,14 +44,19 @@ import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
 
 import { InpatientModelInpatients,InpatientDetails } from '../../../../models/doctor';
 import { ExecutiveService } from 'src/app/services/executive/executive.service';
+import { AnyRecordWithTtl } from 'dns';
+
 @Component({
-  selector: 'app-patient-detail',
-  templateUrl: './patient-detail.page.html',
-  styleUrls: ['./patient-detail.page.scss'],
+  selector: 'app-patientdetail',
+  templateUrl: './patientdetail.component.html',
+  styleUrls: ['./patientdetail.component.scss'],
 })
-export class PatientDetailPage implements OnInit {
+export class PatientdetailComponent implements OnInit {
 
   @Input() patientdetail: any;
+  @Input() drcode: any;
+
+
   inpatientModelInpatients = new InpatientModelInpatients;
 
   data: any = [];
@@ -112,62 +117,23 @@ export class PatientDetailPage implements OnInit {
   method1:any;
   back:any;
   patientid:any;
-  constructor(    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private _location: Location,
+
+  constructor(
     public modalController: ModalController,
-    public _modalController: ModalController,
-    public popover: PopoverController,
-    private doctorService: DoctorService,
-    public alertController: AlertController,
-    protected $gaService: GoogleAnalyticsService,
-    private authService: AuthService,
-    public functionsService: FunctionsService,
-    private patientService: PatientService,
-    private screensizeService: ScreenSizeService,
-    public messages: Messages,
-    public storageService: StorageService,
-    public constants: Constants,
-    private renderer: Renderer2,
-    public nav: NavController,
+    public executiveService:ExecutiveService,
+    public functionsService: FunctionsService) { }
 
-    public executiveService:ExecutiveService) {
-          //this.functionsService.logToConsole('In-patient detail : Constructor');
-    localStorage.setItem("modaled","0");
-    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
-      if (this.isDesktop && !isDesktop) {
-        window.location.reload();
-      }
-      this.isDesktop = isDesktop;
-    });
-    console.log(this.patientdetail);
-     }
-
-     ionViewWillEnter() {
-  }
-  drcode:any;
-  moreOrLess: boolean = true;
-  moreorless(data) {
-    this.moreOrLess = data;
-  }
-  closemodal(){
-    this.modalController.dismiss({
-      'dismissed': true
-    });
-  }
   ngOnInit() {
-
-    
-    console.log();
-    
-    
+        
     this.data = JSON.parse('['+atob(localStorage.getItem('patientdetails'))+']');
+    console.log(this.data);
+    
     this.dateAdmitted = this.data[0].admission_date;
     this.admissionstatus = this.data[0].admission_status;
     this.inpatientDetails.admission_no = this.data[0].admission_no;
 
-
-
+    
+    //this.drcode = 
     this.executiveService.getAdmittingDiagnosis(this.inpatientDetails).subscribe(
       (res: any) => {   
         console.log(res);
@@ -285,5 +251,13 @@ export class PatientDetailPage implements OnInit {
       }
     );
   }
-
+  closemodal(){
+    this.modalController.dismiss({
+      'dismissed': true
+    });
+  }
+  moreOrLess: boolean = false;
+  moreorless(data) {
+    this.moreOrLess = data;
+  }
 }

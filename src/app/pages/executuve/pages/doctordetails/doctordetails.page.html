@@ -15,21 +15,29 @@
   </ion-toolbar>
 
 
-  <ion-list>
-    <ion-item lines="none">
-      <div class="ion-text-wrap">
-        <ion-label>
-          <h2 class="ion-text-wrap">
-            <b>Dr. {{ dr_name }}</b>
-          </h2>
-          {{deptName}}
-        </ion-label>
-      </div>
 
-    </ion-item>
-  </ion-list>
+<ion-list style=" box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);">
+  <ion-item lines="none">
+    <ion-avatar slot="start">
+      <chh-app-text-avatar [text]="dr_name" [color]=""></chh-app-text-avatar>
+    </ion-avatar>
+    <ion-label style="margin-top: -5px;">
+      <ion-item slot="start" lines="" class="ion-no-padding" style="padding-bottom: 5px;">
+        <h2 class="ion-text-wrap" style="padding-top: 20px;">
+          {{ dr_name }}
+        </h2>
 
+      </ion-item>
 
+      <ion-row class="ion-no-padding" lines="none" style="padding-top: 10px !important;">
+        <p>
+            {{deptName}}
+        </p>
+        <br />
+      </ion-row>
+    </ion-label>
+  </ion-item>
+</ion-list>
 
 
 </ion-header>
@@ -53,7 +61,7 @@
                   <chh-app-text-avatar [text]="x.last_name" [color]=""></chh-app-text-avatar>
                 </ion-avatar>
                 <ion-label style="margin-top: -5px;">
-                  <ion-item slot="start" lines="none" class="ion-no-padding" style="padding-bottom: 5px;">
+                  <ion-item slot="start" lines="" class="ion-no-padding" style="padding-bottom: 5px;">
                     <h2 class="ion-text-wrap" style="padding-top: 20px;">
                       {{ x.last_name }}, {{x.first_name}} {{x.middle_name}}
                     </h2>
@@ -71,7 +79,7 @@
                         {{this.constants.CHH_NAME__VALUE__MANDAUE}}
                       </span><br />
                       <ion-icon name="bed-outline" slot="start"></ion-icon> Room
-                      {{x.roomNo}}<br />
+                      {{x.room_no}}<br />
 
 
                       <ion-badge color="warning" slot="end" *ngIf="x.admission_status == 'DN'">

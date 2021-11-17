@@ -21,7 +21,11 @@ export class ChhAppPatientHeaderComponent  {
         window.location.reload();
       }
       this.isDesktop = isDesktop;
+      console.log(this.isDesktop);
+      
     });
+    console.log(this.isDesktop);
+    
   }
   ionViewWillEnter() {
     

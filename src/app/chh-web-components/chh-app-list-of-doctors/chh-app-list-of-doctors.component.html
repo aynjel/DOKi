@@ -11,9 +11,14 @@
           </ion-avatar> -->
           <ion-label style="margin-top: -10px;">
             <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
-              <h3 class="ion-text-wrap" style="padding-top: 20px;">
+              <h3 class="ion-text-wrap" style="padding-top: 20px;" (click)="onClick(dr)" *ngIf="fromExec">
                 Dr. {{dr.first_name}} {{dr.last_name}}
               </h3>
+              <h3 class="ion-text-wrap" style="padding-top: 20px;" *ngIf="!fromExec">
+                Dr. {{dr.first_name}} {{dr.last_name}}
+              </h3>
+
+
             </ion-item>
             <ion-badge color="medium"> {{dr.status}}</ion-badge>
           </ion-label>

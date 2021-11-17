@@ -35,7 +35,10 @@ const routes: Routes = [
         path: 'doctors/:id', 
         loadChildren: () => import('../pages/doctordetails/doctordetails.module').then( m => m.DoctordetailsPageModule)
       },{
-        path: 'patient/:id', 
+        path: 'doctors/:id/:patientid', 
+        loadChildren: () => import('../pages/doctordetails/doctordetails.module').then( m => m.DoctordetailsPageModule)
+      },{
+        path: 'patient/:id/:method', 
         loadChildren: () => import('../pages/patient-detail/patient-detail.module').then( m => m.PatientDetailPageModule)
       },
       {

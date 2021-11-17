@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
 import { ExecutiveService } from 'src/app/services/executive/executive.service';
@@ -8,6 +8,9 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import { Constants } from 'src/app/shared/constants';
 import { BehaviorSubject } from 'rxjs';
 import {UserSettingsModelv3,LoginResponseModelv3,InpatientDetails,DoctorDetails} from 'src/app/models/doctor';
+import { ModalController } from '@ionic/angular';
+import{PatientDetailPage} from '../patient-detail/patient-detail.page';
+import {PatientdetailComponent} from "../../components/patientdetail/patientdetail.component";
 @Component({
   selector: 'app-doctordetails',
   templateUrl: './doctordetails.page.html',
@@ -29,7 +32,9 @@ export class DoctordetailsPage implements OnInit {
     private screensizeService: ScreenSizeService,
     private doctorService: DoctorService,
     private authService: AuthService,
-    private executiveService: ExecutiveService) {       this.screensizeService.isDesktopView().subscribe((isDesktop) => {
+    private executiveService: ExecutiveService,
+    private modalController:ModalController,
+    private activatedRoute: ActivatedRoute) {       this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         // Reload because our routing is out of place
         //window.location.reload();
@@ -39,12 +44,28 @@ export class DoctordetailsPage implements OnInit {
     });}
 
   ngOnInit() {
-  }
-  detail(x){
-    console.log(x);
-    localStorage.setItem('patientdetails',btoa(JSON.stringify(x)));
-    this.router.navigate(['executive/patient/'+x.admission_no]);
+    this.dr_details = JSON.parse(atob(localStorage.getItem('drdetails')));
+    console.log(this.dr_details);
     
+    this.deptName = this.dr_details.deptName;
+
+    this.dr_name = this.dr_details.doctorName;
+
+  }
+  async detail(x){
+    console.log( this.activatedRoute.snapshot.params.id);
+  
+    
+    localStorage.setItem('patientdetails',btoa(JSON.stringify(x)));
+    const modal = await this.modalController.create({
+      component: PatientdetailComponent,
+      cssClass: 'my-custom-modal-css',
+      componentProps: {
+        'patientdetail': x,
+        'drcode':this.activatedRoute.snapshot.params.id,
+      }
+    });
+    return await modal.present();
   }
   doRefresh(event) {
     setTimeout(() => {
@@ -57,16 +78,14 @@ export class DoctordetailsPage implements OnInit {
 
     this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
 
-    this.dr_details = JSON.parse(atob(localStorage.getItem('drdetails')));
-    this.deptName = this.dr_details.deptName;
 
-    this.dr_name = this.dr_details.doctorName;
+
     this.doctorDetails.doctorCode = this.dr_details.doctorCode;
 
 
     this.executiveService.geInpatients(this.doctorDetails).subscribe(
       (res: any) => {   
-        console.log(res);
+  
         this.listOfPatients  = res;
      
       },

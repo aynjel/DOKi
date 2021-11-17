@@ -82,7 +82,7 @@ export class TabsDashboardPage implements OnInit {
   noncriticalT:any;
   noncriticalC:any;
   noncriticalM:any;
-
+  stackedBar:any = true;
   constructor(    private storageService: StorageService,
     private router: Router,
     public constants: Constants,
@@ -254,7 +254,7 @@ export class TabsDashboardPage implements OnInit {
     this.noncriticalT = 0;
     this.executiveService.getTotalPxTypesBySite().subscribe(
       (res: any) => {     
-       console.log(res);
+  
        getTotalPxTypesBySite = res;
       },
       (error) => {
@@ -263,7 +263,7 @@ export class TabsDashboardPage implements OnInit {
       () => {
         this.criticalTV33= false;
         getTotalPxTypesBySite.forEach(element => {
-            console.log(element);
+         
             if((element.site == 'C' || element.site == 'M') && element.patientType =='Critical'){
               this.criticalT = this.criticalT + element.totalAdmissions;
               if(element.site == 'C'){
@@ -286,9 +286,127 @@ export class TabsDashboardPage implements OnInit {
       }
 
     );
+    let cvdOccupancy:any;
+    let dataC=[];
+    let datanonC=[];
+    this.executiveService.getCovidVsNonCovidOccupancyCurrentYear().subscribe(
+      (res: any) => {cvdOccupancy  = res; console.log(res);
+      
+      },
+      (error) => {
+ 
+      },
+      () => {
+        this.stackedBar = false;
+          let c1total = 0;
+          let c2total = 0;
+          let c3total = 0;
+          let c4total = 0;
+          let c5total = 0;
+          let c6total = 0;
+          let c7total = 0;
+          let c8total = 0;
+          let c9total = 0;
+          let c10total = 0;
+          let c11total = 0;
+          let c12total = 0;
+          let nc1total = 0;
+          let nc2total = 0;
+          let nc3total = 0;
+          let nc4total = 0;
+          let nc5total = 0;
+          let nc6total = 0;
+          let nc7total = 0;
+          let nc8total = 0;
+          let nc9total = 0;
+          let nc10total = 0;
+          let nc11total = 0;
+          let nc12total = 0;
+          cvdOccupancy.forEach(el => {
+            
+          
+             
+             
+              if(el.month == 1){
+                if(el.patientType == 'Covid'){c1total= c1total+el.aveOccupancy;}
+                if(el.patientType == 'Non-Covid'){nc1total= nc1total+el.aveOccupancy;}               
+              }
+              if(el.month == 2){
+                if(el.patientType == 'Covid'){c2total= c2total+el.aveOccupancy;}
+                if(el.patientType == 'Non-Covid'){nc2total= nc2total+el.aveOccupancy;}               
+              }
+              if(el.month == 3){
+                if(el.patientType == 'Covid'){c3total+=el.aveOccupancy;}
+                if(el.patientType == 'Non-Covid'){nc3total+=el.aveOccupancy;}               
+              }   
+              if(el.month == 4){
+                if(el.patientType == 'Covid'){c4total+=el.aveOccupancy;}
+                if(el.patientType == 'Non-Covid'){nc4total+=el.aveOccupancy;}               
+              }       
+              if(el.month == 5){
+                if(el.patientType == 'Covid'){c5total+=el.aveOccupancy;}
+                if(el.patientType == 'Non-Covid'){nc5total+=el.aveOccupancy;}               
+              } 
+              if(el.month == 6){
+                if(el.patientType == 'Covid'){c6total+=el.aveOccupancy;}
+                if(el.patientType == 'Non-Covid'){nc6total+=el.aveOccupancy;}               
+              } 
+              if(el.month == 7){
+                if(el.patientType == 'Covid'){c7total+=el.aveOccupancy;}
+                if(el.patientType == 'Non-Covid'){nc7total+=el.aveOccupancy;}               
+              } 
+              if(el.month == 8){
+                if(el.patientType == 'Covid'){c8total+=el.aveOccupancy;}
+                if(el.patientType == 'Non-Covid'){nc8total+=el.aveOccupancy;}               
+              } 
+              if(el.month == 9){
+                if(el.patientType == 'Covid'){c9total+=el.aveOccupancy;}
+                if(el.patientType == 'Non-Covid'){nc9total+=el.aveOccupancy;}               
+              } 
+              if(el.month == 10){
+                if(el.patientType == 'Covid'){c10total+=el.aveOccupancy;}
+                if(el.patientType == 'Non-Covid'){nc10total+=el.aveOccupancy;}               
+              } 
+              if(el.month == 11){
+                if(el.patientType == 'Covid'){c11total+=el.aveOccupancy;}
+                if(el.patientType == 'Non-Covid'){nc11total+=el.aveOccupancy;}               
+              } 
+              if(el.month == 12){
+                if(el.patientType == 'Covid'){c12total+=el.aveOccupancy;}
+                if(el.patientType == 'Non-Covid'){nc12total+=el.aveOccupancy;}               
+              } 
 
-
-
+          });
+        dataC.push(c1total);
+        dataC.push(c2total);
+        dataC.push(c3total);
+        dataC.push(c4total);
+        dataC.push(c5total);
+        dataC.push(c6total);
+        dataC.push(c7total);
+        dataC.push(c8total);
+        dataC.push(c9total);
+        dataC.push(c10total);
+        dataC.push(c11total);
+        dataC.push(c12total);
+        datanonC.push(nc1total);
+        datanonC.push(nc2total);
+        datanonC.push(nc3total);
+        datanonC.push(nc4total);
+        datanonC.push(nc5total);
+        datanonC.push(nc6total);
+        datanonC.push(nc7total);
+        datanonC.push(nc8total);
+        datanonC.push(nc9total);
+        datanonC.push(nc10total);
+        datanonC.push(nc11total);
+        datanonC.push(nc12total);
+          this.populateStackedBar(dataC,datanonC);
+      }
+      
+      
+    );
+//this.populateStackedBar();
 
 /*
     this.TotalAdmissionsByDeptAndSiteData = [];
@@ -343,6 +461,7 @@ export class TabsDashboardPage implements OnInit {
           fontFamily: "Nunito", // fontFamily: 'Inter'
         },
       },
+      
     });
     HighCharts.chart("PieChart", {
 
@@ -512,5 +631,80 @@ export class TabsDashboardPage implements OnInit {
     });
   }
   
-
+  populateStackedBar(datax:any,datay:any){
+    console.log(datax);
+    console.log(datay);
+    HighCharts.chart("stackedBar", {
+      chart: {
+        renderTo: "container",
+        type: "column",
+      },
+ 
+      title: {
+          text: 'Covid & Non-Covid Graph'
+      },
+	        xAxis: {
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: ''
+        },
+        stackLabels: {
+          enabled: true,
+          style: {
+            fontWeight: 'bold',
+          }
+        }
+      },
+      legend: {
+        align: 'right',
+        x: -30,
+        verticalAlign: 'top',
+        y: 25,
+        floating: true,
+        backgroundColor: HighCharts.defaultOptions.legend.backgroundColor || 'white',
+        borderColor: '#CCC',
+        borderWidth: 1,
+        shadow: false
+      },
+      tooltip: {
+        headerFormat: '<b>{point.x}</b><br/>',
+        pointFormat: '{series.name}: {point.y}<br/>Percentage : {point.percentage:.1f}% <br/>Total: {point.stackTotal}'
+      },
+      plotOptions: {
+        column: {
+            stacking: 'normal',
+            dataLabels: {
+                enabled: true
+            },
+            
+        }
+      },
+      /*series: [{
+          name: 'John',
+          data: [5, 3, 4, 7, 2]
+        }, {
+          name: 'Jane',
+          data: [2, 2, 3, 2, 1]
+        }, {
+        name: 'Joe',
+        data: [3, 4, 4, 2, 5]
+      }]*/
+      series: [
+        {
+          type: 'column',
+          name: 'Non-Covid',
+          data: datay
+        },
+        {
+          type: 'column',
+          name: 'Covid',
+          data: datax
+        },
+      ],
+      credits: { enabled: false },
+    });
+  }
 }

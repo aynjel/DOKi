@@ -494,7 +494,7 @@ export class TabsSettingsPage implements OnInit {
       localStorage.clear();
       sessionStorage.clear();
       localStorage.setItem('hasloggedin', '1');
-
+      this.renderer.setAttribute(document.body, 'color-theme', 'light');
       this.router.navigate(['/login']);
     });
 

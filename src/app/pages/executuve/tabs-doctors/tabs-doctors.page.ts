@@ -136,7 +136,7 @@ export class TabsDoctorsPage implements OnInit {
     this.executiveService.getDoctors().subscribe(
       (res: any) => {   
         this.listOfDoctorsTemp = this.listOfDoctorsTemp1 = res;  
-    
+        //localStorage.setItem('listOfDoctors',JSON.stringify(this.listOfDoctorsTemp));
       },
       (error) => {},
       () => {

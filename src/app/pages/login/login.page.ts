@@ -104,7 +104,7 @@ export class LoginPage {
 
   ngOnInit() {
     this.loginResponseModel = new LoginResponseModel;
-
+    this.onDarkModeEnable();
     this.$gaService.pageView('/login', 'Login Page');
     if (localStorage.getItem('promptLogout') == '1') {
       this.timerExpired();
@@ -648,7 +648,11 @@ export class LoginPage {
     
 
   }
+  onDarkModeEnable() {
 
+      this.renderer.setAttribute(document.body, 'color-theme', 'light');
+ 
+  }
   async timerExpired() {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",

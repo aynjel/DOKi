@@ -1,16 +1,15 @@
-<ion-header mode="md" class="ion-no-border" *ngIf="!isDesktop"> 
+<ion-header mode="md" class="ion-no-border" > 
 
 
   <ion-toolbar color="mango">
-    <span 
-      class="padding-left-10"         
-      routerLink="/executive/doctors/" routerDirection="backward"
-      color="chh-css-primary2"
-      >
-      <ion-icon name="arrow-back-outline"  class="my-icon vcenter"></ion-icon>
-
+ 
+    <span class="padding-left-10" (click)="closemodal()" routerDirection="backward" color="chh-css-primary2">
+      <ion-icon name="arrow-back-outline" class="my-icon vcenter"></ion-icon>
+      <!--ion-icon 
+          name="chevron-back-outline" 
+          class="my-icon vcenter">
+        </ion-icon-->
     </span>
-
 
     <span  class="padding-left-30 font-weight-500 font-size-20"> &nbsp;&nbsp;Patient Information </span>
   </ion-toolbar>
@@ -18,7 +17,7 @@
 </ion-header>
  <ion-content >
     <app-chh-app-patient-header
-      [data]="data"
+      [data]="patientdetail"
       [dateAdmitted]="dateAdmitted"
       [forMoreOrLess]="true"
       >
@@ -41,8 +40,10 @@
     ></app-chh-app-final-diagnosis>
  
     <app-chh-app-list-of-doctors  
+  
       [coDoctors]="coDoctors"
       [objecthandler]="objecthandler"
-      [isFetchDone]="isFetchDone">
+      [isFetchDone]="isFetchDone"
+      [fromExec]="true">
     </app-chh-app-list-of-doctors>
   </ion-content>

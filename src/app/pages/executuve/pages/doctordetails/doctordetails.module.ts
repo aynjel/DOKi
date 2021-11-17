@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { DoctordetailsPageRoutingModule } from './doctordetails-routing.module';
-
+import { ChhWebComponentsModule } from './../../../../../app/chh-web-components/chh-web-components.module'
 import { DoctordetailsPage } from './doctordetails.page';
 import { ChhAppTextAvatarModule } from '../../../../chh-web-components/chh-app-text-avatar/chh-app-text-avatar.module';
 @NgModule({
@@ -14,7 +14,8 @@ import { ChhAppTextAvatarModule } from '../../../../chh-web-components/chh-app-t
     FormsModule,
     IonicModule,
     DoctordetailsPageRoutingModule,
-    ChhAppTextAvatarModule
+    ChhAppTextAvatarModule,
+    ChhWebComponentsModule
   ],
   declarations: [DoctordetailsPage]
 })

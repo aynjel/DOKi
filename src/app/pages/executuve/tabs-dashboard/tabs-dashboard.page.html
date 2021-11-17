@@ -35,7 +35,7 @@
           <ion-row>
             
             <ion-col size-xs="12" class="ion-text-center">
-              <h3 style="color:black">Total Admissions : 
+              <h3 >Total Admissions : 
                 <b *ngIf="!totalAdmissionsV33">{{totalAdmissions}}</b>
                 <ion-spinner name="crescent" *ngIf="totalAdmissionsV33"></ion-spinner>
               </h3>
@@ -89,7 +89,7 @@
                         <!-- NEW ADMISSION -->
           <ion-row>
             <ion-col size-xs="12" class="ion-text-center">
-              <h3 style="color:black">
+              <h3 >
                 New Admissions Today : 
                 <b *ngIf="!totalAdmissionsTodayV33">{{totalAdmissionstoday}}</b>
                 <ion-spinner name="crescent" *ngIf="totalAdmissionsTodayV33"></ion-spinner>
@@ -130,7 +130,7 @@
             <!-- FOR DISCHARGE -->
           <ion-row>
             <ion-col size-xs="12" class="ion-text-center">
-              <h3 style="color:black">For Discharge : 
+              <h3 >For Discharge : 
                 <b *ngIf="!forDischargeV33">{{forDischarge}}</b>
                 <ion-spinner name="crescent" *ngIf="forDischargeV33"></ion-spinner>
               </h3>
@@ -185,7 +185,7 @@
           <ion-card   >
             <ion-row>
               <ion-col size-xs="12" class="ion-text-center">
-                <h3 style="color:black">Critical : 
+                <h3 >Critical : 
                   <b *ngIf="!criticalTV33">{{criticalT}}</b>
                   <ion-spinner name="crescent" *ngIf="criticalTV33"></ion-spinner>
                 </h3>
@@ -225,7 +225,7 @@
                 <ion-item class="ion-no-padding ion-no-margin" ></ion-item>
                 <ion-row>
                   <ion-col size-xs="12" class="ion-text-center">
-                    <h3 style="color:black">Non Critical : 
+                    <h3 >Non Critical : 
                       <b *ngIf="!criticalTV33">{{noncriticalT}}</b>
                       <ion-spinner name="crescent" *ngIf="criticalTV33"></ion-spinner>
                     </h3>
@@ -264,7 +264,24 @@
             
                     <ion-item class="ion-no-padding ion-no-margin" ></ion-item>
       
-          </ion-card>      
+          </ion-card> 
+          
+          
+
+
+          <ion-card   mode="ios"  class="pointer">
+            <div id="stackedBar"></div>
+                        <ion-col size-xs="12" class="ion-text-center" *ngIf="stackedBar">
+              <h3 >
+                Covid & Non-Covid Graph
+            
+              </h3>
+            </ion-col>
+            <ion-spinner name="crescent" *ngIf="stackedBar"></ion-spinner>
+          </ion-card>
+
+
+
         </ion-grid>
 
 
