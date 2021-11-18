@@ -165,7 +165,16 @@
    position: absolute; 
    display: block;  
 }
+.my-custom-css .modal-wrapper {
+  height: 90%;
+  top: 5%;
+  position: absolute; 
+  display: block;  
 
+}
+.modal-wrapper{
+  background: transparent !important;
+}
 ion-popover{
    ion-backdrop{
    opacity: 0.5 !important;

@@ -50,7 +50,7 @@ export class AuthInterceptor implements HttpInterceptor {
            return next.handle(cloned).pipe(
             map((event: HttpEvent<any>) => {
                 if (event instanceof HttpResponse) {
-                    //console.log('event--->>>', event);
+                  localStorage.setItem("modaled","0");
                 }
                 return event;
             }),catchError((error: HttpErrorResponse) => {
