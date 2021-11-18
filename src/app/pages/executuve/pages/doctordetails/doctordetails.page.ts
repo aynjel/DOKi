@@ -56,7 +56,7 @@ export class DoctordetailsPage implements OnInit {
     console.log( this.activatedRoute.snapshot.params.id);
   
     
-    localStorage.setItem('patientdetails',btoa(JSON.stringify(x)));
+    //localStorage.setItem('patientdetails',btoa(JSON.stringify(x)));
     const modal = await this.modalController.create({
       component: PatientdetailComponent,
       cssClass: 'my-custom-modal-css',

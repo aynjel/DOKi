@@ -66,7 +66,7 @@ export class DoctordetailComponent implements OnInit {
     );
   }
   async detail(x) {
-    localStorage.setItem('patientdetails', btoa(JSON.stringify(x)));
+    //localStorage.setItem('patientdetails', btoa(JSON.stringify(x)));
     const modal = await this.modalController.create({
       component: PatientdetailComponent,
       cssClass: 'my-custom-modal-c',

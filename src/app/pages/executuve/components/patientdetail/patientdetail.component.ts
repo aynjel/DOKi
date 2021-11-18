@@ -124,10 +124,10 @@ export class PatientdetailComponent implements OnInit {
     public functionsService: FunctionsService) { }
 
   ngOnInit() {
-        
-    this.data = JSON.parse('['+atob(localStorage.getItem('patientdetails'))+']');
+    let stack = '['+JSON.stringify(this.patientdetail)+']';
+    this.data = JSON.parse(stack);
+    //this.data = this.patientdetail;
     console.log(this.data);
-    
     this.dateAdmitted = this.data[0].admission_date;
     this.admissionstatus = this.data[0].admission_status;
     this.inpatientDetails.admission_no = this.data[0].admission_no;
@@ -136,7 +136,7 @@ export class PatientdetailComponent implements OnInit {
     //this.drcode = 
     this.executiveService.getAdmittingDiagnosis(this.inpatientDetails).subscribe(
       (res: any) => {   
-        console.log(res);
+        //console.log(res);
         
         if(!Object.keys(res).length){
           //this.functionsService.logToConsole("no data found");
@@ -171,7 +171,7 @@ export class PatientdetailComponent implements OnInit {
     
     this.executiveService.getFinalDiagnosis(this.inpatientDetails).subscribe(
       (res: any) => {   
-        console.log(res);
+        //console.log(res);
         
         if(!Object.keys(res).length){
           // this.functionsService.logToConsole("no data found");
@@ -238,7 +238,7 @@ export class PatientdetailComponent implements OnInit {
         });
 
         this.coDoctors = coDoctors1.concat(coDoctors2).concat(coDoctors3);
-        console.log(this.coDoctors);
+        //console.log(this.coDoctors);
         
         //this.coDoctors.push(coDoctors2);
       },
