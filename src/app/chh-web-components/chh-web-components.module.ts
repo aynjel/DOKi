@@ -51,6 +51,7 @@ import{ChhAppExecutiveDeptComponent} from "./chh-app-executive-dept/chh-app-exec
 import{PatientdetailComponent} from "../pages/executuve/components/patientdetail/patientdetail.component";
 import{DoctordetailComponent} from "../pages/executuve/components/doctordetail/doctordetail.component";
 import{DashboardgraphComponent} from "../pages/executuve/components/dashboardgraph/dashboardgraph.component";
+import {CvdbreakdownComponent} from "../pages/executuve/components/cvdbreakdown/cvdbreakdown.component";
 @NgModule({
   declarations: [
     ChhAppLogoComponent,
@@ -82,7 +83,8 @@ import{DashboardgraphComponent} from "../pages/executuve/components/dashboardgra
     ChhAppExecutiveDeptComponent,
     PatientdetailComponent,
     DoctordetailComponent,
-    DashboardgraphComponent
+    DashboardgraphComponent,
+    CvdbreakdownComponent
 
   ],
   exports: [
@@ -114,7 +116,8 @@ import{DashboardgraphComponent} from "../pages/executuve/components/dashboardgra
     ChhAppExecutiveDeptComponent,
     PatientdetailComponent,
     DoctordetailComponent,
-    DashboardgraphComponent
+    DashboardgraphComponent,
+    CvdbreakdownComponent
   ],
   imports: [CommonModule, IonicModule, ChhAppTextAvatarModule,RouterModule,FormsModule],
 })

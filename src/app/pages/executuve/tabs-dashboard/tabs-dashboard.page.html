@@ -288,7 +288,11 @@
                       </h2>
                     </ion-label>
                   </ion-item>
-  
+                 
+                 <app-cvdbreakdown 
+                  [cvd]="this.CCC"
+                  [ncvd]="this.CCNC"></app-cvdbreakdown>
+                
 
               </ion-col>
               <ion-col size-xs="6" >
@@ -304,6 +308,9 @@
   
                     </ion-label>
                   </ion-item>
+                  <app-cvdbreakdown 
+                  [cvd]="this.MCC"
+                  [ncvd]="this.MCNC"></app-cvdbreakdown>
               </ion-col>
   
             </ion-row>
@@ -330,6 +337,9 @@
                           </h2>
                         </ion-label>
                       </ion-item>
+                      <app-cvdbreakdown 
+                      [cvd]="this.CNCC"
+                      [ncvd]="this.CNCNC"></app-cvdbreakdown>
                   </ion-col>
                   <ion-col size-xs="6" >
                       <ion-item id="ion-item-dn" lines="none" routerLink='/' routerDirection="back">
@@ -344,6 +354,9 @@
       
                         </ion-label>
                       </ion-item>
+                      <app-cvdbreakdown 
+                      [cvd]="this.MNCC"
+                      [ncvd]="this.MNCNC"></app-cvdbreakdown>
                   </ion-col>
       
                 </ion-row>
@@ -366,7 +379,7 @@
  | |___| |__| | \  /   _| |_| |__| |
   \_____\____/   \/   |_____|_____/ 
                                     
--->                                  
+                                 
 
 
 
@@ -374,7 +387,7 @@
       <div id="BasicBar"></div>
     </ion-card>
 
-
+--> 
 <!--
           <ion-card   mode="ios" >
             <ion-row>

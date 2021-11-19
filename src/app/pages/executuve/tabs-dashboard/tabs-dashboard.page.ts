@@ -216,7 +216,7 @@ export class TabsDashboardPage implements OnInit {
     this.noncriticalT = 0;
     this.executiveService.getTotalPxTypesBySite().subscribe(
       (res: any) => {
-        ////console.log(res);
+        console.log(res);
 
         getTotalPxTypesBySite = res;
       },
@@ -250,7 +250,7 @@ export class TabsDashboardPage implements OnInit {
 
     );
     this.getTotalAdmissions();
-
+    this.getTotalCovidPxTypesBySite();
 
     /*
         this.TotalAdmissionsByDeptAndSiteData = [];
@@ -290,7 +290,7 @@ export class TabsDashboardPage implements OnInit {
 
 
         
-        this.getTotalCovidPxTypesBySite();
+       
   }
 
 
@@ -635,20 +635,21 @@ export class TabsDashboardPage implements OnInit {
       }]*/
 
   totalCovidPxTypesBySite:any;
+  CCC :any = 0;
+  CCNC:any = 0;
+  CNCC :any= 0;
+  CNCNC :any= 0;
+  MCC :any= 0;
+  MCNC :any= 0;
+  MNCC :any= 0;
+  MNCNC :any= 0;
   getTotalCovidPxTypesBySite() {
     let toreturn=[];
-    let CCC = 0;
-    let CCNC = 0;
-    let CNCC = 0;
-    let CNCNC = 0;
-    let MCC = 0;
-    let MCNC = 0;
-    let MNCC = 0;
-    let MNCNC = 0;
+
     this.totalCovidPxTypesBySite = [];
     this.executiveService.getTotalCovidPxTypesBySite().subscribe(
       (res: any) => {
-        //console.log(res);
+        console.log(res);
         
         this.totalCovidPxTypesBySite = res;
       },
@@ -657,28 +658,28 @@ export class TabsDashboardPage implements OnInit {
         this.totalCovidPxTypesBySite.forEach(el => {
             //console.log(el);
             if(el.site=='C'&& el.patientType01 == 'Critical'  && el.patientType02=='Covid' ){
-              CCC = el.totalAdmissions;
+              this.CCC = el.totalAdmissions;
             }
             if(el.site=='C' && el.patientType01 == 'Non-Critical' && el.patientType02=='Covid' ){
-              CNCC = el.totalAdmissions;
+              this.CNCC = el.totalAdmissions;
             }
             if(el.site=='C' && el.patientType01 == 'Critical' && el.patientType02=='Non-Covid' ){
-              CCNC = el.totalAdmissions;
+              this.CCNC = el.totalAdmissions;
             }
             if(el.site=='C' && el.patientType01 == 'Non-Critical' && el.patientType02=='Non-Covid' ){
-              CNCNC = el.totalAdmissions;
+              this.CNCNC = el.totalAdmissions;
             }
             if(el.site=='M' && el.patientType01 == 'Critical' && el.patientType02=='Covid' ){
-              MCC = el.totalAdmissions;
+              this.MCC = el.totalAdmissions;
             }
             if(el.site=='M' && el.patientType01 == 'Non-Critical' && el.patientType02=='Covid' ){
-              MNCC = el.totalAdmissions;
+              this.MNCC = el.totalAdmissions;
             }
             if(el.site=='M' && el.patientType01 == 'Critical' && el.patientType02=='Non-Covid' ){
-              MCNC = el.totalAdmissions;
+              this.MCNC = el.totalAdmissions;
             }
             if(el.site=='M' && el.patientType01 == 'Non-Critical' && el.patientType02=='Non-Covid' ){
-              MNCNC = el.totalAdmissions;
+              this.MNCNC = el.totalAdmissions;
             }
         });
         /*toreturn = [{
@@ -705,7 +706,7 @@ export class TabsDashboardPage implements OnInit {
           data: [MNCC, MNCNC],
           stack: 'Mandaue',
           color:'#009444'
-      }];*/
+      }];
       toreturn = [
         {
           type: 'column',
@@ -734,7 +735,7 @@ export class TabsDashboardPage implements OnInit {
     }];
       this.populateBasicBar(toreturn);
 
-
+*/
 
         
       }
