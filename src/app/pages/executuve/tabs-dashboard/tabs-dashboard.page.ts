@@ -656,32 +656,32 @@ export class TabsDashboardPage implements OnInit {
       () => {
         this.totalCovidPxTypesBySite.forEach(el => {
             //console.log(el);
-            if(el.site=='C' && el.patientType02=='Covid' && el.patientType01 == 'Critical'){
+            if(el.site=='C'&& el.patientType01 == 'Critical'  && el.patientType02=='Covid' ){
               CCC = el.totalAdmissions;
             }
-            if(el.site=='C' && el.patientType02=='Covid' && el.patientType01 == 'Non-Critical'){
-              CCNC = el.totalAdmissions;
-            }
-            if(el.site=='C' && el.patientType02=='Non-Covid' && el.patientType01 == 'Critical'){
+            if(el.site=='C' && el.patientType01 == 'Non-Critical' && el.patientType02=='Covid' ){
               CNCC = el.totalAdmissions;
             }
-            if(el.site=='C' && el.patientType02=='Non-Covid' && el.patientType01 == 'Non-Critical'){
+            if(el.site=='C' && el.patientType01 == 'Critical' && el.patientType02=='Non-Covid' ){
+              CCNC = el.totalAdmissions;
+            }
+            if(el.site=='C' && el.patientType01 == 'Non-Critical' && el.patientType02=='Non-Covid' ){
               CNCNC = el.totalAdmissions;
             }
-            if(el.site=='M' && el.patientType02=='Covid' && el.patientType01 == 'Critical'){
+            if(el.site=='M' && el.patientType01 == 'Critical' && el.patientType02=='Covid' ){
               MCC = el.totalAdmissions;
             }
-            if(el.site=='M' && el.patientType02=='Covid' && el.patientType01 == 'Non-Critical'){
-              MCNC = el.totalAdmissions;
-            }
-            if(el.site=='M' && el.patientType02=='Non-Covid' && el.patientType01 == 'Critical'){
+            if(el.site=='M' && el.patientType01 == 'Non-Critical' && el.patientType02=='Covid' ){
               MNCC = el.totalAdmissions;
             }
-            if(el.site=='M' && el.patientType02=='Non-Covid' && el.patientType01 == 'Non-Critical'){
+            if(el.site=='M' && el.patientType01 == 'Critical' && el.patientType02=='Non-Covid' ){
+              MCNC = el.totalAdmissions;
+            }
+            if(el.site=='M' && el.patientType01 == 'Non-Critical' && el.patientType02=='Non-Covid' ){
               MNCNC = el.totalAdmissions;
             }
         });
-        toreturn = [{
+        /*toreturn = [{
           type: 'column',
           name: 'Covid (Cebu)',
           data: [CCC, CCNC],
@@ -705,8 +705,33 @@ export class TabsDashboardPage implements OnInit {
           data: [MNCC, MNCNC],
           stack: 'Mandaue',
           color:'#009444'
-      }];
-
+      }];*/
+      toreturn = [
+        {
+          type: 'column',
+            name: 'Critical | Non-Covid',
+            data: [CCNC, MCNC],
+            stack: 'Non-Covid',
+            color:'#27aae1'
+        },{
+        type: 'column',
+        name: 'Critical | Covid',
+        data: [CCC, MCC],
+        stack: 'Covid',
+        color:'#FFA500'
+    },   {
+      type: 'column',
+        name: 'Non-Critical | Non-Covid',
+        data: [CNCNC, MNCNC],
+        stack: 'Non-Covid',
+        color:'#009444'
+    },{
+      type: 'column',
+        name: 'Non-Critical | Covid',
+        data: [CNCC, MNCC],
+        stack: 'Covid',
+        color:'#FFA500'
+    }];
       this.populateBasicBar(toreturn);
 
 
@@ -718,7 +743,14 @@ export class TabsDashboardPage implements OnInit {
   }
 
   populateBasicBar(data:any){
-    console.log(data);
+    HighCharts.setOptions({
+      chart: {
+        style: {
+          fontFamily: "Nunito", // fontFamily: 'Inter'
+        },
+      },
+
+    });
     
     let chartxxx = HighCharts.chart("BasicBar", {
       chart: {
@@ -731,7 +763,7 @@ export class TabsDashboardPage implements OnInit {
         },
     
         xAxis: {
-          categories: ['Crtitical', 'Non-Critical',]
+          categories: ['Cebu', 'Mandaue',]
       },
     
         yAxis: {
@@ -1008,6 +1040,6 @@ export class TabsDashboardPage implements OnInit {
       ],
       credits: { enabled: false },
     });
-    setTimeout(() => { chart.reflow() }, 300);
+    setTimeout(() => { chart.reflow() }, 1000);
   }
 }
