@@ -20,71 +20,36 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./dashboardgraph.component.scss'],
 })
 export class DashboardgraphComponent implements OnInit {
-  @Input() chartdata: any;
-  @Input() type: any;
-  @Input() title: any;
-  @Input() seriesname: any; 
+  @Input() data: any;
+  @Input() CritnCrit: any = "";
+  @Input() site: any = "";
+  @Input() CvdnCvd: any =""; 
   constructor() { }
 
+
+  dataC:any=[];
   ngOnInit() {
-
-      console.log(JSON.stringify(this.chartdata));
+/*
+      console.log(this.data);
       
-      this.populatepichart();
+      console.log("CritnCrit : "+this.CritnCrit);
+      console.log("site : "+this.site);     
+      console.log("CvdnCvd : "+this.CvdnCvd);
+
+*/
+      this.data.forEach(el => {
+        
+        if(this.site == "" && this.CvdnCvd == ""){
+          if(el.patientType1 == this.CritnCrit ){
+            //console.log(el);
+
+          }
+        }
+      });
+      
 
   }
 
 
-  populatepichart(){
-    HighCharts.setOptions({
-      chart: {
-        style: {
-          fontFamily: "Nunito", // fontFamily: 'Inter'
-        },
-      },
-      
-    });
-    let chart = HighCharts.chart("admissionByDepartment", {
-
-      chart: {
-        renderTo: "container",
-        height: 300,
-        type: "pie",
-        styledMode: true,
-      },
-      title: { text: this.title },
-      accessibility: {
-        point: {
-            valueSuffix: '%'
-        }
-    },
-      plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-                enabled: true,
-                format: '<b>{point.name}</b>: {point.y} <br /> {point.percentage:.1f} %'
-            }
-        }
-    },
-      series: [
-        {
-          type: undefined,
-          name: this.seriesname,
-          data: [
-            {"name":"Covid","y":2},
-            {"name":"Non-Covid","y":26},
-            {"name":"Covid Non-Critical Cebu","y":6},
-            {"name":"Non-Covid Critical Cebu","y":178},
-            {"name":"Non-Covid Critical Man","y":6},
-            {"name":"Non-Covid Non-Critical Man","y":33}]
-        },
-      ],
-
-      credits: { enabled: false },
-    });
-    setTimeout(() => { chart.reflow()}, 100);
-  }
-
+ 
 }

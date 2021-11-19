@@ -1,18 +1,45 @@
-<ion-grid >
-  <ion-row >
-    <ion-col size="8" >
-      <ion-item style="font-size: 13px !important;" lines="none">Covid</ion-item>
+  <ion-item style="font-size: 13px !important; padding-top: 5px;" (click)="detail(critNcrit,site,'Covid')">
+    <ion-grid >
+      <ion-row  >
+        <ion-col size="9">
+          Covid
+        </ion-col>
+        <ion-col size="3">
+          {{cvd}}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  <ion-item style="font-size: 13px !important; padding-top: 5px;" (click)="detail(critNcrit,site,'Non-Covid')">
+    <ion-grid >
+      <ion-row  >
+        <ion-col size="9">
+          Non-Covid
+        </ion-col>
+        <ion-col size="3">
+          {{ncvd}}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+
+
+<!--ion-grid >
+  <ion-row  >
+    <ion-col size="7" >
+      <ion-item style="font-size: 13px !important;" lines="none"></ion-item>
     </ion-col>
-    <ion-col size="4" >
-      <ion-item style="font-size: 13px !important;" lines="none">{{cvd}}</ion-item>
+    <ion-col size="5" >
+      <ion-item style="font-size: 13px !important;" lines="none"></ion-item>
     </ion-col>
   </ion-row>
-  <ion-row>
-    <ion-col size="8" >
-      <ion-item style="font-size: 13px !important;" lines="none">Non-Covid</ion-item>
+  <ion-row style="padding-top: 10px; box-shadow: 0 1px 1px rgb(0 0 0 / 0.1);" >
+    <ion-col size="7" >
+      <ion-item style="font-size: 12px !important;" lines="none"></ion-item>
     </ion-col>
-    <ion-col size="4" >
+    <ion-col size="5" >
       <ion-item style="font-size: 13px !important;" lines="none">{{ncvd}}</ion-item>
     </ion-col>
   </ion-row>               
-</ion-grid>
+</ion-grid-->
