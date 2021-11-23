@@ -58,6 +58,10 @@ export class IndexPage implements OnInit {
     this.slides.slideNext();
   }
 
+  prev() {
+    this.slides.slidePrev();
+  }
+
   skip() {
     if(this.iosVerifier){
       this.slides.slideTo(4);
@@ -69,6 +73,10 @@ export class IndexPage implements OnInit {
 
   goback() {
     this.slides.slideTo(0);
+  }
+
+  gobackToInstallInstructions() {
+    this.slides.slideTo(4);
   }
 
   // moveToNext(slides) {

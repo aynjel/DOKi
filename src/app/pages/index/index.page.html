@@ -108,14 +108,11 @@
       </div>
     </ion-slide>
 
-
-
-
     <ion-slide class="ion-padding" *ngIf="iosVerifier">
       <!-- <img src="assets/onboarding/3-onboarding-notifications.png"> -->
       <img src="assets/onboarding/iOS-10.png" />
       <div class="slider-text">
-        <h2>how to install DOKi on your Iphone</h2>
+        <h2>How to install DOKi on your iPhone</h2>
         <!--p>
           Get notified via SMS when your patients are about to be discharged.
           Then, submission of professional fees can be done anytime, anywhere.
@@ -123,85 +120,117 @@
       </div>
 
       <div class="navigator">
-        <ion-button color="primary" fill="clear" (click)="skip()"
-          >SKIP</ion-button
+        <ion-button color="primary" fill="clear" (click)="goback()"
+          >GO BACK</ion-button
         >
         <ion-button color="primary" fill="clear" (click)="next()"
           >NEXT</ion-button
         >
       </div>
     </ion-slide>
-    
+
     <ion-slide class="ion-padding" *ngIf="iosVerifier">
       <img src="assets/onboarding/iOS-1.png" />
       <div class="slider-text">
-        <p>Visit <a href="doki.chonghua.com.ph">doki.chonghua.com.ph</a> on Safari<br /> if you are already on safari click next</p>
+        <h2>Open Safari</h2>
+        <p>
+          1.) Visit
+          <a href="https://doki.chonghua.com.ph" target="_BLANK"
+            >doki.chonghua.com.ph</a
+          >
+          using <b>Safari</b> browser.
+        </p>
       </div>
       <div class="navigator">
-        <ion-button color="primary" fill="clear" (click)="skip()">SKIP</ion-button>
-        <ion-button color="primary" fill="clear" (click)="next()">NEXT</ion-button>
+        <ion-button color="primary" fill="clear" (click)="prev()"
+          >PREV</ion-button
+        >
+        <ion-button color="primary" fill="clear" (click)="next()"
+          >NEXT</ion-button
+        >
       </div>
     </ion-slide>
-
 
     <ion-slide class="ion-padding" *ngIf="iosVerifier">
       <img src="assets/onboarding/iOS-6.png" />
       <div class="slider-text">
-        <p>Tap the “Share” button 
-          found at the bottom of the screen</p>
+        <h2>Tap the "Share" button</h2>
+        <p>
+          2.) Tap the <b>“Share”</b> button found at the bottom of the screen.
+        </p>
       </div>
       <div class="navigator">
-        <ion-button color="primary" fill="clear" (click)="skip()">SKIP</ion-button>
-        <ion-button color="primary" fill="clear" (click)="next()">NEXT</ion-button>
+        <ion-button color="primary" fill="clear" (click)="prev()"
+          >PREV</ion-button
+        >
+        <ion-button color="primary" fill="clear" (click)="next()"
+          >NEXT</ion-button
+        >
       </div>
     </ion-slide>
 
     <ion-slide class="ion-padding" *ngIf="iosVerifier">
       <img src="assets/onboarding/iOS-7.png" />
       <div class="slider-text">
-        <p>Tap Add to Home Screen  
-        </p>
+        <h2>Add to Home Screen</h2>
+        <p>3.) Tap Add to <b>Home Screen</b>.</p>
       </div>
       <div class="navigator">
-        <ion-button color="primary" fill="clear" (click)="skip()">SKIP</ion-button>
-        <ion-button color="primary" fill="clear" (click)="next()">NEXT</ion-button>
+        <ion-button color="primary" fill="clear" (click)="prev()"
+          >PREV</ion-button
+        >
+        <ion-button color="primary" fill="clear" (click)="next()"
+          >NEXT</ion-button
+        >
       </div>
     </ion-slide>
 
     <ion-slide class="ion-padding" *ngIf="iosVerifier">
       <img src="assets/onboarding/iOS-8.png" />
       <div class="slider-text">
-        <p>Type in the preferred label of the app. “DOKi” is the default.  
+        <h2>Label the App</h2>
+        <p>
+          4.) Type in the preferred label of the app. <b>“DOKi”</b> is the
+          default.
         </p>
       </div>
       <div class="navigator">
-        <ion-button color="primary" fill="clear" (click)="skip()">SKIP</ion-button>
-        <ion-button color="primary" fill="clear" (click)="next()">NEXT</ion-button>
+        <ion-button color="primary" fill="clear" (click)="prev()"
+          >PREV</ion-button
+        >
+        <ion-button color="primary" fill="clear" (click)="next()"
+          >NEXT</ion-button
+        >
       </div>
     </ion-slide>
     <ion-slide class="ion-padding" *ngIf="iosVerifier">
       <img src="assets/onboarding/iOS-8-1.png" />
       <div class="slider-text">
-        <p>Tap Add.</p>
+        <h2>Tap Add</h2>
+        <p>5.) Tap Add to confirm.</p>
       </div>
       <div class="navigator">
-        <ion-button color="primary" fill="clear" (click)="skip()">SKIP</ion-button>
-        <ion-button color="primary" fill="clear" (click)="next()">NEXT</ion-button>
+        <ion-button color="primary" fill="clear" (click)="prev()"
+          >PREV</ion-button
+        >
+        <ion-button color="primary" fill="clear" (click)="next()"
+          >NEXT</ion-button
+        >
       </div>
     </ion-slide>
 
     <ion-slide class="ion-padding" *ngIf="iosVerifier">
       <img src="assets/onboarding/iOS-9.png" />
       <div class="slider-text">
+        <h2>App installed</h2>
         <p>DOKi is the latest app installed.</p>
       </div>
       <div class="navigator">
-        <ion-button color="primary" fill="clear" (click)="skip()">SKIP</ion-button>
+        <ion-button color="primary" fill="clear" (click)="goback()"
+          >GO BACK</ion-button
+        >
         <!--ion-button color="primary" fill="clear" (click)="next()">NEXT</ion-button-->
       </div>
     </ion-slide>
-
-
-
   </ion-slides>
 </ion-content>
