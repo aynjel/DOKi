@@ -128,7 +128,7 @@ export class Constants {
   public UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO: string =
     'For inquiries, please contact Systems Solution & Business Intelligence Team of Chong Hua Hospital IT Division';
   public UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_TELEPHONE: string =
-    '+63 32 233 8000';
+    '+63 32 233 8000 local 8888';
   public UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_TELEPHONE_HREF: string =
     'tel: +63322338000';
   public UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_APP_VERSION: string =
