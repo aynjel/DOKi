@@ -281,15 +281,15 @@
 
           <ion-card   mode="ios" >
             <ion-row>
-              <ion-col size-xs="12" class="ion-text-center" (click)="detail('Critical','','')">
+              <ion-col size-xs="12" class="ion-text-center" (click)="detail('Critical','','',this.criticalT)">
                 <h3 >Critical : 
                   <b *ngIf="!criticalTV33">{{criticalT}}</b>
                   <ion-spinner name="crescent" *ngIf="criticalTV33"></ion-spinner>
                 </h3>
               </ion-col>
-              <ion-col size-xs="6" >
+              <ion-col size-xs="6" (click)="detail('Critical','','',this.criticalT)">
                   <ion-item id="ion-item-ac" lines="none"  routerLink='/' routerDirection="back" 
-                  (click)="detail('Critical','C','')">
+                  >
                     <ion-avatar slot="start">
                       <chh-app-text-avatar [text]='tTC' [color]="chhgreen" [textColor]="chhtextcolor"></chh-app-text-avatar>
                     </ion-avatar>
@@ -309,9 +309,9 @@
                 
 
               </ion-col>
-              <ion-col size-xs="6" >
+              <ion-col size-xs="6" (click)="detail('Critical','','',this.criticalT)">
                   <ion-item id="ion-item-dn" lines="none" routerLink='/' routerDirection="back" 
-                  (click)="detail('Critical','M','')">
+                  >
                     <ion-avatar slot="start">
                       <chh-app-text-avatar [text]='tTM' [color]="chhred" [textColor]="chhtextcolor"></chh-app-text-avatar>
                     </ion-avatar>
@@ -336,13 +336,13 @@
         
                 <ion-item class="ion-no-padding ion-no-margin" ></ion-item>
                 <ion-row>
-                  <ion-col size-xs="12" class="ion-text-center" (click)="detail('Non-Critical','','')">
+                  <ion-col size-xs="12" class="ion-text-center" (click)="detail('Non-Critical','','',this.noncriticalT)">
                     <h3 >Non Critical : 
                       <b *ngIf="!criticalTV33">{{noncriticalT}}</b>
                       <ion-spinner name="crescent" *ngIf="criticalTV33"></ion-spinner>
                     </h3>
                   </ion-col>
-                  <ion-col size-xs="6" >
+                  <ion-col size-xs="6" (click)="detail('Non-Critical','','',this.noncriticalT)">
                       <ion-item id="ion-item-ac" lines="none" routerLink='/' routerDirection="back">
                         <ion-avatar slot="start">
                           <chh-app-text-avatar [text]='tTC' [color]="chhgreen" [textColor]="chhtextcolor"></chh-app-text-avatar>
@@ -360,7 +360,7 @@
                       [cvd]="this.CNCC"
                       [ncvd]="this.CNCNC"></app-cvdbreakdown>
                   </ion-col>
-                  <ion-col size-xs="6" >
+                  <ion-col size-xs="6" (click)="detail('Non-Critical','','',this.noncriticalT)">
                       <ion-item id="ion-item-dn" lines="none" routerLink='/' routerDirection="back">
                         <ion-avatar slot="start">
                           <chh-app-text-avatar [text]='tTM' [color]="chhred" [textColor]="chhtextcolor"></chh-app-text-avatar>

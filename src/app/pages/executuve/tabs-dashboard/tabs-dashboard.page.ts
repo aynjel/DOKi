@@ -902,19 +902,20 @@ export class TabsDashboardPage implements OnInit {
     });
   }
 
-  async detail(CritnCrit,site,CvdnCvd) {
-    /*var values = JSON.parse(atob(localStorage.getItem("TotalPxTypesBySite")));
+  async detail(CritnCrit,site,CvdnCvd,criticalcount) {
+    var values = JSON.parse(atob(localStorage.getItem("TotalPxTypesBySite")));
     const modal = await this.modalController.create({
       component: DashboardgraphComponent,
       cssClass: 'my-custom-modal-c',
       componentProps: {
         'data': values,
         'CritnCrit': CritnCrit,
+        'CritnCritcnt' : criticalcount,
         'site': site,
         'CvdnCvd': CvdnCvd,
       }
     });
-    return await modal.present();*/
+    return await modal.present();
   }
 
   /*treeMap1(){
