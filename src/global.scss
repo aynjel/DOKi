@@ -158,12 +158,16 @@
 }
 
 .pointer {cursor: pointer;}
- .my-custom-modal-css .modal-wrapper {
-   height: 90%;
-   width: 95%;
-   top: 5%;
-   position: absolute; 
-   display: block;  
+.my-custom-modal-css .modal-wrapper {
+  height: 90%;
+  width: 95%;
+  top: 10%;
+  position: absolute; 
+  display: block;  
+  @media (min-width: 768px) {
+
+   width: 50%;
+ }
 }
 .my-custom-css .modal-wrapper {
   height: 90%;

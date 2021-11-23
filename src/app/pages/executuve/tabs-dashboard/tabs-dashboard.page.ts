@@ -906,7 +906,7 @@ export class TabsDashboardPage implements OnInit {
     var values = JSON.parse(atob(localStorage.getItem("TotalPxTypesBySite")));
     const modal = await this.modalController.create({
       component: DashboardgraphComponent,
-      cssClass: 'my-custom-modal-c',
+      cssClass: 'my-custom-modal-css',
       componentProps: {
         'data': values,
         'CritnCrit': CritnCrit,
