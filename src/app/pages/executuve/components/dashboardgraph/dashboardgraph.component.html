@@ -15,8 +15,22 @@
 
 
             <ion-col size="12"  class="ion-text-center">
-                <ion-toolbar color="mango"><h4>{{CritnCrit}} : {{CritnCritcnt}}</h4></ion-toolbar>
-                
+                <ion-toolbar color="mango"><h4>{{CritnCrit}} : {{CritnCritcnt}}</h4>      
+                  <ion-buttons
+                  slot="end"
+                  class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated"
+                >
+                  <ion-button
+                    (click)="closemodal()"
+                    color="chh-css-primary2"
+                    class="ios button button-clear ion-activatable ion-focusable hydrated"
+                    ><ion-icon name="close-outline"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+                </ion-toolbar>
+
+
+
             </ion-col>
 
 
