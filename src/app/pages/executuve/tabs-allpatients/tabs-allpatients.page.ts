@@ -103,15 +103,19 @@ export class TabsAllpatientsPage implements OnInit {
     this.loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
       message: 'Please wait...',
-      backdropDismiss: false,
-      duration: 20000,
+      duration: 20000
+
     });
     await this.loading.present();
 
     const { role, data } = await this.loading.onDidDismiss();
     ////console.log('Loading dismissed!');
   }
-
+  public async dismissLoading(): Promise<void> {
+    if (this.loading) {
+        this.loading.dismiss();
+    }
+}
   segmentChanged(){
     this.refreshcounter=1;  
     this.searchBar = "";
@@ -233,14 +237,17 @@ export class TabsAllpatientsPage implements OnInit {
       (error) => {
         console.log(error);
         
-       this.loading.dismiss();
+       this.dismissLoading();
       },
       () => {
         if(responsebe==null){
-          this.loading.dismiss();
+          console.log('if');
+          
+          this.dismissLoading();
           this.alert('No Data Available','Okay');
         }else{
-          this.loading.dismiss();
+          console.log('else');
+          this.dismissLoading();
           this.showModal(responsebe,y);
         }
 

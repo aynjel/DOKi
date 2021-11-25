@@ -60,6 +60,14 @@
   </ion-grid>
 </ion-header>
 <ion-content>
+
+
+
+
+
+
+
+
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
     <ion-refresher-content
       pullingIcon="chevron-down-circle-outline"
@@ -73,6 +81,7 @@
     <ion-row>
       <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
         <ng-container>
+
           <div *ngFor="let x of listOfPatients">
 
          
@@ -91,6 +100,9 @@
                   >
                     <h2 class="ion-text-wrap" style="padding-top: 20px;">
                       {{ x.patientName }}
+                      <ion-text color="mango">
+                      <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong>  {{x.gender}}</b></p>
+                      </ion-text>
                     </h2>
  
                   </ion-item>
@@ -100,7 +112,7 @@
                   <ion-row
                     class="ion-no-padding"
                     lines="none"
-                    style="padding-top: 10px !important;"
+                    style="padding-top: 1px !important;"
                   >
                     <p>
                       <span *ngIf="x.site ==siteC ">
