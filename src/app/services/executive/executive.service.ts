@@ -122,4 +122,11 @@ export class ExecutiveService {
     const url =    environment.apiRouterUrl + "v3/Admin/Doctors/InPatients/CoDoctors";
     return this.http.post(url, data, options);
   }
+  getPatientDetail(data: any) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredentials: true };
+    //const url = environment.apiRouterUrl + "v2/ProfFee";
+    const url =    environment.apiRouterUrl + "v3/InPatients/Admin/PatientDetail";
+    return this.http.post(url, data, options);
+  }
 }

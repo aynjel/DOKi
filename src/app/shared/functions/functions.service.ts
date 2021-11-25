@@ -283,4 +283,41 @@ export class FunctionsService {
 
     return new RegExp( '(?:^' + escapedName + '|;\\s*' + escapedName + ')=(.*?)(?:;|$)', 'g' );
   }
+
+  getAdmissionStatus(data:any){
+    let x="";
+    if(data == 'RE'){
+      x = 'registered';
+    }else if(data == 'AC'){
+      x = 'admitted';
+    }else if(data == 'DN'){
+      x = 'for discharge';
+    }else if(data == 'BP'){
+      x = 'partially settled';
+    }else if(data == 'PP'){
+      x = 'ok for checkout';
+    }else if(data == 'CO'){
+      x = 'checkout';
+    }else if(data == 'BA'){
+      x = 'billing approved';
+    }else if(data == 'CC'){
+      x = 'checked-out with balance';
+    }else if(data == 'FP'){
+      x = 'ok for checkout';
+    }else if(data == 'CA'){
+      x = 'cancelled';
+    }else if(data == 'PA'){
+      x = 'pre-admitted';
+    }else if(data == 'OP'){
+      x = ' re-opened (w/o b)';
+    }else if(data == 'ON'){
+      x = 're-opened (wb)';
+    }else if(data == 'UA'){
+      x = 'unit admission';
+    }else if(data == 'BB'){
+      x = 'fully settled';
+    }
+
+    return x;
+  }
 }

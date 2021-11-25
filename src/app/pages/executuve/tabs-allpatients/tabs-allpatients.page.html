@@ -76,7 +76,7 @@
           <div *ngFor="let x of listOfPatients">
 
          
-            <ion-card (click)="detail(x)" mode="ios"  class="pointer">
+            <ion-card (click)="detail(x.admissionNo,x.attendingDoctorCode)" mode="ios"  class="pointer">
               
               <ion-item lines="none">
                 <ion-avatar slot="start">

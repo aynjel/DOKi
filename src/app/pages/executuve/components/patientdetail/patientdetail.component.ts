@@ -55,7 +55,7 @@ export class PatientdetailComponent implements OnInit {
 
   @Input() patientdetail: any;
   @Input() drcode: any;
-
+  @Input() fromPatientList: any = false;
 
   inpatientModelInpatients = new InpatientModelInpatients;
 
@@ -117,35 +117,42 @@ export class PatientdetailComponent implements OnInit {
   method1:any;
   back:any;
   patientid:any;
-
+  admstat:any="";
   constructor(
     public modalController: ModalController,
     public executiveService:ExecutiveService,
     public functionsService: FunctionsService) { }
 
   ngOnInit() {
+    ////console.log(this.patientdetail);
+    
     let stack = '['+JSON.stringify(this.patientdetail)+']';
     this.data = JSON.parse(stack);
+
+    
     //this.data = this.patientdetail;
-    console.log(this.data);
+    ////console.log(this.data);
+    ////console.log(this.data);
     this.dateAdmitted = this.data[0].admission_date;
-    this.admissionstatus = this.data[0].admission_status;
+    this.admstat = this.functionsService.getAdmissionStatus(this.data[0].admission_status);
+    console.log(this.admstat);
+    
     this.inpatientDetails.admission_no = this.data[0].admission_no;
 
     
     //this.drcode = 
     this.executiveService.getAdmittingDiagnosis(this.inpatientDetails).subscribe(
       (res: any) => {   
-        //console.log(res);
+        //////console.log(res);
         
         if(!Object.keys(res).length){
-          //this.functionsService.logToConsole("no data found");
+          ////this.functionsService.logToConsole("no data found");
         }else{
           this.admittingDiagnosis = res.admitting_diagnosis2.replace(
             /(\r\n|\n|\r)/gm,
             '<br />'
           );
-          //this.functionsService.logToConsole('admittingDiagnosis : ' + this.admittingDiagnosis);
+          ////this.functionsService.logToConsole('admittingDiagnosis : ' + this.admittingDiagnosis);
           this.admittingDiagnosis1 = this.functionsService.truncateChar(
             res.admitting_diagnosis2,
             100
@@ -158,26 +165,27 @@ export class PatientdetailComponent implements OnInit {
             /(,)/gm,
             ',<br />'
           );
-          //this.functionsService.logToConsole('admittingDiagnosis2 : ' + this.admittingDiagnosis2);
+          ////this.functionsService.logToConsole('admittingDiagnosis2 : ' + this.admittingDiagnosis2);
       }
 
      
       },
       (error) => {},
       () => {
-
+        this.admstat = this.functionsService.getAdmissionStatus(this.data[0].admission_status);
+        console.log(this.admstat);
       }
     );
     
     this.executiveService.getFinalDiagnosis(this.inpatientDetails).subscribe(
       (res: any) => {   
-        //console.log(res);
+        //////console.log(res);
         
         if(!Object.keys(res).length){
-          // this.functionsService.logToConsole("no data found");
+          // //this.functionsService.logToConsole("no data found");
          }else{
            this.finalDiagnosis = res.final_diagnosis;
-           //this.functionsService.logToConsole(this.finalDiagnosis);
+           ////this.functionsService.logToConsole(this.finalDiagnosis);
            
            this.finalDiagnosis1 = this.functionsService.truncateChar(
              this.finalDiagnosis,
@@ -192,7 +200,7 @@ export class PatientdetailComponent implements OnInit {
                0,
                this.finalDiagnosis2[i].length - 1
              );
-             this.functionsService.logToConsole(this.finalDiagnosis2[i]);
+             //this.functionsService.logToConsole(this.finalDiagnosis2[i]);
            }
            for (let i = 0; i < this.finalDiagnosis2.length; i++) {
              this.finalDiagnosis2[i] = i + 1 + '.) ' + this.finalDiagnosis2[i];
@@ -226,7 +234,7 @@ export class PatientdetailComponent implements OnInit {
         } else {
           this.objecthandler = false;
         }
-        //this.functionsService.logToConsole(res);
+        ////this.functionsService.logToConsole(res);
         res.forEach((element) => {
           if (element.status == 'Primary Attending Physician') {
             coDoctors1.push(element);
@@ -238,7 +246,7 @@ export class PatientdetailComponent implements OnInit {
         });
 
         this.coDoctors = coDoctors1.concat(coDoctors2).concat(coDoctors3);
-        //console.log(this.coDoctors);
+        //////console.log(this.coDoctors);
         
         //this.coDoctors.push(coDoctors2);
       },

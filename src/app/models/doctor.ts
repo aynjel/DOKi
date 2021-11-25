@@ -136,3 +136,7 @@ export class NewsFeed{
     createdBy: any
     createdByReference: any
 }
+export class PatientDetail{
+    doctorCode: any
+    admissionNo: any
+}

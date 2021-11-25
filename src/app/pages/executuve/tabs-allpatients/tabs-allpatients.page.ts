@@ -6,11 +6,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Constants } from '../../../shared/constants';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
-import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
+import {UserSettingsModelv3,LoginResponseModelv3, PatientDetail} from 'src/app/models/doctor';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ExecutiveService } from 'src/app/services/executive/executive.service';
-import { ModalController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import {PatientdetailComponent} from "../components/patientdetail/patientdetail.component";
+import { FunctionsService } from '../../../shared/functions/functions.service'; //"@ionic/angular";
+
 @Component({
   selector: 'app-tabs-allpatients',
   templateUrl: './tabs-allpatients.page.html',
@@ -30,6 +32,7 @@ export class TabsAllpatientsPage implements OnInit {
   segmentModel:any;
   refreshcounter:any;
   isReady:boolean = false;
+  patientDetail:PatientDetail;
   constructor(    private storageService: StorageService,
     private router: Router,
     public constants: Constants,
@@ -38,7 +41,10 @@ export class TabsAllpatientsPage implements OnInit {
     private authService: AuthService,
     private executiveService: ExecutiveService,
     private modalController:ModalController,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    public loadingController: LoadingController,
+    public functionsService:FunctionsService,
+    public alertController:AlertController
     ) { 
 
       this.screensizeService.isDesktopView().subscribe((isDesktop) => {
@@ -54,7 +60,7 @@ export class TabsAllpatientsPage implements OnInit {
 
 
   ngOnInit() {
-    console.log('ngOnInit');
+    ////console.log('ngOnInit');
     this.listOfPatients = [];
     this.refreshcounter=1;  
     this.isReady = false;
@@ -64,7 +70,7 @@ export class TabsAllpatientsPage implements OnInit {
     this.executiveService.getPatients().subscribe(
       (res: any) => {   
         this.listOfPatientsTemp1 = this.listOfPatientsTemp = res;  
-          ////console.log(res);
+          ////////console.log(res);
      
       },
       (error) => {
@@ -84,16 +90,31 @@ export class TabsAllpatientsPage implements OnInit {
     this.listOfPatientsTemp1=[];
     this.listOfPatientsTemp1 = this.listOfPatientsTemp;
     this.listOfPatientsTemp.forEach(element => {
-      //console.log(element.status);
+      //////console.log(element.status);
       if(i<=10){this.listOfPatients.push(element);}
       
       i++;
     }
     );
   }
+
+  loading:any;
+  async presentLoading() {
+    this.loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+      backdropDismiss: false,
+      duration: 20000,
+    });
+    await this.loading.present();
+
+    const { role, data } = await this.loading.onDidDismiss();
+    ////console.log('Loading dismissed!');
+  }
+
   segmentChanged(){
     this.refreshcounter=1;  
-    //console.log(da.detail.value);
+    this.searchBar = "";
     this.listOfPatientsTemp1 = [];
     if(this.segmentModel == 'ALL'){
       this.listOfPatients = [];
@@ -106,7 +127,7 @@ export class TabsAllpatientsPage implements OnInit {
 
  
           if (element.status == this.segmentModel) {
-            console.log(element.status);
+            ////console.log(element.status);
             
             if(x<=10){   
               this.listOfPatients.push(element);
@@ -138,11 +159,11 @@ export class TabsAllpatientsPage implements OnInit {
 
 
       let i =1;
-      console.log(this.listOfPatientsTemp1.length);
+      ////console.log(this.listOfPatientsTemp1.length);
       this.listOfPatientsTemp1.forEach(element => {
         if(i > ((this.refreshcounter*10)-10) && i<= (this.refreshcounter*10)){
           this.listOfPatients.push(element);
-          console.log(element.status);
+          ////console.log(element.status);
           
         }
         i++;
@@ -158,10 +179,10 @@ export class TabsAllpatientsPage implements OnInit {
     }, 500);
   }
   filterList() {
-    ////console.log('filterList');
+    ////////console.log('filterList');
     
     if(this.searchBar == ""){
-      ////console.log('empty');
+      ////////console.log('empty');
       
       this.listOfPatients = [];
       this.initialload();
@@ -188,31 +209,72 @@ export class TabsAllpatientsPage implements OnInit {
     }, 1000);
   }
   ionViewWillEnter() {
-    console.log('ionViewWillEnter');
+    ////console.log('ionViewWillEnter');
 
 
   }
   checkInput(){
     this.doctorService.refreshTokenV3().subscribe((res: any) => {
-      //////console.log(res);
+      //////////console.log(res);
     });
   }
-  async detail(x:any){
-    /*
-    console.log( this.activatedRoute.snapshot.params.id);
-    console.log(x);
+  async detail(x:any,y:any){
+    this.presentLoading();
+    this.patientDetail = new PatientDetail();
+    this.patientDetail.admissionNo = x;
+    this.patientDetail.doctorCode = y;
+    ////console.log(this.patientDetail);
     
+    let responsebe=[];
+    this.executiveService.getPatientDetail(this.patientDetail).subscribe(
+      (res: any) => {   
+        responsebe=res;
+      },
+      (error) => {
+        console.log(error);
+        
+       this.loading.dismiss();
+      },
+      () => {
+        if(responsebe==null){
+          this.loading.dismiss();
+          this.alert('No Data Available','Okay');
+        }else{
+          this.loading.dismiss();
+          this.showModal(responsebe,y);
+        }
+
+      }
+    );
+  
     
-    localStorage.setItem('patientdetails',btoa(JSON.stringify(x)));
+    //localStorage.setItem('patientdetails',btoa(JSON.stringify(x)));
+
+  }
+
+  async alert(data1: any, data2: any) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      message: data1,
+      backdropDismiss: false,
+      buttons: [{ text: data2, handler: () => {
+          this.doRefresh('');
+      } }],
+    });
+    await alert.present();
+  }
+
+  async showModal(responsebe:any,y:any){
     const modal = await this.modalController.create({
       component: PatientdetailComponent,
-      cssClass: 'my-custom-modal-css',
+      cssClass: 'my-custom-modal',
       componentProps: {
-        'patientdetail': x,
-        'drcode':this.activatedRoute.snapshot.params.id,
+        'patientdetail': responsebe,
+        'drcode':y,
+        'fromPatientList':true,
       }
     });
-    return await modal.present();*/
+    return await modal.present();
   }
 
 

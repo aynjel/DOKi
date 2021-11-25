@@ -29,6 +29,11 @@
           </div>
           <ion-badge color="warning" slot="end" (click)="moreorless(false)"><ion-icon name="chevron-down-outline"></ion-icon></ion-badge>
         </ion-item>
+        <ion-item lines="none" style="padding-bottom: 10px">
+          <ion-badge color="warning" slot="start">
+            {{admstat}}
+          </ion-badge>
+        </ion-item>
       </ion-list>
       <ion-list *ngIf="moreOrLess == false">
         <ion-item style="padding-bottom: 10px">
@@ -57,7 +62,7 @@
               <ion-icon name="bed-outline" slot="start"></ion-icon>
               Room {{ x.room_no }}
             </div>
-            <div class=" font-size12">
+            <div class=" font-size12" *ngIf="!fromPatientList">
               <ion-icon name="clipboard-outline" slot="start"></ion-icon>
               as {{x.doctor_Status}}&nbsp;
               <ion-chip *ngIf="x.admission_status == 'AC'">
@@ -78,7 +83,13 @@
           </div>
           <ion-badge color="warning" slot="end" (click)="moreorless(true)"><ion-icon name="chevron-up-outline"></ion-icon></ion-badge>
         </ion-item>
+        <ion-item lines="none" style="padding-bottom: 10px">
+          <ion-badge color="warning" slot="start">
+            {{admstat}}
+          </ion-badge>
+        </ion-item>
       </ion-list>
+
     </div>
   </ion-card>
   <app-chh-app-admitting-diagnosis
