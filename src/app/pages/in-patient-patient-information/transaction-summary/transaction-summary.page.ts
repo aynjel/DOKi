@@ -198,7 +198,10 @@ export class TransactionSummaryPage implements OnInit {
 
     // this.data = JSON.parse(atob(sessionStorage.getItem("patientData")));
     this.data = JSON.parse(atob(localStorage.getItem('patientData')));
-
+    this.patient_name = this.data[0].first_name + ' ' + this.data[0].last_name;
+    this.patient_name = this.functionsService.convertAllFirstLetterToUpperCase(
+      this.patient_name
+    );
     if (this.data[0].site == 'C') {
       this.site = 'Chong Hua Hospital';
     } else {

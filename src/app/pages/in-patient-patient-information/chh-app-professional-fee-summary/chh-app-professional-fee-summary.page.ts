@@ -422,7 +422,8 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     if (!this.isDesktop) {
       this.router.navigate([this.router.url + '/summary']);
     } else {
-      this.presentSummary();
+      //this.presentSummary();
+      this.router.navigate([this.router.url + '/summary']);
     }
   }
 
