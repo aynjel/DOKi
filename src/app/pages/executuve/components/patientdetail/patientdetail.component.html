@@ -16,13 +16,13 @@
 
 </ion-header>
 <ion-content>
-  <ion-card mode="ios" *ngIf="!isDesktop" >
+  <ion-card mode="ios"  >
     <div *ngFor="let x of data">
       <ion-list *ngIf="moreOrLess == true">
         <ion-item style="padding-bottom: 10px">
           <div class="ion-text-wrap">
             <ion-label>
-              <h2 class="ion-text-wrap">
+              <h2 class="ion-text-wrap"  style="padding-top: 10px;">
                 <b>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</b>
                 <ion-text color="mango">
                   <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong>  {{x.gender}}</b></p>
@@ -45,7 +45,7 @@
         <ion-item style="padding-bottom: 10px">
           <div class="ion-text-wrap">
             <ion-label>
-              <h2 class="ion-text-wrap">
+              <h2 class="ion-text-wrap"  style="padding-top: 10px;">
                 <b>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</b>
                 <ion-text color="mango">
                   <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong>  {{x.gender}}</b></p>
@@ -85,11 +85,11 @@
             </div>
             <div class=" font-size12">
               <ion-icon name="calendar-outline" slot="start"></ion-icon>
-              Admission Date : {{ dateAdmitted }}
+              <span style="font-size: 13px;"> Admission Date &nbsp;&nbsp;: {{ dateAdmitted }}</span>
             </div>
             <div class=" font-size12" *ngIf="x.forDischargeDateTime != null" >
               <ion-icon name="calendar-outline" slot="start"></ion-icon>
-              Discharge Notice &nbsp;: {{ x.forDischargeDateTime }}
+              <span style="font-size: 13px;"> Discharge Notice : {{ x.forDischargeDateTime }}</span>
             </div>
           </div>
 

@@ -44,8 +44,14 @@
       </ion-item>
       <ion-item lines="none" style="padding-bottom: 10px">
         <div class="ion-text-wrap">
-          <ion-icon name="calendar-outline"></ion-icon>
-          <ion-text> Admission Date : {{ dateAdmitted }}</ion-text>
+          <div class=" font-size12" >
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <span > Admission Date &nbsp;&nbsp;: {{ dateAdmitted }}</span>
+          </div>
+          <div class=" font-size12" *ngIf="x.forDischargeDateTime != null"  >
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <span > Discharge Notice : {{ dischargeNotice }}</span>
+          </div>
         </div>
       </ion-item>
     </ion-list>
@@ -58,7 +64,7 @@
       <ion-item style="padding-bottom: 10px">
         <div class="ion-text-wrap">
           <ion-label>
-            <h2 class="ion-text-wrap">
+            <h2 class="ion-text-wrap" style="padding-top: 10px;">
               <b>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</b>
               <ion-text color="mango">
                 <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong>  {{x.gender}}</b></p>
@@ -73,7 +79,7 @@
       <ion-item style="padding-bottom: 10px">
         <div class="ion-text-wrap">
           <ion-label>
-            <h2 class="ion-text-wrap">
+            <h2 class="ion-text-wrap" style="padding-top: 10px;" >
               <b>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</b>
               <ion-text color="mango">
                 <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong>  {{x.gender}}</b></p>
@@ -109,13 +115,13 @@
               <ion-label color="mango"><b>For Discharge</b></ion-label>
             </ion-chip>
           </div>
-          <div class=" font-size12">
-            <ion-icon name="bed-outline" slot="start"></ion-icon>
-            Admission Date : {{ dateAdmitted }}
+          <div class=" font-size12" style="font-size: 13px;">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <span style="font-size: 13px;"> Admission Date &nbsp;&nbsp;: {{ dateAdmitted }}</span>
           </div>
-          <div class=" font-size12" *ngIf="x.forDischargeDateTime != null" >
-            <ion-icon name="bed-outline" slot="start"></ion-icon>
-            Discharge Notice &nbsp;: {{ dischargeNotice }}
+          <div class=" font-size12" *ngIf="x.forDischargeDateTime != null" style="font-size: 13px;" >
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <span style="font-size: 13px;"> Discharge Notice : {{ dischargeNotice }}</span>
           </div>
           
         </div>

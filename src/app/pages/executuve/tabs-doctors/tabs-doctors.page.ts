@@ -56,7 +56,7 @@ export class TabsDoctorsPage implements OnInit {
       this.router.navigate(['/executive/settings']);
     }
   ngOnInit() {
-    console.log('ngOnInit');
+   //console.log('ngOnInit');
     this.listOfDoctors = [];
     this.refreshcounter=1;  
     this.isReady = false;
@@ -98,12 +98,13 @@ export class TabsDoctorsPage implements OnInit {
   }
   segmentChanged(){
     this.refreshcounter=1;  
-    
+      this.searchBar = "";
     //console.log(da.detail.value);
     if(this.segmentModel == 'ALL'){
       this.listOfDoctors = [];
       this.initialload();
     }else{
+
       this.listOfDoctors = [];
       this.listOfDoctorsTemp1 = [];
       let x =1;
@@ -149,7 +150,7 @@ export class TabsDoctorsPage implements OnInit {
   }
   isReady:boolean = false;
   ionViewWillEnter() {
-    console.log('ionViewWillEnter');
+   //console.log('ionViewWillEnter');
     
     localStorage.removeItem("drdetails");
     localStorage.removeItem("patientdetails");
@@ -166,7 +167,7 @@ export class TabsDoctorsPage implements OnInit {
     localStorage.setItem('drdetails',btoa(JSON.stringify(data)));
     this.router.navigate(['executive/doctors/'+data.doctorCode]);*/
     //console.log( this.activatedRoute.snapshot.params.id);
-    console.log(data);
+   //console.log(data);
     
     
     //localStorage.setItem('patientdetails',btoa(JSON.stringify(x)));

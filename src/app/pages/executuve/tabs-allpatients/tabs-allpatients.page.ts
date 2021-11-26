@@ -67,11 +67,20 @@ export class TabsAllpatientsPage implements OnInit {
 
 
     this.listOfPatients = [];
+    let rawList;
     this.executiveService.getPatients().subscribe(
       (res: any) => {   
-        this.listOfPatientsTemp1 = this.listOfPatientsTemp = res;  
+        rawList = this.listOfPatientsTemp1 = this.listOfPatientsTemp = res;  
           ////////console.log(res);
-     
+          /*rawList.forEach(element => {
+            if(element.forDischargeDateTime != null){
+              let d = new Date(element.forDischargeDateTime);
+              element.forDischargeDateTime = d.toLocaleString();
+            }
+  
+            this.listOfPatientsTemp1.push(element);
+            this.listOfPatientsTemp.push(element);
+          });*/
       },
       (error) => {
         this.isReady = true;

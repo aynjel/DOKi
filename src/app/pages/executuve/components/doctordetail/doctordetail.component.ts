@@ -27,6 +27,7 @@ export class DoctordetailComponent implements OnInit {
   dr_details: any;
   dr_name: any;
   deptName: any;
+  expertise:any;
   listOfPatients: any;
   isReady:boolean = false;
   constructor(private storageService: StorageService,
@@ -50,17 +51,32 @@ export class DoctordetailComponent implements OnInit {
 
   ngOnInit() {
     this.dr_details = this.doctorDetail;
-    //console.log(this.dr_details);
+  
     this.deptName = this.dr_details.deptName;
+    this.expertise = this.dr_details.expertise;
+    
     this.dr_name = this.dr_details.doctorName;
+
     this.isReady = false;
+    let rawList=[];
+    this.listOfPatients=[];
     this.doctorDetails.doctorCode = this.dr_details.doctorCode;
     this.executiveService.geInpatients(this.doctorDetails).subscribe(
       (res: any) => {
-        this.listOfPatients = res;
+        rawList = res;
       },
       (error) => {   this.isReady = true;},
       () => {
+       /* rawList.forEach(element => {
+          if(element.forDischargeDateTime != null){
+            console.log(element.forDischargeDateTime);
+            let d = new Date(element.forDischargeDateTime);
+            element.forDischargeDateTime = d.toLocaleString();
+          }
+
+          this.listOfPatients.push(element);
+        });*/
+        this.listOfPatients = rawList;
         this.isReady = true;
       }
     );

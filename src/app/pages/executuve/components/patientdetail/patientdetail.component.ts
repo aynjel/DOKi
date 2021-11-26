@@ -83,6 +83,7 @@ export class PatientdetailComponent implements OnInit {
   truncating1 = true;
   daysOfManage: any;
   dateAdmitted: any;
+  dischargeNotice: any;
   ionSkeleton: boolean = false;
   currentExamList: any;
   currentExamList_filtered: any = [];
@@ -133,46 +134,64 @@ export class PatientdetailComponent implements OnInit {
         this.executiveService.getPatientDetail(this.patientdetail).subscribe(
           (res: any) => {   
             responsebe=res;
-            //console.log(responsebe);
-            
           },
           (error) => {
-            //console.log(error);
-            
           this.dismissLoading();
           },
           () => {
             if(responsebe==null){
-              //console.log('if');
-              
               this.dismissLoading();
               this.alert('No Data Available','Okay');
             }else{
-              //console.log('else');
+              let res1=[];
+       
+              res1 = JSON.parse('['+JSON.stringify(responsebe)+']');
+              /*responsebe=[];
+              res1.forEach(element => {
+                if(element.forDischargeDateTime != null){
+                  let d = new Date(element.forDischargeDateTime);
+                  element.forDischargeDateTime = d.toLocaleString();
+                }
+                responsebe.push(element);
+              });*/
+
+              
               this.dismissLoading();
-              this.processData(responsebe);
+              this.processData(res1);
             }
 
           }
         );
       }else{
-        this.processData(this.patientdetail);
+        let stack = '['+JSON.stringify(this.patientdetail)+']';
+        this.data = JSON.parse(stack);
+        this.processData(this.data);
       }
   
   }
 
   processData(responsebe){
-    let stack = '['+JSON.stringify(responsebe)+']';
-    this.data = JSON.parse(stack);
-    //console.log(this.data);
+    //let stack = '['+JSON.stringify(responsebe)+']';
+    //this.data = JSON.parse(stack);
+
+    this.data = responsebe;
+    //////console.log(this.data);
     
     
     //this.data = this.patientdetail;
-    //////console.log(this.data);
-    //////console.log(this.data);
-    this.dateAdmitted = this.data[0].admission_date;
+    //////////console.log(this.data);
+    //////////console.log(this.data);
+    //this.dateAdmitted = this.data[0].admission_date;
+
+    let d = new Date(this.data[0].admission_date);
+    this.dateAdmitted = d.toLocaleString();
+
+    //this.dischargeNotice = 
+    //console.log(this.data);
+    
+    this.admissionstatus = this.data[0].admission_status;
     this.admstat = this.functionsService.getAdmissionStatus(this.data[0].admission_status);
-    //console.log(this.admstat);
+    //////console.log(this.admstat);
     
     this.inpatientDetails.admission_no = this.data[0].admission_no;
 
@@ -180,7 +199,7 @@ export class PatientdetailComponent implements OnInit {
     //this.drcode = 
     this.executiveService.getAdmittingDiagnosis(this.inpatientDetails).subscribe(
       (res: any) => {   
-        ////////console.log(res);
+        ////////////console.log(res);
         
         if(!Object.keys(res).length){
           ////this.functionsService.logToConsole("no data found");
@@ -210,13 +229,13 @@ export class PatientdetailComponent implements OnInit {
       (error) => {},
       () => {
         this.admstat = this.functionsService.getAdmissionStatus(this.data[0].admission_status);
-        //console.log(this.admstat);
+        //////console.log(this.admstat);
       }
     );
     
     this.executiveService.getFinalDiagnosis(this.inpatientDetails).subscribe(
       (res: any) => {   
-        ////////console.log(res);
+        ////////////console.log(res);
         
         if(!Object.keys(res).length){
           // //this.functionsService.logToConsole("no data found");
@@ -283,7 +302,7 @@ export class PatientdetailComponent implements OnInit {
         });
 
         this.coDoctors = coDoctors1.concat(coDoctors2).concat(coDoctors3);
-        ////////console.log(this.coDoctors);
+        ////////////console.log(this.coDoctors);
         
         //this.coDoctors.push(coDoctors2);
       },
@@ -318,7 +337,7 @@ export class PatientdetailComponent implements OnInit {
     await this.loading.present();
 
     const { role, data } = await this.loading.onDidDismiss();
-    //////console.log('Loading dismissed!');
+    //////////console.log('Loading dismissed!');
   }
   public async dismissLoading(): Promise<void> {
     if (this.loading) {

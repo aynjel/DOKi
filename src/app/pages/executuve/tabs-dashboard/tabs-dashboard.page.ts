@@ -111,9 +111,11 @@ export class TabsDashboardPage implements OnInit {
     });
 
   }
-
-
   ngOnInit() {
+
+  }
+
+  ionViewWillEnter() {
 
     this.totalAdmissions = 0;
     this.totalAdmissionsC = 0;
@@ -883,16 +885,14 @@ export class TabsDashboardPage implements OnInit {
 
   doRefresh(event) {
     setTimeout(() => {
-      this.ngOnInit();
+      this.ionViewWillEnter();
       event.target.complete();
     }, 1000);
   }
   settings() {
     this.router.navigate(['/executive/settings']);
   }
-  ionViewWillEnter() {
-
-  }
+ 
 
   famTotal: any; famPer: any; famC: any; famM: any;
   inmTotal: any; inmPer: any; inmC: any; inmM: any;
