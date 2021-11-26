@@ -16,7 +16,7 @@
 
 </ion-header>
 <ion-content>
-  <ion-card mode="ios" *ngIf="!isDesktop">
+  <ion-card mode="ios" *ngIf="!isDesktop" >
     <div *ngFor="let x of data">
       <ion-list *ngIf="moreOrLess == true">
         <ion-item style="padding-bottom: 10px">
@@ -24,15 +24,21 @@
             <ion-label>
               <h2 class="ion-text-wrap">
                 <b>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</b>
+                <ion-text color="mango">
+                  <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong>  {{x.gender}}</b></p>
+                  </ion-text>
               </h2>
             </ion-label>
           </div>
           <ion-badge color="warning" slot="end" (click)="moreorless(false)"><ion-icon name="chevron-down-outline"></ion-icon></ion-badge>
         </ion-item>
         <ion-item lines="none" style="padding-bottom: 10px">
-          <ion-badge color="warning" slot="start">
-            {{admstat}}
-          </ion-badge>
+          <ion-chip *ngIf="x.admission_status == 'AC'">
+            <ion-label color="mango"><b>Admitted</b></ion-label>
+          </ion-chip>
+          <ion-chip *ngIf="x.admission_status != 'AC'">
+            <ion-label color="mango"><b>{{admstat}}</b></ion-label>
+          </ion-chip>
         </ion-item>
       </ion-list>
       <ion-list *ngIf="moreOrLess == false">
@@ -41,6 +47,9 @@
             <ion-label>
               <h2 class="ion-text-wrap">
                 <b>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</b>
+                <ion-text color="mango">
+                  <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong>  {{x.gender}}</b></p>
+                  </ion-text>
               </h2>
             </ion-label>
           </div>
@@ -48,7 +57,7 @@
             *ngIf=" x.admission_status == 'DN' && x.doctor_prof_fee == null && x.is_posted == null ">PF</ion-badge>
           <ion-badge color="success" slot="end" class="font-size12" *ngIf="x.doctor_prof_fee != null && x.is_posted != null">PF OK</ion-badge>
         </ion-item>
-        <ion-item lines="none" style="padding-bottom: 10px">
+        <ion-item lines="none" style="padding-bottom: 1px">
           <div class="ion-text-wrap" style="padding-top: 5px">
             <div *ngIf="x.site == 'C'" class=" font-size12">
               <ion-icon name="location-outline" slot="start"></ion-icon>
@@ -62,32 +71,69 @@
               <ion-icon name="bed-outline" slot="start"></ion-icon>
               Room {{ x.room_no }}
             </div>
-            <div class=" font-size12" *ngIf="!fromPatientList">
-              <ion-icon name="clipboard-outline" slot="start"></ion-icon>
-              as {{x.doctor_Status}}&nbsp;
+            <div class=" font-size12" >
+              <div *ngIf="!fromPatientList">
+                <ion-icon name="clipboard-outline" slot="start"></ion-icon>
+                as {{x.doctor_Status}}&nbsp;
+              </div>
               <ion-chip *ngIf="x.admission_status == 'AC'">
                 <ion-label color="mango"><b>Admitted</b></ion-label>
               </ion-chip>
-              <ion-chip *ngIf="x.admission_status == 'DN'">
-                <ion-label color="mango"><b>For Discharge</b></ion-label>
+              <ion-chip *ngIf="x.admission_status != 'AC'">
+                <ion-label color="mango"><b>{{admstat}}</b></ion-label>
               </ion-chip>
             </div>
+            <div class=" font-size12">
+              <ion-icon name="calendar-outline" slot="start"></ion-icon>
+              Admission Date : {{ dateAdmitted }}
+            </div>
+            <div class=" font-size12" *ngIf="x.forDischargeDateTime != null" >
+              <ion-icon name="calendar-outline" slot="start"></ion-icon>
+              Discharge Notice &nbsp;: {{ x.forDischargeDateTime }}
+            </div>
           </div>
+
         </ion-item>
-        <ion-item lines="none" style="padding-bottom: 10px">
+        <ion-item lines="none" style="padding-bottom: 1px">
+          <!--div class="ion-text-wrap font-size12">
+            <ion-text *ngIf="x.admission_status == 'AC'">Status : Admitted </ion-text>
+            <ion-text *ngIf="x.admission_status == 'DN'">Status : For Discharge<br /></ion-text>
+            <ion-icon name="calendar-outline"></ion-icon>
+            <ion-text> Admission Date : {{ dateAdmitted }}</ion-text>
+          </div-->
+          <ion-badge color="warning" slot="end" (click)="moreorless(true)"><ion-icon name="chevron-up-outline"></ion-icon></ion-badge>
+        </ion-item>
+        <!--ion-item lines="none" style="padding-bottom: 1px">
           <div class="ion-text-wrap font-size12">
-            <ion-text *ngIf="data.admission_status == 'AC'">Status : Admitted </ion-text>
-            <ion-text *ngIf="data.admission_status == 'DN'">Status : For Discharge<br /></ion-text>
+            <ion-text *ngIf="x.admission_status == 'AC'">Status : Admitted </ion-text>
+            <ion-text *ngIf="x.admission_status == 'DN'">Status : For Discharge<br /></ion-text>
             <ion-icon name="calendar-outline"></ion-icon>
             <ion-text> Admission Date : {{ dateAdmitted }}</ion-text>
           </div>
+          
           <ion-badge color="warning" slot="end" (click)="moreorless(true)"><ion-icon name="chevron-up-outline"></ion-icon></ion-badge>
-        </ion-item>
-        <ion-item lines="none" style="padding-bottom: 10px">
+        </ion-item-->
+
+
+
+
+
+
+
+        <!--ion-item lines="none" style="padding-bottom: 1px">
           <ion-badge color="warning" slot="start">
             {{admstat}}
           </ion-badge>
-        </ion-item>
+<br />
+          <div class="ion-text-wrap font-size12">
+            <ion-icon name="alarm-outline" slot="start" *ngIf="x.forDischargeDateTime != null" color="danger"></ion-icon>
+            <ion-text *ngIf="x.forDischargeDateTime != null" color="danger">
+                DN : 
+              {{x.forDischargeDateTime}}<br />
+            </ion-text>
+          </div>
+        </ion-item-->
+
       </ion-list>
 
     </div>

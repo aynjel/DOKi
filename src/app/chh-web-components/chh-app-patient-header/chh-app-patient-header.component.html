@@ -9,6 +9,9 @@
           <ion-item class="ion-no-padding">
             <h2 class="ion-text-wrap" style="padding-top: 20px">
               <b>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</b>
+              <ion-text color="mango">
+                <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong>  {{x.gender}}</b></p>
+                </ion-text>
             </h2>
             <ion-badge color="warning" slot="end"
               *ngIf="x.admission_status == 'DN' && x.doctor_prof_fee == null && x.is_posted == null">PF</ion-badge>
@@ -57,6 +60,9 @@
           <ion-label>
             <h2 class="ion-text-wrap">
               <b>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</b>
+              <ion-text color="mango">
+                <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong>  {{x.gender}}</b></p>
+                </ion-text>
             </h2>
           </ion-label>
         </div>
@@ -69,6 +75,9 @@
           <ion-label>
             <h2 class="ion-text-wrap">
               <b>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</b>
+              <ion-text color="mango">
+                <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong>  {{x.gender}}</b></p>
+                </ion-text>
             </h2>
           </ion-label>
         </div>
@@ -100,15 +109,28 @@
               <ion-label color="mango"><b>For Discharge</b></ion-label>
             </ion-chip>
           </div>
+          <div class=" font-size12">
+            <ion-icon name="bed-outline" slot="start"></ion-icon>
+            Admission Date : {{ dateAdmitted }}
+          </div>
+          <div class=" font-size12" *ngIf="x.forDischargeDateTime != null" >
+            <ion-icon name="bed-outline" slot="start"></ion-icon>
+            Discharge Notice &nbsp;: {{ dischargeNotice }}
+          </div>
+          
         </div>
       </ion-item>
       <ion-item lines="none" style="padding-bottom: 10px">
-        <div class="ion-text-wrap font-size12">
+        <!--div class="ion-text-wrap font-size12">
           <ion-text *ngIf="data.admission_status == 'AC'">Status : Admitted </ion-text>
           <ion-text *ngIf="data.admission_status == 'DN'">Status : For Discharge<br /></ion-text>
           <ion-icon name="calendar-outline"></ion-icon>
           <ion-text> Admission Date : {{ dateAdmitted }}</ion-text>
         </div>
+        <div class=" font-size12" *ngIf="x.forDischargeDateTime != null" >
+          <ion-icon name="bed-outline" slot="start"></ion-icon>
+          Discharge Notice &nbsp;: {{ x.forDischargeDateTime }}
+        </div-->
         <ion-badge color="warning" slot="end" (click)="moreorless(true)"><ion-icon name="chevron-up-outline"></ion-icon></ion-badge>
       </ion-item>
     </ion-list>

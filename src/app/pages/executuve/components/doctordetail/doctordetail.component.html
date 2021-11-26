@@ -68,11 +68,14 @@
                   <ion-item slot="start" lines="" class="ion-no-padding" style="padding-bottom: 5px;">
                     <h2 class="ion-text-wrap" style="padding-top: 20px;">
                       {{ x.last_name }}, {{x.first_name}} {{x.middle_name}}
+                      <ion-text color="mango">
+                        <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong>  {{x.gender}}</b></p>
+                        </ion-text>
                     </h2>
 
                   </ion-item>
 
-                  <ion-row class="ion-no-padding" lines="none" style="padding-top: 10px !important;">
+                  <ion-row class="ion-no-padding" lines="none" style="padding-top: 1px !important;">
                     <p>
                       <span *ngIf="x.site =='C' ">
                         <ion-icon name="location-outline" slot="start"></ion-icon>
@@ -87,7 +90,14 @@
 
 
                       <ion-badge color="warning" slot="end" *ngIf="x.admission_status == 'DN'">
-                        for discharge</ion-badge>
+                        for discharge</ion-badge> <br *ngIf="x.admission_status == 'DN'" />
+
+
+                        <ion-icon name="alarm-outline" slot="start" *ngIf="x.forDischargeDateTime != null" color=""></ion-icon>
+                        <ion-text *ngIf="x.forDischargeDateTime != null" color="">
+                            DN : 
+                          {{x.forDischargeDateTime}}<br />
+                        </ion-text>
                     </p>
                     <br />
                   </ion-row>

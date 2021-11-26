@@ -10,6 +10,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 export class ChhAppPatientHeaderComponent  {
   @Input() data: any;
   @Input() dateAdmitted: any;
+  @Input() dischargeNotice: any;
   @Input() forMoreOrLess: boolean;
   isDesktop: any;
   moreOrLess: boolean = true;

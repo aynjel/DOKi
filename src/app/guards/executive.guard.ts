@@ -27,7 +27,7 @@ export class ExecutiveGuard implements CanActivate {
                 });
                 //console.log('2');
 
-                console.log(localStorage.getItem('role_flag'));
+                //console.log(localStorage.getItem('role_flag'));
                 if(localStorage.getItem('role_flag') == 'medcons'){
                   this.router.navigate(["/menu/dashboard"]);
                   resolve(false);

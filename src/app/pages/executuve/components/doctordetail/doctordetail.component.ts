@@ -50,7 +50,7 @@ export class DoctordetailComponent implements OnInit {
 
   ngOnInit() {
     this.dr_details = this.doctorDetail;
-    console.log(this.dr_details);
+    //console.log(this.dr_details);
     this.deptName = this.dr_details.deptName;
     this.dr_name = this.dr_details.doctorName;
     this.isReady = false;

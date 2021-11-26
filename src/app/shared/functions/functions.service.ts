@@ -287,35 +287,35 @@ export class FunctionsService {
   getAdmissionStatus(data:any){
     let x="";
     if(data == 'RE'){
-      x = 'registered';
+      x = 'Registered';
     }else if(data == 'AC'){
-      x = 'admitted';
+      x = 'Admitted';
     }else if(data == 'DN'){
-      x = 'for discharge';
+      x = 'For Discharge';
     }else if(data == 'BP'){
-      x = 'partially settled';
+      x = 'Partially Settled';
     }else if(data == 'PP'){
-      x = 'ok for checkout';
+      x = 'Ok For Checkout';
     }else if(data == 'CO'){
-      x = 'checkout';
+      x = 'Checkout';
     }else if(data == 'BA'){
-      x = 'billing approved';
+      x = 'Billing Approved';
     }else if(data == 'CC'){
-      x = 'checked-out with balance';
+      x = 'Checked-out With Balance';
     }else if(data == 'FP'){
-      x = 'ok for checkout';
+      x = 'Ok For Checkout';
     }else if(data == 'CA'){
-      x = 'cancelled';
+      x = 'Cancelled';
     }else if(data == 'PA'){
-      x = 'pre-admitted';
+      x = 'Pre-Admitted';
     }else if(data == 'OP'){
-      x = ' re-opened (w/o b)';
+      x = 'Re-Opened (w/o b)';
     }else if(data == 'ON'){
-      x = 're-opened (wb)';
+      x = 'Re-Opened (wb)';
     }else if(data == 'UA'){
-      x = 'unit admission';
+      x = 'Unit Admission';
     }else if(data == 'BB'){
-      x = 'fully settled';
+      x = 'Fully Settled';
     }
 
     return x;

@@ -114,7 +114,7 @@
                     lines="none"
                     style="padding-top: 1px !important;"
                   >
-                    <p>
+                    <div style="font-size:14px">
                       <span *ngIf="x.site ==siteC ">
                         <ion-icon
                           name="location-outline"
@@ -132,10 +132,16 @@
                       <ion-icon name="bed-outline" slot="start"></ion-icon> Room
                       {{x.roomNo}}<br />
                  
-                      <ion-badge color="warning" slot="end" *ngIf="x.admission_status == 'DN'">
-                        for discharge</ion-badge>
-                      <!--ion-icon name="body-outline"></ion-icon>Patient Journey<br /-->
-                    </p>
+                      <ion-badge color="warning" slot="end" *ngIf="x.status == 'For Discharge' && segmentModel != 'For Discharge'">
+                        for discharge</ion-badge><br  *ngIf="x.status == 'For Discharge' && segmentModel != 'For Discharge'" />
+
+                      <ion-icon name="alarm-outline" slot="start" *ngIf="x.forDischargeDateTime != null" color=""></ion-icon>
+                      <ion-text *ngIf="x.forDischargeDateTime != null" color="">
+                          DN : 
+                        {{x.forDischargeDateTime}}<br />
+                      </ion-text>
+ 
+                    </div>
                     <br />
                   </ion-row>
                 </ion-label>

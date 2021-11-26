@@ -110,8 +110,8 @@
                     <h2 class="ion-text-wrap" style="padding-top: 20px;">
                       {{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}
                       <ion-text color="mango">
-                        <p color="primary"><b>July 15, 1990 | (28) | M</b></p>
-                      </ion-text>
+                        <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong>  {{x.gender}}</b></p>
+                        </ion-text>
                     </h2>
                    
                     <ion-badge
@@ -194,8 +194,14 @@
                  
                       <ion-icon name="clipboard-outline" slot="start"></ion-icon>
                       as {{x.doctor_Status}}<br />
+                      <ion-icon name="alarm-outline" slot="start" color="" *ngIf="x.forDischargeDateTime != null"></ion-icon>
+                      <ion-text *ngIf="x.forDischargeDateTime != null" color="">
+                        DN : 
+                      {{x.forDischargeDateTime}}<br />
+                    </ion-text>
                       <!--ion-icon name="body-outline"></ion-icon>Patient Journey<br /-->
                     </p>
+                    
                     <br />
                   </ion-row>
                 </ion-label>

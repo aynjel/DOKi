@@ -77,6 +77,7 @@ export class InPatientDetailPage {
   truncating1 = true;
   daysOfManage: any;
   dateAdmitted: any;
+  dischargeNotice: any;
   ionSkeleton: boolean = false;
   currentExamList: any;
   currentExamList_filtered: any = [];
@@ -246,7 +247,12 @@ export class InPatientDetailPage {
 
   operate() {
     let d = new Date(this.data[0].admission_date);
-    this.dateAdmitted = d.toUTCString();
+    this.dateAdmitted = d.toLocaleString();
+    if(this.data[0].forDischargeDateTime != null){
+      let f = new Date(this.data[0].forDischargeDateTime);
+      this.dischargeNotice = f.toLocaleString();
+    }
+
     this.$gaService.pageView(
       '/In-Patient/Patient Details',
       'Patient Details Modal'

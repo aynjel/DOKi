@@ -31,7 +31,7 @@ export class HomeGuard implements CanActivate {
               }
 
           });
-          console.log(localStorage.getItem('role_flag'));
+          //console.log(localStorage.getItem('role_flag'));
           if(localStorage.getItem('role_flag') == 'medcons'){
             resolve(true);
           }else if(localStorage.getItem('role_flag') == 'exec'){

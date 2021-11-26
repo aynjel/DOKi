@@ -223,12 +223,15 @@ export class TabsAllpatientsPage implements OnInit {
     });
   }
   async detail(x:any,y:any){
-    this.presentLoading();
+    //
     this.patientDetail = new PatientDetail();
     this.patientDetail.admissionNo = x;
     this.patientDetail.doctorCode = y;
+    this.showModal(this.patientDetail);
+
     ////console.log(this.patientDetail);
-    
+    /*
+    this.presentLoading();
     let responsebe=[];
     this.executiveService.getPatientDetail(this.patientDetail).subscribe(
       (res: any) => {   
@@ -253,7 +256,7 @@ export class TabsAllpatientsPage implements OnInit {
 
       }
     );
-  
+  */
     
     //localStorage.setItem('patientdetails',btoa(JSON.stringify(x)));
 
@@ -271,13 +274,12 @@ export class TabsAllpatientsPage implements OnInit {
     await alert.present();
   }
 
-  async showModal(responsebe:any,y:any){
+  async showModal(responsebe:any){
     const modal = await this.modalController.create({
       component: PatientdetailComponent,
       cssClass: 'my-custom-modal',
       componentProps: {
         'patientdetail': responsebe,
-        'drcode':y,
         'fromPatientList':true,
       }
     });

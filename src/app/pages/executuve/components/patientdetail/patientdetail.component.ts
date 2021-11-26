@@ -13,6 +13,7 @@ import {
   ModalController,
   AlertController,
   NavController,
+  LoadingController,
 } from '@ionic/angular';
 import { ChhAppFeePage } from '../../../../chh-web-components/chh-app-fee/chh-app-fee.page';
 import { from } from 'rxjs';
@@ -121,21 +122,57 @@ export class PatientdetailComponent implements OnInit {
   constructor(
     public modalController: ModalController,
     public executiveService:ExecutiveService,
-    public functionsService: FunctionsService) { }
+    public functionsService: FunctionsService,
+    public loadingController:LoadingController,
+    public alertController:AlertController) { }
 
   ngOnInit() {
-    ////console.log(this.patientdetail);
-    
-    let stack = '['+JSON.stringify(this.patientdetail)+']';
-    this.data = JSON.parse(stack);
+    if(this.fromPatientList){
+        this.presentLoading();
+        let responsebe=[];
+        this.executiveService.getPatientDetail(this.patientdetail).subscribe(
+          (res: any) => {   
+            responsebe=res;
+            //console.log(responsebe);
+            
+          },
+          (error) => {
+            //console.log(error);
+            
+          this.dismissLoading();
+          },
+          () => {
+            if(responsebe==null){
+              //console.log('if');
+              
+              this.dismissLoading();
+              this.alert('No Data Available','Okay');
+            }else{
+              //console.log('else');
+              this.dismissLoading();
+              this.processData(responsebe);
+            }
 
+          }
+        );
+      }else{
+        this.processData(this.patientdetail);
+      }
+  
+  }
+
+  processData(responsebe){
+    let stack = '['+JSON.stringify(responsebe)+']';
+    this.data = JSON.parse(stack);
+    //console.log(this.data);
+    
     
     //this.data = this.patientdetail;
-    ////console.log(this.data);
-    ////console.log(this.data);
+    //////console.log(this.data);
+    //////console.log(this.data);
     this.dateAdmitted = this.data[0].admission_date;
     this.admstat = this.functionsService.getAdmissionStatus(this.data[0].admission_status);
-    console.log(this.admstat);
+    //console.log(this.admstat);
     
     this.inpatientDetails.admission_no = this.data[0].admission_no;
 
@@ -143,7 +180,7 @@ export class PatientdetailComponent implements OnInit {
     //this.drcode = 
     this.executiveService.getAdmittingDiagnosis(this.inpatientDetails).subscribe(
       (res: any) => {   
-        //////console.log(res);
+        ////////console.log(res);
         
         if(!Object.keys(res).length){
           ////this.functionsService.logToConsole("no data found");
@@ -173,13 +210,13 @@ export class PatientdetailComponent implements OnInit {
       (error) => {},
       () => {
         this.admstat = this.functionsService.getAdmissionStatus(this.data[0].admission_status);
-        console.log(this.admstat);
+        //console.log(this.admstat);
       }
     );
     
     this.executiveService.getFinalDiagnosis(this.inpatientDetails).subscribe(
       (res: any) => {   
-        //////console.log(res);
+        ////////console.log(res);
         
         if(!Object.keys(res).length){
           // //this.functionsService.logToConsole("no data found");
@@ -246,7 +283,7 @@ export class PatientdetailComponent implements OnInit {
         });
 
         this.coDoctors = coDoctors1.concat(coDoctors2).concat(coDoctors3);
-        //////console.log(this.coDoctors);
+        ////////console.log(this.coDoctors);
         
         //this.coDoctors.push(coDoctors2);
       },
@@ -259,6 +296,8 @@ export class PatientdetailComponent implements OnInit {
       }
     );
   }
+
+
   closemodal(){
     this.modalController.dismiss({
       'dismissed': true
@@ -267,5 +306,34 @@ export class PatientdetailComponent implements OnInit {
   moreOrLess: boolean = false;
   moreorless(data) {
     this.moreOrLess = data;
+  }
+  loading:any;
+  async presentLoading() {
+    this.loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+      duration: 2000
+
+    });
+    await this.loading.present();
+
+    const { role, data } = await this.loading.onDidDismiss();
+    //////console.log('Loading dismissed!');
+  }
+  public async dismissLoading(): Promise<void> {
+    if (this.loading) {
+        this.loading.dismiss();
+    }
+  }
+  async alert(data1: any, data2: any) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      message: data1,
+      backdropDismiss: false,
+      buttons: [{ text: data2, handler: () => {
+          this.closemodal();
+      } }],
+    });
+    await alert.present();
   }
 }
