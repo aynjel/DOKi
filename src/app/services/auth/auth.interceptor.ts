@@ -150,13 +150,13 @@ export class AuthInterceptor implements HttpInterceptor {
       await alert.present();
     }
     logout(){
-      this.revokeTokenV3.jwt = this.functionsService.getcookie('refreshToken');
+      this.revokeTokenV3.jwt = decodeURIComponent(this.functionsService.getcookie('refreshToken'));
       localStorage.setItem("torevoketoken","1");
       this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe(
         (res: any) => {
           //console.log(res);
         },(error) => {
-          this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
+          //this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
             this.userData$.next('');
             localStorage.removeItem('_cap_userDataKey');
             localStorage.removeItem('username');
@@ -165,7 +165,7 @@ export class AuthInterceptor implements HttpInterceptor {
             localStorage.setItem('hasloggedin', '1');
       
             this.router.navigate(['/login']);
-          });   
+          //});   
          },
          () => {
 
@@ -193,7 +193,14 @@ export class AuthInterceptor implements HttpInterceptor {
           {
             text: 'Ok',
             handler: () => {
-              this.logout();
+              this.userData$.next('');
+              localStorage.removeItem('_cap_userDataKey');
+              localStorage.removeItem('username');
+              localStorage.clear();
+              sessionStorage.clear();
+              localStorage.setItem('hasloggedin', '1');
+        
+              this.router.navigate(['/login']);
             },
           },
         ],

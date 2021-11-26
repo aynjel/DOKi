@@ -479,8 +479,9 @@ export class TabSettingsPage {
 
   logout() {
     this.revokeTokenV3 = new RevokeTokenV3(); 
-    this.revokeTokenV3.jwt = this.functionsService.getcookie('refreshToken');
-
+    this.revokeTokenV3.jwt = decodeURIComponent(this.functionsService.getcookie('refreshToken'));
+    console.log(this.revokeTokenV3);
+    
     this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
       this.functionsService.logToConsole(res);
     });
