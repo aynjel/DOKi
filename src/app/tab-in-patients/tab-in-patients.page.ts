@@ -283,6 +283,7 @@ export class TabInPatientsPage {
 
   async detail(data: any) {
     this.data = [];
+    /*
     this.functionsService.logToConsole(data);
     this.inPatients.forEach(element => {
        
@@ -292,6 +293,7 @@ export class TabInPatientsPage {
         }
     });
     this.functionsService.logToConsole( this.data);
+  */
     
     /*
   this.router.navigate(['menu/in-patients/', data]);

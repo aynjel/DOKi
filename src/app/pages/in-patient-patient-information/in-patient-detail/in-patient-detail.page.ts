@@ -13,6 +13,7 @@ import {
   ModalController,
   AlertController,
   NavController,
+  LoadingController,
 } from '@ionic/angular';
 import { ChhAppFeePage } from '../../../chh-web-components/chh-app-fee/chh-app-fee.page';
 import { from } from 'rxjs';
@@ -39,10 +40,12 @@ import { Constants } from 'src/app/shared/constants';
 
 import { InPatientData,ProfessionalFeeModelv3} from 'src/app/models/in-patient.model';
 
-import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
+import {UserSettingsModelv3,LoginResponseModelv3,PatientDetail} from 'src/app/models/doctor';
 
 import { LaboratoryTestModalPage } from '../laboratory-test-modal/laboratory-test-modal.page';
 import { InpatientModelInpatients,InpatientDetails } from '../../../models/doctor';
+import { AESEncryptDecryptServiceService } from 'src/app/services/encryption/aesencrypt-decrypt-service.service';
+import { ExecutiveService } from 'src/app/services/executive/executive.service';
 @Component({
   selector: 'app-in-patient-detail',
   templateUrl: './in-patient-detail.page.html',
@@ -127,7 +130,10 @@ export class InPatientDetailPage {
     public storageService: StorageService,
     public constants: Constants,
     private renderer: Renderer2,
-    public nav: NavController
+    public nav: NavController,
+    public aes:AESEncryptDecryptServiceService,
+    public executiveService:ExecutiveService,
+    public loadingController:LoadingController,
   ) {
     //this.functionsService.logToConsole('In-patient detail : Constructor');
     localStorage.setItem("modaled","0");
@@ -213,38 +219,87 @@ export class InPatientDetailPage {
       }
     );*/
 
+    //let ppatientdata = JSON.parse(this.aes.decrypt((localStorage.getItem("patientData"))));
 
+    let ppatientdata = new PatientDetail();
+    ppatientdata.admissionNo = this.patient_id;
+    ppatientdata.doctorCode = this.dr_code;
+      this.presentLoading();
+    this.executiveService.getPatientDetail(ppatientdata).subscribe(
+      (res: any) => {   
+        console.log(res);
+        this.data1 = JSON.parse('['+JSON.stringify(res)+']');
+        localStorage.setItem('patientData',btoa(JSON.stringify(this.data1)));
+      },
+      (error) => {
+        this.dismissLoading();
+      },
+      () => {
+        this.dismissLoading();
+        if(this.data1 != ""){
+        this.data1.forEach((element) => {
+            this.opd_code = element.admission_no;
+            this.inpatientModelInpatients.accountNo = this.opd_code;
+            this.inpatientDetails.admission_no = this.opd_code;
+            this.data.push(element);
+            this.admissionstatus = element.admission_status;
+            this.patient_name = element.first_name + ' ' + element.last_name;
+            this.patient_name = this.functionsService.convertAllFirstLetterToUpperCase(
+              this.patient_name
+            );
+            if (element.payvenue != null) {
+              this.checkmark = true;
+            }
+        });
+        let n = this.data[0].admission_no.indexOf('IPC');
+        //this.functionsService.logToConsole(n);
     
-    this.data1 = JSON.parse(atob(localStorage.getItem("patientData"))) ;
-    this.data1.forEach((element) => {
-
-        this.opd_code = element.admission_no;
-        this.inpatientModelInpatients.accountNo = this.opd_code;
-        this.inpatientDetails.admission_no = this.opd_code;
-        this.data.push(element);
-        this.admissionstatus = element.admission_status;
-        this.patient_name = element.first_name + ' ' + element.last_name;
-        this.patient_name = this.functionsService.convertAllFirstLetterToUpperCase(
-          this.patient_name
-        );
-        if (element.payvenue != null) {
-          this.checkmark = true;
+        if (n >= 0) {
+          this.location = true;
+        } else {
+          this.location = false;
         }
-
-    });
-    let n = this.data[0].admission_no.indexOf('IPC');
-    //this.functionsService.logToConsole(n);
-
-    if (n >= 0) {
-      this.location = true;
-    } else {
-      this.location = false;
-    }
-    this.operate();
-    //localStorage.setItem('patientData', btoa(JSON.stringify(this.data)));
-
+        this.operate();
+      }else{
+        this.alert('No Data Available','Okay');
+      }
+      }
+    );
   }
 
+  loading:any;
+  async presentLoading() {
+    this.loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+      duration: 2000
+
+    });
+    await this.loading.present();
+
+    const { role, data } = await this.loading.onDidDismiss();
+    //////////console.log('Loading dismissed!');
+  }
+  public async dismissLoading(): Promise<void> {
+    if (this.loading) {
+        this.loading.dismiss();
+    }
+  }
+  async alert(data1: any, data2: any) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      message: data1,
+      backdropDismiss: false,
+      buttons: [{ text: data2, handler: () => {
+          this.closemodal();
+      } }],
+    });
+    await alert.present();
+  }
+
+  closemodal(){
+    this.router.navigate(['/menu/in-patients/']);
+  }
   operate() {
 
     this.dateAdmitted = this.data[0].admission_date;
