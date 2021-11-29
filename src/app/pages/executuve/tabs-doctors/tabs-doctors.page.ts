@@ -55,7 +55,7 @@ export class TabsDoctorsPage implements OnInit {
     settings(){
       this.router.navigate(['/executive/settings']);
     }
-  ngOnInit() {
+  ionViewWillEnter() {
    //console.log('ngOnInit');
     this.listOfDoctors = [];
     this.refreshcounter=1;  
@@ -149,7 +149,7 @@ export class TabsDoctorsPage implements OnInit {
     }, 1000);
   }
   isReady:boolean = false;
-  ionViewWillEnter() {
+  ngOnInit() {
    //console.log('ionViewWillEnter');
     
     localStorage.removeItem("drdetails");

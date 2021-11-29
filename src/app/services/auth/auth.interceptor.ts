@@ -17,6 +17,7 @@ import { FunctionsService } from 'src/app/shared/functions/functions.service';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   userData$ = new BehaviorSubject<any>([]);
+  isModal:boolean = false;
   constructor(
     private _router: Router,
     public alertController: AlertController,
@@ -55,10 +56,19 @@ export class AuthInterceptor implements HttpInterceptor {
                 }
                 return event;
             }),catchError((error: HttpErrorResponse) => {
+              console.log(cloned.url);
+              
+        if (cloned.url.includes('v3/Admin/Doctors/InPatients') 
+        || cloned.url.includes('v3/Admin/InPatients/Admin/PatientDetail')) {
+            this.isModal =true;
+
+        }
+
+              
                 this.modaled = localStorage.getItem("modaled");
                 this.jwthas = localStorage.getItem("jwthas");
 
-                  if((error.status == 401 && this.modaled != '1' ) || error.status == 404 && this.modaled != '1' ){
+                  if((error.status == 401 && this.modaled != '1' ) ){
                     //console.log('jwthas = '+this.jwthas);
                     
                     if(this.jwthas == '1'){
@@ -191,6 +201,10 @@ export class AuthInterceptor implements HttpInterceptor {
       });
     }
     out(){
+      if(this.isModal){
+        this.closemodal();
+      }
+      
       let dr_username = atob(localStorage.getItem('username'));
       this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
         this.userData$.next('');
@@ -200,7 +214,7 @@ export class AuthInterceptor implements HttpInterceptor {
         sessionStorage.clear();
         localStorage.setItem('username',dr_username);
         localStorage.setItem('hasloggedin', '1');
-        this.closemodal();
+       
         this.router.navigate(['/login']);
         
       },(error)=>{
