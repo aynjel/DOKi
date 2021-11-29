@@ -6,8 +6,10 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import { AuthConstants, Consta } from '../../../config/auth-constants';
 import { Router } from '@angular/router';
 import { ThrowStmt } from '@angular/compiler';
-import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
+import {UserSettingsModelv3,LoginResponseModelv3, RevokeTokenV3} from 'src/app/models/doctor';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { DoctorService } from 'src/app/services/doctor/doctor.service';
+import { FunctionsService } from 'src/app/shared/functions/functions.service';
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.page.html',
@@ -23,7 +25,10 @@ export class TabsPage implements OnInit {
     private storageService: StorageService,
     private router: Router,
     private renderer: Renderer2,
-    private authService: AuthService) { 
+    private authService: AuthService,
+    public revokeTokenV3: RevokeTokenV3,
+    private doctorService: DoctorService,
+    public functionsService: FunctionsService) { 
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         // Reload because our routing is out of place
@@ -50,6 +55,13 @@ export class TabsPage implements OnInit {
       console.log(res);
     });
     */
+    this.revokeTokenV3 = new RevokeTokenV3(); 
+    this.revokeTokenV3.jwt = decodeURIComponent(this.functionsService.getcookie('refreshToken'));
+
+    this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
+      this.functionsService.logToConsole(res);
+    });
+    
 
 
     let dr_username = atob(localStorage.getItem('username'));
