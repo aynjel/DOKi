@@ -20,13 +20,13 @@ export class TabsPage implements OnInit {
   public logindata: LoginResponseModelv3;
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   userData$ = new BehaviorSubject<any>([]);
+  revokeTokenV3: RevokeTokenV3;
   constructor(    private screensizeService: ScreenSizeService,
     public constants: Constants,
     private storageService: StorageService,
     private router: Router,
     private renderer: Renderer2,
     private authService: AuthService,
-    public revokeTokenV3: RevokeTokenV3,
     private doctorService: DoctorService,
     public functionsService: FunctionsService) { 
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {

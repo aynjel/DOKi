@@ -55,8 +55,6 @@ export class AuthInterceptor implements HttpInterceptor {
                 }
                 return event;
             }),catchError((error: HttpErrorResponse) => {
-              console.log("1111111111");
-              
                 this.modaled = localStorage.getItem("modaled");
                 this.modaled1 = localStorage.getItem("modaled1");
                 this.jwthas = localStorage.getItem("jwthas");
