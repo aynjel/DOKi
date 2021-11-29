@@ -157,16 +157,17 @@ export class AuthInterceptor implements HttpInterceptor {
         (res: any) => {
           //console.log(res);
         },(error) => {
-          //this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
+          this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
             this.userData$.next('');
             localStorage.removeItem('_cap_userDataKey');
             localStorage.removeItem('username');
             localStorage.clear();
             sessionStorage.clear();
-            localStorage.setItem('hasloggedin', '1');
             localStorage.setItem('username',dr_username);
+            localStorage.setItem('hasloggedin', '1');
+      
             this.router.navigate(['/login']);
-          //});   
+          });
          },
          () => {
 
