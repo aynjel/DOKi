@@ -236,7 +236,7 @@ export class PatientdetailComponent implements OnInit {
     this.executiveService.getFinalDiagnosis(this.inpatientDetails).subscribe(
       (res: any) => {   
         ////////////console.log(res);
-        
+        if(res != null){
         if(!Object.keys(res).length){
           // //this.functionsService.logToConsole("no data found");
          }else{
@@ -262,6 +262,7 @@ export class PatientdetailComponent implements OnInit {
              this.finalDiagnosis2[i] = i + 1 + '.) ' + this.finalDiagnosis2[i];
            }
          }
+        }
       },
       (error) => {},
       () => {
