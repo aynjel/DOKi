@@ -26,7 +26,7 @@ export class TabsSettingsPage implements OnInit {
     });
     */
 
- 
+    let dr_username = atob(localStorage.getItem('username'));
     this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
       this.userData$.next('');
       localStorage.removeItem('_cap_userDataKey');
@@ -34,7 +34,7 @@ export class TabsSettingsPage implements OnInit {
       localStorage.clear();
       sessionStorage.clear();
       localStorage.setItem('hasloggedin', '1');
-
+      localStorage.setItem('username',dr_username);
       this.router.navigate(['/login']);
     });
 

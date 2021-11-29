@@ -276,7 +276,7 @@ export class TabsDashboardPage implements OnInit {
     this.executiveService.getTotalPxTypesBySite().subscribe(
       (res: any) => {
         this.TotalPxTypesBySite = res;
-        localStorage.setItem('TotalPxTypesBySite', btoa(JSON.stringify(res)));
+        //localStorage.setItem('TotalPxTypesBySite', btoa(JSON.stringify(res)));
         
       },
       (error) => {
@@ -903,7 +903,8 @@ export class TabsDashboardPage implements OnInit {
   }
 
   async detail(CritnCrit,site,CvdnCvd,criticalcount) {
-    var values = JSON.parse(atob(localStorage.getItem("TotalPxTypesBySite")));
+    //var values = JSON.parse(atob(localStorage.getItem("TotalPxTypesBySite")));
+    var values = this.TotalPxTypesBySite;
     const modal = await this.modalController.create({
       component: DashboardgraphComponent,
       cssClass: 'my-custom-modal-css',

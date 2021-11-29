@@ -150,6 +150,7 @@ export class AuthInterceptor implements HttpInterceptor {
       await alert.present();
     }
     logout(){
+      let dr_username = atob(localStorage.getItem('username'));
       this.revokeTokenV3.jwt = decodeURIComponent(this.functionsService.getcookie('refreshToken'));
       localStorage.setItem("torevoketoken","1");
       this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe(
@@ -163,7 +164,7 @@ export class AuthInterceptor implements HttpInterceptor {
             localStorage.clear();
             sessionStorage.clear();
             localStorage.setItem('hasloggedin', '1');
-      
+            localStorage.setItem('username',dr_username);
             this.router.navigate(['/login']);
           //});   
          },
@@ -175,6 +176,7 @@ export class AuthInterceptor implements HttpInterceptor {
             localStorage.removeItem('username');
             localStorage.clear();
             sessionStorage.clear();
+            localStorage.setItem('username',dr_username);
             localStorage.setItem('hasloggedin', '1');
       
             this.router.navigate(['/login']);
@@ -185,6 +187,7 @@ export class AuthInterceptor implements HttpInterceptor {
       
     }
     async logoutPopup(){
+      let dr_username = atob(localStorage.getItem('username'));
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
         header: 'Your session has expired.',
@@ -199,7 +202,7 @@ export class AuthInterceptor implements HttpInterceptor {
               localStorage.clear();
               sessionStorage.clear();
               localStorage.setItem('hasloggedin', '1');
-        
+              localStorage.setItem('username',dr_username);
               this.router.navigate(['/login']);
             },
           },

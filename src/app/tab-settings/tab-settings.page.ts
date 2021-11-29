@@ -478,6 +478,7 @@ export class TabSettingsPage {
   
 
   logout() {
+    let dr_username = atob(localStorage.getItem('username'));
     this.revokeTokenV3 = new RevokeTokenV3(); 
     this.revokeTokenV3.jwt = decodeURIComponent(this.functionsService.getcookie('refreshToken'));
     console.log(this.revokeTokenV3);
@@ -494,7 +495,7 @@ export class TabSettingsPage {
       localStorage.clear();
       sessionStorage.clear();
       localStorage.setItem('hasloggedin', '1');
-
+      localStorage.setItem('username',dr_username);
       this.router.navigate(['/login']);
     });
 
@@ -530,7 +531,9 @@ export class TabSettingsPage {
               this.privacyPolicy = true;
               this.userData$.next('');
               */
+              let dr_username = atob(localStorage.getItem('username'));
               localStorage.clear();
+              localStorage.setItem('username',dr_username);
               this.router.navigate(['/login']);
             },
           },

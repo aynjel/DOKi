@@ -486,13 +486,14 @@ export class TabsSettingsPage implements OnInit {
       this.functionsService.logToConsole(res);
     });
     
- 
+    let dr_username = atob(localStorage.getItem('username'));
     this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
       this.userData$.next('');
       localStorage.removeItem('_cap_userDataKey');
       localStorage.removeItem('username');
       localStorage.clear();
       sessionStorage.clear();
+      localStorage.setItem('username',dr_username);
       localStorage.setItem('hasloggedin', '1');
       this.renderer.setAttribute(document.body, 'color-theme', 'light');
       this.router.navigate(['/login']);
@@ -530,7 +531,9 @@ export class TabsSettingsPage implements OnInit {
               this.privacyPolicy = true;
               this.userData$.next('');
               */
+              let dr_username = atob(localStorage.getItem('username'));
               localStorage.clear();
+              localStorage.setItem('username',dr_username);
               this.router.navigate(['/login']);
             },
           },
