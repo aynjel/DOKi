@@ -34,7 +34,7 @@ export class AuthInterceptor implements HttpInterceptor {
         this.revokeTokenV3 = new RevokeTokenV3();
         this.revokeTokenV3.jwt = localStorage.getItem("id_token");
         if(idToken){
-          //console.log('token is alive');
+          //////console.log('token is alive');
           
             const cloned = 
             //req.clone({headers:req.headers.set("Authorization",idToken)});
@@ -56,7 +56,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 }
                 return event;
             }),catchError((error: HttpErrorResponse) => {
-              console.log(cloned.url);
+              ////console.log(cloned.url);
               
         if (cloned.url.includes('v3/Admin/Doctors/InPatients') 
         || cloned.url.includes('v3/InPatients/Admin/PatientDetail')) {
@@ -69,14 +69,14 @@ export class AuthInterceptor implements HttpInterceptor {
                 this.jwthas = localStorage.getItem("jwthas");
 
                   if((error.status == 401 && this.modaled != '1' ) ){
-                    //console.log('jwthas = '+this.jwthas);
+                    //////console.log('jwthas = '+this.jwthas);
                     
                     if(this.jwthas == '1'){
-                      //console.log("jwt has = 1");
+                      //////console.log("jwt has = 1");
                       
                       this.logout();
                     }else{
-                      //console.log("show pop-up");
+                      //////console.log("show pop-up");
                       this.timerExpired();
                       localStorage.setItem("modaled","1");
                       localStorage.setItem("jwthas","1");
@@ -92,7 +92,7 @@ export class AuthInterceptor implements HttpInterceptor {
             return next.handle(req).pipe(
               map((event: HttpEvent<any>) => {
                   if (event instanceof HttpResponse) {
-                     // //console.log('event--->>>', event);
+                     // //////console.log('event--->>>', event);
                   }
                   return event;
               }),
@@ -109,7 +109,7 @@ export class AuthInterceptor implements HttpInterceptor {
                         localStorage.setItem("jwthas","1");
                       }
                     }
-                 // //console.log(error.status);
+                 // //////console.log(error.status);
                   return throwError(error);
               }));*/
         }
@@ -140,7 +140,7 @@ export class AuthInterceptor implements HttpInterceptor {
               let xdata : any;
               this.doctorService.refreshTokenV3().subscribe(
               (res: any) => {
-                console.log(xdata);
+                ////console.log(xdata);
                 xdata=res;
               },(error) =>{
                 this.logoutPopup();
@@ -166,7 +166,7 @@ export class AuthInterceptor implements HttpInterceptor {
       localStorage.setItem("torevoketoken","1");
       this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe(
         (res: any) => {
-          //console.log(res);
+          //////console.log(res);
         },(error) => {
           this.out();
          },
@@ -201,9 +201,9 @@ export class AuthInterceptor implements HttpInterceptor {
       });
     }
     out(){
-      if(this.isModal){
+
         this.closemodal();
-      }
+
       
       let dr_username = atob(localStorage.getItem('username'));
       this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
@@ -216,9 +216,10 @@ export class AuthInterceptor implements HttpInterceptor {
         localStorage.setItem('hasloggedin', '1');
        
         this.router.navigate(['/login']);
-        
+        this.closemodal();
       },(error)=>{
         this.router.navigate(['/login']);
+        this.closemodal();
       });
     }
 

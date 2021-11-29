@@ -43,7 +43,7 @@ export class TabsPage implements OnInit {
     this.loginResponseModelv3 = new LoginResponseModelv3();
     
     this.checkAppearance();
-    console.log( this.authService.userData$.getValue());
+    //console.log( this.authService.userData$.getValue());
   }
   logout() {
     //this.revokeTokenV3 = new RevokeTokenV3();
@@ -52,7 +52,7 @@ export class TabsPage implements OnInit {
 
       /*
     this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
-      console.log(res);
+      //console.log(res);
     });
     */
     this.revokeTokenV3 = new RevokeTokenV3(); 

@@ -132,11 +132,11 @@ export class TabsDashboardPage implements OnInit {
     this.totalAdmissionsTodayV33 = true;
     this.forDischargeV33 = true;
 
-    //////// //console.log(this.logindata);
+    //////// ////console.log(this.logindata);
 
     this.executiveService.totalAdmissionsV3().subscribe(
       (res: any) => {
-        //////// //console.log(res);
+        //////// ////console.log(res);
         this.totalAdmissionsV3 = res;
       },
       (error) => { this.totalAdmissionsV33 = false; },
@@ -163,7 +163,7 @@ export class TabsDashboardPage implements OnInit {
     this.totalAdmissionstoday = 0;
     this.executiveService.totalAdmissionsTodayV3().subscribe(
       (res: any) => {
-        //////// //console.log(res);
+        //////// ////console.log(res);
         this.totalAdmissionsTodayV3 = res;
       },
       (error) => { this.totalAdmissionsTodayV33 = false; },
@@ -190,7 +190,7 @@ export class TabsDashboardPage implements OnInit {
 
     this.executiveService.forDischargeV3().subscribe(
       (res: any) => {
-        //////// //console.log(res);
+        //////// ////console.log(res);
         this.forDischargeV3 = res;
       },
       (error) => { this.forDischargeV33 = false; },
@@ -296,7 +296,7 @@ export class TabsDashboardPage implements OnInit {
 
         this.TotalPxTypesBySite.forEach(el => {
      
-             //console.log(el);
+             ////console.log(el);
             
           if ((el.site == 'C' || el.site == 'M') && el.patientType1 == 'Critical') {
             this.criticalT += el.totalAdmissions;
@@ -407,7 +407,7 @@ export class TabsDashboardPage implements OnInit {
 
   //this.callPieChart(this.getTotalAdmissionsByDeptData,'admission','Admissions by Department','Department');
   async callPieChart(data1: any, data2: any, data3: any, data4: any) {
-    //// //console.log(data1);
+    //// ////console.log(data1);
 
     const modal = await this.modalController.create({
       component: DashboardgraphComponent,
@@ -446,11 +446,11 @@ export class TabsDashboardPage implements OnInit {
           this.getTotalAdmissionsByDept.forEach(element => {
             this.getTotalAdmissionsByDeptData.push({ name: element.deptName, y: element.numOfAdmissions });
           });
-          //// //console.log(JSON.stringify(this.getTotalAdmissionsByDeptData));
+          //// ////console.log(JSON.stringify(this.getTotalAdmissionsByDeptData));
           
           this.populatePieChart();
           /*
-          //// //console.log(this.getTotalAdmissionsByDeptData);
+          //// ////console.log(this.getTotalAdmissionsByDeptData);
           this.callPieChart(this.getTotalAdmissionsByDeptData,'admission','Admissions by Department','Department');
           */
         }
@@ -549,7 +549,7 @@ export class TabsDashboardPage implements OnInit {
     let datanonC = [];
     this.executiveService.getCovidVsNonCovidOccupancyCurrentYear().subscribe(
       (res: any) => {
-        cvdOccupancy = res; ////// //console.log(res);
+        cvdOccupancy = res; ////// ////console.log(res);
 
       },
       (error) => {
@@ -709,7 +709,7 @@ export class TabsDashboardPage implements OnInit {
     this.totalCovidPxTypesBySite = [];
     this.executiveService.getTotalCovidPxTypesBySite().subscribe(
       (res: any) => {
-         //console.log(res);
+         ////console.log(res);
         
         this.totalCovidPxTypesBySite = res;
       },
@@ -718,7 +718,7 @@ export class TabsDashboardPage implements OnInit {
         this.CCC  = 0;this.CCNC = 0;this.CNCC = 0;this.CNCNC = 0;this.MCC = 0;this.MCNC = 0;this.MNCC = 0;
         this.MNCNC = 0;
         this.totalCovidPxTypesBySite.forEach(el => {
-            // //console.log(el);
+            // ////console.log(el);
             if(el.site=='C'&& el.patientType01 == 'Critical'  && el.patientType02=='Covid' ){
               this.CCC = el.totalAdmissions;
             }
@@ -899,7 +899,7 @@ export class TabsDashboardPage implements OnInit {
   inmTotal: any; inmPer: any; inmC: any; inmM: any;
   checkInput() {
     this.doctorService.refreshTokenV3().subscribe((res: any) => {
-      //////// //console.log(res);
+      //////// ////console.log(res);
     });
   }
 
