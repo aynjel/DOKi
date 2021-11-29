@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { catchError,map } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { DoctorService } from '../doctor/doctor.service';
 import {UserSettingsModelv3,LoginResponseModelv3,RevokeTokenV3} from 'src/app/models/doctor';
 import { StorageService } from '../storage/storage.service';
@@ -23,7 +23,8 @@ export class AuthInterceptor implements HttpInterceptor {
     public router: Router,
     private doctorService: DoctorService,
     private storageService: StorageService,
-    public functionsService: FunctionsService) { }
+    public functionsService: FunctionsService,
+    public modalController: ModalController) { }
     modaled:any;
     jwthas:any;
     public revokeTokenV3: RevokeTokenV3; 
@@ -184,17 +185,13 @@ export class AuthInterceptor implements HttpInterceptor {
       });
       await alert.present();
     }
-
+    closemodal(){
+      this.modalController.dismiss({
+        'dismissed': true
+      });
+    }
     out(){
       let dr_username = atob(localStorage.getItem('username'));
-      this.userData$.next('');
-      localStorage.removeItem('_cap_userDataKey');
-      localStorage.removeItem('username');
-      localStorage.clear();
-      sessionStorage.clear();
-      localStorage.setItem('hasloggedin', '1');
-      localStorage.setItem('username',dr_username);
-      this.router.navigate(['/login']);
       this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
         this.userData$.next('');
         localStorage.removeItem('_cap_userDataKey');
@@ -203,8 +200,9 @@ export class AuthInterceptor implements HttpInterceptor {
         sessionStorage.clear();
         localStorage.setItem('username',dr_username);
         localStorage.setItem('hasloggedin', '1');
-  
+        this.closemodal();
         this.router.navigate(['/login']);
+        
       },(error)=>{
         this.router.navigate(['/login']);
       });
