@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { Plugins } from "@capacitor/core";
-import { AESEncryptDecryptServiceService } from "../encryption/aesencrypt-decrypt-service.service";
 
 const { Storage } = Plugins;
 @Injectable({
@@ -9,11 +8,11 @@ const { Storage } = Plugins;
 
 export class StorageService {
   drCode: any;
-  constructor(public aes:AESEncryptDecryptServiceService) {}
+  constructor() {}
 
   // Store the value
   async store(storageKey: string, value: any) {
-    const encryptedValue = this.aes.encrypt(escape(JSON.stringify(value)));
+    const encryptedValue = btoa(escape(JSON.stringify(value)));
     await Storage.set({
       key: storageKey,
       value: encryptedValue,
@@ -25,7 +24,7 @@ export class StorageService {
     const ret = await Storage.get({ key: storageKey });
     //
     if (ret.value) {
-      return JSON.parse(unescape(this.aes.decrypt(ret.value)));
+      return JSON.parse(unescape(atob(ret.value)));
     } else {
       return false;
     }
