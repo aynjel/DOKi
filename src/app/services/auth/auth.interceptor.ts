@@ -25,7 +25,6 @@ export class AuthInterceptor implements HttpInterceptor {
     private storageService: StorageService,
     public functionsService: FunctionsService) { }
     modaled:any;
-    modaled1:any;
     jwthas:any;
     public revokeTokenV3: RevokeTokenV3; 
    intercept(req:HttpRequest<any>,next: HttpHandler): Observable<HttpEvent<any>>{
@@ -56,17 +55,14 @@ export class AuthInterceptor implements HttpInterceptor {
                 return event;
             }),catchError((error: HttpErrorResponse) => {
                 this.modaled = localStorage.getItem("modaled");
-                this.modaled1 = localStorage.getItem("modaled1");
                 this.jwthas = localStorage.getItem("jwthas");
 
-                  if(
-                      (error.status == 401 && this.modaled != '1') || 
-                      (error.status == 404 && this.modaled != '1') ||
-                      (error.status == 401 && (this.modaled == '1' && this.modaled1 != '1')) || 
-                      (error.status == 404 && (this.modaled == '1' && this.modaled1 != '1'))
-                    ){
-
+                  if((error.status == 401 && this.modaled != '1' ) || error.status == 404 && this.modaled != '1' ){
+                    //console.log('jwthas = '+this.jwthas);
+                    
                     if(this.jwthas == '1'){
+                      //console.log("jwt has = 1");
+                      
                       this.logout();
                     }else{
                       //console.log("show pop-up");
@@ -74,13 +70,6 @@ export class AuthInterceptor implements HttpInterceptor {
                       localStorage.setItem("modaled","1");
                       localStorage.setItem("jwthas","1");
                     }
-                    if(this.modaled == '1' && this.modaled1 != '1'){
-                      localStorage.setItem("modaled","0");
-                      localStorage.setItem("modaled1","1");
-                    }
-
-
-
                   }
                 return throwError(error);
             }));
