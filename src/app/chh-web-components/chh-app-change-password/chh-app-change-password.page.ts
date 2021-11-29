@@ -228,7 +228,7 @@ export class ChhAppChangePasswordPage {
         this.changePasswordModel.username =  this.dr_username;
         this.changePasswordModel.oldPassword =   this.OldPassword;
         this.changePasswordModel.newPassword = this.NewPassword;
-        console.log(this.changePasswordModel);
+        //console.log(this.changePasswordModel);
         this.changePasswordModelV3 = new ChangePasswordModelV3();
         this.changePasswordModelV3.currentPassword = this.OldPassword;
         this.changePasswordModelV3.newPassword = this.NewPassword;
@@ -241,7 +241,7 @@ export class ChhAppChangePasswordPage {
           hash +
           '"}'; */
         let dJson;
-        console.log(this.changePasswordModelV3);
+        //console.log(this.changePasswordModelV3);
         
         this.doctorService.changePasswordV3(this.changePasswordModelV3).subscribe(
           (res: any) => {

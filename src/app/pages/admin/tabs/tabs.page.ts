@@ -39,7 +39,7 @@ export class TabsPage implements OnInit {
 
       /*
     this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
-      console.log(res);
+      //console.log(res);
     });
     */
 
@@ -60,7 +60,7 @@ export class TabsPage implements OnInit {
   checkAppearance() {
     var values = JSON.parse('[' + atob(localStorage.getItem("user_settings"))+ ']');
     values.forEach(element => {
-      console.log(element.darkmode);
+      //console.log(element.darkmode);
       if(element.darkmode == 1){
         this.renderer.setAttribute(document.body,'color-theme','dark');
       }else{

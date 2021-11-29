@@ -22,7 +22,7 @@ export class TabsSettingsPage implements OnInit {
 
       /*
     this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
-      console.log(res);
+      //console.log(res);
     });
     */
 

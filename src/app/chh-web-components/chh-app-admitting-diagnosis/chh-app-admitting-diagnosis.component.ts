@@ -24,7 +24,7 @@ export class ChhAppAdmittingDiagnosisComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log(this.admittingDiagnosis);
+
     
   }
 

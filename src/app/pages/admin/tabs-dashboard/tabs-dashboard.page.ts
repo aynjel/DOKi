@@ -38,7 +38,7 @@ export class TabsDashboardPage implements OnInit {
   }
   checkInput(){
     this.doctorService.refreshTokenV3().subscribe((res: any) => {
-      console.log(res);
+      //console.log(res);
     });
   }
 }

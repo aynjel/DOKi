@@ -36,7 +36,7 @@ export class ChhAppForgotPasswordComponent implements OnInit {
   forgotpassword(){
     this.btnDisable = true;
     this.forgotPasswordV3.clientURI = environment.linkRouterUrl+'resetpassword';
-    console.log(this.forgotPasswordV3);
+    //console.log(this.forgotPasswordV3);
     
     if(this.forgotPasswordV3.doctorCode == null || this.forgotPasswordV3.email == null){
       this.alert('Email and Doctor Code are needed to recover your access.','Okay');

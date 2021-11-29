@@ -294,7 +294,6 @@ export class ChhAppChangePassPage {
             this.changePasswordModel.username =  this.dr_username;
             this.changePasswordModel.oldPassword =   this.OldPassword;
             this.changePasswordModel.newPassword = this.NewPassword;
-            console.log(this.changePasswordModel);
             this.changePasswordModelV3.newPassword = this.NewPassword;
             this.changePasswordModelV3.currentPassword = this.OldPassword;
           this.doctorService.changePasswordV3(this.changePasswordModelV3).subscribe(
@@ -340,7 +339,7 @@ export class ChhAppChangePassPage {
     //psWord1_1[0].nativeElement.style.transform =  `translateX(${10}px)`;
 
     if (this.NewPassword != this.ConfirmPassword) {
-      //console.log('111');
+      ////console.log('111');
 
       this.errMessage = ' (passwords did not Match)';
       let myDiv1 = document.getElementById('pWord1');
@@ -348,7 +347,7 @@ export class ChhAppChangePassPage {
       myDiv1.style.color = 'red';
       myDiv2.style.color = 'red';
     } else {
-      //console.log('222');
+      ////console.log('222');
       this.errMessage = '';
       let myDiv1 = document.getElementById('pWord1');
       let myDiv2 = document.getElementById('pWord2');
@@ -359,11 +358,11 @@ export class ChhAppChangePassPage {
         /*
         bcrypt.hash(this.NewPassword, this.saltRounds).then(
           (hash) => {
-            console.log(hash);
+            //console.log(hash);
             
          
             let resJson = '{"appCode": "DPP","username": "'+this.usename+'","oldPassword": "'+hash+'","newPassword":"'+hash+'"}';
-            console.log(resJson);
+            //console.log(resJson);
             
                /*
             this.patientService.changePassword(smpJSON).subscribe(

@@ -11,8 +11,8 @@ export class ChhAppNewsfeedComponent implements OnInit {
   constructor(    public modalController: ModalController) { }
 
   ngOnInit() {
-    console.log('-----------------');
-    console.log(this.data);
+    //console.log('-----------------');
+    //console.log(this.data);
   }
   async closeModal() {
     await this.modalController.dismiss('none');

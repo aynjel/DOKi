@@ -20,15 +20,15 @@ export class ChhAppIsPatientSeenComponent implements OnInit {
     }else{
       this.yesno = "No";
     }
-      console.log(e.detail.checked);
+      //console.log(e.detail.checked);
       if(e.detail.checked){
         this.insCoor = "Yes";
       }else{
         this.insCoor = "No";
       }*/
 
-      //console.log(e);
-    //  console.log(e.detail.value);
+      ////console.log(e);
+    //  //console.log(e.detail.value);
 
       if(e.detail.value == "y"){
         this.showSelection = true;

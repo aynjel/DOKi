@@ -80,18 +80,18 @@ export class DashboardgraphComponent implements OnInit {
     });
     
 /*
-      console.log(this.data);
+      //console.log(this.data);
       
-      console.log("CritnCrit : "+this.CritnCrit);
-      console.log("site : "+this.site);     
-      console.log("CvdnCvd : "+this.CvdnCvd);
+      //console.log("CritnCrit : "+this.CritnCrit);
+      //console.log("site : "+this.site);     
+      //console.log("CvdnCvd : "+this.CvdnCvd);
 
 */
       this.data.forEach(el => {
         
         if(this.site == "" && this.CvdnCvd == ""){
           if(el.patientType1 == this.CritnCrit ){
-            //console.log(el);
+            ////console.log(el);
 
           }
         }
