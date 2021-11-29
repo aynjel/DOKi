@@ -124,7 +124,7 @@ export class AuthInterceptor implements HttpInterceptor {
         animated: true,
         backdropDismiss: false,
         message:
-          "You have been Idle for a little while",
+          "You have been idle for quite some time...",
         buttons: [
           {
             text: 'Log me out',
