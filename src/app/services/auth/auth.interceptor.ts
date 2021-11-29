@@ -61,7 +61,6 @@ export class AuthInterceptor implements HttpInterceptor {
         if (cloned.url.includes('v3/Admin/Doctors/InPatients') 
         || cloned.url.includes('v3/InPatients/Admin/PatientDetail')) {
             this.isModal =true;
-            console.log('korek');
             
         }
 
