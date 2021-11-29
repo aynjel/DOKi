@@ -183,8 +183,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     // this.data =[];
     // this.data = JSON.parse(atob(sessionStorage.getItem("patientData")));
     this.data = JSON.parse(atob(localStorage.getItem('patientData')));
-    let d = new Date(this.data[0].admission_date);
-    this.dateAdmitted = d.toUTCString();
+    this.dateAdmitted = this.data[0].admission_date;
     this.patient_name = this.data[0].first_name + ' ' + this.data[0].last_name;
     //this.functionsService.logToConsole(this.data);
 
@@ -333,7 +332,8 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
         /*this.postData.ProfFee = 0;
         this.postData.IsVAT = 'N';
         this.postData.PayVenue = 'X';*/
-        this.professionalFeeModelv3.old_prof_fee = 0;
+        this.professionalFeeModelv3.doctor_prof_fee = 0;
+        //this.professionalFeeModelv3.old_prof_fee = 0;
         this.professionalFeeModelv3.is_vat = 'N';
         this.professionalFeeModelv3.payvenue = 'X'
       } else {

@@ -208,8 +208,7 @@ export class TransactionSummaryPage implements OnInit {
       this.site = 'Chong Hua Hospital Mandaue';
     }
 
-    let d = new Date(this.data[0].admission_date);
-    this.dateAdmitted = d.toUTCString();
+    this.dateAdmitted = this.data[0].admission_date;
   }
   disableSubmit: boolean = false;
 

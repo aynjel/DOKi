@@ -246,8 +246,8 @@ export class InPatientDetailPage {
   }
 
   operate() {
-    let d = new Date(this.data[0].admission_date);
-    this.dateAdmitted = d.toLocaleString();
+
+    this.dateAdmitted = this.data[0].admission_date;
     if(this.data[0].forDischargeDateTime != null){
       let f = new Date(this.data[0].forDischargeDateTime);
       this.dischargeNotice = f.toLocaleString();

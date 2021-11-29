@@ -141,8 +141,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     this.dr_name = this.loginResponseModelv3.lastName;
     this.dr_code = this.loginResponseModelv3.doctorCode;
     this.data = JSON.parse(atob(localStorage.getItem('patientData')));
-    let d = new Date(this.data[0].admission_date);
-    this.dateAdmitted = d.toUTCString();
+    this.dateAdmitted = this.data[0].admission_date;
 
     
     this.data1 = this.data[0].doctor_prof_fee;

@@ -57,7 +57,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 this.modaled = localStorage.getItem("modaled");
                 this.jwthas = localStorage.getItem("jwthas");
 
-                  if(error.status == 401 && this.modaled != '1'){
+                  if((error.status == 401 && this.modaled != '1' ) || error.status == 404 && this.modaled != '1' ){
                     //console.log('jwthas = '+this.jwthas);
                     
                     if(this.jwthas == '1'){

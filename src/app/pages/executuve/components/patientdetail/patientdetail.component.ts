@@ -183,8 +183,8 @@ export class PatientdetailComponent implements OnInit {
     //////////console.log(this.data);
     //this.dateAdmitted = this.data[0].admission_date;
 
-    let d = new Date(this.data[0].admission_date);
-    this.dateAdmitted = d.toLocaleString();
+    
+    this.dateAdmitted = this.data[0].admission_date;
 
     //this.dischargeNotice = 
     //console.log(this.data);
