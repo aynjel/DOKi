@@ -4,6 +4,7 @@ import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.serv
 import { Constants } from 'src/app/shared/constants';
 import { StorageService } from "../../services/storage/storage.service";
 import { AuthConstants } from "../../config/auth-constants";
+import { LogoutService } from 'src/app/services/logout/logout.service';
 @Component({
   selector: 'app-chh-app-desktop-navigation',
   templateUrl: './chh-app-desktop-navigation.component.html',
@@ -12,7 +13,8 @@ import { AuthConstants } from "../../config/auth-constants";
 export class ChhAppDesktopNavigationComponent implements OnInit {
 
   isDesktop:any;
-  constructor(private screensizeService: ScreenSizeService,    public constants: Constants,    public router:Router,   private storageService: StorageService,) { 
+  constructor(private screensizeService: ScreenSizeService,    public constants: Constants,    public router:Router,   private storageService: StorageService,
+    private logoutService:LogoutService) { 
 
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -22,12 +24,15 @@ export class ChhAppDesktopNavigationComponent implements OnInit {
     });
   }
   logout() {
+    this.logoutService.out();
+    /*
     this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
-      localStorage.clear();
+
       localStorage.setItem('hasloggedin', '1');
       //window.location.reload();
       this.router.navigate(['/login']);
     });
+    */
   }
 
   ngOnInit() {}

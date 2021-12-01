@@ -72,7 +72,7 @@ export class TabsPage implements OnInit {
       this.userData$.next('');
       localStorage.removeItem('_cap_userDataKey');
       localStorage.removeItem('username');
-      localStorage.clear();
+    
       sessionStorage.clear();
       localStorage.setItem('hasloggedin', '1');
       localStorage.setItem('username',dr_username);

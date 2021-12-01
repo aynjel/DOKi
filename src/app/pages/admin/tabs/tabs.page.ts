@@ -6,6 +6,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import { AuthConstants, Consta } from '../../../config/auth-constants';
 import { Router } from '@angular/router';
 import { ThrowStmt } from '@angular/compiler';
+import { LogoutService } from 'src/app/services/logout/logout.service';
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.page.html',
@@ -18,7 +19,8 @@ export class TabsPage implements OnInit {
     public constants: Constants,
     private storageService: StorageService,
     private router: Router,
-    private renderer: Renderer2) { 
+    private renderer: Renderer2,
+    private logoutService:LogoutService) { 
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         // Reload because our routing is out of place
@@ -42,19 +44,20 @@ export class TabsPage implements OnInit {
       //console.log(res);
     });
     */
-
+    this.logoutService.out();
+    /*
     let dr_username = atob(localStorage.getItem('username'));
     this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
       this.userData$.next('');
       localStorage.removeItem('_cap_userDataKey');
       localStorage.removeItem('username');
-      localStorage.clear();
+      
       sessionStorage.clear();
       localStorage.setItem('username',dr_username);
       localStorage.setItem('hasloggedin', '1');
 
       this.router.navigate(['/login']);
-    });
+    });*/
 
   }
   checkAppearance() {

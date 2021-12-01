@@ -15,6 +15,7 @@ import { DoctorService } from './services/doctor/doctor.service';
 import { StorageService } from './services/storage/storage.service';
 import { AuthConstants, Consta } from './config/auth-constants';
 import { BehaviorSubject } from 'rxjs';
+import { LogoutService } from './services/logout/logout.service';
 
 @Component({
   selector: 'app-root',
@@ -35,7 +36,8 @@ export class AppComponent {
     private userIdle: UserIdleService,
     public router: Router,
     private doctorService: DoctorService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private logoutService:LogoutService
   ) {
     this.initializeApp();
     this.updateClient();
@@ -86,7 +88,7 @@ export class AppComponent {
     // Start watch when time is up.
     this.userIdle.onTimeout().subscribe(() => {
       this.alertController.dismiss();
-      localStorage.clear();
+
       localStorage.setItem('promptLogout', '1');
       localStorage.setItem('hasloggedin', '1');
       this.router.navigate(['/login']).then(() => {
@@ -167,16 +169,7 @@ export class AppComponent {
        },
        () => {
         let dr_username = atob(localStorage.getItem('username'));
-        this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
-          this.userData$.next('');
-          localStorage.removeItem('_cap_userDataKey');
-          localStorage.removeItem('username');
-          localStorage.clear();
-          sessionStorage.clear();
-          localStorage.setItem('hasloggedin', '1');
-          localStorage.setItem('username',dr_username);
-          this.router.navigate(['/login']);
-        });
+        this.logoutService.out();
        }
     );
     

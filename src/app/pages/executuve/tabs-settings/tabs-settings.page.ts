@@ -494,7 +494,7 @@ export class TabsSettingsPage implements OnInit {
       this.userData$.next('');
       localStorage.removeItem('_cap_userDataKey');
       localStorage.removeItem('username');
-      localStorage.clear();
+
       sessionStorage.clear();
       localStorage.setItem('username',dr_username);
       localStorage.setItem('hasloggedin', '1');
@@ -537,7 +537,7 @@ export class TabsSettingsPage implements OnInit {
               this.logoutService.out();
               /*
               let dr_username = atob(localStorage.getItem('username'));
-              localStorage.clear();
+            
               localStorage.setItem('username',dr_username);
               this.router.navigate(['/login']);*/
             },

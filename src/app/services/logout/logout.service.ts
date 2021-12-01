@@ -29,7 +29,19 @@ export class LogoutService {
     });
     let dr_username = atob(localStorage.getItem('username'));
     this.userData$.next('');
-    localStorage.clear();
+
+    localStorage.removeItem('tokenExpired');
+    localStorage.removeItem('role_flag');
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('_cap_userDataKey');
+    localStorage.removeItem('user_settings');
+    localStorage.removeItem('isIdle');
+    localStorage.removeItem('modaled');
+    localStorage.removeItem('promptLogout');
+    localStorage.removeItem('isIdlestarted');
+    localStorage.removeItem('patientData');
+    localStorage.removeItem('postData1');
+    localStorage.removeItem('daysManaged');
     localStorage.setItem('srnm',dr_username);
     localStorage.setItem('hasloggedin', '1');
     this.router.navigate(['/login']);
