@@ -324,7 +324,7 @@ export class PatientdetailComponent implements OnInit {
     });
     console.log(this.doctorDetail);
     
-    if(this.doctorDetail != ""){
+    if(this.doctorDetail != undefined){
       console.log('show popup');
       
       const modal = await this.modalController.create({
