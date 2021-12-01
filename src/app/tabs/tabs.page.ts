@@ -77,7 +77,7 @@ export class TabsPage {
 
   ngOnInit() {
 
-   
+    localStorage.setItem('tokenExpired','0');
     
     if (localStorage.getItem('isIdle') == '1') {
         if (localStorage.getItem('isIdlestarted')==null) {

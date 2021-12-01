@@ -135,7 +135,7 @@ export class LoginPage {
 
   /*V3 App*/
   startLoginProcessV3(){
-
+    localStorage.setItem('tokenExpired','0');
     this.loginModelv3 = new LoginModelv3();
     this.loginModelv3.userNameOrEmail = this.postData.username;
     this.loginModelv3.password = this.postData.password;

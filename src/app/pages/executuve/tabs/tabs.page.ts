@@ -41,7 +41,7 @@ export class TabsPage implements OnInit {
 
   ngOnInit() {
     this.loginResponseModelv3 = new LoginResponseModelv3();
-    
+    localStorage.setItem('tokenExpired','0');
     this.checkAppearance();
     //console.log( this.authService.userData$.getValue());
   }

@@ -34,131 +34,82 @@ export class AuthInterceptor implements HttpInterceptor {
         this.revokeTokenV3 = new RevokeTokenV3();
         this.revokeTokenV3.jwt = localStorage.getItem("id_token");
         if(idToken){
-          //////console.log('token is alive');
-          
-            const cloned = 
-            //req.clone({headers:req.headers.set("Authorization",idToken)});
-
+           
+          const cloned = 
            req.clone({
                 setHeaders: {
                   Accept: 'application/json',
                   'Content-Type': 'application/json',Authorization: `Bearer ${idToken}`
                 }
               });
-
-
-
-           // return next.handle(cloned);
            return next.handle(cloned).pipe(
             map((event: HttpEvent<any>) => {
-                if (event instanceof HttpResponse) {
-                  localStorage.setItem("modaled","0");
-                }
+                if (event instanceof HttpResponse){}
                 return event;
             }),catchError((error: HttpErrorResponse) => {
-              ////console.log(cloned.url);
-              
-        if (cloned.url.includes('v3/Admin/Doctors/InPatients') 
-        || cloned.url.includes('v3/InPatients/Admin/PatientDetail')) {
-            this.isModal =true;
-            
-        }
-
-              
-                this.modaled = localStorage.getItem("modaled");
-                this.jwthas = localStorage.getItem("jwthas");
-
-                  if((error.status == 401 && this.modaled != '1' ) ){
-                    //////console.log('jwthas = '+this.jwthas);
-                    
-                    if(this.jwthas == '1'){
-                      //////console.log("jwt has = 1");
-                      
-                      this.logout();
-                    }else{
-                      //////console.log("show pop-up");
-                      this.timerExpired();
-                      localStorage.setItem("modaled","1");
-                      localStorage.setItem("jwthas","1");
-                    }
-                  }
+              if(error.status == 401){
+                this.timerExpired();
+              }
                 return throwError(error);
             }));
 
            
         }else{
           return next.handle(req);
-          /*
-            return next.handle(req).pipe(
-              map((event: HttpEvent<any>) => {
-                  if (event instanceof HttpResponse) {
-                     // //////console.log('event--->>>', event);
-                  }
-                  return event;
-              }),
-              catchError((error: HttpErrorResponse) => {
-                  this.modaled = localStorage.getItem("modaled");
-                  this.jwthas = localStorage.getItem("jwthas");
-
-                    if(error.status == 401 && this.modaled != '1'){
-                      if(this.jwthas == '1'){
-                        this.logout();
-                      }else{
-                        this.timerExpired();
-                        localStorage.setItem("modaled","1");
-                        localStorage.setItem("jwthas","1");
-                      }
-                    }
-                 // //////console.log(error.status);
-                  return throwError(error);
-              }));*/
         }
     }
 
-
+    tokenExpired:any;
+    tokenExpiredLog:any;
+    
     async timerExpired() {
-
-      const alert = await this.alertController.create({
-        cssClass: 'my-custom-class',
-        header: 'Dok, are you still there?',
-        animated: true,
-        backdropDismiss: false,
-        message:
-          "You have been idle for quite some time...",
-        buttons: [
-          {
-            text: 'Log me out',
-            // role: 'cancel',
-            cssClass: 'secondary',
-            handler: () => {
-              this.logout();
+      const tokenExpiredLog = localStorage.getItem("tokenExpired");
+      console.log(tokenExpiredLog);
+     
+      if(tokenExpiredLog == '0'){
+        localStorage.setItem('tokenExpired','1');
+        this.tokenExpired = await this.alertController.create({
+          cssClass: 'my-custom-class',
+          header: 'Dok, are you still there?',
+          animated: true,
+          backdropDismiss: false,
+          message:
+            "You have been idle for quite some time...",
+          buttons: [
+            {
+              text: 'Log me out',
+              cssClass: 'secondary',
+              handler: () => {
+                this.logout();
+              },
             },
-          },
-          {
-            text: 'Keep me in',
-            handler: () => {
-              let xdata : any;
-              this.doctorService.refreshTokenV3().subscribe(
-              (res: any) => {
-                ////console.log(xdata);
-                xdata=res;
-              },(error) =>{
-                this.logoutPopup();
-              }, () => {
-                if(xdata.isAuthenticated){
-                localStorage.setItem("id_token",xdata.jwt);
-                localStorage.setItem("modaled","0");
-                window.location.reload();
-              }else{
-                this.logoutPopup();
-              }
-              });
-              
+            {
+              text: 'Keep me in',
+              handler: () => {
+                localStorage.setItem('tokenExpired','0');
+                this.tokenExpired = null;
+                let xdata : any;
+                this.doctorService.refreshTokenV3().subscribe(
+                  (res: any) => {
+                    ////console.log(xdata);
+                    xdata=res;
+                  },(error) =>{
+                    this.logoutPopup();
+                  }, () => {
+                    if(xdata.isAuthenticated){
+                      localStorage.setItem("id_token",xdata.jwt);
+                      window.location.reload();
+                    }else{
+                      this.logoutPopup();
+                    }
+                });
+                
+              },
             },
-          },
-        ],
-      });
-      await alert.present();
+          ],
+        });
+        await this.tokenExpired.present();
+      }
     }
     logout(){
       let dr_username = atob(localStorage.getItem('username'));
