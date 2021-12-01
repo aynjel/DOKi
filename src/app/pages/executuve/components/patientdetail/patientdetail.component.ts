@@ -46,7 +46,7 @@ import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
 import { InpatientModelInpatients,InpatientDetails } from '../../../../models/doctor';
 import { ExecutiveService } from 'src/app/services/executive/executive.service';
 import { AnyRecordWithTtl } from 'dns';
-
+import {DoctordetailComponent} from "../../components/doctordetail/doctordetail.component";
 @Component({
   selector: 'app-patientdetail',
   templateUrl: './patientdetail.component.html',
@@ -57,7 +57,7 @@ export class PatientdetailComponent implements OnInit {
   @Input() patientdetail: any;
   @Input() drcode: any;
   @Input() fromPatientList: any = false;
-
+  @Input() doctorDetail: any;
   inpatientModelInpatients = new InpatientModelInpatients;
 
   data: any = [];
@@ -318,10 +318,28 @@ export class PatientdetailComponent implements OnInit {
   }
 
 
-  closemodal(){
+  async closemodal(){
     this.modalController.dismiss({
       'dismissed': true
     });
+    console.log(this.doctorDetail);
+    
+    if(this.doctorDetail != ""){
+      console.log('show popup');
+      
+      const modal = await this.modalController.create({
+        component: DoctordetailComponent,
+        cssClass: 'my-custom-modal',
+        componentProps: {
+          'patientdetail': this.doctorDetail,
+          'drcode': this.drcode,
+          'doctorDetail':this.doctorDetail
+        },
+        animated:false
+      });
+      return await modal.present();
+    }
+
   }
   moreOrLess: boolean = false;
   moreorless(data) {

@@ -82,14 +82,23 @@ export class DoctordetailComponent implements OnInit {
     );
   }
   async detail(x) {
-    //localStorage.setItem('patientdetails', btoa(JSON.stringify(x)));
+    this.modalController.getTop().then((res)=>{
+      if(res){
+        
+        this.modalController.dismiss({
+          'dismissed': true
+        });
+      }
+    });
     const modal = await this.modalController.create({
       component: PatientdetailComponent,
       cssClass: 'my-custom-modal-c',
       componentProps: {
         'patientdetail': x,
         'drcode': this.activatedRoute.snapshot.params.id,
-      }
+        'doctorDetail':this.doctorDetail
+      },
+      animated:false
     });
     return await modal.present();
   }
