@@ -37,7 +37,7 @@ export class LogoutService {
     localStorage.removeItem('user_settings');
     localStorage.removeItem('isIdle');
     localStorage.removeItem('modaled');
-    localStorage.removeItem('promptLogout');
+    //localStorage.removeItem('promptLogout');
     localStorage.removeItem('isIdlestarted');
     localStorage.removeItem('patientData');
     localStorage.removeItem('postData1');
