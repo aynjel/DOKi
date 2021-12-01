@@ -10,6 +10,7 @@ import {UserSettingsModelv3,LoginResponseModelv3, RevokeTokenV3} from 'src/app/m
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
 import { FunctionsService } from 'src/app/shared/functions/functions.service';
+import { LogoutService } from 'src/app/services/logout/logout.service';
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.page.html',
@@ -28,7 +29,8 @@ export class TabsPage implements OnInit {
     private renderer: Renderer2,
     private authService: AuthService,
     private doctorService: DoctorService,
-    public functionsService: FunctionsService) { 
+    public functionsService: FunctionsService,
+    private logoutService:LogoutService) { 
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         // Reload because our routing is out of place
@@ -63,7 +65,8 @@ export class TabsPage implements OnInit {
     });
     
 
-
+    this.logoutService.out();
+    /*
     let dr_username = atob(localStorage.getItem('username'));
     this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
       this.userData$.next('');
@@ -74,7 +77,7 @@ export class TabsPage implements OnInit {
       localStorage.setItem('hasloggedin', '1');
       localStorage.setItem('username',dr_username);
       this.router.navigate(['/login']);
-    });
+    });*/
 
   }
   checkAppearance() {

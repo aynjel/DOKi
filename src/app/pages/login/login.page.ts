@@ -103,7 +103,7 @@ export class LoginPage {
   btnDisable: boolean = false;
 
   ngOnInit() {
-    this.postData.username = localStorage.getItem('username');
+    this.postData.username = localStorage.getItem('srnm');
     this.loginResponseModel = new LoginResponseModel;
     this.onDarkModeEnable();
     this.$gaService.pageView('/login', 'Login Page');

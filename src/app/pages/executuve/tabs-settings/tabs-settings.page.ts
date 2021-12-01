@@ -29,6 +29,7 @@ import { element } from 'protractor';
 import {UserSettingsModelv3,LoginResponseModelv3,AppSettingsModelv3,RevokeTokenV3} from 'src/app/models/doctor';
 import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
 import { catchError } from 'rxjs/operators';
+import { LogoutService } from 'src/app/services/logout/logout.service';
 
 
 @Component({
@@ -94,7 +95,8 @@ export class TabsSettingsPage implements OnInit {
     private actionSheetController: ActionSheetController,
     private patientService: PatientService,
     public alertController: AlertController,
-    private doctorService: DoctorService
+    private doctorService: DoctorService,
+    private logoutService:LogoutService
   ) {
     this.privacyPolicy = true;
 
@@ -485,7 +487,8 @@ export class TabsSettingsPage implements OnInit {
     this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
       this.functionsService.logToConsole(res);
     });
-    
+    this.logoutService.out();
+    /*
     let dr_username = atob(localStorage.getItem('username'));
     this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
       this.userData$.next('');
@@ -497,7 +500,7 @@ export class TabsSettingsPage implements OnInit {
       localStorage.setItem('hasloggedin', '1');
       this.renderer.setAttribute(document.body, 'color-theme', 'light');
       this.router.navigate(['/login']);
-    });
+    });*/
 
   }
   //OPT-OUT of PRIVACY POLICY
@@ -531,10 +534,12 @@ export class TabsSettingsPage implements OnInit {
               this.privacyPolicy = true;
               this.userData$.next('');
               */
+              this.logoutService.out();
+              /*
               let dr_username = atob(localStorage.getItem('username'));
               localStorage.clear();
               localStorage.setItem('username',dr_username);
-              this.router.navigate(['/login']);
+              this.router.navigate(['/login']);*/
             },
           },
           {

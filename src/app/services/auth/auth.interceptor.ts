@@ -13,6 +13,7 @@ import { AuthConstants, Consta } from '../../config/auth-constants';
 
 import { BehaviorSubject } from 'rxjs';
 import { FunctionsService } from 'src/app/shared/functions/functions.service';
+import { LogoutService } from '../logout/logout.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -25,7 +26,8 @@ export class AuthInterceptor implements HttpInterceptor {
     private doctorService: DoctorService,
     private storageService: StorageService,
     public functionsService: FunctionsService,
-    public modalController: ModalController) { }
+    public modalController: ModalController,
+    private logoutService:LogoutService) { }
     modaled:any;
     jwthas:any;
     public revokeTokenV3: RevokeTokenV3; 
@@ -63,8 +65,14 @@ export class AuthInterceptor implements HttpInterceptor {
     tokenExpiredLog:any;
     
     async timerExpired() {
-      const tokenExpiredLog = localStorage.getItem("tokenExpired");
-      console.log(tokenExpiredLog);
+      let tokenExpiredLog = localStorage.getItem("tokenExpired");
+      if(tokenExpiredLog == '0' || tokenExpiredLog == '1'){
+
+      }else{
+        localStorage.setItem('tokenExpired','0');
+        tokenExpiredLog = localStorage.getItem("tokenExpired");
+      }
+      //console.log(tokenExpiredLog);
      
       if(tokenExpiredLog == '0'){
         localStorage.setItem('tokenExpired','1');
@@ -91,7 +99,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 let xdata : any;
                 this.doctorService.refreshTokenV3().subscribe(
                   (res: any) => {
-                    ////console.log(xdata);
+                    //////console.log(xdata);
                     xdata=res;
                   },(error) =>{
                     this.logoutPopup();
@@ -117,13 +125,13 @@ export class AuthInterceptor implements HttpInterceptor {
       localStorage.setItem("torevoketoken","1");
       this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe(
         (res: any) => {
-          //////console.log(res);
+          ////////console.log(res);
         },(error) => {
-          this.out();
+          this.logoutService.out();
          },
          () => {
 
-          this.out();
+          this.logoutService.out();
          }
       );
       
@@ -139,7 +147,7 @@ export class AuthInterceptor implements HttpInterceptor {
           {
             text: 'Ok',
             handler: () => {
-              this.out();
+              this.logoutService.out();
             },
           },
         ],
@@ -151,29 +159,7 @@ export class AuthInterceptor implements HttpInterceptor {
         'dismissed': true
       });
     }
-    out(){
-
-        this.closemodal();
-
-      
-      let dr_username = atob(localStorage.getItem('username'));
-      this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
-        this.userData$.next('');
-        localStorage.removeItem('_cap_userDataKey');
-        localStorage.removeItem('username');
-        localStorage.clear();
-        sessionStorage.clear();
-        localStorage.setItem('username',dr_username);
-        localStorage.setItem('hasloggedin', '1');
-       
-        this.router.navigate(['/login']);
-        this.closemodal();
-      },(error)=>{
-        this.router.navigate(['/login']);
-        this.closemodal();
-      });
-    }
-
+   
 
 
 

@@ -18,6 +18,7 @@ import { DoctorService } from "../services/doctor/doctor.service";
 import { UserIdleService } from "angular-user-idle";
 import { AlertController } from "@ionic/angular";
 import { merge } from "highcharts";
+import { LogoutService } from "../services/logout/logout.service";
 
 
 @Component({
@@ -46,7 +47,8 @@ export class TabsPage {
     private authService: AuthService,
     private doctorService: DoctorService,
     private userIdle: UserIdleService,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private logoutService:LogoutService
   ) {
     this.functionsService.logToConsole('constructor');
     this.userIdle.setCustomActivityEvents(
@@ -250,7 +252,8 @@ export class TabsPage {
     });
     
 
-    
+    this.logoutService.out();
+    /*
     this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
       this.userData$.next('');
       localStorage.removeItem('_cap_userDataKey');
@@ -261,7 +264,7 @@ export class TabsPage {
       localStorage.setItem('username',this.dr_username);
       this.userIdle.stopWatching();
       this.router.navigate(['/login']);
-    });
+    });*/
 
   }
 }
