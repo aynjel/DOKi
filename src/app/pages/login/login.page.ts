@@ -470,6 +470,11 @@ export class LoginPage {
           false
         );
       } else {
+        this.modalUpdateV3(
+          this.constants.UI_COMPONENT_TEXT_VALUE_PASSWORD_FAILED_TITLE,
+          data.data,
+          false
+        );
         this.btnDisable = false;
       }
     });
