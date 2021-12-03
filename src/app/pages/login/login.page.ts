@@ -786,7 +786,7 @@ export class LoginPage {
   checkbcrypt() {
     let json =
       '{"appCode": "DPP","username": "' + this.postData.username + '"}';
-    this.patientService.commonValidate(json).subscribe(
+    this.patientService.commonLoginGet(json).subscribe(
       (res: any) => {
         this.resultJson = res;
       },
