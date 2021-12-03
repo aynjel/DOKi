@@ -469,6 +469,8 @@ export class LoginPage {
           this.constants.UI_COMPONENT_TEXT_VALUE_UPDATE_PASSWORD_FAILED_BODY,
           false
         );
+      }else{
+        this.btnDisable = false;
       }
     });
     return await modal.present();
