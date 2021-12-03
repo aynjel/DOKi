@@ -260,7 +260,7 @@ export class ChhAppChangePasswordPage {
             if(dJson.succeeded){
               this.modalController.dismiss("Success");
             }else{
-              this.modalController.dismiss(dJson.errors[0].description);
+              this.modalController.dismiss("False");
             }
             this.btnDisable = false;
           }

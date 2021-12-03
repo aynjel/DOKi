@@ -462,20 +462,13 @@ export class LoginPage {
           true
         );
         this.btnDisable = false;
-      } else if (data.data == 'Error') {
+      } else if (data.data == 'False') {
         this.btnDisable = false;
         this.modalUpdateV3(
           this.constants.UI_COMPONENT_TEXT_VALUE_PASSWORD_FAILED_TITLE,
           this.constants.UI_COMPONENT_TEXT_VALUE_UPDATE_PASSWORD_FAILED_BODY,
           false
         );
-      } else {
-        this.modalUpdateV3(
-          this.constants.UI_COMPONENT_TEXT_VALUE_PASSWORD_FAILED_TITLE,
-          data.data,
-          false
-        );
-        this.btnDisable = false;
       }
     });
     return await modal.present();
