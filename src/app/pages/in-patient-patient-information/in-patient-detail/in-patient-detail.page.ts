@@ -227,7 +227,7 @@ export class InPatientDetailPage {
       this.presentLoading();
     this.executiveService.getPatientDetail(ppatientdata).subscribe(
       (res: any) => {   
-        console.log(res);
+        //console.log(res);
         this.data1 = JSON.parse('['+JSON.stringify(res)+']');
         localStorage.setItem('patientData',btoa(JSON.stringify(this.data1)));
       },
@@ -278,7 +278,7 @@ export class InPatientDetailPage {
     await this.loading.present();
 
     const { role, data } = await this.loading.onDidDismiss();
-    //////////console.log('Loading dismissed!');
+    ////////////console.log('Loading dismissed!');
   }
   public async dismissLoading(): Promise<void> {
     if (this.loading) {
@@ -303,10 +303,8 @@ export class InPatientDetailPage {
   operate() {
 
     this.dateAdmitted = this.data[0].admission_date;
-    if(this.data[0].forDischargeDateTime != null){
-      let f = new Date(this.data[0].forDischargeDateTime);
-      this.dischargeNotice = f.toLocaleString();
-    }
+    this.dischargeNotice = this.data[0].forDischargeDateTime;
+
 
     this.$gaService.pageView(
       '/In-Patient/Patient Details',
