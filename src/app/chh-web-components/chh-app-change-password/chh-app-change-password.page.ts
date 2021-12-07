@@ -260,7 +260,14 @@ export class ChhAppChangePasswordPage {
             if(dJson.succeeded){
               this.modalController.dismiss("Success");
             }else{
-              this.modalController.dismiss("False");
+              if(dJson.errors[0].code == "PasswordMismatch"){
+                this.modalUpdateV3(
+                  this.constants.UI_COMPONENT_TEXT_VALUE_PASSWORD_FAILED_TITLE,
+                  dJson.errors[0].description,
+                  false
+                );
+              }
+              //this.modalController.dismiss(dJson.errors[0].description);
             }
             this.btnDisable = false;
           }
@@ -279,5 +286,24 @@ export class ChhAppChangePasswordPage {
       }
     );
 */
+  }
+
+
+  async modalUpdateV3(header, message, data) {
+    this.btnDisable = false;
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: header,
+      message: message,
+      buttons: [
+        {
+          text: 'Okay',
+          handler: () => {
+
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 }

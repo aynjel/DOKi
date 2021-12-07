@@ -469,8 +469,17 @@ export class LoginPage {
           this.constants.UI_COMPONENT_TEXT_VALUE_UPDATE_PASSWORD_FAILED_BODY,
           false
         );
+      } else if (data.data == 'None') {
+        this.btnDisable = false;
+        console.log('none');
+        
       }else{
         this.btnDisable = false;
+        this.modalUpdateV3(
+          this.constants.UI_COMPONENT_TEXT_VALUE_PASSWORD_FAILED_TITLE,
+          data.data,
+          false
+        );
       }
     });
     return await modal.present();
