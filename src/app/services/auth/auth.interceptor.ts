@@ -99,7 +99,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 let xdata : any;
                 this.doctorService.refreshTokenV3().subscribe(
                   (res: any) => {
-                    //////console.log(xdata);
+                    console.log(res);
                     xdata=res;
                   },(error) =>{
                     this.logoutPopup();

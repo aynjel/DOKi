@@ -126,7 +126,7 @@ export class Constants {
   public UI_COMPONENT_TEXT__VALUE__SETTINGS_APPEARANCE_DARK_MODE: string =
     'Switch to Dark Mode';
   public UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO: string =
-    'For inquiries, please contact DOKi App Project Team';
+    'For inquiries, please contact the DOKi App Team:';
   public UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_TELEPHONE: string =
     '+63 32 233 8000 local 8888';
   public UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_TELEPHONE_HREF: string =
@@ -161,7 +161,7 @@ export class Constants {
   /**
    * Version
    */
-  public DOCTOR_PORTAL__VALUE__VERSION: string = '2.1.11';
+  public DOCTOR_PORTAL__VALUE__VERSION: string = '2.1.13';
 
   // (W)
   /**
