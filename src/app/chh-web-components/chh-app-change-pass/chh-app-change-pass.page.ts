@@ -225,7 +225,7 @@ export class ChhAppChangePassPage {
     let json = '{"appCode": "DPP","username": "' + this.dr_username + '"}';
     let resultJson;
 
-    this.patientService.commonValidate(json).subscribe(
+    /*this.patientService.commonValidate(json).subscribe(
       (res: any) => {
         resultJson = res.data;
       },
@@ -233,7 +233,7 @@ export class ChhAppChangePassPage {
       () => {
         this.hashed_oldPassword = resultJson;
       }
-    );
+    );*/
   }
 
   async closeModal() {
