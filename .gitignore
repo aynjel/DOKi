@@ -46,3 +46,5 @@ npm-debug.log*
 
 # Ignore VS Code Counter files
 /.VSCodeCounter
+
+.fake
