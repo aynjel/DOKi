@@ -109,6 +109,10 @@ export class ChhAppChangePasswordPage {
         ],
         confirmPassword: [null, Validators.compose([Validators.required])],
         oldPassword: ['', '']
+      },
+      {
+        // check whether our password and confirm password match
+        validator: CustomValidators.passwordMatchValidator,
       }
     );
   }
@@ -288,6 +292,16 @@ export class ChhAppChangePasswordPage {
 */
   }
 
+  btnSubmit:boolean = false;
+  inputchange(){
+    let Opass:boolean;
+    if(this.OldPassword == '' || this.OldPassword == undefined){
+      Opass = false;
+    }else{
+      Opass = true;
+    }
+    this.btnSubmit = (Opass && !this.frmSignup.invalid);
+  }
 
   async modalUpdateV3(header, message, data) {
     this.btnDisable = false;

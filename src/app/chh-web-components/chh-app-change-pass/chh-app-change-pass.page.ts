@@ -235,6 +235,19 @@ export class ChhAppChangePassPage {
       }
     );*/
   }
+  btnSubmit:boolean = false;
+  inputchange(){
+    let Opass:boolean;
+    if(this.OldPassword == '' || this.OldPassword == undefined){
+      Opass = false;
+    }else{
+      Opass = true;
+    }
+    this.btnSubmit = (Opass && !this.frmSignup.invalid);
+  }
+
+
+
 
   async closeModal() {
     await this.modalController.dismiss('none');
@@ -300,7 +313,9 @@ export class ChhAppChangePassPage {
             (res: any) => {
               this.serverResponse = res;
             },
-            (error) => {},
+            (error) => {
+              this.modalUpdate('Error','Error saving Password',false);
+            },
             () => {
               if(this.serverResponse.succeeded){
                 this.modalController.dismiss("Success");
@@ -355,35 +370,6 @@ export class ChhAppChangePassPage {
       myDiv2.style.color = 'black';
       if (this.NewPassword != this.OldPassword) {
         this.validatePassword();
-        /*
-        bcrypt.hash(this.NewPassword, this.saltRounds).then(
-          (hash) => {
-            //console.log(hash);
-            
-         
-            let resJson = '{"appCode": "DPP","username": "'+this.usename+'","oldPassword": "'+hash+'","newPassword":"'+hash+'"}';
-            //console.log(resJson);
-            
-               /*
-            this.patientService.changePassword(smpJSON).subscribe(
-              (res) => {
-                this.serverResponse = res; 
-              },(error)=>{
-                this.functionsService.alert(
-                  "Sorry, Dok. We cannot change your password at the moment. Please try again.",
-                  "Okay"
-                );
-              },()=>{
-                if(typeof this.serverResponse.ErrorCode !== 'undefined'){
-                  this.alert(this.serverResponse.ErrorDescription,"Okay",false);
-                }else{
-                  this.alert(this.serverResponse.Message,"Okay",true);
-                }
-              }
-            );
-          }
-        );
-        */
       } else {
         this.errMessage = ' (Old and New Passwords are the same)';
         let myDiv0 = document.getElementById('pWord0');
