@@ -141,7 +141,7 @@ export class AuthInterceptor implements HttpInterceptor {
       let dr_username = atob(localStorage.getItem('username'));
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
-        header: 'Your session has expired.',
+        header: 'Your session has expired. Please log in again.',
         message: '',
         buttons: [
           {

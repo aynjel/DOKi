@@ -146,7 +146,7 @@ export class Constants {
     "Great! You've successfully changed it! Please log in again using your new password. ";
 
   public UI_COMPONENT_TEXT_VALUE_UPDATE_PASSWORD_FAILED_BODY =
-    'U-oh! There was a problem updating your password. Please try again.';
+    'U-oh! There was a problem updating your password. Please try again. If problem still persists, please contact the DOKi App Team at doki@chonghua.com.ph';
   public UI_COMPONENT_TEXT_VALUE_CHANGE_PASSWORD_FAILED_BODY =
     "It seems that the current password you entered can't be found in our system. Please try again. ";
 
@@ -161,7 +161,7 @@ export class Constants {
   /**
    * Version
    */
-  public DOCTOR_PORTAL__VALUE__VERSION: string = '2.1.16';
+  public DOCTOR_PORTAL__VALUE__VERSION: string = '2.1.17';
 
   // (W)
   /**
