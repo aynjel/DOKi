@@ -44,6 +44,8 @@ export class LogoutService {
     localStorage.removeItem('daysManaged');
     localStorage.setItem('srnm',dr_username);
     localStorage.setItem('hasloggedin', '1');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login']).then(() => {
+      window.location.reload();
+    });
   }
 }

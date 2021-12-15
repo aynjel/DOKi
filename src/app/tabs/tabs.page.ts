@@ -60,7 +60,7 @@ export class TabsPage {
     fromEvent(document, 'touchend')
 );
 
-    localStorage.setItem('promptLogout', '1');
+    
     localStorage.removeItem("isIdlestarted");
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -84,6 +84,7 @@ export class TabsPage {
     if (localStorage.getItem('isIdle') == '1') {
         if (localStorage.getItem('isIdlestarted')==null) {
           this.functionsService.logToConsole("IDLE WATCH : "+localStorage.getItem('isIdlestarted'));
+          this.userIdle.stopTimer();
           this.userIdle.startWatching();
           
           localStorage.setItem('isIdlestarted', '1');
@@ -100,9 +101,9 @@ export class TabsPage {
         if (localStorage.getItem('isIdle') == '1') {
           this.functionsService.logToConsole(count);
           if (count == 1) {
-            //if (localStorage.getItem('timerPrompt')==null) {
+            if(this.alert.length == 0){
               this.timerExpired();
-            //}
+            }
           }
         } else {
           this.functionsService.logToConsole("timer stopped");
@@ -115,9 +116,11 @@ export class TabsPage {
       // Start watch when time is up.
       let dr_username = atob(localStorage.getItem('username'));
       this.userIdle.onTimeout().subscribe(() => {
+        localStorage.setItem('promptLogout', '1');
         this.userIdle.stopWatching();
         this.alertController.dismiss();
-        this.logoutService.out();
+        this.logout();
+        this.alert=[];
       });
   
   
@@ -125,10 +128,10 @@ export class TabsPage {
   
 
   }
-
+  alert:any = [];
   async timerExpired() {
     //localStorage.setItem('timerPrompt', '1');
-    const alert = await this.alertController.create({
+    this.alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Dok, are you still there?',
       animated: true,
@@ -142,6 +145,7 @@ export class TabsPage {
           cssClass: 'secondary',
           handler: () => {
             this.logout();
+            this.alert=[];
           },
         },
         {
@@ -150,11 +154,12 @@ export class TabsPage {
             //localStorage.removeItem("timerPrompt");
             this.alertController.dismiss();
             this.userIdle.stopTimer();
+            this.alert=[];
           },
         },
       ],
     });
-    await alert.present();
+    await this.alert.present();
   }
 
 
