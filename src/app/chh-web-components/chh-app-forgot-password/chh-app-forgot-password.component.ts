@@ -39,31 +39,56 @@ export class ChhAppForgotPasswordComponent implements OnInit {
     //console.log(this.forgotPasswordV3);
     
     if(this.forgotPasswordV3.doctorCode == null || this.forgotPasswordV3.email == null){
-      this.alert('Email and Doctor Code are needed to recover your access.','Okay');
+      this.btnDisable = false;
+      this.alert('Ooops!','Email and Doctor Code are needed to recover your access.','Okay',false);
     }else{
       this.doctorService.forgotPasswordV3(this.forgotPasswordV3).subscribe(
         (res: any) => {
         },(error) => {
           this.btnDisable = false;
+          this.alert('Ooops!','U-oh! Make sure to submit valid information and try again. If problem still persists, please contact the DOKi App Team at doki@chonghua.com.ph.','Okay',false);
         },() => {
           this.btnDisable = false;
-          this.alert('We have received your request. Kindly check your email.','Okay');
+          this.alert('Success','We have received your request. Kindly check your email.','Okay',true);
         }
       );
     }
   }
-  async alert(data1: any, data2: any) {
+  async alert(data0:any,data1: any, data2: any,data3:boolean) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
+      header: data0,
+      message: data1,
+      buttons: [
+       {
+          text: data2,
+          handler: () => {
+            if(data3){
+              this.modalController.dismiss('none');
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+    /*
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header, data0,
       message: data1,
       backdropDismiss: false,
       buttons: [{ text: data2, handler: (
         
       ) => {
-        this.modalController.dismiss('none');
+        if(data3){
+          this.modalController.dismiss('none');
+        }
+
 
       } }],
     });
-    await alert.present();
+    await alert.present();*/
   }
+  
 }
