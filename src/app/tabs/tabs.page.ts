@@ -100,9 +100,9 @@ export class TabsPage {
         if (localStorage.getItem('isIdle') == '1') {
           this.functionsService.logToConsole(count);
           if (count == 1) {
-            if (localStorage.getItem('timerPrompt')==null) {
+            //if (localStorage.getItem('timerPrompt')==null) {
               this.timerExpired();
-            }
+            //}
           }
         } else {
           this.functionsService.logToConsole("timer stopped");
@@ -118,15 +118,6 @@ export class TabsPage {
         this.userIdle.stopWatching();
         this.alertController.dismiss();
         this.logoutService.out();
-        /*
-    
-        localStorage.setItem('promptLogout', '1');
-        localStorage.setItem('hasloggedin', '1');
-        localStorage.setItem('username',dr_username);
-        this.router.navigate(['/login']).then(() => {
-          window.location.reload();
-        });
-        */
       });
   
   
@@ -136,7 +127,7 @@ export class TabsPage {
   }
 
   async timerExpired() {
-    localStorage.setItem('timerPrompt', '1');
+    //localStorage.setItem('timerPrompt', '1');
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Dok, are you still there?',
@@ -156,7 +147,7 @@ export class TabsPage {
         {
           text: 'Keep me in',
           handler: () => {
-            localStorage.removeItem("timerPrompt");
+            //localStorage.removeItem("timerPrompt");
             this.alertController.dismiss();
             this.userIdle.stopTimer();
           },
