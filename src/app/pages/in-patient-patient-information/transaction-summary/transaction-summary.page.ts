@@ -235,7 +235,7 @@ export class TransactionSummaryPage implements OnInit {
             );
           } else {
             this.functionsService.alert(
-              'UPDATING of Professional Fee was Unsuccessful',
+              'UPDATING of Professional Fee was unsuccessful. Please try again.',
               'Okay'
             );
             this.disableSubmit = false;
@@ -243,7 +243,7 @@ export class TransactionSummaryPage implements OnInit {
         },
         (error) => {
           this.functionsService.alert(
-            'SAVING of Professional Fee was Unsuccessful',
+            'SAVING of Professional Fee was unsuccessful. Please try again.',
             'Okay'
           );
           this.disableSubmit = false;
@@ -264,7 +264,7 @@ export class TransactionSummaryPage implements OnInit {
             );
           } else {
             this.functionsService.alert(
-              'SAVING of Professional Fee was Unsuccessful',
+              'SAVING of Professional Fee was unsuccessful. Please try again.',
               'Okay'
             );
             this.disableSubmit = false;
@@ -272,7 +272,7 @@ export class TransactionSummaryPage implements OnInit {
         },
         (error) => {
           this.functionsService.alert(
-            'SAVING of Professional Fee was Unsuccessful',
+            'SAVING of Professional Fee was unsuccessful. Please try again.',
             'Okay'
           );
           this.disableSubmit = false;

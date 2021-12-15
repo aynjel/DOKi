@@ -510,7 +510,7 @@ export class ChhAppInPatientModalPage implements OnInit {
               );
             } else {
               this.functionsService.alert(
-                'SAVING of Professional Fee was Unsuccessful',
+                'SAVING of Professional Fee was unsuccessful. Please try again.',
                 'Okay'
               );
             }
