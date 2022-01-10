@@ -40,14 +40,15 @@ ___  ___        _      _  _
       routerLink="/menu/in-patients/" routerDirection="backward"
       color="chh-css-primary2"
       >
-      <ion-icon 
+      <ion-icon name="arrow-back-outline"  class="my-icon vcenter"></ion-icon>
+      <!--ion-icon 
         name="chevron-back-outline" 
         class="my-icon vcenter">
-      </ion-icon>
+      </ion-icon-->
     </span>
 
 
-    <span  class="padding-left-30 font-weight-500 font-size-20"> Patient Information </span>
+    <span  class="padding-left-30 font-weight-500 font-size-20"> &nbsp;&nbsp;Patient Information </span>
   </ion-toolbar>
 
 
@@ -72,6 +73,7 @@ ___  ___        _      _  _
     <app-chh-app-patient-header
       [data]="data"
       [dateAdmitted]="dateAdmitted"
+      [dischargeNotice]="dischargeNotice"
       [forMoreOrLess]="true"
       >
     </app-chh-app-patient-header>
@@ -84,7 +86,7 @@ ___  ___        _      _  _
     </app-chh-app-admitting-diagnosis>
    
     <app-chh-app-final-diagnosis
-      [data]="data"
+      [data]="admissionstatus"
       [finalDiagnosis]="finalDiagnosis"
       [limit]="limit"
       [truncating]="truncating"
@@ -95,9 +97,7 @@ ___  ___        _      _  _
     <ion-list>
       <ion-item style="padding-top: 10px;">
         <div class="ion-text-wrap"><b>Lab Tests</b><br /></div>
-        
       </ion-item>
-
         <ion-searchbar           
         [(ngModel)]="searchBar"
         (ionChange)="filterList()"
@@ -167,7 +167,9 @@ ___  ___        _      _  _
         <ion-row >
           <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
           <ion-col size-xs="12" size-md="4" size-lg="4">
+
             <ion-button
+            class="buttonActive"
               color="mango"
               size="default"
               expand="block"
@@ -198,6 +200,16 @@ ______          _    _
 -->
 <app-chh-app-desktop-navigation *ngIf="isDesktop"></app-chh-app-desktop-navigation>
 <ion-content *ngIf="isDesktop">
+  <ul class="breadcrumb">
+    <li>
+      <a routerLink="{{routerLinkBack}}">In-Patients</a>
+      <ion-icon name="chevron-forward-outline" class="icon-center"></ion-icon>
+    </li>
+    <li>
+      <a>{{patient_name}}</a>
+      <ion-icon name="chevron-forward-outline" class="icon-center"></ion-icon>
+    </li>
+  </ul>
   <!-- <ul class="breadcrumb" >
     <li>
       <a routerLink="/menu/in-patients">In-Patient</a>
@@ -258,9 +270,8 @@ ______          _    _
    
             <ion-list>
 
-
             <ion-button
-            color="mango"
+            class="buttonActive"
               size="default"
               expand="block"
               shape="round"
@@ -272,7 +283,7 @@ ______          _    _
 </ion-card>
 
 
-              <app-chh-app-admitting-diagnosis
+          <app-chh-app-admitting-diagnosis
               [admittingDiagnosis]="admittingDiagnosis"
               [admittingDiagnosis1]="admittingDiagnosis1"
               [admittingDiagnosis2]="admittingDiagnosis2"

@@ -1,0 +1,521 @@
+<ion-header mode="md" class="ion-no-border" *ngIf="!isDesktop">
+  <div>
+    <ion-toolbar color="mango">
+      <ion-title>
+        <ion-icon name="stats-chart-outline"></ion-icon> {{this.constants.MENU__VALUE__DASHBOARD}}
+      </ion-title>
+      <ion-buttons
+       
+        slot="end"
+        class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated"
+      >
+      <ion-button
+      (click)="settings()"
+        >&nbsp; <ion-icon name="settings-outline" class="icon–big"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    </ion-toolbar>
+  </div>
+</ion-header>
+
+<ion-content>
+
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+
+
+
+
+  <ion-grid class="ion-no-padding">
+    <ion-row class="custom-padding">
+      <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3" class="custom-border-bottom ion-no-border ">
+
+ 
+        <ion-grid>
+          
+<!--
+
+  
+
+  _______ ____ _______       _                     _____  __  __ _____  _____ _____ _____ ____  _   _ 
+ |__   __/ __ \__   __|/\   | |              /\   |  __ \|  \/  |_   _|/ ____/ ____|_   _/ __ \| \ | |
+    | | | |  | | | |  /  \  | |             /  \  | |  | | \  / | | | | (___| (___   | || |  | |  \| |
+    | | | |  | | | | / /\ \ | |            / /\ \ | |  | | |\/| | | |  \___ \\___ \  | || |  | | . ` |
+    | | | |__| | | |/ ____ \| |____       / ____ \| |__| | |  | |_| |_ ____) |___) |_| || |__| | |\  |
+    |_|  \____/  |_/_/    \_\______|     /_/    \_\_____/|_|  |_|_____|_____/_____/|_____\____/|_| \_|
+                                                                                                      
+                                                                                                      
+                                                     
+                                                              
+
+-->
+
+
+
+          <ion-card  mode="ios"  class="pointer" >
+           <!-- Total ADMISSION -->
+          <ion-row>
+            
+            <ion-col size-xs="12" class="ion-text-center" >
+              <h3 >Total Admissions : 
+                <b *ngIf="!totalAdmissionsV33">{{totalAdmissions}}</b>
+                <ion-spinner name="crescent" *ngIf="totalAdmissionsV33"></ion-spinner>
+              </h3>
+            </ion-col>
+
+
+
+
+
+            
+            <ion-col size-xs="6" >
+                <ion-item id="ion-item-ac" lines="none" routerLink='/' routerDirection="back">
+                  <ion-avatar slot="start">
+                    <chh-app-text-avatar [text]='tTC' [color]="chhgreen" [textColor]="chhtextcolor"></chh-app-text-avatar>
+                  </ion-avatar>
+                  
+                  <ion-label>
+                    <h2>
+                      <b *ngIf="!totalAdmissionsV33">{{totalAdmissionsC}}</b>
+                      <ion-spinner name="crescent" *ngIf="totalAdmissionsV33"></ion-spinner>
+                    </h2>
+
+                  </ion-label>
+                </ion-item>
+            </ion-col>
+
+
+            <ion-col size-xs="6" >
+                <ion-item id="ion-item-dn" lines="none" routerLink='/' routerDirection="back">
+                  <ion-avatar slot="start">
+                    <chh-app-text-avatar [text]='tTM' [color]="chhred" [textColor]="chhtextcolor"></chh-app-text-avatar>
+                  </ion-avatar>
+                  <ion-label>
+                    <h2>
+                        <b *ngIf="!totalAdmissionsV33">{{totalAdmissionsM}}</b>
+                        <ion-spinner name="crescent" *ngIf="totalAdmissionsV33"></ion-spinner>
+                    </h2>
+
+                  </ion-label>
+                </ion-item>
+            </ion-col>
+
+          </ion-row>
+
+
+      
+              <ion-item class="ion-no-padding ion-no-margin" ></ion-item>
+
+
+
+                        <!-- 
+                          
+  _   _ ________          __               _____  __  __ _____  _____ _____ _____ ____  _   _ 
+ | \ | |  ____\ \        / /         /\   |  __ \|  \/  |_   _|/ ____/ ____|_   _/ __ \| \ | |
+ |  \| | |__   \ \  /\  / /         /  \  | |  | | \  / | | | | (___| (___   | || |  | |  \| |
+ | . ` |  __|   \ \/  \/ /         / /\ \ | |  | | |\/| | | |  \___ \\___ \  | || |  | | . ` |
+ | |\  | |____   \  /\  /         / ____ \| |__| | |  | |_| |_ ____) |___) |_| || |__| | |\  |
+ |_| \_|______|   \/  \/         /_/    \_\_____/|_|  |_|_____|_____/_____/|_____\____/|_| \_|
+                                                                                              
+                                                                                              
+
+                         -->
+          <ion-row>
+            <ion-col size-xs="12" class="ion-text-center">
+              <h3 >
+                New Admissions Today : 
+                <b *ngIf="!totalAdmissionsTodayV33">{{totalAdmissionstoday}}</b>
+                <ion-spinner name="crescent" *ngIf="totalAdmissionsTodayV33"></ion-spinner>
+              </h3>
+            </ion-col>
+            <ion-col size-xs="6" >
+                <ion-item id="ion-item-ac" lines="none" routerLink='/' routerDirection="back">
+                  <ion-avatar slot="start">
+                    <chh-app-text-avatar [text]='tTC' [color]="chhgreen" [textColor]="chhtextcolor"></chh-app-text-avatar>
+                  </ion-avatar>
+                  
+                  <ion-label>
+                    <h2>
+                      <b *ngIf="!totalAdmissionsTodayV33">{{totalAdmissionstodayC}}</b>
+                      <ion-spinner name="crescent" *ngIf="totalAdmissionsTodayV33"></ion-spinner>
+                    </h2>
+
+                  </ion-label>
+                </ion-item>
+            </ion-col>
+            <ion-col size-xs="6" >
+                <ion-item id="ion-item-dn" lines="none" routerLink='/' routerDirection="back">
+                  <ion-avatar slot="start">
+                    <chh-app-text-avatar [text]='tTM' [color]="chhred" [textColor]="chhtextcolor"></chh-app-text-avatar>
+                  </ion-avatar>
+                  <ion-label>
+                    <h2>
+                      <b *ngIf="!totalAdmissionsTodayV33">{{totalAdmissionstodayM}}</b>
+                      <ion-spinner name="crescent" *ngIf="totalAdmissionsTodayV33"></ion-spinner>
+                    </h2>
+                    <!--p class="ion-text-wrap" >{{this.functionsService.convertToCamelCase(this.constants.ADMISSION_STATUS__VALUE__FOR_DISCHARGE)}}</p-->
+                  </ion-label>
+                </ion-item>
+            </ion-col>
+
+          </ion-row>
+          <ion-item class="ion-no-padding ion-no-margin" ></ion-item>
+            <!-- 
+
+
+  ______ ____  _____        _____ _____  _____  _____ _    _          _____   _____ ______ 
+ |  ____/ __ \|  __ \      |  __ \_   _|/ ____|/ ____| |  | |   /\   |  __ \ / ____|  ____|
+ | |__ | |  | | |__) |     | |  | || | | (___ | |    | |__| |  /  \  | |__) | |  __| |__   
+ |  __|| |  | |  _  /      | |  | || |  \___ \| |    |  __  | / /\ \ |  _  /| | |_ |  __|  
+ | |   | |__| | | \ \      | |__| || |_ ____) | |____| |  | |/ ____ \| | \ \| |__| | |____ 
+ |_|    \____/|_|  \_\     |_____/_____|_____/ \_____|_|  |_/_/    \_\_|  \_\\_____|______|
+                                                                                           
+                                                                                           
+
+
+             -->
+          <ion-row>
+            <ion-col size-xs="12" class="ion-text-center">
+              <h3 >For Discharge : 
+                <b *ngIf="!forDischargeV33">{{forDischarge}}</b>
+                <ion-spinner name="crescent" *ngIf="forDischargeV33"></ion-spinner>
+              </h3>
+            </ion-col>
+            <ion-col size-xs="6" >
+                <ion-item id="ion-item-ac" lines="none" routerLink='/' routerDirection="back">
+                  <ion-avatar slot="start">
+                    <chh-app-text-avatar [text]='tTC' [color]="chhgreen" [textColor]="chhtextcolor"></chh-app-text-avatar>
+                  </ion-avatar>
+                  
+                  <ion-label>
+                    <h2>
+                      <b *ngIf="!forDischargeV33">{{forDischargeC}}</b>
+                      <ion-spinner name="crescent" *ngIf="forDischargeV33"></ion-spinner>
+                    </h2>
+                    <!--p>{{this.functionsService.convertToCamelCase(this.constants.ADMISSION_STATUS__VALUE__ADMITTED)}}</p-->
+                  </ion-label>
+                </ion-item>
+            </ion-col>
+            <ion-col size-xs="6" >
+                <ion-item id="ion-item-dn" lines="none" routerLink='/' routerDirection="back">
+                  <ion-avatar slot="start">
+                    <chh-app-text-avatar [text]='tTM' [color]="chhred" [textColor]="chhtextcolor"></chh-app-text-avatar>
+                  </ion-avatar>
+                  <ion-label>
+                    <h2>
+                      <b *ngIf="!forDischargeV33">{{forDischargeM}}</b>
+                      <ion-spinner name="crescent" *ngIf="forDischargeV33"></ion-spinner>
+                    </h2>
+                    <!--p class="ion-text-wrap" >{{this.functionsService.convertToCamelCase(this.constants.ADMISSION_STATUS__VALUE__FOR_DISCHARGE)}}</p-->
+                  </ion-label>
+                </ion-item>
+            </ion-col>
+
+          </ion-row>
+          <ion-item class="ion-no-padding ion-no-margin" lines="none"></ion-item>
+          <!--ion-item class="ion-no-padding ion-no-margin" lines="none">
+
+            <ion-col>
+              <div class="ion-text-end">
+                <small style="float: right !important;" (click)="detail('admission')"><ion-icon name="pie-chart-outline" class="icon–big"></ion-icon></small>
+              </div>
+            </ion-col>
+              
+           
+          </ion-item-->
+          </ion-card>
+
+<!--
+
+ 
+  _____ _____ ______        _____ _    _          _____ _______ 
+ |  __ \_   _|  ____|      / ____| |  | |   /\   |  __ \__   __|
+ | |__) || | | |__        | |    | |__| |  /  \  | |__) | | |   
+ |  ___/ | | |  __|       | |    |  __  | / /\ \ |  _  /  | |   
+ | |    _| |_| |____      | |____| |  | |/ ____ \| | \ \  | |   
+ |_|   |_____|______|      \_____|_|  |_/_/    \_\_|  \_\ |_|   
+                                                                
+                                                                
+ 
+-->
+
+
+
+
+          <ion-card   mode="ios"  class="pointer">
+            <div id="PieChart"></div>
+          </ion-card>
+
+
+
+
+
+
+ 
+
+<!--
+
+
+
+   _____ _____  _____ _______ _____ _____          _      
+  / ____|  __ \|_   _|__   __|_   _/ ____|   /\   | |     
+ | |    | |__) | | |    | |    | || |       /  \  | |     
+ | |    |  _  /  | |    | |    | || |      / /\ \ | |     
+ | |____| | \ \ _| |_   | |   _| || |____ / ____ \| |____ 
+  \_____|_|  \_\_____|  |_|  |_____\_____/_/    \_\______|
+                                                          
+                                                          
+                                                                                                                                            
+
+  -->        
+
+
+
+          <ion-card   mode="ios" >
+            <ion-row>
+              <ion-col size-xs="12" class="ion-text-center" (click)="detail('Critical','','',this.criticalT)">
+                <h3 >Critical : 
+                  <b *ngIf="!criticalTV33">{{criticalT}}</b>
+                  <ion-spinner name="crescent" *ngIf="criticalTV33"></ion-spinner>
+                </h3>
+              </ion-col>
+              <ion-col size-xs="6" (click)="detail('Critical','','',this.criticalT)">
+                  <ion-item id="ion-item-ac" lines="none"  routerLink='/' routerDirection="back" 
+                  >
+                    <ion-avatar slot="start">
+                      <chh-app-text-avatar [text]='tTC' [color]="chhgreen" [textColor]="chhtextcolor"></chh-app-text-avatar>
+                    </ion-avatar>
+                    <ion-label>
+                      <h2>
+                        <b *ngIf="!criticalTV33">{{criticalC}}</b>
+                        <ion-spinner name="crescent" *ngIf="criticalTV33"></ion-spinner>
+                      </h2>
+                    </ion-label>
+                  </ion-item>
+                 
+                 <app-cvdbreakdown 
+                  [site]="cvdbreakdownC"
+                  [critNcrit]="cvdbreakdowncrit"
+                  [cvd]="this.CCC"
+                  [ncvd]="this.CCNC"></app-cvdbreakdown>
+                
+
+              </ion-col>
+              <ion-col size-xs="6" (click)="detail('Critical','','',this.criticalT)">
+                  <ion-item id="ion-item-dn" lines="none" routerLink='/' routerDirection="back" 
+                  >
+                    <ion-avatar slot="start">
+                      <chh-app-text-avatar [text]='tTM' [color]="chhred" [textColor]="chhtextcolor"></chh-app-text-avatar>
+                    </ion-avatar>
+                    <ion-label>
+                      <h2>
+                          <b *ngIf="!criticalTV33">{{criticalM}}</b>
+                          <ion-spinner name="crescent" *ngIf="criticalTV33"></ion-spinner>
+                      </h2>
+  
+                    </ion-label>
+                  </ion-item>
+                  <app-cvdbreakdown 
+                  [site]="cvdbreakdownM"
+                  [critNcrit]="cvdbreakdowncrit"
+                  [cvd]="this.MCC"
+                  [ncvd]="this.MCNC"></app-cvdbreakdown>
+              </ion-col>
+  
+            </ion-row>
+  
+  
+        
+                <ion-item class="ion-no-padding ion-no-margin" ></ion-item>
+                <ion-row>
+                  <ion-col size-xs="12" class="ion-text-center" (click)="detail('Non-Critical','','',this.noncriticalT)">
+                    <h3 >Non Critical : 
+                      <b *ngIf="!criticalTV33">{{noncriticalT}}</b>
+                      <ion-spinner name="crescent" *ngIf="criticalTV33"></ion-spinner>
+                    </h3>
+                  </ion-col>
+                  <ion-col size-xs="6" (click)="detail('Non-Critical','','',this.noncriticalT)">
+                      <ion-item id="ion-item-ac" lines="none" routerLink='/' routerDirection="back">
+                        <ion-avatar slot="start">
+                          <chh-app-text-avatar [text]='tTC' [color]="chhgreen" [textColor]="chhtextcolor"></chh-app-text-avatar>
+                        </ion-avatar>
+                        <ion-label>
+                          <h2>
+                            <b *ngIf="!criticalTV33">{{noncriticalC}}</b>
+                            <ion-spinner name="crescent" *ngIf="criticalTV33"></ion-spinner>
+                          </h2>
+                        </ion-label>
+                      </ion-item>
+                      <app-cvdbreakdown 
+                      [site]="cvdbreakdownC"
+                      [critNcrit]="cvdbreakdownNcrit"
+                      [cvd]="this.CNCC"
+                      [ncvd]="this.CNCNC"></app-cvdbreakdown>
+                  </ion-col>
+                  <ion-col size-xs="6" (click)="detail('Non-Critical','','',this.noncriticalT)">
+                      <ion-item id="ion-item-dn" lines="none" routerLink='/' routerDirection="back">
+                        <ion-avatar slot="start">
+                          <chh-app-text-avatar [text]='tTM' [color]="chhred" [textColor]="chhtextcolor"></chh-app-text-avatar>
+                        </ion-avatar>
+                        <ion-label>
+                          <h2>
+                              <b *ngIf="!criticalTV33">{{noncriticalM}}</b>
+                              <ion-spinner name="crescent" *ngIf="criticalTV33"></ion-spinner>
+                          </h2>
+      
+                        </ion-label>
+                      </ion-item>
+                      <app-cvdbreakdown 
+                      [site]="cvdbreakdownM"
+                      [critNcrit]="cvdbreakdownNcrit"
+                      [cvd]="this.MNCC"
+                      [ncvd]="this.MNCNC"></app-cvdbreakdown>
+                  </ion-col>
+      
+                </ion-row>
+      
+        
+                <ion-item class="ion-no-padding ion-no-margin" lines="none"></ion-item>
+
+          </ion-card> 
+          
+
+
+          
+<!--
+
+  
+   _____ ______      _______ _____  
+  / ____/ __ \ \    / /_   _|  __ \ 
+ | |   | |  | \ \  / /  | | | |  | |
+ | |   | |  | |\ \/ /   | | | |  | |
+ | |___| |__| | \  /   _| |_| |__| |
+  \_____\____/   \/   |_____|_____/ 
+                                    
+                                 
+
+
+
+    <ion-card   mode="ios"  class="pointer">
+      <div id="BasicBar"></div>
+    </ion-card>
+
+--> 
+<!--
+          <ion-card   mode="ios" >
+            <ion-row>
+              <ion-col size-xs="12" class="ion-text-center">
+                <h3 >Covid : 
+                  <b *ngIf="!criticalTV33">{{criticalT}}</b>
+                  <ion-spinner name="crescent" *ngIf="criticalTV33"></ion-spinner>
+                </h3>
+              </ion-col>
+              <ion-col size-xs="6" >
+                  <ion-item id="ion-item-ac" lines="none" (click)="detail('Critical')" routerLink='/' routerDirection="back">
+                    <ion-avatar slot="start">
+                      <chh-app-text-avatar [text]='tTC' [color]="chhgreen" [textColor]="chhtextcolor"></chh-app-text-avatar>
+                    </ion-avatar>
+                    <ion-label>
+                      <h2>
+                        <b *ngIf="!criticalTV33">{{criticalC}}</b>
+                        <ion-spinner name="crescent" *ngIf="criticalTV33"></ion-spinner>
+                      </h2>
+                    </ion-label>
+                  </ion-item>
+  
+
+              </ion-col>
+              <ion-col size-xs="6" >
+                  <ion-item id="ion-item-dn" lines="none" routerLink='/' routerDirection="back">
+                    <ion-avatar slot="start">
+                      <chh-app-text-avatar [text]='tTM' [color]="chhred" [textColor]="chhtextcolor"></chh-app-text-avatar>
+                    </ion-avatar>
+                    <ion-label>
+                      <h2>
+                          <b *ngIf="!criticalTV33">{{criticalM}}</b>
+                          <ion-spinner name="crescent" *ngIf="criticalTV33"></ion-spinner>
+                      </h2>
+  
+                    </ion-label>
+                  </ion-item>
+              </ion-col>
+  
+            </ion-row>
+  
+  
+        
+                <ion-item class="ion-no-padding ion-no-margin" ></ion-item>
+                <ion-row>
+                  <ion-col size-xs="12" class="ion-text-center">
+                    <h3 >Non Covid : 
+                      <b *ngIf="!criticalTV33">{{noncriticalT}}</b>
+                      <ion-spinner name="crescent" *ngIf="criticalTV33"></ion-spinner>
+                    </h3>
+                  </ion-col>
+                  <ion-col size-xs="6" >
+                      <ion-item id="ion-item-ac" lines="none" routerLink='/' routerDirection="back">
+                        <ion-avatar slot="start">
+                          <chh-app-text-avatar [text]='tTC' [color]="chhgreen" [textColor]="chhtextcolor"></chh-app-text-avatar>
+                        </ion-avatar>
+                        <ion-label>
+                          <h2>
+                            <b *ngIf="!criticalTV33">{{noncriticalC}}</b>
+                            <ion-spinner name="crescent" *ngIf="criticalTV33"></ion-spinner>
+                          </h2>
+                        </ion-label>
+                      </ion-item>
+                  </ion-col>
+                  <ion-col size-xs="6" >
+                      <ion-item id="ion-item-dn" lines="none" routerLink='/' routerDirection="back">
+                        <ion-avatar slot="start">
+                          <chh-app-text-avatar [text]='tTM' [color]="chhred" [textColor]="chhtextcolor"></chh-app-text-avatar>
+                        </ion-avatar>
+                        <ion-label>
+                          <h2>
+                              <b *ngIf="!criticalTV33">{{noncriticalM}}</b>
+                              <ion-spinner name="crescent" *ngIf="criticalTV33"></ion-spinner>
+                          </h2>
+      
+                        </ion-label>
+                      </ion-item>
+                  </ion-col>
+      
+                </ion-row>
+      
+      
+            
+                    <ion-item class="ion-no-padding ion-no-margin" ></ion-item>
+      
+          </ion-card> 
+
+-->
+          <!-- <ion-card   mode="ios"  class="pointer">
+            <div id="stackedBar"></div>
+                        <ion-col size-xs="12" class="ion-text-center" *ngIf="stackedBar">
+              <h3 >
+                Covid & Non-Covid Graph
+            
+              </h3>
+            </ion-col>
+            <ion-spinner name="crescent" *ngIf="stackedBar"></ion-spinner>
+          </ion-card> -->
+
+
+
+        </ion-grid>
+
+
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

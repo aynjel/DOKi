@@ -1,0 +1,22 @@
+
+<ion-header mode="md" class="ion-no-border" *ngIf="!isDesktop">
+
+    <ion-toolbar  color="mango" >
+      <ion-title>
+        <ion-icon name="stats-chart-outline"></ion-icon> {{this.constants.MENU__VALUE__DASHBOARD}}
+      </ion-title>
+    </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-button
+  expand="block"
+  id="btn-confirm"
+  (click)="checkInput()"
+  ><div >
+    refreshtoken
+  </div>
+
+</ion-button>
+</ion-content>

@@ -5,6 +5,7 @@ import { AuthConstants } from "../../config/auth-constants";
 import { BehaviorSubject, Observable } from "rxjs";
 import { HttpService } from "../http/http.service";
 import { LoginData } from "../../models/login-data.model";
+import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
 import { FunctionsService } from "../../shared/functions/functions.service";
 import {
   HttpClient,
@@ -17,7 +18,7 @@ import {
 })
 
 export class AuthService {
-  userData$ = new BehaviorSubject<LoginData>(null);
+  userData$ = new BehaviorSubject<LoginResponseModelv3>(null);
 
   constructor(
     private httpService: HttpService,
@@ -97,7 +98,7 @@ export class AuthService {
   }
 
 
-
+/*
   mockGetAppSetting(){
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredentials: false };
@@ -124,5 +125,5 @@ export class AuthService {
     const url = 'http://10.130.21.200:81/api/UserSetting/Update';
     //return this.http.post(url, JSON.stringify(data), options);
     return this.http.put(url, data, options);
-  }
+  }*/
 }

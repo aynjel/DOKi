@@ -1,0 +1,33 @@
+<ion-row>
+            
+  <ion-col size-xs="12" class="ion-text-center">
+    <h3 style="color:black;font-size: 18px;">
+        {{name}}<b>{{total}} | {{percentage | number}}%</b>
+    </h3>
+  </ion-col>
+  <ion-col size-xs="6" >
+      <ion-item id="ion-item-ac" lines="none" routerLink='/' routerDirection="back">
+        <ion-avatar slot="start">
+          <chh-app-text-avatar [text]='tTC' [color]="chhgreen" [textColor]="chhtextcolor"></chh-app-text-avatar>
+        </ion-avatar>
+        <ion-label>
+          <h2>
+            <b>{{cebu}}</b>
+          </h2>
+        </ion-label>
+      </ion-item>
+  </ion-col>
+  <ion-col size-xs="6" >
+      <ion-item id="ion-item-dn" lines="none" routerLink='/' routerDirection="back">
+        <ion-avatar slot="start">
+          <chh-app-text-avatar [text]='tTM' [color]="chhred" [textColor]="chhtextcolor"></chh-app-text-avatar>
+        </ion-avatar>
+        <ion-label>
+          <h2>
+            <b>{{mandaue}}</b>
+          </h2>
+        </ion-label>
+      </ion-item>
+  </ion-col>
+
+</ion-row>

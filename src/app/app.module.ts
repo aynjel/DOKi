@@ -45,11 +45,15 @@ import { Constants } from "../app/shared/constants";
 import { Variables } from "../app/shared/variables";
 import { Messages } from "../app/shared/messages";
 import { UserIdleModule } from 'angular-user-idle';
+import {  HTTP_INTERCEPTORS } from "@angular/common/http";
+import {AuthInterceptor} from "./services/auth/auth.interceptor";
   import { from } from "rxjs";
+import { CommonModule } from "@angular/common";
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [ChhAppTestChemistryComponent,ChhAppTestFecalysisComponent,ChhAppTestSerologyComponent],
   imports: [
+    CommonModule,
     FormsModule,
     BrowserModule,
     IonicModule.forRoot(),
@@ -68,7 +72,7 @@ import { UserIdleModule } from 'angular-user-idle';
     NgxGoogleAnalyticsRouterModule,
     //LottieAnimationViewModule,
     //SliderPageModule,
-    UserIdleModule.forRoot({idle: 120, timeout: 180, ping: 20}),
+    UserIdleModule.forRoot({idle:120, timeout: 180, ping: 20}),
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production,
     }),
@@ -81,6 +85,8 @@ import { UserIdleModule } from 'angular-user-idle';
     SplashScreen,
     HttpClientModule,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {provide : HTTP_INTERCEPTORS, useClass :AuthInterceptor, multi:true}
+
   ],
   bootstrap: [AppComponent],
 })

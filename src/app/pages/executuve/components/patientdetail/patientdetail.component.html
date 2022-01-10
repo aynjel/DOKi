@@ -1,0 +1,163 @@
+<ion-header mode="md" class="ion-no-border" > 
+
+
+  <ion-toolbar color="mango">
+ 
+    <span class="padding-left-10" (click)="closemodal()" routerDirection="backward" color="chh-css-primary2">
+      <ion-icon name="arrow-back-outline" class="my-icon vcenter"></ion-icon>
+      <!--ion-icon 
+          name="chevron-back-outline" 
+          class="my-icon vcenter">
+        </ion-icon-->
+    </span>
+
+    <span  class="padding-left-30 font-weight-500 font-size-20"> &nbsp;&nbsp;Patient Information </span>
+  </ion-toolbar>
+
+</ion-header>
+<ion-content>
+  <ion-card mode="ios"  >
+    <div *ngFor="let x of data">
+      <ion-list *ngIf="moreOrLess == true">
+        <ion-item style="padding-bottom: 10px">
+          <div class="ion-text-wrap">
+            <ion-label>
+              <h2 class="ion-text-wrap"  style="padding-top: 10px;">
+                <b>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</b>
+                <ion-text color="mango">
+                  <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong>  {{x.gender}}</b></p>
+                  </ion-text>
+              </h2>
+            </ion-label>
+          </div>
+          <ion-badge color="warning" slot="end" (click)="moreorless(false)"><ion-icon name="chevron-down-outline"></ion-icon></ion-badge>
+        </ion-item>
+        <ion-item lines="none" style="padding-bottom: 10px">
+          <ion-chip *ngIf="x.admission_status == 'AC'">
+            <ion-label color="mango"><b>Admitted</b></ion-label>
+          </ion-chip>
+          <ion-chip *ngIf="x.admission_status != 'AC'">
+            <ion-label color="mango"><b>{{admstat}}</b></ion-label>
+          </ion-chip>
+        </ion-item>
+      </ion-list>
+      <ion-list *ngIf="moreOrLess == false">
+        <ion-item style="padding-bottom: 10px">
+          <div class="ion-text-wrap">
+            <ion-label>
+              <h2 class="ion-text-wrap"  style="padding-top: 10px;">
+                <b>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</b>
+                <ion-text color="mango">
+                  <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong>  {{x.gender}}</b></p>
+                  </ion-text>
+              </h2>
+            </ion-label>
+          </div>
+          <ion-badge color="warning" slot="end" class="font-size12"
+            *ngIf=" x.admission_status == 'DN' && x.doctor_prof_fee == null && x.is_posted == null ">PF</ion-badge>
+          <ion-badge color="success" slot="end" class="font-size12" *ngIf="x.doctor_prof_fee != null && x.is_posted != null">PF OK</ion-badge>
+        </ion-item>
+        <ion-item lines="none" style="padding-bottom: 1px">
+          <div class="ion-text-wrap" style="padding-top: 5px">
+            <div *ngIf="x.site == 'C'" class=" font-size12">
+              <ion-icon name="location-outline" slot="start"></ion-icon>
+              Chong Hua Hospital
+            </div>
+            <div *ngIf="x.site == 'M'"  class=" font-size12">
+              <ion-icon name="location-outline" slot="start"></ion-icon>
+              Chong Hua Hospital Mandaue
+            </div>
+            <div class=" font-size12">
+              <ion-icon name="bed-outline" slot="start"></ion-icon>
+              Room {{ x.room_no }}
+            </div>
+            <div class=" font-size12" >
+              <div *ngIf="!fromPatientList">
+                <ion-icon name="clipboard-outline" slot="start"></ion-icon>
+                as {{x.doctor_Status}}&nbsp;
+              </div>
+              <ion-chip *ngIf="x.admission_status == 'AC'">
+                <ion-label color="mango"><b>Admitted</b></ion-label>
+              </ion-chip>
+              <ion-chip *ngIf="x.admission_status != 'AC'">
+                <ion-label color="mango"><b>{{admstat}}</b></ion-label>
+              </ion-chip>
+            </div>
+            <div class=" font-size12">
+              <ion-icon name="calendar-outline" slot="start"></ion-icon>
+              <span style="font-size: 13px;"> Admission Date &nbsp;&nbsp;: {{ dateAdmitted }}</span>
+            </div>
+            <div class=" font-size12" *ngIf="x.forDischargeDateTime != null" >
+              <ion-icon name="calendar-outline" slot="start"></ion-icon>
+              <span style="font-size: 13px;"> Discharge Notice : {{ x.forDischargeDateTime }}</span>
+            </div>
+          </div>
+
+        </ion-item>
+        <ion-item lines="none" style="padding-bottom: 1px">
+          <!--div class="ion-text-wrap font-size12">
+            <ion-text *ngIf="x.admission_status == 'AC'">Status : Admitted </ion-text>
+            <ion-text *ngIf="x.admission_status == 'DN'">Status : For Discharge<br /></ion-text>
+            <ion-icon name="calendar-outline"></ion-icon>
+            <ion-text> Admission Date : {{ dateAdmitted }}</ion-text>
+          </div-->
+          <ion-badge color="warning" slot="end" (click)="moreorless(true)"><ion-icon name="chevron-up-outline"></ion-icon></ion-badge>
+        </ion-item>
+        <!--ion-item lines="none" style="padding-bottom: 1px">
+          <div class="ion-text-wrap font-size12">
+            <ion-text *ngIf="x.admission_status == 'AC'">Status : Admitted </ion-text>
+            <ion-text *ngIf="x.admission_status == 'DN'">Status : For Discharge<br /></ion-text>
+            <ion-icon name="calendar-outline"></ion-icon>
+            <ion-text> Admission Date : {{ dateAdmitted }}</ion-text>
+          </div>
+          
+          <ion-badge color="warning" slot="end" (click)="moreorless(true)"><ion-icon name="chevron-up-outline"></ion-icon></ion-badge>
+        </ion-item-->
+
+
+
+
+
+
+
+        <!--ion-item lines="none" style="padding-bottom: 1px">
+          <ion-badge color="warning" slot="start">
+            {{admstat}}
+          </ion-badge>
+<br />
+          <div class="ion-text-wrap font-size12">
+            <ion-icon name="alarm-outline" slot="start" *ngIf="x.forDischargeDateTime != null" color="danger"></ion-icon>
+            <ion-text *ngIf="x.forDischargeDateTime != null" color="danger">
+                DN : 
+              {{x.forDischargeDateTime}}<br />
+            </ion-text>
+          </div>
+        </ion-item-->
+
+      </ion-list>
+
+    </div>
+  </ion-card>
+  <app-chh-app-admitting-diagnosis
+  [admittingDiagnosis]="admittingDiagnosis"
+  [admittingDiagnosis1]="admittingDiagnosis1"
+  [admittingDiagnosis2]="admittingDiagnosis2"
+  [truncating1]="truncating1">
+</app-chh-app-admitting-diagnosis>
+<app-chh-app-final-diagnosis
+[data]="admissionstatus"
+[finalDiagnosis]="finalDiagnosis"
+[limit]="limit"
+[truncating]="truncating"
+[finalDiagnosis1]="finalDiagnosis1"
+[finalDiagnosis2]="finalDiagnosis2"
+></app-chh-app-final-diagnosis>
+
+<app-chh-app-list-of-doctors  
+[drCode]="drcode"
+[coDoctors]="coDoctors"
+[objecthandler]="objecthandler"
+[isFetchDone]="isFetchDone"
+[fromExec]="true">
+</app-chh-app-list-of-doctors>
+</ion-content>

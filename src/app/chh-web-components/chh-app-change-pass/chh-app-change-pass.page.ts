@@ -19,15 +19,20 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import * as bcrypt from 'bcryptjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PasswordStrengthValidator } from '../../shared/password-strength.validators';
-
+import { LoginModel,ChangePasswordModel,ChangePasswordModelV3 } from '../../models/patient';
 import { CustomValidators } from '../../shared/custom-validators';
+import { AuthConstants, Consta } from '../../config/auth-constants';
+import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
+import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
+import { DoctorService } from 'src/app/services/doctor/doctor.service';
 @Component({
   selector: 'app-chh-app-change-pass',
   templateUrl: './chh-app-change-pass.page.html',
   styleUrls: ['./chh-app-change-pass.page.scss'],
 })
 export class ChhAppChangePassPage {
-  public logindata: LoginData;
+  public logindata: LoginResponseModelv3;
+  loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   public form: FormGroup;
   public frmSignup: FormGroup;
   OldPassword;
@@ -43,6 +48,8 @@ export class ChhAppChangePassPage {
   isEyeOnOff3: Boolean = true;
   uxSaveCancel: boolean = true;
   serverResponse: any;
+  public changePasswordModel: ChangePasswordModel; 
+  public changePasswordModelV3: ChangePasswordModelV3; 
   constructor(
     public modalController: ModalController,
     private patientService: PatientService,
@@ -54,12 +61,16 @@ export class ChhAppChangePassPage {
     private renderer: Renderer2,
     private authService: AuthService,
     private zone: NgZone,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private doctorService: DoctorService
   ) {
     this.form = fb.group({
       password: ['', [Validators.required, PasswordStrengthValidator]],
     });
     this.frmSignup = this.createSignupForm();
+    this.changePasswordModel = new ChangePasswordModel();
+    this.changePasswordModelV3 = new ChangePasswordModelV3();
+    this.changePasswordModel.mode = Consta.mode;
   }
   @ViewChildren('psWord1', { read: ElementRef }) psWord1: QueryList<ElementRef>;
   @ViewChildren('psWord2', { read: ElementRef }) psWord2: QueryList<ElementRef>;
@@ -207,14 +218,14 @@ export class ChhAppChangePassPage {
   }
 
   ngOnInit() {
-    this.logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_name = this.logindata[0].last_name;
-    this.dr_code = this.logindata[0].dr_code;
+    this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
+    this.dr_name = this.logindata.lastName;
+    this.dr_code = this.logindata.doctorCode;
     this.dr_username = atob(localStorage.getItem('username'));
     let json = '{"appCode": "DPP","username": "' + this.dr_username + '"}';
     let resultJson;
 
-    this.patientService.commonValidate(json).subscribe(
+    /*this.patientService.commonValidate(json).subscribe(
       (res: any) => {
         resultJson = res.data;
       },
@@ -222,8 +233,21 @@ export class ChhAppChangePassPage {
       () => {
         this.hashed_oldPassword = resultJson;
       }
-    );
+    );*/
   }
+  btnSubmit:boolean = false;
+  inputchange(){
+    let Opass:boolean;
+    if(this.OldPassword == '' || this.OldPassword == undefined){
+      Opass = false;
+    }else{
+      Opass = true;
+    }
+    this.btnSubmit = (Opass && !this.frmSignup.invalid);
+  }
+
+
+
 
   async closeModal() {
     await this.modalController.dismiss('none');
@@ -232,6 +256,7 @@ export class ChhAppChangePassPage {
   async alert(data1: any, data2: any, data3: boolean) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
+      backdropDismiss: false,
       message: data1,
       buttons: [
         {
@@ -250,6 +275,7 @@ export class ChhAppChangePassPage {
   async modalUpdate(header, message, data) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
+      backdropDismiss: false,
       header: header,
       message: message,
       buttons: [
@@ -266,24 +292,37 @@ export class ChhAppChangePassPage {
   }
 
   validatePassword() {
-    bcrypt.compare(this.OldPassword, this.hashed_oldPassword).then((result) => {
-      if (result) {
-        bcrypt.hash(this.NewPassword, this.saltRounds).then((hash) => {
-          let resJson =
+    //bcrypt.compare(this.OldPassword, this.hashed_oldPassword).then((result) => {
+     // if (this.OldPassword == this.NewPassword) {
+        //bcrypt.hash(this.NewPassword, this.saltRounds).then((hash) => {
+         /* let resJson =
             '{"appCode": "DPP","username": "' +
             this.dr_username +
             '","oldPassword": "' +
             this.hashed_oldPassword +
             '","newPassword":"' +
             hash +
-            '"}';
-
-          this.patientService.commonChangePassword(resJson).subscribe(
+            '"}';*/
+            this.changePasswordModel.appCode = 'DPP';
+            this.changePasswordModel.username =  this.dr_username;
+            this.changePasswordModel.oldPassword =   this.OldPassword;
+            this.changePasswordModel.newPassword = this.NewPassword;
+            this.changePasswordModelV3.newPassword = this.NewPassword;
+            this.changePasswordModelV3.currentPassword = this.OldPassword;
+          this.doctorService.changePasswordV3(this.changePasswordModelV3).subscribe(
             (res: any) => {
               this.serverResponse = res;
             },
-            (error) => {},
+            (error) => {
+              this.modalUpdate('Error','Error saving Password',false);
+            },
             () => {
+              if(this.serverResponse.succeeded){
+                this.modalController.dismiss("Success");
+              }else{
+                this.modalController.dismiss("False");
+              }
+/*
               if (typeof this.serverResponse.ErrorCode !== 'undefined') {
                 //this.alert(this.serverResponse.ErrorDescription,"Okay",false);
                 this.modalController.dismiss(
@@ -291,17 +330,19 @@ export class ChhAppChangePassPage {
                 );
               } else {
                 this.modalController.dismiss(this.serverResponse.Message);
-              }
+              }*/
             }
           );
-        });
+
+       // });
+       /*
       } else {
         this.functionsService.alert(
           "It seems that the current password you entered can't be found in our system.",
           'Okay'
         );
-      }
-    });
+      }*/
+    //});
   }
 
   save() {
@@ -313,7 +354,7 @@ export class ChhAppChangePassPage {
     //psWord1_1[0].nativeElement.style.transform =  `translateX(${10}px)`;
 
     if (this.NewPassword != this.ConfirmPassword) {
-      //console.log('111');
+      ////console.log('111');
 
       this.errMessage = ' (passwords did not Match)';
       let myDiv1 = document.getElementById('pWord1');
@@ -321,7 +362,7 @@ export class ChhAppChangePassPage {
       myDiv1.style.color = 'red';
       myDiv2.style.color = 'red';
     } else {
-      //console.log('222');
+      ////console.log('222');
       this.errMessage = '';
       let myDiv1 = document.getElementById('pWord1');
       let myDiv2 = document.getElementById('pWord2');
@@ -329,35 +370,6 @@ export class ChhAppChangePassPage {
       myDiv2.style.color = 'black';
       if (this.NewPassword != this.OldPassword) {
         this.validatePassword();
-        /*
-        bcrypt.hash(this.NewPassword, this.saltRounds).then(
-          (hash) => {
-            console.log(hash);
-            
-         
-            let resJson = '{"appCode": "DPP","username": "'+this.usename+'","oldPassword": "'+hash+'","newPassword":"'+hash+'"}';
-            console.log(resJson);
-            
-               /*
-            this.patientService.changePassword(smpJSON).subscribe(
-              (res) => {
-                this.serverResponse = res; 
-              },(error)=>{
-                this.functionsService.alert(
-                  "Sorry, Dok. We cannot change your password at the moment. Please try again.",
-                  "Okay"
-                );
-              },()=>{
-                if(typeof this.serverResponse.ErrorCode !== 'undefined'){
-                  this.alert(this.serverResponse.ErrorDescription,"Okay",false);
-                }else{
-                  this.alert(this.serverResponse.Message,"Okay",true);
-                }
-              }
-            );
-          }
-        );
-        */
       } else {
         this.errMessage = ' (Old and New Passwords are the same)';
         let myDiv0 = document.getElementById('pWord0');

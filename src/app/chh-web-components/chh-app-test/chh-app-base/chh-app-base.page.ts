@@ -39,7 +39,7 @@ export class ChhAppBasePage implements OnInit {
     });
   }
   ngOnInit() {
-    console.log(this.Site );
+    //console.log(this.Site );
     
     if (this.Site == 'C') {
       this.hospitalSite = "Chong Hua Hospital";
@@ -101,7 +101,7 @@ export class ChhAppBasePage implements OnInit {
     //  if (this.ExamDetails.Exam == 'Hematology') {
         this.patientService.getMandaueHeader(this.ExamDetails.Patient_No, this.ExamDetails.Request_No).subscribe(
           (res: any) => {
-            console.log(res);
+            //console.log(res);
             
             let x = JSON.stringify(res)
             this.Header = JSON.parse(x);

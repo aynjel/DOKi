@@ -1,57 +1,78 @@
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col size-md="6" offset-md="3" size-lg="4" offset-lg="4">
-        <ion-card mode="ios">
-          <ion-card-content>
-            <div class="center">
-              <chh-app-logo></chh-app-logo>
-              <h1>
-                <b
-                  >{{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN_GREETINGS}}</b
-                >
-              </h1>
-            </div>
-            <ion-item>
-              <!--ion-label position="fixed">{{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN_USERNAME}}</ion-label-->
-              <ion-input
-                placeholder="Username"
-                type="text"
-                id="input-username"
-                [(ngModel)]="postData.username"
-              ></ion-input>
-            </ion-item>
-            <ion-item>
-              <!--ion-label position="fixed">{{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN_PASSWORD}}</ion-label-->
-              <!--ion-input
-                type="password"
-                id="input-password"
-                [(ngModel)]="postData.password"
-              ></ion-input-->
+  <div id="header">
+    <!--div id="app-bar">
+      <ion-icon name="arrow-back" routerLink="/"> </ion-icon>
+    </div-->
 
-              <ion-input
-                type="password"
-                id="input-password"
-                placeholder="Password"
-                [type]="getType()"
-                (keyup.enter)="checkInput()"
-                [(ngModel)]="postData.password"
-              ></ion-input>
-              <ion-icon
-                name="eye-off-outline"
-                [name]="getName()"
-                item-right
-                (click)="showPassword()"
-                class="rectangle"
-              ></ion-icon>
-            </ion-item>
-            <div class="ion-margin-vertical ion-text-right">
+    <div id="logo">
+      <h1>
+        DOKi <br />
+        <p>v{{this.constants.DOCTOR_PORTAL__VALUE__VERSION}}</p>
+      </h1>
+
+      <!-- <p>v{{this.constants.DOCTOR_PORTAL__VALUE__VERSION}}</p> -->
+      <img src="assets/img/doctors-rafiki-simple-wo-shadow.svg" alt="doctors" />
+    </div>
+
+    <!-- <p>
+      A new way of viewing the status of your patients, 
+      <br >hospital news feed, and professional fee
+      <br >submissions.
+    </p> -->
+  </div>
+
+  <div class="wrapper">
+    <ion-grid>
+      <ion-row>
+        <ion-col
+          size-lg="4"
+          offset-lg="4 "
+          size-md="4"
+          offset-md="4 "
+          size-sm="6"
+          size="12"
+          class="my-custom-slider"
+        >
+          <ion-card class="form-wrapper">
+            <img src="assets/img/orgwide-png.png" />
+            <ion-card-content>
+          
+              
+               
+  
+              <ion-item style="margin-top:-10px">
+                <ion-icon name="mail"></ion-icon>
+                <ion-input
+                  type="text"
+                  placeholder="Username or Email"
+                  id="input-username"
+                  [(ngModel)]="postData.username"
+                >
+                </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-icon name="lock-closed"></ion-icon>
+                <ion-input
+                  type="password"
+                  placeholder="Password"
+                  id="input-password"
+                  [type]="getType()"
+                  (keyup.enter)="checkInput()"
+                  [(ngModel)]="postData.password"
+                >
+                </ion-input>
+                <ion-icon
+                  name="eye-off-outline"
+                  [name]="getName()"
+                  item-right
+                  (click)="showPassword()"
+                  class="rectangle"
+                ></ion-icon>
+              </ion-item>
               <ion-button
                 expand="block"
-                shape="round"
                 id="btn-confirm"
                 (click)="checkInput()"
-                color="mango"
                 disabled="{{btnDisable}}"
                 ><div *ngIf="!btnDisable">
                   {{this.constants.UI_COMPONENT_TEXT__VALUE__LOGIN.toUpperCase()}}
@@ -59,25 +80,50 @@
                 <span *ngIf="!btnDisable"></span
                 ><ion-spinner *ngIf="btnDisable"></ion-spinner>
               </ion-button>
-            </div>
-          </ion-card-content>
 
-          <ion-item class="fontSize-12">
-            <p>
-              {{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO}} (<b
-                ><a href="tel: +63322338000"
-                  >{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_TELEPHONE}}</a
-                ></b
-              >). <br />
-              <br />{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_APP_VERSION}} {{this.constants.DOCTOR_PORTAL__VALUE__VERSION}}
-            </p>
-          </ion-item>
-          <ion-item lines="none" class="fontSize-12">
-            <ion-label>( Made by Chong Hua for Chong Hua )</ion-label>
-          </ion-item>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+              <br />
+              <p align="center" class="fontSize-12" (click)="forgotpassword()">
+                Don't remember your password?
+              </p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="ion-text-center fontSize-12">
+            {{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO}}
+          </div>
+          <div class="ion-text-center fontSize-12">
+            <b>
+              <a href="tel: +63322338000">{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_TELEPHONE}}
+              </a>
+          </b>
+          </div>
+          <div class="ion-text-center fontSize-12">
+            <b>
+              <a href="mailto: doki@chonghua.com.ph">doki@chonghua.com.ph</a>
+          </b>
+          </div>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+
+
+
+
+
+
+
+  </div>
 </ion-content>
-<ion-footer class="ion-no-border"> </ion-footer>
+<ion-footer class="ion-no-border">
+  <ion-item lines="none" class="fontSize-12">
+    <ion-label class="ion-text-center"
+      >( Made by Chong Hua Hospital for Chong Hua Hospital )</ion-label
+    >
+  </ion-item>
+</ion-footer>

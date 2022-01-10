@@ -25,8 +25,9 @@ import { AuthConstants } from "../../../config/auth-constants";
 import { executionAsyncResource } from "async_hooks";
 import { Constants } from "src/app/shared/constants";
 
+import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
+import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
 
-import {InPatientData} from "src/app/models/in-patient.model";
 @Component({
   selector: 'app-laboratory-test-modal',
   templateUrl: './laboratory-test-modal.page.html',
@@ -53,6 +54,8 @@ export class LaboratoryTestModalPage implements OnInit {
   refresher:boolean = true;
   examListSkeleton:boolean = false;
   patient_name:any;
+  public logindata: LoginResponseModelv3;
+  loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -93,9 +96,9 @@ export class LaboratoryTestModalPage implements OnInit {
   ionViewWillEnter(){
 
     this.checkAppearance();
-    let logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_name = logindata[0].last_name;
-    this.dr_code = logindata[0].dr_code;
+    let logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
+    this.dr_name = logindata.lastName;
+    this.dr_code = logindata.doctorCode;
 
     this.data =[];
     this.doctorService.getInPatient(this.dr_code).subscribe(

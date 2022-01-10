@@ -185,6 +185,7 @@
       /* width */
     ::-webkit-scrollbar {
       width: 5px;
+      height: 2px;
     }
 
     /* Track */
@@ -195,7 +196,7 @@
     
     /* Handle */
     ::-webkit-scrollbar-thumb {
-      background: #275228; 
+      background: #009444; 
       border-radius: 10px;
     }
     .background-lightgray{

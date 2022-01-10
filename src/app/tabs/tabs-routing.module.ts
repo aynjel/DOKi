@@ -36,6 +36,10 @@ const routes: Routes = [
         loadChildren: () => import('../tab-dashboard/tab-dashboard.module').then(m => m.TabDashboardPageModule)
       },
       {
+        path: 'news-feed',
+        loadChildren: () => import('../tab-news-feed/tab-news-feed.module').then( m => m.TabNewsFeedPageModule)
+      },
+      {
         path: '',
         redirectTo: '/menu/dashboard',
         pathMatch: 'full'

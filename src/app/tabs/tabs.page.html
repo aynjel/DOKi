@@ -1,17 +1,28 @@
 <ion-tabs *ngIf="!isDesktop">
   <ion-tab-bar slot="bottom">
-    <ion-tab-button id="button-dashboard" tab="dashboard">
-      <ion-icon name="stats-chart-outline"></ion-icon>
-      <ion-label class="tab-font-family">{{this.constants.MENU__VALUE__DASHBOARD}}</ion-label>
-    </ion-tab-button>
     <ion-tab-button id="button-in-patients" tab="in-patients">
       <ion-icon name="person-circle-outline"></ion-icon>
       <ion-label class="tab-font-family">{{this.constants.MENU__VALUE__IN_PATIENTS}}</ion-label>
     </ion-tab-button>
-    <ion-tab-button id="button-appointments" tab="appointments">
+    <ion-tab-button id="button-dashboard" tab="dashboard">
+      <ion-icon name="stats-chart-outline"></ion-icon>
+      <ion-label class="tab-font-family">{{this.constants.MENU__VALUE__DASHBOARD}}</ion-label>
+    </ion-tab-button>
+
+
+    <!--ion-tab-button id="button-appointments" tab="appointments">
       <ion-icon name="calendar-outline"></ion-icon>
       <ion-label class="tab-font-family">{{this.constants.MENU__VALUE__APPOINTMENTS}}</ion-label>
+    </ion-tab-button-->
+    <ion-tab-button id="button-news-feed" tab="news-feed">
+      <ion-icon name="newspaper-outline"></ion-icon>
+      <ion-label class="tab-font-family">News Feed</ion-label>
     </ion-tab-button>
+
+
+    
+
+
     <ion-tab-button id="button-settings" tab="settings">
       <ion-icon name="settings-outline"></ion-icon>
       <ion-label class="tab-font-family">{{this.constants.MENU__VALUE__SETTINGS}}</ion-label>
@@ -48,7 +59,7 @@
             >
               {{this.constants.MENU__VALUE__IN_PATIENTS}}
             </ion-button>
-            <ion-button
+            <!--ion-button
               id="button-appointments"
               fill="clear"
               routerLink="/menu/appointments"
@@ -57,7 +68,23 @@
               class="link"
             >
               {{this.constants.MENU__VALUE__APPOINTMENTS}}
+            </ion-button-->
+
+
+            <ion-button
+              id="button-appointments"
+              fill="clear"
+              routerLink="/menu/news-feed"
+              routerDirection="root"
+              routerLinkActive="active-link"
+              class="link"
+            >
+              News Feed
             </ion-button>
+
+
+
+            
             <ion-button
               id="button-settings"
               fill="clear"

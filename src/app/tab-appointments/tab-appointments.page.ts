@@ -23,7 +23,8 @@ import { ViewChildren, QueryList } from "@angular/core";
 import {  IonGrid, IonContent,IonRow } from "@ionic/angular";
 import { Constants } from "../shared/constants";
 import { Messages } from "../shared/messages";
-
+import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
+import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
 @Component({
   selector: "app-tab-appointments",
   templateUrl: "tab-appointments.page.html",
@@ -47,7 +48,8 @@ export class TabAppointmentsPage {
   buttonDisablerDateSelector: boolean = false;
   hospitalActivator: any;
   dr_code = "";
-  public logindata: LoginData;
+  public logindata: LoginResponseModelv3;
+  loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   yAxisArray;
   ishidden:boolean = true;
   headerData;
@@ -354,9 +356,9 @@ export class TabAppointmentsPage {
   }
 
   ionViewWillEnter() {
-    this.logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_code = this.logindata[0].dr_code;
-    let  dr_name = this.logindata[0].last_name;
+    this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
+    this.dr_code = this.logindata.doctorCode;
+    let  dr_name = this.logindata.lastName;
     console.log('ionViewWillEnter');
     console.log(this.logindata);
     this.$gaService.event('Appointments','User Flow',dr_name);

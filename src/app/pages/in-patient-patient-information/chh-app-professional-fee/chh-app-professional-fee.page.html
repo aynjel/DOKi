@@ -15,24 +15,26 @@ ___  ___        _      _  _              _   _                   _
       routerDirection="backwards"
       color="chh-css-primary2"
       *ngIf="btnclose">
-      <ion-icon 
+      <!-- <ion-icon 
         name="chevron-back-outline" 
         class="my-icon vcenter">
-      </ion-icon>
+      </ion-icon> -->
+      <ion-icon name="arrow-back-outline"  class="my-icon vcenter"></ion-icon>
     </span>
     <span 
-      class="padding-left-10"         
+      class="padding-left-10 buttonActive"         
       routerDirection="backwards"
       color="chh-css-primary2"
       *ngIf="!btnclose"
       (click)="modifyProfFeeClose()">
-      <ion-icon 
+      <!-- <ion-icon 
         name="chevron-back-outline" 
         class="my-icon vcenter">
-      </ion-icon>
+      </ion-icon> -->
+      <ion-icon name="arrow-back-outline"  class="my-icon vcenter"></ion-icon>
     </span>
 
-    <span  class="padding-left-30 font-weight-500 font-size-20"> Professional Fee </span>
+    <span  class="padding-left-30 font-weight-500 font-size-20"> &nbsp;&nbsp;Professional Fee </span>
   </ion-toolbar>
   <!-- <ion-toolbar color="mango">
     <ion-title> Professional Fee </ion-title>
@@ -457,6 +459,7 @@ ______             _     _                        _   _                   _
               size="default"
               expand="block"
               shape="round"
+              class="buttonActive"
               [disabled]="toPFMbtn"
               (click)="redirecto()"
               *ngIf="ifShowSummary == false"
@@ -464,6 +467,7 @@ ______             _     _                        _   _                   _
             >
 
             <ion-button
+            class="buttonActive"
               color="mango"
               size="default"
               expand="block"
@@ -494,13 +498,18 @@ ______             _     _                       ______             _
 <ion-content *ngIf="isDesktop">
   <ul class="breadcrumb">
     <li>
-      <a routerLink="{{routerLinkBack}}">{{patient_name}}</a>
+      <a routerLink="{{routerLinkBack}}">In-Patients</a>
+      <ion-icon name="chevron-forward-outline" class="icon-center"></ion-icon>
+    </li>
+    <li>
+      <a>{{patient_name}}</a>
       <ion-icon name="chevron-forward-outline" class="icon-center"></ion-icon>
     </li>
     <li>
       <a>Professional Fee</a>
       <ion-icon name="chevron-forward-outline" class="icon-center"></ion-icon>
     </li>
+
   </ul>
 
   <ion-grid class="ion-no-padding">
@@ -604,90 +613,92 @@ ______             _     _                       ______             _
               </ion-row> -->
             </ion-grid>
           </ion-item>
-          <ul *ngIf="payvenueN == 'X' && data1 <= 0">
-            <li class="lineheight-80">
-              <ion-text class="fs-12 ion-text-wrap" color="danger">Amenable to Insurance (HMO) and PhilHealth rates.</ion-text>
-            </li>
-            <li class="lineheight-80  paddingtop-10">
-              <ion-text class="fs-12 ion-text-wrap" color="danger">Receivables: Insurance (HMO) + PhilHealth </ion-text>
-            </li>
-          </ul>
-          <ul *ngIf="payvenueN == 'X' && data1 > 0">
-            <li class="lineheight-80">
-              <ion-text class="fs-12 ion-text-wrap" color="danger">Insurance (HMO) and PhilHealth coverage
-                applies.</ion-text>
-            </li>
-            <li class="lineheight-80  paddingtop-10" *ngIf="withVatN == 'Y'">
-              <ion-text class="fs-12 ion-text-wrap" color="danger">Only the excess amount of <b>&#8369;{{data1 | number}}</b> (+ VAT) will be collected from your patient.</ion-text>
-            </li>
-            <li class="lineheight-80  paddingtop-10" *ngIf="withVatN == 'Y'">
-              <ion-text class="fs-12 ion-text-wrap" color="danger">Receivables: Insurance (HMO) + PhilHealth + <b>&#8369;{{data1 | number}}</b> (+ VAT)</ion-text>
-            </li>
-            <li class="lineheight-80  paddingtop-10" *ngIf="withVatN == 'N'">
-              <ion-text class="fs-12 ion-text-wrap" color="danger">Only the excess amount of <b>&#8369;{{data1 | number}}</b> will be collected from your patient.</ion-text>
-            </li>
-            <li class="lineheight-80  paddingtop-10" *ngIf="withVatN == 'N'">
-              <ion-text class="fs-12 ion-text-wrap" color="danger">Receivables: Insurance (HMO) + PhilHealth + <b>&#8369;{{data1 | number}}</b>
-              </ion-text>
-            </li>
-            <li class="lineheight-80  paddingtop-10">
-              <ion-text class="fs-12 ion-text-wrap" color="danger">Please note that actual receivable amount may vary after
-                final computations from Accounting.</ion-text>
-            </li>
-          </ul>
-        
-          <ul *ngIf="payvenueN == 'H' && data1 > 0">
-        
-            <li class="lineheight-80  paddingtop-10" *ngIf="withVatN == 'Y'">
-              <ion-text class="fs-12 ion-text-wrap" color="danger">Total amount of <b>&#8369;{{data1 | number}}</b> (+ VAT) will be collected from your patient.</ion-text>
-            </li>
-            <li class="lineheight-80  paddingtop-10" *ngIf="withVatN == 'Y'">
-              <ion-text class="fs-12 ion-text-wrap" color="danger">Receivables: <b>&#8369;{{data1 | number}}</b> (+ VAT) + PhilHealth</ion-text>
-            </li>
-            <li class="lineheight-80  paddingtop-10" *ngIf="withVatN == 'N'">
-              <ion-text class="fs-12 ion-text-wrap" color="danger">Total amount of <b>&#8369;{{data1 | number}}</b> will be collected from your patient.</ion-text>
-            </li>
-            <li class="lineheight-80  paddingtop-10" *ngIf="withVatN == 'N'">
-              <ion-text class="fs-12 ion-text-wrap" color="danger">Receivables: <b>&#8369;{{data1 | number}}</b> + PhilHealth
-              </ion-text>
-            </li>
-            <li class="lineheight-80  paddingtop-10">
-              <ion-text class="fs-12 ion-text-wrap" color="danger">Please note that actual receivable amount may vary after final computations from Accounting.  </ion-text>
-            </li>
-          </ul>
-        
-        
-          <ul *ngIf="payvenueN == 'W'">
-            <li class="lineheight-80">
-              <ion-text class="fs-12 ion-text-wrap" color="danger">Amenable to PhilHealth rates.</ion-text>
-            </li>
-            <li class="lineheight-80  paddingtop-10">
-              <ion-text class="fs-12 ion-text-wrap" color="danger">Receivable: PhilHealth </ion-text>
-            </li>
-          </ul>
-          <ul *ngIf="payvenueN == 'N'">
-            <li class="lineheight-80">
-              <ion-text class="fs-12 ion-text-wrap" color="danger">Patient was not seen so no professional fee will be collected from this patient.</ion-text>
-            </li>
-          </ul>
-          <ul *ngIf="payvenueN == 'A'">
-            <li class="lineheight-80">
-              <ion-text class="fs-12 ion-text-wrap" color="danger">As an insurance coordinator you will receive a coordinator's fee.</ion-text>
-            </li>
-            <li class="lineheight-80">
-              <ion-text class="fs-12 ion-text-wrap" color="danger">No professional fee will be collected from this patient.</ion-text>
-            </li>
-          </ul>
-          <ul *ngIf="payvenueN == 'xyz'">
-            <li class="lineheight-80">
-              <ion-text class="fs-12 ion-text-wrap" color="danger">Receivable: PhilHealth (if patient is a member)</ion-text>
-            </li>
-          </ul>
+          
+    <ul *ngIf="payvenueN == 'X' && data1 <= 0">
+      <li class="lineheight-80">
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Amenable to Insurance (HMO) and PhilHealth rates.</ion-text>
+      </li>
+      <li class="lineheight-80  paddingtop-10">
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Receivables: Insurance (HMO) + PhilHealth </ion-text>
+      </li>
+    </ul>
+    <ul *ngIf="payvenueN == 'X' && data1 > 0">
+      <li class="lineheight-80">
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Insurance (HMO) and PhilHealth coverage
+          applies.</ion-text>
+      </li>
+      <li class="lineheight-80  paddingtop-10" *ngIf="withVatN == 'Y'">
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Only the excess amount of <b>&#8369;{{data1 | number}}</b> {{withVat}} will be collected from your patient.</ion-text>
+      </li>
+      <li class="lineheight-80  paddingtop-10" *ngIf="withVatN == 'Y'">
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Receivables: Insurance (HMO) + PhilHealth + <b>&#8369;{{data1 | number}}</b> {{withVat}}</ion-text>
+      </li>
+      <li class="lineheight-80  paddingtop-10" *ngIf="withVatN == 'N'">
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Only the excess amount of <b>&#8369;{{data1 | number}}</b> will be collected from your patient.</ion-text>
+      </li>
+      <li class="lineheight-80  paddingtop-10" *ngIf="withVatN == 'N'">
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Receivables: Insurance (HMO) + PhilHealth + <b>&#8369;{{data1 | number}}</b>
+        </ion-text>
+      </li>
+      <li class="lineheight-80  paddingtop-10">
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Please note that actual receivable amount may vary after
+          final computations from Accounting.</ion-text>
+      </li>
+    </ul>
+  
+    <ul *ngIf="payvenueN == 'H' && data1 > 0">
+  
+      <li class="lineheight-80  paddingtop-10" *ngIf="withVatN == 'Y'">
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Total amount of <b>&#8369;{{data1 | number}}</b> {{withVat}} will be collected from your patient.</ion-text>
+      </li>
+      <li class="lineheight-80  paddingtop-10" *ngIf="withVatN == 'Y'">
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Receivables: <b>&#8369;{{data1 | number}}</b> {{withVat}} + PhilHealth</ion-text>
+      </li>
+      <li class="lineheight-80  paddingtop-10" *ngIf="withVatN == 'N'">
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Total amount of <b>&#8369;{{data1 | number}}</b> will be collected from your patient.</ion-text>
+      </li>
+      <li class="lineheight-80  paddingtop-10" *ngIf="withVatN == 'N'">
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Receivables: <b>&#8369;{{data1 | number}}</b> + PhilHealth
+        </ion-text>
+      </li>
+      <li class="lineheight-80  paddingtop-10">
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Please note that actual receivable amount may vary after final computations from Accounting.  </ion-text>
+      </li>
+    </ul>
+  
+  
+    <ul *ngIf="payvenueN == 'W'">
+      <li class="lineheight-80">
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Amenable to PhilHealth rates.</ion-text>
+      </li>
+      <li class="lineheight-80  paddingtop-10">
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Receivable: PhilHealth </ion-text>
+      </li>
+    </ul>
+    <ul *ngIf="payvenueN == 'N'">
+      <li class="lineheight-80">
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Patient was not seen so no professional fee will be collected from this patient.</ion-text>
+      </li>
+    </ul>
+    <ul *ngIf="payvenueN == 'A'">
+      <li class="lineheight-80">
+        <ion-text class="fs-12 ion-text-wrap" color="danger">As an insurance coordinator you will receive a coordinator's fee.</ion-text>
+      </li>
+      <li class="lineheight-80">
+        <ion-text class="fs-12 ion-text-wrap" color="danger">No professional fee will be collected from this patient.</ion-text>
+      </li>
+    </ul>
+    <ul *ngIf="payvenueN == 'xyz'">
+      <li class="lineheight-80">
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Receivable: PhilHealth (if patient is a member)</ion-text>
+      </li>
+    </ul>
           <ion-button
             color="mango"
             size="default"
             expand="block"
             shape="round"
+            class="buttonActive"
             (click)="modifyProfFee()"
             *ngIf="ifShowSummary"
             [disabled]="modifybtn"

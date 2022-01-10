@@ -126,9 +126,9 @@ export class Constants {
   public UI_COMPONENT_TEXT__VALUE__SETTINGS_APPEARANCE_DARK_MODE: string =
     'Switch to Dark Mode';
   public UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO: string =
-    'For inquiries, please contact Systems Solution & Business Intelligence Team of Chong Hua Hospital IT Division';
+    'For inquiries, please contact the DOKi App Team:';
   public UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_TELEPHONE: string =
-    '+63 32 233 8000';
+    '+63 32 233 8000 local 8888';
   public UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_TELEPHONE_HREF: string =
     'tel: +63322338000';
   public UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_APP_VERSION: string =
@@ -146,7 +146,7 @@ export class Constants {
     "Great! You've successfully changed it! Please log in again using your new password. ";
 
   public UI_COMPONENT_TEXT_VALUE_UPDATE_PASSWORD_FAILED_BODY =
-    'U-oh! There was a problem updating your password. Please try again.';
+    'U-oh! There was a problem updating your password. Please try again. If problem still persists, please contact the DOKi App Team at doki@chonghua.com.ph';
   public UI_COMPONENT_TEXT_VALUE_CHANGE_PASSWORD_FAILED_BODY =
     "It seems that the current password you entered can't be found in our system. Please try again. ";
 
@@ -161,7 +161,7 @@ export class Constants {
   /**
    * Version
    */
-  public DOCTOR_PORTAL__VALUE__VERSION: string = '1.7.16';
+  public DOCTOR_PORTAL__VALUE__VERSION: string = '2.1.18';
 
   // (W)
   /**

@@ -158,14 +158,28 @@
 }
 
 .pointer {cursor: pointer;}
- .my-custom-modal-css .modal-wrapper {
-   height: 90%;
-   width: 95%;
-   top: 5%;
-   position: absolute; 
-   display: block;  
-}
+.my-custom-modal-css .modal-wrapper {
+  height: 90%;
+  width: 95%;
+  top: 10%;
+  position: absolute; 
+  display: block;  
+  @media (min-width: 768px) {
 
+   width: 50%;
+ }
+}
+.my-custom-css .modal-wrapper {
+  height: 90%;
+  top: 5%;
+  position: absolute; 
+  display: block;  
+
+}
+.modal-wrapper{
+  background: transparent !important;
+  --box-shadow: 0 28px 48px rgba(0, 0, 0, 0);
+}
 ion-popover{
    ion-backdrop{
    opacity: 0.5 !important;
@@ -362,8 +376,25 @@ body {
 }
 
 .swiper-pagination {
-  bottom: 97% !important;
+  //bottom: 97% !important;
+  width: 50% !important;
+  left: 25% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.swiper-pagination-bullet {
+  transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+}
+
+.swiper-pagination-bullet-active {
+   width: 12px;
+   height: 12px;
+   background: var(--ion-color-primary);
+   border: 2px solid var(--bullet-backround-active);
+}
+
 body[color-theme="dark"] {
   .darkmode{
     display: block;
@@ -445,9 +476,12 @@ a {
 
 
 
-
+.buttonActive:active {
+  border: 3px solid;
+ // box-shadow: 1px 1px red;
+}
 // html {
 //   min-height: calc(100% + env(safe-area-inset-top));
 //   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 
-// }
+// }rgb(245, 0, 0)

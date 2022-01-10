@@ -10,25 +10,29 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 export class ChhAppPatientHeaderComponent  {
   @Input() data: any;
   @Input() dateAdmitted: any;
+  @Input() dischargeNotice: any;
   @Input() forMoreOrLess: boolean;
   isDesktop: any;
   moreOrLess: boolean = true;
 
   constructor(private screensizeService: ScreenSizeService) {
-    console.log(this.data);
+   
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         window.location.reload();
       }
       this.isDesktop = isDesktop;
+      //console.log(this.isDesktop);
+      
     });
+    //console.log(this.isDesktop);
+    
   }
   ionViewWillEnter() {
-    console.log("123123123");
+    
   }
   ngOnInit() {
-    console.log(this.data);
-    
+
     if (this.forMoreOrLess) {
       this.moreOrLess = !this.forMoreOrLess;
     }

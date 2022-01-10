@@ -1,11 +1,13 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { StorageService } from "../storage/storage.service";
-import { AuthConstants } from "../../config/auth-constants";
+import { AuthConstants,Consta } from "../../config/auth-constants";
 import { BehaviorSubject, Observable } from "rxjs";
 import { HttpService } from "../http/http.service";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
+import { FunctionsService } from "src/app/shared/functions/functions.service";
+import { constants } from "buffer";
 
 @Injectable({
   providedIn: "root",
@@ -16,7 +18,8 @@ export class PatientService {
     private httpService: HttpService,
     private storageService: StorageService,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    public functionsService: FunctionsService
   ) {}
 
   retrieveSchedTime(
@@ -146,46 +149,51 @@ export class PatientService {
   getUserSettings(data1:any,data2:any){
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
+    let newLink = this.functionsService.isLocalorLive("AppSetting");
     const url =
-      environment.apiRouterUrl +
-      "AppSetting/GetUserSetting/"+data1+'/'+data2;
+      environment.apiRouterUrl + newLink+ "/GetUserSetting/"+data1+'/'+data2;
     return this.http.get(url, options);
   }
   getAppSetting(data:any){
     const headers = new HttpHeaders();
     const options = { headers: headers, withCredintials: false };
+    let newLink = this.functionsService.isLocalorLive("AppSetting");
     const url =
-      environment.apiRouterUrl +
-      "AppSetting/GetAppSetting/"+data;
+      environment.apiRouterUrl +newLink+
+      "/GetAppSetting/"+data;
     return this.http.get(url, options);
   }
   insertUserSettings(data:any){
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredintials: false };
+    let newLink = this.functionsService.isLocalorLive("UserSetting");
     const url =
-      environment.apiRouterUrl +
-      "UserSetting/Insert";
+      environment.apiRouterUrl +newLink+
+      "/Insert";
     return this.http.post(url,  data, options);
   }
   updateUserSettings(data:any){
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredintials: false };
+    let newLink = this.functionsService.isLocalorLive("UserSetting");
     const url =
-    environment.apiRouterUrl+"UserSetting/Update";
+    environment.apiRouterUrl+newLink+"/Update";
     return this.http.put(url, data, options);
   }
   resetUserSettings(data:any){
     //const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const headers = new HttpHeaders();
     const options = { headers: headers,body:data, withCredentials: false };
-    const url = environment.apiRouterUrl+"UserSetting/Delete";
+    let newLink = this.functionsService.isLocalorLive("UserSetting");
+    const url = environment.apiRouterUrl+newLink+"/Delete";
     return this.http.delete(url,options)
   }
   changePassword(data: any) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredintials: false };
+    let newLink = this.functionsService.isLocalorLive("Login");
     const url =
-      environment.apiRouterUrl + "Login/ChangePassword";
+      environment.apiRouterUrl + ""+newLink+"/ChangePassword";
       return this.http.put(url, data, options);
   }
 
@@ -397,25 +405,91 @@ export class PatientService {
       //const headers = new HttpHeaders({ "Content-Type": "application/json" });
       const headers = new HttpHeaders();
       const options = { headers: headers, withCredintials: false };
-      const url = environment.apiRouterUrl+"Login/HISUser/Get?username="+data1+"&password="+data2;
+      let newLink = this.functionsService.isLocalorLive("Login");
+      const url = environment.apiRouterUrl+""+newLink+"/HISUser/Get?username="+data1+"&password="+data2;
       return this.http.get(url, options);
   }
   commonValidate(data: any) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredintials: false };
-    const url = environment.apiRouterUrl+"common/Login/Validate";
+    let newLink = this.functionsService.isLocalorLive("Login");
+    const url = environment.apiRouterUrl+"common/"+newLink+"/Validate";
       return this.http.put(url, data, options);
   }
   commonChangePassword(data: any) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredintials: false };
-    const url = environment.apiRouterUrl+"common/Login/ChangePassword";
+    let newLink = this.functionsService.isLocalorLive("Login");
+    const url = environment.apiRouterUrl+"common/"+newLink+"/ChangePassword";
       return this.http.put(url, data, options);
   }
   commonLoginGet(data: any) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredintials: false };
-    const url = environment.apiRouterUrl+"common/Login/Get";
+    let newLink = this.functionsService.isLocalorLive("Login");
+    const url = environment.apiRouterUrl+"common/"+newLink+"/Get";
       return this.http.put(url, data, options);
   }
+
+
+
+
+/////////V2
+
+
+  loginv2(data:any){
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl + "v2/Login";
+    //const url = "http://10.128.18.75:8088/api/v2/Login";
+    return this.http.post(url,  data, options);
+  }
+  changePasswordV2(data: any) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+   const url = environment.apiRouterUrl+"v2/Login/ChangePassword";
+  // const url = "http://10.128.18.75:8088/api/v2/Login/ChangePassword";
+      return this.http.put(url, data, options);
+  }
+
+  getUserSettingsV2(data1:any){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+   const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
+   //const url = 'http://10.128.18.75:8088/api/v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
+    return this.http.get(url, options);
+  }
+
+  getAppSettingV2(){
+    const headers = new HttpHeaders();
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl + 'v2/AppSetting/'+Consta.appCode+'/'+Consta.mode;
+   //const url = 'http://10.128.18.75:8088/api/v2/AppSetting/'+Consta.appCode+'/'+Consta.mode;
+    return this.http.get(url, options);
+  }
+  insertUserSettingsV2(data:any){
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    const url = environment.apiRouterUrl + "v2/UserSetting";
+    //const url = 'http://10.128.18.75:8088/api/v2/UserSetting';
+    return this.http.post(url,  data, options);
+  }
+  updateUserSettingsV2(data:any){
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredintials: false };
+    const url =    environment.apiRouterUrl + "v2/UserSetting";
+    //const url = 'http://10.128.18.75:8088/api/v2/UserSetting';
+    return this.http.put(url, data, options);
+  }
+  resetUserSettingsV2(data:any){
+    //const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const headers = new HttpHeaders();
+    const options = { headers: headers,body:data, withCredentials: false };
+    const url = environment.apiRouterUrl + "v2/UserSetting";
+    //const url = 'http://10.128.18.75:8088/api/v2/UserSetting';
+    return this.http.delete(url,options)
+  }
+  ////////////////////////V3/////////////////////////
+
+  
 }

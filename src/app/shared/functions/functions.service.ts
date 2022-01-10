@@ -4,14 +4,22 @@ import { Constants } from '../constants';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import * as bcrypt from 'bcryptjs';
+import { Inject, PLATFORM_ID, InjectionToken, Component } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 @Injectable({
   providedIn: 'root',
 })
 export class FunctionsService {
+  private readonly documentIsAccessible: boolean;
   constructor(
     public alertController: AlertController,
-    public constants: Constants
-  ) {}
+    public constants: Constants,
+    @Inject( DOCUMENT ) private document: any,
+    @Inject( PLATFORM_ID ) private platformId: InjectionToken<Object>
+  ) {
+
+    this.documentIsAccessible = isPlatformBrowser( this.platformId );
+  }
 
   /**
    * Alert
@@ -22,6 +30,7 @@ export class FunctionsService {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       message: data1,
+      backdropDismiss: false,
       buttons: [{ text: data2, handler: () => {} }],
     });
     await alert.present();
@@ -221,15 +230,94 @@ export class FunctionsService {
   sorryDoc() {
     this.alert(
       'Sorry, Dok. We cannot log you in at the moment. Please try again.',
-      'Okay'
+      'Okay',
     );
   }
 
+
+
+  isLocalorLive(data:any){
+
+    if (localStorage.getItem('testdb') == '1') {
+      return data+'Test';
+    } else {
+      return data;
+    }
+  }
   // numberWithCommas(x) {
   //   return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
   // }
   
   isEmptyObject(obj) {
     return !Object.keys(obj).length;
+  }
+
+
+
+  check( name: string ): boolean {
+    if ( !this.documentIsAccessible ) {
+      return false;
+    }
+
+    name = encodeURIComponent( name );
+
+    const regExp: RegExp = this.getCookieRegExp( name );
+    const exists: boolean = regExp.test( this.document.cookie );
+
+    return exists;
+  }
+  getcookie( name: string ): string {
+    if ( this.documentIsAccessible && this.check( name ) ) {
+      name = encodeURIComponent( name );
+
+      const regExp: RegExp = this.getCookieRegExp( name );
+      const result: RegExpExecArray = regExp.exec( this.document.cookie );
+
+      return decodeURIComponent( result[ 1 ] );
+    } else {
+      return '';
+    }
+  }
+  private getCookieRegExp( name: string ): RegExp {
+    const escapedName: string = name.replace( /([\[\]\{\}\(\)\|\=\;\+\?\,\.\*\^\$])/ig, '\\$1' );
+
+    return new RegExp( '(?:^' + escapedName + '|;\\s*' + escapedName + ')=(.*?)(?:;|$)', 'g' );
+  }
+
+  getAdmissionStatus(data:any){
+    let x="";
+    if(data == 'RE'){
+      x = 'Registered';
+    }else if(data == 'AC'){
+      x = 'Admitted';
+    }else if(data == 'DN'){
+      x = 'For Discharge';
+    }else if(data == 'BP'){
+      x = 'Partially Settled';
+    }else if(data == 'PP'){
+      x = 'Ok For Checkout';
+    }else if(data == 'CO'){
+      x = 'Checkout';
+    }else if(data == 'BA'){
+      x = 'Billing Approved';
+    }else if(data == 'CC'){
+      x = 'Checked-out With Balance';
+    }else if(data == 'FP'){
+      x = 'Ok For Checkout';
+    }else if(data == 'CA'){
+      x = 'Cancelled';
+    }else if(data == 'PA'){
+      x = 'Pre-Admitted';
+    }else if(data == 'OP'){
+      x = 'Re-Opened (w/o b)';
+    }else if(data == 'ON'){
+      x = 'Re-Opened (wb)';
+    }else if(data == 'UA'){
+      x = 'Unit Admission';
+    }else if(data == 'BB'){
+      x = 'Fully Settled';
+    }
+
+    return x;
   }
 }

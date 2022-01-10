@@ -1,184 +1,237 @@
-<ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col size-lg="6" size-md="6" offset-md="3 " size-sm="6" size="12" class="my-custom-slider ">
-        <ion-slides pager="{{!isDesktop}}" #theSlides [options]="slideOpts" >
-          <ion-slide id="slide1" >
-            <!-- <app-logo></app-logo> -->
-            <div class="logoContainer" style="padding-top:5px">
-              <img
-                src="assets/img/LOGOMARK.png"
-                class="flexibleImg"
-                alt="Chong Hua Hospital"
-              />
-            </div>
-            <h1 style="margin-bottom: 0"><b>Welcome aboard, Dok!</b></h1>
-            <img
-              src="assets/img/world-health-day-rafiki.svg"
-              alt="frontliners"
-            />
-            <!-- <div align="center"> -->
-            <!-- <object data="assets/img/world-health-day-rafiki.svg" width="300" height="300"> </object> -->
-            <!-- <lottie-player
-                src="assets/animations/21474-medical-frontliners.json"
-                mode="bounce"
-                background="transparent"
-                speed="3"
-                style="width: 300px"
-                loop
-                autoplay
-              ></lottie-player> -->
-            <!-- </div> -->
-            <h4>
-              We <b>thank you</b> for your courage and service. We appreciate
-              it!
-            </h4>
-            <p class="fontSize-12">
-              Swipe left to see what we've built for you.
-            </p>
-            <ion-button
-              id="first-slide-button-right"
-              fill="clear"
-              *ngIf="isDesktop"
-              (click)="moveToNext(theSlides)"
-              ><ion-icon name="arrow-forward"></ion-icon
-            ></ion-button>
-          </ion-slide>
-          <ion-slide>
-            <h1>View your admitted patients.</h1>
-            <img
-              src="assets/img/medical-care-rafiki.svg"
-              width="300"
-              height="300"
-              alt="admitted-patients"
-            />
-            <!-- <object data="assets/animations/gynecology-consultation-animate.svg" width="300" height="300"> </object> -->
-            <!-- <div align="center">
-              <lottie-player
-                src="assets/animations/18646-medic-clinic-chh-branding.json"
-                mode="bounce"
-                background="transparent"
-                speed="1"
-                style="width: 300px; height: 300px"
-                loop
-                autoplay
-              ></lottie-player>
-            </div> -->
-            <p>
-              You will be notified via SMS when you have patients admitted to
-              the hospital at both sites (Cebu and Mandaue).
-            </p>
-            <ion-button
-              id="second-slide-button-left"
-              fill="clear"
-              *ngIf="isDesktop"
-              (click)="moveToPrev(theSlides)"
-              ><ion-icon name="arrow-back"></ion-icon
-            ></ion-button>
-            <ion-button
-              id="second-slide-button-right"
-              fill="clear"
-              *ngIf="isDesktop"
-              (click)="moveToNext(theSlides)"
-              ><ion-icon name="arrow-forward"></ion-icon
-            ></ion-button>
-          </ion-slide>
-          <ion-slide>
-            <h1>View patient appointments.</h1>
-            <img
-              src="assets/img/schedule-rafiki.svg"
-              width="300"
-              height="300"
-              alt="view-appointments"
-            />
-            <!-- <object data="assets/animations/schedule-animate.svg" width="300" height="300"> </object> -->
-            <!-- <div align="center">
-              <lottie-player
-                src="assets/animations/11013-animation-feed-chh-branding.json"
-                mode="bounce"
-                background="transparent"
-                speed="1"
-                style="width: 300px; height: 300px"
-                loop
-                autoplay
-              ></lottie-player>
-            </div> -->
-            <p>
-              Whenever patients book an appointment schedule online, you can
-              view the list of patients expected to visit your clinic.
-            </p>
-            <ion-button
-              id="third-slide-button-left"
-              fill="clear"
-              *ngIf="isDesktop"
-              (click)="moveToPrev(theSlides)"
-              ><ion-icon name="arrow-back"></ion-icon
-            ></ion-button>
-            <ion-button
-              id="third-slide-button-right"
-              fill="clear"
-              *ngIf="isDesktop"
-              (click)="moveToNext(theSlides)"
-              ><ion-icon name="arrow-forward"></ion-icon
-            ></ion-button>
-          </ion-slide>
-          <ion-slide>
-            <h1>Submit professional fee online.</h1>
-            <img
-              src="assets/img/online-doctor-rafiki.svg"
-              width="300"
-              height="300"
-              alt="online-doctor"
-            />
-            <!-- <object data="assets/animations/online-doctor-animate.svg" width="300" height="300"> </object> -->
-            <!-- <div align="center">
-              <lottie-player
-                src="assets/animations/4774-done-chh-branding.json"
-                mode="bounce"
-                background="transparent"
-                speed="1"
-                style="width: 300px; height: 300px"
-                loop
-                autoplay
-              ></lottie-player>
-            </div> -->
-            <p>
-              You will be notified via SMS if your patient is about to be
-              discharged. Then, you can submit your professional fee using this
-              app.
-            </p>
-            <ion-row>
-              <ion-col size-lg="4" offset-lg="4">
-                <ion-grid class="ion-no-padding">
-                  <ion-row>
-                    <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
-                    <ion-col size-xs="12" size-md="4" size-lg="4">
-                      <chh-app-start *ngIf="!android"></chh-app-start>
-                    </ion-col>
-                    <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col
-                  ></ion-row>
-                </ion-grid>
-                <ion-button
-                  id="button-lets-go"
-                  *ngIf="android"
-                  shape="round"
-                  expand="block"
-                  (click)="addToHomeScreen()"
-                  color="mango"
-                  >INSTALL</ion-button
-                >
-              </ion-col>
-            </ion-row>
-            <ion-button
-              id="fourth-slide-button-left"
-              fill="clear"
-              *ngIf="isDesktop"
-              (click)="moveToPrev(theSlides)"
-              ><ion-icon name="arrow-back"></ion-icon
-            ></ion-button>
-          </ion-slide>
-        </ion-slides>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+<ion-content class="ion-padding">
+  <ion-slides pager="true">
+    <!-- <ion-slide class="ion-padding"> -->
+    <ion-slide>
+      <!-- <img src="assets/onboarding/1-onboarding-welcome.png"> -->
+      <img src="assets/img/world-health-day-rafiki.svg" />
+      <div class="slider-text">
+        <h2><b>Welcome aboard, Dok!</b></h2>
+        <p>
+          <b>Chong Hua Hospital</b> extends its <b>gratitude</b> to you for your
+          courage and service! Swipe left to see what we’ve built for you.
+        </p>
+      </div>
+
+      <div class="navigator">
+        <ion-button color="primary" fill="clear" (click)="skip()"
+          >SKIP</ion-button
+        >
+        <ion-button color="primary" fill="clear" (click)="next()"
+          >NEXT</ion-button
+        >
+      </div>
+    </ion-slide>
+
+    <ion-slide class="ion-padding">
+      <!-- <img src="assets/onboarding/2-onboarding-inpatients.png"> -->
+      <img src="assets/img/medical-care-rafiki.svg" />
+      <div class="slider-text">
+        <h2>View your admitted patients.</h2>
+        <p>
+          Get notified via SMS when your patients are admitted to the hospital
+          at both sites (Cebu and Mandaue).
+        </p>
+      </div>
+
+      <div class="navigator">
+        <ion-button color="primary" fill="clear" (click)="skip()"
+          >SKIP</ion-button
+        >
+        <ion-button color="primary" fill="clear" (click)="next()"
+          >NEXT</ion-button
+        >
+      </div>
+    </ion-slide>
+
+    <ion-slide class="ion-padding">
+      <!-- <img src="assets/onboarding/3-onboarding-notifications.png"> -->
+      <img src="assets/img/online-doctor-rafiki.svg" />
+      <div class="slider-text">
+        <h2>Submit professional fees online.</h2>
+        <p>
+          Get notified via SMS when your patients are about to be discharged.
+          Then, submission of professional fees can be done anytime, anywhere.
+        </p>
+      </div>
+
+      <div class="navigator">
+        <ion-button color="primary" fill="clear" (click)="skip()"
+          >SKIP</ion-button
+        >
+        <ion-button color="primary" fill="clear" (click)="next()"
+          >NEXT</ion-button
+        >
+      </div>
+    </ion-slide>
+
+    <ion-slide class="ion-padding">
+      <!-- <img src="assets/onboarding/4-onboarding-newsfeed.png"> -->
+      <img src="assets/img/news-rafiki.svg" />
+      <div class="slider-text">
+        <h2>News Feed</h2>
+        <p>
+          Get updated with hospital-wide news and department-level
+          announcements.
+        </p>
+      </div>
+
+      <!-- <ion-button
+      id="button-lets-go"
+      *ngIf="android"
+      shape="round"
+      expand="block"
+      (click)="addToHomeScreen()"
+      color="primary"
+      >INSTALL</ion-button
+      >
+      </ion-slide> -->
+      <ion-button
+        id="button-lets-go"
+        *ngIf="android"
+        expand="block"
+        (click)="addToHomeScreen()"
+        color="primary"
+        >INSTALL</ion-button
+      >
+      <div class="navigator" *ngIf="!iosVerifier">
+        <ion-button color="primary" fill="clear" (click)="goback()"
+          >GO BACK</ion-button
+        >
+      </div>
+      <div class="navigator" *ngIf="iosVerifier">
+        <ion-button color="primary" fill="clear" (click)="skip()"
+          >SKIP</ion-button
+        >
+        <ion-button color="primary" fill="clear" (click)="next()"
+          >NEXT</ion-button
+        >
+      </div>
+    </ion-slide>
+
+    <ion-slide class="ion-padding" *ngIf="iosVerifier">
+      <!-- <img src="assets/onboarding/3-onboarding-notifications.png"> -->
+      <img src="assets/onboarding/iOS-10.png" />
+      <div class="slider-text">
+        <h2>How to install DOKi on your iPhone</h2>
+        <!--p>
+          Get notified via SMS when your patients are about to be discharged.
+          Then, submission of professional fees can be done anytime, anywhere.
+        </p-->
+      </div>
+
+      <div class="navigator">
+        <ion-button color="primary" fill="clear" (click)="goback()"
+          >GO BACK</ion-button
+        >
+        <ion-button color="primary" fill="clear" (click)="next()"
+          >NEXT</ion-button
+        >
+      </div>
+    </ion-slide>
+
+    <ion-slide class="ion-padding" *ngIf="iosVerifier">
+      <img src="assets/onboarding/iOS-1.png" />
+      <div class="slider-text">
+        <h2>Open Safari</h2>
+        <p>
+          1.) Visit
+          <a href="https://doki.chonghua.com.ph" target="_BLANK"
+            >doki.chonghua.com.ph</a
+          >
+          using <b>Safari</b> browser.
+        </p>
+      </div>
+      <div class="navigator">
+        <ion-button color="primary" fill="clear" (click)="prev()"
+          >PREV</ion-button
+        >
+        <ion-button color="primary" fill="clear" (click)="next()"
+          >NEXT</ion-button
+        >
+      </div>
+    </ion-slide>
+
+    <ion-slide class="ion-padding" *ngIf="iosVerifier">
+      <img src="assets/onboarding/iOS-6.png" />
+      <div class="slider-text">
+        <h2>Tap the "Share" button</h2>
+        <p>
+          2.) Tap the <b>“Share”</b> button found at the bottom of the screen.
+        </p>
+      </div>
+      <div class="navigator">
+        <ion-button color="primary" fill="clear" (click)="prev()"
+          >PREV</ion-button
+        >
+        <ion-button color="primary" fill="clear" (click)="next()"
+          >NEXT</ion-button
+        >
+      </div>
+    </ion-slide>
+
+    <ion-slide class="ion-padding" *ngIf="iosVerifier">
+      <img src="assets/onboarding/iOS-7.png" />
+      <div class="slider-text">
+        <h2>Add to Home Screen</h2>
+        <p>3.) Tap Add to <b>Home Screen</b>.</p>
+      </div>
+      <div class="navigator">
+        <ion-button color="primary" fill="clear" (click)="prev()"
+          >PREV</ion-button
+        >
+        <ion-button color="primary" fill="clear" (click)="next()"
+          >NEXT</ion-button
+        >
+      </div>
+    </ion-slide>
+
+    <ion-slide class="ion-padding" *ngIf="iosVerifier">
+      <img src="assets/onboarding/iOS-8.png" />
+      <div class="slider-text">
+        <h2>Label the App</h2>
+        <p>
+          4.) Type in the preferred label of the app. <b>“DOKi”</b> is the
+          default.
+        </p>
+      </div>
+      <div class="navigator">
+        <ion-button color="primary" fill="clear" (click)="prev()"
+          >PREV</ion-button
+        >
+        <ion-button color="primary" fill="clear" (click)="next()"
+          >NEXT</ion-button
+        >
+      </div>
+    </ion-slide>
+    <ion-slide class="ion-padding" *ngIf="iosVerifier">
+      <img src="assets/onboarding/iOS-8-1.png" />
+      <div class="slider-text">
+        <h2>Tap Add</h2>
+        <p>5.) Tap Add to confirm.</p>
+      </div>
+      <div class="navigator">
+        <ion-button color="primary" fill="clear" (click)="prev()"
+          >PREV</ion-button
+        >
+        <ion-button color="primary" fill="clear" (click)="next()"
+          >NEXT</ion-button
+        >
+      </div>
+    </ion-slide>
+
+    <ion-slide class="ion-padding" *ngIf="iosVerifier">
+      <img src="assets/onboarding/iOS-9.png" />
+      <div class="slider-text">
+        <h2>App installed</h2>
+        <p>DOKi is the latest app installed.</p>
+        <p>6.) Tap DOKi icon from the Home Screen to launch the App.</p>
+      </div>
+      <div class="navigator">
+        <ion-button color="primary" fill="clear" (click)="goback()"
+          >GO BACK</ion-button
+        >
+        <!--ion-button color="primary" fill="clear" (click)="next()">NEXT</ion-button-->
+      </div>
+    </ion-slide>
+  </ion-slides>
 </ion-content>

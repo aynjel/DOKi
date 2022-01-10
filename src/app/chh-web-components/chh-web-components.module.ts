@@ -42,6 +42,16 @@ import {ChhAppInsuranceCoordinatorInquiryComponent} from "./chh-app-insurance-co
 
 import {ChhAppIsPatientSeenComponent} from "./chh-app-is-patient-seen/chh-app-is-patient-seen.component";
 
+import {ChhAppCaseratesComponent} from "./chh-app-caserates/chh-app-caserates.component";
+import {ChhAppNewsfeedComponent} from "./chh-app-newsfeed/chh-app-newsfeed.component";
+
+import {ChhAppForgotPasswordComponent} from "./chh-app-forgot-password/chh-app-forgot-password.component";
+import{ChhAppExecutiveDeptComponent} from "./chh-app-executive-dept/chh-app-executive-dept.component"
+
+import{PatientdetailComponent} from "../pages/executuve/components/patientdetail/patientdetail.component";
+import{DoctordetailComponent} from "../pages/executuve/components/doctordetail/doctordetail.component";
+import{DashboardgraphComponent} from "../pages/executuve/components/dashboardgraph/dashboardgraph.component";
+import {CvdbreakdownComponent} from "../pages/executuve/components/cvdbreakdown/cvdbreakdown.component";
 @NgModule({
   declarations: [
     ChhAppLogoComponent,
@@ -66,7 +76,15 @@ import {ChhAppIsPatientSeenComponent} from "./chh-app-is-patient-seen/chh-app-is
     ChhAppFinalDiagnosisComponent,
     ChhAppInsuranceCoordinatorInquiryComponent,
     ChhAppIsPatientSeenComponent,
-    MandaueLabDetailsComponent
+    MandaueLabDetailsComponent,
+    ChhAppCaseratesComponent,
+    ChhAppNewsfeedComponent,
+    ChhAppForgotPasswordComponent,
+    ChhAppExecutiveDeptComponent,
+    PatientdetailComponent,
+    DoctordetailComponent,
+    DashboardgraphComponent,
+    CvdbreakdownComponent
 
   ],
   exports: [
@@ -91,7 +109,15 @@ import {ChhAppIsPatientSeenComponent} from "./chh-app-is-patient-seen/chh-app-is
     ChhAppFinalDiagnosisComponent,
     ChhAppInsuranceCoordinatorInquiryComponent,
     ChhAppIsPatientSeenComponent,
-    MandaueLabDetailsComponent
+    MandaueLabDetailsComponent,
+    ChhAppCaseratesComponent,
+    ChhAppNewsfeedComponent,
+    ChhAppForgotPasswordComponent,
+    ChhAppExecutiveDeptComponent,
+    PatientdetailComponent,
+    DoctordetailComponent,
+    DashboardgraphComponent,
+    CvdbreakdownComponent
   ],
   imports: [CommonModule, IonicModule, ChhAppTextAvatarModule,RouterModule,FormsModule],
 })

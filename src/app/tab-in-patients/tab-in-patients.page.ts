@@ -2,7 +2,8 @@ import { Component, Renderer2 } from '@angular/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { StorageService } from '../services/storage/storage.service';
-import { AuthConstants } from '../config/auth-constants';
+import { AuthConstants, Consta} from '../config/auth-constants';
+
 import { DoctorService } from '../services/doctor/doctor.service';
 import {
   ModalController,
@@ -23,6 +24,7 @@ import { FunctionsService } from '../shared/functions/functions.service';
 import { Constants } from '../shared/constants';
 import { Messages } from '../shared/messages';
 import { PatientService } from '../services/patient/patient.service';
+import { InpatientModelInpatients,LoginResponseModelv3 } from '../models/doctor';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -32,7 +34,8 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   styleUrls: ['tab-in-patients.page.scss'],
 })
 export class TabInPatientsPage {
-  public logindata: LoginData;
+  inpatientModelInpatients = new InpatientModelInpatients;
+  public logindata: LoginResponseModelv3;
   public inPatientData: InPatientData;
   isDesktop: boolean;
   isFetchDone: boolean = false;
@@ -47,7 +50,7 @@ export class TabInPatientsPage {
   admittedOrDischargeLabel = '';
   route: string;
   objecthandler: boolean = false;
-
+  data: any = [];
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -65,7 +68,7 @@ export class TabInPatientsPage {
     private patientService: PatientService,
     public nav: NavController
   ) {
-    console.log('In-patient : Constructor');
+    
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         window.location.reload();
@@ -92,7 +95,7 @@ export class TabInPatientsPage {
   }
 
   ngOnInit() {
-    console.log('In-patient : ngOnInit');
+    this.checkAppearance();
     this.$gaService.pageView('/In-Patient', 'In-Patient Tab');
   }
 
@@ -188,16 +191,23 @@ export class TabInPatientsPage {
 
   //Fired when the component routing to is about to animate into view.
   ionViewWillEnter() {
-    console.log('In-patient : ionViewWillEnter');
 
-    this.logindata = <LoginData>this.authService.userData$.getValue();
+    this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
+    this.functionsService.logToConsole(this.logindata);
 
-    this.dr_code = this.logindata[0].dr_code;
-    let dr_name = this.logindata[0].last_name;
+    this.dr_code = this.logindata.doctorCode;
+    this.inpatientModelInpatients.accountNo = "none";
+    
+    //this.inpatientModelInpatients.drCode = 'MD000175';
+    this.inpatientModelInpatients.drCode = this.dr_code;
+    this.inpatientModelInpatients.mode = Consta.mode;
+    let dr_name = this.logindata.lastName;
     this.$gaService.event('In-Patient', 'User Flow', dr_name);
 
     let x: boolean = true;
-    this.patientService.getAppSetting('DPP').subscribe((res: any) => {
+    /*
+    deleted by jessie oct 20 2021
+    this.patientService.getAppSettingV2().subscribe((res: any) => {
       Object.keys(res).forEach((key) => {
         var value = res[key];
         Object.keys(value).forEach((lock) => {
@@ -208,15 +218,14 @@ export class TabInPatientsPage {
             }
 
             if (key == 'smsGateway') {
-              console.log(value);
-
               localStorage.setItem('smsGateway', JSON.stringify(value));
             }
           }
         });
       });
-    });
-
+    });*/
+    this.functionsService.logToConsole('call patient');
+    
     this.callPatient(this.site);
   }
 
@@ -224,9 +233,11 @@ export class TabInPatientsPage {
   callPatient(data: any) {
     this.isFetchDone = false;
 
-    setTimeout(() => {
-      this.doctorService.getInPatient(this.dr_code).subscribe(
+
+      this.doctorService.getInPatientV3().subscribe(
         (res: any) => {
+
+          
           if (res.length) {
             this.objecthandler = true;
           } else {
@@ -258,7 +269,7 @@ export class TabInPatientsPage {
           this.isFetchDone = true;
         }
       );
-    }, 1000);
+
   }
 
   //swipe down refresh
@@ -271,6 +282,19 @@ export class TabInPatientsPage {
   }
 
   async detail(data: any) {
+    this.data = [];
+    /*
+    this.functionsService.logToConsole(data);
+    this.inPatients.forEach(element => {
+       
+        if( element.patient_no == data){
+          this.data.push(element);
+          localStorage.setItem('patientData',btoa(JSON.stringify(this.data)));
+        }
+    });
+    this.functionsService.logToConsole( this.data);
+  */
+    
     /*
   this.router.navigate(['menu/in-patients/', data]);
 */
@@ -333,5 +357,47 @@ export class TabInPatientsPage {
     ) {
       this.router.navigate(['/menu/in-patients/DN']);
     }
+  }
+  checkAppearance() {
+    this.functionsService.logToConsole('checkAppearance');
+    var values = JSON.parse('[' + atob(localStorage.getItem("user_settings"))+ ']');
+    let dr_username = atob(localStorage.getItem('username'));
+    values.forEach(element => {
+      this.functionsService.logToConsole(element.darkmode);
+      if(element.darkmode == 1){
+        this.renderer.setAttribute(document.body,'color-theme','dark');
+      }else{
+        this.renderer.setAttribute(document.body,'color-theme','light');
+      }
+    });
+    
+   /* this.patientService
+      .getUserSettingsV2(dr_username)
+      .subscribe((res: any) => {
+        if (Object.keys(res).length >= 1) {
+          let data = JSON.stringify(res);
+          data = '[' + data + ']';
+          let adat = JSON.parse(data);
+          adat.forEach((el) => {
+            if (typeof el.appearance !== 'undefined') {
+              if (el.appearance.darkmode == 1) {
+                this.renderer.setAttribute(
+                  document.body,
+                  'color-theme',
+                  'dark'
+                );
+              } else {
+                this.renderer.setAttribute(
+                  document.body,
+                  'color-theme',
+                  'light'
+                );
+              }
+            } else {
+              this.renderer.setAttribute(document.body, 'color-theme', 'light');
+            }
+          });
+        }
+      });*/
   }
 }
