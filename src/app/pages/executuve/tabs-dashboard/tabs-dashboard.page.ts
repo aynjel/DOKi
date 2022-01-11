@@ -1265,29 +1265,34 @@ export class TabsDashboardPage implements OnInit {
       },
       (error) => {},
       () => {
-        tempMTA.forEach((element) => {
-          if (element.site == 'C') {
-            this.MTACebSet[element.month - 1] = element.totalAdmsMTD;
-          }
-          if (element.site == 'M') {
-            this.MTAManSet[element.month - 1] = element.totalAdmsMTD;
-          }
-        });
-        this.MTACeb = this.MTACebSet;
-        this.MTAMan = this.MTAManSet;
-        this.MTACategory = this.MTACategorySet;
-        this.populateMontlyTotalAdmissions();
+        if (tempMTA != null) {
+          tempMTA.forEach((element) => {
+            if (element.site == 'C') {
+              this.MTACebSet[element.month - 1] = element.totalAdmsMTD;
+            }
+            if (element.site == 'M') {
+              this.MTAManSet[element.month - 1] = element.totalAdmsMTD;
+            }
+          });
+          this.MTACeb = this.MTACebSet;
+          this.MTAMan = this.MTAManSet;
+          this.MTACategory = this.MTACategorySet;
+          this.monthTrendFromTo();
+        } else {
+          this.MTACebSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+          this.MTAManSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+          this.monthTrendFromTo();
+        }
       }
     );
   }
   monthTrendYear() {
     console.log(this.yearTreandTO);
-    this.MTA.destroy();
     this.generateMonthlyTotalAdmissions();
   }
   monthTrendFromTo() {
     if (this.monthTrendTo >= this.monthTrendFrom) {
-      this.MTA.destroy();
+      //this.MTA.destroy();
       // this.MonthlyTotalAdmissionsCeb = [300, 452, 700];
       //this.MonthlyTotalAdmissionsMan = [300, 435, 500];
       this.MTACategory = [];
