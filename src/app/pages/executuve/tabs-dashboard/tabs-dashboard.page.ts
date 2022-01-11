@@ -6,12 +6,15 @@ import { Router } from '@angular/router';
 import { Constants } from '../../../shared/constants';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
-import { UserSettingsModelv3, LoginResponseModelv3 } from 'src/app/models/doctor';
+import {
+  UserSettingsModelv3,
+  LoginResponseModelv3,
+} from 'src/app/models/doctor';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ExecutiveService } from 'src/app/services/executive/executive.service';
 import { throwIfEmpty } from 'rxjs/operators';
 import { runInThisContext } from 'vm';
-import { DashboardgraphComponent } from "../components/dashboardgraph/dashboardgraph.component";
+import { DashboardgraphComponent } from '../components/dashboardgraph/dashboardgraph.component';
 /*
 import * as HighCharts from "highcharts";
 import More from 'highcharts/highcharts-more';
@@ -34,8 +37,6 @@ import { ThrowStmt } from '@angular/compiler';
 import { ModalController } from '@ionic/angular';
 // Initialize exporting module.
 //Exporting(HighCharts);
-
-
 
 @Component({
   selector: 'app-tabs-dashboard',
@@ -86,12 +87,13 @@ export class TabsDashboardPage implements OnInit {
   noncriticalM: any;
   stackedBar: any = true;
 
-  cvdbreakdownC="C";
-  cvdbreakdownM = "M";
-  cvdbreakdowncrit = "Critical";
-  cvdbreakdownNcrit = "Non-Critical"
+  cvdbreakdownC = 'C';
+  cvdbreakdownM = 'M';
+  cvdbreakdowncrit = 'Critical';
+  cvdbreakdownNcrit = 'Non-Critical';
 
-  constructor(private storageService: StorageService,
+  constructor(
+    private storageService: StorageService,
     private router: Router,
     public constants: Constants,
     private screensizeService: ScreenSizeService,
@@ -100,7 +102,6 @@ export class TabsDashboardPage implements OnInit {
     private executiveService: ExecutiveService,
     private modalController: ModalController
   ) {
-
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         // Reload because our routing is out of place
@@ -109,14 +110,10 @@ export class TabsDashboardPage implements OnInit {
 
       this.isDesktop = isDesktop;
     });
-
   }
-  ionViewWillEnter() {
-
-  }
+  ionViewWillEnter() {}
 
   ngOnInit() {
-
     this.totalAdmissions = 0;
     this.totalAdmissionsC = 0;
     this.totalAdmissionsM = 0;
@@ -126,7 +123,6 @@ export class TabsDashboardPage implements OnInit {
     this.forDischargeC = 0;
     this.forDischargeM = 0;
     this.forDischarge = 0;
-
 
     this.totalAdmissionsV33 = true;
     this.totalAdmissionsTodayV33 = true;
@@ -139,13 +135,15 @@ export class TabsDashboardPage implements OnInit {
         //////// ////console.log(res);
         this.totalAdmissionsV3 = res;
       },
-      (error) => { this.totalAdmissionsV33 = false; },
+      (error) => {
+        this.totalAdmissionsV33 = false;
+      },
       () => {
-
         if (this.totalAdmissionsV3) {
-          this.totalAdmissionsV3.forEach(element => {
+          this.totalAdmissionsV3.forEach((element) => {
             this.totalAdmissionsV33 = false;
-            this.totalAdmissions = this.totalAdmissions + element.totalAdmissions;
+            this.totalAdmissions =
+              this.totalAdmissions + element.totalAdmissions;
             if (element.site == 'C') {
               this.totalAdmissionsC = element.totalAdmissions;
             } else if (element.site == 'M') {
@@ -156,7 +154,6 @@ export class TabsDashboardPage implements OnInit {
           this.totalAdmissionsV33 = false;
           //this.totalAdmissions = this.totalAdmissionsC = this.totalAdmissionsM= 0;
         }
-
       }
     );
 
@@ -166,13 +163,15 @@ export class TabsDashboardPage implements OnInit {
         //////// ////console.log(res);
         this.totalAdmissionsTodayV3 = res;
       },
-      (error) => { this.totalAdmissionsTodayV33 = false; },
+      (error) => {
+        this.totalAdmissionsTodayV33 = false;
+      },
       () => {
-
         if (this.totalAdmissionsTodayV3) {
-          this.totalAdmissionsTodayV3.forEach(element => {
+          this.totalAdmissionsTodayV3.forEach((element) => {
             this.totalAdmissionsTodayV33 = false;
-            this.totalAdmissionstoday = this.totalAdmissionstoday + element.totalNewAdmissions;
+            this.totalAdmissionstoday =
+              this.totalAdmissionstoday + element.totalNewAdmissions;
             if (element.site == 'C') {
               this.totalAdmissionstodayC = element.totalNewAdmissions;
             } else if (element.site == 'M') {
@@ -182,22 +181,20 @@ export class TabsDashboardPage implements OnInit {
         } else {
           this.totalAdmissionsTodayV33 = false;
         }
-
       }
-
     );
-
 
     this.executiveService.forDischargeV3().subscribe(
       (res: any) => {
         //////// ////console.log(res);
         this.forDischargeV3 = res;
       },
-      (error) => { this.forDischargeV33 = false; },
+      (error) => {
+        this.forDischargeV33 = false;
+      },
       () => {
-
         if (this.forDischargeV3) {
-          this.forDischargeV3.forEach(element => {
+          this.forDischargeV3.forEach((element) => {
             this.forDischargeV33 = false;
             this.forDischarge = this.forDischarge + element.totalForDischarge;
             if (element.site == 'C') {
@@ -209,17 +206,12 @@ export class TabsDashboardPage implements OnInit {
         } else {
           this.forDischargeV33 = false;
         }
-
-
-
       }
-
     );
 
     this.getTotalAdmissions();
 
-      this.getTotalPxTypesBySite();
-    
+    this.getTotalPxTypesBySite();
 
     //this.getTotalCovidPxTypesBySite();
 
@@ -257,19 +249,15 @@ export class TabsDashboardPage implements OnInit {
     
         );*/
 
-
-
-
-        
-       
+    this.generateMonthlyTotalAdmissions();
   }
 
+  MontlyTotalAdmissions: any;
+  MontlyTotalAdmissionsCeb: any;
+  MontlyTotalAdmissionsMan: any;
+  TotalPxTypesBySite: any;
 
-
-
-
-  TotalPxTypesBySite:any;
-  getTotalPxTypesBySite(){
+  getTotalPxTypesBySite() {
     let getTotalPxTypesBySite: any;
     this.criticalT = 0;
     this.noncriticalT = 0;
@@ -277,28 +265,34 @@ export class TabsDashboardPage implements OnInit {
       (res: any) => {
         this.TotalPxTypesBySite = res;
         //localStorage.setItem('TotalPxTypesBySite', btoa(JSON.stringify(res)));
-        
       },
       (error) => {
         this.criticalTV33 = false;
       },
       () => {
         this.criticalTV33 = false;
-        this.CCC  = 0;this.CCNC = 0;this.CNCC = 0;this.CNCNC = 0;this.MCC = 0;this.MCNC = 0;this.MNCC = 0;
+        this.CCC = 0;
+        this.CCNC = 0;
+        this.CNCC = 0;
+        this.CNCNC = 0;
+        this.MCC = 0;
+        this.MCNC = 0;
+        this.MNCC = 0;
         this.MNCNC = 0;
-        this.criticalC=0;
-        this.criticalT=0;
-        this.criticalM=0;
-        this.noncriticalC=0;
-        this.noncriticalT=0;
-        this.noncriticalM=0;
+        this.criticalC = 0;
+        this.criticalT = 0;
+        this.criticalM = 0;
+        this.noncriticalC = 0;
+        this.noncriticalT = 0;
+        this.noncriticalM = 0;
 
+        this.TotalPxTypesBySite.forEach((el) => {
+          ////console.log(el);
 
-        this.TotalPxTypesBySite.forEach(el => {
-     
-             ////console.log(el);
-            
-          if ((el.site == 'C' || el.site == 'M') && el.patientType1 == 'Critical') {
+          if (
+            (el.site == 'C' || el.site == 'M') &&
+            el.patientType1 == 'Critical'
+          ) {
             this.criticalT += el.totalAdmissions;
             if (el.site == 'C') {
               this.criticalC += el.totalAdmissions;
@@ -307,8 +301,11 @@ export class TabsDashboardPage implements OnInit {
               this.criticalM += el.totalAdmissions;
             }
           }
-          if ((el.site == 'C' || el.site == 'M') && el.patientType1 == 'Non-Critical') {
-            this.noncriticalT +=  el.totalAdmissions;
+          if (
+            (el.site == 'C' || el.site == 'M') &&
+            el.patientType1 == 'Non-Critical'
+          ) {
+            this.noncriticalT += el.totalAdmissions;
             if (el.site == 'C') {
               this.noncriticalC += el.totalAdmissions;
             }
@@ -317,93 +314,66 @@ export class TabsDashboardPage implements OnInit {
             }
           }
 
-
-          if(el.site=='C'&& el.patientType1 == 'Critical'  && el.patientType2=='Covid' ){
+          if (
+            el.site == 'C' &&
+            el.patientType1 == 'Critical' &&
+            el.patientType2 == 'Covid'
+          ) {
             this.CCC += el.totalAdmissions;
           }
-          if(el.site=='C' && el.patientType1 == 'Non-Critical' && el.patientType2=='Covid' ){
+          if (
+            el.site == 'C' &&
+            el.patientType1 == 'Non-Critical' &&
+            el.patientType2 == 'Covid'
+          ) {
             this.CNCC += el.totalAdmissions;
           }
-          if(el.site=='C' && el.patientType1 == 'Critical' && el.patientType2=='Non-Covid' ){
+          if (
+            el.site == 'C' &&
+            el.patientType1 == 'Critical' &&
+            el.patientType2 == 'Non-Covid'
+          ) {
             this.CCNC += el.totalAdmissions;
           }
-          if(el.site=='C' && el.patientType1 == 'Non-Critical' && el.patientType2=='Non-Covid' ){
+          if (
+            el.site == 'C' &&
+            el.patientType1 == 'Non-Critical' &&
+            el.patientType2 == 'Non-Covid'
+          ) {
             this.CNCNC += el.totalAdmissions;
           }
-          if(el.site=='M' && el.patientType1 == 'Critical' && el.patientType2=='Covid' ){
+          if (
+            el.site == 'M' &&
+            el.patientType1 == 'Critical' &&
+            el.patientType2 == 'Covid'
+          ) {
             this.MCC += el.totalAdmissions;
           }
-          if(el.site=='M' && el.patientType1 == 'Non-Critical' && el.patientType2=='Covid' ){
+          if (
+            el.site == 'M' &&
+            el.patientType1 == 'Non-Critical' &&
+            el.patientType2 == 'Covid'
+          ) {
             this.MNCC += el.totalAdmissions;
           }
-          if(el.site=='M' && el.patientType1 == 'Critical' && el.patientType2=='Non-Covid' ){
+          if (
+            el.site == 'M' &&
+            el.patientType1 == 'Critical' &&
+            el.patientType2 == 'Non-Covid'
+          ) {
             this.MCNC += el.totalAdmissions;
           }
-          if(el.site=='M' && el.patientType1 == 'Non-Critical' && el.patientType2=='Non-Covid' ){
+          if (
+            el.site == 'M' &&
+            el.patientType1 == 'Non-Critical' &&
+            el.patientType2 == 'Non-Covid'
+          ) {
             this.MNCNC += el.totalAdmissions;
-            
           }
-
-
-
-
-
-
-
-
-
-
-
         });
       }
-
     );
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   //this.callPieChart(this.getTotalAdmissionsByDeptData,'admission','Admissions by Department','Department');
   async callPieChart(data1: any, data2: any, data3: any, data4: any) {
@@ -413,11 +383,11 @@ export class TabsDashboardPage implements OnInit {
       component: DashboardgraphComponent,
       cssClass: 'my-custom-css',
       componentProps: {
-        'chartdata': data1,
-        'type': data2,
-        'title': data3,
-        'seriesname': data4
-      }
+        chartdata: data1,
+        type: data2,
+        title: data3,
+        seriesname: data4,
+      },
     });
     return await modal.present();
   }
@@ -440,14 +410,17 @@ export class TabsDashboardPage implements OnInit {
       (res: any) => {
         this.getTotalAdmissionsByDept = res;
       },
-      (error) => { },
+      (error) => {},
       () => {
         if (this.getTotalAdmissionsByDept) {
-          this.getTotalAdmissionsByDept.forEach(element => {
-            this.getTotalAdmissionsByDeptData.push({ name: element.deptName, y: element.numOfAdmissions });
+          this.getTotalAdmissionsByDept.forEach((element) => {
+            this.getTotalAdmissionsByDeptData.push({
+              name: element.deptName,
+              y: element.numOfAdmissions,
+            });
           });
           //// ////console.log(JSON.stringify(this.getTotalAdmissionsByDeptData));
-          
+
           this.populatePieChart();
           /*
           //// ////console.log(this.getTotalAdmissionsByDeptData);
@@ -455,7 +428,6 @@ export class TabsDashboardPage implements OnInit {
           */
         }
       }
-
     );
   }
   /*                                             
@@ -464,30 +436,26 @@ export class TabsDashboardPage implements OnInit {
                                                                        
   */
   populatePieChart() {
-
-
     HighCharts.setOptions({
       chart: {
         style: {
-          fontFamily: "Nunito", // fontFamily: 'Inter'
+          fontFamily: 'Nunito', // fontFamily: 'Inter'
         },
       },
-
     });
-    let chart = HighCharts.chart("PieChart", {
-
+    let chart = HighCharts.chart('PieChart', {
       chart: {
-        renderTo: "container",
+        renderTo: 'container',
         height: 300,
-        type: "pie",
+        type: 'pie',
         styledMode: true,
-        reflow: false
+        reflow: false,
       },
-      title: { text: "Admissions by Department" },
+      title: { text: 'Admissions by Department' },
       accessibility: {
         point: {
-          valueSuffix: '%'
-        }
+          valueSuffix: '%',
+        },
       },
       plotOptions: {
         pie: {
@@ -495,15 +463,16 @@ export class TabsDashboardPage implements OnInit {
           cursor: 'pointer',
           dataLabels: {
             enabled: true,
-            format: '<b>{point.name}</b>: {point.y} <br /> {point.percentage:.1f} %'
-          }
-        }
+            format:
+              '<b>{point.name}</b>: {point.y} <br /> {point.percentage:.1f} %',
+          },
+        },
       },
       series: [
         {
           type: undefined,
-          name: "Department",
-          data: this.getTotalAdmissionsByDeptData
+          name: 'Department',
+          data: this.getTotalAdmissionsByDeptData,
         },
       ],
       responsive: {
@@ -512,9 +481,9 @@ export class TabsDashboardPage implements OnInit {
             condition: { minWidth: 300 },
             chartOptions: {
               legend: {
-                layout: "horizontal",
-                align: "center",
-                verticalAlign: "bottom",
+                layout: 'horizontal',
+                align: 'center',
+                verticalAlign: 'bottom',
               },
             },
           },
@@ -522,7 +491,9 @@ export class TabsDashboardPage implements OnInit {
       },
       credits: { enabled: false },
     });
-    setTimeout(() => { chart.reflow() }, 300);
+    setTimeout(() => {
+      chart.reflow();
+    }, 300);
   }
   /*
   
@@ -540,21 +511,15 @@ export class TabsDashboardPage implements OnInit {
   
   */
 
-
-
   getTotalAdmissionsPerYear() {
-
     let cvdOccupancy: any;
     let dataC = [];
     let datanonC = [];
     this.executiveService.getCovidVsNonCovidOccupancyCurrentYear().subscribe(
       (res: any) => {
         cvdOccupancy = res; ////// ////console.log(res);
-
       },
-      (error) => {
-
-      },
+      (error) => {},
       () => {
         this.stackedBar = false;
         let c1total = 0;
@@ -581,60 +546,103 @@ export class TabsDashboardPage implements OnInit {
         let nc10total = 0;
         let nc11total = 0;
         let nc12total = 0;
-        cvdOccupancy.forEach(el => {
-
-
-
-
+        cvdOccupancy.forEach((el) => {
           if (el.month == 1) {
-            if (el.patientType == 'Covid') { c1total = c1total + el.aveOccupancy; }
-            if (el.patientType == 'Non-Covid') { nc1total = nc1total + el.aveOccupancy; }
+            if (el.patientType == 'Covid') {
+              c1total = c1total + el.aveOccupancy;
+            }
+            if (el.patientType == 'Non-Covid') {
+              nc1total = nc1total + el.aveOccupancy;
+            }
           }
           if (el.month == 2) {
-            if (el.patientType == 'Covid') { c2total = c2total + el.aveOccupancy; }
-            if (el.patientType == 'Non-Covid') { nc2total = nc2total + el.aveOccupancy; }
+            if (el.patientType == 'Covid') {
+              c2total = c2total + el.aveOccupancy;
+            }
+            if (el.patientType == 'Non-Covid') {
+              nc2total = nc2total + el.aveOccupancy;
+            }
           }
           if (el.month == 3) {
-            if (el.patientType == 'Covid') { c3total += el.aveOccupancy; }
-            if (el.patientType == 'Non-Covid') { nc3total += el.aveOccupancy; }
+            if (el.patientType == 'Covid') {
+              c3total += el.aveOccupancy;
+            }
+            if (el.patientType == 'Non-Covid') {
+              nc3total += el.aveOccupancy;
+            }
           }
           if (el.month == 4) {
-            if (el.patientType == 'Covid') { c4total += el.aveOccupancy; }
-            if (el.patientType == 'Non-Covid') { nc4total += el.aveOccupancy; }
+            if (el.patientType == 'Covid') {
+              c4total += el.aveOccupancy;
+            }
+            if (el.patientType == 'Non-Covid') {
+              nc4total += el.aveOccupancy;
+            }
           }
           if (el.month == 5) {
-            if (el.patientType == 'Covid') { c5total += el.aveOccupancy; }
-            if (el.patientType == 'Non-Covid') { nc5total += el.aveOccupancy; }
+            if (el.patientType == 'Covid') {
+              c5total += el.aveOccupancy;
+            }
+            if (el.patientType == 'Non-Covid') {
+              nc5total += el.aveOccupancy;
+            }
           }
           if (el.month == 6) {
-            if (el.patientType == 'Covid') { c6total += el.aveOccupancy; }
-            if (el.patientType == 'Non-Covid') { nc6total += el.aveOccupancy; }
+            if (el.patientType == 'Covid') {
+              c6total += el.aveOccupancy;
+            }
+            if (el.patientType == 'Non-Covid') {
+              nc6total += el.aveOccupancy;
+            }
           }
           if (el.month == 7) {
-            if (el.patientType == 'Covid') { c7total += el.aveOccupancy; }
-            if (el.patientType == 'Non-Covid') { nc7total += el.aveOccupancy; }
+            if (el.patientType == 'Covid') {
+              c7total += el.aveOccupancy;
+            }
+            if (el.patientType == 'Non-Covid') {
+              nc7total += el.aveOccupancy;
+            }
           }
           if (el.month == 8) {
-            if (el.patientType == 'Covid') { c8total += el.aveOccupancy; }
-            if (el.patientType == 'Non-Covid') { nc8total += el.aveOccupancy; }
+            if (el.patientType == 'Covid') {
+              c8total += el.aveOccupancy;
+            }
+            if (el.patientType == 'Non-Covid') {
+              nc8total += el.aveOccupancy;
+            }
           }
           if (el.month == 9) {
-            if (el.patientType == 'Covid') { c9total += el.aveOccupancy; }
-            if (el.patientType == 'Non-Covid') { nc9total += el.aveOccupancy; }
+            if (el.patientType == 'Covid') {
+              c9total += el.aveOccupancy;
+            }
+            if (el.patientType == 'Non-Covid') {
+              nc9total += el.aveOccupancy;
+            }
           }
           if (el.month == 10) {
-            if (el.patientType == 'Covid') { c10total += el.aveOccupancy; }
-            if (el.patientType == 'Non-Covid') { nc10total += el.aveOccupancy; }
+            if (el.patientType == 'Covid') {
+              c10total += el.aveOccupancy;
+            }
+            if (el.patientType == 'Non-Covid') {
+              nc10total += el.aveOccupancy;
+            }
           }
           if (el.month == 11) {
-            if (el.patientType == 'Covid') { c11total += el.aveOccupancy; }
-            if (el.patientType == 'Non-Covid') { nc11total += el.aveOccupancy; }
+            if (el.patientType == 'Covid') {
+              c11total += el.aveOccupancy;
+            }
+            if (el.patientType == 'Non-Covid') {
+              nc11total += el.aveOccupancy;
+            }
           }
           if (el.month == 12) {
-            if (el.patientType == 'Covid') { c12total += el.aveOccupancy; }
-            if (el.patientType == 'Non-Covid') { nc12total += el.aveOccupancy; }
+            if (el.patientType == 'Covid') {
+              c12total += el.aveOccupancy;
+            }
+            if (el.patientType == 'Non-Covid') {
+              nc12total += el.aveOccupancy;
+            }
           }
-
         });
         dataC.push(c1total);
         dataC.push(c2total);
@@ -661,17 +669,11 @@ export class TabsDashboardPage implements OnInit {
         datanonC.push(nc11total);
         datanonC.push(nc12total);
         this.populateStackedBar(dataC, datanonC);
-
       }
-
-
     );
-
-
   }
 
-
-/*
+  /*
       [{
           type: 'column',
           name: 'Covid (Cebu)',
@@ -694,55 +696,93 @@ export class TabsDashboardPage implements OnInit {
           stack: 'Mandaue',
       }]*/
 
-  totalCovidPxTypesBySite:any;
-  CCC :any = 0;
-  CCNC:any = 0;
-  CNCC :any= 0;
-  CNCNC :any= 0;
-  MCC :any= 0;
-  MCNC :any= 0;
-  MNCC :any= 0;
-  MNCNC :any= 0;
+  totalCovidPxTypesBySite: any;
+  CCC: any = 0;
+  CCNC: any = 0;
+  CNCC: any = 0;
+  CNCNC: any = 0;
+  MCC: any = 0;
+  MCNC: any = 0;
+  MNCC: any = 0;
+  MNCNC: any = 0;
   getTotalCovidPxTypesBySite() {
-    let toreturn=[];
+    let toreturn = [];
 
     this.totalCovidPxTypesBySite = [];
     this.executiveService.getTotalCovidPxTypesBySite().subscribe(
       (res: any) => {
-         ////console.log(res);
-        
+        ////console.log(res);
+
         this.totalCovidPxTypesBySite = res;
       },
-      (error) => { },
+      (error) => {},
       () => {
-        this.CCC  = 0;this.CCNC = 0;this.CNCC = 0;this.CNCNC = 0;this.MCC = 0;this.MCNC = 0;this.MNCC = 0;
+        this.CCC = 0;
+        this.CCNC = 0;
+        this.CNCC = 0;
+        this.CNCNC = 0;
+        this.MCC = 0;
+        this.MCNC = 0;
+        this.MNCC = 0;
         this.MNCNC = 0;
-        this.totalCovidPxTypesBySite.forEach(el => {
-            // ////console.log(el);
-            if(el.site=='C'&& el.patientType01 == 'Critical'  && el.patientType02=='Covid' ){
-              this.CCC = el.totalAdmissions;
-            }
-            if(el.site=='C' && el.patientType01 == 'Non-Critical' && el.patientType02=='Covid' ){
-              this.CNCC = el.totalAdmissions;
-            }
-            if(el.site=='C' && el.patientType01 == 'Critical' && el.patientType02=='Non-Covid' ){
-              this.CCNC = el.totalAdmissions;
-            }
-            if(el.site=='C' && el.patientType01 == 'Non-Critical' && el.patientType02=='Non-Covid' ){
-              this.CNCNC = el.totalAdmissions;
-            }
-            if(el.site=='M' && el.patientType01 == 'Critical' && el.patientType02=='Covid' ){
-              this.MCC = el.totalAdmissions;
-            }
-            if(el.site=='M' && el.patientType01 == 'Non-Critical' && el.patientType02=='Covid' ){
-              this.MNCC = el.totalAdmissions;
-            }
-            if(el.site=='M' && el.patientType01 == 'Critical' && el.patientType02=='Non-Covid' ){
-              this.MCNC = el.totalAdmissions;
-            }
-            if(el.site=='M' && el.patientType01 == 'Non-Critical' && el.patientType02=='Non-Covid' ){
-              this.MNCNC = el.totalAdmissions;
-            }
+        this.totalCovidPxTypesBySite.forEach((el) => {
+          // ////console.log(el);
+          if (
+            el.site == 'C' &&
+            el.patientType01 == 'Critical' &&
+            el.patientType02 == 'Covid'
+          ) {
+            this.CCC = el.totalAdmissions;
+          }
+          if (
+            el.site == 'C' &&
+            el.patientType01 == 'Non-Critical' &&
+            el.patientType02 == 'Covid'
+          ) {
+            this.CNCC = el.totalAdmissions;
+          }
+          if (
+            el.site == 'C' &&
+            el.patientType01 == 'Critical' &&
+            el.patientType02 == 'Non-Covid'
+          ) {
+            this.CCNC = el.totalAdmissions;
+          }
+          if (
+            el.site == 'C' &&
+            el.patientType01 == 'Non-Critical' &&
+            el.patientType02 == 'Non-Covid'
+          ) {
+            this.CNCNC = el.totalAdmissions;
+          }
+          if (
+            el.site == 'M' &&
+            el.patientType01 == 'Critical' &&
+            el.patientType02 == 'Covid'
+          ) {
+            this.MCC = el.totalAdmissions;
+          }
+          if (
+            el.site == 'M' &&
+            el.patientType01 == 'Non-Critical' &&
+            el.patientType02 == 'Covid'
+          ) {
+            this.MNCC = el.totalAdmissions;
+          }
+          if (
+            el.site == 'M' &&
+            el.patientType01 == 'Critical' &&
+            el.patientType02 == 'Non-Covid'
+          ) {
+            this.MCNC = el.totalAdmissions;
+          }
+          if (
+            el.site == 'M' &&
+            el.patientType01 == 'Non-Critical' &&
+            el.patientType02 == 'Non-Covid'
+          ) {
+            this.MNCNC = el.totalAdmissions;
+          }
         });
         /*toreturn = [{
           type: 'column',
@@ -798,69 +838,73 @@ export class TabsDashboardPage implements OnInit {
       this.populateBasicBar(toreturn);
 
 */
-
-        
       }
-
     );
   }
 
-  populateBasicBar(data:any){
+  populateBasicBar(data: any) {
     HighCharts.setOptions({
       chart: {
         style: {
-          fontFamily: "Nunito", // fontFamily: 'Inter'
+          fontFamily: 'Nunito', // fontFamily: 'Inter'
+        },
+      },
+    });
+
+    let chartxxx = HighCharts.chart('BasicBar', {
+      chart: {
+        renderTo: 'container',
+        type: 'column',
+      },
+
+      title: {
+        text: 'Total Admissions per Patient type',
+      },
+
+      xAxis: {
+        categories: ['Cebu', 'Mandaue'],
+      },
+
+      yAxis: {
+        allowDecimals: false,
+        min: 0,
+        title: {
+          text: '',
         },
       },
 
-    });
-    
-    let chartxxx = HighCharts.chart("BasicBar", {
-      chart: {
-        renderTo: "container",
-        type: "column",
-      },    
-   
-        title: {
-            text: 'Total Admissions per Patient type'
+      tooltip: {
+        formatter: function () {
+          var stackName = this.series.userOptions.stack;
+          return (
+            '<b>' +
+            this.x +
+            '</b><br/>' +
+            this.series.name +
+            ': ' +
+            this.y +
+            '<br/>' +
+            'Total: ' +
+            this.total
+          );
         },
-    
-        xAxis: {
-          categories: ['Cebu', 'Mandaue',]
       },
-    
-        yAxis: {
-            allowDecimals: false,
-            min: 0,
-            title: {
-                text: ''
-            }
+
+      plotOptions: {
+        column: {
+          stacking: 'normal',
         },
-  
-        tooltip: {
-            formatter: function () {
-              var stackName = this.series.userOptions.stack;
-              return '<b>' + this.x + '</b><br/>' +
-                  this.series.name + ': ' + this.y + '<br/>' +
-                  'Total: ' +  this.total;
-            }
-        },
-    
-        plotOptions: {
-            column: {
-                stacking: 'normal'
-            }
-        },
-        series: data,
+      },
+      series: data,
       responsive: {
         rules: [
           {
             condition: { minWidth: 300 },
             chartOptions: {
               legend: {
-                layout: "horizontal",
-                align: "center",
-                verticalAlign: "bottom",
+                layout: 'horizontal',
+                align: 'center',
+                verticalAlign: 'bottom',
               },
             },
           },
@@ -868,20 +912,10 @@ export class TabsDashboardPage implements OnInit {
       },
       credits: { enabled: false },
     });
-    setTimeout(() => { chartxxx.reflow() }, 1000);
+    setTimeout(() => {
+      chartxxx.reflow();
+    }, 1000);
   }
-
-
-
-
-
-
-
-
-
-
-
-
 
   doRefresh(event) {
     setTimeout(() => {
@@ -893,29 +927,34 @@ export class TabsDashboardPage implements OnInit {
   settings() {
     this.router.navigate(['/executive/settings']);
   }
- 
 
-  famTotal: any; famPer: any; famC: any; famM: any;
-  inmTotal: any; inmPer: any; inmC: any; inmM: any;
+  famTotal: any;
+  famPer: any;
+  famC: any;
+  famM: any;
+  inmTotal: any;
+  inmPer: any;
+  inmC: any;
+  inmM: any;
   checkInput() {
     this.doctorService.refreshTokenV3().subscribe((res: any) => {
       //////// ////console.log(res);
     });
   }
 
-  async detail(CritnCrit,site,CvdnCvd,criticalcount) {
+  async detail(CritnCrit, site, CvdnCvd, criticalcount) {
     //var values = JSON.parse(atob(localStorage.getItem("TotalPxTypesBySite")));
     var values = this.TotalPxTypesBySite;
     const modal = await this.modalController.create({
       component: DashboardgraphComponent,
       cssClass: 'my-custom-modal-css',
       componentProps: {
-        'data': values,
-        'CritnCrit': CritnCrit,
-        'CritnCritcnt' : criticalcount,
-        'site': site,
-        'CvdnCvd': CvdnCvd,
-      }
+        data: values,
+        CritnCrit: CritnCrit,
+        CritnCritcnt: criticalcount,
+        site: site,
+        CvdnCvd: CvdnCvd,
+      },
     });
     return await modal.present();
   }
@@ -1041,29 +1080,42 @@ export class TabsDashboardPage implements OnInit {
   }*/
 
   populateStackedBar(datax: any, datay: any) {
-    let chart = HighCharts.chart("stackedBar", {
+    let chart = HighCharts.chart('stackedBar', {
       chart: {
-        renderTo: "container",
-        type: "column",
+        renderTo: 'container',
+        type: 'column',
       },
 
       title: {
-        text: 'Covid & Non-Covid Graph'
+        text: 'Covid & Non-Covid Graph',
       },
       xAxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        categories: [
+          'Jan',
+          'Feb',
+          'Mar',
+          'Apr',
+          'May',
+          'Jun',
+          'Jul',
+          'Aug',
+          'Sep',
+          'Oct',
+          'Nov',
+          'Dec',
+        ],
       },
       yAxis: {
         min: 0,
         title: {
-          text: ''
+          text: '',
         },
         stackLabels: {
           enabled: true,
           style: {
             fontWeight: 'bold',
-          }
-        }
+          },
+        },
       },
       legend: {
         align: 'right',
@@ -1071,23 +1123,24 @@ export class TabsDashboardPage implements OnInit {
         verticalAlign: 'top',
         y: 25,
         floating: true,
-        backgroundColor: HighCharts.defaultOptions.legend.backgroundColor || 'white',
+        backgroundColor:
+          HighCharts.defaultOptions.legend.backgroundColor || 'white',
         borderColor: '#CCC',
         borderWidth: 1,
-        shadow: false
+        shadow: false,
       },
       tooltip: {
         headerFormat: '<b>{point.x}</b><br/>',
-        pointFormat: '{series.name}: {point.y}<br/>Percentage : {point.percentage:.1f}% <br/>Total: {point.stackTotal}'
+        pointFormat:
+          '{series.name}: {point.y}<br/>Percentage : {point.percentage:.1f}% <br/>Total: {point.stackTotal}',
       },
       plotOptions: {
         column: {
           stacking: 'normal',
           dataLabels: {
-            enabled: true
+            enabled: true,
           },
-
-        }
+        },
       },
       /*series: [{
           name: 'John',
@@ -1103,16 +1156,138 @@ export class TabsDashboardPage implements OnInit {
         {
           type: 'column',
           name: 'Non-Covid',
-          data: datay
+          data: datay,
         },
         {
           type: 'column',
           name: 'Covid',
-          data: datax
+          data: datax,
         },
       ],
       credits: { enabled: false },
     });
-    setTimeout(() => { chart.reflow() }, 1000);
+    setTimeout(() => {
+      chart.reflow();
+    }, 1000);
+  }
+
+  /*
+  __  __             _   _          _______    _        _                _           _         _                 
+ |  \/  |           | | | |        |__   __|  | |      | |      /\      | |         (_)       (_)                
+ | \  / | ___  _ __ | |_| |_   _      | | ___ | |_ __ _| |     /  \   __| |_ __ ___  _ ___ ___ _  ___  _ __  ___ 
+ | |\/| |/ _ \| '_ \| __| | | | |     | |/ _ \| __/ _` | |    / /\ \ / _` | '_ ` _ \| / __/ __| |/ _ \| '_ \/ __|
+ | |  | | (_) | | | | |_| | |_| |     | | (_) | || (_| | |   / ____ \ (_| | | | | | | \__ \__ \ | (_) | | | \__ \
+ |_|  |_|\___/|_| |_|\__|_|\__, |     |_|\___/ \__\__,_|_|  /_/    \_\__,_|_| |_| |_|_|___/___/_|\___/|_| |_|___/
+                            __/ |                                                                                
+                           |___/                                                                                 
+  */
+  populateMontlyTotalAdmissions() {
+    this.MontlyTotalAdmissions = HighCharts.chart(
+      'populateMontlyTotalAdmissions',
+      {
+        chart: {
+          type: 'column',
+        },
+        title: {
+          text: 'Total Admissions YTD',
+        },
+        xAxis: {
+          categories: [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec',
+          ],
+        },
+        yAxis: {
+          title: { text: '' },
+          stackLabels: {
+            enabled: true,
+            style: {
+              fontWeight: 'bold',
+            },
+          },
+        },
+        tooltip: {
+          headerFormat: '<b>{point.x}</b><br/>',
+          pointFormat: '{series.name}: {point.y}',
+        },
+        plotOptions: {
+          column: {
+            stacking: 'normal',
+            dataLabels: {
+              enabled: true,
+            },
+          },
+        },
+        series: [
+          {
+            name: 'Cebu',
+            type: undefined,
+            color: '#275228',
+            data: this.MontlyTotalAdmissionsCeb,
+          },
+          {
+            name: 'Mandaue',
+            type: undefined,
+            color: '#d12027',
+            data: this.MontlyTotalAdmissionsMan,
+          },
+        ],
+        credits: { enabled: false },
+      }
+    );
+
+    setTimeout(() => {
+      this.MontlyTotalAdmissions.reflow();
+    }, 1000);
+  }
+  tempMontlyTotalAdmissions: any;
+  generateMonthlyTotalAdmissions() {
+    this.MontlyTotalAdmissionsCeb = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    this.MontlyTotalAdmissionsMan = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+    this.executiveService.getMontlyTotalAdmissions().subscribe(
+      (res: any) => {
+        this.tempMontlyTotalAdmissions = res;
+      },
+      (error) => {},
+      () => {
+        this.tempMontlyTotalAdmissions.forEach((element) => {
+          if (element.site == 'C') {
+            this.MontlyTotalAdmissionsCeb[element.month - 1] =
+              element.totalAdmsMTD;
+          }
+          if (element.site == 'M') {
+            this.MontlyTotalAdmissionsMan[element.month - 1] =
+              element.totalAdmsMTD;
+          }
+        });
+        this.populateMontlyTotalAdmissions();
+      }
+    );
+  }
+  monthTrendFrom: any = '01';
+  monthTrendTo: any = '12';
+  yearTreandTO: any = '2022';
+  monthTrendFromTo() {
+    if (this.monthTrendTo >= this.monthTrendFrom) {
+      this.MontlyTotalAdmissions.destroy();
+      this.MontlyTotalAdmissionsCeb = [
+        300, 452, 700, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      ];
+      this.MontlyTotalAdmissionsMan = [
+        300, 435, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      ];
+      this.populateMontlyTotalAdmissions();
+    }
   }
 }
