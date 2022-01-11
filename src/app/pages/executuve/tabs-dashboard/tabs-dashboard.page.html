@@ -408,7 +408,7 @@
                 </ion-item>
                 <ion-item>
                   <ion-label>Year</ion-label>
-                  <ion-select [(ngModel)]="yearTreandTO" (ionChange)="monthTrendFromTo()">
+                  <ion-select [(ngModel)]="yearTreandTO" (ionChange)="monthTrendYear()">
                     <ion-select-option value="2022">2022</ion-select-option>
                     <ion-select-option value="2021">2021</ion-select-option>
                     <ion-select-option value="2020">2020</ion-select-option>
@@ -424,6 +424,10 @@
                     <ion-select-option value="2010">2010</ion-select-option>
                   </ion-select>
                 </ion-item>
+                <!--ion-item>
+                  <ion-label>Start Date</ion-label>
+                  <ion-datetime displayFormat="MMMM" placeholder="Select Date"></ion-datetime>
+                </ion-item-->
                 <div id="populateMontlyTotalAdmissions"></div>
               </ion-col>
             </ion-row>

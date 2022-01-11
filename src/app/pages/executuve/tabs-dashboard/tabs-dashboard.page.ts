@@ -400,7 +400,9 @@ export class TabsDashboardPage implements OnInit {
                                                                                                         
   
   */
-
+  friendFun(value) {
+    var myObj = { value: value.value, userName: value.userName };
+  }
   getTotalAdmissions() {
     this.getTotalAdmissionsByDeptData = [];
     this.executiveService.getTotalAdmissionsByDept().subscribe(
@@ -1178,26 +1180,16 @@ export class TabsDashboardPage implements OnInit {
                             __/ |                                                                                
                            |___/                                                                                 
   */
-  MonthlyTotalAdmissions: any;
-  MonthlyTotalAdmissionsCeb: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  MonthlyTotalAdmissionsMan: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  MonthlyTotalAdmissionsCebSet: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  MonthlyTotalAdmissionsManSet: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  MonthlyTotalAdmissionsCategory: any = [
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-  ];
-  MonthlyTotalAdmissionsCategorySet: any = [
+  monthTrendFrom: any = '01';
+  monthTrendTo: any = '12';
+  yearTreandTO: any = '2022';
+  MTA: any;
+  MTACeb: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  MTAMan: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  MTACebSet: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  MTAManSet: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  MTACategory: any = ['', '', '', '', '', '', '', '', '', '', '', ''];
+  MTACategorySet: any = [
     'Jan',
     'Feb',
     'Mar',
@@ -1212,114 +1204,101 @@ export class TabsDashboardPage implements OnInit {
     'Dec',
   ];
   populateMontlyTotalAdmissions() {
-    this.MonthlyTotalAdmissions = HighCharts.chart(
-      'populateMontlyTotalAdmissions',
-      {
-        chart: {
-          type: 'column',
+    this.MTA = HighCharts.chart('populateMontlyTotalAdmissions', {
+      chart: {
+        type: 'column',
+      },
+      title: {
+        text: 'Total Admissions YTD',
+      },
+      xAxis: {
+        categories: this.MTACategory,
+      },
+      yAxis: {
+        title: { text: '' },
+        stackLabels: {
+          enabled: true,
+          style: {
+            fontWeight: 'bold',
+          },
         },
-        title: {
-          text: 'Total Admissions YTD',
-        },
-        xAxis: {
-          categories: this.MonthlyTotalAdmissionsCategory,
-        },
-        yAxis: {
-          title: { text: '' },
-          stackLabels: {
+      },
+      tooltip: {
+        headerFormat: '<b>{point.x}</b><br/>',
+        pointFormat: '{series.name}: {point.y}',
+      },
+      plotOptions: {
+        column: {
+          stacking: 'normal',
+          dataLabels: {
             enabled: true,
-            style: {
-              fontWeight: 'bold',
-            },
           },
         },
-        tooltip: {
-          headerFormat: '<b>{point.x}</b><br/>',
-          pointFormat: '{series.name}: {point.y}',
+      },
+      series: [
+        {
+          name: 'Cebu',
+          type: undefined,
+          color: '#275228',
+          data: this.MTACeb,
         },
-        plotOptions: {
-          column: {
-            stacking: 'normal',
-            dataLabels: {
-              enabled: true,
-            },
-          },
+        {
+          name: 'Mandaue',
+          type: undefined,
+          color: '#d12027',
+          data: this.MTAMan,
         },
-        series: [
-          {
-            name: 'Cebu',
-            type: undefined,
-            color: '#275228',
-            data: this.MonthlyTotalAdmissionsCeb,
-          },
-          {
-            name: 'Mandaue',
-            type: undefined,
-            color: '#d12027',
-            data: this.MonthlyTotalAdmissionsMan,
-          },
-        ],
-        credits: { enabled: false },
-      }
-    );
+      ],
+      credits: { enabled: false },
+    });
 
     setTimeout(() => {
-      this.MonthlyTotalAdmissions.reflow();
+      this.MTA.reflow();
     }, 1000);
   }
-  tempMontlyTotalAdmissions: any;
+
   generateMonthlyTotalAdmissions() {
-    this.executiveService.getMontlyTotalAdmissions().subscribe(
+    let tempMTA;
+    this.executiveService.getMontlyTotalAdmissions(this.yearTreandTO).subscribe(
       (res: any) => {
-        this.tempMontlyTotalAdmissions = res;
+        tempMTA = res;
       },
       (error) => {},
       () => {
-        this.tempMontlyTotalAdmissions.forEach((element) => {
+        tempMTA.forEach((element) => {
           if (element.site == 'C') {
-            this.MonthlyTotalAdmissionsCebSet[element.month - 1] =
-              element.totalAdmsMTD;
+            this.MTACebSet[element.month - 1] = element.totalAdmsMTD;
           }
           if (element.site == 'M') {
-            this.MonthlyTotalAdmissionsManSet[element.month - 1] =
-              element.totalAdmsMTD;
+            this.MTAManSet[element.month - 1] = element.totalAdmsMTD;
           }
         });
-        this.MonthlyTotalAdmissionsCeb = this.MonthlyTotalAdmissionsCebSet;
-        this.MonthlyTotalAdmissionsMan = this.MonthlyTotalAdmissionsManSet;
-        this.MonthlyTotalAdmissionsCategory =
-          this.MonthlyTotalAdmissionsCategorySet;
+        this.MTACeb = this.MTACebSet;
+        this.MTAMan = this.MTAManSet;
+        this.MTACategory = this.MTACategorySet;
         this.populateMontlyTotalAdmissions();
       }
     );
   }
-  monthTrendFrom: any = '01';
-  monthTrendTo: any = '12';
-  yearTreandTO: any = '2022';
+  monthTrendYear() {
+    console.log(this.yearTreandTO);
+    this.MTA.destroy();
+    this.generateMonthlyTotalAdmissions();
+  }
   monthTrendFromTo() {
     if (this.monthTrendTo >= this.monthTrendFrom) {
-      this.MonthlyTotalAdmissions.destroy();
+      this.MTA.destroy();
       // this.MonthlyTotalAdmissionsCeb = [300, 452, 700];
       //this.MonthlyTotalAdmissionsMan = [300, 435, 500];
-      this.MonthlyTotalAdmissionsCategory = [];
-      this.MonthlyTotalAdmissionsCeb = [];
-      this.MonthlyTotalAdmissionsMan = [];
+      this.MTACategory = [];
+      this.MTACeb = [];
+      this.MTAMan = [];
       for (let i = this.monthTrendFrom - 1; i <= this.monthTrendTo - 1; i++) {
-        this.MonthlyTotalAdmissionsCategory.push(
-          this.MonthlyTotalAdmissionsCategorySet[i]
-        );
-        this.MonthlyTotalAdmissionsCeb.push(
-          this.MonthlyTotalAdmissionsCebSet[i]
-        );
-        this.MonthlyTotalAdmissionsMan.push(
-          this.MonthlyTotalAdmissionsManSet[i]
-        );
-        /* this.MonthlyTotalAdmissionsCeb[i] =
-          this.MonthlyTotalAdmissionsCebSet[i];
-        this.MonthlyTotalAdmissionsMan[i] =
-          this.MonthlyTotalAdmissionsManSet[i];*/
+        this.MTACategory.push(this.MTACategorySet[i]);
+        this.MTACeb.push(this.MTACebSet[i]);
+        this.MTAMan.push(this.MTAManSet[i]);
       }
-      console.log(this.MonthlyTotalAdmissionsCategory);
+      console.log(this.MTACategory);
 
       this.populateMontlyTotalAdmissions();
     }
