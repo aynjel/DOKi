@@ -1183,6 +1183,7 @@ export class TabsDashboardPage implements OnInit {
   monthTrendFrom: any = '01';
   monthTrendTo: any = '12';
   yearTreandTO: any = '2022';
+  MTATotal: any;
   MTA: any;
   MTACeb: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   MTAMan: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -1209,7 +1210,7 @@ export class TabsDashboardPage implements OnInit {
         type: 'column',
       },
       title: {
-        text: 'Total Admissions YTD',
+        text: 'Total Admissions YTD - ' + this.MTATotal,
       },
       xAxis: {
         categories: this.MTACategory,
@@ -1266,11 +1267,14 @@ export class TabsDashboardPage implements OnInit {
       (error) => {},
       () => {
         if (tempMTA != null) {
+          this.MTATotal = 0;
           tempMTA.forEach((element) => {
             if (element.site == 'C') {
+              this.MTATotal += element.totalAdmsMTD;
               this.MTACebSet[element.month - 1] = element.totalAdmsMTD;
             }
             if (element.site == 'M') {
+              this.MTATotal += element.totalAdmsMTD;
               this.MTAManSet[element.month - 1] = element.totalAdmsMTD;
             }
           });
