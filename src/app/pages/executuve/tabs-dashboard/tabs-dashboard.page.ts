@@ -252,9 +252,6 @@ export class TabsDashboardPage implements OnInit {
     this.generateMonthlyTotalAdmissions();
   }
 
-  MontlyTotalAdmissions: any;
-  MontlyTotalAdmissionsCeb: any;
-  MontlyTotalAdmissionsMan: any;
   TotalPxTypesBySite: any;
 
   getTotalPxTypesBySite() {
@@ -1181,8 +1178,41 @@ export class TabsDashboardPage implements OnInit {
                             __/ |                                                                                
                            |___/                                                                                 
   */
+  MonthlyTotalAdmissions: any;
+  MonthlyTotalAdmissionsCeb: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  MonthlyTotalAdmissionsMan: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  MonthlyTotalAdmissionsCebSet: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  MonthlyTotalAdmissionsManSet: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  MonthlyTotalAdmissionsCategory: any = [
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+  ];
+  MonthlyTotalAdmissionsCategorySet: any = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
   populateMontlyTotalAdmissions() {
-    this.MontlyTotalAdmissions = HighCharts.chart(
+    this.MonthlyTotalAdmissions = HighCharts.chart(
       'populateMontlyTotalAdmissions',
       {
         chart: {
@@ -1192,20 +1222,7 @@ export class TabsDashboardPage implements OnInit {
           text: 'Total Admissions YTD',
         },
         xAxis: {
-          categories: [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec',
-          ],
+          categories: this.MonthlyTotalAdmissionsCategory,
         },
         yAxis: {
           title: { text: '' },
@@ -1233,13 +1250,13 @@ export class TabsDashboardPage implements OnInit {
             name: 'Cebu',
             type: undefined,
             color: '#275228',
-            data: this.MontlyTotalAdmissionsCeb,
+            data: this.MonthlyTotalAdmissionsCeb,
           },
           {
             name: 'Mandaue',
             type: undefined,
             color: '#d12027',
-            data: this.MontlyTotalAdmissionsMan,
+            data: this.MonthlyTotalAdmissionsMan,
           },
         ],
         credits: { enabled: false },
@@ -1247,14 +1264,11 @@ export class TabsDashboardPage implements OnInit {
     );
 
     setTimeout(() => {
-      this.MontlyTotalAdmissions.reflow();
+      this.MonthlyTotalAdmissions.reflow();
     }, 1000);
   }
   tempMontlyTotalAdmissions: any;
   generateMonthlyTotalAdmissions() {
-    this.MontlyTotalAdmissionsCeb = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    this.MontlyTotalAdmissionsMan = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
     this.executiveService.getMontlyTotalAdmissions().subscribe(
       (res: any) => {
         this.tempMontlyTotalAdmissions = res;
@@ -1263,14 +1277,18 @@ export class TabsDashboardPage implements OnInit {
       () => {
         this.tempMontlyTotalAdmissions.forEach((element) => {
           if (element.site == 'C') {
-            this.MontlyTotalAdmissionsCeb[element.month - 1] =
+            this.MonthlyTotalAdmissionsCebSet[element.month - 1] =
               element.totalAdmsMTD;
           }
           if (element.site == 'M') {
-            this.MontlyTotalAdmissionsMan[element.month - 1] =
+            this.MonthlyTotalAdmissionsManSet[element.month - 1] =
               element.totalAdmsMTD;
           }
         });
+        this.MonthlyTotalAdmissionsCeb = this.MonthlyTotalAdmissionsCebSet;
+        this.MonthlyTotalAdmissionsMan = this.MonthlyTotalAdmissionsManSet;
+        this.MonthlyTotalAdmissionsCategory =
+          this.MonthlyTotalAdmissionsCategorySet;
         this.populateMontlyTotalAdmissions();
       }
     );
@@ -1280,13 +1298,29 @@ export class TabsDashboardPage implements OnInit {
   yearTreandTO: any = '2022';
   monthTrendFromTo() {
     if (this.monthTrendTo >= this.monthTrendFrom) {
-      this.MontlyTotalAdmissions.destroy();
-      this.MontlyTotalAdmissionsCeb = [
-        300, 452, 700, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-      ];
-      this.MontlyTotalAdmissionsMan = [
-        300, 435, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-      ];
+      this.MonthlyTotalAdmissions.destroy();
+      // this.MonthlyTotalAdmissionsCeb = [300, 452, 700];
+      //this.MonthlyTotalAdmissionsMan = [300, 435, 500];
+      this.MonthlyTotalAdmissionsCategory = [];
+      this.MonthlyTotalAdmissionsCeb = [];
+      this.MonthlyTotalAdmissionsMan = [];
+      for (let i = this.monthTrendFrom - 1; i <= this.monthTrendTo - 1; i++) {
+        this.MonthlyTotalAdmissionsCategory.push(
+          this.MonthlyTotalAdmissionsCategorySet[i]
+        );
+        this.MonthlyTotalAdmissionsCeb.push(
+          this.MonthlyTotalAdmissionsCebSet[i]
+        );
+        this.MonthlyTotalAdmissionsMan.push(
+          this.MonthlyTotalAdmissionsManSet[i]
+        );
+        /* this.MonthlyTotalAdmissionsCeb[i] =
+          this.MonthlyTotalAdmissionsCebSet[i];
+        this.MonthlyTotalAdmissionsMan[i] =
+          this.MonthlyTotalAdmissionsManSet[i];*/
+      }
+      console.log(this.MonthlyTotalAdmissionsCategory);
+
       this.populateMontlyTotalAdmissions();
     }
   }
