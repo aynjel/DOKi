@@ -1270,9 +1270,10 @@ export class TabsDashboardPage implements OnInit {
 
   generateMonthlyTotalAdmissions() {
     let tempMTA;
-    this.presentLoading();
+    //this.presentLoading();
     this.executiveService.getMontlyTotalAdmissions(this.yearTreandTO).subscribe(
       (res: any) => {
+        this.dismissLoading();
         tempMTA = res;
       },
       (error) => {
