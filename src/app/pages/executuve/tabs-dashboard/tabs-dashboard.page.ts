@@ -1205,12 +1205,15 @@ export class TabsDashboardPage implements OnInit {
     'Dec',
   ];
   populateMontlyTotalAdmissions() {
+    if (this.MTA != undefined) {
+      this.MTA.destroy();
+    }
     this.MTA = HighCharts.chart('populateMontlyTotalAdmissions', {
       chart: {
         type: 'column',
       },
       title: {
-        text: 'Total Admissions YTD - ' + this.MTATotal,
+        text: 'Total Admissions YTD : ' + this.MTATotal,
       },
       xAxis: {
         categories: this.MTACategory,
@@ -1268,6 +1271,8 @@ export class TabsDashboardPage implements OnInit {
       () => {
         if (tempMTA != null) {
           this.MTATotal = 0;
+          this.MTACebSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+          this.MTAManSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
           tempMTA.forEach((element) => {
             if (element.site == 'C') {
               this.MTATotal += element.totalAdmsMTD;
@@ -1302,7 +1307,10 @@ export class TabsDashboardPage implements OnInit {
       this.MTACategory = [];
       this.MTACeb = [];
       this.MTAMan = [];
+      this.MTATotal = 0;
       for (let i = this.monthTrendFrom - 1; i <= this.monthTrendTo - 1; i++) {
+        this.MTATotal += this.MTACebSet[i];
+        this.MTATotal += this.MTAManSet[i];
         this.MTACategory.push(this.MTACategorySet[i]);
         this.MTACeb.push(this.MTACebSet[i]);
         this.MTAMan.push(this.MTAManSet[i]);
