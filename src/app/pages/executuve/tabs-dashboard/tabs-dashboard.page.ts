@@ -34,7 +34,8 @@ Heatmap(HighCharts);
 // Load the exporting module.
 import Exporting from 'highcharts/modules/exporting';
 import { ThrowStmt } from '@angular/compiler';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 // Initialize exporting module.
 //Exporting(HighCharts);
 
@@ -100,7 +101,8 @@ export class TabsDashboardPage implements OnInit {
     private doctorService: DoctorService,
     private authService: AuthService,
     private executiveService: ExecutiveService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private loadingController: LoadingController
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -1227,9 +1229,14 @@ export class TabsDashboardPage implements OnInit {
           },
         },
       },
-      tooltip: {
+      /*tooltip: {
         headerFormat: '<b>{point.x}</b><br/>',
         pointFormat: '{series.name}: {point.y}',
+      },*/
+      tooltip: {
+        headerFormat: '<b>{point.x}</b><br/>',
+        pointFormat:
+          '{series.name}: {point.y}<br/><br/>Total: {point.stackTotal}',
       },
       plotOptions: {
         column: {
@@ -1255,7 +1262,7 @@ export class TabsDashboardPage implements OnInit {
       ],
       credits: { enabled: false },
     });
-
+    this.MTA.yAxis[0].setExtremes(500, 4700);
     setTimeout(() => {
       this.MTA.reflow();
     }, 1000);
@@ -1263,12 +1270,16 @@ export class TabsDashboardPage implements OnInit {
 
   generateMonthlyTotalAdmissions() {
     let tempMTA;
+    this.presentLoading();
     this.executiveService.getMontlyTotalAdmissions(this.yearTreandTO).subscribe(
       (res: any) => {
         tempMTA = res;
       },
-      (error) => {},
+      (error) => {
+        this.dismissLoading();
+      },
       () => {
+        this.dismissLoading();
         if (tempMTA != null) {
           this.MTATotal = 0;
           this.MTACebSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -1318,6 +1329,23 @@ export class TabsDashboardPage implements OnInit {
       console.log(this.MTACategory);
 
       this.populateMontlyTotalAdmissions();
+    }
+  }
+  loading: any;
+  async presentLoading() {
+    this.loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+      duration: 0,
+    });
+    await this.loading.present();
+
+    const { role, data } = await this.loading.onDidDismiss();
+    //////////console.log('Loading dismissed!');
+  }
+  public async dismissLoading(): Promise<void> {
+    if (this.loading) {
+      this.loading.dismiss();
     }
   }
 }
