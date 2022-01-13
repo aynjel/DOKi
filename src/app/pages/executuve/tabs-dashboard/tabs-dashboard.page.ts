@@ -1262,7 +1262,7 @@ export class TabsDashboardPage implements OnInit {
       ],
       credits: { enabled: false },
     });
-    this.MTA.yAxis[0].setExtremes(500, 4700);
+    //this.MTA.yAxis[0].setExtremes(500, 4700);
     setTimeout(() => {
       this.MTA.reflow();
     }, 1000);
