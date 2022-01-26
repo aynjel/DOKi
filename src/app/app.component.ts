@@ -40,6 +40,11 @@ export class AppComponent {
       url: '/executive/allpatients',
       icon: 'person-circle-outline',
     },
+    {
+      title: 'Case Rates',
+      url: '/executive/caserates',
+      icon: 'today-outline',
+    },
   ];
   constructor(
     private platform: Platform,

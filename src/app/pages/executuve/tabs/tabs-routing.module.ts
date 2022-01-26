@@ -59,6 +59,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'caserates',
+        loadChildren: () =>
+          import('../tab-caserates/tab-caserates.module').then(
+            (m) => m.TabCaseratesPageModule
+          ),
+      },
+      {
         path: 'settings',
         loadChildren: () =>
           import('../tabs-settings/tabs-settings.module').then(
