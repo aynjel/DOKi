@@ -21,5 +21,7 @@
     </ion-menu>
     <ion-router-outlet id="menu-content"></ion-router-outlet>
 </ion-split-pane>
-<ion-router-outlet id="menu-content" *ngIf="(role_flag != 'exec' && isDesktop) || (role_flag != 'exec' && !isDesktop)">
+
+<ion-router-outlet id="menu-content"
+    *ngIf="(role_flag != 'exec' && isDesktop) || (role_flag != 'exec' && !isDesktop)|| (role_flag == 'exec' && isDesktop)">
 </ion-router-outlet>

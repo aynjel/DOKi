@@ -18,37 +18,30 @@
 
 
 
+  <ion-grid class="ion-no-padding">
+    <ion-row class="custom-padding">
+      <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3" class="custom-border-bottom ion-no-border ">
+
+
+        <ion-grid>
 
 
 
 
 
-
-  <ion-list>
-    <ion-item *ngFor="let x of caseRateResponse_first">
-      <ion-label>
-        <h2 class="ion-text-wrap">{{x.case_desc}}</h2>
-        <h3 class="ion-text-wrap" slot="end">Case Code : {{x.case_code}}</h3>
-        <ion-badge>
-          <h3 class="ion-text-wrap">
-            <b>PF : {{x.case_pf }}</b>
-          </h3>
-        </ion-badge>
-      </ion-label>
-    </ion-item>
-  </ion-list>
-
-
-
-
-
-
-
-
-
-
-
-
+          <ion-list>
+            <ion-item *ngFor="let x of caseRateResponse_first">
+              <ion-label>
+                <h2 class="ion-text-wrap">{{x.case_desc}}</h2>
+                <h3 class="ion-text-wrap" slot="end">Case Code : {{x.case_code}}</h3>
+                <ion-badge>
+                  <h3 class="ion-text-wrap">
+                    <b>PF : {{x.case_pf }}</b>
+                  </h3>
+                </ion-badge>
+              </ion-label>
+            </ion-item>
+          </ion-list>
 
 
 
@@ -58,163 +51,202 @@
 
 
 
-  <div class="custom-skeleton" *ngIf="ionSkeleton">
-    <ion-list>
-      <ion-item>
-        <ion-label>
-          <h2 class="ion-text-wrap">
-            <ion-skeleton-text animated></ion-skeleton-text>
-          </h2>
-          <h3 class="ion-text-wrap">
-            <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
-          </h3>
-          <h3 class="ion-text-wrap">
-            <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
-          </h3>
-        </ion-label>
-      </ion-item>
-    </ion-list>
-    <ion-list>
-      <ion-item>
-        <ion-label>
-          <h2 class="ion-text-wrap">
-            <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
-          </h2>
-          <h3 class="ion-text-wrap">
-            <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
-          </h3>
-          <h3 class="ion-text-wrap">
-            <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
-          </h3>
-        </ion-label>
-      </ion-item>
-    </ion-list>
-  </div>
-  <div *ngIf="ionNoData">
-    <ion-grid>
-      <ion-row>
-        <ion-col size="8" offset="2">
-          <div class="vertical-center">
-            <div class="center">
-              <img src="assets/img/no-data-rafiki.png" />
+
+
+
+
+
+
+
+
+
+
+
+
+          <div class="custom-skeleton" *ngIf="ionSkeleton">
+            <ion-list>
+              <ion-item>
+                <ion-label>
+                  <h2 class="ion-text-wrap">
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </h2>
+                  <h3 class="ion-text-wrap">
+                    <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
+                  </h3>
+                  <h3 class="ion-text-wrap">
+                    <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+                  </h3>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+            <ion-list>
+              <ion-item>
+                <ion-label>
+                  <h2 class="ion-text-wrap">
+                    <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+                  </h2>
+                  <h3 class="ion-text-wrap">
+                    <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+                  </h3>
+                  <h3 class="ion-text-wrap">
+                    <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+                  </h3>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+          </div>
+          <div *ngIf="ionNoData">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="8" offset="2">
+                  <div class="vertical-center">
+                    <div class="center">
+                      <img src="assets/img/no-data-rafiki.png" />
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+          <div *ngIf="ionStart">
+            <div class="ion-text-center">
+              <img src="assets/img/hunt-rafiki.png" alt="Search" />
+              <h3>Search to see case rates</h3>
             </div>
           </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-  <div *ngIf="ionStart">
-    <div class="ion-text-center">
-      <img src="assets/img/hunt-rafiki.png" alt="Search" />
-      <h3>Search to see case rates</h3>
-    </div>
-  </div>
-  <ion-list>
-    <ion-item *ngFor="let x of caseRateResponse_first">
-      <ion-label>asd
-        <h2 class="ion-text-wrap">{{x.case_desc}}</h2>
-        <h3 class="ion-text-wrap" slot="end">Case Code : {{x.case_code}}</h3>
-        <ion-badge>
-          <h3 class="ion-text-wrap">
-            <b>PF : {{x.case_pf }}</b>
-          </h3>
-        </ion-badge>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+          <ion-list>
+            <ion-item *ngFor="let x of caseRateResponse_first">
+              <ion-label>asd
+                <h2 class="ion-text-wrap">{{x.case_desc}}</h2>
+                <h3 class="ion-text-wrap" slot="end">Case Code : {{x.case_code}}</h3>
+                <ion-badge>
+                  <h3 class="ion-text-wrap">
+                    <b>PF : {{x.case_pf }}</b>
+                  </h3>
+                </ion-badge>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-grid>
+
+
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
 <ion-content *ngIf="ccCase=='second'">
-  <div class="custom-skeleton" *ngIf="ionSkeleton1">
-    <ion-list>
-      <ion-item>
-        <ion-label>
-          <h2 class="ion-text-wrap">
-            <ion-skeleton-text animated></ion-skeleton-text>
-          </h2>
-          <h3 class="ion-text-wrap">
-            <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
-          </h3>
-          <h3 class="ion-text-wrap">
-            <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
-          </h3>
-        </ion-label>
-      </ion-item>
-    </ion-list>
-    <ion-list>
-      <ion-item>
-        <ion-label>
-          <h2 class="ion-text-wrap">
-            <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
-          </h2>
-          <h3 class="ion-text-wrap">
-            <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
-          </h3>
-          <h3 class="ion-text-wrap">
-            <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
-          </h3>
-        </ion-label>
-      </ion-item>
-    </ion-list>
-  </div>
-  <div *ngIf="ionNoData1">
-    <ion-grid>
-      <ion-row>
-        <ion-col size="8" offset="2">
-          <div class="vertical-center">
-            <div class="center">
-              <img src="assets/img/no-data-rafiki.png" />
+  <ion-grid class="ion-no-padding">
+    <ion-row class="custom-padding">
+      <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3" class="custom-border-bottom ion-no-border ">
+        <ion-grid>
+          <div class="custom-skeleton" *ngIf="ionSkeleton1">
+            <ion-list>
+              <ion-item>
+                <ion-label>
+                  <h2 class="ion-text-wrap">
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </h2>
+                  <h3 class="ion-text-wrap">
+                    <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
+                  </h3>
+                  <h3 class="ion-text-wrap">
+                    <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+                  </h3>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+            <ion-list>
+              <ion-item>
+                <ion-label>
+                  <h2 class="ion-text-wrap">
+                    <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+                  </h2>
+                  <h3 class="ion-text-wrap">
+                    <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+                  </h3>
+                  <h3 class="ion-text-wrap">
+                    <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+                  </h3>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+          </div>
+          <div *ngIf="ionNoData1">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="8" offset="2">
+                  <div class="vertical-center">
+                    <div class="center">
+                      <img src="assets/img/no-data-rafiki.png" />
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+          <div *ngIf="ionStart1">
+            <div class="ion-text-center">
+              <img src="assets/img/hunt-rafiki.png" alt="Search" />
+              <h3>Search to see case rates</h3>
             </div>
           </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-  <div *ngIf="ionStart1">
-    <div class="ion-text-center">
-      <img src="assets/img/hunt-rafiki.png" alt="Search" />
-      <h3>Search to see case rates</h3>
-    </div>
-  </div>
-  <ion-list>
-    <ion-item *ngFor="let x of caseRateResponse_second">
-      <ion-label>
-        <h2 class="ion-text-wrap">{{x.case_desc}}</h2>
-        <h3 class="ion-text-wrap" slot="end">Case Code : {{x.case_code}}</h3>
-        <ion-badge>
-          <h3 class="ion-text-wrap">
-            <b>PF : {{x.case_pf }}</b>
-          </h3>
-        </ion-badge>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+          <ion-list>
+            <ion-item *ngFor="let x of caseRateResponse_second">
+              <ion-label>
+                <h2 class="ion-text-wrap">{{x.case_desc}}</h2>
+                <h3 class="ion-text-wrap" slot="end">Case Code : {{x.case_code}}</h3>
+                <ion-badge>
+                  <h3 class="ion-text-wrap">
+                    <b>PF : {{x.case_pf }}</b>
+                  </h3>
+                </ion-badge>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>
 <ion-footer class="ion-no-border" color="mango">
-  <ion-segment (ionChange)="segmentChanged($event)" mode="ios" [(ngModel)]="caseRateData.CaseClass" color="mango">
-    <ion-segment-button value="first">
-      <ion-label>1st Case</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="second">
-      <ion-label>2nd Case</ion-label>
-    </ion-segment-button>
-  </ion-segment>
-  <ion-item>
-    <ion-label position="floating">Code : </ion-label>
-    <ion-input [(ngModel)]="caseRateData.case_code" id="input-code"></ion-input>
-  </ion-item>
-
-  <ion-item>
-    <ion-label position="floating" [class.activedescription]="activedescription">Description :
-    </ion-label>
-    <ion-input [(ngModel)]="caseRateData.case_desc" id="input-searchdesc"></ion-input>
-  </ion-item>
   <ion-grid class="ion-no-padding">
-    <ion-row>
-      <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
-      <ion-col size-xs="12" size-md="4" size-lg="4">
-        <ion-button color="mango" size="default" expand="block" shape="round" (click)="search()">Search</ion-button>
+    <ion-row class="custom-padding">
+      <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3" class="custom-border-bottom ion-no-border ">
+        <ion-grid>
+          <ion-segment (ionChange)="segmentChanged($event)" mode="ios" [(ngModel)]="caseRateData.CaseClass"
+            color="mango">
+            <ion-segment-button value="first">
+              <ion-label>1st Case</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="second">
+              <ion-label>2nd Case</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+          <ion-item>
+            <ion-label position="floating">Code : </ion-label>
+            <ion-input [(ngModel)]="caseRateData.case_code" id="input-code"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating" [class.activedescription]="activedescription">Description :
+            </ion-label>
+            <ion-input [(ngModel)]="caseRateData.case_desc" id="input-searchdesc"></ion-input>
+          </ion-item>
+          <ion-grid class="ion-no-padding">
+            <ion-row>
+              <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+              <ion-col size-xs="12" size-md="4" size-lg="4">
+                <ion-button color="mango" size="default" expand="block" shape="round" (click)="search()">Search
+                </ion-button>
+              </ion-col>
+              <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-grid>
       </ion-col>
-      <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
     </ion-row>
   </ion-grid>
 </ion-footer>
