@@ -37,7 +37,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 })
 export class TabsErlistPage implements OnInit {
   isDesktop: boolean;
-  dateToday: any;
+  dateToday: any = '12/31/2021';
   listOfPatients: any;
   listOfPatientsTemp: any;
   listOfPatientsTemp1: any;
