@@ -1,0 +1,121 @@
+<ion-header mode="md" class="ion-no-border">
+  <div *ngIf="!isDesktop">
+    <ion-toolbar color="mango">
+      <ion-title>
+        <ion-icon name="person-circle-outline"></ion-icon> Patients
+      </ion-title>
+      <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
+        <ion-button (click)="settings()">&nbsp; <ion-icon name="settings-outline" class="icon–big"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+
+  </div>
+
+
+  <ion-grid class="ion-no-padding chh-darkmode">
+    <ion-row>
+      <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4"
+        class="custom-border-bottom ion-no-border custom-padding">
+
+      </ion-col>
+    </ion-row>
+    <ion-row class="">
+      <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4" class="ion-no-border">
+        <ion-item style="font-size: 13px !important;">
+          <ion-label>Choose Date (MM-DD-YY)</ion-label>
+          <ion-datetime displayFormat="MM DD YY" placeholder="Select Date" [(ngModel)]="dateToday"
+            (ionChange)="dateChanged()"></ion-datetime>
+        </ion-item>
+        <ion-searchbar [(ngModel)]="searchBar" (ionChange)="filterList()" mode="ios"></ion-searchbar>
+        <ion-segment scrollable value="heart" class="scrollable-element" (ionChange)="segmentChanged()"
+          [(ngModel)]="segmentModel" value="Clean ER">
+          <!--ion-segment-button value="ALL">
+            All
+          </ion-segment-button-->
+          <ion-segment-button value="Clean ER">
+            Clean ER
+          </ion-segment-button>
+          <ion-segment-button value="Covid ER">
+            Covid ER
+          </ion-segment-button>
+
+        </ion-segment>
+        <ion-segment scrollable value="heart" class="scrollable-element" (ionChange)="segmentChanged()"
+          [(ngModel)]="segmentModel1" value="ALL">
+          <ion-segment-button value="ALL">
+            All
+          </ion-segment-button>
+          <ion-segment-button value="Cebu">
+            Cebu
+          </ion-segment-button>
+          <ion-segment-button value="Mandaue">
+            Mandaue
+          </ion-segment-button>
+
+        </ion-segment>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-header>
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+      refreshingSpinner="circles" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
+        <ng-container>
+
+          <div *ngFor="let x of listOfPatients">
+            <ion-card (click)="detail(x.admissionNo,x.attendingDoctorCode)" mode="ios" class="pointer">
+
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <chh-app-text-avatar [text]="x.patientName" [color]=""></chh-app-text-avatar>
+                </ion-avatar>
+                <ion-label style="margin-top: -5px;">
+                  <ion-item slot="start" lines="none" class="ion-no-padding" style="padding-bottom: 5px;">
+                    <h2 class="ion-text-wrap" style="padding-top: 20px;">
+                      {{ x.patientName }}
+                      <ion-text color="mango">
+                        <p color="primary"><b>{{x.dob}}</b></p>
+                      </ion-text>
+                    </h2>
+
+                  </ion-item>
+
+
+
+                  <ion-row class="ion-no-padding" lines="none" style="padding-top: 1px !important;">
+                    <div style="font-size:14px">
+                      <span *ngIf="x.site =='Cebu' ">
+                        <ion-icon name="location-outline" slot="start"></ion-icon>
+                        {{this.constants.CHH_NAME__VALUE__CEBU}}
+                      </span>
+                      <span *ngIf="x.site == 'Mandaue'">
+                        <ion-icon name="location-outline" slot="start"></ion-icon>
+                        {{this.constants.CHH_NAME__VALUE__MANDAUE}}
+                      </span><br />
+
+                      {{x.erType}} : {{x.erDate}} | {{x.erTime}}<br />
+
+                      impression : {{x.impression}}
+
+
+                    </div>
+                    <br />
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+
+          </div>
+        </ng-container>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

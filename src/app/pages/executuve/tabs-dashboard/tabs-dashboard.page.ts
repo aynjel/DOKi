@@ -251,7 +251,7 @@ export class TabsDashboardPage implements OnInit {
     
         );*/
 
-    this.generateMonthlyTotalAdmissions();
+    //this.generateMonthlyTotalAdmissions();
   }
 
   TotalPxTypesBySite: any;
