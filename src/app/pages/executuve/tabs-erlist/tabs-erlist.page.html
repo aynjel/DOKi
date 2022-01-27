@@ -128,7 +128,7 @@
                     </h2>
                   </ion-item>
                   <ion-row class="ion-no-padding" lines="none" style="padding-top: 1px !important;">
-                    <div style="font-size:14px">
+                    <div style="font-size:14px;">
                       <span *ngIf="x.site =='Cebu' ">
                         <ion-icon name="location-outline" slot="start"></ion-icon>
                         {{this.constants.CHH_NAME__VALUE__CEBU}}
@@ -139,9 +139,12 @@
                       </span><br />
 
                       {{x.erType}} : {{x.erDate}} | {{x.erTime}}<br />
-
-                      Impression : {{x.impression}}<br />
-                      Disposition : {{x.disposition}}
+                      <div *ngIf="x.impression != null" class="ion-text-wrap">
+                        Impression : {{x.impression}}<br />
+                      </div>
+                      <div *ngIf="x.disposition != null" class="ion-text-wrap">
+                        Disposition : {{x.disposition}}
+                      </div>
 
 
                     </div>
