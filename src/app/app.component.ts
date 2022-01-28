@@ -10,7 +10,11 @@ import { Constants } from './shared/constants';
 import { Messages } from '../app/shared/messages';
 import { UserIdleService } from 'angular-user-idle';
 import { Router } from '@angular/router';
-import {UserSettingsModelv3,LoginResponseModelv3,RevokeTokenV3} from 'src/app/models/doctor';
+import {
+  UserSettingsModelv3,
+  LoginResponseModelv3,
+  RevokeTokenV3,
+} from 'src/app/models/doctor';
 import { DoctorService } from './services/doctor/doctor.service';
 import { StorageService } from './services/storage/storage.service';
 import { AuthConstants, Consta } from './config/auth-constants';
@@ -23,6 +27,25 @@ import { LogoutService } from './services/logout/logout.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+  role_flag: any;
+  isDesktop: boolean;
+  public appPages = [
+    {
+      title: 'Doctors',
+      url: '/executive/doctors',
+      icon: 'git-network-outline',
+    },
+    {
+      title: 'Patients',
+      url: '/executive/allpatients',
+      icon: 'person-circle-outline',
+    },
+    {
+      title: 'Case Rates',
+      url: '/executive/caserates',
+      icon: 'file-tray-full-outline',
+    },
+  ];
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -37,26 +60,34 @@ export class AppComponent {
     public router: Router,
     private doctorService: DoctorService,
     private storageService: StorageService,
-    private logoutService:LogoutService
+    private logoutService: LogoutService
   ) {
     this.initializeApp();
     this.updateClient();
+    this.role_flag = localStorage.getItem('role_flag');
+    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
+      if (this.isDesktop && !isDesktop) {
+        window.location.reload();
+      }
+      this.isDesktop = isDesktop;
+    });
   }
   userData$ = new BehaviorSubject<any>([]);
-  public revokeTokenV3: RevokeTokenV3; 
+  public revokeTokenV3: RevokeTokenV3;
+  onSplitPaneVisible(event) {
+    console.log(event);
+  }
   initializeApp() {
     this.revokeTokenV3 = new RevokeTokenV3();
-    this.functionsService.logToConsole("initializeApp");
-    
+    this.functionsService.logToConsole('initializeApp');
+
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.screensizeService.onResize(this.platform.width());
     });
 
-
-
-/*
+    /*
     if (localStorage.getItem('isIdle') == '1') {
     this.functionsService.logToConsole(localStorage.getItem('isIdlestarted'));
 
@@ -96,11 +127,6 @@ export class AppComponent {
       });
     });
 */
-
-
-
-
-
   }
 
   updateClient() {
@@ -158,22 +184,19 @@ export class AppComponent {
     });
     await alert.present();
   }
-  logout(){
+  logout() {
     this.revokeTokenV3.jwt = this.functionsService.getcookie('refreshToken');
-    localStorage.setItem("torevoketoken","1");
+    localStorage.setItem('torevoketoken', '1');
     this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe(
       (res: any) => {
         this.functionsService.logToConsole(res);
-      },(error) => {
-    
-       },
-       () => {
+      },
+      (error) => {},
+      () => {
         let dr_username = atob(localStorage.getItem('username'));
         this.logoutService.out();
-       }
+      }
     );
-    
-    
   }
   @HostListener('window:resize', ['$event'])
   private onResize(event) {

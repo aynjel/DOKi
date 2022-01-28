@@ -2,26 +2,28 @@
   <div>
     <ion-toolbar color="mango">
       <ion-title>
-        <ion-icon name="briefcase-outline"></ion-icon> Case Rates
+        <ion-icon name="file-tray-full-outline"></ion-icon> Case Rates
       </ion-title>
+      <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
+        <ion-button (click)="settings()">&nbsp; <ion-icon name="settings-outline" class="icon–big"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </div>
 </ion-header>
+<!-- <app-chh-app-desktop-navigation *ngIf="isDesktop"></app-chh-app-desktop-navigation> -->
+<ion-content *ngIf="ccCase=='first'">
 
-<ion-content>
+
+
+
+
   <ion-grid class="ion-no-padding">
-    <ion-row>
-      <ion-col size-lg="4" size-md="2" *ngIf="isDesktop">
-
-      </ion-col>
-      <ion-col size-lg="4" size-md="6">
-        <div *ngIf="ccCase=='first'">
+    <ion-row class="custom-padding">
+      <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3" class="custom-border-bottom ion-no-border ">
 
 
-
-
-
-
+        <ion-grid>
 
 
 
@@ -34,7 +36,7 @@
                 <h3 class="ion-text-wrap" slot="end">Case Code : {{x.case_code}}</h3>
                 <ion-badge>
                   <h3 class="ion-text-wrap">
-                    <b>PF : {{x.case_pf | number}}</b>
+                    <b>PF : {{x.case_pf }}</b>
                   </h3>
                 </ion-badge>
               </ion-label>
@@ -119,14 +121,25 @@
                 <h3 class="ion-text-wrap" slot="end">Case Code : {{x.case_code}}</h3>
                 <ion-badge>
                   <h3 class="ion-text-wrap">
-                    <b>PF : {{x.case_pf | number}}</b>
+                    <b>PF : {{x.case_pf }}</b>
                   </h3>
                 </ion-badge>
               </ion-label>
             </ion-item>
           </ion-list>
-        </div>
-        <div *ngIf="ccCase=='second'">
+        </ion-grid>
+
+
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-content *ngIf="ccCase=='second'">
+  <ion-grid class="ion-no-padding">
+    <ion-row class="custom-padding">
+      <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3" class="custom-border-bottom ion-no-border ">
+        <ion-grid>
           <div class="custom-skeleton" *ngIf="ionSkeleton1">
             <ion-list>
               <ion-item>
@@ -185,20 +198,24 @@
                 <h3 class="ion-text-wrap" slot="end">Case Code : {{x.case_code}}</h3>
                 <ion-badge>
                   <h3 class="ion-text-wrap">
-                    <b>PF : {{x.case_pf | number}}</b>
+                    <b>PF : {{x.case_pf }}</b>
                   </h3>
                 </ion-badge>
               </ion-label>
             </ion-item>
           </ion-list>
-        </div>
 
-
-
-
+        </ion-grid>
       </ion-col>
-      <ion-col size-lg="3" size-md="3" *ngIf="isDesktop">
-        <ion-footer class="ion-no-border" color="mango">
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+<ion-footer class="ion-no-border" color="mango">
+  <ion-grid class="ion-no-padding">
+    <ion-row class="custom-padding">
+      <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3" class="custom-border-bottom ion-no-border ">
+        <ion-grid>
           <ion-segment (ionChange)="segmentChanged($event)" mode="ios" [(ngModel)]="caseRateData.case_class"
             color="mango">
             <ion-segment-button value="first">
@@ -228,83 +245,8 @@
               <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
             </ion-row>
           </ion-grid>
-        </ion-footer>
-      </ion-col>
-      <ion-col size-lg="1" size-md="1" *ngIf="isDesktop"></ion-col>
-
-
-    </ion-row>
-  </ion-grid>
-</ion-content>
-
-<ion-footer class="ion-no-border" color="mango" *ngIf="!isDesktop">
-  <ion-segment (ionChange)="segmentChanged($event)" mode="ios" [(ngModel)]="caseRateData.case_class" color="mango">
-    <ion-segment-button value="first">
-      <ion-label>1st Case</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="second">
-      <ion-label>2nd Case</ion-label>
-    </ion-segment-button>
-  </ion-segment>
-
-  <ion-grid>
-    <ion-row>
-      <ion-col size="4">
-        <ion-item style="font-size: 14px;">
-          <ion-label position="floating">Code : </ion-label>
-          <ion-input [(ngModel)]="caseRateData.case_code" id="input-code"></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col size="6">
-        <ion-item style="font-size: 14px;">
-          <ion-label position="floating" [class.activedescription]="activedescription">Description :
-          </ion-label>
-          <ion-input [(ngModel)]="caseRateData.case_desc" id="input-searchdesc"></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col size="2">
-        <ion-button size="small" style="margin-top: 20px;">
-          <ion-icon name="search-outline"></ion-icon>
-        </ion-button>
-        <!--ion-grid class="ion-no-padding">
-          <ion-row>
-
-            <ion-col size-xs="12" size-md="4" size-lg="4">
-              <ion-button
-                color="mango"
-                
-                expand="block"
-                shape="round"
-                (click)="search()"
-                ><ion-icon color="white" name="search-outline"></ion-icon></ion-button
-              >
-            </ion-col>
-  
-          </ion-row>
-        </ion-grid-->
+        </ion-grid>
       </ion-col>
     </ion-row>
   </ion-grid>
-
-
-
-
-
-
-  <!--ion-grid class="ion-no-padding">
-    <ion-row>
-      <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
-      <ion-col size-xs="12" size-md="4" size-lg="4">
-        <ion-button
-          color="mango"
-          size="default"
-          expand="block"
-          shape="round"
-          (click)="search()"
-          >Search</ion-button
-        >
-      </ion-col>
-      <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
-    </ion-row>
-  </ion-grid-->
 </ion-footer>

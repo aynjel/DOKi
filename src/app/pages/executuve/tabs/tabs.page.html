@@ -2,13 +2,31 @@
   <ion-tab-bar slot="bottom">
     <ion-tab-button id="button-in-patients" tab="dashboard">
       <ion-icon name="stats-chart-outline"></ion-icon>
-      <ion-label class="tab-font-family">Dashboard</ion-label>
+      <ion-label class="tab-font-family">Daily</ion-label>
     </ion-tab-button>
+
+
+    <ion-tab-button id="button-in-patients" tab="historical">
+      <ion-icon name="bar-chart-outline"></ion-icon>
+      <ion-label class="tab-font-family">Historical</ion-label>
+    </ion-tab-button>
+    <ion-tab-button id="button-in-patients" tab="erlist">
+      <ion-icon name="pulse-outline"></ion-icon>
+      <ion-label class="tab-font-family">ER List</ion-label>
+    </ion-tab-button>
+
+
+
     <ion-tab-button id="button-news-feed" tab="newsfeed">
       <ion-icon name="newspaper-outline"></ion-icon>
       <ion-label class="tab-font-family">Newsfeed</ion-label>
     </ion-tab-button>
-    <ion-tab-button id="button-news-feed" tab="doctors">
+
+
+
+
+
+    <!--ion-tab-button id="button-news-feed" tab="doctors">
       <ion-icon name="git-network-outline"></ion-icon>
       <ion-label class="tab-font-family">Doctors</ion-label>
     </ion-tab-button>
@@ -16,7 +34,18 @@
     <ion-tab-button id="button-in-patients" tab="allpatients">
       <ion-icon name="person-circle-outline"></ion-icon>
       <ion-label class="tab-font-family">Patients</ion-label>
+    </ion-tab-button-->
+    <!--ion-tab-button id="button-in-patients" (click)="toggleMenu()">
+      <ion-icon name="person-circle-outline"></ion-icon>
+      <ion-label class="tab-font-family">Patients</ion-label>
+    </ion-tab-button-->
+
+    <ion-tab-button id="button-in-patients" (click)="toggleMenu()">
+      <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
+      <ion-label class="tab-font-family">More</ion-label>
     </ion-tab-button>
+
+
 
 
     <!--ion-tab-button id="button-settings" tab="settings">
@@ -32,70 +61,48 @@
     <ion-toolbar>
       <ion-row class="ion-align-items-center">
         <ion-col size="2">
-          <chh-app-logo-sm ></chh-app-logo-sm>
+          <chh-app-logo-sm></chh-app-logo-sm>
         </ion-col>
         <ion-col size="10">
           <div class="navbar" class="ion-text-center chh-bg">
-            <ion-button
-              id="button-dashboard"
-              fill="clear"
-              routerLink="/executive/dashboard"
-              routerDirection="root"
-              routerLinkActive="active-link"
-              class="link"
-            >
-              {{this.constants.MENU__VALUE__DASHBOARD}}
+            <ion-button id="button-dashboard" fill="clear" routerLink="/executive/dashboard" routerDirection="root"
+              routerLinkActive="active-link" class="link">
+              Daily
             </ion-button>
-            <ion-button
-            id="button-settings"
-            fill="clear"
-            routerLink="/executive/newsfeed"
-            routerDirection="root"
-            routerLinkActive="active-link"
-            class="link"
-            >
+            <ion-button id="button-settings" fill="clear" routerLink="/executive/historical" routerDirection="root"
+              routerLinkActive="active-link" class="link">
+              Historical
+            </ion-button>
+            <ion-button id="button-settings" fill="clear" routerLink="/executive/erlist" routerDirection="root"
+              routerLinkActive="active-link" class="link">
+              ER List
+            </ion-button>
+
+
+
+            <ion-button id="button-settings" fill="clear" routerLink="/executive/newsfeed" routerDirection="root"
+              routerLinkActive="active-link" class="link">
               Newsfeed
-          </ion-button>        
-            <ion-button
-              id="button-settings"
-              fill="clear"
-              routerLink="/executive/doctors"
-              routerDirection="root"
-              routerLinkActive="active-link"
-              class="link"
-              >
-                Doctors
-            </ion-button>    
-            <ion-button
-              id="button-settings"
-              fill="clear"
-              routerLink="/executive/allpatients"
-              routerDirection="root"
-              routerLinkActive="active-link"
-              class="link"
-              >
-              Patients
-            </ion-button>  
-            
-            <ion-button
-              id="button-settings"
-              fill="clear"
-              routerLink="/executive/settings"
-              routerDirection="root"
-              routerLinkActive="active-link"
-              class="link"
-            >
-            {{this.constants.MENU__VALUE__SETTINGS}}
             </ion-button>
-            <ion-button
-              id="button-logout"
-              fill="clear"
-              routerDirection="root"
-              routerLinkActive="active-link"
-              class="link"
-              (click)="logout()"
-            >
-            {{this.constants.MENU__VALUE__LOG_OUT}}
+            <ion-button id="button-settings" fill="clear" routerLink="/executive/doctors" routerDirection="root"
+              routerLinkActive="active-link" class="link">
+              Doctors
+            </ion-button>
+            <ion-button id="button-settings" fill="clear" routerLink="/executive/allpatients" routerDirection="root"
+              routerLinkActive="active-link" class="link">
+              Patients
+            </ion-button>
+            <ion-button id="button-settings" fill="clear" routerLink="/executive/caserates" routerDirection="root"
+              routerLinkActive="active-link" class="link">
+              Case Rates
+            </ion-button>
+            <ion-button id="button-settings" fill="clear" routerLink="/executive/settings" routerDirection="root"
+              routerLinkActive="active-link" class="link">
+              {{this.constants.MENU__VALUE__SETTINGS}}
+            </ion-button>
+            <ion-button id="button-logout" fill="clear" routerDirection="root" routerLinkActive="active-link"
+              class="link" (click)="logout()">
+              {{this.constants.MENU__VALUE__LOG_OUT}}
             </ion-button>
           </div>
         </ion-col>

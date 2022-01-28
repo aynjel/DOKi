@@ -1,1 +1,26 @@
-<ion-router-outlet></ion-router-outlet>
+<ion-split-pane *ngIf="role_flag == 'exec' && !isDesktop" contentId="menu-content" when="xs" [disabled]="true">
+    <ion-menu contentId="menu-content" menuId="menu-content" side="start" type="overlay">
+        <ion-header>
+            <ion-toolbar color="mango">
+                <ion-title>More</ion-title>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content>
+            <ion-list>
+                <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+                    <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+                        <ion-icon color="primary" slot="start" [name]="p.icon"></ion-icon>
+                        <ion-label>
+                            {{p.title}}
+                        </ion-label>
+                    </ion-item>
+                </ion-menu-toggle>
+            </ion-list>
+        </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="menu-content"></ion-router-outlet>
+</ion-split-pane>
+
+<ion-router-outlet id="menu-content"
+    *ngIf="(role_flag != 'exec' && isDesktop) || (role_flag != 'exec' && !isDesktop)|| (role_flag == 'exec' && isDesktop)">
+</ion-router-outlet>
