@@ -36,14 +36,14 @@ export class AppComponent {
       icon: 'git-network-outline',
     },
     {
-      title: 'Patient List',
+      title: 'Patients',
       url: '/executive/allpatients',
       icon: 'person-circle-outline',
     },
     {
       title: 'Case Rates',
       url: '/executive/caserates',
-      icon: 'today-outline',
+      icon: 'file-tray-full-outline',
     },
   ];
   constructor(
