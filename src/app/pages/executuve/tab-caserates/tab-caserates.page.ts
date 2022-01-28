@@ -12,6 +12,7 @@ import {
   UserSettingsModelv3,
   LoginResponseModelv3,
 } from 'src/app/models/doctor';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-tab-caserates',
   templateUrl: './tab-caserates.page.html',
@@ -50,7 +51,8 @@ export class TabCaseratesPage implements OnInit {
     public functionsService: FunctionsService,
     private patientService: PatientService,
     private renderer: Renderer2,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private router: Router
   ) {
     //this.caseRateData.CaseSearchCode ="";
     //this.caseRateData.CaseSearchDesc="";
@@ -91,6 +93,9 @@ export class TabCaseratesPage implements OnInit {
     this.caseRateData.case_class = e.detail.value;
     this.case = '(' + e.detail.value + ')';
     this.search();
+  }
+  settings() {
+    this.router.navigate(['/executive/settings']);
   }
   search() {
     console.log(this.caseRateData);
