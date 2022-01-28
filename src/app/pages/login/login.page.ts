@@ -159,6 +159,7 @@ export class LoginPage {
                 userIndentifier = 'Administrator';
               } else if (element == 'Executive') {
                 userIndentifier = 'Executive';
+                localStorage.setItem('role_flag', 'exec');
                 execflag = false;
               } else {
               }
