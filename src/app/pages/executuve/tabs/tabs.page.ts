@@ -15,6 +15,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
 import { FunctionsService } from 'src/app/shared/functions/functions.service';
 import { LogoutService } from 'src/app/services/logout/logout.service';
+import { MenuController } from '@ionic/angular';
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.page.html',
@@ -35,7 +36,8 @@ export class TabsPage implements OnInit {
     private authService: AuthService,
     private doctorService: DoctorService,
     public functionsService: FunctionsService,
-    private logoutService: LogoutService
+    private logoutService: LogoutService,
+    private menu: MenuController
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -46,7 +48,9 @@ export class TabsPage implements OnInit {
       this.isDesktop = isDesktop;
     });
   }
-
+  toggleMenu() {
+    this.menu.toggle(); //Add this method to your button click function
+  }
   ngOnInit() {
     this.loginResponseModelv3 = new LoginResponseModelv3();
     localStorage.setItem('tokenExpired', '0');

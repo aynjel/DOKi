@@ -38,7 +38,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 export class TabsErlistPage implements OnInit {
   isDesktop: boolean;
   dateToday: any = '12/31/2021';
-  listOfPatients: any;
+  listOfPatients: any = [];
   listOfPatientsTemp: any;
   listOfPatientsTemp1: any;
   listOfPatientsTemp2: any;
@@ -74,11 +74,16 @@ export class TabsErlistPage implements OnInit {
   ngOnInit() {
     this.getErwaitlist('12/31/2021');
   }
-
+  showSkeleton: boolean = false;
+  noData: boolean = false;
   getErwaitlist(data) {
+    this.listOfPatients = [];
+    this.showSkeleton = true;
+    this.noData = false;
     let dateToSend = encodeURIComponent(data);
     this.executiveService.getERList(dateToSend).subscribe(
       (res: any) => {
+        this.showSkeleton = false;
         this.listOfPatientsTemp =
           this.listOfPatientsTemp1 =
           this.listOfPatientsTemp2 =
@@ -112,6 +117,11 @@ export class TabsErlistPage implements OnInit {
           this.listOfPatients.push(element);
         }
       });
+    }
+    if (this.listOfPatients == null) {
+      this.noData = true;
+    } else {
+      this.noData = false;
     }
   }
   segmentChanged() {
