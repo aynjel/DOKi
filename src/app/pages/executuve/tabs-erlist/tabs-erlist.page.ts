@@ -91,7 +91,7 @@ export class TabsErlistPage implements OnInit {
       },
       (error) => {},
       () => {
-        this.filterList();
+        this.segmentChanged();
       }
     );
   }
