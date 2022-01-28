@@ -103,7 +103,7 @@ export class TabsErlistPage implements OnInit {
     }, 1000);
   }
   filterList() {
-    //console.log(this.searchBar);
+    ////console.log(this.searchBar);
     if (this.searchBar == '') {
       this.listOfPatients = this.listOfPatientsTemp2;
     } else {
@@ -118,7 +118,11 @@ export class TabsErlistPage implements OnInit {
         }
       });
     }
-    if (this.listOfPatients == null) {
+    //console.log('listOfPatients');
+
+    //console.log(this.listOfPatients);
+
+    if (this.listOfPatients == null || this.listOfPatients.length <= 0) {
       this.noData = true;
     } else {
       this.noData = false;
@@ -128,11 +132,15 @@ export class TabsErlistPage implements OnInit {
     this.listOfPatients = [];
     this.listOfPatientsTemp1 = [];
     this.listOfPatientsTemp2 = [];
-    this.listOfPatientsTemp.forEach((element) => {
-      if (element.erType == this.segmentModel) {
-        this.listOfPatientsTemp1.push(element);
-      }
-    });
+    if (this.listOfPatientsTemp != null) {
+      this.listOfPatientsTemp.forEach((element) => {
+        if (element.erType == this.segmentModel) {
+          this.listOfPatientsTemp1.push(element);
+        }
+      });
+    } else {
+      this.listOfPatientsTemp1 = [];
+    }
     if (this.segmentModel1 == 'ALL') {
       this.listOfPatientsTemp2 = this.listOfPatientsTemp1;
     } else {
@@ -143,7 +151,7 @@ export class TabsErlistPage implements OnInit {
         }
       });
     }
-    console.log(this.listOfPatientsTemp2);
+    //console.log(this.listOfPatientsTemp2);
 
     this.filterList();
   }
@@ -172,7 +180,7 @@ export class TabsErlistPage implements OnInit {
     let year1 = date1.getFullYear();
     let sendDate = month1 + '/' + day1 + '/' + year1;
 
-    console.log(this.maxTime);
+    //console.log(this.maxTime);
     this.listOfPatients = [];
     this.listOfPatientsTemp1 = [];
     this.getErwaitlist(sendDate);
