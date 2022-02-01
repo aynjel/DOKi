@@ -178,8 +178,8 @@ export class TabsErlistPage implements OnInit {
     let day1 = date1.getDate();
     let month1 = date1.getMonth() + 1;
     let year1 = date1.getFullYear();
-    let sendDate = month1 + '/' + day1 + '/' + year1;
-
+    let sendDate = ('0' + month1).slice(-2) + '/' + ('0' + day1).slice(-2) + '/' + year1;
+    
     //console.log(this.maxTime);
     this.listOfPatients = [];
     this.listOfPatientsTemp1 = [];
