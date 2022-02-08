@@ -41,6 +41,11 @@ export class AppComponent {
       icon: 'person-circle-outline',
     },
     {
+      title: 'Physician Directory',
+      url: '/executive/directory',
+      icon: 'book-outline',
+    },
+    {
       title: 'Case Rates',
       url: '/executive/caserates',
       icon: 'file-tray-full-outline',
