@@ -1,11 +1,23 @@
-ion-content {
-  --background: url(../../../../../assets/img/background.jpg) no-repeat top
-      center/cover fixed,
-    #fff;
-  position: relative;
-  height: 100%;
-  width: 100%;
-
+.bg-content {
+  background: url(../../../../../assets/img/test1.png);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  /*
+    background: url(../../../../../assets/img/background.jpg) no-repeat center
+      center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  */
+  /*
+    --background: url(../../../../../assets/img/background.jpg) no-repeat top
+        center/cover fixed,
+      #fff;
+    position: relative;
+    height: 100%;
+    width: 100%;
+  */
   ion-button {
     margin-top: 1em;
     margin-bottom: 1em;
