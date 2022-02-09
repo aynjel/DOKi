@@ -17,11 +17,12 @@ import { ExecutiveService } from 'src/app/services/executive/executive.service';
 })
 export class DoctordirectorydetailComponent implements OnInit {
   loading: any;
-  information: any;
+  information: any = [];
   @Input() mdcode: any;
   @Input() firstname: any;
   @Input() middleName: any;
   @Input() lastName: any;
+  @Input() gender: any;
   jsonData = {
     doctorCode: 'string',
     mode: 'string',
@@ -33,16 +34,17 @@ export class DoctordirectorydetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.lastName);
+    console.log(this.gender);
     this.jsonData.doctorCode = this.mdcode;
     this.jsonData.mode = 'P';
     this.executiveService.getDoctorInfo(this.jsonData).subscribe(
       (res: any) => {
-        this.information = res;
-        console.log(this.information);
+        this.information = JSON.parse('[' + JSON.stringify(res) + ']');
       },
       (error) => {},
-      () => {}
+      () => {
+        console.log(this.information);
+      }
     );
   }
   async presentLoading() {

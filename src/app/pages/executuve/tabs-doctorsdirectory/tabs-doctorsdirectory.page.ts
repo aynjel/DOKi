@@ -208,18 +208,19 @@ export class TabsDoctorsdirectoryPage implements OnInit {
   settings() {
     this.router.navigate(['/executive/settings']);
   }
-  detail(mdCode, firstname, middleName, lastName) {
+  detail(mdCode, firstname, middleName, lastName, gender) {
     console.log(mdCode);
     console.log(firstname);
     console.log(middleName);
     console.log(lastName);
-    this.showModal(mdCode, firstname, middleName, lastName);
+    this.showModal(mdCode, firstname, middleName, lastName, gender);
   }
   async showModal(
     responsebe: any,
     firstname: any,
     middleName: any,
-    lastName: any
+    lastName: any,
+    gender: any
   ) {
     const modal = await this.modalController.create({
       component: DoctordirectorydetailComponent,
@@ -229,6 +230,7 @@ export class TabsDoctorsdirectoryPage implements OnInit {
         firstname: firstname,
         middleName: middleName,
         lastName: lastName,
+        gender: gender,
       },
     });
     return await modal.present();
