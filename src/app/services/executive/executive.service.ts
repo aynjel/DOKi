@@ -194,7 +194,7 @@ export class ExecutiveService {
     const options = { headers: headers, withCredentials: true };
     //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
     //const url = environment.apiRouterUrl + 'v3/Dashboard/DoctorsDirectory?mode=P';
-    const url = 'http://10.130.21.176:5002/api/v3/DoctorsDirectory?mode=P';
+    const url = 'http://10.130.21.222:5002/api/v3/DoctorsDirectory?mode=P';
     return this.http.get(url, options);
   }
 
@@ -203,7 +203,7 @@ export class ExecutiveService {
     const options = { headers: headers, withCredentials: true };
     // const url = environment.apiRouterUrl + 'v3/DoctorsDirectory/DoctorDetail';
     const url =
-      'http://10.130.21.176:5002/api/v3/DoctorsDirectory/DoctorDetail';
+      'http://10.130.21.222:5002/api/v3/DoctorsDirectory/DoctorDetail';
     return this.http.post(url, data, options);
   }
 }
