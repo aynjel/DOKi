@@ -33,18 +33,18 @@ import { AuthConstants } from '../../../config/auth-constants';
 import { executionAsyncResource } from 'async_hooks';
 import { Constants } from 'src/app/shared/constants';
 
-
-import {ChhAppCaseratesComponent } from '../../../chh-web-components/chh-app-caserates/chh-app-caserates.component';
-
+import { ChhAppCaseratesComponent } from '../../../chh-web-components/chh-app-caserates/chh-app-caserates.component';
 
 import { TransactionSummaryPage } from '../transaction-summary/transaction-summary.page';
 
-
-import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
-import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
-
-
-
+import {
+  UserSettingsModelv3,
+  LoginResponseModelv3,
+} from 'src/app/models/doctor';
+import {
+  InPatientData,
+  ProfessionalFeeModelv3,
+} from 'src/app/models/in-patient.model';
 
 @Component({
   selector: 'app-chh-app-professional-fee-summary',
@@ -89,8 +89,8 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   txtPhilHealthVAT: boolean = true;
   txtPersonalPhilHealthVAT: boolean = true;
   headerMethod: any;
-  professionalFeeModelv3 : ProfessionalFeeModelv3 = new ProfessionalFeeModelv3();
-  userSettingsModelv3 : UserSettingsModelv3 = new UserSettingsModelv3();
+  professionalFeeModelv3: ProfessionalFeeModelv3 = new ProfessionalFeeModelv3();
+  userSettingsModelv3: UserSettingsModelv3 = new UserSettingsModelv3();
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   constructor(
     private router: Router,
@@ -111,7 +111,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     public constants: Constants,
     private renderer: Renderer2
   ) {
-    localStorage.setItem("modaled","0");
+    localStorage.setItem('modaled', '0');
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         window.location.reload();
@@ -123,11 +123,17 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   }
 
   ngOnInit() {
-     this.checkAppearance();
-         this.functionsService.logToConsole('checkAppearance');this.functionsService.logToConsole('checkAppearance');this.functionsService.logToConsole('checkAppearance');this.functionsService.logToConsole('checkAppearance');this.functionsService.logToConsole('checkAppearance');
+    this.checkAppearance();
+    this.functionsService.logToConsole('checkAppearance');
+    this.functionsService.logToConsole('checkAppearance');
+    this.functionsService.logToConsole('checkAppearance');
+    this.functionsService.logToConsole('checkAppearance');
+    this.functionsService.logToConsole('checkAppearance');
     //this.postData = JSON.parse(atob(sessionStorage.getItem("postData"))) as InPatientData;
-   // this.postData = JSON.parse(atob(localStorage.getItem('postData'))) as InPatientData;
-    this.professionalFeeModelv3 = JSON.parse(atob(localStorage.getItem('postData1')));
+    // this.postData = JSON.parse(atob(localStorage.getItem('postData'))) as InPatientData;
+    this.professionalFeeModelv3 = JSON.parse(
+      atob(localStorage.getItem('postData1'))
+    );
     this.headerMethod = this.professionalFeeModelv3.selected_payvenue;
 
     this.id = this.activatedRoute.snapshot.params.id;
@@ -153,7 +159,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
       // this.PhilhealthShowVat = true;
       this.PhilhealthShowValue = true;
     }
-    
+
     this.method = this.functionsService.convertAllFirstLetterToUpperCase(
       this.method
     );
@@ -217,14 +223,16 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
 
   checkAppearance() {
     this.functionsService.logToConsole('checkAppearance');
-    var values = JSON.parse('[' + atob(localStorage.getItem("user_settings"))+ ']');
+    var values = JSON.parse(
+      '[' + atob(localStorage.getItem('user_settings')) + ']'
+    );
     let dr_username = atob(localStorage.getItem('username'));
-    values.forEach(element => {
+    values.forEach((element) => {
       this.functionsService.logToConsole(element.darkmode);
-      if(element.darkmode == 1){
-        this.renderer.setAttribute(document.body,'color-theme','dark');
-      }else{
-        this.renderer.setAttribute(document.body,'color-theme','light');
+      if (element.darkmode == 1) {
+        this.renderer.setAttribute(document.body, 'color-theme', 'dark');
+      } else {
+        this.renderer.setAttribute(document.body, 'color-theme', 'light');
       }
     });
   }
@@ -241,11 +249,16 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     return await modal.present();
   }
 
-  isurancePF() {
-    if (this.InsurancePF > 0) {
+  isurancePF(event) {
+    if (event.key == ',') {
+      event.stopPropagation();
+      return false;
+    }
 
-      this.InsurancePF = (this.InsurancePF / this.InsurancePF) * this.InsurancePF;
-      
+    if (this.InsurancePF > 0) {
+      this.InsurancePF =
+        (this.InsurancePF / this.InsurancePF) * this.InsurancePF;
+
       this.InsuranceShowVat = true;
     } else {
       this.InsuranceShowVat = false;
@@ -256,10 +269,6 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     } else {
       this.txtInsurancePF = true;
     }
-
-
-
-
   }
 
   insuranceVat() {
@@ -283,9 +292,12 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     }
     //this.functionsService.logToConsole(this.PhilhealthShowVat);
   }
-  txtPersonalPhilHealthPF:boolean = true;
-  personalPhilhealth() {
-   
+  txtPersonalPhilHealthPF: boolean = true;
+  personalPhilhealth(event) {
+    if (event.key == ',') {
+      event.stopPropagation();
+      return false;
+    }
     if (this.PersonalPhilhealthPF > 0) {
       this.PersonalPhilhealthShowVat = true;
       this.txtPersonalPhilHealthPF = false;
@@ -319,37 +331,33 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   }
 
   finishTransaction() {
-
-
     this.functionsService.logToConsole(this.method);
-    
-    
+
     if (this.method == 'Insurance') {
       this.functionsService.logToConsole(this.InsurancePF);
-      
-      if (this.InsurancePF <= 0 || this.InsurancePF == null) {
 
+      if (this.InsurancePF <= 0 || this.InsurancePF == null) {
         /*this.postData.ProfFee = 0;
         this.postData.IsVAT = 'N';
         this.postData.PayVenue = 'X';*/
         this.professionalFeeModelv3.doctor_prof_fee = 0;
         //this.professionalFeeModelv3.old_prof_fee = 0;
         this.professionalFeeModelv3.is_vat = 'N';
-        this.professionalFeeModelv3.payvenue = 'X'
+        this.professionalFeeModelv3.payvenue = 'X';
       } else {
-        this.functionsService.logToConsole("no");
+        this.functionsService.logToConsole('no');
         //this.postData.ProfFee = this.InsurancePF;
         this.professionalFeeModelv3.doctor_prof_fee = this.InsurancePF;
         if (this.InsuranceVat) {
           /*this.postData.IsVAT = 'Y';
           this.postData.PayVenue = 'X';*/
           this.professionalFeeModelv3.is_vat = 'Y';
-          this.professionalFeeModelv3.payvenue = 'X'
+          this.professionalFeeModelv3.payvenue = 'X';
         } else {
           /*this.postData.IsVAT = 'N';
           this.postData.PayVenue = 'X';*/
           this.professionalFeeModelv3.is_vat = 'N';
-          this.professionalFeeModelv3.payvenue = 'X'
+          this.professionalFeeModelv3.payvenue = 'X';
         }
       }
     } else if (this.method == 'Personal-philhealth') {
@@ -362,9 +370,6 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
         this.professionalFeeModelv3.is_vat = 'N';
         this.professionalFeeModelv3.payvenue = 'W';
         this.professionalFeeModelv3.selected_payvenue = 'PhilHealth';
-
-
-
       } else {
         /*this.postData.ProfFee = this.PersonalPhilhealthPF;
         this.postData.SelectedPayVenue = 'Personal + PhilHealth';*/
@@ -400,7 +405,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
             this.professionalFeeModelv3.is_vat = 'Y';
             this.professionalFeeModelv3.payvenue = 'H';
           } else {
-           /*this.postData.IsVAT = 'N';
+            /*this.postData.IsVAT = 'N';
             this.postData.PayVenue = 'H';*/
             this.professionalFeeModelv3.is_vat = 'N';
             this.professionalFeeModelv3.payvenue = 'H';
@@ -416,9 +421,11 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
       this.professionalFeeModelv3.payvenue = 'W';
     }
 
-
     /*localStorage.setItem('postData', btoa(JSON.stringify(this.postData)));*/
-    localStorage.setItem('postData1', btoa(JSON.stringify(this.professionalFeeModelv3)));
+    localStorage.setItem(
+      'postData1',
+      btoa(JSON.stringify(this.professionalFeeModelv3))
+    );
     if (!this.isDesktop) {
       this.router.navigate([this.router.url + '/summary']);
     } else {

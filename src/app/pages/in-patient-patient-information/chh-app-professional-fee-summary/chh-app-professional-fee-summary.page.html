@@ -6,19 +6,14 @@
 
 
   <ion-toolbar color="mango">
-    <span 
-      class="padding-left-10" 
-      routerLink="{{routerLinkBack}}"
-      routerDirection="backwards"
-      color="chh-css-primary2"        
-      >
+    <span class="padding-left-10" routerLink="{{routerLinkBack}}" routerDirection="backwards" color="chh-css-primary2">
       <!-- <ion-icon 
         name="chevron-back-outline" 
         class="my-icon vcenter">
       </ion-icon> -->
-      <ion-icon name="arrow-back-outline"  class="my-icon vcenter"></ion-icon>
+      <ion-icon name="arrow-back-outline" class="my-icon vcenter"></ion-icon>
     </span>
-    <span  class="padding-left-30 font-weight-500 font-size-20"> &nbsp;&nbsp;{{headerMethod}}  </span>
+    <span class="padding-left-30 font-weight-500 font-size-20"> &nbsp;&nbsp;{{headerMethod}} </span>
   </ion-toolbar>
 
 
@@ -29,7 +24,7 @@
 
 
 
-<!-- 
+  <!-- 
   <ion-toolbar color="mango">
     <ion-title> {{headerMethod}} </ion-title>
     <ion-buttons
@@ -56,8 +51,8 @@
 
 
 
-  
- <!--
+
+  <!--
   _____                    ______ _   _ _____ _____ 
   |_   _|                   | ___ \ | | |_   _/  __ \
     | | _ __  ___   ______  | |_/ / |_| | | | | /  \/
@@ -65,17 +60,14 @@
    _| || | | \__ \          | |   | | | |_| |_| \__/\
    \___/_| |_|___/          \_|   \_| |_/\___/ \____/
                                                      
- -->                                                
+ -->
   <div *ngIf="(method=='Insurance')">
     <ion-grid class="ion-no-padding">
       <ion-row>
         <ion-col size-md="8" offset-md="2" size-sm="6" offset-sm="3" size-xs="6" offset-xs="3">
           <div class="vertical-center">
             <div class="center">
-              <img
-                src="assets/img/pay-venue-insurance-philhealth-rafiki.png"
-                alt="Care of Insurance + PHIC"
-              />
+              <img src="assets/img/pay-venue-insurance-philhealth-rafiki.png" alt="Care of Insurance + PHIC" />
             </div>
           </div>
         </ion-col>
@@ -84,102 +76,79 @@
 
     <div class="vertical-center">
       <div class="center">
-        <ion-button
-          expand="block"
-          fill="outline"
-          (click)="presentCaseRatesModal()"
-          >View Case Rates</ion-button
-        >
+        <ion-button expand="block" fill="outline" (click)="presentCaseRatesModal()">View Case Rates</ion-button>
       </div>
     </div>
     <ion-card mode="ios" *ngIf="!isDesktop ">
       <ion-item lines="none">
         <ion-label>&#8369; </ion-label>
-        <ion-input
-          color="danger"
-          type="number"
-          placeholder="0"
-          [(ngModel)]="InsurancePF"
-          (ionChange)="isurancePF()"
-        >
+        <ion-input color="danger" type="number" placeholder="0" [(ngModel)]="InsurancePF"
+          (keydown)="isurancePF($event)">
         </ion-input>
       </ion-item>
     </ion-card>
     <ion-card mode="ios" *ngIf="!isDesktop && InsuranceShowVat">
       <ion-item lines="none">
         <ion-label>Add VAT?</ion-label>
-        <ion-checkbox
-          color="mango"
-          checked="false"
-          [(ngModel)]="InsuranceVat"
-          (ionChange)="insuranceVat()"
-        >
+        <ion-checkbox color="mango" checked="false" [(ngModel)]="InsuranceVat" (ionChange)="insuranceVat()">
         </ion-checkbox>
       </ion-item>
     </ion-card>
 
     <ul *ngIf="txtInsurancePF">
       <li class="lineheight-80">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Amenable to Insurance (HMO) and PhilHealth rates.
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Amenable to Insurance (HMO) and PhilHealth rates.
         </ion-text>
       </li>
       <li class="lineheight-80 paddingtop-10">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Receivables: Insurance (HMO) + PhilHealth 
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Receivables: Insurance (HMO) + PhilHealth
         </ion-text>
       </li>
     </ul>
 
     <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==true">
       <li class="lineheight-80">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Insurance (HMO) and PhilHealth coverage applies.
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Insurance (HMO) and PhilHealth coverage applies.
         </ion-text>
       </li>
       <li class="lineheight-80 paddingtop-10">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Only the excess amount of <b>&#8369;{{InsurancePF | number}}</b> (+ VAT) will be collected from your patient.</ion-text
-        >
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Only the excess amount of <b>&#8369;{{InsurancePF |
+            number}}</b> (+ VAT) will be collected from your patient.</ion-text>
       </li>
       <li class="lineheight-80 paddingtop-10">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Receivables: Insurance (HMO) + PhilHealth + <b>&#8369;{{InsurancePF | number}}</b> (+ VAT)</ion-text
-        >
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Receivables: Insurance (HMO) + PhilHealth +
+          <b>&#8369;{{InsurancePF | number}}</b> (+ VAT)
+        </ion-text>
       </li>
       <li class="lineheight-80 paddingtop-10">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Please note that actual receivable amount may vary after final computations from Accounting.</ion-text
-        >
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Please note that actual receivable amount may vary after
+          final computations from Accounting.</ion-text>
       </li>
     </ul>
 
     <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==false">
       <li class="lineheight-80">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Insurance (HMO) and PhilHealth coverage applies.</ion-text
-        >
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Insurance (HMO) and PhilHealth coverage applies.</ion-text>
       </li>
       <li class="lineheight-80 paddingtop-10">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Only the excess amount of <b>&#8369;{{InsurancePF | number}}</b> will be collected from your patient.</ion-text
-        >
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Only the excess amount of <b>&#8369;{{InsurancePF |
+            number}}</b> will be collected from your patient.</ion-text>
       </li>
       <li class="lineheight-80 paddingtop-10">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Receivables: Insurance (HMO) + PhilHealth + <b>&#8369;{{InsurancePF | number}}</b>
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Receivables: Insurance (HMO) + PhilHealth +
+          <b>&#8369;{{InsurancePF | number}}</b>
         </ion-text>
       </li>
       <li class="lineheight-80 paddingtop-10">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Please note that actual receivable amount may vary after final computations from Accounting.
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Please note that actual receivable amount may vary after
+          final computations from Accounting.
         </ion-text>
       </li>
     </ul>
   </div>
 
 
- <!--
+  <!--
 ______   _   _   _____   _____ 
 | ___ \ | | | | |_   _| /  __ \
 | |_/ / | |_| |   | |   | /  \/
@@ -188,7 +157,7 @@ ______   _   _   _____   _____
 \_|     \_| |_/  \___/   \____/
                                
                                                                             
- -->     
+ -->
 
 
   <div *ngIf="(method=='Philhealth')">
@@ -200,10 +169,7 @@ ______   _   _   _____   _____
         <ion-col size-md="8" offset-md="2" size-sm="6" offset-sm="3" size-xs="6" offset-xs="3">
           <div class="vertical-center">
             <div class="center">
-              <img
-                src="assets/img/philhealth.png"
-                alt="Care of Insurance + PHIC"
-              />
+              <img src="assets/img/philhealth.png" alt="Care of Insurance + PHIC" />
             </div>
           </div>
         </ion-col>
@@ -214,110 +180,79 @@ ______   _   _   _____   _____
 
     <div class="vertical-center">
       <div class="center">
-        <ion-button
-          expand="block"
-          fill="outline"
-          (click)="presentCaseRatesModal()"
-          >View Case Rates</ion-button
-        >
+        <ion-button expand="block" fill="outline" (click)="presentCaseRatesModal()">View Case Rates</ion-button>
       </div>
     </div>
     <ion-card mode="ios" *ngIf="!isDesktop">
       <ion-item disabled="true" hidden>
         <ion-label>Accept PhilHealth Only?</ion-label>
-        <ion-checkbox
-          color="mango"
-          checked="false"
-          [(ngModel)]="IsPhilhealthOnly"
-          (ionChange)="isPhilhealthOnly()"
-        >
+        <ion-checkbox color="mango" checked="false" [(ngModel)]="IsPhilhealthOnly" (ionChange)="isPhilhealthOnly()">
         </ion-checkbox>
       </ion-item>
     </ion-card>
     <ion-card mode="ios" *ngIf="!isDesktop  && PhilhealthShowValue">
       <ion-item lines="none">
         <ion-label>&#8369; </ion-label>
-        <ion-input
-          color="danger"
-          type="number"
-          minlength="0"
-          placeholder="0"
-          [(ngModel)]="PhilhealthPF"
-          (ionChange)="philhealthPF()"
-        ></ion-input>
+        <ion-input color="danger" type="number" minlength="0" placeholder="0" [(ngModel)]="PhilhealthPF"
+          (ionChange)="philhealthPF()"></ion-input>
       </ion-item>
     </ion-card>
 
     <ion-card mode="ios" *ngIf="!isDesktop && PhilhealthShowVat">
       <ion-item lines="none">
         <ion-label>Add VAT?</ion-label>
-        <ion-checkbox
-          color="mango"
-          checked="false"
-          [(ngModel)]="PhilhealthVat"
-          (ionChange)="philhealthVat()"
-        >
+        <ion-checkbox color="mango" checked="false" [(ngModel)]="PhilhealthVat" (ionChange)="philhealthVat()">
         </ion-checkbox>
       </ion-item>
     </ion-card>
 
     <ul *ngIf="txtPhilHealthPF">
       <li class="lineheight-80">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Amenable to PhilHealth rates.</ion-text
-        >
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Amenable to PhilHealth rates.</ion-text>
       </li>
       <li class="lineheight-80 paddingtop-10">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Receivable: PhilHealth
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Receivable: PhilHealth
         </ion-text>
       </li>
     </ul>
 
     <ul *ngIf="!txtPhilHealthPF && txtPhilHealthVAT">
       <li class="lineheight-80">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >This is the overall professional fee that will be charged to your
-          patient.</ion-text
-        >
+        <ion-text class="fs-12 ion-text-wrap" color="danger">This is the overall professional fee that will be charged
+          to your
+          patient.</ion-text>
       </li>
       <li class="lineheight-80 paddingtop-10">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Net amount will vary after deducting your patient's PhilHealth case
-          coverage.</ion-text
-        >
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Net amount will vary after deducting your patient's
+          PhilHealth case
+          coverage.</ion-text>
       </li>
       <li class="lineheight-80 paddingtop-10">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >VAT percentage will be added to your overall professional
-          fee.</ion-text
-        >
+        <ion-text class="fs-12 ion-text-wrap" color="danger">VAT percentage will be added to your overall professional
+          fee.</ion-text>
       </li>
     </ul>
 
     <ul *ngIf="!txtPhilHealthPF && !txtPhilHealthVAT">
       <li class="lineheight-80">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >This is the overall professional fee that will be charged to your
-          patient.</ion-text
-        >
+        <ion-text class="fs-12 ion-text-wrap" color="danger">This is the overall professional fee that will be charged
+          to your
+          patient.</ion-text>
       </li>
       <li class="lineheight-80 paddingtop-10">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Net amount will vary after deducting your patient's PhilHealth case
-          coverage.</ion-text
-        >
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Net amount will vary after deducting your patient's
+          PhilHealth case
+          coverage.</ion-text>
       </li>
       <li class="lineheight-80 paddingtop-10">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >No VAT will be added to your overall professional fee.
+        <ion-text class="fs-12 ion-text-wrap" color="danger">No VAT will be added to your overall professional fee.
         </ion-text>
       </li>
     </ul>
   </div>
 
 
- <!--
+  <!--
 ______                         ______   _   _   _____   _____ 
 | ___ \                        | ___ \ | | | | |_   _| /  __ \
 | |_/ /   ___   _ __   ______  | |_/ / | |_| |   | |   | /  \/
@@ -327,7 +262,7 @@ ______                         ______   _   _   _____   _____
                                                               
                                                                                      
                                                                             
- -->     
+ -->
 
 
 
@@ -337,10 +272,7 @@ ______                         ______   _   _   _____   _____
         <ion-col size-md="8" offset-md="2" size-sm="6" offset-sm="3" size-xs="6" offset-xs="3">
           <div class="vertical-center">
             <div class="center">
-              <img
-                src="assets/img/pay-venue-personal-philhealth-rafiki.png"
-                alt="Care of Insurance + PHIC"
-              />
+              <img src="assets/img/pay-venue-personal-philhealth-rafiki.png" alt="Care of Insurance + PHIC" />
             </div>
           </div>
         </ion-col>
@@ -352,12 +284,7 @@ ______                         ______   _   _   _____   _____
         <ion-col size="12">
           <div class="vertical-center">
             <div class="center">
-              <ion-button
-                expand="block"
-                fill="outline"
-                (click)="presentCaseRatesModal()"
-                >View Case Rates</ion-button
-              >
+              <ion-button expand="block" fill="outline" (click)="presentCaseRatesModal()">View Case Rates</ion-button>
             </div>
           </div>
         </ion-col>
@@ -372,74 +299,56 @@ ______                         ______   _   _   _____   _____
     <ion-card mode="ios" *ngIf="!isDesktop">
       <ion-item lines="none">
         <ion-label>&#8369; </ion-label>
-        <ion-input
-          color="danger"
-          type="number"
-          minlength="0"
-          placeholder="0"
-          [(ngModel)]="PersonalPhilhealthPF"
-          (ionChange)="personalPhilhealth()"
-        ></ion-input>
+        <ion-input color="danger" type="number" minlength="0" placeholder="0" [(ngModel)]="PersonalPhilhealthPF"
+          (keydown)="personalPhilhealth($event)"></ion-input>
       </ion-item>
     </ion-card>
 
     <ion-card mode="ios" *ngIf="!isDesktop && PersonalPhilhealthShowVat">
       <ion-item lines="none">
         <ion-label>Add VAT?</ion-label>
-        <ion-checkbox
-          color="mango"
-          checked="false"
-          [(ngModel)]="PersonalPhilhealthVat"
-          (ionChange)="personalPhilhealthVat()"
-        ></ion-checkbox>
+        <ion-checkbox color="mango" checked="false" [(ngModel)]="PersonalPhilhealthVat"
+          (ionChange)="personalPhilhealthVat()"></ion-checkbox>
       </ion-item>
     </ion-card>
 
     <ul *ngIf="txtPersonalPhilHealthPF">
       <li class="lineheight-80">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Amenable to PhilHealth rates.</ion-text
-        >
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Amenable to PhilHealth rates.</ion-text>
       </li>
       <li class="lineheight-80 paddingtop-10">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Receivable: PhilHealth 
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Receivable: PhilHealth
         </ion-text>
       </li>
     </ul>
 
     <ul *ngIf="!txtPersonalPhilHealthPF && txtPersonalPhilHealthVAT">
       <li class="lineheight-80">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Total amount of <b>&#8369;{{PersonalPhilhealthPF | number}}</b> (+ VAT) will be collected from your patient.</ion-text
-        >
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Total amount of <b>&#8369;{{PersonalPhilhealthPF |
+            number}}</b> (+ VAT) will be collected from your patient.</ion-text>
       </li>
       <li class="lineheight-80 paddingtop-10">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Receivables: <b>&#8369;{{PersonalPhilhealthPF | number}}</b> (+ VAT) + PhilHealth</ion-text
-        >
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Receivables: <b>&#8369;{{PersonalPhilhealthPF |
+            number}}</b> (+ VAT) + PhilHealth</ion-text>
       </li>
       <li class="lineheight-80 paddingtop-10">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Please note that actual receivable amount may vary after final computations from Accounting.</ion-text
-        >
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Please note that actual receivable amount may vary after
+          final computations from Accounting.</ion-text>
       </li>
     </ul>
 
     <ul *ngIf="!txtPersonalPhilHealthPF && !txtPersonalPhilHealthVAT">
       <li class="lineheight-80">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Total amount of <b>&#8369;{{PersonalPhilhealthPF | number}}</b> will be collected from your patient.</ion-text
-        >
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Total amount of <b>&#8369;{{PersonalPhilhealthPF |
+            number}}</b> will be collected from your patient.</ion-text>
       </li>
       <li class="lineheight-80 paddingtop-10">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Receivables: <b>&#8369;{{PersonalPhilhealthPF | number}}</b> + PhilHealth</ion-text
-        >
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Receivables: <b>&#8369;{{PersonalPhilhealthPF |
+            number}}</b> + PhilHealth</ion-text>
       </li>
       <li class="lineheight-80 paddingtop-10">
-        <ion-text class="fs-12 ion-text-wrap" color="danger"
-          >Please note that actual receivable amount may vary after final computations from Accounting. 
+        <ion-text class="fs-12 ion-text-wrap" color="danger">Please note that actual receivable amount may vary after
+          final computations from Accounting.
         </ion-text>
       </li>
     </ul>
@@ -452,7 +361,7 @@ ______                         ______   _   _   _____   _____
   | \__/\ | | | | | (_| | | |   
    \____/ |_| |_|  \__,_| |_|   
                                 
-      -->                          
+      -->
   <div *ngIf="(method=='Charity')">
     <ion-card mode="ios">
       <ion-grid class="ion-no-padding">
@@ -460,10 +369,7 @@ ______                         ______   _   _   _____   _____
           <ion-col size-md="8" offset-md="2" size-sm="6" offset-sm="3" size-xs="6" offset-xs="3">
             <div class="vertical-center">
               <div class="center">
-                <img
-                  src="assets/img/pay-venue-charity-rafiki.png"
-                  alt="Charity"
-                />
+                <img src="assets/img/pay-venue-charity-rafiki.png" alt="Charity" />
               </div>
             </div>
           </ion-col>
@@ -471,10 +377,8 @@ ______                         ______   _   _   _____   _____
       </ion-grid>
 
       <ion-item lines="none">
-        <ion-label class="ion-text-wrap"
-          >Thank you for your generosity, Dok! &#10084; We truly appreciate your
-          kindness and heartfelt service!</ion-label
-        >
+        <ion-label class="ion-text-wrap">Thank you for your generosity, Dok! &#10084; We truly appreciate your
+          kindness and heartfelt service!</ion-label>
       </ion-item>
 
       <!-- <ul >
@@ -500,36 +404,19 @@ ______                         ______   _   _   _____   _____
         <ion-row>
           <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
           <ion-col size-xs="12" size-md="4" size-lg="4">
-            <ion-progress-bar
-              value="{{progressStatus}}"
-              color="warning"
-            ></ion-progress-bar>
+            <ion-progress-bar value="{{progressStatus}}" color="warning"></ion-progress-bar>
           </ion-col>
           <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
         </ion-row>
         <ion-row>
           <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
           <ion-col size-xs="12" size-md="4" size-lg="4">
-            <ion-button
-            class="buttonActive"
-              color="mango"
-              size="default"
-              expand="block"
-              shape="round"
-              (click)="finishTransaction()"
-              *ngIf="summary != 'summary'"
-              disabled="{{nxtBtn}}"
-            >
+            <ion-button class="buttonActive" color="mango" size="default" expand="block" shape="round"
+              (click)="finishTransaction()" *ngIf="summary != 'summary'" disabled="{{nxtBtn}}">
               Next
             </ion-button>
 
-            <ion-button
-              color="mango"
-              size="default"
-              expand="block"
-              shape="round"
-              *ngIf="summary == 'summary'"
-            >
+            <ion-button color="mango" size="default" expand="block" shape="round" *ngIf="summary == 'summary'">
               Confirm
             </ion-button>
           </ion-col>
@@ -614,9 +501,7 @@ ______          _    _
   </ion-toolbar>
   </ion-header>  -->
 
-<app-chh-app-desktop-navigation
-  *ngIf="isDesktop"
-></app-chh-app-desktop-navigation>
+<app-chh-app-desktop-navigation *ngIf="isDesktop"></app-chh-app-desktop-navigation>
 
 <ion-content *ngIf="isDesktop">
   <ul class="breadcrumb">
@@ -641,17 +526,14 @@ ______          _    _
     <ion-row>
       <ion-col size-lg="2" size-md="12"></ion-col>
       <ion-col size-lg="3" size-md="6">
-        <app-chh-app-patient-header
-          [data]="data"
-          [dateAdmitted]="dateAdmitted"
-        ></app-chh-app-patient-header>
+        <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted"></app-chh-app-patient-header>
       </ion-col>
 
       <ion-col size-lg="4" size-md="6">
         <ion-grid class="ion-no-padding">
           <ion-row>
             <ion-col size="12">
- <!--
+              <!--
   _____                    ______ _   _ _____ _____ 
   |_   _|                   | ___ \ | | |_   _/  __ \
     | | _ __  ___   ______  | |_/ / |_| | | | | /  \/
@@ -659,241 +541,193 @@ ______          _    _
    _| || | | \__ \          | |   | | | |_| |_| \__/\
    \___/_| |_|___/          \_|   \_| |_/\___/ \____/
                                                      
- -->                                                
- <div *ngIf="(method=='Insurance')">
-  <ion-grid class="ion-no-padding">
-    <ion-row>
-      <ion-col size="8" offset="2">
-        <div class="vertical-center">
-          <div class="center">
-            <img
-              src="assets/img/pay-venue-insurance-philhealth-rafiki.png"
-              alt="Care of Insurance + PHIC"
-            />
-          </div>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+ -->
+              <div *ngIf="(method=='Insurance')">
+                <ion-grid class="ion-no-padding">
+                  <ion-row>
+                    <ion-col size="8" offset="2">
+                      <div class="vertical-center">
+                        <div class="center">
+                          <img src="assets/img/pay-venue-insurance-philhealth-rafiki.png"
+                            alt="Care of Insurance + PHIC" />
+                        </div>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
 
-  <div class="vertical-center">
-    <div class="center">
-      <ion-button
-        expand="block"
-        fill="outline"
-        (click)="presentCaseRatesModal()"
-        >View Case Rates</ion-button
-      >
-    </div>
-  </div>
-  <ion-card mode="ios" >
-    <ion-item lines="none">
-      <ion-label>&#8369; </ion-label>
-      <ion-input
-        color="danger"
-        type="number"
-        placeholder="0"
-        [(ngModel)]="InsurancePF"
-        (ionChange)="isurancePF()"
-      >
-      </ion-input>
-    </ion-item>
-  </ion-card>
-  <ion-card mode="ios" *ngIf="InsuranceShowVat">
-    <ion-item lines="none">
-      <ion-label>Add VAT?</ion-label>
-      <ion-checkbox
-        color="mango"
-        checked="false"
-        [(ngModel)]="InsuranceVat"
-        (ionChange)="insuranceVat()"
-      >
-      </ion-checkbox>
-    </ion-item>
-  </ion-card>
+                <div class="vertical-center">
+                  <div class="center">
+                    <ion-button expand="block" fill="outline" (click)="presentCaseRatesModal()">View Case Rates
+                    </ion-button>
+                  </div>
+                </div>
+                <ion-card mode="ios">
+                  <ion-item lines="none">
+                    <ion-label>&#8369; </ion-label>
+                    <ion-input color="danger" type="number" placeholder="0" [(ngModel)]="InsurancePF"
+                      (keydown)="isurancePF($event)">
+                    </ion-input>
+                  </ion-item>
+                </ion-card>
+                <ion-card mode="ios" *ngIf="InsuranceShowVat">
+                  <ion-item lines="none">
+                    <ion-label>Add VAT?</ion-label>
+                    <ion-checkbox color="mango" checked="false" [(ngModel)]="InsuranceVat" (ionChange)="insuranceVat()">
+                    </ion-checkbox>
+                  </ion-item>
+                </ion-card>
 
-  <ul *ngIf="txtInsurancePF">
-    <li class="lineheight-80">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Amenable to Insurance (HMO) and PhilHealth rates.
-      </ion-text>
-    </li>
-    <li class="lineheight-80 paddingtop-10">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Receivables: Insurance (HMO) + PhilHealth 
-      </ion-text>
-    </li>
-  </ul>
+                <ul *ngIf="txtInsurancePF">
+                  <li class="lineheight-80">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">Amenable to Insurance (HMO) and PhilHealth
+                      rates.
+                    </ion-text>
+                  </li>
+                  <li class="lineheight-80 paddingtop-10">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">Receivables: Insurance (HMO) + PhilHealth
+                    </ion-text>
+                  </li>
+                </ul>
 
-  <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==true">
-    <li class="lineheight-80">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Insurance (HMO) and PhilHealth coverage applies.
-      </ion-text>
-    </li>
-    <li class="lineheight-80 paddingtop-10">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Only the excess amount of <b>&#8369;{{InsurancePF}}</b> (+ VAT) will be collected from your patient.</ion-text
-      >
-    </li>
-    <li class="lineheight-80 paddingtop-10">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Receivables: Insurance (HMO) + PhilHealth + <b>&#8369;{{InsurancePF}}</b> (+ VAT)</ion-text
-      >
-    </li>
-    <li class="lineheight-80 paddingtop-10">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Please note that actual receivable amount may vary after final computations from Accounting.</ion-text
-      >
-    </li>
-  </ul>
+                <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==true">
+                  <li class="lineheight-80">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">Insurance (HMO) and PhilHealth coverage
+                      applies.
+                    </ion-text>
+                  </li>
+                  <li class="lineheight-80 paddingtop-10">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">Only the excess amount of
+                      <b>&#8369;{{InsurancePF}}</b> (+ VAT) will be collected from your patient.
+                    </ion-text>
+                  </li>
+                  <li class="lineheight-80 paddingtop-10">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">Receivables: Insurance (HMO) + PhilHealth +
+                      <b>&#8369;{{InsurancePF}}</b> (+ VAT)
+                    </ion-text>
+                  </li>
+                  <li class="lineheight-80 paddingtop-10">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">Please note that actual receivable amount may
+                      vary after final computations from Accounting.</ion-text>
+                  </li>
+                </ul>
 
-  <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==false">
-    <li class="lineheight-80">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Insurance (HMO) and PhilHealth coverage applies.</ion-text
-      >
-    </li>
-    <li class="lineheight-80 paddingtop-10">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Only the excess amount of <b>&#8369;{{InsurancePF}}</b> will be collected from your patient.</ion-text
-      >
-    </li>
-    <li class="lineheight-80 paddingtop-10">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Receivables: Insurance (HMO) + PhilHealth + <b>&#8369;{{InsurancePF}}</b>
-      </ion-text>
-    </li>
-    <li class="lineheight-80 paddingtop-10">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Please note that actual receivable amount may vary after final computations from Accounting.
-      </ion-text>
-    </li>
-  </ul>
-</div>
-<!--
+                <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==false">
+                  <li class="lineheight-80">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">Insurance (HMO) and PhilHealth coverage
+                      applies.</ion-text>
+                  </li>
+                  <li class="lineheight-80 paddingtop-10">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">Only the excess amount of
+                      <b>&#8369;{{InsurancePF}}</b> will be collected from your patient.
+                    </ion-text>
+                  </li>
+                  <li class="lineheight-80 paddingtop-10">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">Receivables: Insurance (HMO) + PhilHealth +
+                      <b>&#8369;{{InsurancePF}}</b>
+                    </ion-text>
+                  </li>
+                  <li class="lineheight-80 paddingtop-10">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">Please note that actual receivable amount may
+                      vary after final computations from Accounting.
+                    </ion-text>
+                  </li>
+                </ul>
+              </div>
+              <!--
 ______   _   _   _____   _____ 
 | ___ \ | | | | |_   _| /  __ \
 | |_/ / | |_| |   | |   | /  \/
 |  __/  |  _  |   | |   | |    
 | |     | | | |  _| |_  | \__/\
 \_|     \_| |_/  \___/   \____/                                                               
--->     
-<div *ngIf="(method=='Philhealth')">
-  <ion-grid class="ion-no-padding">
-    <ion-row>
-      <ion-col size="8" offset="2">
-        <div class="vertical-center">
-          <div class="center">
-            <img
-              src="assets/img/philhealth.png"
-              alt="Care of Insurance + PHIC"
-            />
-          </div>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <div class="vertical-center">
-    <div class="center">
-      <ion-button
-        expand="block"
-        fill="outline"
-        (click)="presentCaseRatesModal()"
-        >View Case Rates</ion-button
-      >
-    </div>
-  </div>
-  <ion-card mode="ios" >
-    <ion-item disabled="true" hidden>
-      <ion-label>Accept PhilHealth Only?</ion-label>
-      <ion-checkbox
-        color="mango"
-        checked="false"
-        [(ngModel)]="IsPhilhealthOnly"
-        (ionChange)="isPhilhealthOnly()"
-      >
-      </ion-checkbox>
-    </ion-item>
-  </ion-card>
-  <ion-card mode="ios" *ngIf="PhilhealthShowValue">
-    <ion-item lines="none">
-      <ion-label>&#8369; </ion-label>
-      <ion-input
-        color="danger"
-        type="number"
-        minlength="0"
-        placeholder="0"
-        [(ngModel)]="PhilhealthPF"
-        (ionChange)="philhealthPF()"
-      ></ion-input>
-    </ion-item>
-  </ion-card>
-  <ion-card mode="ios" *ngIf="PhilhealthShowVat">
-    <ion-item lines="none">
-      <ion-label>Add VAT?</ion-label>
-      <ion-checkbox
-        color="mango"
-        checked="false"
-        [(ngModel)]="PhilhealthVat"
-        (ionChange)="philhealthVat()"
-      >
-      </ion-checkbox>
-    </ion-item>
-  </ion-card>
-  <ul *ngIf="txtPhilHealthPF">
-    <li class="lineheight-80">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Amenable to PhilHealth rates.</ion-text
-      >
-    </li>
-    <li class="lineheight-80 paddingtop-10">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Receivable: PhilHealth
-      </ion-text>
-    </li>
-  </ul>
-  <ul *ngIf="!txtPhilHealthPF && txtPhilHealthVAT">
-    <li class="lineheight-80">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >This is the overall professional fee that will be charged to your
-        patient.</ion-text
-      >
-    </li>
-    <li class="lineheight-80 paddingtop-10">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Net amount will vary after deducting your patient's PhilHealth case
-        coverage.</ion-text
-      >
-    </li>
-    <li class="lineheight-80 paddingtop-10">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >VAT percentage will be added to your overall professional
-        fee.</ion-text
-      >
-    </li>
-  </ul>
-  <ul *ngIf="!txtPhilHealthPF && !txtPhilHealthVAT">
-    <li class="lineheight-80">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >This is the overall professional fee that will be charged to your
-        patient.</ion-text
-      >
-    </li>
-    <li class="lineheight-80 paddingtop-10">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Net amount will vary after deducting your patient's PhilHealth case
-        coverage.</ion-text
-      >
-    </li>
-    <li class="lineheight-80 paddingtop-10">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >No VAT will be added to your overall professional fee.
-      </ion-text>
-    </li>
-  </ul>
-</div>
-<!--
+-->
+              <div *ngIf="(method=='Philhealth')">
+                <ion-grid class="ion-no-padding">
+                  <ion-row>
+                    <ion-col size="8" offset="2">
+                      <div class="vertical-center">
+                        <div class="center">
+                          <img src="assets/img/philhealth.png" alt="Care of Insurance + PHIC" />
+                        </div>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+                <div class="vertical-center">
+                  <div class="center">
+                    <ion-button expand="block" fill="outline" (click)="presentCaseRatesModal()">View Case Rates
+                    </ion-button>
+                  </div>
+                </div>
+                <ion-card mode="ios">
+                  <ion-item disabled="true" hidden>
+                    <ion-label>Accept PhilHealth Only?</ion-label>
+                    <ion-checkbox color="mango" checked="false" [(ngModel)]="IsPhilhealthOnly"
+                      (ionChange)="isPhilhealthOnly()">
+                    </ion-checkbox>
+                  </ion-item>
+                </ion-card>
+                <ion-card mode="ios" *ngIf="PhilhealthShowValue">
+                  <ion-item lines="none">
+                    <ion-label>&#8369; </ion-label>
+                    <ion-input color="danger" type="number" minlength="0" placeholder="0" [(ngModel)]="PhilhealthPF"
+                      (ionChange)="philhealthPF()"></ion-input>
+                  </ion-item>
+                </ion-card>
+                <ion-card mode="ios" *ngIf="PhilhealthShowVat">
+                  <ion-item lines="none">
+                    <ion-label>Add VAT?</ion-label>
+                    <ion-checkbox color="mango" checked="false" [(ngModel)]="PhilhealthVat"
+                      (ionChange)="philhealthVat()">
+                    </ion-checkbox>
+                  </ion-item>
+                </ion-card>
+                <ul *ngIf="txtPhilHealthPF">
+                  <li class="lineheight-80">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">Amenable to PhilHealth rates.</ion-text>
+                  </li>
+                  <li class="lineheight-80 paddingtop-10">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">Receivable: PhilHealth
+                    </ion-text>
+                  </li>
+                </ul>
+                <ul *ngIf="!txtPhilHealthPF && txtPhilHealthVAT">
+                  <li class="lineheight-80">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">This is the overall professional fee that will
+                      be charged to your
+                      patient.</ion-text>
+                  </li>
+                  <li class="lineheight-80 paddingtop-10">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">Net amount will vary after deducting your
+                      patient's PhilHealth case
+                      coverage.</ion-text>
+                  </li>
+                  <li class="lineheight-80 paddingtop-10">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">VAT percentage will be added to your overall
+                      professional
+                      fee.</ion-text>
+                  </li>
+                </ul>
+                <ul *ngIf="!txtPhilHealthPF && !txtPhilHealthVAT">
+                  <li class="lineheight-80">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">This is the overall professional fee that will
+                      be charged to your
+                      patient.</ion-text>
+                  </li>
+                  <li class="lineheight-80 paddingtop-10">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">Net amount will vary after deducting your
+                      patient's PhilHealth case
+                      coverage.</ion-text>
+                  </li>
+                  <li class="lineheight-80 paddingtop-10">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">No VAT will be added to your overall
+                      professional fee.
+                    </ion-text>
+                  </li>
+                </ul>
+              </div>
+              <!--
 ______                         ______   _   _   _____   _____ 
 | ___ \                        | ___ \ | | | | |_   _| /  __ \
 | |_/ /   ___   _ __   ______  | |_/ / | |_| |   | |   | /  \/
@@ -901,119 +735,100 @@ ______                         ______   _   _   _____   _____
 | |     |  __/ | |             | |     | | | |  _| |_  | \__/\
 \_|      \___| |_|             \_|     \_| |_/  \___/   \____/                                                             
 -->
-<div *ngIf="(method=='Personal-philhealth')">
-  <ion-grid class="ion-no-padding">
-    <ion-row>
-      <ion-col size="8" offset="2">
-        <div class="vertical-center">
-          <div class="center">
-            <img
-              src="assets/img/pay-venue-personal-philhealth-rafiki.png"
-              alt="Care of Insurance + PHIC"
-            />
-          </div>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-grid class="ion-no-padding">
-    <!-- <ion-button expand="block" fill="outline" (click)="presentCaseRatesModal()" *ngIf="method=='Philhealth'">View Case Rates</ion-button>  -->
-    <ion-row>
-      <ion-col size="12">
-        <div class="vertical-center">
-          <div class="center">
-            <ion-button
-              expand="block"
-              fill="outline"
-              (click)="presentCaseRatesModal()"
-              >View Case Rates</ion-button>
-          </div>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <!-- <ion-card mode="ios" *ngIf="!isDesktop" >
+              <div *ngIf="(method=='Personal-philhealth')">
+                <ion-grid class="ion-no-padding">
+                  <ion-row>
+                    <ion-col size="8" offset="2">
+                      <div class="vertical-center">
+                        <div class="center">
+                          <img src="assets/img/pay-venue-personal-philhealth-rafiki.png"
+                            alt="Care of Insurance + PHIC" />
+                        </div>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+                <ion-grid class="ion-no-padding">
+                  <!-- <ion-button expand="block" fill="outline" (click)="presentCaseRatesModal()" *ngIf="method=='Philhealth'">View Case Rates</ion-button>  -->
+                  <ion-row>
+                    <ion-col size="12">
+                      <div class="vertical-center">
+                        <div class="center">
+                          <ion-button expand="block" fill="outline" (click)="presentCaseRatesModal()">View Case Rates
+                          </ion-button>
+                        </div>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+                <!-- <ion-card mode="ios" *ngIf="!isDesktop" >
       <ion-item disabled="true">
         <ion-label>Accept PhilHealth Only?</ion-label> 
         <ion-checkbox color="mango" checked="false" [(ngModel)]="IsPhilhealthOnly" (ionChange)="isPhilhealthOnly()"></ion-checkbox>
       </ion-item>
     </ion-card> -->
-  <ion-card mode="ios" >
-    <ion-item lines="none">
-      <ion-label>&#8369; </ion-label>
-      <ion-input
-        color="danger"
-        type="number"
-        minlength="0"
-        placeholder="0"
-        [(ngModel)]="PersonalPhilhealthPF"
-        (ionChange)="personalPhilhealth()"
-      ></ion-input>
-    </ion-item>
-  </ion-card>
+                <ion-card mode="ios">
+                  <ion-item lines="none">
+                    <ion-label>&#8369; </ion-label>
+                    <ion-input color="danger" type="number" minlength="0" placeholder="0"
+                      [(ngModel)]="PersonalPhilhealthPF" (keydown)="personalPhilhealth($event)"></ion-input>
+                  </ion-item>
+                </ion-card>
 
-  <ion-card mode="ios" *ngIf="PersonalPhilhealthShowVat">
-    <ion-item lines="none">
-      <ion-label>Add VAT?</ion-label>
-      <ion-checkbox
-        color="mango"
-        checked="false"
-        [(ngModel)]="PersonalPhilhealthVat"
-        (ionChange)="personalPhilhealthVat()"
-      ></ion-checkbox>
-    </ion-item>
-  </ion-card>
+                <ion-card mode="ios" *ngIf="PersonalPhilhealthShowVat">
+                  <ion-item lines="none">
+                    <ion-label>Add VAT?</ion-label>
+                    <ion-checkbox color="mango" checked="false" [(ngModel)]="PersonalPhilhealthVat"
+                      (ionChange)="personalPhilhealthVat()"></ion-checkbox>
+                  </ion-item>
+                </ion-card>
 
-  <ul *ngIf="txtPersonalPhilHealthPF">
-    <li class="lineheight-80">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Amenable to PhilHealth rates.</ion-text
-      >
-    </li>
-    <li class="lineheight-80 paddingtop-10">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Receivable: PhilHealth 
-      </ion-text>
-    </li>
-  </ul>
+                <ul *ngIf="txtPersonalPhilHealthPF">
+                  <li class="lineheight-80">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">Amenable to PhilHealth rates.</ion-text>
+                  </li>
+                  <li class="lineheight-80 paddingtop-10">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">Receivable: PhilHealth
+                    </ion-text>
+                  </li>
+                </ul>
 
-  <ul *ngIf="!txtPersonalPhilHealthPF && txtPersonalPhilHealthVAT">
-    <li class="lineheight-80">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Total amount of <b>&#8369;{{PersonalPhilhealthPF}}</b> (+ VAT) will be collected from your patient.</ion-text
-      >
-    </li>
-    <li class="lineheight-80 paddingtop-10">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Receivables: <b>&#8369;{{PersonalPhilhealthPF}}</b> (+ VAT) + PhilHealth</ion-text
-      >
-    </li>
-    <li class="lineheight-80 paddingtop-10">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Please note that actual receivable amount may vary after final computations from Accounting.</ion-text
-      >
-    </li>
-  </ul>
+                <ul *ngIf="!txtPersonalPhilHealthPF && txtPersonalPhilHealthVAT">
+                  <li class="lineheight-80">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">Total amount of
+                      <b>&#8369;{{PersonalPhilhealthPF}}</b> (+ VAT) will be collected from your patient.
+                    </ion-text>
+                  </li>
+                  <li class="lineheight-80 paddingtop-10">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">Receivables:
+                      <b>&#8369;{{PersonalPhilhealthPF}}</b> (+ VAT) + PhilHealth
+                    </ion-text>
+                  </li>
+                  <li class="lineheight-80 paddingtop-10">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">Please note that actual receivable amount may
+                      vary after final computations from Accounting.</ion-text>
+                  </li>
+                </ul>
 
-  <ul *ngIf="!txtPersonalPhilHealthPF && !txtPersonalPhilHealthVAT">
-    <li class="lineheight-80">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Total amount of <b>&#8369;{{PersonalPhilhealthPF}}</b> will be collected from your patient.</ion-text
-      >
-    </li>
-    <li class="lineheight-80 paddingtop-10">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Receivables: <b>&#8369;{{PersonalPhilhealthPF}}</b> + PhilHealth</ion-text
-      >
-    </li>
-    <li class="lineheight-80 paddingtop-10">
-      <ion-text class="fs-12 ion-text-wrap" color="danger"
-        >Please note that actual receivable amount may vary after final computations from Accounting. 
-      </ion-text>
-    </li>
-  </ul>
-</div>
-<!--
+                <ul *ngIf="!txtPersonalPhilHealthPF && !txtPersonalPhilHealthVAT">
+                  <li class="lineheight-80">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">Total amount of
+                      <b>&#8369;{{PersonalPhilhealthPF}}</b> will be collected from your patient.
+                    </ion-text>
+                  </li>
+                  <li class="lineheight-80 paddingtop-10">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">Receivables:
+                      <b>&#8369;{{PersonalPhilhealthPF}}</b> + PhilHealth
+                    </ion-text>
+                  </li>
+                  <li class="lineheight-80 paddingtop-10">
+                    <ion-text class="fs-12 ion-text-wrap" color="danger">Please note that actual receivable amount may
+                      vary after final computations from Accounting.
+                    </ion-text>
+                  </li>
+                </ul>
+              </div>
+              <!--
 _____   _                    
 /  __ \ | |                   
 | /  \/ | |__     __ _   _ __ 
@@ -1021,40 +836,36 @@ _____   _
 | \__/\ | | | | | (_| | | |   
  \____/ |_| |_|  \__,_| |_|   
                               
-    -->                          
-<div *ngIf="(method=='Charity')">
-  <ion-card mode="ios">
-    <ion-grid class="ion-no-padding">
-      <ion-row>
-        <ion-col size="8" offset="2">
-          <div class="vertical-center">
-            <div class="center">
-              <img
-                src="assets/img/pay-venue-charity-rafiki.png"
-                alt="Charity"
-              />
-            </div>
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+    -->
+              <div *ngIf="(method=='Charity')">
+                <ion-card mode="ios">
+                  <ion-grid class="ion-no-padding">
+                    <ion-row>
+                      <ion-col size="8" offset="2">
+                        <div class="vertical-center">
+                          <div class="center">
+                            <img src="assets/img/pay-venue-charity-rafiki.png" alt="Charity" />
+                          </div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
 
-    <ion-item lines="none">
-      <ion-label class="ion-text-wrap"
-        >Thank you for your generosity, Dok! &#10084; We truly appreciate your
-        kindness and heartfelt service!</ion-label
-      >
-    </ion-item>
+                  <ion-item lines="none">
+                    <ion-label class="ion-text-wrap">Thank you for your generosity, Dok! &#10084; We truly appreciate
+                      your
+                      kindness and heartfelt service!</ion-label>
+                  </ion-item>
 
-    <!-- <ul >
+                  <!-- <ul >
       <li class="lineheight-80">
         <ion-text class="fs-12 ion-text-wrap" color="danger"
           >Receivable: PhilHealth (if patient is a member)</ion-text
         >
       </li>
     </ul> -->
-  </ion-card>
-</div>
+                </ion-card>
+              </div>
 
 
 
@@ -1072,15 +883,8 @@ _____   _
 
 
 
-              <ion-button
-              class="buttonActive"
-                color="mango"
-                size="default"
-                expand="block"
-                shape="round"
-                (click)="finishTransaction()"
-                *ngIf="summary != 'summary'"
-              >
+              <ion-button class="buttonActive" color="mango" size="default" expand="block" shape="round"
+                (click)="finishTransaction()" *ngIf="summary != 'summary'">
                 Next
               </ion-button>
             </ion-col>
