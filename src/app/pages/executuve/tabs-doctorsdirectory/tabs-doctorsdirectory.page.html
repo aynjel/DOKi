@@ -23,22 +23,22 @@
           <ion-segment-button value="ALL">
             All
           </ion-segment-button>
-          <ion-segment-button value="ANE">
+          <ion-segment-button value="ANES">
             ANE
           </ion-segment-button>
-          <ion-segment-button value="FAM">
+          <ion-segment-button value="FMED">
             FAM
           </ion-segment-button>
-          <ion-segment-button value="INM">
+          <ion-segment-button value="MED">
             IM
           </ion-segment-button>
-          <ion-segment-button value="OBG">
+          <ion-segment-button value="OB">
             OB
           </ion-segment-button>
-          <ion-segment-button value="ORT">
+          <ion-segment-button value="ORTH">
             ORT
           </ion-segment-button>
-          <ion-segment-button value="PAT">
+          <ion-segment-button value="PATH">
             PAT
           </ion-segment-button>
           <ion-segment-button value="PED">
@@ -84,9 +84,12 @@
                     </ion-item>
                     <ion-row class="ion-no-padding" lines="none" style="padding-top: 1px !important;">
                       <p>
+                        <span *ngIf="segmentModel =='ALL' && x.deptName != x.expertise">
+                          {{x.deptName}}<br />
+                        </span>
                         <span>
-                          Obstetrics & Gynecology
-                        </span><br />
+                          {{x.expertise}}
+                        </span>
                       </p>
                       <br />
                     </ion-row>

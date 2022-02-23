@@ -39,7 +39,7 @@ export class TabsDoctorsdirectoryPage implements OnInit {
   listOfDoctorsTemp2: any;
   searchBar: any = '';
   responseData: any;
-  segmentModel: any = 'Clean ER';
+  segmentModel: any = 'ALL';
   segmentModel1: any = 'ALL';
   maxTime: any;
   showSkeleton: boolean = false;
@@ -77,6 +77,7 @@ export class TabsDoctorsdirectoryPage implements OnInit {
     setTimeout(() => {
       this.ngOnInit();
       event.target.complete();
+      //
     }, 1000);
   }
   getDocotrsDirectory() {
@@ -89,15 +90,15 @@ export class TabsDoctorsdirectoryPage implements OnInit {
         //console.log(res);
         this.listOfDoctorsTemp1 = res;
         this.listOfDoctorsTemp300 = res;
-        //console.log(this.listOfDoctorsTemp300);
+        ////console.log(this.listOfDoctorsTemp300);
         this.isReady = false;
       },
       (error) => {},
       () => {
         if (this.listOfDoctorsTemp300 != []) {
           this.listlength = this.listOfDoctorsTemp300.lenth;
-          //console.log(this.listlength);
-          //console.log(this.listOfDoctorsTemp300);
+          ////console.log(this.listlength);
+          ////console.log(this.listOfDoctorsTemp300);
         }
         this.initialload();
       }
@@ -123,15 +124,13 @@ export class TabsDoctorsdirectoryPage implements OnInit {
     }, 500);
   }
   initialload() {
-    //console.log('initialload');
-    //console.log(this.listOfDoctorsTemp300);
-    ////console.log('initialload');
     this.refreshcounter = 1;
     this.listOfDoctors = [];
     this.isReady = true;
+    this.segmentModel = 'ALL';
     let i = 1;
     this.listOfDoctorsTemp1 = [];
-    //console.log(this.listOfDoctorsTemp300);
+    ////console.log(this.listOfDoctorsTemp300);
     let asdasd = this.listOfDoctorsTemp300;
     asdasd.forEach((ex) => {
       if (i <= 10) {
@@ -140,17 +139,25 @@ export class TabsDoctorsdirectoryPage implements OnInit {
       this.listOfDoctorsTemp1.push(ex);
       i++;
     });
-    //console.log('initialloadends');
-    //console.log(this.listOfDoctorsTemp300);
-    //console.log('initialloadends');
     this.isReady = false;
   }
   segmentChanged() {
-    //console.log('segmentChanged');
+    ////console.log('segmentChanged');
     this.content.scrollToTop();
     this.refreshcounter = 1;
     this.searchBar = '';
-    //////console.log(da.detail.value);
+    ////////console.log(da.detail.value);
+    let x;
+    let y;
+    //console.log(this.segmentModel);
+
+    if (this.segmentModel == 'SUR') {
+      x = 'SURA';
+      y = 'SURP';
+    } else {
+      x = this.segmentModel;
+      y = this.segmentModel;
+    }
     if (this.segmentModel == 'ALL') {
       this.listOfDoctors = [];
       this.initialload();
@@ -159,7 +166,8 @@ export class TabsDoctorsdirectoryPage implements OnInit {
       this.listOfDoctorsTemp1 = [];
       let x = 1;
       this.listOfDoctorsTemp300.forEach((element) => {
-        if (element.deptCode == this.segmentModel) {
+        if (element.deptCode == x || element.deptCode == y) {
+          //console.log(this.segmentModel, element.deptCode);
           if (x <= 10) {
             this.listOfDoctors.push(element);
           }
@@ -171,7 +179,7 @@ export class TabsDoctorsdirectoryPage implements OnInit {
   }
   filterList() {
     this.isReady = true;
-    //console.log('filter list');
+    ////console.log('filter list');
 
     this.refreshcounter = 1;
     this.listOfDoctors = [];
@@ -180,19 +188,23 @@ export class TabsDoctorsdirectoryPage implements OnInit {
       this.initialload();
     } else {
       this.listOfDoctorsTemp300.forEach((el) => {
-        //console.log('found1');
         let fnamelname =
           el.firstName.toLowerCase() + ' ' + el.lastName.toLowerCase();
         let lnamefname =
           el.lastName.toLowerCase() + ' ' + el.firstName.toLowerCase();
+        let deptName = el.deptName.toLowerCase();
+        let expertise = el.expertise.toLowerCase();
+
         if (
           el.firstName.toLowerCase().includes(this.searchBar.toLowerCase()) ||
           el.middleName.toLowerCase().includes(this.searchBar.toLowerCase()) ||
           el.lastName.toLowerCase().includes(this.searchBar.toLowerCase()) ||
           fnamelname.includes(this.searchBar.toLowerCase()) ||
-          lnamefname.includes(this.searchBar.toLowerCase())
+          lnamefname.includes(this.searchBar.toLowerCase()) ||
+          deptName.includes(this.searchBar.toLowerCase()) ||
+          expertise.includes(this.searchBar.toLowerCase())
         ) {
-          ////console.log('found');
+          //////console.log('found');
 
           let x = 1;
           if (x <= 10) {
@@ -209,10 +221,10 @@ export class TabsDoctorsdirectoryPage implements OnInit {
     this.router.navigate(['/executive/settings']);
   }
   detail(mdCode, firstname, middleName, lastName, gender) {
-    console.log(mdCode);
-    console.log(firstname);
-    console.log(middleName);
-    console.log(lastName);
+    //console.log(mdCode);
+    //console.log(firstname);
+    //console.log(middleName);
+    //console.log(lastName);
     this.showModal(mdCode, firstname, middleName, lastName, gender);
   }
   async showModal(

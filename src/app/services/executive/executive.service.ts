@@ -192,8 +192,6 @@ export class ExecutiveService {
       'Content-Type': 'application/json;charset=utf-8',
     });
     const options = { headers: headers, withCredentials: true };
-    //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
-    //const url = environment.apiRouterUrl + 'v3/Dashboard/DoctorsDirectory?mode=P';
     const url = environment.apiRouterUrl + 'v3/DoctorsDirectory?mode=P';
     return this.http.get(url, options);
   }
@@ -201,7 +199,6 @@ export class ExecutiveService {
   getDoctorInfo(data) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers: headers, withCredentials: true };
-    // const url = environment.apiRouterUrl + 'v3/DoctorsDirectory/DoctorDetail';
     const url = environment.apiRouterUrl + 'v3/DoctorsDirectory/DoctorDetail';
     return this.http.post(url, data, options);
   }
