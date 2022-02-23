@@ -254,7 +254,10 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
       event.stopPropagation();
       return false;
     }
-
+    if (!this.numberString.includes(event.key)) {
+      event.stopPropagation();
+      return false;
+    }
     if (this.InsurancePF > 0) {
       this.InsurancePF =
         (this.InsurancePF / this.InsurancePF) * this.InsurancePF;
@@ -293,8 +296,13 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     //this.functionsService.logToConsole(this.PhilhealthShowVat);
   }
   txtPersonalPhilHealthPF: boolean = true;
+  numberString: any = '0123456789.';
   personalPhilhealth(event) {
     if (event.key == ',') {
+      event.stopPropagation();
+      return false;
+    }
+    if (!this.numberString.includes(event.key)) {
       event.stopPropagation();
       return false;
     }
