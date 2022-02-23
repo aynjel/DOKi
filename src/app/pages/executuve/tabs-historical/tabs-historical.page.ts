@@ -104,7 +104,8 @@ export class TabsHistoricalPage implements OnInit {
         type: 'column',
       },
       title: {
-        text: 'Total Admissions YTD : ' + this.MTATotal,
+        //text: 'Total Admissions ' + this.yearTreandTO + ' : ' + this.MTATotal,
+        text: '',
       },
       xAxis: {
         categories: this.MTACategory,
