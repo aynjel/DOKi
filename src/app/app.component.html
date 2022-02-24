@@ -1,4 +1,4 @@
-<ion-split-pane contentId="menu-content" when="xs" [disabled]="true">
+<ion-split-pane contentId="menu-content" when="xs" [disabled]="true" *ngIf="(role_flag == 'exec')">
     <ion-menu contentId="menu-content" menuId="menu-content" side="start" type="overlay">
         <ion-header>
             <ion-toolbar color="mango">
@@ -26,7 +26,8 @@
     </ion-menu>
     <ion-router-outlet id="menu-content"></ion-router-outlet>
 </ion-split-pane>
-
+<ion-router-outlet id="menu-content" *ngIf="(role_flag != 'exec')">
+</ion-router-outlet>
 <!--ion-router-outlet id="menu-content"
     *ngIf="(role_flag != 'exec' && isDesktop) || (role_flag != 'exec' && !isDesktop)|| (role_flag == 'exec' && isDesktop)">
 </ion-router-outlet-->
