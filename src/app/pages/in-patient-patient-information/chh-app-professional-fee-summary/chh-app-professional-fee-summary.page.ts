@@ -260,8 +260,8 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   }
   isurancePFchange() {
     if (this.InsurancePF > 0) {
-      this.InsurancePF =
-        (this.InsurancePF / this.InsurancePF) * this.InsurancePF;
+      /*this.InsurancePF =
+        (this.InsurancePF / this.InsurancePF) * this.InsurancePF;*/
       this.InsuranceShowVat = true;
     } else {
       this.InsuranceShowVat = false;
