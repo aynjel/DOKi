@@ -124,11 +124,6 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
 
   ngOnInit() {
     this.checkAppearance();
-    this.functionsService.logToConsole('checkAppearance');
-    this.functionsService.logToConsole('checkAppearance');
-    this.functionsService.logToConsole('checkAppearance');
-    this.functionsService.logToConsole('checkAppearance');
-    this.functionsService.logToConsole('checkAppearance');
     //this.postData = JSON.parse(atob(sessionStorage.getItem("postData"))) as InPatientData;
     // this.postData = JSON.parse(atob(localStorage.getItem('postData'))) as InPatientData;
     this.professionalFeeModelv3 = JSON.parse(
@@ -297,8 +292,6 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   txtPersonalPhilHealthPF: boolean = true;
   numberString: any = '0123456789.';
   personalPhilhealth(event) {
-    console.log(event);
-
     if (event.keyCode == 8) {
     } else {
       if (!this.numberString.includes(event.key)) {
