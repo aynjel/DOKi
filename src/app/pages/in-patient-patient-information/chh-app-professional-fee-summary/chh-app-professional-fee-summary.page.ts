@@ -171,18 +171,9 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    /* let logindata = <LoginData>this.authService.userData$.getValue();
-    this.functionsService.logToConsole(logindata);
-    let dr_name = logindata[0].last_name;
-    this.dr_code = logindata[0].dr_code;*/
-
     let logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
-
     this.dr_name = logindata.lastName;
     this.dr_code = logindata.doctorCode;
-
-    // this.data =[];
-    // this.data = JSON.parse(atob(sessionStorage.getItem("patientData")));
     this.data = JSON.parse(atob(localStorage.getItem('patientData')));
     this.dateAdmitted = this.data[0].admission_date;
     this.patient_name = this.data[0].first_name + ' ' + this.data[0].last_name;
@@ -260,7 +251,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
       this.InsuranceShowVat = true;
     } else {
       this.InsuranceShowVat = false;
-      this.InsurancePF = 0;
+      //this.InsurancePF = 0;
     }
     if (this.InsurancePF > 0) {
       this.txtInsurancePF = false;
