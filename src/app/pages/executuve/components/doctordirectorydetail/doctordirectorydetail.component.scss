@@ -29,7 +29,7 @@ ion-toolbar {
 }
 
 ion-chip {
-  --background: #9dc912;
+  --background: #009444;
   --color: #fff;
 }
 
@@ -50,7 +50,7 @@ ion-chip {
         border-radius: 50%;
         position: absolute;
         bottom: calc(-1 * (80px + 4px)); // -42px;
-        border: 8px solid #9dc912;
+        border: 8px solid #009444;
         background-color: #fff;
       }
     }
