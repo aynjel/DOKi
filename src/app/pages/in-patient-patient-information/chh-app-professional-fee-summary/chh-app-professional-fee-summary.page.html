@@ -82,8 +82,8 @@
     <ion-card mode="ios" *ngIf="!isDesktop ">
       <ion-item lines="none">
         <ion-label>&#8369; </ion-label>
-        <ion-input color="danger" type="number" placeholder="0" [(ngModel)]="InsurancePF"
-          (keydown)="isurancePF($event)">
+        <ion-input color="danger" type="number" placeholder="0" [(ngModel)]="InsurancePF" (keydown)="isurancePF($event)"
+          (ionChange)="isurancePFchange()">
         </ion-input>
       </ion-item>
     </ion-card>
@@ -566,7 +566,7 @@ ______          _    _
                   <ion-item lines="none">
                     <ion-label>&#8369; </ion-label>
                     <ion-input color="danger" type="number" placeholder="0" [(ngModel)]="InsurancePF"
-                      (keydown)="isurancePF($event)">
+                      (keydown)="isurancePF($event)" (ionChange)="isurancePFchange()">
                     </ion-input>
                   </ion-item>
                 </ion-card>

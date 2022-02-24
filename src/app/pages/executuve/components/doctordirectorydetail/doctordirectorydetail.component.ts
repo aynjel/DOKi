@@ -25,7 +25,6 @@ export class DoctordirectorydetailComponent implements OnInit {
   @Input() gender: any;
   jsonData = {
     doctorCode: 'string',
-    mode: 'string',
   };
   constructor(
     public loadingController: LoadingController,
@@ -36,7 +35,6 @@ export class DoctordirectorydetailComponent implements OnInit {
   ngOnInit() {
     console.log(this.gender);
     this.jsonData.doctorCode = this.mdcode;
-    this.jsonData.mode = 'P';
     this.executiveService.getDoctorInfo(this.jsonData).subscribe(
       (res: any) => {
         this.information = JSON.parse('[' + JSON.stringify(res) + ']');

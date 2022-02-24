@@ -257,11 +257,11 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
         return false;
       }
     }
-
+  }
+  isurancePFchange() {
     if (this.InsurancePF > 0) {
       this.InsurancePF =
         (this.InsurancePF / this.InsurancePF) * this.InsurancePF;
-
       this.InsuranceShowVat = true;
     } else {
       this.InsuranceShowVat = false;
@@ -273,7 +273,6 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
       this.txtInsurancePF = true;
     }
   }
-
   insuranceVat() {
     this.txtInsuranceVAT = this.InsuranceVat;
   }
@@ -298,6 +297,8 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   txtPersonalPhilHealthPF: boolean = true;
   numberString: any = '0123456789.';
   personalPhilhealth(event) {
+    console.log(event);
+
     if (event.keyCode == 8) {
     } else {
       if (!this.numberString.includes(event.key)) {
