@@ -120,7 +120,7 @@ export class InPatientDetailPage {
   opd_code: any;
   admissionstatus: any;
   progNot_InitDisplay: any;
-  progNot_account_no;
+  progNot_account_no: any = '';
 
   patientId: any;
   patientInfo: any;
@@ -251,7 +251,7 @@ export class InPatientDetailPage {
     this.presentLoading();
     this.executiveService.getPatientDetail(ppatientdata).subscribe(
       (res: any) => {
-        //console.log(res);
+        //console.log(res.admission_no);
         this.data1 = JSON.parse('[' + JSON.stringify(res) + ']');
         localStorage.setItem('patientData', btoa(JSON.stringify(this.data1)));
       },
@@ -563,8 +563,9 @@ export class InPatientDetailPage {
     this.progessNotes = [];
     this.progessNotesTemp = [];
     this.progressNotesIsNotReady = true;
-    this.doctorService.getProgressNotes('test').subscribe(
+    this.doctorService.getProgressNotes(this.data1[0].admission_no).subscribe(
       (res: any = []) => {
+        console.log(res);
         this.progessNotesTemp = res;
         if (this.progessNotesTemp.length > 0) {
           this.progNot_InitDisplay = this.functionsService.truncateChar(

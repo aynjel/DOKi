@@ -19,6 +19,7 @@ export class ProgressNotesPage implements OnInit {
   progressNotesIsEmpty: boolean = false;
   progressNotesIsNotReady: boolean = false;
   activeDays: any = [];
+  accountNo: any;
   constructor(
     private screensizeService: ScreenSizeService,
     private activatedRoute: ActivatedRoute,
@@ -35,6 +36,7 @@ export class ProgressNotesPage implements OnInit {
 
   ngOnInit() {
     this.patient_id = this.activatedRoute.snapshot.params.id;
+    this.accountNo = this.activatedRoute.snapshot.params.accountNo;
     this.getProgressNote();
   }
 
@@ -42,7 +44,7 @@ export class ProgressNotesPage implements OnInit {
     this.progessNotes = [];
     this.progessNotesTemp = [];
     this.progressNotesIsNotReady = true;
-    this.doctorService.getProgressNotes('test').subscribe(
+    this.doctorService.getProgressNotes(this.accountNo).subscribe(
       (res: any) => {
         this.progessNotesTemp = res;
       },
