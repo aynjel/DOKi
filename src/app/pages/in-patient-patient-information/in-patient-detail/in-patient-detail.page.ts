@@ -564,13 +564,17 @@ export class InPatientDetailPage {
     this.progessNotesTemp = [];
     this.progressNotesIsNotReady = true;
     this.doctorService.getProgressNotes('test').subscribe(
-      (res: any) => {
+      (res: any = []) => {
         this.progessNotesTemp = res;
-        this.progNot_InitDisplay = this.functionsService.truncateChar(
-          res[0].notes,
-          200
-        );
-        this.progNot_account_no = res[0].account_no;
+        if (this.progessNotesTemp.length > 0) {
+          this.progNot_InitDisplay = this.functionsService.truncateChar(
+            res[0].notes,
+            200
+          );
+          this.progNot_account_no = res[0].account_no;
+        } else {
+          this.progNot_account_no = '';
+        }
       },
       (error) => {},
       () => {

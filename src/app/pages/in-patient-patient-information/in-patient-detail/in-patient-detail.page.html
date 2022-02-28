@@ -75,7 +75,7 @@ ___  ___        _      _  _
   </app-chh-app-admitting-diagnosis>
 
   <!-- progress notes -->
-  <ion-card mode="ios">
+  <ion-card mode="ios" *ngIf="progNot_account_no != ''">
     <ion-list>
       <ion-item style="padding-top: 10px;">
         <div class="ion-text-wrap"><b>Progress Notes</b><br /></div>
