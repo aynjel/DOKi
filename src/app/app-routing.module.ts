@@ -29,7 +29,7 @@ const routes: Routes = [
       ).then((m) => m.InpatientDetailPageModule),
   },
   {
-    path: 'menu/in-patients/:id/:accountNo',
+    path: 'menu/in-patients/:id/progressnotes/:accountNo',
     loadChildren: () =>
       import(
         './pages/in-patient-patient-information/progress-notes/progress-notes.module'

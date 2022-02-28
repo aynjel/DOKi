@@ -236,7 +236,7 @@ ______          _    _
   </ion-fab> -->
   <ion-grid class="ion-no-padding">
     <ion-row>
-      <ion-col size-lg="2" size-md="12"></ion-col>
+      <ion-col size-lg="1" size-md="12"></ion-col>
       <!-- <ion-col size-lg="3" size-md="4">
               <app-chh-app-admitting-diagnosis
                 [admittingDiagnosis]="admittingDiagnosis"
@@ -276,9 +276,44 @@ ______          _    _
           [admittingDiagnosis1]="admittingDiagnosis1" [admittingDiagnosis2]="admittingDiagnosis2"
           [truncating1]="truncating1"></app-chh-app-admitting-diagnosis>
 
+
         <app-chh-app-final-diagnosis [data]="data" [finalDiagnosis]="finalDiagnosis" [limit]="limit"
           [truncating]="truncating" [finalDiagnosis1]="finalDiagnosis1" [finalDiagnosis2]="finalDiagnosis2">
         </app-chh-app-final-diagnosis>
+      </ion-col>
+      <ion-col size-lg="3" size-md="6" class=" max-height-82vh overflow-scroll">
+        <ion-card mode="ios">
+          <ion-list>
+            <ion-item style="padding-top: 10px;">
+              <div class="ion-text-wrap"><b>Progress Notes</b><br /></div>
+            </ion-item>
+            <ng-container>
+              <div *ngFor="let x of progessNotes">
+                <ion-item>
+                  Day #<b>{{x.notes_id}}</b>
+                </ion-item>
+                <cardshowhide [notes]="x.notes" [noteslength]="x.noteslength" [notesmall]="x.notessmall">
+                </cardshowhide>
+                <ion-footer>
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col center text-center>
+                        <div style="padding:5px">Date Created : {{x.dateCreateConverted}}
+                          {{x.dateCreateTimeConverted}}
+                        </div>
+                      </ion-col>
+                      <ion-col center text-center>
+                        <div style="padding:5px">Date Updated : {{x.dateUpdateConverted}}
+                          {{x.dateUpdateTimeConverted}}
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-footer>
+              </div>
+            </ng-container>
+          </ion-list>
+        </ion-card>
       </ion-col>
 
       <ion-col size-lg="3" size-md="6" class=" max-height-82vh overflow-scroll">
@@ -286,6 +321,24 @@ ______          _    _
           [isFetchDone]="isFetchDone"></app-chh-app-list-of-doctors>
 
       </ion-col>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       <ion-col size-lg="1" size-md="12"></ion-col>
     </ion-row>
   </ion-grid>

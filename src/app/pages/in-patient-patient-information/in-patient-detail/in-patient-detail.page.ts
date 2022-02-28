@@ -121,6 +121,20 @@ export class InPatientDetailPage {
   admissionstatus: any;
   progNot_InitDisplay: any;
   progNot_account_no;
+
+  patientId: any;
+  patientInfo: any;
+
+  progessNotes: any = [];
+  progessNotesTemp: any = [];
+  progressNotesIsEmpty: boolean = false;
+  progressNotesIsNotReady: boolean = false;
+  dateToday: any;
+  user_created: any;
+  activeDays: any = [];
+  birthday: any;
+  age: any;
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -142,7 +156,8 @@ export class InPatientDetailPage {
     public nav: NavController,
     public aes: AESEncryptDecryptServiceService,
     public executiveService: ExecutiveService,
-    public loadingController: LoadingController
+    public loadingController: LoadingController,
+    private functionService: FunctionsService
   ) {
     //this.functionsService.logToConsole('In-patient detail : Constructor');
     localStorage.setItem('modaled', '0');
@@ -526,7 +541,7 @@ export class InPatientDetailPage {
       btoa(JSON.stringify(this.professionalFeeModelv3))
     );
 
-    this.doctorService.getProgressNotes('test').subscribe(
+    /*this.doctorService.getProgressNotes('test').subscribe(
       (res: any = []) => {
         console.log(res[0].notes);
         this.progNot_InitDisplay = this.functionsService.truncateChar(
@@ -541,13 +556,76 @@ export class InPatientDetailPage {
       () => {
         console.log('call done');
       }
+    );*/
+    this.getProgressNotes();
+  }
+  getProgressNotes() {
+    this.progessNotes = [];
+    this.progessNotesTemp = [];
+    this.progressNotesIsNotReady = true;
+    this.doctorService.getProgressNotes('test').subscribe(
+      (res: any) => {
+        this.progessNotesTemp = res;
+        this.progNot_InitDisplay = this.functionsService.truncateChar(
+          res[0].notes,
+          200
+        );
+        this.progNot_account_no = res[0].account_no;
+      },
+      (error) => {},
+      () => {
+        this.activeDays = [];
+        this.progessNotesTemp.forEach((el) => {
+          this.activeDays.push(el.notes_id);
+          el.dateCreateConverted = this.functionService.convertDatetoMMDDYYYY(
+            el.date_created
+          );
+
+          el.dateCreateTimeConverted = this.functionService.getTime(
+            el.date_created
+          );
+
+          el.dateUpdateConverted = this.functionService.convertDatetoMMDDYYYY(
+            el.date_updated
+          );
+          el.dateUpdateTimeConverted = this.functionService.getTime(
+            el.date_updated
+          );
+          if (el.date_updated == '0001-01-01T00:00:00') {
+            el.dateUpdateConverted = '';
+          }
+          el.notessmall = this.functionService.truncateChar(el.notes, 300);
+          if (el.notes.length > 200) {
+            el.noteslength = true;
+          } else {
+            el.noteslength = false;
+          }
+          this.progessNotes.push(el);
+        });
+        //console.log(this.activeDays);
+
+        if (this.progessNotes.length <= 0) {
+          this.progressNotesIsEmpty = true;
+        } else {
+          this.progressNotesIsEmpty = false;
+        }
+        this.progressNotesIsNotReady = false;
+        //this.scrolltotop();
+      }
     );
   }
   showProgressNotes() {
-    this.router.navigate([
-      '/menu/in-patients/' + this.patient_id + '/' + this.progNot_account_no,
-    ]);
+    if (this.isDesktop) {
+    } else {
+      this.router.navigate([
+        '/menu/in-patients/' +
+          this.patient_id +
+          '/progressnotes/' +
+          this.progNot_account_no,
+      ]);
+    }
   }
+
   ngOnInit() {
     this.checkAppearance();
     // this.functionsService.logToConsole('In-patient detail : ngOnInit');
