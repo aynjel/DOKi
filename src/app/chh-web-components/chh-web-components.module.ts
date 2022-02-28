@@ -49,7 +49,7 @@ import { DashboardgraphComponent } from '../pages/executuve/components/dashboard
 import { CvdbreakdownComponent } from '../pages/executuve/components/cvdbreakdown/cvdbreakdown.component';
 
 import { DoctordirectorydetailComponent } from '../pages/executuve/components/doctordirectorydetail/doctordirectorydetail.component';
-
+import { CardshowhideComponent } from '../chh-web-components/cardshowhide/cardshowhide.component';
 @NgModule({
   declarations: [
     ChhAppLogoComponent,
@@ -84,6 +84,7 @@ import { DoctordirectorydetailComponent } from '../pages/executuve/components/do
     DashboardgraphComponent,
     CvdbreakdownComponent,
     DoctordirectorydetailComponent,
+    CardshowhideComponent,
   ],
   exports: [
     ChhAppLogoComponent,
@@ -118,6 +119,7 @@ import { DoctordirectorydetailComponent } from '../pages/executuve/components/do
     DashboardgraphComponent,
     CvdbreakdownComponent,
     DoctordirectorydetailComponent,
+    CardshowhideComponent,
   ],
   imports: [
     CommonModule,

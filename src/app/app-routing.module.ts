@@ -29,6 +29,14 @@ const routes: Routes = [
       ).then((m) => m.InpatientDetailPageModule),
   },
   {
+    path: 'menu/in-patients/:id/:accountNo',
+    loadChildren: () =>
+      import(
+        './pages/in-patient-patient-information/progress-notes/progress-notes.module'
+      ).then((m) => m.ProgressNotesPageModule),
+  },
+
+  {
     path: 'menu/in-patients/:id/professional-fee',
     loadChildren: () =>
       import(

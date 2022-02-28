@@ -1,0 +1,135 @@
+<ion-header mode="md" class="ion-no-border" *ngIf="!isDesktop">
+  <ion-toolbar color="mango">
+    <span class="padding-left-10" routerLink="/menu/in-patients/{{patient_id}}" routerDirection="backward"
+      color="chh-css-primary2">
+      <ion-icon name="arrow-back-outline" class="my-icon vcenter"></ion-icon>
+    </span>
+    <span class="padding-left-30 font-weight-500 font-size-20"> &nbsp;&nbsp;Progress Notes </span>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+      refreshingSpinner="circles" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-grid class="ion-no-padding">
+    <ion-row class="custom-padding">
+
+      <ion-col size-lg="3" *ngIf="isDesktop">
+        <!--patientName [patient_name]="patientInfo.patient_name" [patient_no]="patientInfo.patient_no"
+          [account_no]="patientInfo.account_no" [ap_name]="patientInfo.ap_name" [dateCreated]="patientInfo.date_created"
+          [birthday]="birthday" [age]="age">
+        </patientName-->
+      </ion-col>
+      <ion-col size-md="1" size-xs="12" *ngIf="!isDesktop">
+
+      </ion-col>
+      <ion-col size-md="10" size-lg="8" class="custom-border-bottom ion-no-border ">
+
+        <ng-container>
+
+          <div *ngFor="let x of progessNotes">
+            <ion-card class="pointer">
+              <ion-item>
+                Day #<b>{{x.notes_id}}</b>
+                <!--ion-button fill="outline" slot="end" (click)="viewhistory(x.trans_no)">
+                  View History</ion-button>
+                <ion-button fill="outline" color="secondary" slot="end" (click)="detail(x)">
+                  Modify</ion-button-->
+
+              </ion-item>
+              <cardshowhide [notes]="x.notes" [noteslength]="x.noteslength" [notesmall]="x.notessmall"></cardshowhide>
+
+              <ion-footer>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col center text-center>
+                      <div style="padding:5px">Date Created : {{x.dateCreateConverted}} {{x.dateCreateTimeConverted}}
+                      </div>
+                    </ion-col>
+                    <ion-col center text-center>
+                      <div style="padding:5px">Date Updated : {{x.dateUpdateConverted}} {{x.dateUpdateTimeConverted}}
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-footer>
+            </ion-card>
+          </div>
+        </ng-container>
+
+
+
+
+
+
+
+
+        <ng-container *ngIf="progressNotesIsNotReady">
+          <div class="ion-padding custom-skeleton">
+            <ion-card mode="ios" class="pointer">
+              <ion-item lines="none">
+                <ion-label style="margin-top: -10px;">
+                  <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+            <ion-card mode="ios" class="pointer">
+              <ion-item lines="none">
+                <ion-label style="margin-top: -10px;">
+                  <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+            <ion-card mode="ios" class="pointer">
+              <ion-item lines="none">
+                <ion-label style="margin-top: -10px;">
+                  <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+            <ion-card mode="ios" class="pointer">
+              <ion-item lines="none">
+                <ion-label style="margin-top: -10px;">
+                  <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+          </div>
+        </ng-container>
+
+
+
+        <div *ngIf="progressNotesIsEmpty">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="8" offset="2">
+                <div class="vertical-center">
+                  <div class="center">
+                    <img src="assets/img/no-data-rafiki.png" />
+                  </div>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+</ion-content>

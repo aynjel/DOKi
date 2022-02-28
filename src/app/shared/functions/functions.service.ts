@@ -14,11 +14,10 @@ export class FunctionsService {
   constructor(
     public alertController: AlertController,
     public constants: Constants,
-    @Inject( DOCUMENT ) private document: any,
-    @Inject( PLATFORM_ID ) private platformId: InjectionToken<Object>
+    @Inject(DOCUMENT) private document: any,
+    @Inject(PLATFORM_ID) private platformId: InjectionToken<Object>
   ) {
-
-    this.documentIsAccessible = isPlatformBrowser( this.platformId );
+    this.documentIsAccessible = isPlatformBrowser(this.platformId);
   }
 
   /**
@@ -230,16 +229,13 @@ export class FunctionsService {
   sorryDoc() {
     this.alert(
       'Sorry, Dok. We cannot log you in at the moment. Please try again.',
-      'Okay',
+      'Okay'
     );
   }
 
-
-
-  isLocalorLive(data:any){
-
+  isLocalorLive(data: any) {
     if (localStorage.getItem('testdb') == '1') {
-      return data+'Test';
+      return data + 'Test';
     } else {
       return data;
     }
@@ -247,77 +243,105 @@ export class FunctionsService {
   // numberWithCommas(x) {
   //   return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
   // }
-  
+
   isEmptyObject(obj) {
     return !Object.keys(obj).length;
   }
 
-
-
-  check( name: string ): boolean {
-    if ( !this.documentIsAccessible ) {
+  check(name: string): boolean {
+    if (!this.documentIsAccessible) {
       return false;
     }
 
-    name = encodeURIComponent( name );
+    name = encodeURIComponent(name);
 
-    const regExp: RegExp = this.getCookieRegExp( name );
-    const exists: boolean = regExp.test( this.document.cookie );
+    const regExp: RegExp = this.getCookieRegExp(name);
+    const exists: boolean = regExp.test(this.document.cookie);
 
     return exists;
   }
-  getcookie( name: string ): string {
-    if ( this.documentIsAccessible && this.check( name ) ) {
-      name = encodeURIComponent( name );
+  getcookie(name: string): string {
+    if (this.documentIsAccessible && this.check(name)) {
+      name = encodeURIComponent(name);
 
-      const regExp: RegExp = this.getCookieRegExp( name );
-      const result: RegExpExecArray = regExp.exec( this.document.cookie );
+      const regExp: RegExp = this.getCookieRegExp(name);
+      const result: RegExpExecArray = regExp.exec(this.document.cookie);
 
-      return decodeURIComponent( result[ 1 ] );
+      return decodeURIComponent(result[1]);
     } else {
       return '';
     }
   }
-  private getCookieRegExp( name: string ): RegExp {
-    const escapedName: string = name.replace( /([\[\]\{\}\(\)\|\=\;\+\?\,\.\*\^\$])/ig, '\\$1' );
+  private getCookieRegExp(name: string): RegExp {
+    const escapedName: string = name.replace(
+      /([\[\]\{\}\(\)\|\=\;\+\?\,\.\*\^\$])/gi,
+      '\\$1'
+    );
 
-    return new RegExp( '(?:^' + escapedName + '|;\\s*' + escapedName + ')=(.*?)(?:;|$)', 'g' );
+    return new RegExp(
+      '(?:^' + escapedName + '|;\\s*' + escapedName + ')=(.*?)(?:;|$)',
+      'g'
+    );
   }
 
-  getAdmissionStatus(data:any){
-    let x="";
-    if(data == 'RE'){
+  getAdmissionStatus(data: any) {
+    let x = '';
+    if (data == 'RE') {
       x = 'Registered';
-    }else if(data == 'AC'){
+    } else if (data == 'AC') {
       x = 'Admitted';
-    }else if(data == 'DN'){
+    } else if (data == 'DN') {
       x = 'For Discharge';
-    }else if(data == 'BP'){
+    } else if (data == 'BP') {
       x = 'Partially Settled';
-    }else if(data == 'PP'){
+    } else if (data == 'PP') {
       x = 'Ok For Checkout';
-    }else if(data == 'CO'){
+    } else if (data == 'CO') {
       x = 'Checkout';
-    }else if(data == 'BA'){
+    } else if (data == 'BA') {
       x = 'Billing Approved';
-    }else if(data == 'CC'){
+    } else if (data == 'CC') {
       x = 'Checked-out With Balance';
-    }else if(data == 'FP'){
+    } else if (data == 'FP') {
       x = 'Ok For Checkout';
-    }else if(data == 'CA'){
+    } else if (data == 'CA') {
       x = 'Cancelled';
-    }else if(data == 'PA'){
+    } else if (data == 'PA') {
       x = 'Pre-Admitted';
-    }else if(data == 'OP'){
+    } else if (data == 'OP') {
       x = 'Re-Opened (w/o b)';
-    }else if(data == 'ON'){
+    } else if (data == 'ON') {
       x = 'Re-Opened (wb)';
-    }else if(data == 'UA'){
+    } else if (data == 'UA') {
       x = 'Unit Admission';
-    }else if(data == 'BB'){
+    } else if (data == 'BB') {
       x = 'Fully Settled';
     }
 
     return x;
+  }
+  getDateTodayMMDDYYYY() {
+    let dateCreate = new Date();
+    let dd = String(dateCreate.getDate()).padStart(2, '0');
+    let mm = String(dateCreate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = dateCreate.getFullYear();
+    let xtoday = mm + '/' + dd + '/' + yyyy;
+    return xtoday;
+  }
+  convertDatetoMMDDYYYY(date) {
+    let dateCreate = new Date(date);
+    let dd = String(dateCreate.getDate()).padStart(2, '0');
+    let mm = String(dateCreate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = dateCreate.getFullYear();
+    let xtoday = mm + '/' + dd + '/' + yyyy;
+    return xtoday;
+  }
+  getTime(date) {
+    var d = new Date(date); // for now
+    let Hour = d.getHours(); // => 9
+    let Min = d.getMinutes(); // =>  30
+    let Sec = d.getSeconds(); // => 51
+    let xtime = Hour + ':' + Min + ':' + Sec;
+    return xtime;
   }
 }

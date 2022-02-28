@@ -34,16 +34,26 @@ import { ChhAppTestChemistryComponent } from '../../../chh-web-components/chh-ap
 import { ChhAppTestFecalysisComponent } from '../../../chh-web-components/chh-app-test/chh-app-test-fecalysis/chh-app-test-fecalysis.component';
 import { ChhAppTestSerologyComponent } from '../../../chh-web-components/chh-app-test/chh-app-test-serology/chh-app-test-serology.component';
 import { StorageService } from '../../../services/storage/storage.service';
-import { AuthConstants, Consta} from '../../../config/auth-constants';
+import { AuthConstants, Consta } from '../../../config/auth-constants';
 import { executionAsyncResource } from 'async_hooks';
 import { Constants } from 'src/app/shared/constants';
 
-import { InPatientData,ProfessionalFeeModelv3} from 'src/app/models/in-patient.model';
+import {
+  InPatientData,
+  ProfessionalFeeModelv3,
+} from 'src/app/models/in-patient.model';
 
-import {UserSettingsModelv3,LoginResponseModelv3,PatientDetail} from 'src/app/models/doctor';
+import {
+  UserSettingsModelv3,
+  LoginResponseModelv3,
+  PatientDetail,
+} from 'src/app/models/doctor';
 
 import { LaboratoryTestModalPage } from '../laboratory-test-modal/laboratory-test-modal.page';
-import { InpatientModelInpatients,InpatientDetails } from '../../../models/doctor';
+import {
+  InpatientModelInpatients,
+  InpatientDetails,
+} from '../../../models/doctor';
 import { AESEncryptDecryptServiceService } from 'src/app/services/encryption/aesencrypt-decrypt-service.service';
 import { ExecutiveService } from 'src/app/services/executive/executive.service';
 @Component({
@@ -52,10 +62,7 @@ import { ExecutiveService } from 'src/app/services/executive/executive.service';
   styleUrls: ['./in-patient-detail.page.scss'],
 })
 export class InPatientDetailPage {
-
-
-  
-  inpatientModelInpatients = new InpatientModelInpatients;
+  inpatientModelInpatients = new InpatientModelInpatients();
 
   data: any = [];
   data1: any;
@@ -95,7 +102,7 @@ export class InPatientDetailPage {
   urinalysis: boolean = false;
   refresher: boolean = true;
   searchBar: any;
-  routerLinkBack:any;
+  routerLinkBack: any;
   HighlightRow: number;
   ClickedRow: any;
   dr_code: any;
@@ -103,15 +110,17 @@ export class InPatientDetailPage {
   patient_name: any;
   patient_no: any;
   postData: InPatientData = new InPatientData();
-  professionalFeeModelv3 : ProfessionalFeeModelv3 = new ProfessionalFeeModelv3();
-  userSettingsModelv3 : UserSettingsModelv3 = new UserSettingsModelv3();
+  professionalFeeModelv3: ProfessionalFeeModelv3 = new ProfessionalFeeModelv3();
+  userSettingsModelv3: UserSettingsModelv3 = new UserSettingsModelv3();
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
 
-  inpatientDetails : InpatientDetails = new InpatientDetails();
+  inpatientDetails: InpatientDetails = new InpatientDetails();
   location: boolean;
-  patient_id:any;
-  opd_code:any;
-  admissionstatus:any;
+  patient_id: any;
+  opd_code: any;
+  admissionstatus: any;
+  progNot_InitDisplay: any;
+  progNot_account_no;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -131,12 +140,12 @@ export class InPatientDetailPage {
     public constants: Constants,
     private renderer: Renderer2,
     public nav: NavController,
-    public aes:AESEncryptDecryptServiceService,
-    public executiveService:ExecutiveService,
-    public loadingController:LoadingController,
+    public aes: AESEncryptDecryptServiceService,
+    public executiveService: ExecutiveService,
+    public loadingController: LoadingController
   ) {
     //this.functionsService.logToConsole('In-patient detail : Constructor');
-    localStorage.setItem("modaled","0");
+    localStorage.setItem('modaled', '0');
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         window.location.reload();
@@ -153,20 +162,21 @@ export class InPatientDetailPage {
     this.inpatientDetails = new InpatientDetails();
     //this.functionsService.logToConsole();
     this.patient_id = this.activatedRoute.snapshot.params.id;
-    this.routerLinkBack =    '/menu/in-patients/';
+    this.routerLinkBack = '/menu/in-patients/';
     //this.functionsService.logToConsole('In-patient detail : ionViewWillEnter');
     //sessionStorage.removeItem('pfIsPatientSeen');
     // sessionStorage.removeItem('pfInsCoor');
 
     //this.checkAppearance();
-    
+
     //let logindata = <LoginData>this.authService.userData$.getValue();
-    this.loginResponseModelv3 = <LoginResponseModelv3>this.authService.userData$.getValue();
-    this.userSettingsModelv3 = new UserSettingsModelv3;
-    this.userSettingsModelv3 = JSON.parse('['+atob(localStorage.getItem("user_settings"))+']');
-
-
-
+    this.loginResponseModelv3 = <LoginResponseModelv3>(
+      this.authService.userData$.getValue()
+    );
+    this.userSettingsModelv3 = new UserSettingsModelv3();
+    this.userSettingsModelv3 = JSON.parse(
+      '[' + atob(localStorage.getItem('user_settings')) + ']'
+    );
 
     this.loginResponseModelv3 = this.authService.userData$.getValue();
     this.dr_name = this.loginResponseModelv3.lastName;
@@ -174,15 +184,14 @@ export class InPatientDetailPage {
     this.inpatientModelInpatients.drCode = this.dr_code;
     this.inpatientModelInpatients.mode = Consta.mode;
     this.postData.DoctorMobileNumber = this.loginResponseModelv3.mobileNo;
-    this.professionalFeeModelv3.doctor_mobile_no = this.loginResponseModelv3.mobileNo;
-    this.professionalFeeModelv3.smsGatewayCHH = this.userSettingsModelv3[0].smsGatewayCHH;
-    this.professionalFeeModelv3.smsGatewaySmart = this.userSettingsModelv3[0].smsGatewaySmart;
+    this.professionalFeeModelv3.doctor_mobile_no =
+      this.loginResponseModelv3.mobileNo;
+    this.professionalFeeModelv3.smsGatewayCHH =
+      this.userSettingsModelv3[0].smsGatewayCHH;
+    this.professionalFeeModelv3.smsGatewaySmart =
+      this.userSettingsModelv3[0].smsGatewaySmart;
 
     this.data = [];
-
-    
-
-
 
     /*this.doctorService.getInPatientV2(this.inpatientModelInpatients).subscribe(
       (res: any) => {
@@ -224,56 +233,56 @@ export class InPatientDetailPage {
     let ppatientdata = new PatientDetail();
     ppatientdata.admissionNo = this.patient_id;
     ppatientdata.doctorCode = this.dr_code;
-      this.presentLoading();
+    this.presentLoading();
     this.executiveService.getPatientDetail(ppatientdata).subscribe(
-      (res: any) => {   
+      (res: any) => {
         //console.log(res);
-        this.data1 = JSON.parse('['+JSON.stringify(res)+']');
-        localStorage.setItem('patientData',btoa(JSON.stringify(this.data1)));
+        this.data1 = JSON.parse('[' + JSON.stringify(res) + ']');
+        localStorage.setItem('patientData', btoa(JSON.stringify(this.data1)));
       },
       (error) => {
         this.dismissLoading();
       },
       () => {
         this.dismissLoading();
-        if(this.data1 != ""){
-        this.data1.forEach((element) => {
+        if (this.data1 != '') {
+          this.data1.forEach((element) => {
             this.opd_code = element.admission_no;
             this.inpatientModelInpatients.accountNo = this.opd_code;
             this.inpatientDetails.admission_no = this.opd_code;
             this.data.push(element);
             this.admissionstatus = element.admission_status;
             this.patient_name = element.first_name + ' ' + element.last_name;
-            this.patient_name = this.functionsService.convertAllFirstLetterToUpperCase(
-              this.patient_name
-            );
+            this.patient_name =
+              this.functionsService.convertAllFirstLetterToUpperCase(
+                this.patient_name
+              );
             if (element.payvenue != null) {
               this.checkmark = true;
             }
-        });
-        let n = this.data[0].admission_no.indexOf('IPC');
-        //this.functionsService.logToConsole(n);
-    
-        if (n >= 0) {
-          this.location = true;
+          });
+          let n = this.data[0].admission_no.indexOf('IPC');
+          //this.functionsService.logToConsole(n);
+
+          if (n >= 0) {
+            this.location = true;
+          } else {
+            this.location = false;
+          }
+          this.operate();
         } else {
-          this.location = false;
+          this.alert('No Data Available', 'Okay');
         }
-        this.operate();
-      }else{
-        this.alert('No Data Available','Okay');
-      }
       }
     );
   }
 
-  loading:any;
+  loading: any;
   async presentLoading() {
     this.loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
       message: 'Please wait...',
-      duration: 2000
-
+      duration: 2000,
     });
     await this.loading.present();
 
@@ -282,7 +291,7 @@ export class InPatientDetailPage {
   }
   public async dismissLoading(): Promise<void> {
     if (this.loading) {
-        this.loading.dismiss();
+      this.loading.dismiss();
     }
   }
   async alert(data1: any, data2: any) {
@@ -290,21 +299,24 @@ export class InPatientDetailPage {
       cssClass: 'my-custom-class',
       message: data1,
       backdropDismiss: false,
-      buttons: [{ text: data2, handler: () => {
-          this.closemodal();
-      } }],
+      buttons: [
+        {
+          text: data2,
+          handler: () => {
+            this.closemodal();
+          },
+        },
+      ],
     });
     await alert.present();
   }
 
-  closemodal(){
+  closemodal() {
     this.router.navigate(['/menu/in-patients/']);
   }
   operate() {
-
     this.dateAdmitted = this.data[0].admission_date;
     this.dischargeNotice = this.data[0].forDischargeDateTime;
-
 
     this.$gaService.pageView(
       '/In-Patient/Patient Details',
@@ -328,24 +340,20 @@ export class InPatientDetailPage {
 
     //this.functionsService.logToConsole(this.data[0].site);
 
-    
-
-    
-    
     if (this.data[0].site == 'C') {
       this.site = 'CHHC';
       //this.postData.PatientSite = "CEBU";
       this.postData.BillingMobileNumber = atob(localStorage.getItem('C'));
-      this.professionalFeeModelv3.billing_mobile_no = this.userSettingsModelv3[0].billingContactCebu;
-
+      this.professionalFeeModelv3.billing_mobile_no =
+        this.userSettingsModelv3[0].billingContactCebu;
     } else {
       this.site = 'CHHM';
       //this.postData.PatientSite = "MANDAUE";
       this.postData.BillingMobileNumber = atob(localStorage.getItem('M'));
-      this.professionalFeeModelv3.billing_mobile_no = this.userSettingsModelv3[0].billingContactMandaue;
+      this.professionalFeeModelv3.billing_mobile_no =
+        this.userSettingsModelv3[0].billingContactMandaue;
     }
 
-    
     this.postData.RoomNumber = this.data[0].room_no;
     this.professionalFeeModelv3.room_no = this.data[0].room_no;
     /*
@@ -376,12 +384,11 @@ export class InPatientDetailPage {
 
     //this.postData.DoctorCode = this.data.dr_code;
     this.postData.DoctorStatusCode = this.data[0].Doctor_Status_code;
-    this.professionalFeeModelv3.doctor_status_code = this.data[0].doctor_Status_code;
-
+    this.professionalFeeModelv3.doctor_status_code =
+      this.data[0].doctor_Status_code;
 
     this.postData.site = this.data[0].site;
     this.professionalFeeModelv3.site = this.data[0].site;
-
 
     this.postData.CreatedBy = this.data[0].dr_code;
     let coDoctors1 = [];
@@ -438,55 +445,49 @@ export class InPatientDetailPage {
     );
     //
 
-    this.doctorService
-      .getAdmittingDiagnosisV3(this.inpatientDetails)
-      .subscribe(
-        (res: any) => {
-
-          
-          if(!Object.keys(res).length){
-            //this.functionsService.logToConsole("no data found");
-          }else{
-            this.admittingDiagnosis = res.admitting_diagnosis2.replace(
-              /(\r\n|\n|\r)/gm,
-              '<br />'
-            );
-            //this.functionsService.logToConsole('admittingDiagnosis : ' + this.admittingDiagnosis);
-            this.admittingDiagnosis1 = this.functionsService.truncateChar(
-              res.admitting_diagnosis2,
-              100
-            );
-            this.admittingDiagnosis1 = this.admittingDiagnosis1.replace(
-              /(\r\n|\n|\r)/gm,
-              '<br />'
-            );
-            this.admittingDiagnosis2 = this.admittingDiagnosis.replace(
-              /(,)/gm,
-              ',<br />'
-            );
-            //this.functionsService.logToConsole('admittingDiagnosis2 : ' + this.admittingDiagnosis2);
+    this.doctorService.getAdmittingDiagnosisV3(this.inpatientDetails).subscribe(
+      (res: any) => {
+        if (!Object.keys(res).length) {
+          //this.functionsService.logToConsole("no data found");
+        } else {
+          this.admittingDiagnosis = res.admitting_diagnosis2.replace(
+            /(\r\n|\n|\r)/gm,
+            '<br />'
+          );
+          //this.functionsService.logToConsole('admittingDiagnosis : ' + this.admittingDiagnosis);
+          this.admittingDiagnosis1 = this.functionsService.truncateChar(
+            res.admitting_diagnosis2,
+            100
+          );
+          this.admittingDiagnosis1 = this.admittingDiagnosis1.replace(
+            /(\r\n|\n|\r)/gm,
+            '<br />'
+          );
+          this.admittingDiagnosis2 = this.admittingDiagnosis.replace(
+            /(,)/gm,
+            ',<br />'
+          );
+          //this.functionsService.logToConsole('admittingDiagnosis2 : ' + this.admittingDiagnosis2);
         }
-        },
-        (error) => {
-          this.isFetchDone = true;
-          //this.functionsService.alert('Server Error', 'Okay');
-        },
-        () => {
-          this.isFetchDone = true;
-        }
-      );
+      },
+      (error) => {
+        this.isFetchDone = true;
+        //this.functionsService.alert('Server Error', 'Okay');
+      },
+      () => {
+        this.isFetchDone = true;
+      }
+    );
     //final diagnosis
     if (this.data[0].admission_status == 'DN') {
       this.doctorService.getFinalDiagnosisV3(this.inpatientDetails).subscribe(
         (res: any) => {
-
-          
-          if(!Object.keys(res).length){
-           // this.functionsService.logToConsole("no data found");
-          }else{
+          if (!Object.keys(res).length) {
+            // this.functionsService.logToConsole("no data found");
+          } else {
             this.finalDiagnosis = res.final_diagnosis;
             //this.functionsService.logToConsole(this.finalDiagnosis);
-            
+
             this.finalDiagnosis1 = this.functionsService.truncateChar(
               this.finalDiagnosis,
               50
@@ -520,12 +521,36 @@ export class InPatientDetailPage {
     this.postData.DateCreated = this.functionsService.getSystemDateTime();
     //sessionStorage.setItem('postData', btoa(JSON.stringify(this.postData)));
     //localStorage.setItem('postData', btoa(JSON.stringify(this.postData)));
-    localStorage.setItem('postData1', btoa((JSON.stringify(this.professionalFeeModelv3))));
-  }
+    localStorage.setItem(
+      'postData1',
+      btoa(JSON.stringify(this.professionalFeeModelv3))
+    );
 
+    this.doctorService.getProgressNotes('test').subscribe(
+      (res: any = []) => {
+        console.log(res[0].notes);
+        this.progNot_InitDisplay = this.functionsService.truncateChar(
+          res[0].notes,
+          200
+        );
+        this.progNot_account_no = res[0].account_no;
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        console.log('call done');
+      }
+    );
+  }
+  showProgressNotes() {
+    this.router.navigate([
+      '/menu/in-patients/' + this.patient_id + '/' + this.progNot_account_no,
+    ]);
+  }
   ngOnInit() {
     this.checkAppearance();
-   // this.functionsService.logToConsole('In-patient detail : ngOnInit');
+    // this.functionsService.logToConsole('In-patient detail : ngOnInit');
   }
 
   updateDisplay(data: boolean) {
@@ -733,7 +758,8 @@ export class InPatientDetailPage {
               this.remarks = data.data.remarks;
               this.postData.ProfFee = data.data.professionalFee;
               this.postData.Remarks = data.data.remarks;
-              this.postData.DateCreated = this.functionsService.getSystemDateTime();
+              this.postData.DateCreated =
+                this.functionsService.getSystemDateTime();
               this.data[0].doctor_prof_fee = data.data.professionalFee;
               this.modalUpdate(
                 'SUCCESS',
@@ -754,7 +780,8 @@ export class InPatientDetailPage {
               this.remarks = data.data.remarks;
               this.postData.ProfFee = data.data.professionalFee;
               this.postData.Remarks = data.data.remarks;
-              this.postData.DateCreated = this.functionsService.getSystemDateTime();
+              this.postData.DateCreated =
+                this.functionsService.getSystemDateTime();
               this.data[0].doctor_prof_fee = data.data.professionalFee;
               this.modalUpdate(
                 'SUCCESS',
@@ -783,7 +810,8 @@ export class InPatientDetailPage {
                 this.remarks = data.data.remarks;
                 this.postData.ProfFee = data.data.professionalFee;
                 this.postData.Remarks = data.data.remarks;
-                this.postData.DateCreated = this.functionsService.getSystemDateTime();
+                this.postData.DateCreated =
+                  this.functionsService.getSystemDateTime();
                 this.data[0].doctor_prof_fee = data.data.professionalFee;
                 this.modalUpdate(
                   'SUCCESS',
@@ -894,17 +922,18 @@ export class InPatientDetailPage {
 
   checkAppearance() {
     this.functionsService.logToConsole('checkAppearance');
-    var values = JSON.parse('[' + atob(localStorage.getItem("user_settings"))+ ']');
+    var values = JSON.parse(
+      '[' + atob(localStorage.getItem('user_settings')) + ']'
+    );
     let dr_username = atob(localStorage.getItem('username'));
-    values.forEach(element => {
+    values.forEach((element) => {
       this.functionsService.logToConsole(element.darkmode);
-      if(element.darkmode == 1){
-        this.renderer.setAttribute(document.body,'color-theme','dark');
-      }else{
-        this.renderer.setAttribute(document.body,'color-theme','light');
+      if (element.darkmode == 1) {
+        this.renderer.setAttribute(document.body, 'color-theme', 'dark');
+      } else {
+        this.renderer.setAttribute(document.body, 'color-theme', 'light');
       }
     });
-   
   }
 
   async presentlabtestresult() {
