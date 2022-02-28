@@ -1,4 +1,4 @@
-import { Component, HostListener, Renderer2 } from '@angular/core';
+import { Component, Renderer2 } from '@angular/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { StorageService } from '../services/storage/storage.service';
@@ -37,7 +37,7 @@ import { ChhAppNewsfeedComponent } from '../chh-web-components/chh-app-newsfeed/
 })
 export class TabNewsFeedPage implements OnInit {
   isDesktop: boolean;
-  isModalActive: boolean = false;
+
   newsfeed: any;
   constructor(
     private screensizeService: ScreenSizeService,
@@ -58,11 +58,6 @@ export class TabNewsFeedPage implements OnInit {
   items = [];
   numTimesLeft = 5;
   ngOnInit() {
-    const modalState = {
-      modal: true,
-      desc: 'fake state for our modal',
-    };
-    history.pushState(modalState, null);
     this.checkAppearance();
 
     this.doctorService.getNewsFeedV3().subscribe(
@@ -88,18 +83,16 @@ export class TabNewsFeedPage implements OnInit {
     }
   }
   async showaddmodal1(x) {
-    this.isModalActive = true;
     var data = x;
     const modal = await this.modalController.create({
       component: ChhAppNewsfeedComponent,
+
       componentProps: {
         backdropDismiss: true,
         data: data,
       },
     });
-    modal.onDidDismiss().then((data) => {
-      this.isModalActive = false;
-    });
+    modal.onDidDismiss().then((data) => {});
     return await modal.present();
   }
   doRefresh(event) {
@@ -129,15 +122,5 @@ export class TabNewsFeedPage implements OnInit {
         this.renderer.setAttribute(document.body, 'color-theme', 'light');
       }
     });
-  }
-
-  @HostListener('window:popstate', ['$event'])
-  dismissModal() {
-    this.modalController.dismiss();
-  }
-  ngOnDestroy() {
-    if (window.history.state.modal) {
-      history.back();
-    }
   }
 }
