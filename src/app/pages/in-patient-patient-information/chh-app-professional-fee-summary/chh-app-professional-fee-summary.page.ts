@@ -260,7 +260,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   }
   numberString: any = '0123456789.';
   isurancePF(event) {
-    console.log(event);
+    //console.log(event);
 
     if (event.which == 8) {
     } else {
@@ -271,6 +271,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     }
   }
   isurancePFchange() {
+    /*
     if (this.InsurancePF > 0) {
       let stringInsurancePF = this.InsurancePF.toString();
       if (stringInsurancePF.includes('-')) {
@@ -284,7 +285,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
       } else {
         this.nxtBtn = false;
       }
-    }
+    }*/
 
     if (this.InsurancePF > 0) {
       /*this.InsurancePF =
@@ -324,7 +325,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   txtPersonalPhilHealthPF: boolean = true;
 
   personalPhilhealth(event) {
-    console.log(event);
+    //console.log(event);
 
     if (event.keyCode == 8) {
     } else {
@@ -335,8 +336,8 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     }
   }
   personalPhilhealthChange() {
-    let stringPersonalPhilhealthPF = this.PersonalPhilhealthPF.toString();
-    console.log(stringPersonalPhilhealthPF);
+    /*  let stringPersonalPhilhealthPF = this.PersonalPhilhealthPF.toString();
+    //console.log(stringPersonalPhilhealthPF);
 
     if (stringPersonalPhilhealthPF.includes('-')) {
       this.nxtBtn = true;
@@ -348,7 +349,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
       this.nxtBtn = true;
     } else {
       this.nxtBtn = false;
-    }
+    }*/
 
     if (this.PersonalPhilhealthPF > 0) {
       this.PersonalPhilhealthShowVat = true;
