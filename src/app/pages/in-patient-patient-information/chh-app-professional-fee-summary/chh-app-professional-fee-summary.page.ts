@@ -246,6 +246,21 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   }
   isurancePFchange() {
     if (this.InsurancePF > 0) {
+      let stringInsurancePF = this.InsurancePF.toString();
+      if (stringInsurancePF.includes('-')) {
+        this.nxtBtn = true;
+      } else {
+        this.nxtBtn = false;
+      }
+      let dotCount = stringInsurancePF.split('.').length - 1;
+      if (dotCount >= 2) {
+        this.nxtBtn = true;
+      } else {
+        this.nxtBtn = false;
+      }
+    }
+
+    if (this.InsurancePF > 0) {
       /*this.InsurancePF =
         (this.InsurancePF / this.InsurancePF) * this.InsurancePF;*/
       this.InsuranceShowVat = true;
@@ -290,6 +305,23 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
         return false;
       }
     }
+  }
+  personalPhilhealthChange() {
+    if (this.PersonalPhilhealthPF > 0) {
+      let stringPersonalPhilhealthPF = this.PersonalPhilhealthPF.toString();
+      if (stringPersonalPhilhealthPF.includes('-')) {
+        this.nxtBtn = true;
+      } else {
+        this.nxtBtn = false;
+      }
+      let dotCount = stringPersonalPhilhealthPF.split('.').length - 1;
+      if (dotCount >= 2) {
+        this.nxtBtn = true;
+      } else {
+        this.nxtBtn = false;
+      }
+    }
+
     if (this.PersonalPhilhealthPF > 0) {
       this.PersonalPhilhealthShowVat = true;
       this.txtPersonalPhilHealthPF = false;
@@ -298,7 +330,6 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
       this.txtPersonalPhilHealthPF = true;
     }
   }
-
   philhealthPF() {
     if (this.PhilhealthPF > 0) {
       this.nxtBtn = false;

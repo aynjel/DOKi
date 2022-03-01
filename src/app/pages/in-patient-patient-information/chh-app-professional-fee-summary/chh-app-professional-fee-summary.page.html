@@ -300,7 +300,8 @@ ______                         ______   _   _   _____   _____
       <ion-item lines="none">
         <ion-label>&#8369; </ion-label>
         <ion-input color="danger" type="number" inputmode="decimal" minlength="0" placeholder="0"
-          [(ngModel)]="PersonalPhilhealthPF" (keydown)="personalPhilhealth($event)"></ion-input>
+          [(ngModel)]="PersonalPhilhealthPF" (keydown)="personalPhilhealth($event)"
+          (ionChange)="personalPhilhealthChange()"></ion-input>
       </ion-item>
     </ion-card>
 
@@ -771,7 +772,8 @@ ______                         ______   _   _   _____   _____
                   <ion-item lines="none">
                     <ion-label>&#8369; </ion-label>
                     <ion-input color="danger" type="number" inputmode="decimal" minlength="0" placeholder="0"
-                      [(ngModel)]="PersonalPhilhealthPF" (keydown)="personalPhilhealth($event)"></ion-input>
+                      [(ngModel)]="PersonalPhilhealthPF" (keydown)="personalPhilhealth($event)"
+                      (ionChange)="personalPhilhealthChange()"></ion-input>
                   </ion-item>
                 </ion-card>
 
