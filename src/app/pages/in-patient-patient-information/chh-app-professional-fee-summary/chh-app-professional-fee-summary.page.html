@@ -80,12 +80,38 @@
       </div>
     </div>
     <ion-card mode="ios" *ngIf="!isDesktop ">
-      <ion-item lines="none">
+
+
+
+
+
+      <!--form>
+
+        <div class="form-group">
+          <label for="number">Number</label>
+          <input formControlName="number" id="number" type="text" class="form-control">
+        </div>
+
+      </form-->
+
+
+
+
+
+
+
+
+
+      <ion-item lines="none" [formGroup]="form">
         <ion-label>&#8369; </ion-label>
-        <ion-input color="danger" type="number" inputmode="decimal" placeholder="0" [(ngModel)]="InsurancePF"
-          (keydown)="isurancePF($event)" (ionChange)="isurancePFchange()">
-        </ion-input>
+        <ion-input color="danger" formControlName="InsurancePF" id="InsurancePF" type="number" class="form-control"
+          (ionChange)="isurancePFchange()" [(ngModel)]="InsurancePF" value="0"></ion-input>
       </ion-item>
+
+
+
+
+
     </ion-card>
     <ion-card mode="ios" *ngIf="!isDesktop && InsuranceShowVat">
       <ion-item lines="none">
@@ -297,12 +323,22 @@ ______                         ______   _   _   _____   _____
         </ion-item>
       </ion-card> -->
     <ion-card mode="ios" *ngIf="!isDesktop">
-      <ion-item lines="none">
+
+      <!--ion-item lines="none">
         <ion-label>&#8369; </ion-label>
         <ion-input color="danger" type="number" inputmode="decimal" minlength="0" placeholder="0"
           [(ngModel)]="PersonalPhilhealthPF" (keydown)="personalPhilhealth($event)"
           (ionChange)="personalPhilhealthChange()"></ion-input>
+      </ion-item-->
+
+      <ion-item lines="none" [formGroup]="form">
+        <ion-label>&#8369; </ion-label>
+        <ion-input color="danger" formControlName="PersonalPhilhealthPF" id="PersonalPhilhealthPF" type="number"
+          class="form-control" (ionChange)="personalPhilhealthChange()" [(ngModel)]="PersonalPhilhealthPF" value="0">
+        </ion-input>
       </ion-item>
+
+
     </ion-card>
 
     <ion-card mode="ios" *ngIf="!isDesktop && PersonalPhilhealthShowVat">
@@ -413,7 +449,7 @@ ______                         ______   _   _   _____   _____
           <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
           <ion-col size-xs="12" size-md="4" size-lg="4">
             <ion-button class="buttonActive" color="mango" size="default" expand="block" shape="round"
-              (click)="finishTransaction()" *ngIf="summary != 'summary'" disabled="{{nxtBtn}}">
+              (click)="finishTransaction()" *ngIf="summary != 'summary'" disabled="{{nxtBtn}}" [disabled]="!form.valid">
               Next
             </ion-button>
 
@@ -564,12 +600,26 @@ ______          _    _
                   </div>
                 </div>
                 <ion-card mode="ios">
-                  <ion-item lines="none">
+
+
+                  <!--ion-item lines="none">
                     <ion-label>&#8369; </ion-label>
                     <ion-input color="danger" type="number" inputmode="decimal" placeholder="0"
                       [(ngModel)]="InsurancePF" (keydown)="isurancePF($event)" (ionChange)="isurancePFchange()">
                     </ion-input>
+                  </ion-item-->
+
+
+                  <ion-item lines="none" [formGroup]="form">
+                    <ion-label>&#8369; </ion-label>
+                    <ion-input color="danger" formControlName="InsurancePF" id="InsurancePF" type="number"
+                      class="form-control" (ionChange)="isurancePFchange()" [(ngModel)]="InsurancePF" value="0">
+                    </ion-input>
                   </ion-item>
+
+
+
+
                 </ion-card>
                 <ion-card mode="ios" *ngIf="InsuranceShowVat">
                   <ion-item lines="none">
@@ -769,12 +819,24 @@ ______                         ______   _   _   _____   _____
       </ion-item>
     </ion-card> -->
                 <ion-card mode="ios">
-                  <ion-item lines="none">
+
+                  <!--ion-item lines="none">
                     <ion-label>&#8369; </ion-label>
                     <ion-input color="danger" type="number" inputmode="decimal" minlength="0" placeholder="0"
                       [(ngModel)]="PersonalPhilhealthPF" (keydown)="personalPhilhealth($event)"
                       (ionChange)="personalPhilhealthChange()"></ion-input>
+                  </ion-item-->
+
+                  <ion-item lines="none" [formGroup]="form">
+                    <ion-label>&#8369; </ion-label>
+                    <ion-input color="danger" formControlName="PersonalPhilhealthPF" id="PersonalPhilhealthPF"
+                      type="number" class="form-control" (ionChange)="personalPhilhealthChange()"
+                      [(ngModel)]="PersonalPhilhealthPF" value="0">
+                    </ion-input>
                   </ion-item>
+
+
+
                 </ion-card>
 
                 <ion-card mode="ios" *ngIf="PersonalPhilhealthShowVat">
@@ -886,7 +948,7 @@ _____   _
 
 
               <ion-button class="buttonActive" color="mango" size="default" expand="block" shape="round"
-                (click)="finishTransaction()" *ngIf="summary != 'summary'">
+                (click)="finishTransaction()" *ngIf="summary != 'summary'" [disabled]="!form.valid">
                 Next
               </ion-button>
             </ion-col>

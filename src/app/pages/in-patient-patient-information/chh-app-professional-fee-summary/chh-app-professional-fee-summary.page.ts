@@ -45,7 +45,12 @@ import {
   InPatientData,
   ProfessionalFeeModelv3,
 } from 'src/app/models/in-patient.model';
-
+import {
+  FormBuilder,
+  FormGroup,
+  FormControl,
+  Validators,
+} from '@angular/forms';
 @Component({
   selector: 'app-chh-app-professional-fee-summary',
   templateUrl: './chh-app-professional-fee-summary.page.html',
@@ -92,6 +97,8 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   professionalFeeModelv3: ProfessionalFeeModelv3 = new ProfessionalFeeModelv3();
   userSettingsModelv3: UserSettingsModelv3 = new UserSettingsModelv3();
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
+  form: FormGroup = new FormGroup({});
+  numRegex = /^-?\d*[.,]?\d{0,2}$/;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -109,7 +116,8 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     public messages: Messages,
     public storageService: StorageService,
     public constants: Constants,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private fb: FormBuilder
   ) {
     localStorage.setItem('modaled', '0');
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
@@ -118,11 +126,27 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
       }
       this.isDesktop = isDesktop;
     });
-
+    this.form = fb.group({
+      InsurancePF: [
+        '0',
+        [Validators.required, Validators.pattern(this.numRegex)],
+      ],
+      PersonalPhilhealthPF: [
+        '0',
+        [Validators.required, Validators.pattern(this.numRegex)],
+      ],
+    });
     //this.functionsService.logToConsole('constructor');
   }
+  /*get f() {
+    return this.form.controls;
+  }*/
 
   ngOnInit() {
+    this.form.setValue({
+      InsurancePF: 0,
+      PersonalPhilhealthPF: 0,
+    });
     this.checkAppearance();
     //this.postData = JSON.parse(atob(sessionStorage.getItem("postData"))) as InPatientData;
     // this.postData = JSON.parse(atob(localStorage.getItem('postData'))) as InPatientData;
