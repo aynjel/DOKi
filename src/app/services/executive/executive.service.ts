@@ -187,4 +187,19 @@ export class ExecutiveService {
       data;
     return this.http.get(url, options);
   }
+  getDoctorsDirectory() {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json;charset=utf-8',
+    });
+    const options = { headers: headers, withCredentials: true };
+    const url = environment.apiRouterUrl + 'v3/DoctorsDirectory';
+    return this.http.get(url, options);
+  }
+
+  getDoctorInfo(data) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers: headers, withCredentials: true };
+    const url = environment.apiRouterUrl + 'v3/DoctorsDirectory/DoctorDetail';
+    return this.http.post(url, data, options);
+  }
 }

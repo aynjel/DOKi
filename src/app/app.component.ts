@@ -41,9 +41,19 @@ export class AppComponent {
       icon: 'person-circle-outline',
     },
     {
+      title: 'Physician Directory',
+      url: '/executive/directory',
+      icon: 'book-outline',
+    },
+    {
       title: 'Case Rates',
       url: '/executive/caserates',
       icon: 'file-tray-full-outline',
+    },
+    {
+      title: 'Log Out',
+      url: 'logout',
+      icon: 'log-out-outline',
     },
   ];
   constructor(
@@ -185,18 +195,23 @@ export class AppComponent {
     await alert.present();
   }
   logout() {
-    this.revokeTokenV3.jwt = this.functionsService.getcookie('refreshToken');
-    localStorage.setItem('torevoketoken', '1');
-    this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe(
-      (res: any) => {
-        this.functionsService.logToConsole(res);
-      },
-      (error) => {},
-      () => {
-        let dr_username = atob(localStorage.getItem('username'));
-        this.logoutService.out();
-      }
+    let dr_username = atob(localStorage.getItem('username'));
+    this.revokeTokenV3 = new RevokeTokenV3();
+    this.revokeTokenV3.jwt = decodeURIComponent(
+      this.functionsService.getcookie('refreshToken')
     );
+    this.doctorService
+      .revokeTokenV3(this.revokeTokenV3)
+      .subscribe((res: any) => {
+        this.functionsService.logToConsole(res);
+      });
+
+    this.logoutService.out();
+  }
+  whattodo(data) {
+    if (data == 'logout') {
+      this.logout();
+    }
   }
   @HostListener('window:resize', ['$event'])
   private onResize(event) {

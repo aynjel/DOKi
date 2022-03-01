@@ -7,55 +7,76 @@ const routes: Routes = [
   {
     path: '',
     component: TabsPage,
-    canActivate:[HomeGuard], 
-    resolve:{
-      userData: UserDataResolver
+    canActivate: [HomeGuard],
+    resolve: {
+      userData: UserDataResolver,
     },
     children: [
       {
         path: 'in-patients',
-        loadChildren: () => import('../tab-in-patients/tab-in-patients.module').then(m => m.TabInPatientsPageModule)
+        loadChildren: () =>
+          import('../tab-in-patients/tab-in-patients.module').then(
+            (m) => m.TabInPatientsPageModule
+          ),
       },
       {
         path: 'in-patients/DN',
-        loadChildren: () => import('../tab-in-patients/tab-in-patients.module').then(m => m.TabInPatientsPageModule)
+        loadChildren: () =>
+          import('../tab-in-patients/tab-in-patients.module').then(
+            (m) => m.TabInPatientsPageModule
+          ),
       },
       {
         path: 'in-patients/AC',
-        loadChildren: () => import('../tab-in-patients/tab-in-patients.module').then(m => m.TabInPatientsPageModule)
+        loadChildren: () =>
+          import('../tab-in-patients/tab-in-patients.module').then(
+            (m) => m.TabInPatientsPageModule
+          ),
       },
       {
         path: 'appointments',
-        loadChildren: () => import('../tab-appointments/tab-appointments.module').then(m => m.TabAppointmentsPageModule)
+        loadChildren: () =>
+          import('../tab-appointments/tab-appointments.module').then(
+            (m) => m.TabAppointmentsPageModule
+          ),
       },
       {
         path: 'settings',
-        loadChildren: () => import('../tab-settings/tab-settings.module').then(m => m.TabSettingsPageModule)
-      },{
+        loadChildren: () =>
+          import('../tab-settings/tab-settings.module').then(
+            (m) => m.TabSettingsPageModule
+          ),
+      },
+      {
         path: 'dashboard',
-        loadChildren: () => import('../tab-dashboard/tab-dashboard.module').then(m => m.TabDashboardPageModule)
+        loadChildren: () =>
+          import('../tab-dashboard/tab-dashboard.module').then(
+            (m) => m.TabDashboardPageModule
+          ),
       },
       {
         path: 'news-feed',
-        loadChildren: () => import('../tab-news-feed/tab-news-feed.module').then( m => m.TabNewsFeedPageModule)
+        loadChildren: () =>
+          import('../tab-news-feed/tab-news-feed.module').then(
+            (m) => m.TabNewsFeedPageModule
+          ),
       },
       {
         path: '',
         redirectTo: '/menu/dashboard',
-        pathMatch: 'full'
-      }
-    ]
+        pathMatch: 'full',
+      },
+    ],
   },
   {
     path: 'menu',
     redirectTo: '/menu/tab-in-patients',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
-  
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class TabsPageRoutingModule {}

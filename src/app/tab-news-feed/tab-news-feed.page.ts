@@ -30,7 +30,6 @@ import { ChhAppChangePassPage } from '../chh-web-components/chh-app-change-pass/
 
 import { ChhAppNewsfeedComponent } from '../chh-web-components/chh-app-newsfeed/chh-app-newsfeed.component';
 
-
 @Component({
   selector: 'app-tab-news-feed',
   templateUrl: './tab-news-feed.page.html',
@@ -38,15 +37,14 @@ import { ChhAppNewsfeedComponent } from '../chh-web-components/chh-app-newsfeed/
 })
 export class TabNewsFeedPage implements OnInit {
   isDesktop: boolean;
-  
-  newsfeed:any;
-  constructor(
 
+  newsfeed: any;
+  constructor(
     private screensizeService: ScreenSizeService,
     private modalController: ModalController,
-    private doctorService: DoctorService,    private renderer: Renderer2,
+    private doctorService: DoctorService,
+    private renderer: Renderer2,
     public functionsService: FunctionsService
-
   ) {
     this.functionsService.logToConsole('In-patient : Constructor');
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
@@ -55,10 +53,10 @@ export class TabNewsFeedPage implements OnInit {
       }
       this.isDesktop = isDesktop;
     });
-    this.addMoreItems();  
+    this.addMoreItems();
   }
-  items = [];  
-  numTimesLeft = 5;  
+  items = [];
+  numTimesLeft = 5;
   ngOnInit() {
     this.checkAppearance();
 
@@ -67,59 +65,44 @@ export class TabNewsFeedPage implements OnInit {
         this.newsfeed = res;
       },
       (error) => {},
-      () => {
-
-      }
+      () => {}
     );
-
-
   }
 
-
-
-
-  loadData(event) {  
-    setTimeout(() => {  
-      this.functionsService.logToConsole('Done');  
-      this.addMoreItems();  
-      //this.numTimesLeft -= 1;  
-      event.target.complete();  
-    }, 500);  
-  }  
-  addMoreItems() {  
-    for (let i = 0; i < 10; i++) {  
-      this.items.push(i);  
-    }  
-  }  
+  loadData(event) {
+    setTimeout(() => {
+      this.functionsService.logToConsole('Done');
+      this.addMoreItems();
+      //this.numTimesLeft -= 1;
+      event.target.complete();
+    }, 500);
+  }
+  addMoreItems() {
+    for (let i = 0; i < 10; i++) {
+      this.items.push(i);
+    }
+  }
   async showaddmodal1(x) {
-  
-    
     var data = x;
     const modal = await this.modalController.create({
       component: ChhAppNewsfeedComponent,
 
       componentProps: {
         backdropDismiss: true,
-        data: data
+        data: data,
       },
     });
-    modal.onDidDismiss().then((data) => {
-
-    });
+    modal.onDidDismiss().then((data) => {});
     return await modal.present();
   }
   doRefresh(event) {
     setTimeout(() => {
-
-      
       this.doctorService.getNewsFeedV3().subscribe(
         (res: any) => {
           this.newsfeed = res;
         },
         (error) => {},
-        () => {
-  
-        }
+        () => {}
       );
       //location.reload();
       event.target.complete();
@@ -127,16 +110,17 @@ export class TabNewsFeedPage implements OnInit {
   }
   checkAppearance() {
     this.functionsService.logToConsole('checkAppearance');
-    var values = JSON.parse('[' + atob(localStorage.getItem("user_settings"))+ ']');
+    var values = JSON.parse(
+      '[' + atob(localStorage.getItem('user_settings')) + ']'
+    );
     let dr_username = atob(localStorage.getItem('username'));
-    values.forEach(element => {
+    values.forEach((element) => {
       this.functionsService.logToConsole(element.darkmode);
-      if(element.darkmode == 1){
-        this.renderer.setAttribute(document.body,'color-theme','dark');
-      }else{
-        this.renderer.setAttribute(document.body,'color-theme','light');
+      if (element.darkmode == 1) {
+        this.renderer.setAttribute(document.body, 'color-theme', 'dark');
+      } else {
+        this.renderer.setAttribute(document.body, 'color-theme', 'light');
       }
     });
-   
   }
 }

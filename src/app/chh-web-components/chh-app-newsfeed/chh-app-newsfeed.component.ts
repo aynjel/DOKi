@@ -1,4 +1,4 @@
-import { Component, OnInit,  Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -8,15 +8,26 @@ import { ModalController } from '@ionic/angular';
 })
 export class ChhAppNewsfeedComponent implements OnInit {
   @Input() data: any;
-  constructor(    public modalController: ModalController) { }
+  constructor(public modalController: ModalController) {}
 
   ngOnInit() {
-    //console.log('-----------------');
-    //console.log(this.data);
+    const modalState = {
+      modal: true,
+      desc: 'fake state for our modal',
+    };
+    history.pushState(modalState, null);
   }
   async closeModal() {
     await this.modalController.dismiss('none');
   }
 
-
+  @HostListener('window:popstate', ['$event'])
+  dismissModal() {
+    this.modalController.dismiss();
+  }
+  ngOnDestroy() {
+    if (window.history.state.modal) {
+      history.back();
+    }
+  }
 }
