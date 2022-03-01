@@ -307,19 +307,19 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     }
   }
   personalPhilhealthChange() {
-    if (this.PersonalPhilhealthPF > 0) {
-      let stringPersonalPhilhealthPF = this.PersonalPhilhealthPF.toString();
-      if (stringPersonalPhilhealthPF.includes('-')) {
-        this.nxtBtn = true;
-      } else {
-        this.nxtBtn = false;
-      }
-      let dotCount = stringPersonalPhilhealthPF.split('.').length - 1;
-      if (dotCount >= 2) {
-        this.nxtBtn = true;
-      } else {
-        this.nxtBtn = false;
-      }
+    let stringPersonalPhilhealthPF = this.PersonalPhilhealthPF.toString();
+    console.log(stringPersonalPhilhealthPF);
+
+    if (stringPersonalPhilhealthPF.includes('-')) {
+      this.nxtBtn = true;
+    } else {
+      this.nxtBtn = false;
+    }
+    let dotCount = stringPersonalPhilhealthPF.split('.').length - 1;
+    if (dotCount >= 2) {
+      this.nxtBtn = true;
+    } else {
+      this.nxtBtn = false;
     }
 
     if (this.PersonalPhilhealthPF > 0) {
