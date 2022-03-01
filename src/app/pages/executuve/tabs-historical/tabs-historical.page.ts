@@ -198,7 +198,7 @@ export class TabsHistoricalPage implements OnInit {
     );
   }
   monthTrendYear() {
-    console.log(this.yearTreandTO);
+    //console.log(this.yearTreandTO);
     this.generateMonthlyTotalAdmissions();
   }
   monthTrendFromTo() {
@@ -217,7 +217,7 @@ export class TabsHistoricalPage implements OnInit {
         this.MTACeb.push(this.MTACebSet[i]);
         this.MTAMan.push(this.MTAManSet[i]);
       }
-      console.log(this.MTACategory);
+      //console.log(this.MTACategory);
 
       this.populateMontlyTotalAdmissions();
     }
@@ -232,7 +232,7 @@ export class TabsHistoricalPage implements OnInit {
     await this.loading.present();
 
     const { role, data } = await this.loading.onDidDismiss();
-    //////////console.log('Loading dismissed!');
+    ////////////console.log('Loading dismissed!');
   }
   public async dismissLoading(): Promise<void> {
     if (this.loading) {

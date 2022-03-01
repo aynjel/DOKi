@@ -6,6 +6,7 @@ import {
   ViewContainerRef,
   ComponentFactoryResolver,
   Renderer2,
+  HostListener,
 } from '@angular/core';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { ExecutiveService } from 'src/app/services/executive/executive.service';
@@ -33,7 +34,12 @@ export class DoctordirectorydetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.gender);
+    const modalState = {
+      modal: true,
+      desc: 'fake state for our modal',
+    };
+    history.pushState(modalState, null);
+    //console.log(this.gender);
     this.jsonData.doctorCode = this.mdcode;
     this.executiveService.getDoctorInfo(this.jsonData).subscribe(
       (res: any) => {
@@ -41,7 +47,7 @@ export class DoctordirectorydetailComponent implements OnInit {
       },
       (error) => {},
       () => {
-        console.log(this.information);
+        //console.log(this.information);
       }
     );
   }
@@ -54,11 +60,20 @@ export class DoctordirectorydetailComponent implements OnInit {
     await this.loading.present();
 
     const { role, data } = await this.loading.onDidDismiss();
-    //////////console.log('Loading dismissed!');
+    ////////////console.log('Loading dismissed!');
   }
   async closemodal() {
     this.modalController.dismiss({
       dismissed: true,
     });
+  }
+  @HostListener('window:popstate', ['$event'])
+  dismissModal() {
+    this.modalController.dismiss();
+  }
+  ngOnDestroy() {
+    if (window.history.state.modal) {
+      history.back();
+    }
   }
 }

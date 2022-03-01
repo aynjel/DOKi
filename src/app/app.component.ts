@@ -209,7 +209,6 @@ export class AppComponent {
     this.logoutService.out();
   }
   whattodo(data) {
-    console.log(data);
     if (data == 'logout') {
       this.logout();
     }
