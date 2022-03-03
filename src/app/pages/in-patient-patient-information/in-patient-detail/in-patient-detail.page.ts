@@ -557,7 +557,7 @@ export class InPatientDetailPage {
         console.log('call done');
       }
     );*/
-    //this.getProgressNotes();
+    this.getProgressNotes();
   }
   getProgressNotes() {
     this.progessNotes = [];
