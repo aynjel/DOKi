@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { IonicModule } from "@ionic/angular";
 import { ChhAppLogoSmComponent } from "./chh-app-logo-sm.component";
 
@@ -6,7 +6,7 @@ describe("ChhAppLogoSmComponent", () => {
   let component: ChhAppLogoSmComponent;
   let fixture: ComponentFixture<ChhAppLogoSmComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ChhAppLogoSmComponent],
       imports: [IonicModule.forRoot()],

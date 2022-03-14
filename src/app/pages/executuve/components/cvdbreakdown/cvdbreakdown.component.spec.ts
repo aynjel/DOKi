@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { CvdbreakdownComponent } from './cvdbreakdown.component';
@@ -7,7 +7,7 @@ describe('CvdbreakdownComponent', () => {
   let component: CvdbreakdownComponent;
   let fixture: ComponentFixture<CvdbreakdownComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ CvdbreakdownComponent ],
       imports: [IonicModule.forRoot()]

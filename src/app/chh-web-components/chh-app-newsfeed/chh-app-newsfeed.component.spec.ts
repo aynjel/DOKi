@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { ChhAppNewsfeedComponent } from './chh-app-newsfeed.component';
@@ -7,7 +7,7 @@ describe('ChhAppNewsfeedComponent', () => {
   let component: ChhAppNewsfeedComponent;
   let fixture: ComponentFixture<ChhAppNewsfeedComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ChhAppNewsfeedComponent ],
       imports: [IonicModule.forRoot()]
