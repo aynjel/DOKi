@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { AuthConstants, Consta } from '../../../config/auth-constants';
 import { BehaviorSubject } from 'rxjs';
@@ -25,11 +25,15 @@ Heatmap(HighCharts);
 // Load the exporting module.
 import Exporting from 'highcharts/modules/exporting';
 import { ThrowStmt } from '@angular/compiler';
-import { LoadingController, ModalController } from '@ionic/angular';
+import {
+  IonDatetime,
+  LoadingController,
+  ModalController,
+} from '@ionic/angular';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 // Initialize exporting module.
 //Exporting(HighCharts);
-
+import { format, parseISO } from 'date-fns';
 @Component({
   selector: 'app-tabs-erlist',
   templateUrl: './tabs-erlist.page.html',
@@ -47,6 +51,8 @@ export class TabsErlistPage implements OnInit {
   segmentModel: any = 'Clean ER';
   segmentModel1: any = 'ALL';
   maxTime: any;
+
+  dateValue = '2021-12-31';
   constructor(
     private storageService: StorageService,
     private router: Router,
@@ -66,13 +72,45 @@ export class TabsErlistPage implements OnInit {
 
       this.isDesktop = isDesktop;
     });
+    this.setDate();
   }
+
+  setDate() {
+    let date1 = new Date(this.dateValue);
+
+    let day1 = date1.getDate();
+    let month1 = date1.getMonth() + 1;
+    let year1 = date1.getFullYear();
+    let sendDatedateToday =
+      ('0' + month1).slice(-2) + '/' + ('0' + day1).slice(-2) + '/' + year1;
+    let sendDatedateValue =
+      year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
+    this.dateValue = sendDatedateValue;
+    this.dateToday = sendDatedateToday;
+    console.log(this.dateValue);
+  }
+  formatDate(value: string) {
+    let date1 = new Date(value);
+    let day1 = date1.getDate();
+    let month1 = date1.getMonth() + 1;
+    let year1 = date1.getFullYear();
+    let sendDatedateToday =
+      ('0' + month1).slice(-2) + '/' + ('0' + day1).slice(-2) + '/' + year1;
+    let sendDatedateValue =
+      year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
+    this.dateValue = sendDatedateValue;
+    this.dateToday = sendDatedateToday;
+    this.dateChanged();
+  }
+  /*********************************************/
   settings() {
     this.router.navigate(['/executive/settings']);
   }
 
   ngOnInit() {
-    this.getErwaitlist('12/31/2021');
+    this.formatDate(this.dateToday);
+    //this.getErwaitlist('12/31/2021');
+    // this.setDate();
   }
   showSkeleton: boolean = false;
   noData: boolean = false;
@@ -178,8 +216,9 @@ export class TabsErlistPage implements OnInit {
     let day1 = date1.getDate();
     let month1 = date1.getMonth() + 1;
     let year1 = date1.getFullYear();
-    let sendDate = ('0' + month1).slice(-2) + '/' + ('0' + day1).slice(-2) + '/' + year1;
-    
+    let sendDate =
+      ('0' + month1).slice(-2) + '/' + ('0' + day1).slice(-2) + '/' + year1;
+
     //console.log(this.maxTime);
     this.listOfPatients = [];
     this.listOfPatientsTemp1 = [];

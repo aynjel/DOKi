@@ -37,6 +37,7 @@
     "@teamhive/lottie-player": "^1.0.0",
     "angular-user-idle": "^2.2.5",
     "capacitor-datepicker": "0.0.2",
+    "date-fns": "^2.28.0",
     "goog-webfont-dl": "^1.0.4",
     "highcharts": "^8.1.2",
     "ionic-text-avatar": "^1.1.0",
