@@ -198,10 +198,12 @@ export class TabsHistoricalPage implements OnInit {
     );
   }
   monthTrendYear() {
-    //console.log(this.yearTreandTO);
+    //////console.log(this.yearTreandTO);
     this.generateMonthlyTotalAdmissions();
   }
   monthTrendFromTo() {
+    //console.log('monthTrendTo', this.monthTrendTo);
+    //console.log('monthTrendFrom', this.monthTrendFrom);
     if (this.monthTrendTo >= this.monthTrendFrom) {
       //this.MTA.destroy();
       // this.MonthlyTotalAdmissionsCeb = [300, 452, 700];
@@ -217,7 +219,7 @@ export class TabsHistoricalPage implements OnInit {
         this.MTACeb.push(this.MTACebSet[i]);
         this.MTAMan.push(this.MTAManSet[i]);
       }
-      //console.log(this.MTACategory);
+      //////console.log(this.MTACategory);
 
       this.populateMontlyTotalAdmissions();
     }
@@ -232,7 +234,7 @@ export class TabsHistoricalPage implements OnInit {
     await this.loading.present();
 
     const { role, data } = await this.loading.onDidDismiss();
-    ////////////console.log('Loading dismissed!');
+    ////////////////console.log('Loading dismissed!');
   }
   public async dismissLoading(): Promise<void> {
     if (this.loading) {
@@ -241,5 +243,91 @@ export class TabsHistoricalPage implements OnInit {
   }
   ngOnInit() {
     this.generateMonthlyTotalAdmissions();
+    this.setDateFromTo();
+  }
+  monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  dateTodayFrom;
+  dateTodayTo;
+  dateValueFrom = '2012-01-15';
+  dateValueTo = '2012-12-15';
+  dateValueYear = '2022-01-15';
+  dateTodayYear;
+  setDateFromTo() {
+    let date1 = new Date(this.dateValueFrom);
+    let day1 = date1.getDate();
+    let month1 = date1.getMonth() + 1;
+    let year1 = date1.getFullYear();
+    let sendDatedateValue =
+      year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
+    this.dateValueFrom = sendDatedateValue;
+    this.dateTodayFrom = this.monthNames[month1 - 1];
+
+    let date2 = new Date(this.dateValueTo);
+    let day2 = date2.getDate();
+    let month2 = date2.getMonth() + 1;
+    let year2 = date2.getFullYear();
+    let sendDatedateValue2 =
+      year2 + '-' + ('0' + month2).slice(-2) + '-' + ('0' + day2).slice(-2);
+    this.dateValueTo = sendDatedateValue2;
+    this.dateTodayTo = this.monthNames[month2 - 1];
+
+    let date3 = new Date();
+    console.log(date3);
+
+    let day3 = date3.getDate();
+    let month3 = date3.getMonth() + 1;
+    let year3 = date3.getFullYear();
+    console.log(year3);
+    let sendDatedateValue3 =
+      year3 + '-' + ('0' + month3).slice(-2) + '-' + ('0' + day3).slice(-2);
+    this.dateValueYear = sendDatedateValue3;
+    this.dateTodayYear = year3;
+  }
+  formatDate(fromtoyear, value: string) {
+    if (fromtoyear == 'from') {
+      let date1 = new Date(value);
+      let month1 = date1.getMonth() + 1;
+      let day1 = date1.getDate();
+      let year1 = date1.getFullYear();
+      this.dateValueFrom =
+        year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
+      this.monthTrendFrom = ('0' + month1).slice(-2);
+      this.dateTodayFrom = this.monthNames[month1 - 1];
+      this.monthTrendFromTo();
+    } else if (fromtoyear == 'to') {
+      let date1 = new Date(value);
+      let month1 = date1.getMonth() + 1;
+      let day1 = date1.getDate();
+      let year1 = date1.getFullYear();
+      this.dateValueTo =
+        year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
+      this.monthTrendTo = ('0' + month1).slice(-2);
+      this.dateTodayTo = this.monthNames[month1 - 1];
+      this.monthTrendFromTo();
+    } else if (fromtoyear == 'year') {
+      let date1 = new Date(value);
+      let month1 = date1.getMonth() + 1;
+      let day1 = date1.getDate();
+      let year1 = date1.getFullYear();
+      this.yearTreandTO = year1;
+      this.dateTodayYear = year1;
+      this.dateValueYear =
+        year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
+      this.monthTrendYear();
+    }
   }
 }

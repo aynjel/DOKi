@@ -948,7 +948,7 @@ export class TabsDashboardPage implements OnInit {
     var values = this.TotalPxTypesBySite;
     const modal = await this.modalController.create({
       component: DashboardgraphComponent,
-      cssClass: 'my-custom-modal-css',
+      cssClass: 'ion5modal',
       componentProps: {
         data: values,
         CritnCrit: CritnCrit,
