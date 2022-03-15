@@ -40,16 +40,16 @@
         </ion-item-->
 
 
-        <ion-item button="true" id="open-modal">
+        <ion-item button="true" id="open-modal" *ngIf="!isDesktop">
           <ion-icon icon="calendar-outline" slot="start" color="mango"></ion-icon>
           <ion-label>Pick Date</ion-label>
           <ion-text slot="end">{{ dateToday }}</ion-text>
         </ion-item>
-        <ion-modal trigger="open-modal" show-backdrop="true" class="ion6modal">
+        <ion-modal trigger="open-modal" show-backdrop="true" class="ion6modal" *ngIf="!isDesktop">
           <ng-template>
             <ion-content class="blur testssss" style="width:100% !important">
               <ion-datetime #popoverDatetime presentation="date" (ionChange)="formatDate(popoverDatetime.value)"
-                showDefaultButtons="true" [value]="dateValue" min="1994-03-14" max="2012-12-09">
+                showDefaultButtons="true" [value]="dateValue">
               </ion-datetime>
             </ion-content>
           </ng-template>
@@ -104,12 +104,23 @@
 
       <ion-col size-md="4" size-lg="3" *ngIf="isDesktop">
         <ion-card mode="ios" class="pointer">
-          <ion-item style="font-size: 13px !important;">
-            <ion-label>Select Start Date (MM-DD-YY)</ion-label>
-            <ion-datetime displayFormat="MM DD YY" placeholder="Select Date" [(ngModel)]="dateToday"
-              (ionChange)="dateChanged()">
-            </ion-datetime>
+          <ion-item button="true" id="open-modal">
+            <ion-icon icon="calendar-outline" slot="start" color="mango"></ion-icon>
+            <ion-label>Pick Date</ion-label>
+            <ion-text slot="end">{{ dateToday }}</ion-text>
           </ion-item>
+          <ion-modal trigger="open-modal" show-backdrop="true" class="ion6modal">
+            <ng-template>
+              <ion-content class="blur testssss" style="width:100% !important">
+                <ion-datetime #popoverDatetime presentation="date" (ionChange)="formatDate(popoverDatetime.value)"
+                  showDefaultButtons="true" [value]="dateValue">
+                </ion-datetime>
+              </ion-content>
+            </ng-template>
+          </ion-modal>
+
+
+
           <ion-segment scrollable value="heart" class="scrollable-element" (ionChange)="segmentChanged()"
             [(ngModel)]="segmentModel" value="Clean ER">
             <!--ion-segment-button value="ALL">
