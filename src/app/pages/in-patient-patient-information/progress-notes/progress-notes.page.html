@@ -1,4 +1,4 @@
-<ion-header mode="md" class="ion-no-border" *ngIf="!isDesktop">
+<ion-header mode="md" class="ion-no-border">
   <ion-toolbar color="mango">
     <span class="padding-left-10" routerLink="/menu/in-patients/{{patient_id}}" routerDirection="backward"
       color="chh-css-primary2">
@@ -34,6 +34,8 @@
             <ion-card class="pointer">
               <ion-item>
                 Day #<b>{{x.notes_id}}</b>
+                <ion-button size="small" fill="outline" slot="end" (click)="viewhistory(x.trans_no)">View History
+                </ion-button>
                 <!--ion-button fill="outline" slot="end" (click)="viewhistory(x.trans_no)">
                   View History</ion-button>
                 <ion-button fill="outline" color="secondary" slot="end" (click)="detail(x)">

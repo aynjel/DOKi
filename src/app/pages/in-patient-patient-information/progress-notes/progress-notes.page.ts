@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
 import { FunctionsService } from 'src/app/shared/functions/functions.service';
-
+import { ProgressnotesHistoryComponent } from 'src/app/chh-web-components/progressnotes-history/progressnotes-history.component';
 @Component({
   selector: 'app-progress-notes',
   templateUrl: './progress-notes.page.html',
@@ -24,7 +25,8 @@ export class ProgressNotesPage implements OnInit {
     private screensizeService: ScreenSizeService,
     private activatedRoute: ActivatedRoute,
     private doctorService: DoctorService,
-    private functionService: FunctionsService
+    private functionService: FunctionsService,
+    public modalController: ModalController
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -95,5 +97,32 @@ export class ProgressNotesPage implements OnInit {
       this.ngOnInit();
       event.target.complete();
     }, 1000);
+  }
+  async options(data) {
+    const options = {
+      component: ProgressnotesHistoryComponent,
+      cssClass: 'ion5modalviewedithistory',
+      swipeToClose: true,
+      breakpoints: [0, 0.5, 1],
+      initialBreakpoint: 1,
+      backdropDismiss: false,
+      componentProps: { data: data },
+    };
+    const modal = await this.modalController.create(options);
+    await modal.present();
+    // const {data} = await modal.onWillDismiss();
+  }
+  async viewhistory(data) {
+    console.log(data);
+
+    const modal = await this.modalController.create({
+      component: ProgressnotesHistoryComponent,
+      backdropDismiss: false,
+      componentProps: { data: data },
+    });
+    modal.onDidDismiss().then((data) => {
+      console.log(data);
+    });
+    return await modal.present();
   }
 }

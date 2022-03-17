@@ -282,38 +282,25 @@ ______          _    _
         </app-chh-app-final-diagnosis>
       </ion-col>
       <ion-col size-lg="3" size-md="6" class=" max-height-82vh overflow-scroll">
-        <ion-card mode="ios">
+        <ion-card mode="ios" *ngIf="progNot_account_no != ''">
           <ion-list>
             <ion-item style="padding-top: 10px;">
               <div class="ion-text-wrap"><b>Progress Notes</b><br /></div>
             </ion-item>
-            <ng-container>
-              <div *ngFor="let x of progessNotes">
-                <ion-item>
-                  Day #<b>{{x.notes_id}}</b>
-                </ion-item>
-                <cardshowhide [notes]="x.notes" [noteslength]="x.noteslength" [notesmall]="x.notessmall">
-                </cardshowhide>
-                <ion-footer>
-                  <ion-grid>
-                    <ion-row>
-                      <ion-col center text-center>
-                        <div style="padding:5px">Date Created : {{x.dateCreateConverted}}
-                          {{x.dateCreateTimeConverted}}
-                        </div>
-                      </ion-col>
-                      <ion-col center text-center>
-                        <div style="padding:5px">Date Updated : {{x.dateUpdateConverted}}
-                          {{x.dateUpdateTimeConverted}}
-                        </div>
-                      </ion-col>
-                    </ion-row>
-                  </ion-grid>
-                </ion-footer>
+            <ion-item style="padding-top: 10px;" lines="none">
+              <div class="ion-text-wrap">
+                <div *ngIf="progNot_InitDisplay" class="custom-font">
+                  <div [innerHTML]="progNot_InitDisplay">
+                  </div>
+                  <button (click)="showProgressNotes()">show
+                    more</button>
+
+                </div>
               </div>
-            </ng-container>
+            </ion-item>
           </ion-list>
         </ion-card>
+
       </ion-col>
 
       <ion-col size-lg="3" size-md="6" class=" max-height-82vh overflow-scroll">

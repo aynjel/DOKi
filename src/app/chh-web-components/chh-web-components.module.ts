@@ -50,6 +50,8 @@ import { CvdbreakdownComponent } from '../pages/executuve/components/cvdbreakdow
 
 import { DoctordirectorydetailComponent } from '../pages/executuve/components/doctordirectorydetail/doctordirectorydetail.component';
 import { CardshowhideComponent } from '../chh-web-components/cardshowhide/cardshowhide.component';
+import { ProgressnotesHistoryComponent } from './progressnotes-history/progressnotes-history.component';
+import { ProgressnotesHistoryCardComponent } from './progressnotes-history-card/progressnotes-history-card.component';
 @NgModule({
   declarations: [
     ChhAppLogoComponent,
@@ -85,6 +87,8 @@ import { CardshowhideComponent } from '../chh-web-components/cardshowhide/cardsh
     CvdbreakdownComponent,
     DoctordirectorydetailComponent,
     CardshowhideComponent,
+    ProgressnotesHistoryComponent,
+    ProgressnotesHistoryCardComponent,
   ],
   exports: [
     ChhAppLogoComponent,
@@ -120,6 +124,8 @@ import { CardshowhideComponent } from '../chh-web-components/cardshowhide/cardsh
     CvdbreakdownComponent,
     DoctordirectorydetailComponent,
     CardshowhideComponent,
+    ProgressnotesHistoryComponent,
+    ProgressnotesHistoryCardComponent,
   ],
   imports: [
     CommonModule,

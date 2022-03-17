@@ -399,7 +399,21 @@ export class DoctorService {
     });
     const options = { headers: headers, withCredentials: true };
     //const url = environment.apiResident + 'api/ProgressNotes/' + data;
-    const url = 'http://10.151.12.120/api/ProgressNotes/'+data;
+    const url = 'http://10.151.12.120/api/ProgressNotes/' + data;
+    return this.http.post(url, data, options);
+  }
+  getPatientProgressNotesHistory(data) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json;',
+    });
+    const options = { headers: headers, withCredentials: true };
+    const url = 'http://10.151.12.120/api/ProgressNotes/Logs/' + data;
+    return this.http.post(url, data, options);
+  }
+  addComment(data) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers: headers, withCredentials: true };
+    const url = 'http://10.151.12.120/api/ProgressNotesComment/Insert';
     return this.http.post(url, data, options);
   }
 }

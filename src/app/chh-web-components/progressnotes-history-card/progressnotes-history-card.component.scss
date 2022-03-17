@@ -1,18 +1,3 @@
-ion-card {
-  max-height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-ion-list {
-  overflow: hidden;
-  overflow-y: auto;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-}
-.groupList {
-  overflow: scroll;
-}
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&display=swap');
 
 .custom-font {

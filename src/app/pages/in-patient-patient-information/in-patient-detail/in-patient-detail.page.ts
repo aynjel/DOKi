@@ -621,6 +621,12 @@ export class InPatientDetailPage {
   }
   showProgressNotes() {
     if (this.isDesktop) {
+       this.router.navigate([
+         '/menu/in-patients/' +
+           this.patient_id +
+           '/progressnotes/' +
+           this.progNot_account_no,
+       ]);
     } else {
       this.router.navigate([
         '/menu/in-patients/' +
