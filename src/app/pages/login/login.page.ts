@@ -7,7 +7,6 @@ import { DoctorService } from '../../services/doctor/doctor.service';
 import { PatientService } from '../../services/patient/patient.service';
 import { StorageService } from '../../services/storage/storage.service';
 import { ToastService } from '../../services/toast/toast.service';
-import { BehaviorSubject, Subject } from 'rxjs';
 import { DoctorInfoGlobal } from '../../shared/doctor-info-global';
 import { LoginData } from '../../models/login-data.model';
 import {
@@ -51,6 +50,7 @@ import { ChhAppCaseratesComponent } from '../../chh-web-components/chh-app-caser
 import { tick } from '@angular/core/testing';
 import { ChhAppForgotPasswordComponent } from '../../chh-web-components/chh-app-forgot-password/chh-app-forgot-password.component';
 import { takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -1150,10 +1150,7 @@ export class LoginPage {
 
         /*For Doctors Portal */
   ionViewDidLeave() {
-    console.log(this.ngUnsubscribe);
-
     this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
-    console.log(this.ngUnsubscribe);
+    this.ngUnsubscribe.unsubscribe();
   }
 }

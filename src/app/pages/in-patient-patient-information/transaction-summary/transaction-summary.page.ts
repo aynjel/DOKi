@@ -35,17 +35,26 @@ import { ChhAppTestSerologyComponent } from '../../../chh-web-components/chh-app
 import { StorageService } from '../../../services/storage/storage.service';
 import { AuthConstants, Consta } from '../../../config/auth-constants';
 import { executionAsyncResource } from 'async_hooks';
-import { Constants, } from 'src/app/shared/constants';
+import { Constants } from 'src/app/shared/constants';
 import { CaseRatesPage } from '../../case-rates/case-rates.page';
 
-import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
-import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
+import {
+  UserSettingsModelv3,
+  LoginResponseModelv3,
+} from 'src/app/models/doctor';
+import {
+  InPatientData,
+  ProfessionalFeeModelv3,
+} from 'src/app/models/in-patient.model';
+import { takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
 @Component({
   selector: 'app-transaction-summary',
   templateUrl: './transaction-summary.page.html',
   styleUrls: ['./transaction-summary.page.scss'],
 })
 export class TransactionSummaryPage implements OnInit {
+  private ngUnsubscribe = new Subject();
   isDesktop: any;
   routerLinkBack: any;
   routerLinkBack1: any;
@@ -82,8 +91,8 @@ export class TransactionSummaryPage implements OnInit {
   site: any;
   day: any;
   moreOrLess: boolean = true;
-  professionalFeeModelv3 : ProfessionalFeeModelv3 = new ProfessionalFeeModelv3();
-  userSettingsModelv3 : UserSettingsModelv3 = new UserSettingsModelv3();
+  professionalFeeModelv3: ProfessionalFeeModelv3 = new ProfessionalFeeModelv3();
+  userSettingsModelv3: UserSettingsModelv3 = new UserSettingsModelv3();
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   constructor(
     private router: Router,
@@ -105,13 +114,16 @@ export class TransactionSummaryPage implements OnInit {
     private renderer: Renderer2,
     public nav: NavController
   ) {
-    localStorage.setItem("modaled","0");
-    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
-      if (this.isDesktop && !isDesktop) {
-        window.location.reload();
-      }
-      this.isDesktop = isDesktop;
-    });
+    localStorage.setItem('modaled', '0');
+    this.screensizeService
+      .isDesktopView()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((isDesktop) => {
+        if (this.isDesktop && !isDesktop) {
+          window.location.reload();
+        }
+        this.isDesktop = isDesktop;
+      });
   }
 
   ngOnInit() {
@@ -119,8 +131,9 @@ export class TransactionSummaryPage implements OnInit {
       this.moreOrLess = false;
     }
     //this.postData = JSON.parse(atob(localStorage.getItem('postData'))) as InPatientData;
-    this.professionalFeeModelv3 = JSON.parse(atob(localStorage.getItem('postData1')));
-
+    this.professionalFeeModelv3 = JSON.parse(
+      atob(localStorage.getItem('postData1'))
+    );
 
     this.data1 = this.professionalFeeModelv3.doctor_prof_fee;
     this.daysManaged = atob(localStorage.getItem('daysManaged'));
@@ -137,18 +150,15 @@ export class TransactionSummaryPage implements OnInit {
     }
     this.payvenueN = this.professionalFeeModelv3.payvenue;
 
-    if(this.professionalFeeModelv3.selected_payvenue == "Charity"){
-      this.payvenueN  = "xyz";
+    if (this.professionalFeeModelv3.selected_payvenue == 'Charity') {
+      this.payvenueN = 'xyz';
     }
-    
-    
+
     this.functionsService.logToConsole(this.professionalFeeModelv3);
-    
-    this.functionsService.logToConsole("data1 :" + this.data1);
-    this.functionsService.logToConsole("withVatN :" + this.withVatN);
-    this.functionsService.logToConsole("payvenueN :" + this.payvenueN);
 
-
+    this.functionsService.logToConsole('data1 :' + this.data1);
+    this.functionsService.logToConsole('withVatN :' + this.withVatN);
+    this.functionsService.logToConsole('payvenueN :' + this.payvenueN);
 
     if (this.professionalFeeModelv3.payvenue == 'W') {
       this.payvenue = 'Charity / PhilHealth';
@@ -223,62 +233,71 @@ export class TransactionSummaryPage implements OnInit {
       this.data[0].payvenue == 'A'
     ) {
       this.professionalFeeModelv3.old_prof_fee = this.data[0].doctor_prof_fee;
-     
-  
-      this.functionsService.logToConsole(JSON.stringify(this.professionalFeeModelv3));
-      this.doctorService.updatePFV3(this.professionalFeeModelv3).subscribe(
-        (res: any) => {
-          if (res == true) {
-            this.modalUpdate(
-              'SUCCESS',
-              'Successfully UPDATED your Professional Fee.'
-            );
-          } else {
-            this.functionsService.alert(
-              'UPDATING of Professional Fee was unsuccessful. Please try again.',
-              'Okay'
-            );
-            this.disableSubmit = false;
-          }
-        },
-        (error) => {
-          this.functionsService.alert(
-            'SAVING of Professional Fee was unsuccessful. Please try again.',
-            'Okay'
-          );
-          this.disableSubmit = false;
-        },
-        () => {}
+
+      this.functionsService.logToConsole(
+        JSON.stringify(this.professionalFeeModelv3)
       );
-    } else {
-      this.professionalFeeModelv3.old_prof_fee = 0;
-      this.functionsService.logToConsole(JSON.stringify(this.professionalFeeModelv3));
-      this.doctorService.insertPFV3(this.professionalFeeModelv3).subscribe(
-        (res: any) => {
-          this.functionsService.logToConsole(res);
-          
-          if (res == true) {
-            this.modalUpdate(
-              'SUCCESS',
-              'Thank you, Dok! You have successfully SAVED your Professional Fee.'
-            );
-          } else {
+      this.doctorService
+        .updatePFV3(this.professionalFeeModelv3)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(
+          (res: any) => {
+            if (res == true) {
+              this.modalUpdate(
+                'SUCCESS',
+                'Successfully UPDATED your Professional Fee.'
+              );
+            } else {
+              this.functionsService.alert(
+                'UPDATING of Professional Fee was unsuccessful. Please try again.',
+                'Okay'
+              );
+              this.disableSubmit = false;
+            }
+          },
+          (error) => {
             this.functionsService.alert(
               'SAVING of Professional Fee was unsuccessful. Please try again.',
               'Okay'
             );
             this.disableSubmit = false;
-          }
-        },
-        (error) => {
-          this.functionsService.alert(
-            'SAVING of Professional Fee was unsuccessful. Please try again.',
-            'Okay'
-          );
-          this.disableSubmit = false;
-        },
-        () => {}
+          },
+          () => {}
+        );
+    } else {
+      this.professionalFeeModelv3.old_prof_fee = 0;
+      this.functionsService.logToConsole(
+        JSON.stringify(this.professionalFeeModelv3)
       );
+      this.doctorService
+        .insertPFV3(this.professionalFeeModelv3)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(
+          (res: any) => {
+            this.functionsService.logToConsole(res);
+
+            if (res == true) {
+              this.modalUpdate(
+                'SUCCESS',
+                'Thank you, Dok! You have successfully SAVED your Professional Fee.'
+              );
+            } else {
+              this.functionsService.alert(
+                'SAVING of Professional Fee was unsuccessful. Please try again.',
+                'Okay'
+              );
+              this.disableSubmit = false;
+            }
+          },
+          (error) => {
+            this.functionsService.alert(
+              'SAVING of Professional Fee was unsuccessful. Please try again.',
+              'Okay'
+            );
+            this.disableSubmit = false;
+          },
+          () => {}
+        );
     }
   }
 
@@ -293,12 +312,12 @@ export class TransactionSummaryPage implements OnInit {
           handler: () => {
             this.disableSubmit = false;
             this.functionsService.logToConsole(this.isDesktop);
-            
+
             if (!this.isDesktop) {
               this.alertController.dismiss();
               //this.router.navigate(['menu/in-patients/']);
               this.router.navigate(['menu/in-patients/']).then(() => {
-              window.location.reload();
+                window.location.reload();
               });
             } else {
               this.alertController.dismiss();
@@ -329,6 +348,7 @@ export class TransactionSummaryPage implements OnInit {
     let dr_username = atob(localStorage.getItem('username'));
     this.patientService
       .getUserSettingsV2(dr_username)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((res: any) => {
         if (Object.keys(res).length >= 1) {
           let data = JSON.stringify(res);
@@ -355,5 +375,10 @@ export class TransactionSummaryPage implements OnInit {
           });
         }
       });
+  }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    // this.ngUnsubscribe.complete();
+    this.ngUnsubscribe.unsubscribe();
   }
 }

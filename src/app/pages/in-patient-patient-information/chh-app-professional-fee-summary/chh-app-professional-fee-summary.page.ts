@@ -51,12 +51,15 @@ import {
   FormControl,
   Validators,
 } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
 @Component({
   selector: 'app-chh-app-professional-fee-summary',
   templateUrl: './chh-app-professional-fee-summary.page.html',
   styleUrls: ['./chh-app-professional-fee-summary.page.scss'],
 })
 export class ChhAppProfessionalFeeSummaryPage implements OnInit {
+  private ngUnsubscribe = new Subject();
   isDesktop: any;
   routerLinkBack: any;
   routerLinkBack1: any;
@@ -120,12 +123,15 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     private fb: FormBuilder
   ) {
     localStorage.setItem('modaled', '0');
-    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
-      if (this.isDesktop && !isDesktop) {
-        window.location.reload();
-      }
-      this.isDesktop = isDesktop;
-    });
+    this.screensizeService
+      .isDesktopView()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((isDesktop) => {
+        if (this.isDesktop && !isDesktop) {
+          window.location.reload();
+        }
+        this.isDesktop = isDesktop;
+      });
     this.form = fb.group({
       InsurancePF: [
         '0',
@@ -497,5 +503,10 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   goToBottom() {
     window.scrollTo(document.body.scrollHeight, document.body.scrollHeight);
     //window.scrollY(document.body.scrollHeight);
+  }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    // this.ngUnsubscribe.complete();
+    this.ngUnsubscribe.unsubscribe();
   }
 }

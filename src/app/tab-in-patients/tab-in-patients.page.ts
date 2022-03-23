@@ -2,21 +2,12 @@ import { Component, Renderer2 } from '@angular/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { StorageService } from '../services/storage/storage.service';
-import { AuthConstants, Consta} from '../config/auth-constants';
+import { Consta } from '../config/auth-constants';
 
 import { DoctorService } from '../services/doctor/doctor.service';
-import {
-  ModalController,
-  AlertController,
-  NavController,
-} from '@ionic/angular';
-import { ChhAppPatientDetailsPage } from '../chh-web-components/chh-app-patient-details/chh-app-patient-details.page';
+import { ModalController, NavController } from '@ionic/angular';
 import { ScreenSizeService } from '../services/screen-size/screen-size.service';
 import { PopoverController } from '@ionic/angular';
-import { ChhAppInPatientModalPage } from '../chh-web-components/chh-app-in-patient-modal/chh-app-in-patient-modal.page';
-import { timeStamp } from 'console';
-import { DoctorInfoGlobal } from '../shared/doctor-info-global';
-import { LoginData } from '../models/login-data.model';
 import { InPatientData } from '../models/in-patient.model';
 import { Location } from '@angular/common';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
@@ -24,17 +15,22 @@ import { FunctionsService } from '../shared/functions/functions.service';
 import { Constants } from '../shared/constants';
 import { Messages } from '../shared/messages';
 import { PatientService } from '../services/patient/patient.service';
-import { InpatientModelInpatients,LoginResponseModelv3 } from '../models/doctor';
+import {
+  InpatientModelInpatients,
+  LoginResponseModelv3,
+} from '../models/doctor';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import { takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
 @Component({
   selector: 'app-tab-in-patients',
   templateUrl: 'tab-in-patients.page.html',
   styleUrls: ['tab-in-patients.page.scss'],
 })
 export class TabInPatientsPage {
-  inpatientModelInpatients = new InpatientModelInpatients;
+  inpatientModelInpatients = new InpatientModelInpatients();
   public logindata: LoginResponseModelv3;
   public inPatientData: InPatientData;
   isDesktop: boolean;
@@ -51,36 +47,36 @@ export class TabInPatientsPage {
   route: string;
   objecthandler: boolean = false;
   data: any = [];
+  private ngUnsubscribe = new Subject();
   constructor(
     private authService: AuthService,
     private router: Router,
-    private storageService: StorageService,
     private doctorService: DoctorService,
-    private modalController: ModalController,
     private screensizeService: ScreenSizeService,
-    private popover: PopoverController,
     private location: Location,
     public functionsService: FunctionsService,
     private renderer: Renderer2,
     protected $gaService: GoogleAnalyticsService,
     public constants: Constants,
     public messages: Messages,
-    private patientService: PatientService,
     public nav: NavController
   ) {
-    
-    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
-      if (this.isDesktop && !isDesktop) {
-        window.location.reload();
-      }
-      this.isDesktop = isDesktop;
-    });
-    router.events.subscribe((val) => {
+    this.screensizeService
+      .isDesktopView()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((isDesktop) => {
+        if (this.isDesktop && !isDesktop) {
+          window.location.reload();
+        }
+        this.isDesktop = isDesktop;
+      });
+    router.events.pipe(takeUntil(this.ngUnsubscribe)).subscribe((val) => {
       if (location.path() == '/menu/in-patients') {
         this.admittedOrDischarge = this.constants.CHH_SITE__VALUE__ALL; //"ALL";
         this.admittedOrDischargeLabel = '';
       } else if (location.path() == '/menu/in-patients/AC') {
-        this.admittedOrDischarge = this.constants.ADMISSION_STATUS__CODE__ADMITTED; //"AC";
+        this.admittedOrDischarge =
+          this.constants.ADMISSION_STATUS__CODE__ADMITTED; //"AC";
         this.admittedOrDischargeLabel =
           '(' +
           this.functionsService.convertAllFirstLetterToUpperCase(
@@ -88,7 +84,8 @@ export class TabInPatientsPage {
           ) +
           ')'; //"(Admitted)";
       } else if (location.path() == '/menu/in-patients/DN') {
-        this.admittedOrDischarge = this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE; //"DN";
+        this.admittedOrDischarge =
+          this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE; //"DN";
         this.admittedOrDischargeLabel = '(for Discharge)';
       }
     });
@@ -191,13 +188,14 @@ export class TabInPatientsPage {
 
   //Fired when the component routing to is about to animate into view.
   ionViewWillEnter() {
-
-    this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
+    this.logindata = <LoginResponseModelv3>(
+      this.authService.userData$.getValue()
+    );
     this.functionsService.logToConsole(this.logindata);
 
     this.dr_code = this.logindata.doctorCode;
-    this.inpatientModelInpatients.accountNo = "none";
-    
+    this.inpatientModelInpatients.accountNo = 'none';
+
     //this.inpatientModelInpatients.drCode = 'MD000175';
     this.inpatientModelInpatients.drCode = this.dr_code;
     this.inpatientModelInpatients.mode = Consta.mode;
@@ -225,7 +223,7 @@ export class TabInPatientsPage {
       });
     });*/
     this.functionsService.logToConsole('call patient');
-    
+
     this.callPatient(this.site);
   }
 
@@ -233,11 +231,11 @@ export class TabInPatientsPage {
   callPatient(data: any) {
     this.isFetchDone = false;
 
-
-      this.doctorService.getInPatientV3().subscribe(
+    this.doctorService
+      .getInPatientV3()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
         (res: any) => {
-
-          
           if (res.length) {
             this.objecthandler = true;
           } else {
@@ -269,7 +267,6 @@ export class TabInPatientsPage {
           this.isFetchDone = true;
         }
       );
-
   }
 
   //swipe down refresh
@@ -294,7 +291,7 @@ export class TabInPatientsPage {
     });
     this.functionsService.logToConsole( this.data);
   */
-    
+
     /*
   this.router.navigate(['menu/in-patients/', data]);
 */
@@ -319,7 +316,7 @@ export class TabInPatientsPage {
       this.callPatient(this.site);
     });*/
   }
-  
+
   locationAction(data: any) {
     if (
       data == this.constants.CHH_SITE__CODE__ALL /*"A"*/ ||
@@ -360,18 +357,20 @@ export class TabInPatientsPage {
   }
   checkAppearance() {
     this.functionsService.logToConsole('checkAppearance');
-    var values = JSON.parse('[' + atob(localStorage.getItem("user_settings"))+ ']');
+    var values = JSON.parse(
+      '[' + atob(localStorage.getItem('user_settings')) + ']'
+    );
     let dr_username = atob(localStorage.getItem('username'));
-    values.forEach(element => {
+    values.forEach((element) => {
       this.functionsService.logToConsole(element.darkmode);
-      if(element.darkmode == 1){
-        this.renderer.setAttribute(document.body,'color-theme','dark');
-      }else{
-        this.renderer.setAttribute(document.body,'color-theme','light');
+      if (element.darkmode == 1) {
+        this.renderer.setAttribute(document.body, 'color-theme', 'dark');
+      } else {
+        this.renderer.setAttribute(document.body, 'color-theme', 'light');
       }
     });
-    
-   /* this.patientService
+
+    /* this.patientService
       .getUserSettingsV2(dr_username)
       .subscribe((res: any) => {
         if (Object.keys(res).length >= 1) {
@@ -399,5 +398,10 @@ export class TabInPatientsPage {
           });
         }
       });*/
+  }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    // this.ngUnsubscribe.complete();
+    this.ngUnsubscribe.unsubscribe();
   }
 }
