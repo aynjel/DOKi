@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  ElementRef,
+  NgZone,
+} from '@angular/core';
 import {
   IonContent,
   IonList,
@@ -43,7 +50,8 @@ export class ProgressnotesHistoryComponent implements OnInit {
     private modalController: ModalController,
     // private residentService: ResidentService,
     private functionService: FunctionsService,
-    private doctorService: DoctorService
+    private doctorService: DoctorService,
+    private ngZone: NgZone
   ) {}
 
   ngOnInit() {
@@ -151,21 +159,51 @@ export class ProgressnotesHistoryComponent implements OnInit {
 
   private connect(): void {
     this._hubConnection = new HubConnectionBuilder()
-      .withUrl('http://10.151.12.120/notify')
+      .withUrl('http://10.151.12.120/chat')
       .build();
 
-    this._hubConnection.on('BroadcastMessage', (message: any) => {
-      console.log('message received');
-      console.log(this.progessNotes);
-      this.progessNotes = [];
-      console.log(this.progessNotes);
-
-      //this.getProgressNotesHistory();
+    this._hubConnection.on('broadcasttoresigroup', (message: any) => {
+      let txtMessage = '[' + JSON.stringify(message) + ']';
+      let jsonMessage = JSON.parse(txtMessage);
+      let counter = jsonMessage.length;
+      jsonMessage.forEach((el) => {
+        if (el.account_no == '') {
+          el.type = 'comment';
+        } else {
+          el.type = 'progressnotes';
+        }
+        el.dateCreateConverted = this.functionService.convertDatetoMMDDYYYY(
+          el.date_created
+        );
+        el.notessmall = this.functionService.truncateChar(el.msg, 300);
+        if (el.msg.length > 200) {
+          el.noteslength = true;
+        } else {
+          el.noteslength = false;
+        }
+        el.dateCreateTimeConverted = this.functionService.getTime(
+          el.date_created
+        );
+        el.counter = counter;
+        counter++;
+        this.ngZone.run(() => {
+          this.toBot = true;
+          this.progessNotes.push(el);
+        });
+      });
     });
 
     this._hubConnection
       .start()
-      .then(() => console.log('connection started'))
+      .then(() => {
+        console.log('connection started');
+        this._hubConnection
+          .invoke('addtoresigroup', this.data)
+          .then((res) => {
+            //console.log(res);
+          })
+          .catch((err) => console.error(err));
+      })
       .catch((err) =>
         console.log('error while establishing signalr connection: ' + err)
       );
