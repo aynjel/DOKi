@@ -34,12 +34,15 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 // Initialize exporting module.
 //Exporting(HighCharts);
 import { format, parseISO } from 'date-fns';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-tabs-erlist',
   templateUrl: './tabs-erlist.page.html',
   styleUrls: ['./tabs-erlist.page.scss'],
 })
 export class TabsErlistPage implements OnInit {
+  private ngUnsubscribe = new Subject();
   isDesktop: boolean;
   dateToday: any = '12/31/2021';
   listOfPatients: any = [];
@@ -64,14 +67,17 @@ export class TabsErlistPage implements OnInit {
     private modalController: ModalController,
     private loadingController: LoadingController
   ) {
-    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
-      if (this.isDesktop && !isDesktop) {
-        // Reload because our routing is out of place
-        //window.location.reload();
-      }
+    this.screensizeService
+      .isDesktopView()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((isDesktop) => {
+        if (this.isDesktop && !isDesktop) {
+          // Reload because our routing is out of place
+          //window.location.reload();
+        }
 
-      this.isDesktop = isDesktop;
-    });
+        this.isDesktop = isDesktop;
+      });
     this.setDate();
   }
 
@@ -119,19 +125,22 @@ export class TabsErlistPage implements OnInit {
     this.showSkeleton = true;
     this.noData = false;
     let dateToSend = encodeURIComponent(data);
-    this.executiveService.getERList(dateToSend).subscribe(
-      (res: any) => {
-        this.showSkeleton = false;
-        this.listOfPatientsTemp =
-          this.listOfPatientsTemp1 =
-          this.listOfPatientsTemp2 =
-            res;
-      },
-      (error) => {},
-      () => {
-        this.segmentChanged();
-      }
-    );
+    this.executiveService
+      .getERList(dateToSend)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          this.showSkeleton = false;
+          this.listOfPatientsTemp =
+            this.listOfPatientsTemp1 =
+            this.listOfPatientsTemp2 =
+              res;
+        },
+        (error) => {},
+        () => {
+          this.segmentChanged();
+        }
+      );
   }
   doRefresh(event) {
     this.searchBar = '';
@@ -223,5 +232,10 @@ export class TabsErlistPage implements OnInit {
     this.listOfPatients = [];
     this.listOfPatientsTemp1 = [];
     this.getErwaitlist(sendDate);
+  }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    // this.ngUnsubscribe.complete();
+    this.ngUnsubscribe.unsubscribe();
   }
 }

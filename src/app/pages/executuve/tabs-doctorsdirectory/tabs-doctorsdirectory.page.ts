@@ -23,13 +23,15 @@ import { PatientdetailComponent } from '../components/patientdetail/patientdetai
 
 import { DoctordirectorydetailComponent } from '../components/doctordirectorydetail/doctordirectorydetail.component';
 import { FunctionsService } from '../../../shared/functions/functions.service'; //"@ionic/angular";
-
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-tabs-doctorsdirectory',
   templateUrl: './tabs-doctorsdirectory.page.html',
   styleUrls: ['./tabs-doctorsdirectory.page.scss'],
 })
 export class TabsDoctorsdirectoryPage implements OnInit {
+  private ngUnsubscribe = new Subject();
   @ViewChild(IonContent) content: IonContent;
   isDesktop: boolean;
   dateToday: any = '12/31/2021';
@@ -61,9 +63,12 @@ export class TabsDoctorsdirectoryPage implements OnInit {
     public functionsService: FunctionsService,
     public alertController: AlertController
   ) {
-    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
-      this.isDesktop = isDesktop;
-    });
+    this.screensizeService
+      .isDesktopView()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((isDesktop) => {
+        this.isDesktop = isDesktop;
+      });
   }
 
   ngOnInit() {
@@ -85,24 +90,27 @@ export class TabsDoctorsdirectoryPage implements OnInit {
     this.listOfDoctors = [];
     this.showSkeleton = true;
     this.noData = false;
-    this.executiveService.getDoctorsDirectory().subscribe(
-      (res: any) => {
-        ////console.log(res);
-        this.listOfDoctorsTemp1 = res;
-        this.listOfDoctorsTemp300 = res;
-        //////console.log(this.listOfDoctorsTemp300);
-        this.isReady = false;
-      },
-      (error) => {},
-      () => {
-        if (this.listOfDoctorsTemp300 != []) {
-          this.listlength = this.listOfDoctorsTemp300.lenth;
-          //////console.log(this.listlength);
+    this.executiveService
+      .getDoctorsDirectory()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          ////console.log(res);
+          this.listOfDoctorsTemp1 = res;
+          this.listOfDoctorsTemp300 = res;
           //////console.log(this.listOfDoctorsTemp300);
+          this.isReady = false;
+        },
+        (error) => {},
+        () => {
+          if (this.listOfDoctorsTemp300 != []) {
+            this.listlength = this.listOfDoctorsTemp300.lenth;
+            //////console.log(this.listlength);
+            //////console.log(this.listOfDoctorsTemp300);
+          }
+          this.initialload();
         }
-        this.initialload();
-      }
-    );
+      );
   }
   loadData(event) {
     this.refreshcounter++;
@@ -246,5 +254,9 @@ export class TabsDoctorsdirectoryPage implements OnInit {
       },
     });
     return await modal.present();
+  }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.unsubscribe();
   }
 }

@@ -13,12 +13,15 @@ import {
   LoginResponseModelv3,
 } from 'src/app/models/doctor';
 import { Router } from '@angular/router';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-tab-caserates',
   templateUrl: './tab-caserates.page.html',
   styleUrls: ['./tab-caserates.page.scss'],
 })
 export class TabCaseratesPage implements OnInit {
+  private ngUnsubscribe = new Subject();
   isDesktop: any;
   dr_name: any;
   dr_code: any;
@@ -58,12 +61,15 @@ export class TabCaseratesPage implements OnInit {
     //this.caseRateData.CaseSearchDesc="";
 
     //sessionStorage.setItem('caseRateData', JSON.stringify(this.caseRateData));
-    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
-      if (this.isDesktop && !isDesktop) {
-        window.location.reload();
-      }
-      this.isDesktop = isDesktop;
-    });
+    this.screensizeService
+      .isDesktopView()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((isDesktop) => {
+        if (this.isDesktop && !isDesktop) {
+          window.location.reload();
+        }
+        this.isDesktop = isDesktop;
+      });
 
     this.caseRateResponse_first = [];
     this.caseRateResponse_second = [];
@@ -108,57 +114,65 @@ export class TabCaseratesPage implements OnInit {
         this.ionSkeleton = true;
         this.ionNoData = false;
         this.activedescription = false;
-        this.doctorService.searchCaseRatesV3(this.caseRateData).subscribe(
-          (res: any) => {
-            console.log(res);
+        this.doctorService
+          .searchCaseRatesV3(this.caseRateData)
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe(
+            (res: any) => {
+              console.log(res);
 
-            this.caseRateResponse_first = res;
-          },
-          (error) => {
-            this.ionNoData = true;
-          },
-          () => {
-            this.ionSkeleton = false;
-            if (
-              this.functionsService.isEmptyObject(this.caseRateResponse_first)
-            ) {
+              this.caseRateResponse_first = res;
+            },
+            (error) => {
               this.ionNoData = true;
-            } else {
-              this.ionNoData = false;
+            },
+            () => {
+              this.ionSkeleton = false;
+              if (
+                this.functionsService.isEmptyObject(this.caseRateResponse_first)
+              ) {
+                this.ionNoData = true;
+              } else {
+                this.ionNoData = false;
+              }
+
+              //console.log('first');
+
+              //console.log(this.caseRateResponse_first );
+              let x = JSON.stringify(this.caseRateResponse_first);
+              // console.log(x);
             }
-
-            //console.log('first');
-
-            //console.log(this.caseRateResponse_first );
-            let x = JSON.stringify(this.caseRateResponse_first);
-            // console.log(x);
-          }
-        );
+          );
       } else {
         this.ionStart1 = false;
         this.ionSkeleton1 = true;
         this.ionNoData1 = false;
         this.activedescription1 = false;
-        this.doctorService.searchCaseRatesV3(this.caseRateData).subscribe(
-          (res: any) => {
-            console.log(res);
+        this.doctorService
+          .searchCaseRatesV3(this.caseRateData)
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe(
+            (res: any) => {
+              console.log(res);
 
-            this.caseRateResponse_second = res;
-          },
-          (error) => {
-            this.ionNoData1 = true;
-          },
-          () => {
-            this.ionSkeleton1 = false;
-            if (
-              this.functionsService.isEmptyObject(this.caseRateResponse_second)
-            ) {
+              this.caseRateResponse_second = res;
+            },
+            (error) => {
               this.ionNoData1 = true;
-            } else {
-              this.ionNoData1 = false;
+            },
+            () => {
+              this.ionSkeleton1 = false;
+              if (
+                this.functionsService.isEmptyObject(
+                  this.caseRateResponse_second
+                )
+              ) {
+                this.ionNoData1 = true;
+              } else {
+                this.ionNoData1 = false;
+              }
             }
-          }
-        );
+          );
       }
     } else {
       this.activedescription = true;
@@ -193,5 +207,9 @@ export class TabCaseratesPage implements OnInit {
     this.modalController.dismiss({
       dismissed: true,
     });
+  }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.unsubscribe();
   }
 }

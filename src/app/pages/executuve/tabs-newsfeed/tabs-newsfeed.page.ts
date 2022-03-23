@@ -29,7 +29,8 @@ import { OnInit } from '@angular/core';
 import { ChhAppChangePassPage } from '../../../chh-web-components/chh-app-change-pass/chh-app-change-pass.page';
 
 import { ChhAppNewsfeedComponent } from '../../../chh-web-components/chh-app-newsfeed/chh-app-newsfeed.component';
-
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-tabs-newsfeed',
   templateUrl: './tabs-newsfeed.page.html',
@@ -37,7 +38,7 @@ import { ChhAppNewsfeedComponent } from '../../../chh-web-components/chh-app-new
 })
 export class TabsNewsfeedPage implements OnInit {
   isDesktop: boolean;
-
+  private ngUnsubscribe = new Subject();
   newsfeed: any;
   constructor(
     private screensizeService: ScreenSizeService,
@@ -48,12 +49,15 @@ export class TabsNewsfeedPage implements OnInit {
     public router: Router
   ) {
     this.functionsService.logToConsole('In-patient : Constructor');
-    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
-      if (this.isDesktop && !isDesktop) {
-        window.location.reload();
-      }
-      this.isDesktop = isDesktop;
-    });
+    this.screensizeService
+      .isDesktopView()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((isDesktop) => {
+        if (this.isDesktop && !isDesktop) {
+          window.location.reload();
+        }
+        this.isDesktop = isDesktop;
+      });
     this.addMoreItems();
   }
   items = [];
@@ -64,13 +68,16 @@ export class TabsNewsfeedPage implements OnInit {
   ngOnInit() {
     this.checkAppearance();
 
-    this.doctorService.getNewsFeedV3().subscribe(
-      (res: any) => {
-        this.newsfeed = res;
-      },
-      (error) => {},
-      () => {}
-    );
+    this.doctorService
+      .getNewsFeedV3()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          this.newsfeed = res;
+        },
+        (error) => {},
+        () => {}
+      );
   }
 
   loadData(event) {
@@ -101,13 +108,16 @@ export class TabsNewsfeedPage implements OnInit {
   }
   doRefresh(event) {
     setTimeout(() => {
-      this.doctorService.getNewsFeedV3().subscribe(
-        (res: any) => {
-          this.newsfeed = res;
-        },
-        (error) => {},
-        () => {}
-      );
+      this.doctorService
+        .getNewsFeedV3()
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(
+          (res: any) => {
+            this.newsfeed = res;
+          },
+          (error) => {},
+          () => {}
+        );
       //location.reload();
       event.target.complete();
     }, 1000);
@@ -126,5 +136,10 @@ export class TabsNewsfeedPage implements OnInit {
         this.renderer.setAttribute(document.body, 'color-theme', 'light');
       }
     });
+  }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    // this.ngUnsubscribe.complete();
+    this.ngUnsubscribe.unsubscribe();
   }
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { AuthConstants, Consta } from '../../../config/auth-constants';
-import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Constants } from '../../../shared/constants';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
@@ -29,7 +28,8 @@ import { LoadingController, ModalController } from '@ionic/angular';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 // Initialize exporting module.
 //Exporting(HighCharts);
-
+import { takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
 @Component({
   selector: 'app-tabs-historical',
   templateUrl: './tabs-historical.page.html',
@@ -37,6 +37,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 })
 export class TabsHistoricalPage implements OnInit {
   isDesktop: boolean;
+  private ngUnsubscribe = new Subject();
   constructor(
     private storageService: StorageService,
     private router: Router,
@@ -48,14 +49,17 @@ export class TabsHistoricalPage implements OnInit {
     private modalController: ModalController,
     private loadingController: LoadingController
   ) {
-    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
-      if (this.isDesktop && !isDesktop) {
-        // Reload because our routing is out of place
-        //window.location.reload();
-      }
+    this.screensizeService
+      .isDesktopView()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((isDesktop) => {
+        if (this.isDesktop && !isDesktop) {
+          // Reload because our routing is out of place
+          //window.location.reload();
+        }
 
-      this.isDesktop = isDesktop;
-    });
+        this.isDesktop = isDesktop;
+      });
   }
   settings() {
     this.router.navigate(['/executive/settings']);
@@ -161,41 +165,44 @@ export class TabsHistoricalPage implements OnInit {
   generateMonthlyTotalAdmissions() {
     let tempMTA;
     //this.presentLoading();
-    this.executiveService.getMontlyTotalAdmissions(this.yearTreandTO).subscribe(
-      (res: any) => {
-        this.dismissLoading();
-        tempMTA = res;
-      },
-      (error) => {
-        this.dismissLoading();
-      },
-      () => {
-        this.dismissLoading();
-        if (tempMTA != null) {
-          this.MTATotal = 0;
-          this.MTACebSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-          this.MTAManSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-          tempMTA.forEach((element) => {
-            if (element.site == 'C') {
-              this.MTATotal += element.totalAdmsMTD;
-              this.MTACebSet[element.month - 1] = element.totalAdmsMTD;
-            }
-            if (element.site == 'M') {
-              this.MTATotal += element.totalAdmsMTD;
-              this.MTAManSet[element.month - 1] = element.totalAdmsMTD;
-            }
-          });
-          this.MTACeb = this.MTACebSet;
-          this.MTAMan = this.MTAManSet;
-          this.MTACategory = this.MTACategorySet;
-          this.monthTrendFromTo();
-        } else {
-          this.MTACebSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-          this.MTAManSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-          this.monthTrendFromTo();
+    this.executiveService
+      .getMontlyTotalAdmissions(this.yearTreandTO)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          this.dismissLoading();
+          tempMTA = res;
+        },
+        (error) => {
+          this.dismissLoading();
+        },
+        () => {
+          this.dismissLoading();
+          if (tempMTA != null) {
+            this.MTATotal = 0;
+            this.MTACebSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            this.MTAManSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            tempMTA.forEach((element) => {
+              if (element.site == 'C') {
+                this.MTATotal += element.totalAdmsMTD;
+                this.MTACebSet[element.month - 1] = element.totalAdmsMTD;
+              }
+              if (element.site == 'M') {
+                this.MTATotal += element.totalAdmsMTD;
+                this.MTAManSet[element.month - 1] = element.totalAdmsMTD;
+              }
+            });
+            this.MTACeb = this.MTACebSet;
+            this.MTAMan = this.MTAManSet;
+            this.MTACategory = this.MTACategorySet;
+            this.monthTrendFromTo();
+          } else {
+            this.MTACebSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            this.MTAManSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            this.monthTrendFromTo();
+          }
         }
-      }
-    );
+      );
   }
   monthTrendYear() {
     //////console.log(this.yearTreandTO);
@@ -329,5 +336,10 @@ export class TabsHistoricalPage implements OnInit {
         year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
       this.monthTrendYear();
     }
+  }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    // this.ngUnsubscribe.complete();
+    this.ngUnsubscribe.unsubscribe();
   }
 }

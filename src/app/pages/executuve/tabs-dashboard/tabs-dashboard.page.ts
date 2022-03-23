@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { AuthConstants, Consta } from '../../../config/auth-constants';
-import { BehaviorSubject } from 'rxjs';
+
 import { Router } from '@angular/router';
 import { Constants } from '../../../shared/constants';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
@@ -38,13 +38,15 @@ import { LoadingController, ModalController } from '@ionic/angular';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 // Initialize exporting module.
 //Exporting(HighCharts);
-
+import { takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
 @Component({
   selector: 'app-tabs-dashboard',
   templateUrl: './tabs-dashboard.page.html',
   styleUrls: ['./tabs-dashboard.page.scss'],
 })
 export class TabsDashboardPage implements OnInit {
+  private ngUnsubscribe = new Subject();
   isDesktop: boolean;
   userData$ = new BehaviorSubject<any>([]);
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
@@ -104,14 +106,17 @@ export class TabsDashboardPage implements OnInit {
     private modalController: ModalController,
     private loadingController: LoadingController
   ) {
-    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
-      if (this.isDesktop && !isDesktop) {
-        // Reload because our routing is out of place
-        //window.location.reload();
-      }
+    this.screensizeService
+      .isDesktopView()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((isDesktop) => {
+        if (this.isDesktop && !isDesktop) {
+          // Reload because our routing is out of place
+          //window.location.reload();
+        }
 
-      this.isDesktop = isDesktop;
-    });
+        this.isDesktop = isDesktop;
+      });
   }
   ionViewWillEnter() {}
 
@@ -132,84 +137,93 @@ export class TabsDashboardPage implements OnInit {
 
     //////// ////console.log(this.logindata);
 
-    this.executiveService.totalAdmissionsV3().subscribe(
-      (res: any) => {
-        //////// ////console.log(res);
-        this.totalAdmissionsV3 = res;
-      },
-      (error) => {
-        this.totalAdmissionsV33 = false;
-      },
-      () => {
-        if (this.totalAdmissionsV3) {
-          this.totalAdmissionsV3.forEach((element) => {
-            this.totalAdmissionsV33 = false;
-            this.totalAdmissions =
-              this.totalAdmissions + element.totalAdmissions;
-            if (element.site == 'C') {
-              this.totalAdmissionsC = element.totalAdmissions;
-            } else if (element.site == 'M') {
-              this.totalAdmissionsM = element.totalAdmissions;
-            }
-          });
-        } else {
+    this.executiveService
+      .totalAdmissionsV3()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          //////// ////console.log(res);
+          this.totalAdmissionsV3 = res;
+        },
+        (error) => {
           this.totalAdmissionsV33 = false;
-          //this.totalAdmissions = this.totalAdmissionsC = this.totalAdmissionsM= 0;
+        },
+        () => {
+          if (this.totalAdmissionsV3) {
+            this.totalAdmissionsV3.forEach((element) => {
+              this.totalAdmissionsV33 = false;
+              this.totalAdmissions =
+                this.totalAdmissions + element.totalAdmissions;
+              if (element.site == 'C') {
+                this.totalAdmissionsC = element.totalAdmissions;
+              } else if (element.site == 'M') {
+                this.totalAdmissionsM = element.totalAdmissions;
+              }
+            });
+          } else {
+            this.totalAdmissionsV33 = false;
+            //this.totalAdmissions = this.totalAdmissionsC = this.totalAdmissionsM= 0;
+          }
         }
-      }
-    );
+      );
 
     this.totalAdmissionstoday = 0;
-    this.executiveService.totalAdmissionsTodayV3().subscribe(
-      (res: any) => {
-        //////// ////console.log(res);
-        this.totalAdmissionsTodayV3 = res;
-      },
-      (error) => {
-        this.totalAdmissionsTodayV33 = false;
-      },
-      () => {
-        if (this.totalAdmissionsTodayV3) {
-          this.totalAdmissionsTodayV3.forEach((element) => {
-            this.totalAdmissionsTodayV33 = false;
-            this.totalAdmissionstoday =
-              this.totalAdmissionstoday + element.totalNewAdmissions;
-            if (element.site == 'C') {
-              this.totalAdmissionstodayC = element.totalNewAdmissions;
-            } else if (element.site == 'M') {
-              this.totalAdmissionstodayM = element.totalNewAdmissions;
-            }
-          });
-        } else {
+    this.executiveService
+      .totalAdmissionsTodayV3()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          //////// ////console.log(res);
+          this.totalAdmissionsTodayV3 = res;
+        },
+        (error) => {
           this.totalAdmissionsTodayV33 = false;
+        },
+        () => {
+          if (this.totalAdmissionsTodayV3) {
+            this.totalAdmissionsTodayV3.forEach((element) => {
+              this.totalAdmissionsTodayV33 = false;
+              this.totalAdmissionstoday =
+                this.totalAdmissionstoday + element.totalNewAdmissions;
+              if (element.site == 'C') {
+                this.totalAdmissionstodayC = element.totalNewAdmissions;
+              } else if (element.site == 'M') {
+                this.totalAdmissionstodayM = element.totalNewAdmissions;
+              }
+            });
+          } else {
+            this.totalAdmissionsTodayV33 = false;
+          }
         }
-      }
-    );
+      );
 
-    this.executiveService.forDischargeV3().subscribe(
-      (res: any) => {
-        //////// ////console.log(res);
-        this.forDischargeV3 = res;
-      },
-      (error) => {
-        this.forDischargeV33 = false;
-      },
-      () => {
-        if (this.forDischargeV3) {
-          this.forDischargeV3.forEach((element) => {
-            this.forDischargeV33 = false;
-            this.forDischarge = this.forDischarge + element.totalForDischarge;
-            if (element.site == 'C') {
-              this.forDischargeC = element.totalForDischarge;
-            } else if (element.site == 'M') {
-              this.forDischargeM = element.totalForDischarge;
-            }
-          });
-        } else {
+    this.executiveService
+      .forDischargeV3()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          //////// ////console.log(res);
+          this.forDischargeV3 = res;
+        },
+        (error) => {
           this.forDischargeV33 = false;
+        },
+        () => {
+          if (this.forDischargeV3) {
+            this.forDischargeV3.forEach((element) => {
+              this.forDischargeV33 = false;
+              this.forDischarge = this.forDischarge + element.totalForDischarge;
+              if (element.site == 'C') {
+                this.forDischargeC = element.totalForDischarge;
+              } else if (element.site == 'M') {
+                this.forDischargeM = element.totalForDischarge;
+              }
+            });
+          } else {
+            this.forDischargeV33 = false;
+          }
         }
-      }
-    );
+      );
 
     this.getTotalAdmissions();
 
@@ -260,118 +274,121 @@ export class TabsDashboardPage implements OnInit {
     let getTotalPxTypesBySite: any;
     this.criticalT = 0;
     this.noncriticalT = 0;
-    this.executiveService.getTotalPxTypesBySite().subscribe(
-      (res: any) => {
-        this.TotalPxTypesBySite = res;
-        //localStorage.setItem('TotalPxTypesBySite', btoa(JSON.stringify(res)));
-      },
-      (error) => {
-        this.criticalTV33 = false;
-      },
-      () => {
-        this.criticalTV33 = false;
-        this.CCC = 0;
-        this.CCNC = 0;
-        this.CNCC = 0;
-        this.CNCNC = 0;
-        this.MCC = 0;
-        this.MCNC = 0;
-        this.MNCC = 0;
-        this.MNCNC = 0;
-        this.criticalC = 0;
-        this.criticalT = 0;
-        this.criticalM = 0;
-        this.noncriticalC = 0;
-        this.noncriticalT = 0;
-        this.noncriticalM = 0;
+    this.executiveService
+      .getTotalPxTypesBySite()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          this.TotalPxTypesBySite = res;
+          //localStorage.setItem('TotalPxTypesBySite', btoa(JSON.stringify(res)));
+        },
+        (error) => {
+          this.criticalTV33 = false;
+        },
+        () => {
+          this.criticalTV33 = false;
+          this.CCC = 0;
+          this.CCNC = 0;
+          this.CNCC = 0;
+          this.CNCNC = 0;
+          this.MCC = 0;
+          this.MCNC = 0;
+          this.MNCC = 0;
+          this.MNCNC = 0;
+          this.criticalC = 0;
+          this.criticalT = 0;
+          this.criticalM = 0;
+          this.noncriticalC = 0;
+          this.noncriticalT = 0;
+          this.noncriticalM = 0;
 
-        this.TotalPxTypesBySite.forEach((el) => {
-          ////console.log(el);
+          this.TotalPxTypesBySite.forEach((el) => {
+            ////console.log(el);
 
-          if (
-            (el.site == 'C' || el.site == 'M') &&
-            el.patientType1 == 'Critical'
-          ) {
-            this.criticalT += el.totalAdmissions;
-            if (el.site == 'C') {
-              this.criticalC += el.totalAdmissions;
+            if (
+              (el.site == 'C' || el.site == 'M') &&
+              el.patientType1 == 'Critical'
+            ) {
+              this.criticalT += el.totalAdmissions;
+              if (el.site == 'C') {
+                this.criticalC += el.totalAdmissions;
+              }
+              if (el.site == 'M') {
+                this.criticalM += el.totalAdmissions;
+              }
             }
-            if (el.site == 'M') {
-              this.criticalM += el.totalAdmissions;
+            if (
+              (el.site == 'C' || el.site == 'M') &&
+              el.patientType1 == 'Non-Critical'
+            ) {
+              this.noncriticalT += el.totalAdmissions;
+              if (el.site == 'C') {
+                this.noncriticalC += el.totalAdmissions;
+              }
+              if (el.site == 'M') {
+                this.noncriticalM += el.totalAdmissions;
+              }
             }
-          }
-          if (
-            (el.site == 'C' || el.site == 'M') &&
-            el.patientType1 == 'Non-Critical'
-          ) {
-            this.noncriticalT += el.totalAdmissions;
-            if (el.site == 'C') {
-              this.noncriticalC += el.totalAdmissions;
-            }
-            if (el.site == 'M') {
-              this.noncriticalM += el.totalAdmissions;
-            }
-          }
 
-          if (
-            el.site == 'C' &&
-            el.patientType1 == 'Critical' &&
-            el.patientType2 == 'Covid'
-          ) {
-            this.CCC += el.totalAdmissions;
-          }
-          if (
-            el.site == 'C' &&
-            el.patientType1 == 'Non-Critical' &&
-            el.patientType2 == 'Covid'
-          ) {
-            this.CNCC += el.totalAdmissions;
-          }
-          if (
-            el.site == 'C' &&
-            el.patientType1 == 'Critical' &&
-            el.patientType2 == 'Non-Covid'
-          ) {
-            this.CCNC += el.totalAdmissions;
-          }
-          if (
-            el.site == 'C' &&
-            el.patientType1 == 'Non-Critical' &&
-            el.patientType2 == 'Non-Covid'
-          ) {
-            this.CNCNC += el.totalAdmissions;
-          }
-          if (
-            el.site == 'M' &&
-            el.patientType1 == 'Critical' &&
-            el.patientType2 == 'Covid'
-          ) {
-            this.MCC += el.totalAdmissions;
-          }
-          if (
-            el.site == 'M' &&
-            el.patientType1 == 'Non-Critical' &&
-            el.patientType2 == 'Covid'
-          ) {
-            this.MNCC += el.totalAdmissions;
-          }
-          if (
-            el.site == 'M' &&
-            el.patientType1 == 'Critical' &&
-            el.patientType2 == 'Non-Covid'
-          ) {
-            this.MCNC += el.totalAdmissions;
-          }
-          if (
-            el.site == 'M' &&
-            el.patientType1 == 'Non-Critical' &&
-            el.patientType2 == 'Non-Covid'
-          ) {
-            this.MNCNC += el.totalAdmissions;
-          }
-        });
-      }
-    );
+            if (
+              el.site == 'C' &&
+              el.patientType1 == 'Critical' &&
+              el.patientType2 == 'Covid'
+            ) {
+              this.CCC += el.totalAdmissions;
+            }
+            if (
+              el.site == 'C' &&
+              el.patientType1 == 'Non-Critical' &&
+              el.patientType2 == 'Covid'
+            ) {
+              this.CNCC += el.totalAdmissions;
+            }
+            if (
+              el.site == 'C' &&
+              el.patientType1 == 'Critical' &&
+              el.patientType2 == 'Non-Covid'
+            ) {
+              this.CCNC += el.totalAdmissions;
+            }
+            if (
+              el.site == 'C' &&
+              el.patientType1 == 'Non-Critical' &&
+              el.patientType2 == 'Non-Covid'
+            ) {
+              this.CNCNC += el.totalAdmissions;
+            }
+            if (
+              el.site == 'M' &&
+              el.patientType1 == 'Critical' &&
+              el.patientType2 == 'Covid'
+            ) {
+              this.MCC += el.totalAdmissions;
+            }
+            if (
+              el.site == 'M' &&
+              el.patientType1 == 'Non-Critical' &&
+              el.patientType2 == 'Covid'
+            ) {
+              this.MNCC += el.totalAdmissions;
+            }
+            if (
+              el.site == 'M' &&
+              el.patientType1 == 'Critical' &&
+              el.patientType2 == 'Non-Covid'
+            ) {
+              this.MCNC += el.totalAdmissions;
+            }
+            if (
+              el.site == 'M' &&
+              el.patientType1 == 'Non-Critical' &&
+              el.patientType2 == 'Non-Covid'
+            ) {
+              this.MNCNC += el.totalAdmissions;
+            }
+          });
+        }
+      );
   }
 
   //this.callPieChart(this.getTotalAdmissionsByDeptData,'admission','Admissions by Department','Department');
@@ -407,29 +424,32 @@ export class TabsDashboardPage implements OnInit {
   }
   getTotalAdmissions() {
     this.getTotalAdmissionsByDeptData = [];
-    this.executiveService.getTotalAdmissionsByDept().subscribe(
-      (res: any) => {
-        this.getTotalAdmissionsByDept = res;
-      },
-      (error) => {},
-      () => {
-        if (this.getTotalAdmissionsByDept) {
-          this.getTotalAdmissionsByDept.forEach((element) => {
-            this.getTotalAdmissionsByDeptData.push({
-              name: element.deptName,
-              y: element.numOfAdmissions,
+    this.executiveService
+      .getTotalAdmissionsByDept()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          this.getTotalAdmissionsByDept = res;
+        },
+        (error) => {},
+        () => {
+          if (this.getTotalAdmissionsByDept) {
+            this.getTotalAdmissionsByDept.forEach((element) => {
+              this.getTotalAdmissionsByDeptData.push({
+                name: element.deptName,
+                y: element.numOfAdmissions,
+              });
             });
-          });
-          //// ////console.log(JSON.stringify(this.getTotalAdmissionsByDeptData));
+            //// ////console.log(JSON.stringify(this.getTotalAdmissionsByDeptData));
 
-          this.populatePieChart();
-          /*
+            this.populatePieChart();
+            /*
           //// ////console.log(this.getTotalAdmissionsByDeptData);
           this.callPieChart(this.getTotalAdmissionsByDeptData,'admission','Admissions by Department','Department');
           */
+          }
         }
-      }
-    );
+      );
   }
   /*                                             
   ______ ______ ______ ______ ______ ______ ______ 
@@ -516,162 +536,165 @@ export class TabsDashboardPage implements OnInit {
     let cvdOccupancy: any;
     let dataC = [];
     let datanonC = [];
-    this.executiveService.getCovidVsNonCovidOccupancyCurrentYear().subscribe(
-      (res: any) => {
-        cvdOccupancy = res; ////// ////console.log(res);
-      },
-      (error) => {},
-      () => {
-        this.stackedBar = false;
-        let c1total = 0;
-        let c2total = 0;
-        let c3total = 0;
-        let c4total = 0;
-        let c5total = 0;
-        let c6total = 0;
-        let c7total = 0;
-        let c8total = 0;
-        let c9total = 0;
-        let c10total = 0;
-        let c11total = 0;
-        let c12total = 0;
-        let nc1total = 0;
-        let nc2total = 0;
-        let nc3total = 0;
-        let nc4total = 0;
-        let nc5total = 0;
-        let nc6total = 0;
-        let nc7total = 0;
-        let nc8total = 0;
-        let nc9total = 0;
-        let nc10total = 0;
-        let nc11total = 0;
-        let nc12total = 0;
-        cvdOccupancy.forEach((el) => {
-          if (el.month == 1) {
-            if (el.patientType == 'Covid') {
-              c1total = c1total + el.aveOccupancy;
+    this.executiveService
+      .getCovidVsNonCovidOccupancyCurrentYear()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          cvdOccupancy = res; ////// ////console.log(res);
+        },
+        (error) => {},
+        () => {
+          this.stackedBar = false;
+          let c1total = 0;
+          let c2total = 0;
+          let c3total = 0;
+          let c4total = 0;
+          let c5total = 0;
+          let c6total = 0;
+          let c7total = 0;
+          let c8total = 0;
+          let c9total = 0;
+          let c10total = 0;
+          let c11total = 0;
+          let c12total = 0;
+          let nc1total = 0;
+          let nc2total = 0;
+          let nc3total = 0;
+          let nc4total = 0;
+          let nc5total = 0;
+          let nc6total = 0;
+          let nc7total = 0;
+          let nc8total = 0;
+          let nc9total = 0;
+          let nc10total = 0;
+          let nc11total = 0;
+          let nc12total = 0;
+          cvdOccupancy.forEach((el) => {
+            if (el.month == 1) {
+              if (el.patientType == 'Covid') {
+                c1total = c1total + el.aveOccupancy;
+              }
+              if (el.patientType == 'Non-Covid') {
+                nc1total = nc1total + el.aveOccupancy;
+              }
             }
-            if (el.patientType == 'Non-Covid') {
-              nc1total = nc1total + el.aveOccupancy;
+            if (el.month == 2) {
+              if (el.patientType == 'Covid') {
+                c2total = c2total + el.aveOccupancy;
+              }
+              if (el.patientType == 'Non-Covid') {
+                nc2total = nc2total + el.aveOccupancy;
+              }
             }
-          }
-          if (el.month == 2) {
-            if (el.patientType == 'Covid') {
-              c2total = c2total + el.aveOccupancy;
+            if (el.month == 3) {
+              if (el.patientType == 'Covid') {
+                c3total += el.aveOccupancy;
+              }
+              if (el.patientType == 'Non-Covid') {
+                nc3total += el.aveOccupancy;
+              }
             }
-            if (el.patientType == 'Non-Covid') {
-              nc2total = nc2total + el.aveOccupancy;
+            if (el.month == 4) {
+              if (el.patientType == 'Covid') {
+                c4total += el.aveOccupancy;
+              }
+              if (el.patientType == 'Non-Covid') {
+                nc4total += el.aveOccupancy;
+              }
             }
-          }
-          if (el.month == 3) {
-            if (el.patientType == 'Covid') {
-              c3total += el.aveOccupancy;
+            if (el.month == 5) {
+              if (el.patientType == 'Covid') {
+                c5total += el.aveOccupancy;
+              }
+              if (el.patientType == 'Non-Covid') {
+                nc5total += el.aveOccupancy;
+              }
             }
-            if (el.patientType == 'Non-Covid') {
-              nc3total += el.aveOccupancy;
+            if (el.month == 6) {
+              if (el.patientType == 'Covid') {
+                c6total += el.aveOccupancy;
+              }
+              if (el.patientType == 'Non-Covid') {
+                nc6total += el.aveOccupancy;
+              }
             }
-          }
-          if (el.month == 4) {
-            if (el.patientType == 'Covid') {
-              c4total += el.aveOccupancy;
+            if (el.month == 7) {
+              if (el.patientType == 'Covid') {
+                c7total += el.aveOccupancy;
+              }
+              if (el.patientType == 'Non-Covid') {
+                nc7total += el.aveOccupancy;
+              }
             }
-            if (el.patientType == 'Non-Covid') {
-              nc4total += el.aveOccupancy;
+            if (el.month == 8) {
+              if (el.patientType == 'Covid') {
+                c8total += el.aveOccupancy;
+              }
+              if (el.patientType == 'Non-Covid') {
+                nc8total += el.aveOccupancy;
+              }
             }
-          }
-          if (el.month == 5) {
-            if (el.patientType == 'Covid') {
-              c5total += el.aveOccupancy;
+            if (el.month == 9) {
+              if (el.patientType == 'Covid') {
+                c9total += el.aveOccupancy;
+              }
+              if (el.patientType == 'Non-Covid') {
+                nc9total += el.aveOccupancy;
+              }
             }
-            if (el.patientType == 'Non-Covid') {
-              nc5total += el.aveOccupancy;
+            if (el.month == 10) {
+              if (el.patientType == 'Covid') {
+                c10total += el.aveOccupancy;
+              }
+              if (el.patientType == 'Non-Covid') {
+                nc10total += el.aveOccupancy;
+              }
             }
-          }
-          if (el.month == 6) {
-            if (el.patientType == 'Covid') {
-              c6total += el.aveOccupancy;
+            if (el.month == 11) {
+              if (el.patientType == 'Covid') {
+                c11total += el.aveOccupancy;
+              }
+              if (el.patientType == 'Non-Covid') {
+                nc11total += el.aveOccupancy;
+              }
             }
-            if (el.patientType == 'Non-Covid') {
-              nc6total += el.aveOccupancy;
+            if (el.month == 12) {
+              if (el.patientType == 'Covid') {
+                c12total += el.aveOccupancy;
+              }
+              if (el.patientType == 'Non-Covid') {
+                nc12total += el.aveOccupancy;
+              }
             }
-          }
-          if (el.month == 7) {
-            if (el.patientType == 'Covid') {
-              c7total += el.aveOccupancy;
-            }
-            if (el.patientType == 'Non-Covid') {
-              nc7total += el.aveOccupancy;
-            }
-          }
-          if (el.month == 8) {
-            if (el.patientType == 'Covid') {
-              c8total += el.aveOccupancy;
-            }
-            if (el.patientType == 'Non-Covid') {
-              nc8total += el.aveOccupancy;
-            }
-          }
-          if (el.month == 9) {
-            if (el.patientType == 'Covid') {
-              c9total += el.aveOccupancy;
-            }
-            if (el.patientType == 'Non-Covid') {
-              nc9total += el.aveOccupancy;
-            }
-          }
-          if (el.month == 10) {
-            if (el.patientType == 'Covid') {
-              c10total += el.aveOccupancy;
-            }
-            if (el.patientType == 'Non-Covid') {
-              nc10total += el.aveOccupancy;
-            }
-          }
-          if (el.month == 11) {
-            if (el.patientType == 'Covid') {
-              c11total += el.aveOccupancy;
-            }
-            if (el.patientType == 'Non-Covid') {
-              nc11total += el.aveOccupancy;
-            }
-          }
-          if (el.month == 12) {
-            if (el.patientType == 'Covid') {
-              c12total += el.aveOccupancy;
-            }
-            if (el.patientType == 'Non-Covid') {
-              nc12total += el.aveOccupancy;
-            }
-          }
-        });
-        dataC.push(c1total);
-        dataC.push(c2total);
-        dataC.push(c3total);
-        dataC.push(c4total);
-        dataC.push(c5total);
-        dataC.push(c6total);
-        dataC.push(c7total);
-        dataC.push(c8total);
-        dataC.push(c9total);
-        dataC.push(c10total);
-        dataC.push(c11total);
-        dataC.push(c12total);
-        datanonC.push(nc1total);
-        datanonC.push(nc2total);
-        datanonC.push(nc3total);
-        datanonC.push(nc4total);
-        datanonC.push(nc5total);
-        datanonC.push(nc6total);
-        datanonC.push(nc7total);
-        datanonC.push(nc8total);
-        datanonC.push(nc9total);
-        datanonC.push(nc10total);
-        datanonC.push(nc11total);
-        datanonC.push(nc12total);
-        this.populateStackedBar(dataC, datanonC);
-      }
-    );
+          });
+          dataC.push(c1total);
+          dataC.push(c2total);
+          dataC.push(c3total);
+          dataC.push(c4total);
+          dataC.push(c5total);
+          dataC.push(c6total);
+          dataC.push(c7total);
+          dataC.push(c8total);
+          dataC.push(c9total);
+          dataC.push(c10total);
+          dataC.push(c11total);
+          dataC.push(c12total);
+          datanonC.push(nc1total);
+          datanonC.push(nc2total);
+          datanonC.push(nc3total);
+          datanonC.push(nc4total);
+          datanonC.push(nc5total);
+          datanonC.push(nc6total);
+          datanonC.push(nc7total);
+          datanonC.push(nc8total);
+          datanonC.push(nc9total);
+          datanonC.push(nc10total);
+          datanonC.push(nc11total);
+          datanonC.push(nc12total);
+          this.populateStackedBar(dataC, datanonC);
+        }
+      );
   }
 
   /*
@@ -710,82 +733,85 @@ export class TabsDashboardPage implements OnInit {
     let toreturn = [];
 
     this.totalCovidPxTypesBySite = [];
-    this.executiveService.getTotalCovidPxTypesBySite().subscribe(
-      (res: any) => {
-        ////console.log(res);
+    this.executiveService
+      .getTotalCovidPxTypesBySite()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          ////console.log(res);
 
-        this.totalCovidPxTypesBySite = res;
-      },
-      (error) => {},
-      () => {
-        this.CCC = 0;
-        this.CCNC = 0;
-        this.CNCC = 0;
-        this.CNCNC = 0;
-        this.MCC = 0;
-        this.MCNC = 0;
-        this.MNCC = 0;
-        this.MNCNC = 0;
-        this.totalCovidPxTypesBySite.forEach((el) => {
-          // ////console.log(el);
-          if (
-            el.site == 'C' &&
-            el.patientType01 == 'Critical' &&
-            el.patientType02 == 'Covid'
-          ) {
-            this.CCC = el.totalAdmissions;
-          }
-          if (
-            el.site == 'C' &&
-            el.patientType01 == 'Non-Critical' &&
-            el.patientType02 == 'Covid'
-          ) {
-            this.CNCC = el.totalAdmissions;
-          }
-          if (
-            el.site == 'C' &&
-            el.patientType01 == 'Critical' &&
-            el.patientType02 == 'Non-Covid'
-          ) {
-            this.CCNC = el.totalAdmissions;
-          }
-          if (
-            el.site == 'C' &&
-            el.patientType01 == 'Non-Critical' &&
-            el.patientType02 == 'Non-Covid'
-          ) {
-            this.CNCNC = el.totalAdmissions;
-          }
-          if (
-            el.site == 'M' &&
-            el.patientType01 == 'Critical' &&
-            el.patientType02 == 'Covid'
-          ) {
-            this.MCC = el.totalAdmissions;
-          }
-          if (
-            el.site == 'M' &&
-            el.patientType01 == 'Non-Critical' &&
-            el.patientType02 == 'Covid'
-          ) {
-            this.MNCC = el.totalAdmissions;
-          }
-          if (
-            el.site == 'M' &&
-            el.patientType01 == 'Critical' &&
-            el.patientType02 == 'Non-Covid'
-          ) {
-            this.MCNC = el.totalAdmissions;
-          }
-          if (
-            el.site == 'M' &&
-            el.patientType01 == 'Non-Critical' &&
-            el.patientType02 == 'Non-Covid'
-          ) {
-            this.MNCNC = el.totalAdmissions;
-          }
-        });
-        /*toreturn = [{
+          this.totalCovidPxTypesBySite = res;
+        },
+        (error) => {},
+        () => {
+          this.CCC = 0;
+          this.CCNC = 0;
+          this.CNCC = 0;
+          this.CNCNC = 0;
+          this.MCC = 0;
+          this.MCNC = 0;
+          this.MNCC = 0;
+          this.MNCNC = 0;
+          this.totalCovidPxTypesBySite.forEach((el) => {
+            // ////console.log(el);
+            if (
+              el.site == 'C' &&
+              el.patientType01 == 'Critical' &&
+              el.patientType02 == 'Covid'
+            ) {
+              this.CCC = el.totalAdmissions;
+            }
+            if (
+              el.site == 'C' &&
+              el.patientType01 == 'Non-Critical' &&
+              el.patientType02 == 'Covid'
+            ) {
+              this.CNCC = el.totalAdmissions;
+            }
+            if (
+              el.site == 'C' &&
+              el.patientType01 == 'Critical' &&
+              el.patientType02 == 'Non-Covid'
+            ) {
+              this.CCNC = el.totalAdmissions;
+            }
+            if (
+              el.site == 'C' &&
+              el.patientType01 == 'Non-Critical' &&
+              el.patientType02 == 'Non-Covid'
+            ) {
+              this.CNCNC = el.totalAdmissions;
+            }
+            if (
+              el.site == 'M' &&
+              el.patientType01 == 'Critical' &&
+              el.patientType02 == 'Covid'
+            ) {
+              this.MCC = el.totalAdmissions;
+            }
+            if (
+              el.site == 'M' &&
+              el.patientType01 == 'Non-Critical' &&
+              el.patientType02 == 'Covid'
+            ) {
+              this.MNCC = el.totalAdmissions;
+            }
+            if (
+              el.site == 'M' &&
+              el.patientType01 == 'Critical' &&
+              el.patientType02 == 'Non-Covid'
+            ) {
+              this.MCNC = el.totalAdmissions;
+            }
+            if (
+              el.site == 'M' &&
+              el.patientType01 == 'Non-Critical' &&
+              el.patientType02 == 'Non-Covid'
+            ) {
+              this.MNCNC = el.totalAdmissions;
+            }
+          });
+          /*toreturn = [{
           type: 'column',
           name: 'Covid (Cebu)',
           data: [CCC, CCNC],
@@ -839,8 +865,8 @@ export class TabsDashboardPage implements OnInit {
       this.populateBasicBar(toreturn);
 
 */
-      }
-    );
+        }
+      );
   }
 
   populateBasicBar(data: any) {
@@ -938,9 +964,12 @@ export class TabsDashboardPage implements OnInit {
   inmC: any;
   inmM: any;
   checkInput() {
-    this.doctorService.refreshTokenV3().subscribe((res: any) => {
-      //////// ////console.log(res);
-    });
+    this.doctorService
+      .refreshTokenV3()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((res: any) => {
+        //////// ////console.log(res);
+      });
   }
 
   async detail(CritnCrit, site, CvdnCvd, criticalcount) {
@@ -1271,41 +1300,44 @@ export class TabsDashboardPage implements OnInit {
   generateMonthlyTotalAdmissions() {
     let tempMTA;
     //this.presentLoading();
-    this.executiveService.getMontlyTotalAdmissions(this.yearTreandTO).subscribe(
-      (res: any) => {
-        this.dismissLoading();
-        tempMTA = res;
-      },
-      (error) => {
-        this.dismissLoading();
-      },
-      () => {
-        this.dismissLoading();
-        if (tempMTA != null) {
-          this.MTATotal = 0;
-          this.MTACebSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-          this.MTAManSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-          tempMTA.forEach((element) => {
-            if (element.site == 'C') {
-              this.MTATotal += element.totalAdmsMTD;
-              this.MTACebSet[element.month - 1] = element.totalAdmsMTD;
-            }
-            if (element.site == 'M') {
-              this.MTATotal += element.totalAdmsMTD;
-              this.MTAManSet[element.month - 1] = element.totalAdmsMTD;
-            }
-          });
-          this.MTACeb = this.MTACebSet;
-          this.MTAMan = this.MTAManSet;
-          this.MTACategory = this.MTACategorySet;
-          this.monthTrendFromTo();
-        } else {
-          this.MTACebSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-          this.MTAManSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-          this.monthTrendFromTo();
+    this.executiveService
+      .getMontlyTotalAdmissions(this.yearTreandTO)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          this.dismissLoading();
+          tempMTA = res;
+        },
+        (error) => {
+          this.dismissLoading();
+        },
+        () => {
+          this.dismissLoading();
+          if (tempMTA != null) {
+            this.MTATotal = 0;
+            this.MTACebSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            this.MTAManSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            tempMTA.forEach((element) => {
+              if (element.site == 'C') {
+                this.MTATotal += element.totalAdmsMTD;
+                this.MTACebSet[element.month - 1] = element.totalAdmsMTD;
+              }
+              if (element.site == 'M') {
+                this.MTATotal += element.totalAdmsMTD;
+                this.MTAManSet[element.month - 1] = element.totalAdmsMTD;
+              }
+            });
+            this.MTACeb = this.MTACebSet;
+            this.MTAMan = this.MTAManSet;
+            this.MTACategory = this.MTACategorySet;
+            this.monthTrendFromTo();
+          } else {
+            this.MTACebSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            this.MTAManSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            this.monthTrendFromTo();
+          }
         }
-      }
-    );
+      );
   }
   monthTrendYear() {
     console.log(this.yearTreandTO);
@@ -1348,5 +1380,10 @@ export class TabsDashboardPage implements OnInit {
     if (this.loading) {
       this.loading.dismiss();
     }
+  }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    // this.ngUnsubscribe.complete();
+    this.ngUnsubscribe.unsubscribe();
   }
 }
