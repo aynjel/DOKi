@@ -76,7 +76,7 @@ import { CommonModule } from '@angular/common';
     NgxGoogleAnalyticsRouterModule,
     //LottieAnimationViewModule,
     //SliderPageModule,
-    UserIdleModule.forRoot({ idle: 20, timeout: 20, ping: 20 }),
+    UserIdleModule.forRoot({ idle: 120, timeout: 180, ping: 20 }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
     }),

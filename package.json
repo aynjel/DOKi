@@ -33,6 +33,7 @@
     "@ionic/angular": "^6.0.11",
     "@logisticinfotech/ionic4-datepicker": "^1.4.3",
     "@lottiefiles/lottie-player": "^0.5.1",
+    "@microsoft/signalr": "^6.0.3",
     "@synapsium/ngx-lottie": "^8.2.9",
     "@teamhive/lottie-player": "^1.0.0",
     "angular-user-idle": "^2.2.5",

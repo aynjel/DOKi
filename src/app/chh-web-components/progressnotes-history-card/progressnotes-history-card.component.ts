@@ -7,7 +7,6 @@ import { IonContent } from '@ionic/angular';
   styleUrls: ['./progressnotes-history-card.component.scss'],
 })
 export class ProgressnotesHistoryCardComponent implements OnInit {
-  @ViewChild(IonContent) ionContent: IonContent;
   @Input() dateCreateConverted: any;
   @Input() dateCreateTimeConverted: any;
   @Input() counter: any;
@@ -33,8 +32,6 @@ export class ProgressnotesHistoryCardComponent implements OnInit {
     }
   }
   ngOnInit() {
-    console.log('ngOnInit', this.user_created);
-
     this.toBot = true;
     this.user_ = atob(localStorage.getItem('username'));
   }

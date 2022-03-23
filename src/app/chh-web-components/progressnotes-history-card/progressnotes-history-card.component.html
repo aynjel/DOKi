@@ -1,8 +1,12 @@
 <ion-card class="pointer" id="asdasd{{counter}}" [ngClass]="getType()">
   <ion-item>
-    <ion-avatar slot="start">
-      <chh-app-text-avatar [text]="user_created" [color]=""></chh-app-text-avatar>
+    <!--ion-avatar slot="start">
+          <chh-app-text-avatar [text]="user_created" [color]=""></chh-app-text-avatar>
+        </ion-avatar-->
+    <ion-avatar>
+      <img src="https://doki.chonghua.com.ph/assets/profile/{{user_created}}.png">
     </ion-avatar>
+
     <ion-label>
       <h3>{{user_created}}</h3>
       <p>{{dateCreateConverted}} {{dateCreateTimeConverted}}</p>

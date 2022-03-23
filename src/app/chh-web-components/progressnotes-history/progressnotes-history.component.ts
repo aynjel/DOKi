@@ -8,6 +8,13 @@ import {
 import { DoctorConstants } from 'src/app/config/auth-constants';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
 import { FunctionsService } from 'src/app/shared/functions/functions.service';
+import {
+  HubConnection,
+  HubConnectionBuilder,
+  LogLevel,
+} from '@microsoft/signalr';
+
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-progressnotes-history',
   templateUrl: './progressnotes-history.component.html',
@@ -17,9 +24,10 @@ export class ProgressnotesHistoryComponent implements OnInit {
   @ViewChild(IonList, { read: ElementRef }) list: ElementRef;
   @ViewChild(IonContent) ionContent: IonContent;
   @ViewChild('commentDetailWrapper', { static: false }) commentDetailWrapper;
-
+  private _hubConnection: HubConnection;
   @Input() data: any;
   progessNotes: any;
+  progessNotes1: any;
   progessNotesTemp: any;
   isEmpty: boolean = false;
   comment: any = '';
@@ -40,7 +48,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
 
   ngOnInit() {
     //console.log(this.ionContent);
-
+    this.connect();
     this.modified = true;
     this.getProgressNotesHistory();
 
@@ -49,6 +57,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
   }
   getProgressNotesHistory() {
     this.progessNotes = [];
+    this.progessNotes1 = [];
     this.doctorService.getPatientProgressNotesHistory(this.data).subscribe(
       (res: any) => {
         console.log(res);
@@ -78,7 +87,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
             );
             el.counter = counter;
             counter++;
-            this.progessNotes.push(el);
+            this.progessNotes1.push(el);
           });
           ////console.log(this.progessNotes);
         } else {
@@ -88,10 +97,26 @@ export class ProgressnotesHistoryComponent implements OnInit {
       (error) => {},
       () => {
         this.toBot = true;
+        this.processJson(10);
       }
     );
   }
-
+  upto = 0;
+  processJson(x) {
+    console.log(this.progessNotes.length);
+    this.upto += x;
+    let i = 0;
+    this.progessNotes = [];
+    this.progessNotes1.forEach((el) => {
+      if (
+        i >= this.progessNotes1.length - this.upto &&
+        i <= this.progessNotes1.length
+      ) {
+        this.progessNotes.push(el);
+      }
+      i++;
+    });
+  }
   sendComment() {
     console.log(this.summary);
     this.doctorService.addComment(this.summary).subscribe(
@@ -99,7 +124,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
       (error) => {},
       () => {
         this.summary.msg = '';
-        this.getProgressNotesHistory();
+        //this.getProgressNotesHistory();
       }
     );
   }
@@ -118,5 +143,45 @@ export class ProgressnotesHistoryComponent implements OnInit {
     setTimeout(() => {
       this.ionContent.scrollToBottom(30);
     }, 100);
+  }
+
+  public onSendButtonClick(): void {
+    this._hubConnection.send('SendMessage', 'test message').then((r) => {});
+  }
+
+  private connect(): void {
+    this._hubConnection = new HubConnectionBuilder()
+      .withUrl('http://10.151.12.120/notify')
+      .build();
+
+    this._hubConnection.on('BroadcastMessage', (message: any) => {
+      console.log('message received');
+      console.log(this.progessNotes);
+      this.progessNotes = [];
+      console.log(this.progessNotes);
+
+      //this.getProgressNotesHistory();
+    });
+
+    this._hubConnection
+      .start()
+      .then(() => console.log('connection started'))
+      .catch((err) =>
+        console.log('error while establishing signalr connection: ' + err)
+      );
+  }
+  ngOnDestroy() {
+    console.log('ngOnDestroy');
+
+    this._hubConnection.stop();
+  }
+  loadData(event) {
+    setTimeout(() => {
+      this.processJson(10);
+      event.target.complete();
+
+      // App logic to determine if all data is loaded
+      // and disable the infinite scroll
+    }, 500);
   }
 }

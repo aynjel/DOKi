@@ -17,6 +17,11 @@
       <ion-col size="12" class=" ion-no-border ">
 
         <ion-list>
+          <ion-refresher slot="fixed" (ionRefresh)="loadData($event)" mode="ios">
+            <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+              refreshingSpinner="circles" refreshingText="Refreshing...">
+            </ion-refresher-content>
+          </ion-refresher>
           <ion-card *ngIf="isEmpty">
             <ion-item lines="none">No update history.</ion-item>
           </ion-card>
