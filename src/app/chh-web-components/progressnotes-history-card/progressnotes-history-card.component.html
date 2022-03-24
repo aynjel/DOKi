@@ -1,12 +1,8 @@
-<ion-card class="pointer" id="asdasd{{counter}}" [ngClass]="getType()">
-  <ion-item>
-    <!--ion-avatar slot="start">
-          <chh-app-text-avatar [text]="user_created" [color]=""></chh-app-text-avatar>
-        </ion-avatar-->
+<ion-card class="pointer customcardcss" id="asdasd{{counter}}" [ngClass]="getType()">
+  <ion-item *ngIf="type == 'progressnotes'">
     <ion-avatar>
       <img src="https://doki.chonghua.com.ph/assets/profile/{{user_created}}.png">
     </ion-avatar>
-
     <ion-label>
       <h3>{{user_created}}</h3>
       <p>{{dateCreateConverted}} {{dateCreateTimeConverted}}</p>
@@ -16,14 +12,21 @@
 
     <div *ngIf="truncating">
       <ion-text class="custom-font" [innerHtml]="notesmall"></ion-text>
-      <br />
       <button ion-button (click)="process()" *ngIf="noteslength">show more</button>
     </div>
     <div *ngIf="!truncating">
       <ion-text class="custom-font" [innerHtml]="notes"></ion-text>
-      <br />
+
       <button ion-button (click)="process();" *ngIf="noteslength">show less</button>
     </div>
   </ion-card-content>
-
+  <ion-item *ngIf="type != 'progressnotes'">
+    <ion-avatar>
+      <img src="https://doki.chonghua.com.ph/assets/profile/{{user_created}}.png">
+    </ion-avatar>
+    <ion-label>
+      <h3>{{user_created}}</h3>
+      <p>{{dateCreateConverted}} {{dateCreateTimeConverted}}</p>
+    </ion-label>
+  </ion-item>
 </ion-card>

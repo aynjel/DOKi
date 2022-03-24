@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
@@ -29,7 +29,9 @@ export class ProgressNotesPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private doctorService: DoctorService,
     private functionService: FunctionsService,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private functionsService: FunctionsService,
+    private renderer: Renderer2
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -41,17 +43,31 @@ export class ProgressNotesPage implements OnInit {
 
   ngOnInit() {
     this.patient_id = this.activatedRoute.snapshot.params.id;
-    this.accountNo = this.activatedRoute.snapshot.params.accountNo;
     this.getProgressNote();
     this.data = JSON.parse(atob(localStorage.getItem('selectedPatient')));
     this.dateAdmitted = this.data[0].admission_date;
+    this.checkAppearance();
   }
-
+  checkAppearance() {
+    this.functionsService.logToConsole('checkAppearance');
+    var values = JSON.parse(
+      '[' + atob(localStorage.getItem('user_settings')) + ']'
+    );
+    let dr_username = atob(localStorage.getItem('username'));
+    values.forEach((element) => {
+      this.functionsService.logToConsole(element.darkmode);
+      if (element.darkmode == 1) {
+        this.renderer.setAttribute(document.body, 'color-theme', 'dark');
+      } else {
+        this.renderer.setAttribute(document.body, 'color-theme', 'light');
+      }
+    });
+  }
   getProgressNote() {
     this.progessNotes = [];
     this.progessNotesTemp = [];
     this.progressNotesIsNotReady = true;
-    this.doctorService.getProgressNotes(this.accountNo).subscribe(
+    this.doctorService.getProgressNotes(this.patient_id).subscribe(
       (res: any) => {
         this.progessNotesTemp = res;
       },
@@ -118,8 +134,7 @@ export class ProgressNotesPage implements OnInit {
     // const {data} = await modal.onWillDismiss();
   }
   async viewhistory(data, day) {
-    console.log(data);
-
+    /*
     const modal = await this.modalController.create({
       component: ProgressnotesHistoryComponent,
       backdropDismiss: false,
@@ -128,6 +143,18 @@ export class ProgressNotesPage implements OnInit {
     modal.onDidDismiss().then((data) => {
       console.log(data);
     });
-    return await modal.present();
+    return await modal.present();*/
+    const options = {
+      component: ProgressnotesHistoryComponent,
+      cssClass: 'ion5modalviewedithistory',
+      swipeToClose: true,
+      breakpoints: [0, 0.5, 1],
+      initialBreakpoint: 1,
+      backdropDismiss: false,
+      componentProps: { data: data, day: day },
+    };
+    const modal = await this.modalController.create(options);
+    await modal.present();
+    // const {data} = await modal.onWillDismiss();
   }
 }

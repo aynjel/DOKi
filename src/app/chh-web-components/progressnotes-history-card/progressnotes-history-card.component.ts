@@ -32,6 +32,8 @@ export class ProgressnotesHistoryCardComponent implements OnInit {
     }
   }
   ngOnInit() {
+    console.log(this.notes);
+
     this.toBot = true;
     this.user_ = atob(localStorage.getItem('username'));
   }
