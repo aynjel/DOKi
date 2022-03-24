@@ -1,65 +1,5 @@
 <ion-card mode="ios" *ngIf="isDesktop">
   <div *ngFor="let x of data">
-    <ion-list>
-      <ion-item lines="none">
-        <ion-avatar slot="start">
-          <chh-app-text-avatar [text]="x.last_name" [color]=""></chh-app-text-avatar>
-        </ion-avatar>
-        <ion-label>
-          <ion-item class="ion-no-padding">
-            <h2 class="ion-text-wrap" style="padding-top: 20px">
-              <b>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</b>
-              <ion-text color="mango">
-                <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong>  {{x.gender}}</b></p>
-                </ion-text>
-            </h2>
-            <ion-badge color="warning" slot="end"
-              *ngIf="x.admission_status == 'DN' && x.doctor_prof_fee == null && x.is_posted == null">PF</ion-badge>
-            <ion-badge color="success" slot="end" *ngIf="x.doctor_prof_fee != null && x.is_posted != null"> PF OK
-            </ion-badge>
-          </ion-item>
-          <div class="ion-text-wrap" style="padding-top: 5px">
-            <div *ngIf="x.site == 'C'">
-              <ion-icon name="location-outline" slot="start"></ion-icon>
-              Chong Hua Hospital
-            </div>
-            <div *ngIf="x.site == 'M'">
-              <ion-icon name="location-outline" slot="start"></ion-icon>
-              Chong Hua Hospital Mandaue
-            </div>
-            <div>
-              <ion-icon name="bed-outline" slot="start"></ion-icon>
-              Room {{ x.room_no }}<br />
-              <ion-icon name="clipboard-outline" slot="start"></ion-icon>
-              as {{ x.doctor_Status }}<br />
-              <ion-chip *ngIf="x.admission_status == 'AC'">
-                <ion-label color="mango"><b>Admitted</b></ion-label>
-              </ion-chip>
-              <ion-chip *ngIf="x.admission_status == 'DN'">
-                <ion-label color="mango"><b>For Discharge</b></ion-label>
-              </ion-chip>
-            </div>
-          </div>
-        </ion-label>
-      </ion-item>
-      <ion-item lines="none" style="padding-bottom: 10px">
-        <div class="ion-text-wrap">
-          <div class=" font-size12" >
-            <ion-icon name="calendar-outline" slot="start"></ion-icon>
-            <span > Admission Date &nbsp;&nbsp;: {{ dateAdmitted }}</span>
-          </div>
-          <div class=" font-size12" *ngIf="x.forDischargeDateTime != null"  >
-            <ion-icon name="calendar-outline" slot="start"></ion-icon>
-            <span > Discharge Notice : {{ dischargeNotice }}</span>
-          </div>
-        </div>
-      </ion-item>
-    </ion-list>
-  </div>
-</ion-card>
-
-<ion-card mode="ios" *ngIf="!isDesktop">
-  <div *ngFor="let x of data">
     <ion-list *ngIf="moreOrLess == true">
       <ion-item style="padding-bottom: 10px">
         <div class="ion-text-wrap">
@@ -67,29 +7,32 @@
             <h2 class="ion-text-wrap" style="padding-top: 10px;">
               <b>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</b>
               <ion-text color="mango">
-                <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong>  {{x.gender}}</b></p>
-                </ion-text>
+                <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong> {{x.gender}}</b></p>
+              </ion-text>
             </h2>
           </ion-label>
         </div>
-        <ion-badge color="warning" slot="end" (click)="moreorless(false)"><ion-icon name="chevron-down-outline"></ion-icon></ion-badge>
+        <ion-badge color="warning" slot="end" (click)="moreorless(false)">
+          <ion-icon name="chevron-down-outline"></ion-icon>
+        </ion-badge>
       </ion-item>
     </ion-list>
     <ion-list *ngIf="moreOrLess == false">
       <ion-item style="padding-bottom: 10px">
         <div class="ion-text-wrap">
           <ion-label>
-            <h2 class="ion-text-wrap" style="padding-top: 10px;" >
+            <h2 class="ion-text-wrap" style="padding-top: 10px;">
               <b>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</b>
               <ion-text color="mango">
-                <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong>  {{x.gender}}</b></p>
-                </ion-text>
+                <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong> {{x.gender}}</b></p>
+              </ion-text>
             </h2>
           </ion-label>
         </div>
         <ion-badge color="warning" slot="end" class="font-size12"
           *ngIf=" x.admission_status == 'DN' && x.doctor_prof_fee == null && x.is_posted == null ">PF</ion-badge>
-        <ion-badge color="success" slot="end" class="font-size12" *ngIf="x.doctor_prof_fee != null && x.is_posted != null">PF OK</ion-badge>
+        <ion-badge color="success" slot="end" class="font-size12"
+          *ngIf="x.doctor_prof_fee != null && x.is_posted != null">PF OK</ion-badge>
       </ion-item>
       <ion-item lines="none" style="padding-bottom: 10px">
         <div class="ion-text-wrap" style="padding-top: 5px">
@@ -97,7 +40,7 @@
             <ion-icon name="location-outline" slot="start"></ion-icon>
             Chong Hua Hospital
           </div>
-          <div *ngIf="x.site == 'M'"  class=" font-size12">
+          <div *ngIf="x.site == 'M'" class=" font-size12">
             <ion-icon name="location-outline" slot="start"></ion-icon>
             Chong Hua Hospital Mandaue
           </div>
@@ -119,25 +62,97 @@
             <ion-icon name="calendar-outline" slot="start"></ion-icon>
             <span style="font-size: 13px;"> Admission Date &nbsp;&nbsp;: {{ dateAdmitted }}</span>
           </div>
-          <div class=" font-size12" *ngIf="x.forDischargeDateTime != null" style="font-size: 13px;" >
+          <div class=" font-size12" *ngIf="x.forDischargeDateTime != null" style="font-size: 13px;">
             <ion-icon name="calendar-outline" slot="start"></ion-icon>
             <span style="font-size: 13px;"> Discharge Notice : {{ dischargeNotice }}</span>
           </div>
-          
+
         </div>
       </ion-item>
       <ion-item lines="none" style="padding-bottom: 10px">
-        <!--div class="ion-text-wrap font-size12">
-          <ion-text *ngIf="data.admission_status == 'AC'">Status : Admitted </ion-text>
-          <ion-text *ngIf="data.admission_status == 'DN'">Status : For Discharge<br /></ion-text>
-          <ion-icon name="calendar-outline"></ion-icon>
-          <ion-text> Admission Date : {{ dateAdmitted }}</ion-text>
+        <ion-badge color="warning" slot="end" (click)="moreorless(true)">
+          <ion-icon name="chevron-up-outline"></ion-icon>
+        </ion-badge>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-card>
+
+<ion-card mode="ios" *ngIf="!isDesktop">
+  <div *ngFor="let x of data">
+    <ion-list *ngIf="moreOrLess == true">
+      <ion-item style="padding-bottom: 10px">
+        <div class="ion-text-wrap">
+          <ion-label>
+            <h2 class="ion-text-wrap" style="padding-top: 10px;">
+              <b>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</b>
+              <ion-text color="mango">
+                <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong> {{x.gender}}</b></p>
+              </ion-text>
+            </h2>
+          </ion-label>
         </div>
-        <div class=" font-size12" *ngIf="x.forDischargeDateTime != null" >
-          <ion-icon name="bed-outline" slot="start"></ion-icon>
-          Discharge Notice &nbsp;: {{ x.forDischargeDateTime }}
-        </div-->
-        <ion-badge color="warning" slot="end" (click)="moreorless(true)"><ion-icon name="chevron-up-outline"></ion-icon></ion-badge>
+        <ion-badge color="warning" slot="end" (click)="moreorless(false)">
+          <ion-icon name="chevron-down-outline"></ion-icon>
+        </ion-badge>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf="moreOrLess == false">
+      <ion-item style="padding-bottom: 10px">
+        <div class="ion-text-wrap">
+          <ion-label>
+            <h2 class="ion-text-wrap" style="padding-top: 10px;">
+              <b>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</b>
+              <ion-text color="mango">
+                <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong> {{x.gender}}</b></p>
+              </ion-text>
+            </h2>
+          </ion-label>
+        </div>
+        <ion-badge color="warning" slot="end" class="font-size12"
+          *ngIf=" x.admission_status == 'DN' && x.doctor_prof_fee == null && x.is_posted == null ">PF</ion-badge>
+        <ion-badge color="success" slot="end" class="font-size12"
+          *ngIf="x.doctor_prof_fee != null && x.is_posted != null">PF OK</ion-badge>
+      </ion-item>
+      <ion-item lines="none" style="padding-bottom: 10px">
+        <div class="ion-text-wrap" style="padding-top: 5px">
+          <div *ngIf="x.site == 'C'" class=" font-size12">
+            <ion-icon name="location-outline" slot="start"></ion-icon>
+            Chong Hua Hospital
+          </div>
+          <div *ngIf="x.site == 'M'" class=" font-size12">
+            <ion-icon name="location-outline" slot="start"></ion-icon>
+            Chong Hua Hospital Mandaue
+          </div>
+          <div class=" font-size12">
+            <ion-icon name="bed-outline" slot="start"></ion-icon>
+            Room {{ x.room_no }}
+          </div>
+          <div class=" font-size12">
+            <ion-icon name="clipboard-outline" slot="start"></ion-icon>
+            as {{x.doctor_Status}}&nbsp;
+            <ion-chip *ngIf="x.admission_status == 'AC'">
+              <ion-label color="mango"><b>Admitted</b></ion-label>
+            </ion-chip>
+            <ion-chip *ngIf="x.admission_status == 'DN'">
+              <ion-label color="mango"><b>For Discharge</b></ion-label>
+            </ion-chip>
+          </div>
+          <div class=" font-size12" style="font-size: 13px;">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <span style="font-size: 13px;"> Admission Date &nbsp;&nbsp;: {{ dateAdmitted }}</span>
+          </div>
+          <div class=" font-size12" *ngIf="x.forDischargeDateTime != null" style="font-size: 13px;">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <span style="font-size: 13px;"> Discharge Notice : {{ dischargeNotice }}</span>
+          </div>
+
+        </div>
+      </ion-item>
+      <ion-item lines="none" style="padding-bottom: 10px">
+        <ion-badge color="warning" slot="end" (click)="moreorless(true)">
+          <ion-icon name="chevron-up-outline"></ion-icon>
+        </ion-badge>
       </ion-item>
     </ion-list>
   </div>
