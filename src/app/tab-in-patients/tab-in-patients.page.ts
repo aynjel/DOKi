@@ -188,6 +188,7 @@ export class TabInPatientsPage {
 
   //Fired when the component routing to is about to animate into view.
   ionViewWillEnter() {
+    localStorage.removeItem('selectedPatient');
     this.logindata = <LoginResponseModelv3>(
       this.authService.userData$.getValue()
     );

@@ -33,6 +33,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
   @ViewChild('commentDetailWrapper', { static: false }) commentDetailWrapper;
   private _hubConnection: HubConnection;
   @Input() data: any;
+  @Input() day: any;
   progessNotes: any;
   progessNotes1: any;
   progessNotesTemp: any;

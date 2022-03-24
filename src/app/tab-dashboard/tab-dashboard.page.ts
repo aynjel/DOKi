@@ -190,6 +190,7 @@ export class TabDashboardPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    localStorage.removeItem('selectedPatient');
     this.logindata = <LoginResponseModelv3>(
       this.authService.userData$.getValue()
     );

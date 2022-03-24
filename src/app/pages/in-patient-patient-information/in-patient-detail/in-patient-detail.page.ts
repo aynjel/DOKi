@@ -163,6 +163,7 @@ export class InPatientDetailPage {
   }
 
   ionViewWillEnter() {
+    this.ngUnsubscribe = new Subject();
     this.loginResponseModelv3 = new LoginResponseModelv3();
     this.inpatientDetails = new InpatientDetails();
     //this.functionsService.logToConsole();
@@ -244,7 +245,7 @@ export class InPatientDetailPage {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          //console.log(res.admission_no);
+          ////console.log(res.admission_no);
           this.data1 = JSON.parse('[' + JSON.stringify(res) + ']');
           localStorage.setItem('patientData', btoa(JSON.stringify(this.data1)));
         },
@@ -259,6 +260,10 @@ export class InPatientDetailPage {
               this.inpatientModelInpatients.accountNo = this.opd_code;
               this.inpatientDetails.admission_no = this.opd_code;
               this.data.push(element);
+              localStorage.setItem(
+                'selectedPatient',
+                btoa(JSON.stringify(this.data))
+              );
               this.admissionstatus = element.admission_status;
               this.patient_name = element.first_name + ' ' + element.last_name;
               this.patient_name =
@@ -295,7 +300,7 @@ export class InPatientDetailPage {
     await this.loading.present();
 
     const { role, data } = await this.loading.onDidDismiss();
-    ////////////console.log('Loading dismissed!');
+    //////////////console.log('Loading dismissed!');
   }
   public async dismissLoading(): Promise<void> {
     if (this.loading) {
@@ -546,7 +551,7 @@ export class InPatientDetailPage {
 
     /*this.doctorService.getProgressNotes('test').subscribe(
       (res: any = []) => {
-        console.log(res[0].notes);
+        //console.log(res[0].notes);
         this.progNot_InitDisplay = this.functionsService.truncateChar(
           res[0].notes,
           200
@@ -554,10 +559,10 @@ export class InPatientDetailPage {
         this.progNot_account_no = res[0].account_no;
       },
       (error) => {
-        console.log(error);
+        //console.log(error);
       },
       () => {
-        console.log('call done');
+        //console.log('call done');
       }
     );*/
     this.getProgressNotes();
@@ -571,7 +576,7 @@ export class InPatientDetailPage {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any = []) => {
-          console.log(res);
+          //console.log(res);
           this.progessNotesTemp = res;
           if (this.progessNotesTemp.length > 0) {
             this.progNot_InitDisplay = this.functionsService.truncateChar(
@@ -613,7 +618,7 @@ export class InPatientDetailPage {
             }
             this.progessNotes.push(el);
           });
-          //console.log(this.activeDays);
+          ////console.log(this.activeDays);
 
           if (this.progessNotes.length <= 0) {
             this.progressNotesIsEmpty = true;

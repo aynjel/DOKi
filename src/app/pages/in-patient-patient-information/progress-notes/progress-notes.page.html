@@ -17,24 +17,18 @@
   <ion-grid class="ion-no-padding">
     <ion-row class="custom-padding">
 
-      <ion-col size-lg="3" *ngIf="isDesktop">
-        <!--patientName [patient_name]="patientInfo.patient_name" [patient_no]="patientInfo.patient_no"
-          [account_no]="patientInfo.account_no" [ap_name]="patientInfo.ap_name" [dateCreated]="patientInfo.date_created"
-          [birthday]="birthday" [age]="age">
-        </patientName-->
-      </ion-col>
-      <ion-col size-md="1" size-xs="12" *ngIf="!isDesktop">
 
-      </ion-col>
-      <ion-col size-md="10" size-lg="8" class="custom-border-bottom ion-no-border ">
-
+      <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
+        <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [forMoreOrLess]="false">
+        </app-chh-app-patient-header>
         <ng-container>
 
           <div *ngFor="let x of progessNotes">
             <ion-card class="pointer">
               <ion-item>
                 Day #<b>{{x.notes_id}}</b>
-                <ion-button size="small" fill="outline" slot="end" (click)="viewhistory(x.trans_no)">View History
+                <ion-button size="small" fill="outline" slot="end" (click)="viewhistory(x.trans_no,'Day #'+x.notes_id)">
+                  View History
                 </ion-button>
                 <!--ion-button fill="outline" slot="end" (click)="viewhistory(x.trans_no)">
                   View History</ion-button>

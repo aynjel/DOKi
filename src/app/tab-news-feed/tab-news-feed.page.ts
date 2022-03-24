@@ -38,6 +38,7 @@ export class TabNewsFeedPage implements OnInit {
   items = [];
   numTimesLeft = 5;
   ngOnInit() {
+    localStorage.removeItem('selectedPatient');
     this.checkAppearance();
 
     this.doctorService

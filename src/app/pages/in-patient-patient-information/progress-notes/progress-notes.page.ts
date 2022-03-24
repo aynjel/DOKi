@@ -21,6 +21,9 @@ export class ProgressNotesPage implements OnInit {
   progressNotesIsNotReady: boolean = false;
   activeDays: any = [];
   accountNo: any;
+  patientInfor;
+  dateAdmitted;
+  data = [];
   constructor(
     private screensizeService: ScreenSizeService,
     private activatedRoute: ActivatedRoute,
@@ -40,6 +43,8 @@ export class ProgressNotesPage implements OnInit {
     this.patient_id = this.activatedRoute.snapshot.params.id;
     this.accountNo = this.activatedRoute.snapshot.params.accountNo;
     this.getProgressNote();
+    this.data = JSON.parse(atob(localStorage.getItem('selectedPatient')));
+    this.dateAdmitted = this.data[0].admission_date;
   }
 
   getProgressNote() {
@@ -112,13 +117,13 @@ export class ProgressNotesPage implements OnInit {
     await modal.present();
     // const {data} = await modal.onWillDismiss();
   }
-  async viewhistory(data) {
+  async viewhistory(data, day) {
     console.log(data);
 
     const modal = await this.modalController.create({
       component: ProgressnotesHistoryComponent,
       backdropDismiss: false,
-      componentProps: { data: data },
+      componentProps: { data: data, day: day },
     });
     modal.onDidDismiss().then((data) => {
       console.log(data);

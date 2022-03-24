@@ -8,7 +8,6 @@ import { PatientService } from '../services/patient/patient.service';
 import { LoginData } from '../models/login-data.model';
 import { ProfileExpiry } from '../models/doctor';
 
-
 import { BehaviorSubject } from 'rxjs';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Constants } from '../shared/constants';
@@ -23,11 +22,19 @@ import { ChhAppChangePasswordPage } from '../chh-web-components/chh-app-change-p
 import { ChhAppChangePassPage } from '../chh-web-components/chh-app-change-pass/chh-app-change-pass.page';
 import { ChhAppPrivacyPolicyPage } from '../chh-web-components/chh-app-privacy-policy/chh-app-privacy-policy.page';
 import { ChhAppTermsAndConditionsPage } from '../chh-web-components/chh-app-terms-and-conditions/chh-app-terms-and-conditions.page';
-import { UserSettingsModel,UserSettingDeletesModel } from '../models/doctor';
+import { UserSettingsModel, UserSettingDeletesModel } from '../models/doctor';
 import { DoctorService } from '../services/doctor/doctor.service';
 import { element } from 'protractor';
-import {UserSettingsModelv3,LoginResponseModelv3,AppSettingsModelv3,RevokeTokenV3} from 'src/app/models/doctor';
-import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
+import {
+  UserSettingsModelv3,
+  LoginResponseModelv3,
+  AppSettingsModelv3,
+  RevokeTokenV3,
+} from 'src/app/models/doctor';
+import {
+  InPatientData,
+  ProfessionalFeeModelv3,
+} from 'src/app/models/in-patient.model';
 import { catchError } from 'rxjs/operators';
 import { LogoutService } from '../services/logout/logout.service';
 
@@ -38,16 +45,16 @@ import { LogoutService } from '../services/logout/logout.service';
 })
 export class TabSettingsPage {
   userData$ = new BehaviorSubject<any>([]);
-  public logindata:LoginResponseModelv3 ;
+  public logindata: LoginResponseModelv3;
   account: LoginResponseModelv3;
   isDesktop: boolean;
 
   displayUserData: any;
   dr_name: any;
   dr_code: any;
-  userSettingsModel = new UserSettingsModel;
-  userSettingDeletesModel = new UserSettingDeletesModel;
-  appSettingsModelv3 = new AppSettingsModelv3; 
+  userSettingsModel = new UserSettingsModel();
+  userSettingDeletesModel = new UserSettingDeletesModel();
+  appSettingsModelv3 = new AppSettingsModelv3();
   //toggles
   smsAdmitted: boolean = false;
   smsDischarge: boolean = false;
@@ -55,7 +62,7 @@ export class TabSettingsPage {
   pushNotiDischarge = false;
   darkmode: boolean = false;
   privacyPolicy: boolean = true;
-  profileExpiry:any;
+  profileExpiry: any;
   draftJson: any;
   draftJson2: any;
   dr_username;
@@ -66,21 +73,21 @@ export class TabSettingsPage {
   isset_pushNotiDischarge: boolean = false;
   isset_darkmode: boolean = false;
   isset_privacyPolicy: boolean = false;
-  prc:any;
-  prcDays:any;
-  prcBar:any;
-  prcBarColor:any;
-  prcBarHide:any;
-  phic:any;
-  phicDays:any;
-  phicBar:any;
-  phicBarColor:any;
-  phicBarHide:any;
+  prc: any;
+  prcDays: any;
+  prcBar: any;
+  prcBarColor: any;
+  prcBarHide: any;
+  phic: any;
+  phicDays: any;
+  phicBar: any;
+  phicBarColor: any;
+  phicBarHide: any;
   data1;
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
-  public userSettingsModelv3: UserSettingsModelv3; 
-  public revokeTokenV3: RevokeTokenV3; 
-    
+  public userSettingsModelv3: UserSettingsModelv3;
+  public revokeTokenV3: RevokeTokenV3;
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -95,7 +102,7 @@ export class TabSettingsPage {
     private patientService: PatientService,
     public alertController: AlertController,
     private doctorService: DoctorService,
-    private logoutService:LogoutService
+    private logoutService: LogoutService
   ) {
     this.privacyPolicy = true;
 
@@ -105,10 +112,7 @@ export class TabSettingsPage {
       }
       this.isDesktop = isDesktop;
     });
-
-
   }
-
 
   async modalUpdate(header, message, data) {
     const alert = await this.alertController.create({
@@ -182,105 +186,96 @@ export class TabSettingsPage {
     await actionSheet.present();
   }
   ngOnInit() {
-
     //this.checkAppearance();
   }
 
   ionViewWillEnter() {
+    localStorage.removeItem('selectedPatient');
     this.$gaService.pageView('/Settings', 'Settings Tab');
-    
-    this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
+
+    this.logindata = <LoginResponseModelv3>(
+      this.authService.userData$.getValue()
+    );
     this.functionsService.logToConsole(this.logindata);
-    
+
     this.dr_name = this.logindata.lastName;
     this.dr_code = this.logindata.doctorCode;
 
-
-    this.dr_username =this.logindata.userName;
+    this.dr_username = this.logindata.userName;
     let y = '';
     //PARSE USER SETTINGS
     this.functionsService.logToConsole('ionViewWillEnter');
-    
-
 
     this.profileExpiry = new ProfileExpiry();
-    this.profileExpiry.mode = "P";
+    this.profileExpiry.mode = 'P';
     this.profileExpiry.drCode = this.dr_code;
     this.functionsService.logToConsole(this.logindata.phicExpiryDate);
     this.functionsService.logToConsole(this.logindata.phicRemainingDays);
     this.functionsService.logToConsole(this.logindata.prcExpiryDate);
     this.functionsService.logToConsole(this.logindata.prcRemainingDays);
 
-    var dd    = new Date(this.logindata.prcExpiryDate);
+    var dd = new Date(this.logindata.prcExpiryDate);
     this.functionsService.logToConsole(dd);
-    
-    this.prc = dd.getDate()+'/'+(dd.getMonth() + 1)+'/'+dd.getUTCFullYear();
+
+    this.prc =
+      dd.getDate() + '/' + (dd.getMonth() + 1) + '/' + dd.getUTCFullYear();
     this.prcDays = this.logindata.prcRemainingDays;
     this.functionsService.logToConsole(this.prcDays);
-    
-    if(this.prcDays > 90){
-      this.prcBar = this.prcDays/90;
-      this.prcBarColor='';
-      this.prcBarHide = 'ion-hide';
-    }else if(this.prcDays >= 60 && this.prcDays <= 90 ){
-      this.prcBar = this.prcDays/90;
-      this.prcBarColor='mango';
-      this.prcBarHide = '';          
-    }else if(this.prcDays >= 30 && this.prcDays <= 59 ){
-      this.prcBar = this.prcDays/90;
-      this.prcBarColor='warning';
-      this.prcBarHide = '';          
-    }else{
-      this.prcBar = this.prcDays/90;
-      this.prcBarColor='danger';
-      this.prcBarHide = '';  
-    }
-    var cc    = new Date(this.logindata.phicExpiryDate);
-    this.phic = cc.getDate()+'/'+(cc.getMonth() + 1)+'/'+cc.getUTCFullYear();
-    this.phicDays = this.logindata.phicRemainingDays;    
-    if(this.phicDays > 90){
-      this.phicBar = this.phicDays/90;
-      this.phicBarColor='';
-      this.phicBarHide = 'ion-hide';
-    }else if(this.phicDays >= 60 && this.phicDays <= 90 ){
-      this.phicBar = this.phicDays/90;
-      this.phicBarColor='mango';
-      this.phicBarHide = '';          
-    }else if(this.phicDays >= 30 && this.phicDays <= 59 ){
-      this.phicBar = this.phicDays/90;
-      this.phicBarColor='warning';
-      this.phicBarHide = '';          
-    }else{
-      this.phicBar = this.phicDays/90;
-      this.phicBarColor='danger';
-      this.phicBarHide = '';  
-    }  
 
+    if (this.prcDays > 90) {
+      this.prcBar = this.prcDays / 90;
+      this.prcBarColor = '';
+      this.prcBarHide = 'ion-hide';
+    } else if (this.prcDays >= 60 && this.prcDays <= 90) {
+      this.prcBar = this.prcDays / 90;
+      this.prcBarColor = 'mango';
+      this.prcBarHide = '';
+    } else if (this.prcDays >= 30 && this.prcDays <= 59) {
+      this.prcBar = this.prcDays / 90;
+      this.prcBarColor = 'warning';
+      this.prcBarHide = '';
+    } else {
+      this.prcBar = this.prcDays / 90;
+      this.prcBarColor = 'danger';
+      this.prcBarHide = '';
+    }
+    var cc = new Date(this.logindata.phicExpiryDate);
+    this.phic =
+      cc.getDate() + '/' + (cc.getMonth() + 1) + '/' + cc.getUTCFullYear();
+    this.phicDays = this.logindata.phicRemainingDays;
+    if (this.phicDays > 90) {
+      this.phicBar = this.phicDays / 90;
+      this.phicBarColor = '';
+      this.phicBarHide = 'ion-hide';
+    } else if (this.phicDays >= 60 && this.phicDays <= 90) {
+      this.phicBar = this.phicDays / 90;
+      this.phicBarColor = 'mango';
+      this.phicBarHide = '';
+    } else if (this.phicDays >= 30 && this.phicDays <= 59) {
+      this.phicBar = this.phicDays / 90;
+      this.phicBarColor = 'warning';
+      this.phicBarHide = '';
+    } else {
+      this.phicBar = this.phicDays / 90;
+      this.phicBarColor = 'danger';
+      this.phicBarHide = '';
+    }
 
     //this.userSettingsModelv3 = JSON.parse(atob(localStorage.getItem("user_settings")));
 
     this.doctorService.getUserSettingsV3().subscribe(
       (res: any) => {
-
-        
         this.userSettingsModelv3 = <UserSettingsModelv3>res;
-        localStorage.setItem("user_settings",btoa(JSON.stringify(this.userSettingsModelv3)));
-      },(error) => {
+        localStorage.setItem(
+          'user_settings',
+          btoa(JSON.stringify(this.userSettingsModelv3))
+        );
       },
+      (error) => {},
       () => {
-
         this.checkAppearance();
       }
-      );
-
-
-     
-
-
-
-
-
-
+    );
 
     /*this.patientService.getUserSettingsV2(this.dr_username).subscribe((res: any) => {
         this.functionsService.logToConsole(res);
@@ -360,68 +355,58 @@ export class TabSettingsPage {
         });
       });*/
 
-
-
-
     this.$gaService.event('Settings', 'User Flow', this.dr_name);
     this.authService.userData$.subscribe((res: any) => {
       this.account = <LoginResponseModelv3>res;
       this.functionsService.logToConsole(this.account);
-      
+
       let asdasda = JSON.stringify(res);
-      asdasda = '['+asdasda+']';
+      asdasda = '[' + asdasda + ']';
       this.account = JSON.parse(asdasda);
-      
     });
   }
 
-
-
-
-
-
-
-
-  toggleV3(event: { detail: { checked: any } },setting: any,property: any,flag: boolean) {
+  toggleV3(
+    event: { detail: { checked: any } },
+    setting: any,
+    property: any,
+    flag: boolean
+  ) {
     let value: any;
     if (event.detail.checked) {
       value = '1';
     } else {
       value = '0';
     }
-    if(setting == 'smsNotification' ){
-      if(this.userSettingsModelv3.smsNotification != value){
+    if (setting == 'smsNotification') {
+      if (this.userSettingsModelv3.smsNotification != value) {
         this.userSettingsModelv3.smsNotification = value;
         this.updateUserSettings();
         console.log('toggleV3 - smsNotification');
       }
-
     }
-    if(setting == 'darkmode' ){
+    if (setting == 'darkmode') {
       this.userSettingsModelv3.darkmode = value;
       this.updateUserSettings();
       console.log('toggleV3 - darkmode');
     }
-    localStorage.setItem("user_settings",btoa(JSON.stringify(this.userSettingsModelv3)));
- 
+    localStorage.setItem(
+      'user_settings',
+      btoa(JSON.stringify(this.userSettingsModelv3))
+    );
   }
-  updateUserSettings(){
-
+  updateUserSettings() {
     this.functionsService.logToConsole('updateUserSettings : ');
     this.functionsService.logToConsole(this.userSettingsModelv3);
-    
+
     this.doctorService.updateUserSettingsV3(this.userSettingsModelv3).subscribe(
       (res: any) => {
         this.functionsService.logToConsole(res);
-        
-      },(error) => {
-        
       },
+      (error) => {},
       () => {
-
         this.checkAppearance();
       }
-
     );
   }
 
@@ -444,51 +429,53 @@ export class TabSettingsPage {
     }
   }
   checkAppearance() {
-//    this.functionsService.logToConsole('checkAppearance');
-    var values = JSON.parse('[' + atob(localStorage.getItem("user_settings"))+ ']');
+    //    this.functionsService.logToConsole('checkAppearance');
+    var values = JSON.parse(
+      '[' + atob(localStorage.getItem('user_settings')) + ']'
+    );
     //this.functionsService.logToConsole(values);
-    
+
     let dr_username = atob(localStorage.getItem('username'));
-    values.forEach(element => {
-      if(element.darkmode == '1'){
-        this.renderer.setAttribute(document.body,'color-theme','dark');
+    values.forEach((element) => {
+      if (element.darkmode == '1') {
+        this.renderer.setAttribute(document.body, 'color-theme', 'dark');
         this.isset_darkmode = true;
         this.darkmode = true;
-      }else{
-        this.renderer.setAttribute(document.body,'color-theme','light');
+      } else {
+        this.renderer.setAttribute(document.body, 'color-theme', 'light');
         this.isset_darkmode = false;
         this.darkmode = false;
       }
-      if(element.privacyPolicy == '1'){
+      if (element.privacyPolicy == '1') {
         this.privacyPolicy = true;
-      }else{
+      } else {
         this.privacyPolicy = false;
       }
 
-      
-      if(element.smsNotification == '1'){
+      if (element.smsNotification == '1') {
         this.smsAdmitted = true;
         this.isset_smsAdmitted = true;
-      }else{
+      } else {
         this.smsAdmitted = false;
         this.isset_smsAdmitted = false;
       }
     });
   }
 
-
-  
-
   logout() {
     let dr_username = atob(localStorage.getItem('username'));
-    this.revokeTokenV3 = new RevokeTokenV3(); 
-    this.revokeTokenV3.jwt = decodeURIComponent(this.functionsService.getcookie('refreshToken'));
+    this.revokeTokenV3 = new RevokeTokenV3();
+    this.revokeTokenV3.jwt = decodeURIComponent(
+      this.functionsService.getcookie('refreshToken')
+    );
     console.log(this.revokeTokenV3);
-    
-    this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
-      this.functionsService.logToConsole(res);
-    });
-    
+
+    this.doctorService
+      .revokeTokenV3(this.revokeTokenV3)
+      .subscribe((res: any) => {
+        this.functionsService.logToConsole(res);
+      });
+
     this.logoutService.out();
     /*
     this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
@@ -501,7 +488,6 @@ export class TabSettingsPage {
       localStorage.setItem('username',dr_username);
       this.router.navigate(['/login']);
     });*/
-
   }
   //OPT-OUT of PRIVACY POLICY
   async optoutofprivacy(event: { detail: { checked: any } }) {
@@ -573,15 +559,18 @@ export class TabSettingsPage {
                 this.appSettingsModelv3 = <AppSettingsModelv3>resdata;
                 this.userSettingsModelv3 = <UserSettingsModelv3>resdata;
                 this.userSettingsModelv3.privacyPolicy = '1';
-                localStorage.setItem("user_settings",btoa(JSON.stringify(this.userSettingsModelv3)));
-              },(error) => {
-                 this.functionsService.sorryDoc();
-                },
-                () => {
-  
-                  this.updateUserSettings();
-                }
-              );
+                localStorage.setItem(
+                  'user_settings',
+                  btoa(JSON.stringify(this.userSettingsModelv3))
+                );
+              },
+              (error) => {
+                this.functionsService.sorryDoc();
+              },
+              () => {
+                this.updateUserSettings();
+              }
+            );
             /*
             let smpJSON =
               '{"username": "' +
