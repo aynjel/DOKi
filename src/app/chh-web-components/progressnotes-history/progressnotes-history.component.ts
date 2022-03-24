@@ -127,15 +127,16 @@ export class ProgressnotesHistoryComponent implements OnInit {
     });
   }
   sendComment() {
-    console.log(this.summary);
-    this.doctorService.addComment(this.summary).subscribe(
-      (res: any) => {},
-      (error) => {},
-      () => {
-        this.summary.msg = '';
-        //this.getProgressNotesHistory();
-      }
-    );
+    if (this.summary.msg != '') {
+      this.doctorService.addComment(this.summary).subscribe(
+        (res: any) => {},
+        (error) => {},
+        () => {
+          this.summary.msg = '';
+          //this.getProgressNotesHistory();
+        }
+      );
+    }
   }
   closeModal() {
     this.modalController.dismiss({
