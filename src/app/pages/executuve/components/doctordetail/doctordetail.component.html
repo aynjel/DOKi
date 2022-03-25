@@ -1,4 +1,4 @@
-<ion-header mode="md" class="ion-no-border" >
+<ion-header mode="md" class="ion-no-border">
 
 
   <ion-toolbar color="mango" *ngIf="!isDesktop">
@@ -16,49 +16,46 @@
 
 
 
-<ion-list style=" box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);">
-  <ion-item >
-    <ion-avatar slot="start">
-      <chh-app-text-avatar [text]="dr_name" [color]=""></chh-app-text-avatar>
-    </ion-avatar>
-    <ion-label style="margin-top: -5px;">
-      <ion-item slot="start" lines="" class="ion-no-padding" style="padding-bottom: 5px;">
-        <h2 class="ion-text-wrap" style="padding-top: 20px;">
-          {{ dr_name }}
-        </h2>
+  <ion-list style=" box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);">
+    <ion-item>
+      <ion-avatar slot="start">
+        <chh-app-text-avatar [text]="dr_name" [color]=""></chh-app-text-avatar>
+      </ion-avatar>
+      <ion-label style="margin-top: -5px;">
+        <ion-item slot="start" lines="" class="ion-no-padding" style="padding-bottom: 5px;">
+          <h2 class="ion-text-wrap" style="padding-top: 20px;">
+            {{ dr_name }}
+          </h2>
 
-      </ion-item>
+        </ion-item>
 
-      <ion-row class="ion-no-padding" lines="none" style="padding-top: 10px !important;">
-        <p>
-          <span>
-            <ion-icon name="newspaper-outline" slot="start"></ion-icon> {{deptName}}
-          </span><br />
-          <span>
-            <ion-icon name="clipboard-outline" slot="start"></ion-icon> {{expertise}}
-          </span>
-        </p>
-        <br />
-      </ion-row>
-    </ion-label>
-  </ion-item>
-</ion-list>
+        <ion-row class="ion-no-padding" lines="none" style="padding-top: 10px !important;">
+          <p>
+            <span>
+              <ion-icon name="newspaper-outline" slot="start"></ion-icon> {{deptName}}
+            </span><br />
+            <span>
+              <ion-icon name="clipboard-outline" slot="start"></ion-icon> {{expertise}}
+            </span>
+          </p>
+          <br />
+        </ion-row>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 
 
 </ion-header>
 <ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
-    <ion-refresher-content
-      pullingIcon="chevron-down-circle-outline"
-      pullingText="Pull to refresh"
-      refreshingSpinner="circles"
-      refreshingText="Refreshing...">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+      refreshingSpinner="circles" refreshingText="Refreshing...">
     </ion-refresher-content>
   </ion-refresher>
 
   <ion-grid class="ion-no-padding">
     <ion-row>
-      <ion-col size-md="12"  >
+      <ion-col size-md="12">
         <ng-container>
           <div *ngFor="let x of listOfPatients">
 
@@ -73,9 +70,10 @@
                   <ion-item slot="start" lines="" class="ion-no-padding" style="padding-bottom: 5px;">
                     <h2 class="ion-text-wrap" style="padding-top: 20px;">
                       {{ x.last_name }}, {{x.first_name}} {{x.middle_name}}
-                      <ion-text color="mango">
-                        <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong>  {{x.gender}}</b></p>
-                        </ion-text>
+                      <ion-text color="primary">
+                        <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong> {{x.gender}}</b>
+                        </p>
+                      </ion-text>
                     </h2>
 
                   </ion-item>
@@ -98,11 +96,12 @@
                         for discharge</ion-badge> <br *ngIf="x.admission_status == 'DN'" />
 
 
-                        <ion-icon name="alarm-outline" slot="start" *ngIf="x.forDischargeDateTime != null" color=""></ion-icon>
-                        <ion-text *ngIf="x.forDischargeDateTime != null" color="">
-                            DN : 
-                          {{x.forDischargeDateTime}}<br />
-                        </ion-text>
+                      <ion-icon name="alarm-outline" slot="start" *ngIf="x.forDischargeDateTime != null" color="">
+                      </ion-icon>
+                      <ion-text *ngIf="x.forDischargeDateTime != null" color="">
+                        DN :
+                        {{x.forDischargeDateTime}}<br />
+                      </ion-text>
                     </p>
                     <br />
                   </ion-row>
@@ -117,9 +116,7 @@
           </div>
         </ng-container>
         <ng-container *ngIf="!isReady">
-          <div
-            class="ion-padding custom-skeleton"
-          >
+          <div class="ion-padding custom-skeleton">
             <!-- Skeleton  -->
             <ion-item>
               <ion-avatar slot="start">
