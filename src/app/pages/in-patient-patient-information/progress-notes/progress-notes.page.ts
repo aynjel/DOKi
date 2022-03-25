@@ -5,12 +5,15 @@ import { DoctorService } from 'src/app/services/doctor/doctor.service';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
 import { FunctionsService } from 'src/app/shared/functions/functions.service';
 import { ProgressnotesHistoryComponent } from 'src/app/chh-web-components/progressnotes-history/progressnotes-history.component';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-progress-notes',
   templateUrl: './progress-notes.page.html',
   styleUrls: ['./progress-notes.page.scss'],
 })
 export class ProgressNotesPage implements OnInit {
+  private ngUnsubscribe = new Subject();
   isDesktop: boolean;
   patient_id: any;
   patientId: any;
@@ -33,15 +36,21 @@ export class ProgressNotesPage implements OnInit {
     private functionsService: FunctionsService,
     private renderer: Renderer2
   ) {
-    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
-      if (this.isDesktop && !isDesktop) {
-        window.location.reload();
-      }
-      this.isDesktop = isDesktop;
-    });
+    this.screensizeService
+      .isDesktopView()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((isDesktop) => {
+        if (this.isDesktop && !isDesktop) {
+          window.location.reload();
+        }
+        this.isDesktop = isDesktop;
+      });
   }
 
   ngOnInit() {
+    console.log('ngOnInit');
+
+    this.ngUnsubscribe = new Subject();
     this.patient_id = this.activatedRoute.snapshot.params.id;
     this.getProgressNote();
     this.data = JSON.parse(atob(localStorage.getItem('selectedPatient')));
@@ -67,51 +76,54 @@ export class ProgressNotesPage implements OnInit {
     this.progessNotes = [];
     this.progessNotesTemp = [];
     this.progressNotesIsNotReady = true;
-    this.doctorService.getProgressNotes(this.patient_id).subscribe(
-      (res: any) => {
-        this.progessNotesTemp = res;
-      },
-      (error) => {},
-      () => {
-        this.activeDays = [];
-        this.progessNotesTemp.forEach((el) => {
-          this.activeDays.push(el.notes_id);
-          el.dateCreateConverted = this.functionService.convertDatetoMMDDYYYY(
-            el.date_created
-          );
+    this.doctorService
+      .getProgressNotes(this.patient_id)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          this.progessNotesTemp = res;
+        },
+        (error) => {},
+        () => {
+          this.activeDays = [];
+          this.progessNotesTemp.forEach((el) => {
+            this.activeDays.push(el.notes_id);
+            el.dateCreateConverted = this.functionService.convertDatetoMMDDYYYY(
+              el.date_created
+            );
 
-          el.dateCreateTimeConverted = this.functionService.getTime(
-            el.date_created
-          );
+            el.dateCreateTimeConverted = this.functionService.getTime(
+              el.date_created
+            );
 
-          el.dateUpdateConverted = this.functionService.convertDatetoMMDDYYYY(
-            el.date_updated
-          );
-          el.dateUpdateTimeConverted = this.functionService.getTime(
-            el.date_updated
-          );
-          if (el.date_updated == '0001-01-01T00:00:00') {
-            el.dateUpdateConverted = '';
-          }
-          el.notessmall = this.functionService.truncateChar(el.notes, 300);
-          if (el.notes.length > 200) {
-            el.noteslength = true;
+            el.dateUpdateConverted = this.functionService.convertDatetoMMDDYYYY(
+              el.date_updated
+            );
+            el.dateUpdateTimeConverted = this.functionService.getTime(
+              el.date_updated
+            );
+            if (el.date_updated == '0001-01-01T00:00:00') {
+              el.dateUpdateConverted = '';
+            }
+            el.notessmall = this.functionService.truncateChar(el.notes, 300);
+            if (el.notes.length > 200) {
+              el.noteslength = true;
+            } else {
+              el.noteslength = false;
+            }
+            this.progessNotes.push(el);
+          });
+          //console.log(this.activeDays);
+
+          if (this.progessNotes.length <= 0) {
+            this.progressNotesIsEmpty = true;
           } else {
-            el.noteslength = false;
+            this.progressNotesIsEmpty = false;
           }
-          this.progessNotes.push(el);
-        });
-        //console.log(this.activeDays);
-
-        if (this.progessNotes.length <= 0) {
-          this.progressNotesIsEmpty = true;
-        } else {
-          this.progressNotesIsEmpty = false;
+          this.progressNotesIsNotReady = false;
+          //this.scrolltotop();
         }
-        this.progressNotesIsNotReady = false;
-        //this.scrolltotop();
-      }
-    );
+      );
   }
   doRefresh(event) {
     setTimeout(() => {
@@ -156,5 +168,9 @@ export class ProgressNotesPage implements OnInit {
     const modal = await this.modalController.create(options);
     await modal.present();
     // const {data} = await modal.onWillDismiss();
+  }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

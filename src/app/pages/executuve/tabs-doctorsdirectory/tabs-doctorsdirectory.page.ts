@@ -72,6 +72,7 @@ export class TabsDoctorsdirectoryPage implements OnInit {
   }
 
   ngOnInit() {
+    this.ngUnsubscribe = new Subject();
     this.refreshcounter = 1;
     this.getDocotrsDirectory();
   }
@@ -257,6 +258,6 @@ export class TabsDoctorsdirectoryPage implements OnInit {
   }
   ionViewDidLeave() {
     this.ngUnsubscribe.next();
-    this.ngUnsubscribe.unsubscribe();
+    this.ngUnsubscribe.complete();
   }
 }

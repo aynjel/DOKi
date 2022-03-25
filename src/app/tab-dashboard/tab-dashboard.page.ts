@@ -190,6 +190,7 @@ export class TabDashboardPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.ngUnsubscribe = new Subject();
     localStorage.removeItem('selectedPatient');
     this.logindata = <LoginResponseModelv3>(
       this.authService.userData$.getValue()
@@ -334,7 +335,6 @@ export class TabDashboardPage implements OnInit {
   }
   ionViewDidLeave() {
     this.ngUnsubscribe.next();
-    // this.ngUnsubscribe.complete();
-    this.ngUnsubscribe.unsubscribe();
+    this.ngUnsubscribe.complete();
   }
 }

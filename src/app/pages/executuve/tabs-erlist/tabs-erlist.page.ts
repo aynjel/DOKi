@@ -114,6 +114,7 @@ export class TabsErlistPage implements OnInit {
   }
 
   ngOnInit() {
+    this.ngUnsubscribe = new Subject();
     this.formatDate(this.dateToday);
     //this.getErwaitlist('12/31/2021');
     // this.setDate();
@@ -235,7 +236,6 @@ export class TabsErlistPage implements OnInit {
   }
   ionViewDidLeave() {
     this.ngUnsubscribe.next();
-    // this.ngUnsubscribe.complete();
-    this.ngUnsubscribe.unsubscribe();
+    this.ngUnsubscribe.complete();
   }
 }

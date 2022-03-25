@@ -201,6 +201,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.ngUnsubscribe = new Subject();
     let logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
     this.dr_name = logindata.lastName;
     this.dr_code = logindata.doctorCode;
@@ -506,7 +507,6 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   }
   ionViewDidLeave() {
     this.ngUnsubscribe.next();
-    // this.ngUnsubscribe.complete();
-    this.ngUnsubscribe.unsubscribe();
+    this.ngUnsubscribe.complete();
   }
 }

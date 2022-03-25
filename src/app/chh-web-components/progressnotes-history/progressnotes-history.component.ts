@@ -22,12 +22,15 @@ import {
 } from '@microsoft/signalr';
 
 import { HttpClient } from '@angular/common/http';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-progressnotes-history',
   templateUrl: './progressnotes-history.component.html',
   styleUrls: ['./progressnotes-history.component.scss'],
 })
 export class ProgressnotesHistoryComponent implements OnInit {
+  private ngUnsubscribe = new Subject();
   @ViewChild(IonList, { read: ElementRef }) list: ElementRef;
   @ViewChild(IonContent) ionContent: IonContent;
   @ViewChild('commentDetailWrapper', { static: false }) commentDetailWrapper;
@@ -56,6 +59,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.ngUnsubscribe = new Subject();
     //console.log(this.ionContent);
     this.connect();
     this.modified = true;
@@ -67,48 +71,50 @@ export class ProgressnotesHistoryComponent implements OnInit {
   getProgressNotesHistory() {
     this.progessNotes = [];
     this.progessNotes1 = [];
-    this.doctorService.getPatientProgressNotesHistory(this.data).subscribe(
-      (res: any) => {
-        console.log(res);
-        if (res.length > 0) {
-          this.isEmpty = false;
-          this.progessNotesTemp = res;
-          let counter = 0;
-          this.progessNotesTemp.forEach((el) => {
-            if (el.account_no == ' ') {
-              el.type = 'comment';
-            } else {
-              el.type = 'progressnotes';
-            }
-            this.summary.pnotes_trans_no = el.trans_no;
+    this.doctorService
+      .getPatientProgressNotesHistory(this.data)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          console.log(res);
+          if (res.length > 0) {
+            this.isEmpty = false;
+            this.progessNotesTemp = res;
+            let counter = 0;
+            this.progessNotesTemp.forEach((el) => {
+              if (el.account_no == ' ') {
+                el.type = 'comment';
+              } else {
+                el.type = 'progressnotes';
+              }
+              this.summary.pnotes_trans_no = el.trans_no;
 
-            el.dateCreateConverted = this.functionService.convertDatetoMMDDYYYY(
-              el.date_created
-            );
-            el.notessmall = this.functionService.truncateChar(el.notes, 300);
-            if (el.notes.length > 200) {
-              el.noteslength = true;
-            } else {
-              el.noteslength = false;
-            }
-            el.dateCreateTimeConverted = this.functionService.getTime(
-              el.date_created
-            );
-            el.counter = counter;
-            counter++;
-            this.progessNotes1.push(el);
-          });
-          ////console.log(this.progessNotes);
-        } else {
-          this.isEmpty = true;
+              el.dateCreateConverted =
+                this.functionService.convertDatetoMMDDYYYY(el.date_created);
+              el.notessmall = this.functionService.truncateChar(el.notes, 300);
+              if (el.notes.length > 200) {
+                el.noteslength = true;
+              } else {
+                el.noteslength = false;
+              }
+              el.dateCreateTimeConverted = this.functionService.getTime(
+                el.date_created
+              );
+              el.counter = counter;
+              counter++;
+              this.progessNotes1.push(el);
+            });
+            ////console.log(this.progessNotes);
+          } else {
+            this.isEmpty = true;
+          }
+        },
+        (error) => {},
+        () => {
+          this.toBot = true;
+          this.processJson(10);
         }
-      },
-      (error) => {},
-      () => {
-        this.toBot = true;
-        this.processJson(10);
-      }
-    );
+      );
   }
   upto = 0;
   processJson(x) {
@@ -128,14 +134,17 @@ export class ProgressnotesHistoryComponent implements OnInit {
   }
   sendComment() {
     if (this.summary.msg != '') {
-      this.doctorService.addComment(this.summary).subscribe(
-        (res: any) => {},
-        (error) => {},
-        () => {
-          this.summary.msg = '';
-          //this.getProgressNotesHistory();
-        }
-      );
+      this.doctorService
+        .addComment(this.summary)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(
+          (res: any) => {},
+          (error) => {},
+          () => {
+            this.summary.msg = '';
+            //this.getProgressNotesHistory();
+          }
+        );
     }
   }
   closeModal() {
@@ -223,5 +232,9 @@ export class ProgressnotesHistoryComponent implements OnInit {
       // App logic to determine if all data is loaded
       // and disable the infinite scroll
     }, 500);
+  }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

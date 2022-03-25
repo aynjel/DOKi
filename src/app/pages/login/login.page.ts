@@ -114,6 +114,7 @@ export class LoginPage {
   btnDisable: boolean = false;
 
   ngOnInit() {
+    this.ngUnsubscribe = new Subject();
     this.postData.username = localStorage.getItem('srnm');
     this.loginResponseModel = new LoginResponseModel();
     this.onDarkModeEnable();

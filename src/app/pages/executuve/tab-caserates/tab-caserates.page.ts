@@ -77,6 +77,7 @@ export class TabCaseratesPage implements OnInit {
   }
 
   ngOnInit() {
+    this.ngUnsubscribe = new Subject();
     this.caseRateData = new CaseRates();
     this.caseRateData.case_class = 'first';
     this.caseRateData.case_code = '';
@@ -210,6 +211,6 @@ export class TabCaseratesPage implements OnInit {
   }
   ionViewDidLeave() {
     this.ngUnsubscribe.next();
-    this.ngUnsubscribe.unsubscribe();
+    this.ngUnsubscribe.complete();
   }
 }

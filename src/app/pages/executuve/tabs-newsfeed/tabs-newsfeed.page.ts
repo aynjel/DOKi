@@ -66,6 +66,7 @@ export class TabsNewsfeedPage implements OnInit {
     this.router.navigate(['/executive/settings']);
   }
   ngOnInit() {
+    this.ngUnsubscribe = new Subject();
     this.checkAppearance();
 
     this.doctorService
@@ -139,7 +140,6 @@ export class TabsNewsfeedPage implements OnInit {
   }
   ionViewDidLeave() {
     this.ngUnsubscribe.next();
-    // this.ngUnsubscribe.complete();
-    this.ngUnsubscribe.unsubscribe();
+    this.ngUnsubscribe.complete();
   }
 }

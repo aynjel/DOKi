@@ -1052,7 +1052,6 @@ export class InPatientDetailPage {
   }
   ionViewDidLeave() {
     this.ngUnsubscribe.next();
-    // this.ngUnsubscribe.complete();
-    this.ngUnsubscribe.unsubscribe();
+    this.ngUnsubscribe.complete();
   }
 }

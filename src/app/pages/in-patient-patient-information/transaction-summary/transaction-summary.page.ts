@@ -201,6 +201,7 @@ export class TransactionSummaryPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.ngUnsubscribe = new Subject();
     //sessionStorage.removeItem('pfIsPatientSeen');
     //sessionStorage.removeItem('pfInsCoor');
     //this.checkAppearance();
@@ -378,7 +379,6 @@ export class TransactionSummaryPage implements OnInit {
   }
   ionViewDidLeave() {
     this.ngUnsubscribe.next();
-    // this.ngUnsubscribe.complete();
-    this.ngUnsubscribe.unsubscribe();
+    this.ngUnsubscribe.complete();
   }
 }

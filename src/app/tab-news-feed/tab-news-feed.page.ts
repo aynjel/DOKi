@@ -38,6 +38,7 @@ export class TabNewsFeedPage implements OnInit {
   items = [];
   numTimesLeft = 5;
   ngOnInit() {
+    this.ngUnsubscribe = new Subject();
     localStorage.removeItem('selectedPatient');
     this.checkAppearance();
 
@@ -113,10 +114,7 @@ export class TabNewsFeedPage implements OnInit {
     });
   }
   ionViewDidLeave() {
-    console.log('ionViewDidLeave');
-    console.log(this.ngUnsubscribe);
     this.ngUnsubscribe.next();
-    // this.ngUnsubscribe.complete();
-    this.ngUnsubscribe.unsubscribe();
+    this.ngUnsubscribe.complete();
   }
 }

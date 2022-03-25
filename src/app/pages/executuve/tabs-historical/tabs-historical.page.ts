@@ -249,6 +249,7 @@ export class TabsHistoricalPage implements OnInit {
     }
   }
   ngOnInit() {
+    this.ngUnsubscribe = new Subject();
     this.generateMonthlyTotalAdmissions();
     this.setDateFromTo();
   }
@@ -339,7 +340,6 @@ export class TabsHistoricalPage implements OnInit {
   }
   ionViewDidLeave() {
     this.ngUnsubscribe.next();
-    // this.ngUnsubscribe.complete();
-    this.ngUnsubscribe.unsubscribe();
+    this.ngUnsubscribe.complete();
   }
 }

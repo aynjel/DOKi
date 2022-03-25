@@ -118,7 +118,9 @@ export class TabsDashboardPage implements OnInit {
         this.isDesktop = isDesktop;
       });
   }
-  ionViewWillEnter() {}
+  ionViewWillEnter() {
+    this.ngUnsubscribe = new Subject();
+  }
 
   ngOnInit() {
     this.totalAdmissions = 0;
@@ -1383,7 +1385,6 @@ export class TabsDashboardPage implements OnInit {
   }
   ionViewDidLeave() {
     this.ngUnsubscribe.next();
-    // this.ngUnsubscribe.complete();
-    this.ngUnsubscribe.unsubscribe();
+    this.ngUnsubscribe.complete();
   }
 }

@@ -56,12 +56,15 @@ import {
 import { ExecutiveService } from 'src/app/services/executive/executive.service';
 import { AnyRecordWithTtl } from 'dns';
 import { DoctordetailComponent } from '../../components/doctordetail/doctordetail.component';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-patientdetail',
   templateUrl: './patientdetail.component.html',
   styleUrls: ['./patientdetail.component.scss'],
 })
 export class PatientdetailComponent implements OnInit {
+  private ngUnsubscribe = new Subject();
   @Input() patientdetail: any;
   @Input() drcode: any;
   @Input() fromPatientList: any = false;
@@ -137,6 +140,7 @@ export class PatientdetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.ngUnsubscribe = new Subject();
     const modalState = {
       modal: true,
       desc: 'fake state for our modal',
@@ -145,22 +149,25 @@ export class PatientdetailComponent implements OnInit {
     if (this.fromPatientList) {
       this.presentLoading();
       let responsebe = [];
-      this.executiveService.getPatientDetail(this.patientdetail).subscribe(
-        (res: any) => {
-          responsebe = res;
-        },
-        (error) => {
-          this.dismissLoading();
-        },
-        () => {
-          if (responsebe == null) {
+      this.executiveService
+        .getPatientDetail(this.patientdetail)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(
+          (res: any) => {
+            responsebe = res;
+          },
+          (error) => {
             this.dismissLoading();
-            this.alert('No Data Available', 'Okay');
-          } else {
-            let res1 = [];
+          },
+          () => {
+            if (responsebe == null) {
+              this.dismissLoading();
+              this.alert('No Data Available', 'Okay');
+            } else {
+              let res1 = [];
 
-            res1 = JSON.parse('[' + JSON.stringify(responsebe) + ']');
-            /*responsebe=[];
+              res1 = JSON.parse('[' + JSON.stringify(responsebe) + ']');
+              /*responsebe=[];
               res1.forEach(element => {
                 if(element.forDischargeDateTime != null){
                   let d = new Date(element.forDischargeDateTime);
@@ -169,11 +176,11 @@ export class PatientdetailComponent implements OnInit {
                 responsebe.push(element);
               });*/
 
-            this.dismissLoading();
-            this.processData(res1);
+              this.dismissLoading();
+              this.processData(res1);
+            }
           }
-        }
-      );
+        );
     } else {
       let stack = '[' + JSON.stringify(this.patientdetail) + ']';
       this.data = JSON.parse(stack);
@@ -209,6 +216,7 @@ export class PatientdetailComponent implements OnInit {
     //this.drcode =
     this.executiveService
       .getAdmittingDiagnosis(this.inpatientDetails)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
           ////////////console.log(res);
@@ -245,86 +253,93 @@ export class PatientdetailComponent implements OnInit {
         }
       );
 
-    this.executiveService.getFinalDiagnosis(this.inpatientDetails).subscribe(
-      (res: any) => {
-        ////////////console.log(res);
-        if (res != null) {
-          if (!Object.keys(res).length) {
-            // //this.functionsService.logToConsole("no data found");
-          } else {
-            this.finalDiagnosis = res.final_diagnosis;
-            ////this.functionsService.logToConsole(this.finalDiagnosis);
+    this.executiveService
+      .getFinalDiagnosis(this.inpatientDetails)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          ////////////console.log(res);
+          if (res != null) {
+            if (!Object.keys(res).length) {
+              // //this.functionsService.logToConsole("no data found");
+            } else {
+              this.finalDiagnosis = res.final_diagnosis;
+              ////this.functionsService.logToConsole(this.finalDiagnosis);
 
-            this.finalDiagnosis1 = this.functionsService.truncateChar(
-              this.finalDiagnosis,
-              50
-            );
-            this.finalDiagnosis2 = this.finalDiagnosis
-              .replace(/(\r\n|\n|\r)/gm, '')
-              .split('.)');
-            this.finalDiagnosis2.shift();
-            for (let i = 0; i < this.finalDiagnosis2.length - 1; i++) {
-              this.finalDiagnosis2[i] = this.finalDiagnosis2[i].substring(
-                0,
-                this.finalDiagnosis2[i].length - 1
+              this.finalDiagnosis1 = this.functionsService.truncateChar(
+                this.finalDiagnosis,
+                50
               );
-              //this.functionsService.logToConsole(this.finalDiagnosis2[i]);
-            }
-            for (let i = 0; i < this.finalDiagnosis2.length; i++) {
-              this.finalDiagnosis2[i] = i + 1 + '.) ' + this.finalDiagnosis2[i];
+              this.finalDiagnosis2 = this.finalDiagnosis
+                .replace(/(\r\n|\n|\r)/gm, '')
+                .split('.)');
+              this.finalDiagnosis2.shift();
+              for (let i = 0; i < this.finalDiagnosis2.length - 1; i++) {
+                this.finalDiagnosis2[i] = this.finalDiagnosis2[i].substring(
+                  0,
+                  this.finalDiagnosis2[i].length - 1
+                );
+                //this.functionsService.logToConsole(this.finalDiagnosis2[i]);
+              }
+              for (let i = 0; i < this.finalDiagnosis2.length; i++) {
+                this.finalDiagnosis2[i] =
+                  i + 1 + '.) ' + this.finalDiagnosis2[i];
+              }
             }
           }
-        }
-      },
-      (error) => {},
-      () => {}
-    );
+        },
+        (error) => {},
+        () => {}
+      );
     let coDoctors1 = [];
     let coDoctors2 = [];
     let coDoctors3 = [];
-    this.executiveService.getCoDoctors(this.inpatientDetails).subscribe(
-      (res: any) => {
-        res.forEach((element) => {
-          if (element.dr_code == this.data[0].dr_code) {
-            if (element.no_of_days_manage == null) {
-              this.daysOfManage = 0;
-            } else {
-              this.daysOfManage = element.no_of_days_manage;
+    this.executiveService
+      .getCoDoctors(this.inpatientDetails)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          res.forEach((element) => {
+            if (element.dr_code == this.data[0].dr_code) {
+              if (element.no_of_days_manage == null) {
+                this.daysOfManage = 0;
+              } else {
+                this.daysOfManage = element.no_of_days_manage;
+              }
+              //sessionStorage.setItem('daysManaged', btoa(this.daysOfManage));
+              localStorage.setItem('daysManaged', btoa(this.daysOfManage));
             }
-            //sessionStorage.setItem('daysManaged', btoa(this.daysOfManage));
-            localStorage.setItem('daysManaged', btoa(this.daysOfManage));
-          }
-          //
-        });
-        if (res.length) {
-          this.objecthandler = true;
-        } else {
-          this.objecthandler = false;
-        }
-        ////this.functionsService.logToConsole(res);
-        res.forEach((element) => {
-          if (element.status == 'Primary Attending Physician') {
-            coDoctors1.push(element);
-          } else if (element.status == 'Co-Manage') {
-            coDoctors2.push(element);
+            //
+          });
+          if (res.length) {
+            this.objecthandler = true;
           } else {
-            coDoctors3.push(element);
+            this.objecthandler = false;
           }
-        });
+          ////this.functionsService.logToConsole(res);
+          res.forEach((element) => {
+            if (element.status == 'Primary Attending Physician') {
+              coDoctors1.push(element);
+            } else if (element.status == 'Co-Manage') {
+              coDoctors2.push(element);
+            } else {
+              coDoctors3.push(element);
+            }
+          });
 
-        this.coDoctors = coDoctors1.concat(coDoctors2).concat(coDoctors3);
-        ////////////console.log(this.coDoctors);
+          this.coDoctors = coDoctors1.concat(coDoctors2).concat(coDoctors3);
+          ////////////console.log(this.coDoctors);
 
-        //this.coDoctors.push(coDoctors2);
-      },
-      (error) => {
-        this.isFetchDone = true;
-        //this.functionsService.alert('Server Error', 'Okay');
-      },
-      () => {
-        this.isFetchDone = true;
-      }
-    );
+          //this.coDoctors.push(coDoctors2);
+        },
+        (error) => {
+          this.isFetchDone = true;
+          //this.functionsService.alert('Server Error', 'Okay');
+        },
+        () => {
+          this.isFetchDone = true;
+        }
+      );
   }
 
   async closemodal() {
@@ -394,5 +409,9 @@ export class PatientdetailComponent implements OnInit {
     if (window.history.state.modal) {
       history.back();
     }
+  }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

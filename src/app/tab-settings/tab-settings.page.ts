@@ -37,13 +37,15 @@ import {
 } from 'src/app/models/in-patient.model';
 import { catchError } from 'rxjs/operators';
 import { LogoutService } from '../services/logout/logout.service';
-
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-tab-settings',
   templateUrl: 'tab-settings.page.html',
   styleUrls: ['tab-settings.page.scss'],
 })
 export class TabSettingsPage {
+  private ngUnsubscribe = new Subject();
   userData$ = new BehaviorSubject<any>([]);
   public logindata: LoginResponseModelv3;
   account: LoginResponseModelv3;
@@ -106,12 +108,15 @@ export class TabSettingsPage {
   ) {
     this.privacyPolicy = true;
 
-    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
-      if (this.isDesktop && !isDesktop) {
-        window.location.reload();
-      }
-      this.isDesktop = isDesktop;
-    });
+    this.screensizeService
+      .isDesktopView()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((isDesktop) => {
+        if (this.isDesktop && !isDesktop) {
+          window.location.reload();
+        }
+        this.isDesktop = isDesktop;
+      });
   }
 
   async modalUpdate(header, message, data) {
@@ -190,6 +195,7 @@ export class TabSettingsPage {
   }
 
   ionViewWillEnter() {
+    this.ngUnsubscribe = new Subject();
     localStorage.removeItem('selectedPatient');
     this.$gaService.pageView('/Settings', 'Settings Tab');
 
@@ -263,19 +269,22 @@ export class TabSettingsPage {
 
     //this.userSettingsModelv3 = JSON.parse(atob(localStorage.getItem("user_settings")));
 
-    this.doctorService.getUserSettingsV3().subscribe(
-      (res: any) => {
-        this.userSettingsModelv3 = <UserSettingsModelv3>res;
-        localStorage.setItem(
-          'user_settings',
-          btoa(JSON.stringify(this.userSettingsModelv3))
-        );
-      },
-      (error) => {},
-      () => {
-        this.checkAppearance();
-      }
-    );
+    this.doctorService
+      .getUserSettingsV3()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          this.userSettingsModelv3 = <UserSettingsModelv3>res;
+          localStorage.setItem(
+            'user_settings',
+            btoa(JSON.stringify(this.userSettingsModelv3))
+          );
+        },
+        (error) => {},
+        () => {
+          this.checkAppearance();
+        }
+      );
 
     /*this.patientService.getUserSettingsV2(this.dr_username).subscribe((res: any) => {
         this.functionsService.logToConsole(res);
@@ -399,15 +408,18 @@ export class TabSettingsPage {
     this.functionsService.logToConsole('updateUserSettings : ');
     this.functionsService.logToConsole(this.userSettingsModelv3);
 
-    this.doctorService.updateUserSettingsV3(this.userSettingsModelv3).subscribe(
-      (res: any) => {
-        this.functionsService.logToConsole(res);
-      },
-      (error) => {},
-      () => {
-        this.checkAppearance();
-      }
-    );
+    this.doctorService
+      .updateUserSettingsV3(this.userSettingsModelv3)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          this.functionsService.logToConsole(res);
+        },
+        (error) => {},
+        () => {
+          this.checkAppearance();
+        }
+      );
   }
 
   onDarkModeEnable(data: any) {
@@ -472,6 +484,7 @@ export class TabSettingsPage {
 
     this.doctorService
       .revokeTokenV3(this.revokeTokenV3)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((res: any) => {
         this.functionsService.logToConsole(res);
       });
@@ -554,23 +567,26 @@ export class TabSettingsPage {
           role: 'destructive',
           icon: 'refresh-outline',
           handler: () => {
-            this.doctorService.getAppSettingsV3().subscribe(
-              (resdata: any) => {
-                this.appSettingsModelv3 = <AppSettingsModelv3>resdata;
-                this.userSettingsModelv3 = <UserSettingsModelv3>resdata;
-                this.userSettingsModelv3.privacyPolicy = '1';
-                localStorage.setItem(
-                  'user_settings',
-                  btoa(JSON.stringify(this.userSettingsModelv3))
-                );
-              },
-              (error) => {
-                this.functionsService.sorryDoc();
-              },
-              () => {
-                this.updateUserSettings();
-              }
-            );
+            this.doctorService
+              .getAppSettingsV3()
+              .pipe(takeUntil(this.ngUnsubscribe))
+              .subscribe(
+                (resdata: any) => {
+                  this.appSettingsModelv3 = <AppSettingsModelv3>resdata;
+                  this.userSettingsModelv3 = <UserSettingsModelv3>resdata;
+                  this.userSettingsModelv3.privacyPolicy = '1';
+                  localStorage.setItem(
+                    'user_settings',
+                    btoa(JSON.stringify(this.userSettingsModelv3))
+                  );
+                },
+                (error) => {
+                  this.functionsService.sorryDoc();
+                },
+                () => {
+                  this.updateUserSettings();
+                }
+              );
             /*
             let smpJSON =
               '{"username": "' +
@@ -714,5 +730,9 @@ export class TabSettingsPage {
     });
     modal.onDidDismiss().then((data) => {});
     return await modal.present();
+  }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

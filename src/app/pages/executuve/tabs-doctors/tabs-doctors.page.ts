@@ -66,6 +66,7 @@ export class TabsDoctorsPage implements OnInit {
     this.router.navigate(['/executive/settings']);
   }
   ionViewWillEnter() {
+    this.ngUnsubscribe = new Subject();
     //console.log('ngOnInit');
     this.listOfDoctors = [];
     this.refreshcounter = 1;
@@ -232,7 +233,6 @@ export class TabsDoctorsPage implements OnInit {
   }
   ionViewDidLeave() {
     this.ngUnsubscribe.next();
-    // this.ngUnsubscribe.complete();
-    this.ngUnsubscribe.unsubscribe();
+    this.ngUnsubscribe.complete();
   }
 }

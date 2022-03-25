@@ -71,6 +71,7 @@ export class TabsAllpatientsPage implements OnInit {
   }
 
   ngOnInit() {
+    this.ngUnsubscribe = new Subject();
     ////console.log('ngOnInit');
     this.listOfPatients = [];
     this.refreshcounter = 1;
@@ -300,7 +301,6 @@ export class TabsAllpatientsPage implements OnInit {
 
   ionViewDidLeave() {
     this.ngUnsubscribe.next();
-    // this.ngUnsubscribe.complete();
-    this.ngUnsubscribe.unsubscribe();
+    this.ngUnsubscribe.complete();
   }
 }

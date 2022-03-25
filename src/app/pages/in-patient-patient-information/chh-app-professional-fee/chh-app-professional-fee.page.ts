@@ -142,6 +142,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.ngUnsubscribe = new Subject();
     this.userSettingsModelv3 = JSON.parse(
       '[' + atob(localStorage.getItem('user_settings')) + ']'
     );
@@ -479,7 +480,6 @@ export class ChhAppProfessionalFeePage implements OnInit {
   }
   ionViewDidLeave() {
     this.ngUnsubscribe.next();
-    // this.ngUnsubscribe.complete();
-    this.ngUnsubscribe.unsubscribe();
+    this.ngUnsubscribe.complete();
   }
 }
