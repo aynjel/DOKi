@@ -10,13 +10,13 @@
           <div *ngIf="finalDiagnosis.length <= limit">{{finalDiagnosis}}</div>
           <div *ngIf="truncating && finalDiagnosis.length > limit">
             {{finalDiagnosis1}}
-            <button ion-button (click)="truncating = false">show more</button>
+            <ion-button color="light" size="small" (click)="truncating = false">show more</ion-button>
           </div>
           <div *ngIf="!truncating && finalDiagnosis.length > limit">
             <div *ngFor="let x of finalDiagnosis2">
               <ion-text style="padding-top: 15px;">{{x}}<br /></ion-text>
             </div>
-            <button ion-button (click)="truncating = true">show less</button>
+            <ion-button color="light" size="small" (click)="truncating = true">show less</ion-button>
           </div>
         </div>
       </div>

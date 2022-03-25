@@ -12,12 +12,14 @@
 
     <div *ngIf="truncating">
       <ion-text class="custom-font" [innerHtml]="notesmall"></ion-text>
-      <button ion-button (click)="process()" color="light" *ngIf="noteslength">show more</button>
+      <ion-button color="light" size="small" (click)="process()" color="light" *ngIf="noteslength">show more
+      </ion-button>
     </div>
     <div *ngIf="!truncating">
       <ion-text class="custom-font" [innerHtml]="notes"></ion-text>
 
-      <button ion-button (click)="process();" color="light" *ngIf="noteslength">show less</button>
+      <ion-button color="light" size="small" (click)="process();" color="light" *ngIf="noteslength">show less
+      </ion-button>
     </div>
   </ion-card-content>
   <ion-item *ngIf="type != 'progressnotes'">
