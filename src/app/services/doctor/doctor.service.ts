@@ -416,4 +416,17 @@ export class DoctorService {
     const url = 'http://10.151.12.120/api/ProgressNotesComment/Insert';
     return this.http.post(url, data, options);
   }
+
+  testViewpdf() {
+    const httpOptions = {
+      responseType: 'blob' as 'json',
+    };
+    return this.http.get(
+      'http://10.130.21.225:6113/api/PdfGenerator',
+      httpOptions
+    );
+    /*const options = { headers: headers };
+    const url = 'http://10.130.21.225:6113/api/PdfGenerator';
+    return this.http.get(url, options);*/
+  }
 }

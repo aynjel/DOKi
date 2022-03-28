@@ -121,7 +121,8 @@ export class InPatientDetailPage {
   activeDays: any = [];
   birthday: any;
   age: any;
-
+  pdfSrc =
+    'https://patientportal.chonghua.com.ph/pdfResult.php?requestNo=LABR13400363&patientNumber=140022889879&section=CHEMISTRY&testid=BE&examtype=CCH&examcode=GAB&site=C';
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -198,7 +199,20 @@ export class InPatientDetailPage {
       this.userSettingsModelv3[0].smsGatewaySmart;
 
     this.data = [];
+    this.doctorService.testViewpdf().subscribe((data: any) => {
+      let blob = new Blob([data], { type: 'application/pdf' });
+      let downloadURL = window.URL.createObjectURL(data);
+      this.pdfSrc = downloadURL;
 
+      //let blob = new Blob([data], { type: 'application/pdf' });
+      /*this.blob = new Blob([data], { type: 'application/pdf' });
+
+      var downloadURL = window.URL.createObjectURL(data);
+      var link = document.createElement('a');
+      link.href = downloadURL;
+      link.download = 'help.pdf';
+      link.click();*/
+    });
     /*this.doctorService.getInPatientV2(this.inpatientModelInpatients).subscribe(
       (res: any) => {
        

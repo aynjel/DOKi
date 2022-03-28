@@ -95,7 +95,9 @@ ___  ___        _      _  _
   </ion-card>
 
 
-
+  <pdf-viewer [src]="pdfSrc" [rotation]="0" [original-size]="false" [show-all]="true" [fit-to-page]="false" [zoom]="1"
+    [zoom-scale]="'page-width'" [stick-to-page]="false" [render-text]="true" [external-link-target]="'blank'"
+    [autoresize]="true" [show-borders]="false" style="width: 100%; height: 100%;"></pdf-viewer>
   <app-chh-app-final-diagnosis [data]="admissionstatus" [finalDiagnosis]="finalDiagnosis" [limit]="limit"
     [truncating]="truncating" [finalDiagnosis1]="finalDiagnosis1" [finalDiagnosis2]="finalDiagnosis2">
   </app-chh-app-final-diagnosis>
