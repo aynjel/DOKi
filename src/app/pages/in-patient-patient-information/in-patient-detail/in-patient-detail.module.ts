@@ -8,6 +8,7 @@ import { ChhWebComponentsModule } from '../../../chh-web-components/chh-web-comp
 import { ChhAppTextAvatarModule } from '../../../chh-web-components/chh-app-text-avatar/chh-app-text-avatar.module';
 import { ChhAppHospitalSelectorWithAllAndFilterPage } from '../../../chh-web-components/chh-app-hospital-selector-with-all-and-filter/chh-app-hospital-selector-with-all-and-filter.page';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { PinchZoomModule } from 'ngx-pinch-zoom';
 @NgModule({
   imports: [
     CommonModule,
@@ -17,6 +18,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     ChhWebComponentsModule,
     ChhAppTextAvatarModule,
     PdfViewerModule,
+    PinchZoomModule,
   ],
   declarations: [InPatientDetailPage],
 })
