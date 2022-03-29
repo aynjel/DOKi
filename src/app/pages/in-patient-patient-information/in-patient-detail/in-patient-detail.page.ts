@@ -123,8 +123,7 @@ export class InPatientDetailPage {
   activeDays: any = [];
   birthday: any;
   age: any;
-  pdfSrc =
-    'https://patientportal.chonghua.com.ph/pdfResult.php?requestNo=LABR13400363&patientNumber=140022889879&section=CHEMISTRY&testid=BE&examtype=CCH&examcode=GAB&site=C';
+  pdfSrc = '';
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -201,23 +200,37 @@ export class InPatientDetailPage {
       this.userSettingsModelv3[0].smsGatewaySmart;
 
     this.data = [];
-    this.doctorService
+    let testJsonPDF = {
+      doctorCode: 'MD000175',
+      fromDate: '03/01/2022',
+      toDate: '03/15/2022',
+      site: 'C',
+    };
+    this.doctorService.testViewpdfpost(testJsonPDF).subscribe(
+      (data) => {
+        let blob = new Blob([data], { type: 'application/pdf' });
+        let downloadURL = window.URL.createObjectURL(data);
+        this.pdfSrc = downloadURL;
+      },
+      (error) => {
+        console.log('error');
+        console.log(error);
+      },
+      () => {}
+    );
+    /*this.doctorService
       .testViewpdf()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((data: any) => {
         let blob = new Blob([data], { type: 'application/pdf' });
         let downloadURL = window.URL.createObjectURL(data);
         this.pdfSrc = downloadURL;
+        //var link = document.createElement('a');
+        //link.href = downloadURL;
+        //link.download = 'help.pdf';
+        //link.click();
+      });*/
 
-        //let blob = new Blob([data], { type: 'application/pdf' });
-        /*this.blob = new Blob([data], { type: 'application/pdf' });
-
-      var downloadURL = window.URL.createObjectURL(data);
-      var link = document.createElement('a');
-      link.href = downloadURL;
-      link.download = 'help.pdf';
-      link.click();*/
-      });
     /*this.doctorService.getInPatientV2(this.inpatientModelInpatients).subscribe(
       (res: any) => {
        
@@ -1102,5 +1115,4 @@ export class InPatientDetailPage {
     this.signatureImg = base64Data;
     console.log(base64Data);
   }
-
 }

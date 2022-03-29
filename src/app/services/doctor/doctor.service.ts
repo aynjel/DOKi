@@ -429,4 +429,9 @@ export class DoctorService {
     const url = 'http://10.130.21.225:6113/api/PdfGenerator';
     return this.http.get(url, options);*/
   }
+
+  testViewpdfpost(data) {
+    const url = 'http://10.130.21.162:6113/api/dokiregpfcollect/pdf';
+    return this.http.post(url, data, { responseType: 'blob' });
+  }
 }
