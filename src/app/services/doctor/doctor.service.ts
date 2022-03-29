@@ -422,7 +422,7 @@ export class DoctorService {
       responseType: 'blob' as 'json',
     };
     return this.http.get(
-      'http://10.130.21.225:6113/api/PdfGenerator',
+      'http://10.151.12.120:7227/api/dokiregpfcollect/pdf',
       httpOptions
     );
     /*const options = { headers: headers };
