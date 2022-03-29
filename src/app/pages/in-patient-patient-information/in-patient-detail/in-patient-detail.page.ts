@@ -43,6 +43,8 @@ import { AESEncryptDecryptServiceService } from 'src/app/services/encryption/aes
 import { ExecutiveService } from 'src/app/services/executive/executive.service';
 import { takeUntil } from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import SignaturePad from 'signature_pad';
 @Component({
   selector: 'app-in-patient-detail',
   templateUrl: './in-patient-detail.page.html',
@@ -1071,4 +1073,34 @@ export class InPatientDetailPage {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
+  /*************************************/
+  signaturePad: SignaturePad;
+  @ViewChild('canvas') canvasEl: ElementRef;
+
+  signatureImg: string;
+
+  ngAfterViewInit() {
+    this.signaturePad = new SignaturePad(this.canvasEl.nativeElement);
+    //this.resizeCanvas();
+  }
+
+  startDrawing(event: Event) {
+    console.log(event);
+    // works in device not in browser
+  }
+
+  moved(event: Event) {
+    // works in device not in browser
+  }
+
+  clearPad() {
+    this.signaturePad.clear();
+  }
+
+  savePad() {
+    const base64Data = this.signaturePad.toDataURL();
+    this.signatureImg = base64Data;
+    console.log(base64Data);
+  }
+
 }
