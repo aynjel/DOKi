@@ -199,20 +199,23 @@ export class InPatientDetailPage {
       this.userSettingsModelv3[0].smsGatewaySmart;
 
     this.data = [];
-    this.doctorService.testViewpdf().subscribe((data: any) => {
-      let blob = new Blob([data], { type: 'application/pdf' });
-      let downloadURL = window.URL.createObjectURL(data);
-      this.pdfSrc = downloadURL;
+    this.doctorService
+      .testViewpdf()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((data: any) => {
+        let blob = new Blob([data], { type: 'application/pdf' });
+        let downloadURL = window.URL.createObjectURL(data);
+        this.pdfSrc = downloadURL;
 
-      //let blob = new Blob([data], { type: 'application/pdf' });
-      /*this.blob = new Blob([data], { type: 'application/pdf' });
+        //let blob = new Blob([data], { type: 'application/pdf' });
+        /*this.blob = new Blob([data], { type: 'application/pdf' });
 
       var downloadURL = window.URL.createObjectURL(data);
       var link = document.createElement('a');
       link.href = downloadURL;
       link.download = 'help.pdf';
       link.click();*/
-    });
+      });
     /*this.doctorService.getInPatientV2(this.inpatientModelInpatients).subscribe(
       (res: any) => {
        
