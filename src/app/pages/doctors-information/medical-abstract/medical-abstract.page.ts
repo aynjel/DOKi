@@ -34,7 +34,9 @@ export class MedicalAbstractPage implements OnInit {
   }
   data;
   pdfSrc;
+  isPDFLoading: boolean = false;
   getpdf() {
+    this.isPDFLoading = false;
     this.data = [];
     this.pdfSrc = '';
     let testJsonPDF = {
@@ -51,10 +53,12 @@ export class MedicalAbstractPage implements OnInit {
         this.pdfSrc = downloadURL;
       },
       (error) => {
+        this.isPDFLoading = true;
         console.log('error');
         console.log(error);
       },
       () => {
+        this.isPDFLoading = true;
         console.log(this.pdfSrc);
       }
     );
@@ -116,6 +120,7 @@ export class MedicalAbstractPage implements OnInit {
       },
       () => {
         this.getpdf();
+        this.signaturePad.clear();
       }
     );
   }

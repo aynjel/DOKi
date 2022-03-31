@@ -20,6 +20,16 @@
       <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3" class="custom-border-bottom ion-no-border ">
 
         <ion-card mode="ios">
+          <ion-card *ngIf="!isPDFLoading">
+            <ion-item>
+              <ion-label style="margin-top: -10px;">
+                <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-item>
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-label>
+            </ion-item>
+          </ion-card>
           <pinch-zoom style="background-color: rgb(255, 255, 255);">
             <pdf-viewer [src]="pdfSrc" [rotation]="0" [original-size]="false" [show-all]="true" [fit-to-page]="false"
               [zoom]="1" [zoom-scale]="'page-width'" [stick-to-page]="false" [render-text]="true"
