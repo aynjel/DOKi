@@ -89,6 +89,7 @@ export class CollectiblesPage implements OnInit {
   }
 
   getRegularPFpdfPreview() {
+    this.emptyState = false;
     console.log('getRegularPFpdfPreview');
 
     this.isPreviewLoading = true;
@@ -118,6 +119,9 @@ export class CollectiblesPage implements OnInit {
           this.isPreviewLoading = false;
           this.isPDFAvailable = true;
           console.log(this.pdfSrc);
+          if (this.DOKiPFRegularPreview == null) {
+            this.emptyState = true;
+          }
         }
       );
   }
@@ -158,6 +162,7 @@ export class CollectiblesPage implements OnInit {
   }
   DOKiPFPHICPreview;
   getPHICPFpdfPreview() {
+    this.emptyState = false;
     this.isPreviewLoading = true;
     this.isPDFAvailable = false;
     let mode = 'P';
@@ -185,6 +190,9 @@ export class CollectiblesPage implements OnInit {
           this.isPreviewLoading = false;
           this.isPDFAvailable = true;
           console.log(this.pdfSrc);
+          if (this.DOKiPFPHICPreview == null) {
+            this.emptyState = true;
+          }
         }
       );
   }
@@ -223,6 +231,7 @@ export class CollectiblesPage implements OnInit {
   }
 
   getDOKiPFReadersFeeSOAPreview() {
+    this.emptyState = false;
     this.isPreviewLoading = true;
     this.isPDFAvailable = false;
     let mode = 'P';
@@ -250,6 +259,11 @@ export class CollectiblesPage implements OnInit {
           this.isPreviewLoading = false;
           this.isPDFAvailable = true;
           console.log(this.pdfSrc);
+          console.log(this.DOKiPFPHICPreview);
+
+          if (this.DOKiPFPHICPreview == null) {
+            this.emptyState = true;
+          }
         }
       );
   }
@@ -277,7 +291,7 @@ export class CollectiblesPage implements OnInit {
   dateTodayYear;
   monthTrendFrom: any = '01';
   monthTrendTo: any = '12';
-
+  emptyState: boolean = false;
   setDateFromToRegularPF() {
     var date = new Date();
     date.setDate(date.getDate() - 30);
@@ -381,34 +395,5 @@ export class CollectiblesPage implements OnInit {
         this.renderer.setAttribute(document.body, 'color-theme', 'light');
       }
     });
-
-    /* this.patientService
-      .getUserSettingsV2(dr_username)
-      .subscribe((res: any) => {
-        if (Object.keys(res).length >= 1) {
-          let data = JSON.stringify(res);
-          data = '[' + data + ']';
-          let adat = JSON.parse(data);
-          adat.forEach((el) => {
-            if (typeof el.appearance !== 'undefined') {
-              if (el.appearance.darkmode == 1) {
-                this.renderer.setAttribute(
-                  document.body,
-                  'color-theme',
-                  'dark'
-                );
-              } else {
-                this.renderer.setAttribute(
-                  document.body,
-                  'color-theme',
-                  'light'
-                );
-              }
-            } else {
-              this.renderer.setAttribute(document.body, 'color-theme', 'light');
-            }
-          });
-        }
-      });*/
   }
 }

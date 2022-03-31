@@ -1,9 +1,16 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import SignaturePad from 'signature_pad';
+import { FunctionsService } from 'src/app/shared/functions/functions.service';
 
 @Component({
   selector: 'app-medical-abstract',
@@ -15,8 +22,11 @@ export class MedicalAbstractPage implements OnInit {
   isDesktop: boolean;
   constructor(
     private screensizeService: ScreenSizeService,
-    private doctorService: DoctorService
+    private doctorService: DoctorService,
+    private functionsService: FunctionsService,
+    private renderer: Renderer2
   ) {
+    this.checkAppearance();
     this.screensizeService
       .isDesktopView()
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -39,6 +49,7 @@ export class MedicalAbstractPage implements OnInit {
     this.isPDFLoading = false;
     this.data = [];
     this.pdfSrc = '';
+    this.isbutton = false;
     let testJsonPDF = {
       doctorCode: 'MD000175',
       mode: 'P',
@@ -103,7 +114,7 @@ export class MedicalAbstractPage implements OnInit {
   }
   isbutton = false;
   savePad() {
-    this.isbutton = !this.isbutton;
+    this.isbutton = true;
     const base64Data = this.signaturePad.toDataURL();
     this.signatureImg = base64Data;
     const myArray = base64Data.split(',');
@@ -123,5 +134,20 @@ export class MedicalAbstractPage implements OnInit {
         this.signaturePad.clear();
       }
     );
+  }
+  checkAppearance() {
+    this.functionsService.logToConsole('checkAppearance');
+    var values = JSON.parse(
+      '[' + atob(localStorage.getItem('user_settings')) + ']'
+    );
+    let dr_username = atob(localStorage.getItem('username'));
+    values.forEach((element) => {
+      this.functionsService.logToConsole(element.darkmode);
+      if (element.darkmode == 1) {
+        this.renderer.setAttribute(document.body, 'color-theme', 'dark');
+      } else {
+        this.renderer.setAttribute(document.body, 'color-theme', 'light');
+      }
+    });
   }
 }

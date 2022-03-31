@@ -128,7 +128,16 @@
             </ion-label>
           </ion-item>
         </ion-card>
+        <ion-card *ngIf="emptyState">
+          <ion-item>
+            <ion-label style="margin-top: -10px;">
+              <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                No Data
+              </ion-item>
 
+            </ion-label>
+          </ion-item>
+        </ion-card>
 
 
       </ion-col>

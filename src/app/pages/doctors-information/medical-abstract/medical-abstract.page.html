@@ -38,11 +38,13 @@
             </pdf-viewer>
           </pinch-zoom>
 
+          <div style="padding: 10px;">
 
-          <canvas #canvas (touchstart)="startDrawing($event)" (touchmove)="moved($event)" width="350"
-            height="350"></canvas>
 
-          <ion-grid>
+            <canvas #canvas (touchstart)="startDrawing($event)" (touchmove)="moved($event)"
+              style="border: solid 1px #000000;"></canvas>
+          </div>
+          <ion-grid *ngIf="!isbutton">
             <ion-row>
               <ion-col size="6">
                 <ion-button color="danger" (click)="clearPad()">Clear</ion-button>
