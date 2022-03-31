@@ -38,6 +38,7 @@ export class CollectiblesPage implements OnInit {
   site = 'M';
   isPDFAvailable: boolean = false;
   isPreviewLoading: boolean = false;
+  isPDFLoading: boolean = false;
   selectDoctor(event) {
     console.log(event.detail.value);
     this.drCode = event.detail.value;
@@ -55,6 +56,7 @@ export class CollectiblesPage implements OnInit {
   DOKiPFRegularPreview;
   link;
   getRegularPFpdf() {
+    this.isPDFLoading = true;
     this.data = [];
     let testJsonPDF = {
       drCode: this.drCode,
@@ -75,10 +77,12 @@ export class CollectiblesPage implements OnInit {
         this.link.download = 'PFRegular.pdf';
       },
       (error) => {
+        this.isPDFLoading = false;
         console.log('error');
         console.log(error);
       },
       () => {
+        this.isPDFLoading = false;
         console.log(this.pdfSrc);
       }
     );
@@ -119,6 +123,7 @@ export class CollectiblesPage implements OnInit {
   }
 
   getPHICPFpdf() {
+    this.isPDFLoading = true;
     this.data = [];
     let testJsonPDF = {
       drCode: this.drCode,
@@ -135,12 +140,18 @@ export class CollectiblesPage implements OnInit {
         let blob = new Blob([data], { type: 'application/pdf' });
         let downloadURL = window.URL.createObjectURL(data);
         this.pdfSrc = downloadURL;
+        this.link = '';
+        this.link = document.createElement('a');
+        this.link.href = downloadURL;
+        this.link.download = 'PHICPFpdf.pdf';
       },
       (error) => {
+        this.isPDFLoading = false;
         console.log('error');
         console.log(error);
       },
       () => {
+        this.isPDFLoading = false;
         console.log(this.pdfSrc);
       }
     );
@@ -179,6 +190,7 @@ export class CollectiblesPage implements OnInit {
   }
 
   getReadersFeepdf() {
+    this.isPDFLoading = true;
     this.data = [];
     let testJsonPDF = {
       drCode: this.drCode,
@@ -193,12 +205,18 @@ export class CollectiblesPage implements OnInit {
         let blob = new Blob([data], { type: 'application/pdf' });
         let downloadURL = window.URL.createObjectURL(data);
         this.pdfSrc = downloadURL;
+        this.link = '';
+        this.link = document.createElement('a');
+        this.link.href = downloadURL;
+        this.link.download = 'ReadersFeepdf.pdf';
       },
       (error) => {
+        this.isPDFLoading = false;
         console.log('error');
         console.log(error);
       },
       () => {
+        this.isPDFLoading = false;
         console.log(this.pdfSrc);
       }
     );

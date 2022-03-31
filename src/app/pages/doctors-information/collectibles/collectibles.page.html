@@ -147,11 +147,21 @@
         </div>
       </ion-header>
       <ion-content>
+        <ion-card *ngIf="isPDFLoading">
+          <ion-item>
+            <ion-label style="margin-top: -10px;">
+              <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-item>
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-label>
+          </ion-item>
+        </ion-card>
         <pinch-zoom style="background-color: rgb(255, 255, 255);">
           <pdf-viewer [src]="pdfSrc" [rotation]="0" [original-size]="false" [show-all]="true" [fit-to-page]="false"
             [zoom]="1" [zoom-scale]="'page-width'" [stick-to-page]="false" [render-text]="true"
             [external-link-target]="'blank'" [autoresize]="true" [show-borders]="false"
-            style="width: 100vh; height: 30vh;">
+            style="width: 100vh; height: 60vh;">
           </pdf-viewer>
         </pinch-zoom>
       </ion-content>
