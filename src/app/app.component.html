@@ -1,4 +1,4 @@
-<ion-split-pane contentId="menu-content" when="xs" [disabled]="true" *ngIf="(role_flag == 'exec')">
+<ion-split-pane contentId="menu-content" when="xs" [disabled]="true">
     <ion-menu contentId="menu-content" menuId="menu-content" side="start" type="overlay">
         <ion-header>
             <ion-toolbar color="mango">
@@ -6,8 +6,8 @@
             </ion-toolbar>
         </ion-header>
         <ion-content>
-            <ion-list>
-                <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages" (click)="whattodo(p.url)">
+            <ion-list *ngFor="let p of appPages">
+                <ion-menu-toggle auto-hide="false" *ngIf="role_flag == p.type" (click)="whattodo(p.url)">
                     <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" *ngIf="p.url != 'logout'">
                         <ion-icon color="primary" slot="start" [name]="p.icon"></ion-icon>
                         <ion-label>
@@ -26,8 +26,7 @@
     </ion-menu>
     <ion-router-outlet id="menu-content"></ion-router-outlet>
 </ion-split-pane>
-<ion-router-outlet id="menu-content" *ngIf="(role_flag != 'exec')">
-</ion-router-outlet>
+
 <!--ion-router-outlet id="menu-content"
     *ngIf="(role_flag != 'exec' && isDesktop) || (role_flag != 'exec' && !isDesktop)|| (role_flag == 'exec' && isDesktop)">
 </ion-router-outlet-->

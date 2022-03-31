@@ -168,6 +168,7 @@ export class LoginPage {
                   localStorage.setItem('role_flag', 'exec');
                   execflag = false;
                 } else {
+                  localStorage.setItem('role_flag', 'med');
                 }
               }
 
@@ -559,7 +560,7 @@ export class LoginPage {
     localStorage.setItem('username', btoa(this.postData.username));
     localStorage.setItem('modaled', '0');
     this.router.navigate(['/menu/in-patients']).then(() => {
-      //window.location.reload();
+      window.location.reload();
     });
     /*this.router.navigate(['/menu/dashboard']).then(() => {
       window.location.reload();

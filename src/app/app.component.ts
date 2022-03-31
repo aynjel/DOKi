@@ -34,26 +34,55 @@ export class AppComponent {
       title: 'Doctors',
       url: '/executive/doctors',
       icon: 'git-network-outline',
+      type: 'exec',
     },
     {
       title: 'Patients',
       url: '/executive/allpatients',
       icon: 'person-circle-outline',
+      type: 'exec',
     },
     {
       title: 'Physician Directory',
       url: '/executive/directory',
       icon: 'book-outline',
+      type: 'exec',
     },
     {
       title: 'Case Rates',
       url: '/executive/caserates',
       icon: 'file-tray-full-outline',
+      type: 'exec',
     },
     {
       title: 'Log Out',
       url: 'logout',
       icon: 'log-out-outline',
+      type: 'exec',
+    },
+    {
+      title: 'Collectibles',
+      url: 'menu/collectibles',
+      icon: 'wallet-outline',
+      type: 'med',
+    },
+    {
+      title: 'Medical Abstract',
+      url: 'menu/medical-abstract',
+      icon: 'reader-outline',
+      type: 'med',
+    },
+    {
+      title: 'Settings',
+      url: 'menu/settings',
+      icon: 'settings-outline',
+      type: 'med',
+    },
+    {
+      title: 'Log Out',
+      url: 'logout',
+      icon: 'log-out-outline',
+      type: 'med',
     },
   ];
   constructor(
@@ -75,6 +104,7 @@ export class AppComponent {
     this.initializeApp();
     this.updateClient();
     this.role_flag = localStorage.getItem('role_flag');
+    console.log('role_flag', this.role_flag);
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         window.location.reload();

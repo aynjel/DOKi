@@ -62,6 +62,20 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'collectibles',
+        loadChildren: () =>
+          import(
+            '../pages/doctors-information/collectibles/collectibles.module'
+          ).then((m) => m.CollectiblesPageModule),
+      },
+      {
+        path: 'medical-abstract',
+        loadChildren: () =>
+          import(
+            '../pages/doctors-information/medical-abstract/medical-abstract.module'
+          ).then((m) => m.MedicalAbstractPageModule),
+      },
+      {
         path: '',
         redirectTo: '/menu/dashboard',
         pathMatch: 'full',

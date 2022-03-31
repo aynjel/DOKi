@@ -23,7 +23,7 @@ import {
 import { BehaviorSubject, fromEvent } from 'rxjs';
 import { DoctorService } from '../services/doctor/doctor.service';
 import { UserIdleService } from 'angular-user-idle';
-import { AlertController } from '@ionic/angular';
+import { AlertController, MenuController } from '@ionic/angular';
 import { merge } from 'highcharts';
 import { LogoutService } from '../services/logout/logout.service';
 
@@ -54,7 +54,8 @@ export class TabsPage {
     private doctorService: DoctorService,
     private userIdle: UserIdleService,
     public alertController: AlertController,
-    private logoutService: LogoutService
+    private logoutService: LogoutService,
+    private menu: MenuController
   ) {
     this.functionsService.logToConsole('constructor');
     this.userIdle.setCustomActivityEvents(fromEvent(document, 'touchstart'));
@@ -75,7 +76,9 @@ export class TabsPage {
       this.signalList.push(signal);
     });*/
   }
-
+  toggleMenu() {
+    this.menu.toggle(); //Add this method to your button click function
+  }
   ngOnInit() {
     localStorage.setItem('tokenExpired', '0');
 

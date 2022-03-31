@@ -198,7 +198,7 @@ export class InPatientDetailPage {
       this.userSettingsModelv3[0].smsGatewayCHH;
     this.professionalFeeModelv3.smsGatewaySmart =
       this.userSettingsModelv3[0].smsGatewaySmart;
-
+    /*
     this.data = [];
     let testJsonPDF = {
       doctorCode: 'MD000175',
@@ -216,9 +216,11 @@ export class InPatientDetailPage {
         console.log('error');
         console.log(error);
       },
-      () => {}
+      () => {
+        console.log(this.pdfSrc);
+      }
     );
-    /*this.doctorService
+    this.doctorService
       .testViewpdf()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((data: any) => {
@@ -1086,7 +1088,9 @@ export class InPatientDetailPage {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
-  /*************************************/
+  /***************SIGNATURE**********************/
+
+  /*
   signaturePad: SignaturePad;
   @ViewChild('canvas') canvasEl: ElementRef;
 
@@ -1114,5 +1118,5 @@ export class InPatientDetailPage {
     const base64Data = this.signaturePad.toDataURL();
     this.signatureImg = base64Data;
     console.log(base64Data);
-  }
+  }*/
 }

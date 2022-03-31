@@ -422,7 +422,7 @@ export class DoctorService {
       responseType: 'blob' as 'json',
     };
     return this.http.get(
-      'http://10.151.12.120:7227/api/dokiregpfcollect/pdf',
+      'http://10.151.12.120:7227/api/dokipfregcollect/pdf',
       httpOptions
     );
     /*const options = { headers: headers };
@@ -430,8 +430,79 @@ export class DoctorService {
     return this.http.get(url, options);*/
   }
 
-  testViewpdfpost(data) {
-    const url = 'http://10.130.21.162:6113/api/dokiregpfcollect/pdf';
+  getDOKiPFRegularSOA(data) {
+    const url = 'http://10.151.12.120:7227/api/dokipfregcollect/pdf';
     return this.http.post(url, data, { responseType: 'blob' });
+  }
+  getDOKiPFRegularSOAPreview(drCode, mode, fromDate, toDate, site) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json;charset=utf-8',
+    });
+    const options = { headers: headers, withCredentials: true };
+    const url =
+      'http://10.151.12.120:7227/api/dokipfregcollect/datapreview?drCode=' +
+      drCode +
+      '&mode=' +
+      mode +
+      '&fromDate=' +
+      fromDate +
+      '&toDate=' +
+      toDate +
+      '&site=' +
+      site;
+    return this.http.get(url, options);
+  }
+  getDOKiPFPhicCaseRatesSOA(data) {
+    const url = 'http://10.151.12.120:7227/api/dokipfphiccaserates/pdf';
+    return this.http.post(url, data, { responseType: 'blob' });
+  }
+  getDOKiPFPhicCaseRatesSOAPreview(drCode, mode, fromDate, toDate, site) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json;charset=utf-8',
+    });
+    const options = { headers: headers, withCredentials: true };
+    const url =
+      'http://10.151.12.120:7227/api/dokipfphiccaserates/datapreview?drCode=' +
+      drCode +
+      '&mode=' +
+      mode +
+      '&fromDate=' +
+      fromDate +
+      '&toDate=' +
+      toDate +
+      '&site=' +
+      site;
+    return this.http.get(url, options);
+  }
+
+  getDOKiPFReadersFeeSOA(data) {
+    const url = 'http://10.151.12.120:7227/api/dokipfreadersfee/pdf';
+    return this.http.post(url, data, { responseType: 'blob' });
+  }
+  getDOKiPFReadersFeeSOAPreview(drCode, mode, fromDate, toDate, site) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json;charset=utf-8',
+    });
+    const options = { headers: headers, withCredentials: true };
+    const url =
+      'http://10.151.12.120:7227/api/dokipfreadersfee/datapreview?drCode=' +
+      drCode +
+      '&mode=' +
+      mode +
+      '&fromDate=' +
+      fromDate +
+      '&toDate=' +
+      toDate +
+      '&site=' +
+      site;
+    return this.http.get(url, options);
+  }
+
+  testAdultApproval(data) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers: headers, withCredentials: false };
+    const url = 'http://10.151.12.120/api/MedicalAbstract/AdultApproval';
+    //return this.http.put(url, JSON.stringify(data), options);
+    return this.http.put(url, data, options);
   }
 }

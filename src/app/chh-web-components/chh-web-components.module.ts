@@ -52,6 +52,7 @@ import { DoctordirectorydetailComponent } from '../pages/executuve/components/do
 import { CardshowhideComponent } from '../chh-web-components/cardshowhide/cardshowhide.component';
 import { ProgressnotesHistoryComponent } from './progressnotes-history/progressnotes-history.component';
 import { ProgressnotesHistoryCardComponent } from './progressnotes-history-card/progressnotes-history-card.component';
+import { CollectiblesPreviewComponent } from './collectibles-preview/collectibles-preview.component';
 @NgModule({
   declarations: [
     ChhAppLogoComponent,
@@ -89,6 +90,7 @@ import { ProgressnotesHistoryCardComponent } from './progressnotes-history-card/
     CardshowhideComponent,
     ProgressnotesHistoryComponent,
     ProgressnotesHistoryCardComponent,
+    CollectiblesPreviewComponent,
   ],
   exports: [
     ChhAppLogoComponent,
@@ -126,6 +128,7 @@ import { ProgressnotesHistoryCardComponent } from './progressnotes-history-card/
     CardshowhideComponent,
     ProgressnotesHistoryComponent,
     ProgressnotesHistoryCardComponent,
+    CollectiblesPreviewComponent,
   ],
   imports: [
     CommonModule,
