@@ -24,12 +24,15 @@
             <pdf-viewer [src]="pdfSrc" [rotation]="0" [original-size]="false" [show-all]="true" [fit-to-page]="false"
               [zoom]="1" [zoom-scale]="'page-width'" [stick-to-page]="false" [render-text]="true"
               [external-link-target]="'blank'" [autoresize]="true" [show-borders]="false"
-              style="width: 100vh; height: 30vh;">
+              style="width: 100vh; height: 50vh;">
             </pdf-viewer>
           </pinch-zoom>
+
+
           <canvas #canvas (touchstart)="startDrawing($event)" (touchmove)="moved($event)" width="350"
-            height="200"></canvas>
-          <ion-grid *ngIf="!isbutton">
+            height="350"></canvas>
+
+          <ion-grid>
             <ion-row>
               <ion-col size="6">
                 <ion-button color="danger" (click)="clearPad()">Clear</ion-button>
@@ -39,8 +42,9 @@
               </ion-col>
             </ion-row>
           </ion-grid>
-          <!--img src='{{ signatureImg }}' /-->
         </ion-card>
+        <!--img src='{{ signatureImg }}' /-->
+
       </ion-col>
     </ion-row>
   </ion-grid>

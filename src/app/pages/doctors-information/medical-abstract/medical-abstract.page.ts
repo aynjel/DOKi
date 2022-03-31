@@ -36,6 +36,7 @@ export class MedicalAbstractPage implements OnInit {
   pdfSrc;
   getpdf() {
     this.data = [];
+    this.pdfSrc = '';
     let testJsonPDF = {
       doctorCode: 'MD000175',
       mode: 'P',
@@ -43,7 +44,7 @@ export class MedicalAbstractPage implements OnInit {
       toDate: '03/15/2022',
       site: 'C',
     };
-    this.doctorService.getDOKiPFRegularSOA(testJsonPDF).subscribe(
+    this.doctorService.getMedicalAbstract('IPM000125711').subscribe(
       (data: any) => {
         let blob = new Blob([data], { type: 'application/pdf' });
         let downloadURL = window.URL.createObjectURL(data);
@@ -67,7 +68,7 @@ export class MedicalAbstractPage implements OnInit {
   }
   /***************SIGNATURE**********************/
   adultApproval = {
-    account_no: 'IPM000230424',
+    account_no: 'IPM000125711',
     abstract_approve_by: 'testdoki01',
     abstract_approve_by_name: 'DOKI01 GREAT',
     doki_signature: 'string',
@@ -113,7 +114,9 @@ export class MedicalAbstractPage implements OnInit {
         console.log('error');
         console.log(error);
       },
-      () => {}
+      () => {
+        this.getpdf();
+      }
     );
   }
 }

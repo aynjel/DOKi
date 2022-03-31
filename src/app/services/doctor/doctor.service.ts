@@ -505,4 +505,14 @@ export class DoctorService {
     //return this.http.put(url, JSON.stringify(data), options);
     return this.http.put(url, data, options);
   }
+  getMedicalAbstract(data) {
+    const httpOptions = {
+      responseType: 'blob' as 'json',
+    };
+    //10.151.12.120:7227/api/medicalabstract/pdf/IPM000125711
+    http: return this.http.get(
+      'http://10.151.12.120:7227/api/medicalabstract/pdf/' + data,
+      httpOptions
+    );
+  }
 }

@@ -350,7 +350,11 @@ export class CollectiblesPage implements OnInit {
     }
   }
   downloadpdf() {
-    this.link.click();
+    console.log(this.pdfSrc);
+    if (this.pdfSrc != '') {
+      this.link.click();
+    }
+    //
   }
   callPreview() {
     console.log(this.mode);
