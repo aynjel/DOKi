@@ -57,22 +57,25 @@ export class MedicalAbstractPage implements OnInit {
       toDate: '03/15/2022',
       site: 'C',
     };
-    this.doctorService.getMedicalAbstract('IPM000125711').subscribe(
-      (data: any) => {
-        let blob = new Blob([data], { type: 'application/pdf' });
-        let downloadURL = window.URL.createObjectURL(data);
-        this.pdfSrc = downloadURL;
-      },
-      (error) => {
-        this.isPDFLoading = true;
-        console.log('error');
-        console.log(error);
-      },
-      () => {
-        this.isPDFLoading = true;
-        console.log(this.pdfSrc);
-      }
-    );
+    this.doctorService
+      .getMedicalAbstract('IPM000125711')
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (data: any) => {
+          let blob = new Blob([data], { type: 'application/pdf' });
+          let downloadURL = window.URL.createObjectURL(data);
+          this.pdfSrc = downloadURL;
+        },
+        (error) => {
+          this.isPDFLoading = true;
+          console.log('error');
+          console.log(error);
+        },
+        () => {
+          this.isPDFLoading = true;
+          console.log(this.pdfSrc);
+        }
+      );
   }
   doRefresh(event) {
     setTimeout(() => {
@@ -121,19 +124,22 @@ export class MedicalAbstractPage implements OnInit {
     this.adultApproval.doki_signature = myArray[1];
     console.log(this.adultApproval);
 
-    this.doctorService.testAdultApproval(this.adultApproval).subscribe(
-      (data: any) => {
-        console.log(data);
-      },
-      (error) => {
-        console.log('error');
-        console.log(error);
-      },
-      () => {
-        this.getpdf();
-        this.signaturePad.clear();
-      }
-    );
+    this.doctorService
+      .testAdultApproval(this.adultApproval)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+        },
+        (error) => {
+          console.log('error');
+          console.log(error);
+        },
+        () => {
+          this.getpdf();
+          this.signaturePad.clear();
+        }
+      );
   }
   checkAppearance() {
     this.functionsService.logToConsole('checkAppearance');
@@ -149,5 +155,9 @@ export class MedicalAbstractPage implements OnInit {
         this.renderer.setAttribute(document.body, 'color-theme', 'light');
       }
     });
+  }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

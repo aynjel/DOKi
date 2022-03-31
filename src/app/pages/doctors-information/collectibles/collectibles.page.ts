@@ -66,26 +66,29 @@ export class CollectiblesPage implements OnInit {
       mode: 'P',
     };
     this.pdfSrc = '';
-    this.doctorService.getDOKiPFRegularSOA(testJsonPDF).subscribe(
-      (data: any) => {
-        let blob = new Blob([data], { type: 'application/pdf' });
-        let downloadURL = window.URL.createObjectURL(data);
-        this.pdfSrc = downloadURL;
-        this.link = '';
-        this.link = document.createElement('a');
-        this.link.href = downloadURL;
-        this.link.download = 'PFRegular.pdf';
-      },
-      (error) => {
-        this.isPDFLoading = false;
-        console.log('error');
-        console.log(error);
-      },
-      () => {
-        this.isPDFLoading = false;
-        console.log(this.pdfSrc);
-      }
-    );
+    this.doctorService
+      .getDOKiPFRegularSOA(testJsonPDF)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (data: any) => {
+          let blob = new Blob([data], { type: 'application/pdf' });
+          let downloadURL = window.URL.createObjectURL(data);
+          this.pdfSrc = downloadURL;
+          this.link = '';
+          this.link = document.createElement('a');
+          this.link.href = downloadURL;
+          this.link.download = 'PFRegular.pdf';
+        },
+        (error) => {
+          this.isPDFLoading = false;
+          console.log('error');
+          console.log(error);
+        },
+        () => {
+          this.isPDFLoading = false;
+          console.log(this.pdfSrc);
+        }
+      );
   }
 
   getRegularPFpdfPreview() {
@@ -105,6 +108,7 @@ export class CollectiblesPage implements OnInit {
         this.dateTodayTo,
         this.site
       )
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {
           this.DOKiPFRegularPreview = data;
@@ -139,26 +143,29 @@ export class CollectiblesPage implements OnInit {
     console.log(JSON.stringify(testJsonPDF));
 
     this.pdfSrc = '';
-    this.doctorService.getDOKiPFPhicCaseRatesSOA(testJsonPDF).subscribe(
-      (data: any) => {
-        let blob = new Blob([data], { type: 'application/pdf' });
-        let downloadURL = window.URL.createObjectURL(data);
-        this.pdfSrc = downloadURL;
-        this.link = '';
-        this.link = document.createElement('a');
-        this.link.href = downloadURL;
-        this.link.download = 'PHICPFpdf.pdf';
-      },
-      (error) => {
-        this.isPDFLoading = false;
-        console.log('error');
-        console.log(error);
-      },
-      () => {
-        this.isPDFLoading = false;
-        console.log(this.pdfSrc);
-      }
-    );
+    this.doctorService
+      .getDOKiPFPhicCaseRatesSOA(testJsonPDF)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (data: any) => {
+          let blob = new Blob([data], { type: 'application/pdf' });
+          let downloadURL = window.URL.createObjectURL(data);
+          this.pdfSrc = downloadURL;
+          this.link = '';
+          this.link = document.createElement('a');
+          this.link.href = downloadURL;
+          this.link.download = 'PHICPFpdf.pdf';
+        },
+        (error) => {
+          this.isPDFLoading = false;
+          console.log('error');
+          console.log(error);
+        },
+        () => {
+          this.isPDFLoading = false;
+          console.log(this.pdfSrc);
+        }
+      );
   }
   DOKiPFPHICPreview;
   getPHICPFpdfPreview() {
@@ -176,6 +183,7 @@ export class CollectiblesPage implements OnInit {
         this.dateTodayTo,
         this.site
       )
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {
           this.DOKiPFPHICPreview = data;
@@ -208,26 +216,29 @@ export class CollectiblesPage implements OnInit {
       mode: 'P',
     };
     this.pdfSrc = '';
-    this.doctorService.getDOKiPFReadersFeeSOA(testJsonPDF).subscribe(
-      (data: any) => {
-        let blob = new Blob([data], { type: 'application/pdf' });
-        let downloadURL = window.URL.createObjectURL(data);
-        this.pdfSrc = downloadURL;
-        this.link = '';
-        this.link = document.createElement('a');
-        this.link.href = downloadURL;
-        this.link.download = 'ReadersFeepdf.pdf';
-      },
-      (error) => {
-        this.isPDFLoading = false;
-        console.log('error');
-        console.log(error);
-      },
-      () => {
-        this.isPDFLoading = false;
-        console.log(this.pdfSrc);
-      }
-    );
+    this.doctorService
+      .getDOKiPFReadersFeeSOA(testJsonPDF)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (data: any) => {
+          let blob = new Blob([data], { type: 'application/pdf' });
+          let downloadURL = window.URL.createObjectURL(data);
+          this.pdfSrc = downloadURL;
+          this.link = '';
+          this.link = document.createElement('a');
+          this.link.href = downloadURL;
+          this.link.download = 'ReadersFeepdf.pdf';
+        },
+        (error) => {
+          this.isPDFLoading = false;
+          console.log('error');
+          console.log(error);
+        },
+        () => {
+          this.isPDFLoading = false;
+          console.log(this.pdfSrc);
+        }
+      );
   }
 
   getDOKiPFReadersFeeSOAPreview() {
@@ -245,6 +256,7 @@ export class CollectiblesPage implements OnInit {
         this.dateTodayTo,
         this.site
       )
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {
           this.DOKiPFPHICPreview = data;
@@ -395,5 +407,9 @@ export class CollectiblesPage implements OnInit {
         this.renderer.setAttribute(document.body, 'color-theme', 'light');
       }
     });
+  }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }
