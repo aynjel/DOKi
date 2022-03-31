@@ -41,7 +41,7 @@
           <div style="padding: 10px;">
 
 
-            <canvas #canvas (touchstart)="startDrawing($event)" (touchmove)="moved($event)"
+            <!--canvas #canvas (touchstart)="startDrawing($event)" (touchmove)="moved($event)"
               style="border: solid 1px #000000;" width="320" height="350"></canvas>
           </div>
           <ion-grid *ngIf="!isbutton">
@@ -53,9 +53,28 @@
                 <ion-button color="secondary" (click)="savePad()">Save</ion-button>
               </ion-col>
             </ion-row>
-          </ion-grid>
+          </ion-grid-->
+
+
+            <div class="signature-container" style="border: solid 1px #000000;">
+              <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()">
+              </signature-pad>
+
+            </div>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-button color="danger" (click)="clearPad()">Clear</ion-button>
+                </ion-col>
+                <ion-col size="4" offset="2">
+                  <ion-button color="secondary" (click)="savePad()">Save</ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+            <!--img src='{{ signatureImg }}' /-->
+          </div>
         </ion-card>
-        <!--img src='{{ signatureImg }}' /-->
+
 
       </ion-col>
     </ion-row>

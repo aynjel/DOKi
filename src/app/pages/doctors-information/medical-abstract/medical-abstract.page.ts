@@ -9,8 +9,10 @@ import { DoctorService } from 'src/app/services/doctor/doctor.service';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import SignaturePad from 'signature_pad';
+//import SignaturePad from 'signature_pad';
 import { FunctionsService } from 'src/app/shared/functions/functions.service';
+import { AfterViewInit } from '@angular/core';
+import { SignaturePad } from 'angular2-signaturepad';
 
 @Component({
   selector: 'app-medical-abstract',
@@ -80,7 +82,7 @@ export class MedicalAbstractPage implements OnInit {
   doRefresh(event) {
     setTimeout(() => {
       this.ngOnInit();
-      this.signaturePad.clear();
+      //this.signaturePad.clear();
       event.target.complete();
     }, 1000);
   }
@@ -92,7 +94,8 @@ export class MedicalAbstractPage implements OnInit {
     doki_signature: 'string',
     signature_consent_flg: 'yes',
   };
-
+  isbutton = false;
+  /*
   signaturePad: SignaturePad;
   @ViewChild('canvas') canvasEl: ElementRef;
 
@@ -115,7 +118,8 @@ export class MedicalAbstractPage implements OnInit {
   clearPad() {
     this.signaturePad.clear();
   }
-  isbutton = false;
+
+
   savePad() {
     this.isbutton = true;
     const base64Data = this.signaturePad.toDataURL();
@@ -141,6 +145,60 @@ export class MedicalAbstractPage implements OnInit {
         }
       );
   }
+    */
+  @ViewChild(SignaturePad) signaturePad: SignaturePad;
+  signatureImg: string;
+  signaturePadOptions: Object = {
+    minWidth: 5,
+    canvasWidth: 500,
+    canvasHeight: 300,
+  };
+  ngAfterViewInit() {
+    // this.signaturePad is now available
+    this.signaturePad.set('minWidth', 5); // set szimek/signature_pad options at runtime
+    this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
+  }
+
+  drawComplete() {
+    // will be notified of szimek/signature_pad's onEnd event
+    console.log(this.signaturePad.toDataURL());
+  }
+
+  drawStart() {
+    // will be notified of szimek/signature_pad's onBegin event
+    console.log('begin drawing');
+  }
+
+  clearPad() {
+    this.signaturePad.clear();
+  }
+
+  savePad() {
+   this.isbutton = true;
+   const base64Data = this.signaturePad.toDataURL();
+   this.signatureImg = base64Data;
+   const myArray = base64Data.split(',');
+   this.adultApproval.doki_signature = myArray[1];
+   console.log(this.adultApproval);
+
+   this.doctorService
+     .testAdultApproval(this.adultApproval)
+     .pipe(takeUntil(this.ngUnsubscribe))
+     .subscribe(
+       (data: any) => {
+         console.log(data);
+       },
+       (error) => {
+         console.log('error');
+         console.log(error);
+       },
+       () => {
+         this.getpdf();
+         this.signaturePad.clear();
+       }
+     );
+  }
+
   checkAppearance() {
     this.functionsService.logToConsole('checkAppearance');
     var values = JSON.parse(

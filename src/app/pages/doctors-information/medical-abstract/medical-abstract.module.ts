@@ -9,6 +9,7 @@ import { MedicalAbstractPageRoutingModule } from './medical-abstract-routing.mod
 import { MedicalAbstractPage } from './medical-abstract.page';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PinchZoomModule } from 'ngx-pinch-zoom';
+import { SignaturePadModule } from 'angular2-signaturepad';
 @NgModule({
   imports: [
     CommonModule,
@@ -17,6 +18,7 @@ import { PinchZoomModule } from 'ngx-pinch-zoom';
     MedicalAbstractPageRoutingModule,
     PdfViewerModule,
     PinchZoomModule,
+    SignaturePadModule,
   ],
   declarations: [MedicalAbstractPage],
 })

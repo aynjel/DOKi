@@ -37,6 +37,7 @@
     "@synapsium/ngx-lottie": "^8.2.9",
     "@teamhive/lottie-player": "^1.0.0",
     "angular-user-idle": "^2.2.5",
+    "angular2-signaturepad": "^4.0.2",
     "capacitor-datepicker": "0.0.2",
     "date-fns": "^2.28.0",
     "goog-webfont-dl": "^1.0.4",
