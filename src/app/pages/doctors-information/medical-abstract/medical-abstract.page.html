@@ -9,11 +9,11 @@
   </div>
 </ion-header>
 <ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
+  <!--ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios" pull-factor="2">
     <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
       refreshingSpinner="circles" refreshingText="Refreshing...">
     </ion-refresher-content>
-  </ion-refresher>
+  </ion-refresher-->
 
   <ion-grid class="ion-no-padding">
     <ion-row class="custom-padding">
@@ -42,7 +42,7 @@
 
 
             <canvas #canvas (touchstart)="startDrawing($event)" (touchmove)="moved($event)"
-              style="border: solid 1px #000000;"></canvas>
+              style="border: solid 1px #000000;" width="320" height="350"></canvas>
           </div>
           <ion-grid *ngIf="!isbutton">
             <ion-row>
