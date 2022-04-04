@@ -510,8 +510,9 @@ export class DoctorService {
       responseType: 'blob' as 'json',
     };
     //10.151.12.120:7227/api/medicalabstract/pdf/IPM000125711
+
     http: return this.http.get(
-      'http://10.151.12.120:7227/api/medicalabstract/pdf/' + data,
+      'http://10.151.12.120:7227/api/medicalabstract/pdf?accountNo=' + data,
       httpOptions
     );
   }
