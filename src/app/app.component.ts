@@ -73,6 +73,12 @@ export class AppComponent {
       type: 'med',
     },
     {
+      title: 'Medical Certificate',
+      url: 'menu/medical-certificate',
+      icon: 'document-text-outline',
+      type: 'med',
+    },
+    {
       title: 'Settings',
       url: 'menu/settings',
       icon: 'settings-outline',

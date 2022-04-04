@@ -76,6 +76,14 @@ const routes: Routes = [
           ).then((m) => m.MedicalAbstractPageModule),
       },
       {
+        path: 'medical-certificate',
+        loadChildren: () =>
+          import(
+            '../pages/doctors-information/medical-certificate/medical-certificate.module'
+          ).then((m) => m.MedicalCertificatePageModule),
+      },
+
+      {
         path: '',
         redirectTo: '/menu/dashboard',
         pathMatch: 'full',

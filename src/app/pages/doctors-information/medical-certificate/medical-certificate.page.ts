@@ -13,20 +13,33 @@ import { Subject } from 'rxjs';
 import { FunctionsService } from 'src/app/shared/functions/functions.service';
 import { AfterViewInit } from '@angular/core';
 import { SignaturePad } from 'angular2-signaturepad';
+import { ModalController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-medical-abstract',
-  templateUrl: './medical-abstract.page.html',
-  styleUrls: ['./medical-abstract.page.scss'],
+  selector: 'app-medical-certificate',
+  templateUrl: './medical-certificate.page.html',
+  styleUrls: ['./medical-certificate.page.scss'],
 })
-export class MedicalAbstractPage implements OnInit {
+export class MedicalCertificatePage implements OnInit {
   private ngUnsubscribe = new Subject();
   isDesktop: boolean;
+  data;
+  pdfSrc;
+  isPDFLoading: boolean;
+  isbutton = false;
+  @ViewChild(SignaturePad) signaturePad: SignaturePad;
+  signatureImg: string;
+  signaturePadOptions: Object = {
+    minWidth: 5,
+    canvasWidth: 500,
+    canvasHeight: 300,
+  };
   constructor(
     private screensizeService: ScreenSizeService,
     private doctorService: DoctorService,
     private functionsService: FunctionsService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private modalController: ModalController
   ) {
     this.checkAppearance();
     this.screensizeService
@@ -42,11 +55,33 @@ export class MedicalAbstractPage implements OnInit {
 
   ngOnInit() {
     this.getpdf();
-    this.isbutton = false;
   }
-  data;
-  pdfSrc;
-  isPDFLoading: boolean = false;
+
+  onClick() {
+    document.getElementById('trigger-button').click();
+    // this.signaturePad is now available
+    //this.signaturePad.set('minWidth', 5); // set szimek/signature_pad options at runtime
+    // this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
+  }
+  ngAfterViewInit() {
+    // this.signaturePad is now available
+    //this.signaturePad.set('minWidth', 5); // set szimek/signature_pad options at runtime
+    //this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
+  }
+
+  drawComplete() {
+    // will be notified of szimek/signature_pad's onEnd event
+    console.log(this.signaturePad.toDataURL());
+  }
+
+  drawStart() {
+    // will be notified of szimek/signature_pad's onBegin event
+    console.log('begin drawing');
+  }
+
+  clearPad() {
+    this.signaturePad.clear();
+  }
   getpdf() {
     this.isPDFLoading = false;
     this.data = [];
@@ -60,7 +95,7 @@ export class MedicalAbstractPage implements OnInit {
       site: 'C',
     };
     let medabstract = this.doctorService
-      .getMedicalAbstract('IPC100249785')
+      .getMedicalCertificate()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {
@@ -79,110 +114,31 @@ export class MedicalAbstractPage implements OnInit {
         }
       );
   }
-  doRefresh(event) {
-    setTimeout(() => {
-      this.ngOnInit();
-      //this.signaturePad.clear();
-      event.target.complete();
-    }, 1000);
-  }
-  /***************SIGNATURE**********************/
-  adultApproval = {
-    account_no: 'IPM000125711',
-    abstract_approve_by: 'testdoki01',
-    abstract_approve_by_name: 'DOKI01 GREAT',
-    doki_signature: 'string',
-    signature_consent_flg: 'yes',
-  };
-  isbutton = false;
-  /*
-  signaturePad: SignaturePad;
-  @ViewChild('canvas') canvasEl: ElementRef;
-
-  signatureImg: string;
-
-  ngAfterViewInit() {
-    this.signaturePad = new SignaturePad(this.canvasEl.nativeElement);
-    //this.resizeCanvas();
-  }
-
-  startDrawing(event: Event) {
-    console.log(event);
-    // works in device not in browser
-  }
-
-  moved(event: Event) {
-    // works in device not in browser
-  }
-
-  clearPad() {
-    this.signaturePad.clear();
-  }
-
-
   savePad() {
+    this.modalController.dismiss({
+      dismissed: true,
+    });
     this.isbutton = true;
     const base64Data = this.signaturePad.toDataURL();
     this.signatureImg = base64Data;
     const myArray = base64Data.split(',');
-    this.adultApproval.doki_signature = myArray[1];
-    console.log(this.adultApproval);
+    let testAprrove = {
+      mode: 'string',
+      account_no: 'string',
+      medcert_comment: 'string',
+      medcert_approve_by: 'string',
+      medcert_signature: 'string',
+    };
+    testAprrove.mode = 'P';
+    testAprrove.account_no = 'MD000605';
+    testAprrove.medcert_comment = 'medcert_comment';
+    testAprrove.medcert_approve_by = 'medcert_approve_by';
+    testAprrove.medcert_signature = myArray[1];
+
+    console.log(JSON.stringify(testAprrove));
 
     this.doctorService
-      .testAdultApproval(this.adultApproval)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(
-        (data: any) => {
-          console.log(data);
-        },
-        (error) => {
-          console.log('error');
-          console.log(error);
-        },
-        () => {
-          this.getpdf();
-          this.signaturePad.clear();
-        }
-      );
-  }
-    */
-  @ViewChild(SignaturePad) signaturePad: SignaturePad;
-  signatureImg: string;
-  signaturePadOptions: Object = {
-    minWidth: 5,
-    canvasWidth: 500,
-    canvasHeight: 300,
-  };
-  ngAfterViewInit() {
-    // this.signaturePad is now available
-    this.signaturePad.set('minWidth', 5); // set szimek/signature_pad options at runtime
-    this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
-  }
-
-  drawComplete() {
-    // will be notified of szimek/signature_pad's onEnd event
-    console.log(this.signaturePad.toDataURL());
-  }
-
-  drawStart() {
-    // will be notified of szimek/signature_pad's onBegin event
-    console.log('begin drawing');
-  }
-
-  clearPad() {
-    this.signaturePad.clear();
-  }
-
-  savePad() {
-    this.isbutton = true;
-    const base64Data = this.signaturePad.toDataURL();
-    this.signatureImg = base64Data;
-    const myArray = base64Data.split(',');
-    this.adultApproval.doki_signature = myArray[1];
-    console.log(this.adultApproval);
-
-    this.doctorService
-      .testAdultApproval(this.adultApproval)
+      .approveMedicalCertificate(testAprrove)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {

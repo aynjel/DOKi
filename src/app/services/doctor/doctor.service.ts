@@ -515,4 +515,22 @@ export class DoctorService {
       httpOptions
     );
   }
+
+  getMedicalCertificate() {
+    const httpOptions = {
+      responseType: 'blob' as 'json',
+    };
+    //10.151.12.120:7227/api/medicalabstract/pdf/IPM000125711
+    http: return this.http.get(
+      'http://10.151.12.120:7227/api/medcert/pdf?mode=T&account_no=IPM000125711',
+      httpOptions
+    );
+  }
+  approveMedicalCertificate(data) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers: headers, withCredentials: false };
+    const url = 'http://10.151.12.120:7227/api/medcert/approve';
+    //return this.http.put(url, JSON.stringify(data), options);
+    return this.http.put(url, data, options);
+  }
 }
