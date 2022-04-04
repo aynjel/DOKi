@@ -13,6 +13,7 @@ import { Subject } from 'rxjs';
 import { FunctionsService } from 'src/app/shared/functions/functions.service';
 import { AfterViewInit } from '@angular/core';
 import { SignaturePad } from 'angular2-signaturepad';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-medical-abstract',
@@ -26,7 +27,8 @@ export class MedicalAbstractPage implements OnInit {
     private screensizeService: ScreenSizeService,
     private doctorService: DoctorService,
     private functionsService: FunctionsService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private modalController: ModalController
   ) {
     this.checkAppearance();
     this.screensizeService
@@ -78,6 +80,12 @@ export class MedicalAbstractPage implements OnInit {
           console.log(this.pdfSrc);
         }
       );
+  }
+  onClick() {
+    document.getElementById('trigger-button').click();
+    // this.signaturePad is now available
+    //this.signaturePad.set('minWidth', 5); // set szimek/signature_pad options at runtime
+    // this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
   }
   doRefresh(event) {
     setTimeout(() => {
@@ -155,8 +163,8 @@ export class MedicalAbstractPage implements OnInit {
   };
   ngAfterViewInit() {
     // this.signaturePad is now available
-    this.signaturePad.set('minWidth', 5); // set szimek/signature_pad options at runtime
-    this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
+    //this.signaturePad.set('minWidth', 5); // set szimek/signature_pad options at runtime
+    //this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
   }
 
   drawComplete() {
@@ -174,6 +182,9 @@ export class MedicalAbstractPage implements OnInit {
   }
 
   savePad() {
+    this.modalController.dismiss({
+      dismissed: true,
+    });
     this.isbutton = true;
     const base64Data = this.signaturePad.toDataURL();
     this.signatureImg = base64Data;

@@ -37,25 +37,35 @@
               style="width: 100vh; height: 50vh;">
             </pdf-viewer>
           </pinch-zoom>
-
-          <div style="padding: 10px;">
-
-
-            <!--canvas #canvas (touchstart)="startDrawing($event)" (touchmove)="moved($event)"
-              style="border: solid 1px #000000;" width="320" height="350"></canvas>
-          </div>
-          <ion-grid *ngIf="!isbutton">
-            <ion-row>
-              <ion-col size="6">
-                <ion-button color="danger" (click)="clearPad()">Clear</ion-button>
-              </ion-col>
-              <ion-col size="4" offset="2">
-                <ion-button color="secondary" (click)="savePad()">Save</ion-button>
-              </ion-col>
-            </ion-row>
-          </ion-grid-->
+          <ion-button *ngIf="isPDFLoading" (click)="onClick()">Sign Document</ion-button>
+          <ion-button id="trigger-button" style="display:none">Sign Document</ion-button>
+          <ion-modal trigger="trigger-button" show-backdrop="true" class="ion6modaltest">
+            <ng-template>
+              <div style="padding: 10px;">
 
 
+                <div class="signature-container" style="border: solid 1px #000000;">
+                  <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()"
+                    (onEndEvent)="drawComplete()">
+                  </signature-pad>
+
+                </div>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="6">
+                      <ion-button color="danger" (click)="clearPad()">Clear</ion-button>
+                    </ion-col>
+                    <ion-col size="4" offset="2">
+                      <ion-button color="secondary" (click)="savePad()">Save</ion-button>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+                <!--img src='{{ signatureImg }}' /-->
+              </div>
+            </ng-template>
+          </ion-modal>
+
+          <!--div style="padding: 10px;">
             <div class="signature-container" style="border: solid 1px #000000;">
               <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()">
               </signature-pad>
@@ -71,8 +81,11 @@
                 </ion-col>
               </ion-row>
             </ion-grid>
-            <!--img src='{{ signatureImg }}' /-->
-          </div>
+          </div-->
+
+
+
+
         </ion-card>
 
 
