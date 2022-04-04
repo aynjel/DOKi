@@ -30,6 +30,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 //Exporting(HighCharts);
 import { takeUntil } from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { Pipe, PipeTransform } from '@angular/core';
 @Component({
   selector: 'app-tabs-historical',
   templateUrl: './tabs-historical.page.html',
@@ -204,6 +205,7 @@ export class TabsHistoricalPage implements OnInit {
         }
       );
   }
+
   monthTrendYear() {
     //////console.log(this.yearTreandTO);
     this.generateMonthlyTotalAdmissions();
@@ -251,6 +253,7 @@ export class TabsHistoricalPage implements OnInit {
   ngOnInit() {
     this.ngUnsubscribe = new Subject();
     this.generateMonthlyTotalAdmissions();
+    this.YTDAverageOccupancyByMonth();
     this.setDateFromTo();
   }
   monthNames = [
@@ -341,5 +344,162 @@ export class TabsHistoricalPage implements OnInit {
   ionViewDidLeave() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+  doRefresh(event) {
+    setTimeout(() => {
+      this.ngOnInit();
+      event.target.complete();
+    }, 1000);
+  }
+  cebuCovid = [];
+  cebuNonCovid = [];
+  mandaueCovid = [];
+  mandaueNonCovid = [];
+  YTDAverageOccupancyByMonth() {
+    this.cebuCovid = [];
+    this.cebuNonCovid = [];
+    this.mandaueCovid = [];
+    this.mandaueNonCovid = [];
+    let tempMTA;
+    this.executiveService
+      .getYTDAverageOccupancyByMonth()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          this.dismissLoading();
+          tempMTA = res;
+        },
+        (error) => {
+          this.dismissLoading();
+        },
+        () => {
+          console.log(this.orderBy(tempMTA));
+          tempMTA = this.orderBy(tempMTA);
+          tempMTA.forEach((el) => {
+            for (let i = 1; i <= 12; i++) {
+              if (
+                el.month == i.toString() &&
+                el.patientType == 'Covid' &&
+                el.site == 'C'
+              ) {
+                //console.log(el.aveOccupancy);
+                this.cebuCovid.push(el.aveOccupancy);
+              }
+              if (
+                el.month == i.toString() &&
+                el.patientType == 'Non-Covid' &&
+                el.site == 'C'
+              ) {
+                // console.log(el.aveOccupancy);
+                this.cebuNonCovid.push(el.aveOccupancy);
+              }
+              if (
+                el.month == i.toString() &&
+                el.patientType == 'Covid' &&
+                el.site == 'M'
+              ) {
+                //console.log(el.aveOccupancy);
+                this.mandaueCovid.push(el.aveOccupancy);
+              }
+              if (
+                el.month == i.toString() &&
+                el.patientType == 'Non-Covid' &&
+                el.site == 'M'
+              ) {
+                // console.log(el.aveOccupancy);
+                this.mandaueNonCovid.push(el.aveOccupancy);
+              }
+            }
+          });
+          console.log(this.cebuCovid);
+          console.log(this.cebuNonCovid);
+          this.dismissLoading();
+          this.buildYTDAverageOccupancyByMonth();
+        }
+      );
+  }
+  MTb;
+  buildYTDAverageOccupancyByMonth() {
+    if (this.MTb != undefined) {
+      this.MTb.destroy();
+    }
+    this.MTb = HighCharts.chart('YTDAverageOccupancyByMonth', {
+      chart: {
+        type: 'column',
+      },
+      title: {
+        //text: 'Total Admissions ' + this.yearTreandTO + ' : ' + this.MTATotal,
+        text: '',
+      },
+      xAxis: {
+        categories: this.MTACategory,
+      },
+      yAxis: {
+        title: { text: '' },
+        stackLabels: {
+          enabled: true,
+          style: {
+            fontWeight: 'bold',
+          },
+        },
+      },
+      /*tooltip: {
+        headerFormat: '<b>{point.x}</b><br/>',
+        pointFormat: '{series.name}: {point.y}',
+      },*/
+      tooltip: {
+        headerFormat: '<b>{point.x}</b><br/>',
+        pointFormat:
+          '{series.name}: {point.y}<br/><br/>Total: {point.stackTotal}',
+      },
+      plotOptions: {
+        column: {
+          stacking: 'normal',
+          dataLabels: {
+            enabled: true,
+          },
+        },
+      },
+      series: [
+        {
+          name: 'Covid Cebu',
+          data: this.cebuCovid,
+          type: undefined,
+          stack: 'Cebu',
+        },
+        {
+          name: 'Non-Covid Cebu',
+          data: this.cebuNonCovid,
+          type: undefined,
+          stack: 'Cebu',
+        },
+        {
+          name: 'Covid Mandaue',
+          data: this.mandaueCovid,
+          type: undefined,
+          stack: 'female',
+        },
+        {
+          name: 'Non-Covid Mandaue',
+          data: this.mandaueNonCovid,
+          type: undefined,
+          stack: 'female',
+        },
+      ],
+      credits: { enabled: false },
+    });
+    //this.MTA.yAxis[0].setExtremes(500, 4700);
+    setTimeout(() => {
+      this.MTb.reflow();
+    }, 1000);
+  }
+  orderBy(arr) {
+    return arr.sort((item1: any, item2: any) => {
+      return this.comparator(item2, item1);
+    });
+  }
+
+  comparator(a: any, b: any) {
+    return b.month - a.month;
   }
 }

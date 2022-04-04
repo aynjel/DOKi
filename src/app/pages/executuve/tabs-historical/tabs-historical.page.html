@@ -13,6 +13,11 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+      refreshingSpinner="circles" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-grid class="ion-no-padding">
     <ion-row class="custom-padding">
       <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3" class="custom-border-bottom ion-no-border ">
@@ -152,6 +157,9 @@
                   <ion-datetime displayFormat="MMMM" placeholder="Select Date"></ion-datetime>
                 </ion-item-->
                 <div id="populateMontlyTotalAdmissions"></div>
+
+                <div id="YTDAverageOccupancyByMonth"></div>
+
               </ion-col>
             </ion-row>
           </ion-card>

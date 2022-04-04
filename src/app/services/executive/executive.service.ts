@@ -53,7 +53,20 @@ export class ExecutiveService {
       year;
     return this.http.get(url, options);
   }
+  getYTDAverageOccupancyByMonth() {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json;charset=utf-8',
+    });
+    const options = { headers: headers, withCredentials: true };
+    //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
+    /*const url =
+      environment.apiRouterUrl +
+      'v3/Dashboard/Admin/YTDAverageOccupancyByMonth';*/
 
+    const url =
+      'http://10.130.21.198:5002/api/v3/Dashboard/Admin/YTDAverageOccupancyByMonth';
+    return this.http.get(url, options);
+  }
   forDischargeV3() {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json;charset=utf-8',
