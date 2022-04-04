@@ -86,7 +86,6 @@ export class CollectiblesPage implements OnInit {
         },
         () => {
           this.isPDFLoading = false;
-          console.log(this.pdfSrc);
         }
       );
   }
@@ -122,7 +121,7 @@ export class CollectiblesPage implements OnInit {
         () => {
           this.isPreviewLoading = false;
           this.isPDFAvailable = true;
-          console.log(this.pdfSrc);
+
           if (this.DOKiPFRegularPreview == null) {
             this.emptyState = true;
           }
@@ -186,7 +185,7 @@ export class CollectiblesPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {
-          this.DOKiPFPHICPreview = data;
+          this.DOKiPFRegularPreview = data;
           console.log(data);
         },
         (error) => {
@@ -198,7 +197,7 @@ export class CollectiblesPage implements OnInit {
           this.isPreviewLoading = false;
           this.isPDFAvailable = true;
           console.log(this.pdfSrc);
-          if (this.DOKiPFPHICPreview == null) {
+          if (this.DOKiPFRegularPreview == null) {
             this.emptyState = true;
           }
         }
@@ -242,6 +241,8 @@ export class CollectiblesPage implements OnInit {
   }
 
   getDOKiPFReadersFeeSOAPreview() {
+    console.log('getDOKiPFReadersFeeSOAPreview');
+
     this.emptyState = false;
     this.isPreviewLoading = true;
     this.isPDFAvailable = false;
@@ -259,7 +260,7 @@ export class CollectiblesPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {
-          this.DOKiPFPHICPreview = data;
+          this.DOKiPFRegularPreview = data;
           console.log(data);
         },
         (error) => {
@@ -270,10 +271,7 @@ export class CollectiblesPage implements OnInit {
         () => {
           this.isPreviewLoading = false;
           this.isPDFAvailable = true;
-          console.log(this.pdfSrc);
-          console.log(this.DOKiPFPHICPreview);
-
-          if (this.DOKiPFPHICPreview == null) {
+          if (this.DOKiPFRegularPreview == null) {
             this.emptyState = true;
           }
         }
@@ -337,10 +335,12 @@ export class CollectiblesPage implements OnInit {
       year3 + '-' + ('0' + month3).slice(-2) + '-' + ('0' + day3).slice(-2);
     this.dateValueYear = sendDatedateValue3;
     this.dateTodayYear = year3;
-    this.callPreview();
+    // this.callPreview();
   }
   formatDateRegularPF(fromtoyear, value: string) {
     if (fromtoyear == 'from') {
+      console.log('from');
+
       let date1 = new Date(value);
       let month1 = date1.getMonth() + 1;
       let day1 = date1.getDate();
@@ -350,7 +350,9 @@ export class CollectiblesPage implements OnInit {
       this.monthTrendFrom = ('0' + month1).slice(-2);
       this.dateTodayFrom =
         ('0' + month1).slice(-2) + '/' + ('0' + day1).slice(-2) + '/' + year1;
+      this.callPreview();
     } else if (fromtoyear == 'to') {
+      console.log('to');
       let date1 = new Date(value);
       let month1 = date1.getMonth() + 1;
       let day1 = date1.getDate();
@@ -361,8 +363,8 @@ export class CollectiblesPage implements OnInit {
       this.dateTodayTo =
         ('0' + month1).slice(-2) + '/' + ('0' + day1).slice(-2) + '/' + year1;
       //this.monthTrendFromTo();
+      this.callPreview();
     }
-    this.callPreview();
   }
   savepdf() {
     if (this.isPDFAvailable) {
@@ -376,7 +378,6 @@ export class CollectiblesPage implements OnInit {
     }
   }
   downloadpdf() {
-    console.log(this.pdfSrc);
     if (this.pdfSrc != '') {
       this.link.click();
     }

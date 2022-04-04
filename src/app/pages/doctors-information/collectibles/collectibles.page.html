@@ -106,16 +106,10 @@
 
         <ion-list *ngIf="DOKiPFRegularPreview">
           <div *ngFor="let x of DOKiPFRegularPreview">
-            <collectibles [amount]="x.amount" [name]="x.name" [collection_date]="x.collection_date"></collectibles>
+            <collectibles [dataCollection]="x" [name]="x.name" [collection_date]="x.collection_date"></collectibles>
           </div>
         </ion-list>
-        <ion-list *ngIf="DOKiPFPHICPreview">
-          <div *ngFor="let x of DOKiPFPHICPreview">
-            <collectibles [amountREADERS]="x.net_rfee" [amountPHIC]="x.philhealth_amount" [namePHIC]="x.patient_name"
-              [collection_date]="x.collected_dt">
-            </collectibles>
-          </div>
-        </ion-list>
+
 
 
         <ion-card *ngIf="isPreviewLoading">
@@ -143,7 +137,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-modal trigger="trigger-button" [isOpen]="false" [breakpoints]="[0,0.75, 1]" [initialBreakpoint]="1">
+  <ion-modal trigger="trigger-button" [isOpen]="false" [breakpoints]="[0, 1]" [initialBreakpoint]="1">
     <ng-template>
       <ion-header mode="md" class="ion-no-border">
         <div *ngIf="!isDesktop">
