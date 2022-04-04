@@ -88,7 +88,7 @@ export class MedicalCertificatePage implements OnInit {
     this.pdfSrc = '';
     this.isbutton = false;
     let testJsonPDF = {
-      doctorCode: 'MD000175',
+      doctorCode: 'MD000605',
       mode: 'P',
       fromDate: '03/01/2022',
       toDate: '03/15/2022',
