@@ -41,8 +41,31 @@ export class MedicalAbstractPage implements OnInit {
         this.isDesktop = isDesktop;
       });
   }
-
+  screenWidth;
   ngOnInit() {
+    let scWidth = screen.width;
+    if (scWidth <= 767) {
+      this.screenWidth = scWidth - scWidth * 0.05;
+      console.log(this.screenWidth);
+      this.signaturePadOptions = {
+        minWidth: 5,
+        canvasWidth: this.screenWidth,
+        canvasHeight: 300,
+        backgroundColor: 'rgba(255, 255, 255, 1)',
+        penColor: 'rgb(0, 0, 0)',
+      };
+    } else {
+      this.screenWidth = scWidth - scWidth * 0.525;
+      console.log(this.screenWidth);
+      this.signaturePadOptions = {
+        minWidth: 5,
+        canvasWidth: this.screenWidth,
+        canvasHeight: 300,
+        backgroundColor: 'rgba(255, 255, 255, 1)',
+        penColor: 'rgb(0, 0, 0)',
+      };
+    }
+
     this.getpdf();
     this.isbutton = false;
   }
@@ -81,7 +104,10 @@ export class MedicalAbstractPage implements OnInit {
         }
       );
   }
+  clickOn: boolean = false;
   onClick() {
+    console.log(this.clickOn);
+
     document.getElementById('trigger-button').click();
     // this.signaturePad is now available
     //this.signaturePad.set('minWidth', 5); // set szimek/signature_pad options at runtime
@@ -158,8 +184,10 @@ export class MedicalAbstractPage implements OnInit {
   signatureImg: string;
   signaturePadOptions: Object = {
     minWidth: 5,
-    canvasWidth: 500,
+    canvasWidth: 350,
     canvasHeight: 300,
+    backgroundColor: 'rgba(255, 255, 255, 1)',
+    penColor: 'rgb(0, 0, 0)',
   };
   ngAfterViewInit() {
     // this.signaturePad is now available
@@ -180,7 +208,11 @@ export class MedicalAbstractPage implements OnInit {
   clearPad() {
     this.signaturePad.clear();
   }
-
+  closeModal() {
+    this.modalController.dismiss({
+      dismissed: true,
+    });
+  }
   savePad() {
     this.modalController.dismiss({
       dismissed: true,
@@ -191,7 +223,8 @@ export class MedicalAbstractPage implements OnInit {
     const myArray = base64Data.split(',');
     this.adultApproval.doki_signature = myArray[1];
     console.log(this.adultApproval);
-
+    this.signaturePad.clear();
+    this.isPDFLoading = false;
     this.doctorService
       .testAdultApproval(this.adultApproval)
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -205,7 +238,7 @@ export class MedicalAbstractPage implements OnInit {
         },
         () => {
           this.getpdf();
-          this.signaturePad.clear();
+          //this.signaturePad.clear();
         }
       );
   }
