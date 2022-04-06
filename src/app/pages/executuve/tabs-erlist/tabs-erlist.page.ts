@@ -46,6 +46,7 @@ export class TabsErlistPage implements OnInit {
   isDesktop: boolean;
   dateToday: any = '12/31/2021';
   listOfPatients: any = [];
+  listOfPatientsFinal: any = [];
   listOfPatientsTemp: any;
   listOfPatientsTemp1: any;
   listOfPatientsTemp2: any;
@@ -54,7 +55,7 @@ export class TabsErlistPage implements OnInit {
   segmentModel: any = 'Clean ER';
   segmentModel1: any = 'ALL';
   maxTime: any;
-
+  refreshcounter;
   dateValue = '2021-12-31';
   constructor(
     private storageService: StorageService,
@@ -93,7 +94,7 @@ export class TabsErlistPage implements OnInit {
       year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
     this.dateValue = sendDatedateValue;
     this.dateToday = sendDatedateToday;
-    console.log(this.dateValue);
+    ////console.log(this.dateValue);
   }
   formatDate(value: string) {
     let date1 = new Date(value);
@@ -122,7 +123,9 @@ export class TabsErlistPage implements OnInit {
   showSkeleton: boolean = false;
   noData: boolean = false;
   getErwaitlist(data) {
+    this.refreshcounter = 1;
     this.listOfPatients = [];
+    this.listOfPatientsFinal = [];
     this.showSkeleton = true;
     this.noData = false;
     let dateToSend = encodeURIComponent(data);
@@ -151,7 +154,8 @@ export class TabsErlistPage implements OnInit {
     }, 1000);
   }
   filterList() {
-    ////console.log(this.searchBar);
+    this.refreshcounter = 1;
+    //////console.log(this.searchBar);
     if (this.searchBar == '') {
       this.listOfPatients = this.listOfPatientsTemp2;
     } else {
@@ -166,14 +170,26 @@ export class TabsErlistPage implements OnInit {
         }
       });
     }
-    //console.log('listOfPatients');
+    ////console.log('listOfPatients');
 
-    //console.log(this.listOfPatients);
+    ////console.log(this.listOfPatients);
 
     if (this.listOfPatients == null || this.listOfPatients.length <= 0) {
       this.noData = true;
     } else {
       this.noData = false;
+      let i = 1;
+
+      /* this.listOfPatients.forEach((element) => {
+        if (i <= 10) {
+          this.listOfPatientsFinal.push(element);
+        }
+        i++;
+      });*/
+      //console.log(this.listOfPatients);
+
+      this.listOfPatientsFinal = this.listOfPatients.slice(0, 10);
+      //console.log(this.listOfPatientsFinal);
     }
   }
   segmentChanged() {
@@ -199,7 +215,7 @@ export class TabsErlistPage implements OnInit {
         }
       });
     }
-    //console.log(this.listOfPatientsTemp2);
+    ////console.log(this.listOfPatientsTemp2);
 
     this.filterList();
   }
@@ -229,7 +245,7 @@ export class TabsErlistPage implements OnInit {
     let sendDate =
       ('0' + month1).slice(-2) + '/' + ('0' + day1).slice(-2) + '/' + year1;
 
-    //console.log(this.maxTime);
+    ////console.log(this.maxTime);
     this.listOfPatients = [];
     this.listOfPatientsTemp1 = [];
     this.getErwaitlist(sendDate);
@@ -237,5 +253,38 @@ export class TabsErlistPage implements OnInit {
   ionViewDidLeave() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+  loadData(event) {
+    this.refreshcounter++;
+    // Using settimeout to simulate api call
+    setTimeout(() => {
+      // load more data
+
+      this.listOfPatientsFinal = this.listOfPatientsFinal.concat(
+        this.listOfPatients.slice(
+          this.refreshcounter * 10 - 10,
+          this.refreshcounter * 10
+        )
+      );
+      /*
+      let i = 1;
+      //////console.log(this.listOfPatientsTemp1.length);
+      this.listOfPatientsTemp1.forEach((element) => {
+        if (
+          i > this.refreshcounter * 10 - 10 &&
+          i <= this.refreshcounter * 10
+        ) {
+          this.listOfPatients.push(element);
+          //////console.log(element.status);
+        }
+        i++;
+      });
+*/
+      //Hide Infinite List Loader on Complete
+      event.target.complete();
+
+      // App logic to determine if all data is loaded
+      // and disable the infinite scroll
+    }, 500);
   }
 }

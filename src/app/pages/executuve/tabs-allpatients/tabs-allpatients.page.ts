@@ -111,14 +111,16 @@ export class TabsAllpatientsPage implements OnInit {
     let i = 1;
     this.listOfPatientsTemp1 = [];
     this.listOfPatientsTemp1 = this.listOfPatientsTemp;
-    this.listOfPatientsTemp.forEach((element) => {
+    /*this.listOfPatientsTemp.forEach((element) => {
       //////console.log(element.status);
       if (i <= 10) {
         this.listOfPatients.push(element);
       }
 
       i++;
-    });
+    });*/
+
+    this.listOfPatients = this.listOfPatientsTemp.slice(0, 10);
   }
 
   loading: any;
@@ -167,7 +169,13 @@ export class TabsAllpatientsPage implements OnInit {
     // Using settimeout to simulate api call
     setTimeout(() => {
       // load more data
-
+      this.listOfPatients = this.listOfPatients.concat(
+        this.listOfPatientsTemp1.slice(
+          this.refreshcounter * 10 - 10,
+          this.refreshcounter * 10
+        )
+      );
+      /*
       let i = 1;
       ////console.log(this.listOfPatientsTemp1.length);
       this.listOfPatientsTemp1.forEach((element) => {
@@ -180,7 +188,7 @@ export class TabsAllpatientsPage implements OnInit {
         }
         i++;
       });
-
+*/
       //Hide Infinite List Loader on Complete
       event.target.complete();
 

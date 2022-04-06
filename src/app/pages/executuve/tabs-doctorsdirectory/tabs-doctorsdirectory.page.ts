@@ -116,6 +116,13 @@ export class TabsDoctorsdirectoryPage implements OnInit {
   loadData(event) {
     this.refreshcounter++;
     setTimeout(() => {
+      this.listOfDoctors = this.listOfDoctors.concat(
+        this.listOfDoctorsTemp1.slice(
+          this.refreshcounter * 10 - 10,
+          this.refreshcounter * 10
+        )
+      );
+      /*
       let i = 1;
       this.listOfDoctorsTemp1.forEach((element) => {
         if (
@@ -126,6 +133,7 @@ export class TabsDoctorsdirectoryPage implements OnInit {
         }
         i++;
       });
+      */
       event.target.complete();
       if (this.listOfDoctors.length == this.listlength) {
         event.target.disabled = true;
@@ -140,14 +148,18 @@ export class TabsDoctorsdirectoryPage implements OnInit {
     let i = 1;
     this.listOfDoctorsTemp1 = [];
     //////console.log(this.listOfDoctorsTemp300);
-    let asdasd = this.listOfDoctorsTemp300;
+    /*let asdasd = this.listOfDoctorsTemp300;
     asdasd.forEach((ex) => {
       if (i <= 10) {
         this.listOfDoctors.push(ex);
       }
       this.listOfDoctorsTemp1.push(ex);
       i++;
-    });
+    });*/
+
+    this.listOfDoctors = this.listOfDoctorsTemp300.slice(0, 10);
+    this.listOfDoctorsTemp1 = this.listOfDoctorsTemp300;
+
     this.isReady = false;
   }
   segmentChanged() {

@@ -195,21 +195,29 @@ export class TabsDoctorsPage implements OnInit {
     let i = 1;
     this.listOfDoctorsTemp1 = [];
     this.listOfDoctorsTemp1 = this.listOfDoctorsTemp;
-    this.listOfDoctorsTemp.forEach((element) => {
+    /*this.listOfDoctorsTemp.forEach((element) => {
       //console.log(element.deptCode);
       if (i <= 10) {
         this.listOfDoctors.push(element);
       }
 
       i++;
-    });
+    });*/
+
+    this.listOfDoctors = this.listOfDoctorsTemp.slice(0, 10);
   }
   loadData(event) {
     this.refreshcounter++;
     // Using settimeout to simulate api call
     setTimeout(() => {
       // load more data
-
+      this.listOfDoctors = this.listOfDoctors.concat(
+        this.listOfDoctorsTemp1.slice(
+          this.refreshcounter * 10 - 10,
+          this.refreshcounter * 10
+        )
+      );
+      /*
       let i = 1;
       this.listOfDoctorsTemp1.forEach((element) => {
         if (
@@ -220,7 +228,7 @@ export class TabsDoctorsPage implements OnInit {
         }
         i++;
       });
-
+*/
       //Hide Infinite List Loader on Complete
       event.target.complete();
 
