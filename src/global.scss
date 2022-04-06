@@ -537,17 +537,11 @@ ion-modal.ion6modaltest {
   }
   ion-content.blur {
     --background: transparent;
-    --padding-top: 25vh;
+    //--padding-top: 25vh;
     @media (min-width: 767px) {
 
-      --padding-end: 25%;
-      --padding-start: 25%;
- 
-     /*.customBackground{
-    
-        width: 50%;
-     
-      }*/
+      //--padding-end: 25%;
+     // --padding-start: 25%;
     }
 
     ion-datetime {

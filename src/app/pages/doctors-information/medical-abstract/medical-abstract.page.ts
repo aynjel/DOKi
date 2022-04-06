@@ -35,6 +35,8 @@ export class MedicalAbstractPage implements OnInit {
       .isDesktopView()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((isDesktop) => {
+        console.log('change on orientation');
+
         if (this.isDesktop && !isDesktop) {
           window.location.reload();
         }
@@ -42,25 +44,30 @@ export class MedicalAbstractPage implements OnInit {
       });
   }
   screenWidth;
+  screenHeight;
   ngOnInit() {
     let scWidth = screen.width;
+    let scHeight = screen.height;
+
     if (scWidth <= 767) {
       this.screenWidth = scWidth - scWidth * 0.05;
+      this.screenHeight = scHeight - scHeight * 0.2;
       console.log(this.screenWidth);
       this.signaturePadOptions = {
         minWidth: 5,
         canvasWidth: this.screenWidth,
-        canvasHeight: 300,
+        canvasHeight: this.screenHeight,
         backgroundColor: 'rgba(255, 255, 255, 1)',
         penColor: 'rgb(0, 0, 0)',
       };
     } else {
-      this.screenWidth = scWidth - scWidth * 0.525;
+      this.screenWidth = scWidth - scWidth * 0.05;
+      this.screenHeight = scHeight - scHeight * 0.3;
       console.log(this.screenWidth);
       this.signaturePadOptions = {
         minWidth: 5,
         canvasWidth: this.screenWidth,
-        canvasHeight: 300,
+        canvasHeight: this.screenHeight,
         backgroundColor: 'rgba(255, 255, 255, 1)',
         penColor: 'rgb(0, 0, 0)',
       };
