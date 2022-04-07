@@ -35,8 +35,8 @@ export class TabsAllpatientsPage implements OnInit {
   public logindata: LoginResponseModelv3;
   listOfPatients: any;
   searchBar: any = '';
-  listOfPatientsTemp: any;
-  listOfPatientsTemp1: any;
+  listOfPatientsFullList: any;
+  listOfPatientsTempList: any;
   siteC = 'Cebu';
   siteM = 'Mandaue';
   segmentModel: any;
@@ -84,7 +84,10 @@ export class TabsAllpatientsPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          rawList = this.listOfPatientsTemp1 = this.listOfPatientsTemp = res;
+          rawList =
+            this.listOfPatientsTempList =
+            this.listOfPatientsFullList =
+              res;
           ////////console.log(res);
           /*rawList.forEach(element => {
             if(element.forDischargeDateTime != null){
@@ -109,8 +112,8 @@ export class TabsAllpatientsPage implements OnInit {
   }
   initialload() {
     let i = 1;
-    this.listOfPatientsTemp1 = [];
-    this.listOfPatientsTemp1 = this.listOfPatientsTemp;
+    this.listOfPatientsTempList = [];
+    this.listOfPatientsTempList = this.listOfPatientsFullList;
     /*this.listOfPatientsTemp.forEach((element) => {
       //////console.log(element.status);
       if (i <= 10) {
@@ -120,7 +123,7 @@ export class TabsAllpatientsPage implements OnInit {
       i++;
     });*/
 
-    this.listOfPatients = this.listOfPatientsTemp.slice(0, 10);
+    this.listOfPatients = this.listOfPatientsFullList.slice(0, 10);
   }
 
   loading: any;
@@ -143,7 +146,7 @@ export class TabsAllpatientsPage implements OnInit {
   segmentChanged() {
     this.refreshcounter = 1;
     this.searchBar = '';
-    this.listOfPatientsTemp1 = [];
+    this.listOfPatientsTempList = [];
     if (this.segmentModel == 'ALL') {
       this.listOfPatients = [];
       this.initialload();
@@ -151,14 +154,14 @@ export class TabsAllpatientsPage implements OnInit {
       this.listOfPatients = [];
 
       let x = 1;
-      this.listOfPatientsTemp.forEach((element) => {
+      this.listOfPatientsFullList.forEach((element) => {
         if (element.status == this.segmentModel) {
           ////console.log(element.status);
 
           if (x <= 10) {
             this.listOfPatients.push(element);
           }
-          this.listOfPatientsTemp1.push(element);
+          this.listOfPatientsTempList.push(element);
           x++;
         }
       });
@@ -170,7 +173,7 @@ export class TabsAllpatientsPage implements OnInit {
     setTimeout(() => {
       // load more data
       this.listOfPatients = this.listOfPatients.concat(
-        this.listOfPatientsTemp1.slice(
+        this.listOfPatientsTempList.slice(
           this.refreshcounter * 10 - 10,
           this.refreshcounter * 10
         )
@@ -206,7 +209,8 @@ export class TabsAllpatientsPage implements OnInit {
       this.initialload();
     } else {
       this.listOfPatients = [];
-      this.listOfPatientsTemp.forEach((element) => {
+      /*
+      this.listOfPatientsFullList.forEach((element) => {
         if (
           element.patientName
             .toLowerCase()
@@ -214,7 +218,12 @@ export class TabsAllpatientsPage implements OnInit {
         ) {
           this.listOfPatients.push(element);
         }
-      });
+      });*/
+
+      this.listOfPatients = this.listOfPatientsFullList.filter((x) =>
+        x.patientName.toLowerCase().includes(this.searchBar.toLowerCase())
+      );
+      this.listOfPatients = this.listOfPatients;
     }
   }
   settings() {

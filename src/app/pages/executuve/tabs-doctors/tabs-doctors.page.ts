@@ -67,7 +67,7 @@ export class TabsDoctorsPage implements OnInit {
   }
   ionViewWillEnter() {
     this.ngUnsubscribe = new Subject();
-    //console.log('ngOnInit');
+    ////console.log('ngOnInit');
     this.listOfDoctors = [];
     this.refreshcounter = 1;
     this.isReady = false;
@@ -90,7 +90,7 @@ export class TabsDoctorsPage implements OnInit {
           this.segmentChanged();
         }
       );
-    //console.log(this.refreshcounter);
+    ////console.log(this.refreshcounter);
   }
   filterList() {
     if (this.searchBar == '') {
@@ -119,7 +119,7 @@ export class TabsDoctorsPage implements OnInit {
   segmentChanged() {
     this.refreshcounter = 1;
     this.searchBar = '';
-    //console.log(da.detail.value);
+    ////console.log(da.detail.value);
     if (this.segmentModel == 'ALL') {
       this.listOfDoctors = [];
       this.initialload();
@@ -150,10 +150,10 @@ export class TabsDoctorsPage implements OnInit {
         }
       });*/
       let templistofdoctors = [];
-      console.log(this.segmentModel);
+      //console.log(this.segmentModel);
 
       if (this.segmentModel == 'SUR') {
-        console.log('inside SUR');
+        //console.log('inside SUR');
 
         templistofdoctors = this.listOfDoctorsFullList.filter(
           (x) =>
@@ -165,7 +165,7 @@ export class TabsDoctorsPage implements OnInit {
           (x) => x.deptCode == this.segmentModel
         );
       }
-      console.log(templistofdoctors);
+      //console.log(templistofdoctors);
 
       this.listOfDoctorsTempList = templistofdoctors;
       this.listOfDoctors = templistofdoctors.slice(0, 10);
@@ -182,7 +182,7 @@ export class TabsDoctorsPage implements OnInit {
   }
   isReady: boolean = false;
   ngOnInit() {
-    //console.log('ionViewWillEnter');
+    ////console.log('ionViewWillEnter');
 
     localStorage.removeItem('drdetails');
     localStorage.removeItem('patientdetails');
@@ -192,15 +192,15 @@ export class TabsDoctorsPage implements OnInit {
       .refreshTokenV3()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((res: any) => {
-        //////console.log(res);
+        ////////console.log(res);
       });
   }
   async detail(data: any) {
-    /*console.log(data);
+    /*//console.log(data);
     localStorage.setItem('drdetails',btoa(JSON.stringify(data)));
     this.router.navigate(['executive/doctors/'+data.doctorCode]);*/
-    //console.log( this.activatedRoute.snapshot.params.id);
-    //console.log(data);
+    ////console.log( this.activatedRoute.snapshot.params.id);
+    ////console.log(data);
 
     //localStorage.setItem('patientdetails',btoa(JSON.stringify(x)));
     const modal = await this.modalController.create({
@@ -215,13 +215,13 @@ export class TabsDoctorsPage implements OnInit {
   }
 
   initialload() {
-    //console.log('initialload');
+    ////console.log('initialload');
 
     let i = 1;
     this.listOfDoctorsTempList = [];
     this.listOfDoctorsTempList = this.listOfDoctorsFullList;
     /*this.listOfDoctorsTemp.forEach((element) => {
-      //console.log(element.deptCode);
+      ////console.log(element.deptCode);
       if (i <= 10) {
         this.listOfDoctors.push(element);
       }
