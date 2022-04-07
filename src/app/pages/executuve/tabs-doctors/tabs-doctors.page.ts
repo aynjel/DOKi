@@ -110,10 +110,10 @@ export class TabsDoctorsPage implements OnInit {
           this.listOfDoctorsTemp1.push(element);
         }
       });*/
-      this.listOfDoctors = this.listOfDoctorsFullList.filter((x) =>
+      this.listOfDoctorsTempList = this.listOfDoctorsFullList.filter((x) =>
         x.doctorName.toLowerCase().includes(this.searchBar.toLowerCase())
       );
-      this.listOfDoctorsTempList = this.listOfDoctors;
+      this.listOfDoctors = this.listOfDoctorsTempList.slice(0, 10);
     }
   }
   segmentChanged() {
