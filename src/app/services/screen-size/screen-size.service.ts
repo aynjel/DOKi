@@ -1,18 +1,17 @@
-import { Injectable } from "@angular/core";
-import { Observable, BehaviorSubject } from "rxjs";
-import { distinctUntilChanged } from "rxjs/operators";
+import { Injectable } from '@angular/core';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
-
 export class ScreenSizeService {
   private isDesktop = new BehaviorSubject<boolean>(false);
 
   constructor() {}
 
   onResize(size) {
-    if (size <= 767) {
+    if (size <= 666) {
       this.isDesktop.next(false);
     } else {
       this.isDesktop.next(true);

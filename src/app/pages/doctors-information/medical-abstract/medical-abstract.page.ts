@@ -30,16 +30,22 @@ export class MedicalAbstractPage implements OnInit {
     private renderer: Renderer2,
     private modalController: ModalController
   ) {
+    console.log('constructor');
+
     this.checkAppearance();
     this.screensizeService
       .isDesktopView()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((isDesktop) => {
-        console.log('change on orientation');
+        console.log(this.isDesktop, isDesktop);
 
         if (this.isDesktop && !isDesktop) {
           window.location.reload();
         }
+        if (this.isDesktop != undefined && isDesktop) {
+          window.location.reload();
+        }
+
         this.isDesktop = isDesktop;
       });
   }
@@ -49,9 +55,9 @@ export class MedicalAbstractPage implements OnInit {
     let scWidth = screen.width;
     let scHeight = screen.height;
 
-    if (scWidth <= 767) {
+    if (scWidth <= 666) {
       this.screenWidth = scWidth - scWidth * 0.05;
-      this.screenHeight = scHeight - scHeight * 0.2;
+      this.screenHeight = scHeight - scHeight * 0.25;
       console.log(this.screenWidth);
       this.signaturePadOptions = {
         minWidth: 5,
@@ -115,7 +121,7 @@ export class MedicalAbstractPage implements OnInit {
   onClick() {
     console.log(this.clickOn);
 
-    document.getElementById('trigger-button').click();
+    document.getElementById('trigger-button-sign').click();
     // this.signaturePad is now available
     //this.signaturePad.set('minWidth', 5); // set szimek/signature_pad options at runtime
     // this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
@@ -251,7 +257,7 @@ export class MedicalAbstractPage implements OnInit {
   }
 
   checkAppearance() {
-    this.functionsService.logToConsole('checkAppearance');
+    //this.functionsService.logToConsole('checkAppearance');
     var values = JSON.parse(
       '[' + atob(localStorage.getItem('user_settings')) + ']'
     );

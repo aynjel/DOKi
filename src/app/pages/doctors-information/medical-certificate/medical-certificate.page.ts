@@ -53,29 +53,35 @@ export class MedicalCertificatePage implements OnInit {
       });
   }
   screenWidth;
+  screenHeight;
   ngOnInit() {
     let scWidth = screen.width;
-    if (scWidth <= 767) {
+    let scHeight = screen.height;
+
+    if (scWidth <= 666) {
       this.screenWidth = scWidth - scWidth * 0.05;
+      this.screenHeight = scHeight - scHeight * 0.25;
       console.log(this.screenWidth);
       this.signaturePadOptions = {
         minWidth: 5,
         canvasWidth: this.screenWidth,
-        canvasHeight: 300,
+        canvasHeight: this.screenHeight,
         backgroundColor: 'rgba(255, 255, 255, 1)',
         penColor: 'rgb(0, 0, 0)',
       };
     } else {
-      this.screenWidth = scWidth - scWidth * 0.525;
+      this.screenWidth = scWidth - scWidth * 0.05;
+      this.screenHeight = scHeight - scHeight * 0.3;
       console.log(this.screenWidth);
       this.signaturePadOptions = {
         minWidth: 5,
         canvasWidth: this.screenWidth,
-        canvasHeight: 300,
+        canvasHeight: this.screenHeight,
         backgroundColor: 'rgba(255, 255, 255, 1)',
         penColor: 'rgb(0, 0, 0)',
       };
     }
+
     this.getpdf();
   }
   closeModal() {
