@@ -31,8 +31,8 @@ export class TabsDoctorsPage implements OnInit {
   public logindata: LoginResponseModelv3;
   listOfDoctors: any;
   searchBar: any = '';
-  listOfDoctorsTemp: any;
-  listOfDoctorsTemp1: any;
+  listOfDoctorsFullList: any;
+  listOfDoctorsTempList: any;
   refreshcounter: any;
   deptFilter: boolean = false;
   segmentModel: any;
@@ -77,7 +77,7 @@ export class TabsDoctorsPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          this.listOfDoctorsTemp = this.listOfDoctorsTemp1 = res;
+          this.listOfDoctorsFullList = this.listOfDoctorsTempList = res;
           //localStorage.setItem('listOfDoctors',JSON.stringify(this.listOfDoctorsTemp));
         },
         (error) => {
@@ -98,7 +98,8 @@ export class TabsDoctorsPage implements OnInit {
       this.initialload();
     } else {
       this.listOfDoctors = [];
-      this.listOfDoctorsTemp1 = [];
+      this.listOfDoctorsTempList = [];
+      /*
       this.listOfDoctorsTemp.forEach((element) => {
         if (
           element.doctorName
@@ -108,7 +109,11 @@ export class TabsDoctorsPage implements OnInit {
           this.listOfDoctors.push(element);
           this.listOfDoctorsTemp1.push(element);
         }
-      });
+      });*/
+      this.listOfDoctors = this.listOfDoctorsFullList.filter((x) =>
+        x.doctorName.toLowerCase().includes(this.searchBar.toLowerCase())
+      );
+      this.listOfDoctorsTempList = this.listOfDoctors;
     }
   }
   segmentChanged() {
@@ -120,9 +125,9 @@ export class TabsDoctorsPage implements OnInit {
       this.initialload();
     } else {
       this.listOfDoctors = [];
-      this.listOfDoctorsTemp1 = [];
+      this.listOfDoctorsTempList = [];
       let x = 1;
-      this.listOfDoctorsTemp.forEach((element) => {
+      /*this.listOfDoctorsTemp.forEach((element) => {
         if (this.segmentModel == 'SUR') {
           if (
             element.deptCode.toLowerCase() == 'sura' ||
@@ -143,7 +148,27 @@ export class TabsDoctorsPage implements OnInit {
             x++;
           }
         }
-      });
+      });*/
+      let templistofdoctors = [];
+      console.log(this.segmentModel);
+
+      if (this.segmentModel == 'SUR') {
+        console.log('inside SUR');
+
+        templistofdoctors = this.listOfDoctorsFullList.filter(
+          (x) =>
+            x.deptCode.toLowerCase() == 'sura' ||
+            x.deptCode.toLowerCase() == 'surp'
+        );
+      } else {
+        templistofdoctors = this.listOfDoctorsFullList.filter(
+          (x) => x.deptCode == this.segmentModel
+        );
+      }
+      console.log(templistofdoctors);
+
+      this.listOfDoctorsTempList = templistofdoctors;
+      this.listOfDoctors = templistofdoctors.slice(0, 10);
     }
   }
 
@@ -193,8 +218,8 @@ export class TabsDoctorsPage implements OnInit {
     //console.log('initialload');
 
     let i = 1;
-    this.listOfDoctorsTemp1 = [];
-    this.listOfDoctorsTemp1 = this.listOfDoctorsTemp;
+    this.listOfDoctorsTempList = [];
+    this.listOfDoctorsTempList = this.listOfDoctorsFullList;
     /*this.listOfDoctorsTemp.forEach((element) => {
       //console.log(element.deptCode);
       if (i <= 10) {
@@ -204,7 +229,7 @@ export class TabsDoctorsPage implements OnInit {
       i++;
     });*/
 
-    this.listOfDoctors = this.listOfDoctorsTemp.slice(0, 10);
+    this.listOfDoctors = this.listOfDoctorsFullList.slice(0, 10);
   }
   loadData(event) {
     this.refreshcounter++;
@@ -212,7 +237,7 @@ export class TabsDoctorsPage implements OnInit {
     setTimeout(() => {
       // load more data
       this.listOfDoctors = this.listOfDoctors.concat(
-        this.listOfDoctorsTemp1.slice(
+        this.listOfDoctorsTempList.slice(
           this.refreshcounter * 10 - 10,
           this.refreshcounter * 10
         )
