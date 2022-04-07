@@ -88,16 +88,6 @@ export class TabsAllpatientsPage implements OnInit {
             this.listOfPatientsTempList =
             this.listOfPatientsFullList =
               res;
-          ////////console.log(res);
-          /*rawList.forEach(element => {
-            if(element.forDischargeDateTime != null){
-              let d = new Date(element.forDischargeDateTime);
-              element.forDischargeDateTime = d.toLocaleString();
-            }
-  
-            this.listOfPatientsTemp1.push(element);
-            this.listOfPatientsTemp.push(element);
-          });*/
         },
         (error) => {
           this.isReady = true;
@@ -114,15 +104,6 @@ export class TabsAllpatientsPage implements OnInit {
     let i = 1;
     this.listOfPatientsTempList = [];
     this.listOfPatientsTempList = this.listOfPatientsFullList;
-    /*this.listOfPatientsTemp.forEach((element) => {
-      //////console.log(element.status);
-      if (i <= 10) {
-        this.listOfPatients.push(element);
-      }
-
-      i++;
-    });*/
-
     this.listOfPatients = this.listOfPatientsFullList.slice(0, 10);
   }
 
@@ -153,18 +134,11 @@ export class TabsAllpatientsPage implements OnInit {
     } else {
       this.listOfPatients = [];
 
-      let x = 1;
-      this.listOfPatientsFullList.forEach((element) => {
-        if (element.status == this.segmentModel) {
-          ////console.log(element.status);
-
-          if (x <= 10) {
-            this.listOfPatients.push(element);
-          }
-          this.listOfPatientsTempList.push(element);
-          x++;
-        }
-      });
+      let templistofpatients = this.listOfPatientsFullList.filter(
+        (x) => x.status == this.segmentModel
+      );
+      this.listOfPatientsTempList = templistofpatients;
+      this.listOfPatients = templistofpatients.slice(0, 10);
     }
   }
   loadData(event) {
@@ -178,20 +152,7 @@ export class TabsAllpatientsPage implements OnInit {
           this.refreshcounter * 10
         )
       );
-      /*
-      let i = 1;
-      ////console.log(this.listOfPatientsTemp1.length);
-      this.listOfPatientsTemp1.forEach((element) => {
-        if (
-          i > this.refreshcounter * 10 - 10 &&
-          i <= this.refreshcounter * 10
-        ) {
-          this.listOfPatients.push(element);
-          ////console.log(element.status);
-        }
-        i++;
-      });
-*/
+
       //Hide Infinite List Loader on Complete
       event.target.complete();
 
@@ -220,10 +181,10 @@ export class TabsAllpatientsPage implements OnInit {
         }
       });*/
 
-      this.listOfPatients = this.listOfPatientsFullList.filter((x) =>
+      this.listOfPatientsTempList = this.listOfPatientsFullList.filter((x) =>
         x.patientName.toLowerCase().includes(this.searchBar.toLowerCase())
       );
-      this.listOfPatients = this.listOfPatients;
+      this.listOfPatients = this.listOfPatientsTempList.slice(0, 10);
     }
   }
   settings() {

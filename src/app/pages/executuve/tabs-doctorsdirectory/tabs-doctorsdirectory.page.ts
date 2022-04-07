@@ -241,6 +241,12 @@ export class TabsDoctorsdirectoryPage implements OnInit {
           x++;
         }
       });
+
+      this.listOfDoctors = this.listOfDoctorsTempFullList.filter((x) =>
+        x.patientName.toLowerCase().includes(this.searchBar.toLowerCase())
+      );
+      this.listOfDoctors = this.listOfDoctors;
+
       this.isReady = false;
     }
   }
