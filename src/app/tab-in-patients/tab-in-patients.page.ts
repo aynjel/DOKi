@@ -111,24 +111,36 @@ export class TabInPatientsPage {
       this.inPatients = this.inPatientsDraft;
     } else {
       this.inPatients = [];
+      /*
       this.inPatientsDraft.forEach((element) => {
-        if (this.site == this.constants.CHH_SITE__CODE__CEBU /*"C"*/) {
-          if (element.site == this.constants.CHH_SITE__CODE__CEBU /*"C"*/) {
+        if (this.site == this.constants.CHH_SITE__CODE__CEBU ) {
+          if (element.site == this.constants.CHH_SITE__CODE__CEBU ) {
             this.inPatients.push(element);
           }
         } else if (
-          this.site == this.constants.CHH_SITE__CODE__MANDAUE /*"M"*/
+          this.site == this.constants.CHH_SITE__CODE__MANDAUE 
         ) {
-          if (element.site == this.constants.CHH_SITE__CODE__MANDAUE /*"M"*/) {
+          if (element.site == this.constants.CHH_SITE__CODE__MANDAUE ) {
             this.inPatients.push(element);
           }
         }
       });
+    */
+
+      if (this.site == this.constants.CHH_SITE__CODE__CEBU) {
+        this.inPatients = this.inPatientsDraft.filter(
+          (x) => x.site == this.constants.CHH_SITE__CODE__CEBU
+        );
+      } else if (this.site == this.constants.CHH_SITE__CODE__MANDAUE) {
+        this.inPatients = this.inPatientsDraft.filter(
+          (x) => x.site == this.constants.CHH_SITE__CODE__MANDAUE
+        );
+      }
     }
     this.inPatientsDraft1 = this.inPatients;
     if (this.searchBar) {
       this.inPatients = [];
-      this.inPatientsDraft1.forEach((e) => {
+      /*this.inPatientsDraft1.forEach((e) => {
         this.name =
           e.last_name +
           ', ' +
@@ -144,7 +156,24 @@ export class TabInPatientsPage {
         if (this.name.toLowerCase().includes(this.searchBar.toLowerCase())) {
           this.inPatients.push(e);
         }
-      });
+      });*/
+      this.inPatients = this.inPatientsDraft1.filter((e) =>
+        (
+          e.last_name +
+          ', ' +
+          e.first_name +
+          ' ' +
+          e.middle_name +
+          ' ' +
+          e.first_name +
+          ' ' +
+          e.middle_name +
+          ' ' +
+          e.last_name
+        )
+          .toLowerCase()
+          .includes(this.searchBar.toLowerCase())
+      );
     }
 
     /*check if ALL - ADMITTED - FOR DISCHARGE*/
@@ -153,32 +182,56 @@ export class TabInPatientsPage {
     ) {
       let verifier: boolean = false; //to verify if naa ba jud na check na value AC or DN
       let sampleInPatients1 = [];
+      /*
       this.inPatients.forEach((element) => {
         if (
           this.admittedOrDischarge ==
-          this.constants.ADMISSION_STATUS__CODE__ADMITTED /*"AC"*/
+          this.constants.ADMISSION_STATUS__CODE__ADMITTED 
         ) {
           verifier = true;
           if (
             element.admission_status ==
-            this.constants.ADMISSION_STATUS__CODE__ADMITTED /*"AC"*/
+            this.constants.ADMISSION_STATUS__CODE__ADMITTED 
           ) {
             sampleInPatients1.push(element);
           }
         } else if (
           this.admittedOrDischarge ==
-          this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE /*"DN"*/
+          this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE 
         ) {
           verifier = true;
           if (
             element.admission_status ==
-            this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE /*"DN"*/
+            this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE 
           ) {
             sampleInPatients1.push(element);
           }
         }
       });
+      */
+      if (
+        this.admittedOrDischarge ==
+        this.constants.ADMISSION_STATUS__CODE__ADMITTED
+      ) {
+        verifier = true;
 
+        sampleInPatients1 = this.inPatients.filter(
+          (x) =>
+            x.admission_status ==
+            this.constants.ADMISSION_STATUS__CODE__ADMITTED
+        );
+      } else if (
+        this.admittedOrDischarge ==
+        this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE
+      ) {
+        verifier = true;
+
+        sampleInPatients1 = this.inPatients.filter(
+          (x) =>
+            x.admission_status ==
+            this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE
+        );
+      }
       if (verifier) {
         this.inPatients = [];
         this.inPatients = sampleInPatients1;
@@ -245,15 +298,9 @@ export class TabInPatientsPage {
           }
           this.inPatientsDraft = [];
           res.forEach((element) => {
-            /*
-            let d = new Date(element.admission_date);
-            element.admission_date = d.toUTCString();
-*/
-
             element.last_name = element.last_name.toUpperCase();
             element.middle_name = this.camelCase(element.middle_name);
             element.first_name = this.camelCase(element.first_name);
-
             this.inPatientsDraft.push(element);
           });
           this.filterList();
