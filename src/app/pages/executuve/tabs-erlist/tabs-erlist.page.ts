@@ -160,7 +160,7 @@ export class TabsErlistPage implements OnInit {
       this.listOfPatients = this.listOfPatientsTemp2;
     } else {
       this.listOfPatients = [];
-      this.listOfPatientsTemp2.forEach((element) => {
+      /*this.listOfPatientsTemp2.forEach((element) => {
         if (
           element.patientName
             .toLowerCase()
@@ -168,7 +168,11 @@ export class TabsErlistPage implements OnInit {
         ) {
           this.listOfPatients.push(element);
         }
-      });
+      });*/
+
+      this.listOfPatients = this.listOfPatientsTemp2.filter((x) =>
+        x.patientName.toLowerCase().includes(this.searchBar.toLowerCase())
+      );
     }
     ////console.log('listOfPatients');
 
@@ -197,11 +201,10 @@ export class TabsErlistPage implements OnInit {
     this.listOfPatientsTemp1 = [];
     this.listOfPatientsTemp2 = [];
     if (this.listOfPatientsTemp != null) {
-      this.listOfPatientsTemp.forEach((element) => {
-        if (element.erType == this.segmentModel) {
-          this.listOfPatientsTemp1.push(element);
-        }
-      });
+      this.listOfPatientsTemp1 = this.listOfPatientsTemp.filter(
+        (x) => x.erType == this.segmentModel
+      );
+      console.log(this.listOfPatientsTemp1);
     } else {
       this.listOfPatientsTemp1 = [];
     }
@@ -209,11 +212,14 @@ export class TabsErlistPage implements OnInit {
       this.listOfPatientsTemp2 = this.listOfPatientsTemp1;
     } else {
       this.listOfPatients = [];
-      this.listOfPatientsTemp1.forEach((element) => {
+      /*this.listOfPatientsTemp1.forEach((element) => {
         if (element.site == this.segmentModel1) {
           this.listOfPatientsTemp2.push(element);
         }
-      });
+      });*/
+      this.listOfPatientsTemp2 = this.listOfPatientsTemp1.filter(
+        (x) => x.site == this.segmentModel1
+      );
     }
     ////console.log(this.listOfPatientsTemp2);
 
