@@ -185,21 +185,11 @@ export class TabsDoctorsdirectoryPage implements OnInit {
     } else {
       this.listOfDoctors = [];
       this.listOfDoctorsTempList = [];
-      let i = 1;
-      //console.log(this.listOfDoctorsTempFullList);
 
-      this.listOfDoctorsTempFullList.forEach((element) => {
-        //console.log(element.deptCode, x, y);
+      this.listOfDoctorsTempList = this.listOfDoctorsTempFullList.filter(
+        (element) => element.deptCode == x || element.deptCode == y
+      );
 
-        if (element.deptCode == x || element.deptCode == y) {
-          //////console.log(this.segmentModel, element.deptCode);
-          /*if (x <= 10) {
-            this.listOfDoctors.push(element);
-          }*/
-          this.listOfDoctorsTempList.push(element);
-          i++;
-        }
-      });
       this.listOfDoctors = this.listOfDoctorsTempList.slice(0, 10);
       //console.log(this.listOfDoctorsTempList);
     }
@@ -214,7 +204,7 @@ export class TabsDoctorsdirectoryPage implements OnInit {
     if (this.searchBar == '') {
       this.initialload();
     } else {
-      this.listOfDoctorsTempFullList.forEach((el) => {
+      /*this.listOfDoctorsTempFullList.forEach((el) => {
         let fnamelname =
           el.firstName.toLowerCase() + ' ' + el.lastName.toLowerCase();
         let lnamefname =
@@ -240,12 +230,26 @@ export class TabsDoctorsdirectoryPage implements OnInit {
           //this.listOfDoctorsTemp1.push(el);
           x++;
         }
-      });
-
-      this.listOfDoctors = this.listOfDoctorsTempFullList.filter((x) =>
-        x.patientName.toLowerCase().includes(this.searchBar.toLowerCase())
+      });*/
+      this.listOfDoctorsTempList = this.listOfDoctorsTempFullList.filter(
+        (el) =>
+          el.firstName.toLowerCase().includes(this.searchBar.toLowerCase()) ||
+          el.middleName.toLowerCase().includes(this.searchBar.toLowerCase()) ||
+          el.lastName.toLowerCase().includes(this.searchBar.toLowerCase()) ||
+          (
+            el.firstName.toLowerCase() +
+            ' ' +
+            el.lastName.toLowerCase()
+          ).includes(this.searchBar.toLowerCase()) ||
+          (
+            el.lastName.toLowerCase() +
+            ' ' +
+            el.firstName.toLowerCase()
+          ).includes(this.searchBar.toLowerCase()) ||
+          el.deptName.toLowerCase().includes(this.searchBar.toLowerCase()) ||
+          el.expertise.toLowerCase().includes(this.searchBar.toLowerCase())
       );
-      this.listOfDoctors = this.listOfDoctors;
+      this.listOfDoctors = this.listOfDoctorsTempList.slice(0, 10);
 
       this.isReady = false;
     }
