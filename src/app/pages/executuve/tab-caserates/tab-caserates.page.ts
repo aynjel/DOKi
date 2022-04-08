@@ -32,6 +32,11 @@ export class TabCaseratesPage implements OnInit {
   ionNoData: boolean = false;
   ionNoData1: boolean = false;
   caseRateResponse_first: any;
+
+  caseRateFullList: any;
+  caseRateTempList: any;
+  caseRate;
+
   caseRateResponse_second: any;
   case_class: any;
   case_search_code: any;
@@ -47,6 +52,7 @@ export class TabCaseratesPage implements OnInit {
   public logindata: LoginResponseModelv3;
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   caseRateData: CaseRates = new CaseRates();
+  refreshcounter = 1;
   constructor(
     private screensizeService: ScreenSizeService,
     private authService: AuthService,
@@ -82,11 +88,12 @@ export class TabCaseratesPage implements OnInit {
     this.caseRateData.case_class = 'first';
     this.caseRateData.case_code = '';
     this.caseRateData.case_desc = '';
+
     // this.caseRateData  = new CaseRates();
-    //console.log(this.caseRateData);
+    ////console.log(this.caseRateData);
   }
   ionViewWillEnter() {
-    //console.log(this.caseRateData);
+    ////console.log(this.caseRateData);
     //let  user = <CaseRates>JSON.parse(sessionStorage.getItem("caseRateData")) ;
     let logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
     this.dr_name = logindata.lastName;
@@ -105,11 +112,12 @@ export class TabCaseratesPage implements OnInit {
     this.router.navigate(['/executive/settings']);
   }
   search() {
-    console.log(this.caseRateData);
-    console.log(this.caseRateData);
+    this.refreshcounter = 1;
+    //console.log(this.caseRateData);
+
     if (this.caseRateData.case_desc != '') {
       if (this.ccCase == 'first') {
-        console.log(this.ccCase);
+        //console.log(this.ccCase);
 
         this.ionStart = false;
         this.ionSkeleton = true;
@@ -120,9 +128,8 @@ export class TabCaseratesPage implements OnInit {
           .pipe(takeUntil(this.ngUnsubscribe))
           .subscribe(
             (res: any) => {
-              console.log(res);
-
               this.caseRateResponse_first = res;
+              this.caseRateFullList = res;
             },
             (error) => {
               this.ionNoData = true;
@@ -136,50 +143,72 @@ export class TabCaseratesPage implements OnInit {
               } else {
                 this.ionNoData = false;
               }
+              this.caseRate = this.caseRateFullList.slice(0, 10);
+              ////console.log('first');
 
-              //console.log('first');
-
-              //console.log(this.caseRateResponse_first );
+              ////console.log(this.caseRateResponse_first );
               let x = JSON.stringify(this.caseRateResponse_first);
-              // console.log(x);
+              // //console.log(x);
             }
           );
       } else {
-        this.ionStart1 = false;
-        this.ionSkeleton1 = true;
-        this.ionNoData1 = false;
-        this.activedescription1 = false;
+        this.ionStart = false;
+        this.ionSkeleton = true;
+        this.ionNoData = false;
+        this.activedescription = false;
         this.doctorService
           .searchCaseRatesV3(this.caseRateData)
           .pipe(takeUntil(this.ngUnsubscribe))
           .subscribe(
             (res: any) => {
-              console.log(res);
+              //console.log(res);
 
               this.caseRateResponse_second = res;
+              this.caseRateFullList = res;
             },
             (error) => {
-              this.ionNoData1 = true;
+              this.ionNoData = true;
             },
             () => {
-              this.ionSkeleton1 = false;
+              this.ionSkeleton = false;
               if (
                 this.functionsService.isEmptyObject(
                   this.caseRateResponse_second
                 )
               ) {
-                this.ionNoData1 = true;
+                this.ionNoData = true;
               } else {
-                this.ionNoData1 = false;
+                this.ionNoData = false;
               }
+              this.caseRate = this.caseRateFullList.slice(0, 10);
             }
           );
       }
     } else {
+      //console.log('123123123');
+
       this.activedescription = true;
     }
   }
+  loadData(event) {
+    this.refreshcounter++;
+    // Using settimeout to simulate api call
+    setTimeout(() => {
+      // load more data
+      this.caseRate = this.caseRate.concat(
+        this.caseRateFullList.slice(
+          this.refreshcounter * 10 - 10,
+          this.refreshcounter * 10
+        )
+      );
 
+      //Hide Infinite List Loader on Complete
+      event.target.complete();
+
+      // App logic to determine if all data is loaded
+      // and disable the infinite scroll
+    }, 500);
+  }
   checkAppearance() {
     let logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
     this.dr_code = logindata.doctorCode;
