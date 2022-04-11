@@ -53,6 +53,7 @@ import { CardshowhideComponent } from '../chh-web-components/cardshowhide/cardsh
 import { ProgressnotesHistoryComponent } from './progressnotes-history/progressnotes-history.component';
 import { ProgressnotesHistoryCardComponent } from './progressnotes-history-card/progressnotes-history-card.component';
 import { CollectiblesPreviewComponent } from './collectibles-preview/collectibles-preview.component';
+import { UploadComponent } from './upload/upload.component';
 @NgModule({
   declarations: [
     ChhAppLogoComponent,
@@ -91,6 +92,7 @@ import { CollectiblesPreviewComponent } from './collectibles-preview/collectible
     ProgressnotesHistoryComponent,
     ProgressnotesHistoryCardComponent,
     CollectiblesPreviewComponent,
+    UploadComponent,
   ],
   exports: [
     ChhAppLogoComponent,
@@ -129,6 +131,7 @@ import { CollectiblesPreviewComponent } from './collectibles-preview/collectible
     ProgressnotesHistoryComponent,
     ProgressnotesHistoryCardComponent,
     CollectiblesPreviewComponent,
+    UploadComponent,
   ],
   imports: [
     CommonModule,
