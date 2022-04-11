@@ -39,6 +39,7 @@ import { catchError } from 'rxjs/operators';
 import { LogoutService } from '../services/logout/logout.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+
 @Component({
   selector: 'app-tab-settings',
   templateUrl: 'tab-settings.page.html',
@@ -192,6 +193,7 @@ export class TabSettingsPage {
   }
   ngOnInit() {
     //this.checkAppearance();
+    //http://10.151.12.120:7229/res/profile/MD100001.jpg
   }
 
   ionViewWillEnter() {
