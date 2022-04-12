@@ -1,16 +1,45 @@
 [
     {
+        "userName": "Testdoki02",
+        "password": "DOKi123."
+    },
+    {
+        "userName": "Testdoki02",
+        "password": "DOKi123."
+    },
+    {
+        "userName": "Testdoki01",
+        "password": "DOKi123."
+    },
+    {
+        "userName": "Testdoki01",
+        "password": "DOKi123"
+    },
+    {
+        "userName": "Testdoki01.",
+        "password": "DOKi123"
+    },
+    {
         "userName": "50534",
         "password": "12345!bA"
     },
     {
-        "userName": "505341",
-        "password": "505341"
+        "userName": "Testdoki03",
+        "password": "DOKi123."
     },
     {
-        "oldPassword": "12345!bA",
-        "newPassword": "12345!bB",
-        "confirmPassword": "12345!bB"
+        "oldPassword": "DOKi123.",
+        "newPassword": "DOKi123..",
+        "confirmPassword": "DOKi123.."
+    },
+    {
+        "userName": "Testdoki03",
+        "password": "DOKi123.."
+    },
+    {
+        "oldPassword": "DOKi123..",
+        "newPassword": "DOKi123..",
+        "confirmPassword": "DOKi123.."
     },
     {
         "userName": "50534",
