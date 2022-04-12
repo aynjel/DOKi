@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  HostListener,
   OnInit,
   Renderer2,
   ViewChild,
@@ -23,6 +24,7 @@ import { ModalController } from '@ionic/angular';
 export class MedicalAbstractPage implements OnInit {
   private ngUnsubscribe = new Subject();
   isDesktop: boolean;
+  isPortrait: boolean;
   constructor(
     private screensizeService: ScreenSizeService,
     private doctorService: DoctorService,
@@ -30,23 +32,30 @@ export class MedicalAbstractPage implements OnInit {
     private renderer: Renderer2,
     private modalController: ModalController
   ) {
-    console.log('constructor');
-
     this.checkAppearance();
     this.screensizeService
       .isDesktopView()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((isDesktop) => {
-        console.log(this.isDesktop, isDesktop);
-
         if (this.isDesktop && !isDesktop) {
-          window.location.reload();
+          //window.location.reload();
         }
         if (this.isDesktop != undefined && isDesktop) {
-          window.location.reload();
+          //window.location.reload();
         }
-
         this.isDesktop = isDesktop;
+      });
+    this.screensizeService
+      .isPortraitView()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((isPortrait) => {
+        if (this.isPortrait && !isPortrait) {
+          this.ngOnInit();
+        }
+        if (this.isPortrait != undefined && isPortrait) {
+          this.ngOnInit();
+        }
+        this.isPortrait = isPortrait;
       });
   }
   screenWidth;
@@ -263,7 +272,6 @@ export class MedicalAbstractPage implements OnInit {
     );
     let dr_username = atob(localStorage.getItem('username'));
     values.forEach((element) => {
-      this.functionsService.logToConsole(element.darkmode);
       if (element.darkmode == 1) {
         this.renderer.setAttribute(document.body, 'color-theme', 'dark');
       } else {
