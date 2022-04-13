@@ -207,7 +207,7 @@ Cypress.Commands.add('testInPatientsDetails', (site) => {
     if ($body.find('h2').length) {
       // p was found, do something else here
       //return 'input'
-      cy.get('p').then((el) => {
+      cy.get('p').each((ea).then((el) => {
         switch (site) {
           case "CEBU":
             assert.include(el.text(), "Chong Hua Hospital")
@@ -220,7 +220,7 @@ Cypress.Commands.add('testInPatientsDetails', (site) => {
             assert.include(el.text(), "Chong Hua Hospital Mandaue")
         }
       })
-    };
+      )};
   }))
 })
 
@@ -463,7 +463,7 @@ Cypress.Commands.add('login', (username, password, accept) => {
   cy.get('[name="ion-input-1"]').should("exist").type(password)
 
   cy.contains("LOG IN").click()
-  cy.wait(1000)
+  cy.wait(3000)
 
   cy.get('body').then(($body => {
     if ($body.find('[id="acceptCheckBox"]').length > 0) {
@@ -478,52 +478,135 @@ Cypress.Commands.add('login', (username, password, accept) => {
   }))
 
   if (accept) {
-    cy.url({timeout: 30000}).should("include", Cypress.env("inpatientsUrl"))
+    cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsUrl"))
   } else {
-    cy.url({timeout: 30000}).should("include", Cypress.env("loginUrl"))
+    cy.url({ timeout: 30000 }).should("include", Cypress.env("loginUrl"))
   }
 
   cy.wait(2000)
 })
 
+Cypress.Commands.add('errLogin', (username, password, err) => {
+  cy.get('[name="ion-input-0"]').should("exist").type(username)
+  cy.get('[name="ion-input-1"]').should("exist").type(password)
+
+  cy.contains("LOG IN").click()
+  cy.wait(2000)
+
+  if (err == "invalid-user") {
+    cy.get('[id="alert-1-msg"]').should("contain.text", "No Accounts Registered with")
+    cy.get('button').should("have.class", "alert-button").click()
+  } else if (err == "invalid-pass") {
+    cy.get('[id="alert-1-msg"]').should("contain.text", "Incorrect Credentials for user")
+    cy.get('button').should("have.class", "alert-button").click()
+  }
+})
+
+Cypress.Commands.add('clickDashboard', (option) => {
+
+  //set for mobile view
+  cy.get('body').then(($body => {
+    if ($body.find('[id="button-dashboard"]').length > 0) {
+      cy.get('[id="button-dashboard"]').click({force: true})
+
+      if(option == "Admitted") {
+        cy.get('[id="ion-item-ac"]').click()
+        cy.url({timeout: 30000}).should("include", Cypress.env("inpatientsAdmittedUrl"))
+      } else if(option == "For Discharge") {
+        cy.get('[id="ion-item-dn"]').click()
+        cy.url({timeout: 30000}).should("include", Cypress.env("inpatientsDischargedUrl"))
+      }
+
+      cy.url({timeout: 30000}).should("include", Cypress.env("dashboardUrl"))
+
+    } else {
+      cy.get('[id="tab-button-dashboard"]').click({force: true})
+
+      if(option == "Admitted") {
+        cy.get('[id="ion-item-ac"]').click()
+        cy.url({timeout: 30000}).should("include", Cypress.env("inpatientsAdmittedUrl"))
+      } else if(option == "For Discharge") {
+        cy.get('[id="ion-item-dn"]').click()
+        cy.url({timeout: 30000}).should("include", Cypress.env("inpatientsDischargedUrl"))
+      }
+
+      cy.url({timeout: 30000}).should("include", Cypress.env("dashboardUrl"))
+
+    }
+  }))
+})
+
+
+Cypress.Commands.add('optOut', (isOptOut) => {
+  cy.clicktab(3)
+
+  cy.reload()
+  cy.wait(2000)
+
+  cy.get('[id="dataPrivacyToggle"]').click({ force: true })
+  cy.wait(2000)
+
+  if(isOptOut) {
+    cy.contains("Yes, Opt-Out").click({ force: true })
+
+    cy.url({ timeout: 30000 }).should("include", Cypress.env("loginUrl"))
+  } else {
+    cy.url({ timeout: 30000 }).should("include", Cypress.env("settingsUrl"))
+  }
+})
+
+Cypress.Commands.add('logout', () => {
+  cy.clicktab(4)
+})
+
 Cypress.Commands.add('clicktab', (tabno) => {
-  cy.get('[id="button-settings"]').click({ force: true })
   cy.contains(taboptions[tabno]).click({ force: true })
 
   if (taboptions[tabno] == "Settings")
-    cy.url({timeout: 10000}).should("include", Cypress.env("settingsUrl"))
+    cy.url({ timeout: 10000 }).should("include", Cypress.env("settingsUrl"))
 
   if (taboptions[tabno] == "Collectibles")
-    cy.url({timeout: 10000}).should("include", Cypress.env("collectiblesUrl"))
+    cy.url({ timeout: 10000 }).should("include", Cypress.env("collectiblesUrl"))
 
   if (taboptions[tabno] == "Medical Abstract")
-    cy.url({timeout: 10000}).should("include", Cypress.env("medicalAbstractUrl"))
+    cy.url({ timeout: 10000 }).should("include", Cypress.env("medicalAbstractUrl"))
 
   if (taboptions[tabno] == "Medical Certificate")
-    cy.url({timeout: 10000}).should("include", Cypress.env("medicalCertUrl"))
-    
+    cy.url({ timeout: 10000 }).should("include", Cypress.env("medicalCertUrl"))
+
+  if (taboptions[tabno] == "Log Out")
+    cy.url({ timeout: 10000 }).should("include", Cypress.env("loginUrl"))
+
   // cy.reload()
 })
 
 Cypress.Commands.add('clickmenu', (tabno) => {
-  cy.get('[id="' + menuoptions[tabno] + '"]').click({ force: true })
+
+  cy.get('body').then(($body => {
+    if ($body.find('[id="button-dashboard"]').length > 0) {
+      cy.get('[id="' + menuoptions[tabno] + '"]').click({ force: true })
+    } else {
+      cy.get('[id="tab-' + menuoptions[tabno] + '"]').click({ force: true })
+    }
+  }))
 
   if (menuoptions[tabno] == "button-dashboard")
-    cy.url({timeout: 10000}).should("include", Cypress.env("dashboardUrl"))
+    cy.url({ timeout: 10000 }).should("include", Cypress.env("dashboardUrl"))
 
   if (menuoptions[tabno] == "button-in-patients")
-    cy.url({timeout: 10000}).should("include", Cypress.env("inpatientsUrl"))
+    cy.url({ timeout: 10000 }).should("include", Cypress.env("inpatientsUrl"))
 
   if (menuoptions[tabno] == "button-appointments")
-    cy.url({timeout: 10000}).should("include", Cypress.env("newsfeedUrl"))
+    cy.url({ timeout: 10000 }).should("include", Cypress.env("newsfeedUrl"))
 
-  
+
 })
 
 var taboptions = ["Collectibles",
   "Medical Abstract",
   "Medical Certificate",
-  "Settings"
+  "Settings",
+  "Log Out"
 ];
 
 var menuoptions = ["button-dashboard",

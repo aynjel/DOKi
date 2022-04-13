@@ -1,8 +1,9 @@
 /// <reference types='cypress'/>
 
 describe("Actions", () => {
-  describe("3 - Onboarding Pages", () => {
+  describe("3 - Mobile Onboarding Pages", () => {
     beforeEach(() => {
+      cy.viewport(390,844)
       cy.visit("/");
     });
 

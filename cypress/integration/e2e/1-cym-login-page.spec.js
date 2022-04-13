@@ -2,8 +2,9 @@
 
 var userAccount;
 
-describe("Actions 1 - Login Page", () => {
+describe("Actions 1 - Mobile Login Page", () => {
     beforeEach("", () => {
+        cy.viewport(390, 844)
         cy.visit(Cypress.env('baseUrlToTest') + Cypress.env('loginUrl'))
         cy.fixture('testUserAccount').then(function (data) {
             userAccount = data;
@@ -24,13 +25,13 @@ describe("Actions 1 - Login Page", () => {
     });
 
     it("3. Test Scenario 3 - Invalid Username", () => {
-        cy.login(userAccount[0].userName, userAccount[0].password, "invalid-user")
+        cy.errLogin(userAccount[0].userName, userAccount[0].password, "invalid-user")
 
         cy.end()
     }); 
 
     it("4. Test Scenario 4 - Invalid Password", () => {
-        cy.login(userAccount[0].userName, userAccount[0].password, "invalid-pass")
+        cy.errLogin(userAccount[0].userName, userAccount[0].password, "invalid-pass")
 
         cy.end()
     });

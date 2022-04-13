@@ -5,8 +5,9 @@ var userAccount;
 var dataPw = "";
 
 describe("Actions", () => {
-  describe("9 - End Test", () => {
+  describe("9 - Mobile End Test", () => {
     beforeEach(() => {
+      cy.viewport(390, 844)
       cy.visit(Cypress.env('baseUrlToTest') + Cypress.env('loginUrl'))
       cy.fixture('testUserAccount').then(function (data) {
         userAccount = data;
