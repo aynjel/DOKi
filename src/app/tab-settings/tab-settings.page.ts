@@ -213,6 +213,11 @@ export class TabSettingsPage {
     let y = '';
     //PARSE USER SETTINGS
     this.functionsService.logToConsole('ionViewWillEnter');
+    console.log(
+      this.functionsService.imageExists(
+        'http://10.151.12.120:7229/api/Upload/ProfilePic/res/profile/MD100001.jpg'
+      )
+    );
 
     this.profileExpiry = new ProfileExpiry();
     this.profileExpiry.mode = 'P';
