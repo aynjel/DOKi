@@ -38,6 +38,7 @@ export class TabsPage {
   userData$ = new BehaviorSubject<any>([]);
   badgecount = 0;
   isDesktop: boolean;
+  isPortrait: boolean;
   signalList: any = [];
   dr_code;
   dr_username;
@@ -63,12 +64,10 @@ export class TabsPage {
 
     localStorage.removeItem('isIdlestarted');
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
-      if (this.isDesktop && !isDesktop) {
-        // Reload because our routing is out of place
-        //window.location.reload();
-      }
-
       this.isDesktop = isDesktop;
+    });
+    this.screensizeService.isPortraitView().subscribe((isPortrait) => {
+      this.isPortrait = isPortrait;
     });
     /*this.signalRService.signalReceived.subscribe((signal: any) => {
       this.functionsService.logToConsole("-->" + signal.msg);

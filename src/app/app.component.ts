@@ -29,6 +29,7 @@ import { LogoutService } from './services/logout/logout.service';
 export class AppComponent {
   role_flag: any;
   isDesktop: boolean;
+  isPortrait: boolean;
   public appPages = [
     {
       title: 'Doctors',
@@ -110,12 +111,11 @@ export class AppComponent {
     this.initializeApp();
     this.updateClient();
     this.role_flag = localStorage.getItem('role_flag');
-    console.log('role_flag', this.role_flag);
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
-      if (this.isDesktop && !isDesktop) {
-        window.location.reload();
-      }
       this.isDesktop = isDesktop;
+    });
+    this.screensizeService.isPortraitView().subscribe((isPortrait) => {
+      this.isPortrait = isPortrait;
     });
   }
   userData$ = new BehaviorSubject<any>([]);
@@ -126,11 +126,11 @@ export class AppComponent {
   initializeApp() {
     this.revokeTokenV3 = new RevokeTokenV3();
     this.functionsService.logToConsole('initializeApp');
-
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.screensizeService.onResize(this.platform.width());
+      this.screensizeService.onPortrait(screen.orientation.angle);
     });
 
     /*
@@ -249,8 +249,12 @@ export class AppComponent {
       this.logout();
     }
   }
+  @HostListener('window:orientationchange', ['$event'])
   @HostListener('window:resize', ['$event'])
   private onResize(event) {
+    console.log('event', event.target.innerWidth);
+
     this.screensizeService.onResize(event.target.innerWidth);
+    this.screensizeService.onPortrait(screen.orientation.angle);
   }
 }

@@ -23,6 +23,7 @@ import { ModalController } from '@ionic/angular';
 export class MedicalCertificatePage implements OnInit {
   private ngUnsubscribe = new Subject();
   isDesktop: boolean;
+  isPortrait: boolean;
   data;
   pdfSrc;
   isPDFLoading: boolean;
@@ -47,9 +48,24 @@ export class MedicalCertificatePage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((isDesktop) => {
         if (this.isDesktop && !isDesktop) {
-          window.location.reload();
+          //window.location.reload();
+        }
+        if (this.isDesktop != undefined && isDesktop) {
+          //window.location.reload();
         }
         this.isDesktop = isDesktop;
+      });
+    this.screensizeService
+      .isPortraitView()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((isPortrait) => {
+        if (this.isPortrait && !isPortrait) {
+          this.ngOnInit();
+        }
+        if (this.isPortrait != undefined && isPortrait) {
+          this.ngOnInit();
+        }
+        this.isPortrait = isPortrait;
       });
   }
   screenWidth;
