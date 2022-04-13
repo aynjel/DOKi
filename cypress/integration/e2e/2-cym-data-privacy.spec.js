@@ -3,8 +3,9 @@
 var userAccount;
 
 describe("Actions", () => {
-  describe("2 - Data Privacy", () => {
+  describe("2 - Mobile Data Privacy", () => {
     beforeEach(() => {
+      cy.viewport(390, 844)
       cy.visit(Cypress.env('baseUrlToTest') + Cypress.env('loginUrl'))
       cy.fixture('testUserAccount').then(function (data) {
         userAccount = data;

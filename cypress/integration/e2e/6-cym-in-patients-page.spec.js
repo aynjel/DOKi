@@ -3,7 +3,7 @@
 var userAccount;
 
 describe("Actions", () => {
-  describe("6 - In-Patients Page", () => {
+  describe("6 - Mobile In-Patients Page", () => {
     beforeEach(() => {
         cy.viewport(390, 844)
         cy.visit(Cypress.env('baseUrlToTest') + Cypress.env('loginUrl'))

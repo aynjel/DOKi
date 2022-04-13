@@ -3,8 +3,9 @@
 var userAccount;
 
 describe("Actions", () => {
-  describe("7 - Logout Page", () => {
+  describe("7 - Mobile Logout Page", () => {
     beforeEach(() => {
+      cy.viewport(390, 844)
       cy.visit(Cypress.env('baseUrlToTest') + Cypress.env('loginUrl'))
       cy.fixture('testUserAccount').then(function (data) {
         userAccount = data;
