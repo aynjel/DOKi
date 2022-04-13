@@ -5,6 +5,7 @@ import {
   OnInit,
   Renderer2,
   ViewChild,
+  ViewChildren,
 } from '@angular/core';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
@@ -14,7 +15,7 @@ import { Subject } from 'rxjs';
 import { FunctionsService } from 'src/app/shared/functions/functions.service';
 import { AfterViewInit } from '@angular/core';
 import { SignaturePad } from 'angular2-signaturepad';
-import { ModalController } from '@ionic/angular';
+import { IonModal, ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-medical-abstract',
@@ -25,6 +26,7 @@ export class MedicalAbstractPage implements OnInit {
   private ngUnsubscribe = new Subject();
   isDesktop: boolean;
   isPortrait: boolean;
+  @ViewChildren(IonModal) ionModal;
   constructor(
     private screensizeService: ScreenSizeService,
     private doctorService: DoctorService,
@@ -49,6 +51,12 @@ export class MedicalAbstractPage implements OnInit {
       .isPortraitView()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((isPortrait) => {
+        if (this.ionModal) {
+          if (this.ionModal.first.isCmpOpen) {
+            this.modalController.dismiss(true);
+          }
+        }
+
         if (this.isPortrait && !isPortrait) {
           this.ngOnInit();
         }
