@@ -87,7 +87,7 @@ export class TabSettingsPage {
   phicBarColor: any;
   phicBarHide: any;
   data1;
-  isProfilepic: boolean;
+  isProfilepic: boolean = false;
   profilePic;
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   public userSettingsModelv3: UserSettingsModelv3;
@@ -213,9 +213,9 @@ export class TabSettingsPage {
 
     this.dr_username = this.logindata.userName;
 
-    this.isProfilepic = this.functionsService.imageExists(
+    /*this.isProfilepic = this.functionsService.imageExists(
       'http://10.151.12.120:7229/res/profile/' + this.dr_code + '.jpg'
-    );
+    );*/
     if (this.isProfilepic) {
       this.profilePic =
         'http://10.151.12.120:7229/res/profile/' + this.dr_code + '.jpg';
