@@ -15,6 +15,7 @@ import { FunctionsService } from '../shared/functions/functions.service';
 import {
   ActionSheetController,
   AlertController,
+  MenuController,
   ModalController,
 } from '@ionic/angular';
 import { ChhAppAddAppointmentsModalPage } from '../chh-web-components/chh-app-add-appointments-modal/chh-app-add-appointments-modal.page';
@@ -107,7 +108,8 @@ export class TabSettingsPage {
     private patientService: PatientService,
     public alertController: AlertController,
     private doctorService: DoctorService,
-    private logoutService: LogoutService
+    private logoutService: LogoutService,
+    private menu: MenuController
   ) {
     this.privacyPolicy = true;
 
@@ -491,7 +493,13 @@ export class TabSettingsPage {
       }
     });
   }
-
+  async checkSideMenu() {
+    let x = await this.menu.isOpen();
+    console.log(x);
+    if (x) {
+      this.menu.close();
+    }
+  }
   logout() {
     let dr_username = atob(localStorage.getItem('username'));
     this.revokeTokenV3 = new RevokeTokenV3();

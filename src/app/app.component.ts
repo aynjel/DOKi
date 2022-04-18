@@ -1,5 +1,5 @@
 import { Component, HostListener } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { MenuController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ScreenSizeService } from './services/screen-size/screen-size.service';
@@ -106,7 +106,8 @@ export class AppComponent {
     public router: Router,
     private doctorService: DoctorService,
     private storageService: StorageService,
-    private logoutService: LogoutService
+    private logoutService: LogoutService,
+    private menu: MenuController
   ) {
     this.initializeApp();
     this.updateClient();
@@ -229,6 +230,13 @@ export class AppComponent {
       ],
     });
     await alert.present();
+  }
+  async checkSideMenu() {
+    let x = await this.menu.isOpen();
+    console.log(x);
+    if (x) {
+      this.menu.close();
+    }
   }
   logout() {
     let dr_username = atob(localStorage.getItem('username'));
