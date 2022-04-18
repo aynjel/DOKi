@@ -1,29 +1,37 @@
 import { Injectable } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { MenuController, ModalController } from '@ionic/angular';
 import { AuthConstants, Consta } from '../../config/auth-constants';
 import { StorageService } from '../storage/storage.service';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LogoutService {
   userData$ = new BehaviorSubject<any>([]);
   constructor(
     public modalController: ModalController,
     private storageService: StorageService,
-    public router: Router
-    ) { }
+    public router: Router,
+    private menu: MenuController
+  ) {}
 
-
-  closemodal(){
+  closemodal() {
     this.modalController.dismiss({
-      'dismissed': true
+      dismissed: true,
     });
   }
-  out(){
-    this.modalController.getTop().then((res)=>{
-      if(res){
+  async checkSideMenu() {
+    let x = await this.menu.isOpen();
+    console.log(x);
+    if (x) {
+      this.menu.close();
+    }
+  }
+  out() {
+    this.checkSideMenu();
+    this.modalController.getTop().then((res) => {
+      if (res) {
         this.closemodal();
       }
     });
@@ -42,7 +50,7 @@ export class LogoutService {
     localStorage.removeItem('patientData');
     localStorage.removeItem('postData1');
     localStorage.removeItem('daysManaged');
-    localStorage.setItem('srnm',dr_username);
+    localStorage.setItem('srnm', dr_username);
     localStorage.setItem('hasloggedin', '1');
     this.router.navigate(['/login']).then(() => {
       window.location.reload();

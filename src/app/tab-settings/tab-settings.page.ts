@@ -493,13 +493,6 @@ export class TabSettingsPage {
       }
     });
   }
-  async checkSideMenu() {
-    let x = await this.menu.isOpen();
-    console.log(x);
-    if (x) {
-      this.menu.close();
-    }
-  }
   logout() {
     let dr_username = atob(localStorage.getItem('username'));
     this.revokeTokenV3 = new RevokeTokenV3();

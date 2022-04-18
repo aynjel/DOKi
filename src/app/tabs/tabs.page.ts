@@ -202,15 +202,7 @@ export class TabsPage {
       });
       */
   }
-  async checkSideMenu() {
-    let x = await this.menu.isOpen();
-    console.log(x);
-    if (x) {
-      this.menu.close();
-    }
-  }
   logout() {
-    this.checkSideMenu();
     this.revokeTokenV3 = new RevokeTokenV3();
 
     //this.revokeTokenV3 = new RevokeTokenV3();
