@@ -87,6 +87,8 @@ export class TabSettingsPage {
   phicBarColor: any;
   phicBarHide: any;
   data1;
+  isProfilepic: boolean;
+  profilePic;
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   public userSettingsModelv3: UserSettingsModelv3;
   public revokeTokenV3: RevokeTokenV3;
@@ -210,6 +212,15 @@ export class TabSettingsPage {
     this.dr_code = this.logindata.doctorCode;
 
     this.dr_username = this.logindata.userName;
+
+    this.isProfilepic = this.functionsService.imageExists(
+      'http://10.151.12.120:7229/res/profile/' + this.dr_code + '.jpg'
+    );
+    if (this.isProfilepic) {
+      this.profilePic =
+        'http://10.151.12.120:7229/res/profile/' + this.dr_code + '.jpg';
+    }
+
     let y = '';
     //PARSE USER SETTINGS
     this.functionsService.logToConsole('ionViewWillEnter');

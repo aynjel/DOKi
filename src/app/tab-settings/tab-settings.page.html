@@ -22,8 +22,11 @@
           <ion-card mode="ios">
             <br />
             <ion-item lines="none">
-              <ion-avatar slot="start">
+              <ion-avatar slot="start" *ngIf="!isProfilepic">
                 <chh-app-text-avatar [text]="x.lastName" [color]=""></chh-app-text-avatar>
+              </ion-avatar>
+              <ion-avatar *ngIf="isProfilepic">
+                <img src="{{profilePic}}">
               </ion-avatar>
               <ion-label style="margin-top: -5px;">
                 <ion-item class="ion-no-padding">
