@@ -207,7 +207,7 @@ Cypress.Commands.add('testInPatientsDetails', (site) => {
     if ($body.find('h2').length) {
       // p was found, do something else here
       //return 'input'
-      cy.get('p').each((ea).then((el) => {
+      cy.get('p').each((el) => {
         switch (site) {
           case "CEBU":
             assert.include(el.text(), "Chong Hua Hospital")
@@ -220,7 +220,7 @@ Cypress.Commands.add('testInPatientsDetails', (site) => {
             assert.include(el.text(), "Chong Hua Hospital Mandaue")
         }
       })
-      )};
+    };
   }))
 })
 
@@ -540,7 +540,7 @@ Cypress.Commands.add('clickDashboard', (option) => {
 Cypress.Commands.add('optOut', (isOptOut) => {
   cy.clicktab(3)
 
-  cy.reload()
+  // cy.reload()
   cy.wait(2000)
 
   cy.get('[id="dataPrivacyToggle"]').click({ force: true })

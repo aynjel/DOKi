@@ -24,13 +24,13 @@ describe("Actions 1 - Login Page", () => {
     });
 
     it("3. Test Scenario 3 - Invalid Username", () => {
-        cy.login(userAccount[3].userName, userAccount[3].password, "invalid-user")
+        cy.errLogin(userAccount[3].userName, userAccount[3].password, "invalid-user")
 
         cy.end()
     }); 
 
     it("4. Test Scenario 4 - Invalid Password", () => {
-        cy.login(userAccount[0].userName, userAccount[0].password, "invalid-pass")
+        cy.errLogin(userAccount[2].userName, userAccount[2].password, "invalid-pass")
 
         cy.end()
     });
