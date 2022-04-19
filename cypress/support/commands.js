@@ -555,6 +555,19 @@ Cypress.Commands.add('optOut', (isOptOut) => {
   }
 })
 
+Cypress.Commands.add('SMSToggle', () => {
+  cy.clicktab(3)
+  cy.reload()
+  cy.wait(2000)
+
+  cy.get('[name="ion-tg-0"]').click({ force: true })
+  cy.wait(2000)
+
+  cy.clickmenu(1)
+})
+
+
+
 Cypress.Commands.add('logout', () => {
   cy.clicktab(4)
 })

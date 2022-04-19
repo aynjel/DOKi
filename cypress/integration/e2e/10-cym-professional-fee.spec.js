@@ -1,5 +1,7 @@
 /// <reference types='cypress'/>
 
+const { SSL_OP_MSIE_SSLV2_RSA_PADDING } = require("constants");
+
 var userAccount;
 
 describe("Actions", () => {
@@ -14,6 +16,9 @@ describe("Actions", () => {
 
     it("Test Scenario 1 - Input Professional Fee as non insurance coordinator and have not seen patient", () => {
       cy.login(userAccount[0].userName, userAccount[0].password, true)
+
+      cy.SMSToggle() // send sms
+      // cy.pause()
 
       cy.get('body').then(($body => {
         if ($body.find('h2').length) {
@@ -73,6 +78,8 @@ describe("Actions", () => {
 
     it("Test Scenario 3 - Input Professional Fee as non insurance coordinator & have seen patient, Insurance + Philhealth", () => {
       cy.login(userAccount[0].userName, userAccount[0].password, true)
+
+      cy.SMSToggle() // should not send sms
 
       cy.get('body').then(($body => {
         if ($body.find('h2').length) {

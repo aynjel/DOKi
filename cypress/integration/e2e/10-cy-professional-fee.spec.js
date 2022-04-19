@@ -34,10 +34,10 @@ describe("Actions", () => {
       cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsUrl") + "/IPC100230411/professional-fee-transaction-summary")
 
       cy.wait(2000)
-      cy.get('ion-button').contains("Submit").click({force: true})
+      cy.get('[data-testid="btnsubmit"]').click({force:true})
 
       cy.wait(2000)
-      cy.contains("Okay").click({ force: true})
+      cy.contains("Okay").click({ force: true })
 
       cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsUrl"))
     });
@@ -68,10 +68,10 @@ describe("Actions", () => {
       cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsUrl") + "/IPC100230411/professional-fee-transaction-summary")
 
       cy.wait(2000)
-      cy.get('ion-button').contains("Submit").click({force: true})
+      cy.get('[data-testid="btnsubmit"]').click({force:true})
 
       cy.wait(2000)
-      cy.contains("Okay").click({ force: true})
+      cy.contains("Okay").click({ force: true })
 
       cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsUrl"))
     });
@@ -106,11 +106,12 @@ describe("Actions", () => {
 
       cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsUrl") + "/IPC100230411/professional-fee/insurance")
 
+      // cy.get('ion-button').contains("Submit").click({ force: true })
       cy.wait(2000)
-      cy.get('ion-button').contains("Submit").click({force: true})
+      cy.get('[data-testid="btnsubmit"]').click({force:true})
 
       cy.wait(2000)
-      cy.contains("Okay").click({ force: true})
+      cy.contains("Okay").click({ force: true })
 
       cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsUrl"))
     });
@@ -144,12 +145,12 @@ describe("Actions", () => {
       cy.contains("Next").click({ force: true })
 
       cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsUrl") + "/IPC100230411/professional-fee/personal-philhealth")
-      
-      cy.wait(2000)
-      cy.get('ion-button').contains("Submit").click({force: true})
 
       cy.wait(2000)
-      cy.contains("Okay").click({ force: true})
+      cy.get('[data-testid="btnsubmit"]').click({force:true})
+
+      cy.wait(2000)
+      cy.contains("Okay").click({ force: true })
 
       cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsUrl"))
     });
@@ -177,13 +178,13 @@ describe("Actions", () => {
       cy.contains("Next").click()
 
       cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsUrl") + "/IPC100230411/professional-fee/philhealth")
-      cy.contains("Next").click({force:true})
-      
-      cy.wait(2000)
-      cy.get('ion-button').contains("Submit").click({force: true})
+      cy.contains("Next").click({ force: true })
 
       cy.wait(2000)
-      cy.contains("Okay").click({ force: true})
+      cy.get('[data-testid="btnsubmit"]').click({force:true})
+
+      cy.wait(2000)
+      cy.contains("Okay").click({ force: true })
 
       cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsUrl"))
     });
@@ -211,14 +212,14 @@ describe("Actions", () => {
       cy.contains("Next").click()
 
       cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsUrl") + "/IPC100230411/professional-fee/charity")
-      cy.contains("Thank you").should("contain.text","Thank you for your generosity, Dok!")
-      cy.contains("Next").click({force:true})
-      
-      cy.wait(2000)
-      cy.get('ion-button').contains("Submit").click({force: true})
+      cy.contains("Thank you").should("contain.text", "Thank you for your generosity, Dok!")
+      cy.contains("Next").click({ force: true })
 
       cy.wait(2000)
-      cy.contains("Okay").click({ force: true})
+      cy.get('[data-testid="btnsubmit"]').click({force:true})
+
+      cy.wait(2000)
+      cy.contains("Okay").click({ force: true })
 
       cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsUrl"))
     });
