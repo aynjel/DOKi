@@ -247,7 +247,7 @@
           <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
           <ion-col size-xs="12" size-md="4" size-lg="4">
             <ion-button color="mango" size="default" expand="block" shape="round" class="buttonActive"
-              (click)="postSummary()" [disabled]="disableSubmit" [attr.data-testid]='id'><span
+              (click)="postSummary()" [disabled]="disableSubmit" [attr.data-testid]='btnsubmit'><span
                 *ngIf="!disableSubmit">Submit</span>
               <ion-spinner *ngIf="disableSubmit"></ion-spinner>
             </ion-button>
@@ -483,7 +483,7 @@
           </li>
         </ul>
         <ion-button *ngIf="isDesktop" color="mango" class="buttonActive" size="default" expand="block" shape="round"
-          (click)="postSummary()" [attr.data-testid]='id'>
+          (click)="postSummary()" [attr.data-testid]='btnsubmit'>
           Submit</ion-button>
       </ion-col>
     </ion-row>

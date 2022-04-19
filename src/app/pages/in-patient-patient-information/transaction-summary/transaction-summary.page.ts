@@ -94,6 +94,8 @@ export class TransactionSummaryPage implements OnInit {
   professionalFeeModelv3: ProfessionalFeeModelv3 = new ProfessionalFeeModelv3();
   userSettingsModelv3: UserSettingsModelv3 = new UserSettingsModelv3();
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
+  btnsubmit = 'btnsubmit';
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
