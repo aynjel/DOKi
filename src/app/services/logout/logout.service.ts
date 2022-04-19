@@ -25,7 +25,7 @@ export class LogoutService {
     let x = await this.menu.isOpen();
     console.log(x);
     if (x) {
-      this.menu.close();
+      await this.menu.close();
     }
   }
   out() {
