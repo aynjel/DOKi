@@ -19,7 +19,6 @@ describe("Actions", () => {
       cy.login(userAccount[0].userName, userAccount[0].password, true)
 
       // cy.SMSToggle() // send sms
-      // cy.pause()
 
       cy.setProfFee()
 
@@ -60,8 +59,6 @@ describe("Actions", () => {
 
       cy.setProfFee()
 
-      // cy.get('[name="ion-cb-6"]').click({ force: true }) //click Are you an Insurance Coordinator
-      // cy.get('[name="ion-cb-7"]').click({ force: true }) //Have you seen this Patient?
       cy.get('[name="ion-cb-8"]').click({ force: true }) //Insurance + PhilHealth
 
       cy.contains("Next").click()

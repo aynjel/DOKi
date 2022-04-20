@@ -14,6 +14,8 @@ describe("Actions", () => {
     it("Test Scenario 1 - Input Professional Fee as non insurance coordinator and have not seen patient w/ SMS", () => {
       cy.login(userAccount[0].userName, userAccount[0].password, true)
 
+      // cy.SMSToggle() // send sms
+
       cy.setProfFee()
 
       cy.get('[name="ion-cb-7"]').click({ force: true }) //Have you seen this Patient?
@@ -55,10 +57,10 @@ describe("Actions", () => {
     it("Test Scenario 3 - Input Professional Fee as non insurance coordinator & have seen patient, Insurance + Philhealth  w/out SMS", () => {
       cy.login(userAccount[0].userName, userAccount[0].password, true)
 
+      // cy.SMSToggle() // should not send sms
+
       cy.setProfFee()
 
-      // cy.get('[name="ion-cb-6"]').click({ force: true }) //click Are you an Insurance Coordinator
-      // cy.get('[name="ion-cb-7"]').click({ force: true }) //Have you seen this Patient?
       cy.get('[name="ion-cb-8"]').click({ force: true }) //Insurance + PhilHealth
 
       cy.contains("Next").click()
