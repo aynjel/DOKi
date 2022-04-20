@@ -507,30 +507,30 @@ Cypress.Commands.add('clickDashboard', (option) => {
   //set for mobile view
   cy.get('body').then(($body => {
     if ($body.find('[id="button-dashboard"]').length > 0) {
-      cy.get('[id="button-dashboard"]').click({force: true})
+      cy.get('[id="button-dashboard"]').click({ force: true })
 
-      if(option == "Admitted") {
+      if (option == "Admitted") {
         cy.get('[id="ion-item-ac"]').click()
-        cy.url({timeout: 30000}).should("include", Cypress.env("inpatientsAdmittedUrl"))
-      } else if(option == "For Discharge") {
+        cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsAdmittedUrl"))
+      } else if (option == "For Discharge") {
         cy.get('[id="ion-item-dn"]').click()
-        cy.url({timeout: 30000}).should("include", Cypress.env("inpatientsDischargedUrl"))
+        cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsDischargedUrl"))
       }
 
-      cy.url({timeout: 30000}).should("include", Cypress.env("dashboardUrl"))
+      cy.url({ timeout: 30000 }).should("include", Cypress.env("dashboardUrl"))
 
     } else {
-      cy.get('[id="tab-button-dashboard"]').click({force: true})
+      cy.get('[id="tab-button-dashboard"]').click({ force: true })
 
-      if(option == "Admitted") {
+      if (option == "Admitted") {
         cy.get('[id="ion-item-ac"]').click()
-        cy.url({timeout: 30000}).should("include", Cypress.env("inpatientsAdmittedUrl"))
-      } else if(option == "For Discharge") {
+        cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsAdmittedUrl"))
+      } else if (option == "For Discharge") {
         cy.get('[id="ion-item-dn"]').click()
-        cy.url({timeout: 30000}).should("include", Cypress.env("inpatientsDischargedUrl"))
+        cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsDischargedUrl"))
       }
 
-      cy.url({timeout: 30000}).should("include", Cypress.env("dashboardUrl"))
+      cy.url({ timeout: 30000 }).should("include", Cypress.env("dashboardUrl"))
 
     }
   }))
@@ -546,7 +546,7 @@ Cypress.Commands.add('optOut', (isOptOut) => {
   cy.get('[id="dataPrivacyToggle"]').click({ force: true })
   cy.wait(2000)
 
-  if(isOptOut) {
+  if (isOptOut) {
     cy.contains("Yes, Opt-Out").click({ force: true })
 
     cy.url({ timeout: 30000 }).should("include", Cypress.env("loginUrl"))
@@ -565,6 +565,23 @@ Cypress.Commands.add('SMSToggle', () => {
 
   cy.clickmenu(1)
 })
+
+Cypress.Commands.add('setProfFee', () => { 
+  cy.get('body').then(($body => {
+    if ($body.find('h2').length) {
+      cy.get('[data-testid="IPC100230411"]').click()
+      cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsUrl") + "/IPC100230411")
+    };
+  }))
+  cy.wait(1000)
+
+  cy.contains("Professional Fee ").click()
+  cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsUrl") + "/IPC100230411/professional-fee")
+
+  cy.wait(1000)
+  cy.contains("Modify").click()
+})
+
 
 
 

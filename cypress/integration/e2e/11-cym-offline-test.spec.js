@@ -26,7 +26,6 @@ const goOffline = () => {
 }
 
 const goOnline = () => {
-    // disable offline mode, otherwise we will break our tests :)
     cy.log('**go online**')
         .then(() => {
             Cypress.automation('remote:debugger:protocol',
