@@ -94,6 +94,9 @@ export class ChhAppProfessionalFeePage implements OnInit {
   professionalFeeModelv3: ProfessionalFeeModelv3 = new ProfessionalFeeModelv3();
   userSettingsModelv3: UserSettingsModelv3 = new UserSettingsModelv3();
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
+  is_senior;
+  is_pwd;
+  philhealth_membership;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -154,6 +157,9 @@ export class ChhAppProfessionalFeePage implements OnInit {
     this.dr_name = this.loginResponseModelv3.lastName;
     this.dr_code = this.loginResponseModelv3.doctorCode;
     this.data = JSON.parse(atob(localStorage.getItem('patientData')));
+    this.is_pwd = this.data[0].is_pwd;
+    this.is_senior = this.data[0].is_senior;
+    console.log(this.is_pwd, this.is_senior);
     this.dateAdmitted = this.data[0].admission_date;
 
     this.data1 = this.data[0].doctor_prof_fee;

@@ -124,6 +124,9 @@ export class InPatientDetailPage {
   birthday: any;
   age: any;
   pdfSrc = '';
+  is_senior;
+  is_pwd;
+  philhealth_membership;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -320,6 +323,11 @@ export class InPatientDetailPage {
           } else {
             this.alert('No Data Available', 'Okay');
           }
+          console.log(this.data1);
+
+          this.is_pwd = this.data1[0].is_pwd;
+          this.is_senior = this.data1[0].is_senior;
+          console.log(this.is_pwd, this.is_senior);
         }
       );
   }

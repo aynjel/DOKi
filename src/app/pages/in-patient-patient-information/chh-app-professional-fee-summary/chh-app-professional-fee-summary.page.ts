@@ -102,6 +102,9 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   form: FormGroup = new FormGroup({});
   numRegex = /^-?\d*[.,]?\d{0,2}$/;
+  is_pwd;
+  is_senior;
+  isVatDisabled: boolean = false;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -206,6 +209,11 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     this.dr_name = logindata.lastName;
     this.dr_code = logindata.doctorCode;
     this.data = JSON.parse(atob(localStorage.getItem('patientData')));
+    this.is_pwd = this.data[0].is_pwd;
+    this.is_senior = this.data[0].is_senior;
+    if (this.is_pwd != 'N' || this.is_senior != 'N') {
+      this.isVatDisabled = true;
+    }
     this.dateAdmitted = this.data[0].admission_date;
     this.patient_name = this.data[0].first_name + ' ' + this.data[0].last_name;
     //this.functionsService.logToConsole(this.data);

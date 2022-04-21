@@ -67,7 +67,7 @@ ___  ___        _      _  _
 </ion-header>
 <ion-content *ngIf="!isDesktop">
   <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [dischargeNotice]="dischargeNotice"
-    [forMoreOrLess]="true">
+    [forMoreOrLess]="true" [is_pwd]="is_pwd" [is_senior]="is_senior">
   </app-chh-app-patient-header>
 
   <app-chh-app-admitting-diagnosis [admittingDiagnosis]="admittingDiagnosis" [admittingDiagnosis1]="admittingDiagnosis1"
@@ -282,7 +282,8 @@ ______          _    _
         </ion-col> -->
       <ion-col size-lg="4" size-md="6">
         <!--app-chh-app-card-newline></app-chh-app-card-newline-->
-        <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [forMoreOrLess]="true">
+        <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [forMoreOrLess]="true" [is_pwd]="is_pwd"
+          [is_senior]="is_senior">
         </app-chh-app-patient-header>
 
         <ion-card mode="ios" class="shadow-remove">

@@ -117,6 +117,13 @@ ______             _     _                        _   _                   _
           <ion-col size="5">Hospital Site:</ion-col>
           <ion-col size="7">{{site}}</ion-col>
         </ion-row>
+        <ion-row *ngIf="is_pwd !='N' && is_senior!='N'">
+          <ion-col>
+            <span *ngIf="is_pwd !='N'">PWD</span>
+            <span *ngIf="is_pwd !='N' && is_senior!='N'">,</span>
+            <span *ngIf="is_senior !='N'">Senior</span>
+          </ion-col>
+        </ion-row>
         <ion-row>
           <ion-col size="5"> Room:</ion-col>
           <ion-col size="7">{{x.room_no}}</ion-col>
@@ -264,7 +271,7 @@ ______             _     _                        _   _                   _
   </div>
 
   <div *ngIf="ifShowSummary == false">
-    <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted">
+    <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [is_pwd]="is_pwd" [is_senior]="is_senior">
     </app-chh-app-patient-header>
     <ion-card mode="ios" [disabled]="!areyouaninsurancecoordinator">
       <ion-item lines="none">
@@ -448,7 +455,8 @@ ______             _     _                       ______             _
     <ion-row>
       <ion-col size-lg="1" size-md="12"></ion-col>
       <ion-col size-lg="3" size-md="6">
-        <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" *ngIf="!ifShowSummary">
+        <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" *ngIf="!ifShowSummary" [is_pwd]="is_pwd"
+          [is_senior]="is_senior">
         </app-chh-app-patient-header>
         <div *ngIf="ifShowSummary == true">
 
