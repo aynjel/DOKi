@@ -116,8 +116,7 @@
     <ion-card mode="ios" *ngIf="!isDesktop && InsuranceShowVat">
       <ion-item lines="none">
         <ion-label>Add VAT?</ion-label>
-        <ion-checkbox color="primary" checked="false" [(ngModel)]="InsuranceVat" (ionChange)="insuranceVat()"
-          disabled="isVatDisabled">
+        <ion-checkbox color="primary" checked="false" [(ngModel)]="InsuranceVat" (ionChange)="insuranceVat()">
         </ion-checkbox>
       </ion-item>
     </ion-card>
@@ -346,7 +345,7 @@ ______                         ______   _   _   _____   _____
       <ion-item lines="none">
         <ion-label>Add VAT?</ion-label>
         <ion-checkbox color="primary" checked="false" [(ngModel)]="PersonalPhilhealthVat"
-          (ionChange)="personalPhilhealthVat()" disabled="isVatDisabled"></ion-checkbox>
+          (ionChange)="personalPhilhealthVat()"></ion-checkbox>
       </ion-item>
     </ion-card>
 
@@ -627,7 +626,7 @@ ______          _    _
                   <ion-item lines="none">
                     <ion-label>Add VAT?</ion-label>
                     <ion-checkbox color="primary" checked="false" [(ngModel)]="InsuranceVat"
-                      (ionChange)="insuranceVat()" disabled="isVatDisabled">
+                      (ionChange)="insuranceVat()">
                     </ion-checkbox>
                   </ion-item>
                 </ion-card>
@@ -846,7 +845,7 @@ ______                         ______   _   _   _____   _____
                   <ion-item lines="none">
                     <ion-label>Add VAT?</ion-label>
                     <ion-checkbox color="primary" checked="false" [(ngModel)]="PersonalPhilhealthVat"
-                      (ionChange)="personalPhilhealthVat()" disabled="isVatDisabled"></ion-checkbox>
+                      (ionChange)="personalPhilhealthVat()"></ion-checkbox>
                   </ion-item>
                 </ion-card>
 

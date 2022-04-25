@@ -211,9 +211,9 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     this.data = JSON.parse(atob(localStorage.getItem('patientData')));
     this.is_pwd = this.data[0].is_pwd;
     this.is_senior = this.data[0].is_senior;
-    if (this.is_pwd != 'N' || this.is_senior != 'N') {
+    /*if (this.is_pwd != 'N' || this.is_senior != 'N') {
       this.isVatDisabled = true;
-    }
+    }*/
     this.dateAdmitted = this.data[0].admission_date;
     this.patient_name = this.data[0].first_name + ' ' + this.data[0].last_name;
     //this.functionsService.logToConsole(this.data);
