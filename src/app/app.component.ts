@@ -60,7 +60,7 @@ export class AppComponent {
       url: 'logout',
       icon: 'log-out-outline',
       type: 'exec',
-    },
+    } /*
     {
       title: 'Collectibles',
       url: 'menu/collectibles',
@@ -78,7 +78,7 @@ export class AppComponent {
       url: 'menu/medical-certificate',
       icon: 'document-text-outline',
       type: 'med',
-    },
+    },*/,
     {
       title: 'Settings',
       url: 'menu/settings',

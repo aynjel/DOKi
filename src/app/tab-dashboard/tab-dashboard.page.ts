@@ -10,11 +10,12 @@ import { FunctionsService } from '../shared/functions/functions.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Constants } from '../shared/constants';
 import { Consta } from '../config/auth-constants';
-import { DoctorHistoryModel } from '../models/doctor';
+import { DoctorHistoryModel, RevokeTokenV3 } from '../models/doctor';
 import { PatientService } from '../services/patient/patient.service';
 import { LoginResponseModelv3 } from 'src/app/models/doctor';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { LogoutService } from '../services/logout/logout.service';
 @Component({
   selector: 'app-tab-dashboard',
   templateUrl: './tab-dashboard.page.html',
@@ -48,7 +49,8 @@ export class TabDashboardPage implements OnInit {
     public functionsService: FunctionsService,
     protected $gaService: GoogleAnalyticsService,
     public constants: Constants,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private logoutService: LogoutService
   ) {
     this.screensizeService
       .isDesktopView()
@@ -303,38 +305,27 @@ export class TabDashboardPage implements OnInit {
         this.renderer.setAttribute(document.body, 'color-theme', 'light');
       }
     });
-
-    /* this.patientService
-      .getUserSettingsV2(dr_username)
-      .subscribe((res: any) => {
-        if (Object.keys(res).length >= 1) {
-          let data = JSON.stringify(res);
-          data = '[' + data + ']';
-          let adat = JSON.parse(data);
-          adat.forEach((el) => {
-            if (typeof el.appearance !== 'undefined') {
-              if (el.appearance.darkmode == 1) {
-                this.renderer.setAttribute(
-                  document.body,
-                  'color-theme',
-                  'dark'
-                );
-              } else {
-                this.renderer.setAttribute(
-                  document.body,
-                  'color-theme',
-                  'light'
-                );
-              }
-            } else {
-              this.renderer.setAttribute(document.body, 'color-theme', 'light');
-            }
-          });
-        }
-      });*/
   }
   ionViewDidLeave() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+  revokeTokenV3;
+  logout() {
+    let dr_username = atob(localStorage.getItem('username'));
+    this.revokeTokenV3 = new RevokeTokenV3();
+    this.revokeTokenV3.jwt = decodeURIComponent(
+      this.functionsService.getcookie('refreshToken')
+    );
+    console.log(this.revokeTokenV3);
+
+    this.doctorService
+      .revokeTokenV3(this.revokeTokenV3)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((res: any) => {
+        this.functionsService.logToConsole(res);
+      });
+
+    this.logoutService.out();
   }
 }

@@ -33,13 +33,14 @@ const routes: Routes = [
             (m) => m.TabInPatientsPageModule
           ),
       },
+      /*
       {
         path: 'appointments',
         loadChildren: () =>
           import('../tab-appointments/tab-appointments.module').then(
             (m) => m.TabAppointmentsPageModule
           ),
-      },
+      },*/
       {
         path: 'settings',
         loadChildren: () =>
@@ -61,6 +62,7 @@ const routes: Routes = [
             (m) => m.TabNewsFeedPageModule
           ),
       },
+      /*
       {
         path: 'collectibles',
         loadChildren: () =>
@@ -81,7 +83,7 @@ const routes: Routes = [
           import(
             '../pages/doctors-information/medical-certificate/medical-certificate.module'
           ).then((m) => m.MedicalCertificatePageModule),
-      },
+      },*/
 
       {
         path: '',
