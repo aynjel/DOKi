@@ -196,13 +196,16 @@ export class TabsDoctorsPage implements OnInit {
       });
   }
   async detail(data: any) {
-    /*//console.log(data);
+    console.log(data.doctorCode);
+    /*//
     localStorage.setItem('drdetails',btoa(JSON.stringify(data)));
     this.router.navigate(['executive/doctors/'+data.doctorCode]);*/
     ////console.log( this.activatedRoute.snapshot.params.id);
     ////console.log(data);
-
     //localStorage.setItem('patientdetails',btoa(JSON.stringify(x)));
+    localStorage.setItem(data.doctorCode, JSON.stringify(data));
+    this.router.navigate([this.router.url + '/' + data.doctorCode]);
+    /*
     const modal = await this.modalController.create({
       component: DoctordetailComponent,
       cssClass: 'my-custom-modal',
@@ -212,6 +215,7 @@ export class TabsDoctorsPage implements OnInit {
       },
     });
     return await modal.present();
+    */
   }
 
   initialload() {
