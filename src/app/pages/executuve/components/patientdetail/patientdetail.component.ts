@@ -1,44 +1,10 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  ViewChild,
-  ViewContainerRef,
-  ComponentFactoryResolver,
-  Renderer2,
-  HostListener,
-} from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import {
   ModalController,
   AlertController,
-  NavController,
   LoadingController,
 } from '@ionic/angular';
-import { ChhAppFeePage } from '../../../../chh-web-components/chh-app-fee/chh-app-fee.page';
-import { from } from 'rxjs';
-import { PopoverController } from '@ionic/angular';
-import { timeStamp } from 'console';
-import { DoctorService } from 'src/app/services/doctor/doctor.service';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
-import { AuthService } from 'src/app/services/auth/auth.service';
-
 import { FunctionsService } from '../../../../shared/functions/functions.service';
-import { PatientService } from 'src/app/services/patient/patient.service';
-import { logWarnings } from 'protractor/built/driverProviders';
-//import { ChemistryPage } from "../../../../chh-web-components/chh-app-test/chemistry/chemistry.page";
-import { ChhAppBasePage } from '../../../../chh-web-components/chh-app-test/chh-app-base/chh-app-base.page';
-import { Messages } from '../../../../shared/messages';
-import { ScreenSizeService } from '../../../../services/screen-size/screen-size.service';
-import { ChhAppTestChemistryComponent } from '../../../../chh-web-components/chh-app-test/chh-app-test-chemistry/chh-app-test-chemistry.component';
-import { ChhAppTestFecalysisComponent } from '../../../../chh-web-components/chh-app-test/chh-app-test-fecalysis/chh-app-test-fecalysis.component';
-import { ChhAppTestSerologyComponent } from '../../../../chh-web-components/chh-app-test/chh-app-test-serology/chh-app-test-serology.component';
-import { StorageService } from '../../../../services/storage/storage.service';
-import { AuthConstants, Consta } from '../../../../config/auth-constants';
-import { executionAsyncResource } from 'async_hooks';
-import { Constants } from 'src/app/shared/constants';
-
 import {
   InPatientData,
   ProfessionalFeeModelv3,
@@ -54,7 +20,6 @@ import {
   InpatientDetails,
 } from '../../../../models/doctor';
 import { ExecutiveService } from 'src/app/services/executive/executive.service';
-import { AnyRecordWithTtl } from 'dns';
 import { DoctordetailComponent } from '../../components/doctordetail/doctordetail.component';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -131,6 +96,9 @@ export class PatientdetailComponent implements OnInit {
   back: any;
   patientid: any;
   admstat: any = '';
+  is_senior;
+  is_pwd;
+  philhealth_membership;
   constructor(
     public modalController: ModalController,
     public executiveService: ExecutiveService,
