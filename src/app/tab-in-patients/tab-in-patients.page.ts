@@ -47,6 +47,7 @@ export class TabInPatientsPage {
   route: string;
   objecthandler: boolean = false;
   data: any = [];
+  isNotification: boolean;
   private ngUnsubscribe = new Subject();
   constructor(
     private authService: AuthService,
@@ -89,6 +90,8 @@ export class TabInPatientsPage {
         this.admittedOrDischargeLabel = '(for Discharge)';
       }
     });
+
+    this.isNotification = true;
   }
 
   ngOnInit() {

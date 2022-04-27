@@ -35,6 +35,13 @@ const routes: Routes = [
         './pages/in-patient-patient-information/progress-notes/progress-notes.module'
       ).then((m) => m.ProgressNotesPageModule),
   },
+  {
+    path: 'menu/inbox',
+    loadChildren: () =>
+      import('./pages/doctors-information/inbox/inbox.module').then(
+        (m) => m.InboxPageModule
+      ),
+  },
 
   {
     path: 'menu/in-patients/:id/professional-fee',

@@ -1,0 +1,29 @@
+<ion-header mode="md" class="ion-no-border">
+  <div>
+    <ion-toolbar color="mango">
+      <ion-title>
+        <ion-icon [name]="isNotification === true ? 'mail-unread-outline' : 'mail-outline'"></ion-icon> Inbox
+      </ion-title>
+      <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
+        <ion-button (click)="back()" color="chh-css-primary2"
+          class="ios button button-clear ion-activatable ion-focusable hydrated">
+          Back&nbsp; <ion-icon name="log-out-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </div>
+</ion-header>
+
+<ion-content>
+  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="selected" color="secondary" mode='ios'>
+    <ion-segment-button value="Final Diagnosis">
+      <ion-label>Final Diagnosis</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Progress Notes">
+      <ion-label>Progress Notes</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Others">
+      <ion-label>Others</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-content>
