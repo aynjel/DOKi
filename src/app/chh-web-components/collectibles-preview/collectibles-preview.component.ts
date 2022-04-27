@@ -65,6 +65,6 @@ export class CollectiblesPreviewComponent implements OnInit {
 
   showmore() {
     this.showMore = !this.showMore;
-    console.log(this.showMore);
+    //console.log(this.showMore);
   }
 }

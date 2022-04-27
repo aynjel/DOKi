@@ -129,7 +129,7 @@ export class AppComponent implements OnInit {
   userData$ = new BehaviorSubject<any>([]);
   public revokeTokenV3: RevokeTokenV3;
   onSplitPaneVisible(event) {
-    console.log(event);
+    // console.log(event);
   }
   ngOnInit() {
     this.storageService.get(AuthConstants.AUTH).then((res) => {
@@ -276,7 +276,7 @@ export class AppComponent implements OnInit {
   @HostListener('window:orientationchange', ['$event'])
   @HostListener('window:resize', ['$event'])
   private onResize(event) {
-    console.log('event', event.target.innerWidth);
+    // console.log('event', event.target.innerWidth);
 
     this.screensizeService.onResize(event.target.innerWidth);
     this.screensizeService.onPortrait(screen.orientation.angle);
