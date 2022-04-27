@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit, NgZone } from '@angular/core';
 import { MenuController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -26,7 +26,7 @@ import { LogoutService } from './services/logout/logout.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   role_flag: any;
   isDesktop: boolean;
   isPortrait: boolean;
@@ -92,6 +92,12 @@ export class AppComponent {
       type: 'med',
     },
   ];
+  logindata;
+  firstName;
+  lastName = 'D';
+  dr_name;
+  dr_code;
+  dr_username;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -107,7 +113,8 @@ export class AppComponent {
     private doctorService: DoctorService,
     private storageService: StorageService,
     private logoutService: LogoutService,
-    private menu: MenuController
+    private menu: MenuController,
+    private ngZone: NgZone
   ) {
     this.initializeApp();
     this.updateClient();
@@ -124,6 +131,17 @@ export class AppComponent {
   onSplitPaneVisible(event) {
     console.log(event);
   }
+  ngOnInit() {
+    this.storageService.get(AuthConstants.AUTH).then((res) => {
+      this.ngZone.run(() => {
+        this.logindata = res;
+        this.lastName = this.logindata.lastName;
+        this.firstName = this.logindata.firstName;
+        this.dr_code = this.logindata.doctorCode;
+        this.dr_username = this.logindata.userName;
+      });
+    });
+  }
   initializeApp() {
     this.revokeTokenV3 = new RevokeTokenV3();
     this.functionsService.logToConsole('initializeApp');
@@ -133,6 +151,10 @@ export class AppComponent {
       this.screensizeService.onResize(this.platform.width());
       this.screensizeService.onPortrait(screen.orientation.angle);
     });
+
+    /* this.dr_name = this.logindata.lastName;
+    this.dr_code = this.logindata.doctorCode;
+    this.dr_username = this.logindata.userName;*/
 
     /*
     if (localStorage.getItem('isIdle') == '1') {

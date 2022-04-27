@@ -49,6 +49,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth/auth.interceptor';
 import { from } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { ChhAppTextAvatarModule } from './chh-web-components/chh-app-text-avatar';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [
@@ -74,6 +75,7 @@ import { CommonModule } from '@angular/common';
     ChhAppChangePassPageModule,
     NgxGoogleAnalyticsModule.forRoot('UA-175566562-1'),
     NgxGoogleAnalyticsRouterModule,
+    ChhAppTextAvatarModule,
     //LottieAnimationViewModule,
     //SliderPageModule,
     UserIdleModule.forRoot({ idle: 120, timeout: 180, ping: 20 }),

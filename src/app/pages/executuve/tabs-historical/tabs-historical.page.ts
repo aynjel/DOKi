@@ -253,7 +253,7 @@ export class TabsHistoricalPage implements OnInit {
   ngOnInit() {
     this.ngUnsubscribe = new Subject();
     this.generateMonthlyTotalAdmissions();
-    this.YTDAverageOccupancyByMonth();
+    //this.YTDAverageOccupancyByMonth();
     this.setDateFromTo();
   }
   monthNames = [
