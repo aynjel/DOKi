@@ -29,6 +29,8 @@ export class ChhAppPatientHeaderComponent {
   }
   ionViewWillEnter() {}
   ngOnInit() {
+    console.log(this.data);
+
     if (this.forMoreOrLess) {
       this.moreOrLess = !this.forMoreOrLess;
     }

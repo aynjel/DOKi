@@ -45,6 +45,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'allpatients/:doctorCode/:admissionNo',
+        loadChildren: () =>
+          import('../pages/patient-detail/patient-detail.module').then(
+            (m) => m.PatientDetailPageModule
+          ),
+      },
+      {
         path: 'historical',
         loadChildren: () =>
           import('../tabs-historical/tabs-historical.module').then(

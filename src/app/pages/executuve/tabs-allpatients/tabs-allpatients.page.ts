@@ -211,12 +211,15 @@ export class TabsAllpatientsPage implements OnInit {
   }
   async detail(x: any, y: any) {
     //
-    this.patientDetail = new PatientDetail();
+    /* this.patientDetail = new PatientDetail();
     this.patientDetail.admissionNo = x;
     this.patientDetail.doctorCode = y;
-    this.showModal(this.patientDetail);
+    this.showModal(this.patientDetail);*/
 
     ////console.log(this.patientDetail);
+
+    this.router.navigate([this.router.url + '/' + y + '/' + x]);
+
     /*
     this.presentLoading();
     let responsebe=[];
@@ -266,6 +269,8 @@ export class TabsAllpatientsPage implements OnInit {
   }
 
   async showModal(responsebe: any) {
+    console.log('responsebe', responsebe);
+
     const modal = await this.modalController.create({
       component: PatientdetailComponent,
       cssClass: 'my-custom-modal',

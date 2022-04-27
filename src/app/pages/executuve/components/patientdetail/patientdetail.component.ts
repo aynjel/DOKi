@@ -108,6 +108,8 @@ export class PatientdetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log('patientdetail', this.patientdetail);
+
     this.ngUnsubscribe = new Subject();
     const modalState = {
       modal: true,
@@ -117,6 +119,8 @@ export class PatientdetailComponent implements OnInit {
     if (this.fromPatientList) {
       this.presentLoading();
       let responsebe = [];
+      console.log(this.patientdetail);
+
       this.executiveService
         .getPatientDetail(this.patientdetail)
         .pipe(takeUntil(this.ngUnsubscribe))
@@ -135,14 +139,7 @@ export class PatientdetailComponent implements OnInit {
               let res1 = [];
 
               res1 = JSON.parse('[' + JSON.stringify(responsebe) + ']');
-              /*responsebe=[];
-              res1.forEach(element => {
-                if(element.forDischargeDateTime != null){
-                  let d = new Date(element.forDischargeDateTime);
-                  element.forDischargeDateTime = d.toLocaleString();
-                }
-                responsebe.push(element);
-              });*/
+              console.log(res1);
 
               this.dismissLoading();
               this.processData(res1);
