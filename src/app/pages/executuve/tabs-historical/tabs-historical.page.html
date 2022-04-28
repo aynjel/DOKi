@@ -31,13 +31,7 @@
                   </ion-item>
                 </div>
               </ion-col-->
-              <ion-col>
-                <ion-item class="addpadding">
-                  <div class='center-button'>
-                    <b class="ion-text-center">{{this.yearTreandTO}} Total Admissions YTD: {{this.MTATotal}}</b>
-                  </div>
-                </ion-item>
-              </ion-col>
+
               <ion-col size-xs="12" class="ion-text-center">
                 <ion-grid class="ion-no-padding">
                   <ion-row class="custom-padding">
@@ -156,10 +150,34 @@
                   <ion-label>Start Date</ion-label>
                   <ion-datetime displayFormat="MMMM" placeholder="Select Date"></ion-datetime>
                 </ion-item-->
+                <ion-col>
+                  <ion-item class="addpadding" lines="none">
+                    <div class='center-button'>
+                      <b class="ion-text-center">{{this.yearTreandTO}} Total Admissions YTD: {{this.MTATotal}}</b>
+                    </div>
+                  </ion-item>
+                </ion-col>
                 <div id="populateMontlyTotalAdmissions"></div>
-
-                <div id="YTDAverageOccupancyByMonth"></div>
-
+                <br />
+                <br />
+                <ion-col>
+                  <ion-item class="addpadding" lines="none">
+                    <div class='center-button'>
+                      <b class="ion-text-center">{{this.yearTreandTO}} Daily Average Census per Month</b>
+                    </div>
+                  </ion-item>
+                </ion-col>
+                <div id="YTDDailyAvgCensusByMonth"></div>
+                <br />
+                <br />
+                <ion-col>
+                  <ion-item class="addpadding" lines="none">
+                    <div class='center-button'>
+                      <b class="ion-text-center">{{this.yearTreandTO}} Daily Average Length of Stay per Month</b>
+                    </div>
+                  </ion-item>
+                </ion-col>
+                <div id="YTDAverageLOSByMonth"></div>
               </ion-col>
             </ion-row>
           </ion-card>

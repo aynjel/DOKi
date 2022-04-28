@@ -62,6 +62,13 @@ export class TabsHistoricalPage implements OnInit {
         this.isDesktop = isDesktop;
       });
   }
+  ngOnInit() {
+    this.ngUnsubscribe = new Subject();
+    this.generateMonthlyTotalAdmissions();
+    this.generateYTDDailyAvgCensusByMonth();
+    this.generateYTDAverageLOSByMonth();
+    this.setDateFromTo();
+  }
   settings() {
     this.router.navigate(['/executive/settings']);
   }
@@ -207,30 +214,59 @@ export class TabsHistoricalPage implements OnInit {
   }
 
   monthTrendYear() {
-    //////console.log(this.yearTreandTO);
     this.generateMonthlyTotalAdmissions();
+    this.generateYTDDailyAvgCensusByMonth();
+    this.generateYTDAverageLOSByMonth();
   }
   monthTrendFromTo() {
-    //console.log('monthTrendTo', this.monthTrendTo);
-    //console.log('monthTrendFrom', this.monthTrendFrom);
     if (this.monthTrendTo >= this.monthTrendFrom) {
-      //this.MTA.destroy();
-      // this.MonthlyTotalAdmissionsCeb = [300, 452, 700];
-      //this.MonthlyTotalAdmissionsMan = [300, 435, 500];
       this.MTACategory = [];
       this.MTACeb = [];
       this.MTAMan = [];
       this.MTATotal = 0;
+      this.cebuCovid = [];
+      console.log(this.cebuCovidTmp);
       for (let i = this.monthTrendFrom - 1; i <= this.monthTrendTo - 1; i++) {
         this.MTATotal += this.MTACebSet[i];
         this.MTATotal += this.MTAManSet[i];
         this.MTACategory.push(this.MTACategorySet[i]);
         this.MTACeb.push(this.MTACebSet[i]);
         this.MTAMan.push(this.MTAManSet[i]);
+        this.cebuCovid.push(this.cebuCovidTmp[i]);
       }
-      //////console.log(this.MTACategory);
-
       this.populateMontlyTotalAdmissions();
+    }
+    this.monthTrendFromTo1();
+  }
+  monthTrendFromTo1() {
+    if (this.monthTrendTo >= this.monthTrendFrom) {
+      this.cebuCovid = [];
+      this.cebuNonCovid = [];
+      this.mandaueCovid = [];
+      this.mandaueNonCovid = [];
+      for (let i = this.monthTrendFrom - 1; i <= this.monthTrendTo - 1; i++) {
+        this.cebuCovid.push(this.cebuCovidTmp[i]);
+        this.cebuNonCovid.push(this.cebuNonCovidTmp[i]);
+        this.mandaueCovid.push(this.mandaueCovidTmp[i]);
+        this.mandaueNonCovid.push(this.mandaueNonCovidTmp[i]);
+      }
+      this.buildYTDDailyAvgCensusByMonth();
+    }
+    this.monthTrendFromTo2();
+  }
+  monthTrendFromTo2() {
+    if (this.monthTrendTo >= this.monthTrendFrom) {
+      this.cebuCritical = [];
+      this.cebuNonCritical = [];
+      this.mandaueCritical = [];
+      this.mandaueNonCritical = [];
+      for (let i = this.monthTrendFrom - 1; i <= this.monthTrendTo - 1; i++) {
+        this.cebuCritical.push(this.cebuCriticalTmp[i]);
+        this.cebuNonCritical.push(this.cebuNonCriticalTmp[i]);
+        this.mandaueCritical.push(this.mandaueCriticalTmp[i]);
+        this.mandaueNonCritical.push(this.mandaueNonCriticalTmp[i]);
+      }
+      this.buildYTDAverageLOSByMonth();
     }
   }
   loading: any;
@@ -243,19 +279,14 @@ export class TabsHistoricalPage implements OnInit {
     await this.loading.present();
 
     const { role, data } = await this.loading.onDidDismiss();
-    ////////////////console.log('Loading dismissed!');
+    //////////////////console.log('Loading dismissed!');
   }
   public async dismissLoading(): Promise<void> {
     if (this.loading) {
       this.loading.dismiss();
     }
   }
-  ngOnInit() {
-    this.ngUnsubscribe = new Subject();
-    this.generateMonthlyTotalAdmissions();
-    //this.YTDAverageOccupancyByMonth();
-    this.setDateFromTo();
-  }
+
   monthNames = [
     'January',
     'February',
@@ -287,7 +318,7 @@ export class TabsHistoricalPage implements OnInit {
     this.dateValueFrom = sendDatedateValue;
     this.dateTodayFrom = this.monthNames[month1 - 1];
 
-    let date2 = new Date(this.dateValueTo);
+    let date2 = new Date();
     let day2 = date2.getDate();
     let month2 = date2.getMonth() + 1;
     let year2 = date2.getFullYear();
@@ -295,14 +326,21 @@ export class TabsHistoricalPage implements OnInit {
       year2 + '-' + ('0' + month2).slice(-2) + '-' + ('0' + day2).slice(-2);
     this.dateValueTo = sendDatedateValue2;
     this.dateTodayTo = this.monthNames[month2 - 1];
+    let date11 = new Date();
+    let month11 = date11.getMonth() + 1;
+    let day11 = date11.getDate();
+    let year11 = date11.getFullYear();
+    this.dateValueTo =
+      year11 + '-' + ('0' + month11).slice(-2) + '-' + ('0' + day11).slice(-2);
+    this.monthTrendTo = ('0' + month11).slice(-2);
 
     let date3 = new Date();
-    console.log(date3);
+    //console.log(date3);
 
     let day3 = date3.getDate();
     let month3 = date3.getMonth() + 1;
     let year3 = date3.getFullYear();
-    console.log(year3);
+    //console.log(year3);
     let sendDatedateValue3 =
       year3 + '-' + ('0' + month3).slice(-2) + '-' + ('0' + day3).slice(-2);
     this.dateValueYear = sendDatedateValue3;
@@ -352,17 +390,25 @@ export class TabsHistoricalPage implements OnInit {
     }, 1000);
   }
   cebuCovid = [];
+  cebuCovidTmp = [];
   cebuNonCovid = [];
+  cebuNonCovidTmp = [];
   mandaueCovid = [];
+  mandaueCovidTmp = [];
   mandaueNonCovid = [];
-  YTDAverageOccupancyByMonth() {
+  mandaueNonCovidTmp = [];
+  generateYTDDailyAvgCensusByMonth() {
     this.cebuCovid = [];
+    this.cebuCovidTmp = [];
     this.cebuNonCovid = [];
+    this.cebuNonCovidTmp = [];
     this.mandaueCovid = [];
+    this.mandaueCovidTmp = [];
     this.mandaueNonCovid = [];
+    this.mandaueNonCovidTmp = [];
     let tempMTA;
     this.executiveService
-      .getYTDAverageOccupancyByMonth()
+      .getYTDDailyAvgCensusByMonth(this.yearTreandTO)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
@@ -373,7 +419,6 @@ export class TabsHistoricalPage implements OnInit {
           this.dismissLoading();
         },
         () => {
-          console.log(this.orderBy(tempMTA));
           tempMTA = this.orderBy(tempMTA);
           tempMTA.forEach((el) => {
             for (let i = 1; i <= 12; i++) {
@@ -382,48 +427,52 @@ export class TabsHistoricalPage implements OnInit {
                 el.patientType == 'Covid' &&
                 el.site == 'C'
               ) {
-                //console.log(el.aveOccupancy);
+                ////console.log(el.aveOccupancy);
                 this.cebuCovid.push(el.aveOccupancy);
+                this.cebuCovidTmp.push(el.aveOccupancy);
               }
               if (
                 el.month == i.toString() &&
                 el.patientType == 'Non-Covid' &&
                 el.site == 'C'
               ) {
-                // console.log(el.aveOccupancy);
+                // //console.log(el.aveOccupancy);
                 this.cebuNonCovid.push(el.aveOccupancy);
+                this.cebuNonCovidTmp.push(el.aveOccupancy);
               }
               if (
                 el.month == i.toString() &&
                 el.patientType == 'Covid' &&
                 el.site == 'M'
               ) {
-                //console.log(el.aveOccupancy);
+                ////console.log(el.aveOccupancy);
                 this.mandaueCovid.push(el.aveOccupancy);
+                this.mandaueCovidTmp.push(el.aveOccupancy);
               }
               if (
                 el.month == i.toString() &&
                 el.patientType == 'Non-Covid' &&
                 el.site == 'M'
               ) {
-                // console.log(el.aveOccupancy);
+                // //console.log(el.aveOccupancy);
                 this.mandaueNonCovid.push(el.aveOccupancy);
+                this.mandaueNonCovidTmp.push(el.aveOccupancy);
               }
             }
           });
-          console.log(this.cebuCovid);
-          console.log(this.cebuNonCovid);
+          //console.log(this.cebuCovid);
+          //console.log(this.cebuNonCovid);
           this.dismissLoading();
-          this.buildYTDAverageOccupancyByMonth();
+          this.monthTrendFromTo1();
         }
       );
   }
-  MTb;
-  buildYTDAverageOccupancyByMonth() {
-    if (this.MTb != undefined) {
-      this.MTb.destroy();
+  DACpM;
+  buildYTDDailyAvgCensusByMonth() {
+    if (this.DACpM != undefined) {
+      this.DACpM.destroy();
     }
-    this.MTb = HighCharts.chart('YTDAverageOccupancyByMonth', {
+    this.DACpM = HighCharts.chart('YTDDailyAvgCensusByMonth', {
       chart: {
         type: 'column',
       },
@@ -490,7 +539,155 @@ export class TabsHistoricalPage implements OnInit {
     });
     //this.MTA.yAxis[0].setExtremes(500, 4700);
     setTimeout(() => {
-      this.MTb.reflow();
+      this.DACpM.reflow();
+    }, 1000);
+  }
+  cebuCritical = [];
+  cebuCriticalTmp = [];
+  cebuNonCritical = [];
+  cebuNonCriticalTmp = [];
+  mandaueCritical = [];
+  mandaueCriticalTmp = [];
+  mandaueNonCritical = [];
+  mandaueNonCriticalTmp = [];
+  generateYTDAverageLOSByMonth() {
+    this.cebuCritical = [];
+    this.cebuCriticalTmp = [];
+    this.cebuNonCritical = [];
+    this.cebuNonCriticalTmp = [];
+    this.mandaueCritical = [];
+    this.mandaueCriticalTmp = [];
+    this.mandaueNonCritical = [];
+    this.mandaueNonCriticalTmp = [];
+    let tempMTA;
+    this.executiveService
+      .getYTDAverageLOSByMonth(this.yearTreandTO)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          this.dismissLoading();
+          tempMTA = res;
+        },
+        (error) => {
+          this.dismissLoading();
+        },
+        () => {
+          tempMTA.forEach((el) => {
+            for (let i = 1; i <= 12; i++) {
+              if (
+                el.month == i.toString() &&
+                el.patientType == 'Critical' &&
+                el.site == 'C'
+              ) {
+                this.cebuCriticalTmp.push(el.aveLOS);
+                this.cebuCritical.push(el.aveLOS);
+              }
+              if (
+                el.month == i.toString() &&
+                el.patientType == 'Non-Critical' &&
+                el.site == 'C'
+              ) {
+                this.cebuNonCriticalTmp.push(el.aveLOS);
+                this.cebuNonCritical.push(el.aveLOS);
+              }
+              if (
+                el.month == i.toString() &&
+                el.patientType == 'Critical' &&
+                el.site == 'M'
+              ) {
+                this.mandaueCriticalTmp.push(el.aveLOS);
+                this.mandaueCritical.push(el.aveLOS);
+              }
+              if (
+                el.month == i.toString() &&
+                el.patientType == 'Non-Critical' &&
+                el.site == 'M'
+              ) {
+                this.mandaueNonCriticalTmp.push(el.aveLOS);
+                this.mandaueNonCritical.push(el.aveLOS);
+              }
+            }
+          });
+          //console.log(this.cebuCritical);
+          //console.log(this.cebuNonCritical);
+          this.dismissLoading();
+          this.monthTrendFromTo2();
+        }
+      );
+  }
+  albm;
+  buildYTDAverageLOSByMonth() {
+    if (this.albm != undefined) {
+      this.albm.destroy();
+    }
+    this.albm = HighCharts.chart('YTDAverageLOSByMonth', {
+      chart: {
+        type: 'column',
+      },
+      title: {
+        //text: 'Total Admissions ' + this.yearTreandTO + ' : ' + this.MTATotal,
+        text: '',
+      },
+      xAxis: {
+        categories: this.MTACategory,
+      },
+      yAxis: {
+        title: { text: '' },
+        stackLabels: {
+          enabled: true,
+          style: {
+            fontWeight: 'bold',
+          },
+        },
+      },
+      /*tooltip: {
+        headerFormat: '<b>{point.x}</b><br/>',
+        pointFormat: '{series.name}: {point.y}',
+      },*/
+      tooltip: {
+        headerFormat: '<b>{point.x}</b><br/>',
+        pointFormat:
+          '{series.name}: {point.y}<br/><br/>Total: {point.stackTotal}',
+      },
+      plotOptions: {
+        column: {
+          stacking: 'normal',
+          dataLabels: {
+            enabled: true,
+          },
+        },
+      },
+      series: [
+        {
+          name: 'Critical Cebu',
+          data: this.cebuCritical,
+          type: undefined,
+          stack: 'Cebu',
+        },
+        {
+          name: 'Non-Critical Cebu',
+          data: this.cebuNonCritical,
+          type: undefined,
+          stack: 'Cebu',
+        },
+        {
+          name: 'Critical Mandaue',
+          data: this.mandaueCritical,
+          type: undefined,
+          stack: 'female',
+        },
+        {
+          name: 'Non-Critical Mandaue',
+          data: this.mandaueNonCritical,
+          type: undefined,
+          stack: 'female',
+        },
+      ],
+      credits: { enabled: false },
+    });
+    //this.MTA.yAxis[0].setExtremes(500, 4700);
+    setTimeout(() => {
+      this.albm.reflow();
     }, 1000);
   }
   orderBy(arr) {
