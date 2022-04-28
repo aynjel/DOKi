@@ -124,6 +124,9 @@ export class PatientDetailPage implements OnInit {
   back: any;
   patientid: any;
   patientDetail;
+  is_pwd;
+  is_senior;
+  dischargeNotice;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
