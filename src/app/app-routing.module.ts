@@ -28,13 +28,13 @@ const routes: Routes = [
         './pages/in-patient-patient-information/in-patient-detail/in-patient-detail.module'
       ).then((m) => m.InpatientDetailPageModule),
   },
-  {
+  /*{
     path: 'menu/in-patients/:id/progressnotes',
     loadChildren: () =>
       import(
         './pages/in-patient-patient-information/progress-notes/progress-notes.module'
       ).then((m) => m.ProgressNotesPageModule),
-  },
+  },*/
   {
     path: 'menu/inbox',
     loadChildren: () =>
@@ -71,7 +71,7 @@ const routes: Routes = [
         './pages/in-patient-patient-information/transaction-summary/transaction-summary.module'
       ).then((m) => m.TransactionSummaryPageModule),
   },
-  {
+  /*{
     path: 'icdrvs',
     loadChildren: () =>
       import(
@@ -91,7 +91,7 @@ const routes: Routes = [
       import(
         './pages/in-patient-patient-information/laboratory-test-modal/laboratory-test-modal.module'
       ).then((m) => m.LaboratoryTestModalPageModule),
-  },
+  },*/
   {
     path: 'resetpassword',
     loadChildren: () =>
@@ -99,11 +99,11 @@ const routes: Routes = [
         (m) => m.ResetpasswordPageModule
       ),
   },
-  {
+  /* {
     path: 'administrator',
     loadChildren: () =>
       import('./pages/admin/tabs/tabs.module').then((m) => m.TabsPageModule),
-  },
+  },*/
   {
     path: 'executive',
     loadChildren: () =>

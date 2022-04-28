@@ -16,12 +16,15 @@ import {
 import { ModalController } from '@ionic/angular';
 import { PatientDetailPage } from '../patient-detail/patient-detail.page';
 import { PatientdetailComponent } from '../../components/patientdetail/patientdetail.component';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-doctordetails',
   templateUrl: './doctordetails.page.html',
   styleUrls: ['./doctordetails.page.scss'],
 })
 export class DoctordetailsPage implements OnInit {
+  private ngUnsubscribe = new Subject();
   isDesktop: boolean;
   public logindata: LoginResponseModelv3;
   inpatientDetails: InpatientDetails = new InpatientDetails();
@@ -87,12 +90,20 @@ export class DoctordetailsPage implements OnInit {
 
     this.doctorDetails.doctorCode = this.dr_details.doctorCode;
 
-    this.executiveService.geInpatients(this.doctorDetails).subscribe(
-      (res: any) => {
-        this.listOfPatients = res;
-      },
-      (error) => {},
-      () => {}
-    );
+    this.executiveService
+      .geInpatients(this.doctorDetails)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          this.listOfPatients = res;
+        },
+        (error) => {},
+        () => {}
+      );
+  }
+
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }
