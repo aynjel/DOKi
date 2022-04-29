@@ -39,7 +39,7 @@ export class TabInPatientsPage {
   inPatients: any;
   inPatientsDraft: any;
   inPatientsDraft1: any;
-  site: any = this.constants.CHH_SITE__CODE__ALL; //"A";
+  site: any = this.constants.CHH_SITE__CODE__CEBU; //"A";
   searchBar: any;
   name: any;
   admittedOrDischarge = this.constants.ADMISSION_STATUS_SELECTION__VALUE__ALL; //"ALL";
@@ -48,6 +48,119 @@ export class TabInPatientsPage {
   objecthandler: boolean = false;
   data: any = [];
   isNotification: boolean;
+  cebuRooms = [
+    {
+      floor: '3B',
+    },
+    {
+      floor: '3C',
+    },
+    {
+      floor: '4B',
+    },
+    {
+      floor: '4C',
+    },
+    {
+      floor: '5A',
+    },
+    {
+      floor: '5B',
+    },
+    {
+      floor: '5C',
+    },
+    {
+      floor: '6A',
+    },
+    {
+      floor: '6B',
+    },
+    {
+      floor: '7A',
+    },
+    {
+      floor: '7B',
+    },
+    {
+      floor: '8A',
+    },
+    {
+      floor: '8B',
+    },
+    {
+      floor: '9A',
+    },
+    {
+      floor: '9B',
+    },
+    {
+      floor: '10A',
+    },
+    {
+      floor: '10B',
+    },
+    {
+      floor: '11A',
+    },
+    {
+      floor: '11B',
+    },
+    {
+      floor: 'NCU',
+    },
+    {
+      floor: 'ICU',
+    },
+    {
+      floor: 'INT',
+    },
+    {
+      floor: 'CCU',
+    },
+    {
+      floor: 'PICU',
+    },
+    {
+      floor: 'DRM',
+    },
+    {
+      floor: 'NICU',
+    },
+    {
+      floor: 'PWD',
+    },
+  ];
+  cebuRooms1 = [
+    '3B',
+    '3C',
+    '4B',
+    '4C',
+    '5A',
+    '5B',
+    '5C',
+    '6A',
+    '6B',
+    '7A',
+    '7B',
+    '8A',
+    '8B',
+    '9A',
+    '9B',
+    '10A',
+    '10B',
+    '11A',
+    '11B',
+    'NCU',
+    'ICU',
+    'INT',
+    'CCU',
+    'PICU',
+    'DRM',
+    'NICU',
+    'PWD',
+  ];
+  stack = [];
   private ngUnsubscribe = new Subject();
   constructor(
     private authService: AuthService,
@@ -114,6 +227,7 @@ export class TabInPatientsPage {
       this.inPatients = this.inPatientsDraft;
     } else {
       this.inPatients = [];
+      this.finalFullData = [];
       /*
       this.inPatientsDraft.forEach((element) => {
         if (this.site == this.constants.CHH_SITE__CODE__CEBU ) {
@@ -240,6 +354,32 @@ export class TabInPatientsPage {
         this.inPatients = sampleInPatients1;
       }
     }
+    let floorStack = [];
+
+    this.stack = [...new Set(this.inPatients.map((d) => d.floor_desc))];
+    this.stack = this.sortOrder(this.cebuRooms1, this.stack);
+    this.stack.forEach((element) => {
+      let y = this.cebuRooms.filter((x) => x.floor == element);
+      let x = JSON.stringify(this.cebuRooms.filter((x) => x.floor == element));
+      x = x.replace(/\[|\]/g, '');
+      floorStack.push(JSON.parse(x));
+    });
+    let xdata;
+    floorStack.forEach((fs) => {
+      let data;
+      data = this.inPatients.filter((x) => x.floor_desc == fs.floor);
+      let xyz = { floor: fs.floor, data: data };
+      this.finalFullData.push(xyz);
+    });
+    console.log(JSON.stringify(this.finalFullData));
+  }
+  finalFullData = [];
+  sortOrder(getOrder, getArr) {
+    return getOrder.filter(function (order) {
+      return getArr.some(function (list) {
+        return order === list;
+      });
+    });
   }
 
   //Fired when the component routing to is about to animate into view.
@@ -284,7 +424,11 @@ export class TabInPatientsPage {
 
     this.callPatient(this.site);
   }
-
+  hasId(data, id) {
+    return data.some(function (el) {
+      return el.floor === id;
+    });
+  }
   //Get using Doctors API
   callPatient(data: any) {
     this.isFetchDone = false;
@@ -372,6 +516,8 @@ export class TabInPatientsPage {
   }
 
   locationAction(data: any) {
+    console.log('locationAction', data);
+
     if (
       data == this.constants.CHH_SITE__CODE__ALL /*"A"*/ ||
       data == this.constants.CHH_SITE__CODE__CEBU /*"C"*/ ||
