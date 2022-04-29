@@ -276,18 +276,15 @@ export class InPatientDetailPage {
     let ppatientdata = new PatientDetail();
     ppatientdata.admissionNo = this.patient_id;
     ppatientdata.doctorCode = this.dr_code;
-    console.log(ppatientdata);
-
     this.presentLoading();
     this.executiveService
       .getPatientDetail(ppatientdata)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          console.log('getPatientDetail', res);
-
+          ////console.log(res.admission_no);
           this.data1 = JSON.parse('[' + JSON.stringify(res) + ']');
-          //localStorage.setItem('patientData', btoa(JSON.stringify(this.data1)));
+          localStorage.setItem('patientData', btoa(JSON.stringify(this.data1)));
         },
         (error) => {
           this.dismissLoading();
@@ -300,10 +297,10 @@ export class InPatientDetailPage {
               this.inpatientModelInpatients.accountNo = this.opd_code;
               this.inpatientDetails.admission_no = this.opd_code;
               this.data.push(element);
-              /*localStorage.setItem(
+              localStorage.setItem(
                 'selectedPatient',
                 btoa(JSON.stringify(this.data))
-              );*/
+              );
               this.admissionstatus = element.admission_status;
               this.patient_name = element.first_name + ' ' + element.last_name;
               this.patient_name =
@@ -326,8 +323,8 @@ export class InPatientDetailPage {
           } else {
             this.alert('No Data Available', 'Okay');
           }
-          console.log('data1', this.data1);
-          console.log('data', this.data);
+          console.log(this.data1);
+
           this.is_pwd = this.data1[0].is_pwd;
           this.is_senior = this.data1[0].is_senior;
           console.log(this.is_pwd, this.is_senior);

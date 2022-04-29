@@ -46,7 +46,7 @@
     <ion-row>
       <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
         <ng-container>
-          <ion-accordion-group>
+          <ion-accordion-group [value]='defaultAccordions'>
             <div *ngFor="let y of finalFullData">
 
               <ion-accordion value="{{y.floor}}">

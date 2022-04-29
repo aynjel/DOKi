@@ -48,119 +48,8 @@ export class TabInPatientsPage {
   objecthandler: boolean = false;
   data: any = [];
   isNotification: boolean;
-  cebuRooms = [
-    {
-      floor: '3B',
-    },
-    {
-      floor: '3C',
-    },
-    {
-      floor: '4B',
-    },
-    {
-      floor: '4C',
-    },
-    {
-      floor: '5A',
-    },
-    {
-      floor: '5B',
-    },
-    {
-      floor: '5C',
-    },
-    {
-      floor: '6A',
-    },
-    {
-      floor: '6B',
-    },
-    {
-      floor: '7A',
-    },
-    {
-      floor: '7B',
-    },
-    {
-      floor: '8A',
-    },
-    {
-      floor: '8B',
-    },
-    {
-      floor: '9A',
-    },
-    {
-      floor: '9B',
-    },
-    {
-      floor: '10A',
-    },
-    {
-      floor: '10B',
-    },
-    {
-      floor: '11A',
-    },
-    {
-      floor: '11B',
-    },
-    {
-      floor: 'NCU',
-    },
-    {
-      floor: 'ICU',
-    },
-    {
-      floor: 'INT',
-    },
-    {
-      floor: 'CCU',
-    },
-    {
-      floor: 'PICU',
-    },
-    {
-      floor: 'DRM',
-    },
-    {
-      floor: 'NICU',
-    },
-    {
-      floor: 'PWD',
-    },
-  ];
-  cebuRooms1 = [
-    '3B',
-    '3C',
-    '4B',
-    '4C',
-    '5A',
-    '5B',
-    '5C',
-    '6A',
-    '6B',
-    '7A',
-    '7B',
-    '8A',
-    '8B',
-    '9A',
-    '9B',
-    '10A',
-    '10B',
-    '11A',
-    '11B',
-    'NCU',
-    'ICU',
-    'INT',
-    'CCU',
-    'PICU',
-    'DRM',
-    'NICU',
-    'PWD',
-  ];
-  stack = [];
+  finalFullData = [];
+  defaultAccordions;
   private ngUnsubscribe = new Subject();
   constructor(
     private authService: AuthService,
@@ -225,6 +114,7 @@ export class TabInPatientsPage {
     if (this.site == this.constants.CHH_SITE__CODE__ALL /*"A"*/) {
       this.inPatients = [];
       this.inPatients = this.inPatientsDraft;
+      this.finalFullData = [];
     } else {
       this.inPatients = [];
       this.finalFullData = [];
@@ -355,25 +245,31 @@ export class TabInPatientsPage {
       }
     }
     let floorStack = [];
+    let data;
+    let xyz;
+    let reference;
+    if (this.site == 'C') {
+      reference = this.constants.cebuRooms;
+    } else {
+      reference = this.constants.mandaueRooms;
+    }
+    console.log(this.defaultAccordions);
 
-    this.stack = [...new Set(this.inPatients.map((d) => d.floor_desc))];
-    this.stack = this.sortOrder(this.cebuRooms1, this.stack);
-    this.stack.forEach((element) => {
-      let y = this.cebuRooms.filter((x) => x.floor == element);
-      let x = JSON.stringify(this.cebuRooms.filter((x) => x.floor == element));
-      x = x.replace(/\[|\]/g, '');
-      floorStack.push(JSON.parse(x));
+    let stack = [...new Set(this.inPatients.map((d) => d.floor_desc))];
+    stack = this.sortOrder(reference, stack);
+    stack.forEach((element) => {
+      if (this.defaultAccordions == null) {
+        this.defaultAccordions = element;
+      }
+      floorStack.push({ floor: element });
     });
-    let xdata;
     floorStack.forEach((fs) => {
-      let data;
       data = this.inPatients.filter((x) => x.floor_desc == fs.floor);
-      let xyz = { floor: fs.floor, data: data };
+      xyz = { floor: fs.floor, data: data };
       this.finalFullData.push(xyz);
     });
-    console.log(JSON.stringify(this.finalFullData));
   }
-  finalFullData = [];
+
   sortOrder(getOrder, getArr) {
     return getOrder.filter(function (order) {
       return getArr.some(function (list) {
@@ -516,7 +412,7 @@ export class TabInPatientsPage {
   }
 
   locationAction(data: any) {
-    console.log('locationAction', data);
+    this.defaultAccordions = null;
 
     if (
       data == this.constants.CHH_SITE__CODE__ALL /*"A"*/ ||
