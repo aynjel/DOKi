@@ -16,6 +16,7 @@ export class TabNewsFeedPage implements OnInit {
   isDesktop: boolean;
   private ngUnsubscribe = new Subject();
   newsfeed: any;
+  isNotification: boolean;
   constructor(
     private screensizeService: ScreenSizeService,
     private modalController: ModalController,
@@ -34,6 +35,7 @@ export class TabNewsFeedPage implements OnInit {
         this.isDesktop = isDesktop;
       });
     this.addMoreItems();
+    this.checkInbox();
   }
   items = [];
   numTimesLeft = 5;
@@ -55,7 +57,27 @@ export class TabNewsFeedPage implements OnInit {
 
     console.log(this.ngUnsubscribe);
   }
-
+  checkInbox() {
+    let jsonResponse = '';
+    this.doctorService
+      .getPendingApproval()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          jsonResponse = res;
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          if (jsonResponse == '') {
+            this.isNotification = false;
+          } else {
+            this.isNotification = true;
+          }
+        }
+      );
+  }
   loadData(event) {
     setTimeout(() => {
       this.functionsService.logToConsole('Done');

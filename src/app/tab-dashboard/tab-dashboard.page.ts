@@ -41,6 +41,7 @@ export class TabDashboardPage implements OnInit {
   public logindata: LoginResponseModelv3;
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   private ngUnsubscribe = new Subject();
+  isNotification: boolean;
   constructor(
     private authService: AuthService,
     private screensizeService: ScreenSizeService,
@@ -62,6 +63,7 @@ export class TabDashboardPage implements OnInit {
         this.isDesktop = isDesktop;
       });
     this.checkAppearance();
+    this.checkInbox();
   }
 
   doRefresh(event) {
@@ -186,7 +188,27 @@ export class TabDashboardPage implements OnInit {
   ngOnInit() {
     this.$gaService.pageView('/Dashboard', 'Dashboard Tab');
   }
-
+  checkInbox() {
+    let jsonResponse = '';
+    this.doctorService
+      .getPendingApproval()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          jsonResponse = res;
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          if (jsonResponse == '') {
+            this.isNotification = false;
+          } else {
+            this.isNotification = true;
+          }
+        }
+      );
+  }
   goto(data) {
     this.router.navigate(['/menu/in-patients' + data]);
   }

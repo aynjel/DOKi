@@ -93,14 +93,34 @@ export class TabInPatientsPage {
       }
     });
 
-    this.isNotification = true;
+    this.checkInbox();
   }
 
   ngOnInit() {
     this.checkAppearance();
     this.$gaService.pageView('/In-Patient', 'In-Patient Tab');
   }
-
+  checkInbox() {
+    let jsonResponse = '';
+    this.doctorService
+      .getPendingApproval()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          jsonResponse = res;
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          if (jsonResponse == '') {
+            this.isNotification = false;
+          } else {
+            this.isNotification = true;
+          }
+        }
+      );
+  }
   /* async Alert(data1: any, data2: any) {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
@@ -253,7 +273,6 @@ export class TabInPatientsPage {
     } else {
       reference = this.constants.mandaueRooms;
     }
-    console.log(this.defaultAccordions);
 
     let stack = [...new Set(this.inPatients.map((d) => d.floor_desc))];
     stack = this.sortOrder(reference, stack);
@@ -265,7 +284,6 @@ export class TabInPatientsPage {
     });
     floorStack.forEach((fs) => {
       data = this.inPatients.filter((x) => x.floor_desc == fs.floor);
-      console.log(data.length);
       let designation;
       if (data.length == 1) {
         designation = 'Patient';
