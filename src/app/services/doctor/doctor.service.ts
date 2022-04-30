@@ -534,4 +534,20 @@ export class DoctorService {
     //return this.http.put(url, JSON.stringify(data), options);
     return this.http.put(url, data, options);
   }
+
+  getPendingApproval() {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json;charset=utf-8',
+    });
+    const options = { headers: headers, withCredentials: true };
+    const url =
+      environment.apiRouterUrl + 'v3/DischargeDiagnosis/PendingApproval';
+    return this.http.get(url, options);
+  }
+  approvePendingApproval(data) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers: headers, withCredentials: false };
+    const url = environment.apiRouterUrl + 'v3/DischargeDiagnosis/Approve';
+    return this.http.put(url, data, options);
+  }
 }

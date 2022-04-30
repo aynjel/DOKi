@@ -51,7 +51,8 @@
 
               <ion-accordion value="{{y.floor}}">
                 <ion-item slot="header">
-                  <ion-label>{{y.floor}}</ion-label>
+                  <ion-label>{{y.floor}} <span style="font-size: 12px;">({{y.patients}})</span>
+                  </ion-label>
                 </ion-item>
                 <ion-list slot="content">
                   <div *ngFor="let x of y.data">

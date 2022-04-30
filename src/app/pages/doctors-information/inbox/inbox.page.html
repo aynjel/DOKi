@@ -26,5 +26,88 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+      refreshingSpinner="circles" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
+        <ng-container>
 
+          <div *ngFor="let x of pendingApproval">
+            <ion-card mode="ios">
+
+              <ion-list>
+                <ion-item style="padding-bottom: 10px">
+                  <div class="ion-text-wrap">
+                    <ion-label>
+                      <h2 class="ion-text-wrap" style="padding-top: 10px;">
+                        <b>{{ x.patient_name }}</b>
+                        <ion-text color="primary">
+                          <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong>
+                              {{x.gender}}</b></p>
+                        </ion-text>
+                      </h2>
+                    </ion-label>
+                  </div>
+                  <ion-badge color="warning" slot="end" class="font-size12"
+                    *ngIf=" x.admission_status == 'DN' && x.doctor_prof_fee == null && x.is_posted == null ">PF
+                  </ion-badge>
+                  <ion-badge color="success" slot="end" class="font-size12"
+                    *ngIf="x.doctor_prof_fee != null && x.is_posted != null">PF OK</ion-badge>
+                </ion-item>
+                <ion-item lines="none" style="padding-bottom: 10px;font-size: 12px;">
+                  <div class="ion-text-wrap" style="padding-top: 5px">
+                    <div *ngIf="x.site == 'C'" class=" font-size12">
+                      <ion-icon name="location-outline" slot="start"></ion-icon>
+                      Chong Hua Hospital
+                    </div>
+                    <div *ngIf="x.site == 'M'" class=" font-size12">
+                      <ion-icon name="location-outline" slot="start"></ion-icon>
+                      Chong Hua Hospital Mandaue
+                    </div>
+                    <div class=" font-size12">
+                      <ion-icon name="bed-outline" slot="start"></ion-icon>
+                      Room {{ x.room_no }}
+                    </div>
+                    <div class=" font-size12" style="font-size: 13px;">
+                      <ion-icon name="calendar-outline" slot="start"></ion-icon>
+                      <span style="font-size: 13px;"> Admission Date &nbsp;&nbsp;: {{ x.dateAdmitted }}</span>
+                    </div>
+
+
+                  </div>
+
+                </ion-item>
+                <ion-item>
+                  <div class="ion-text-wrap">
+                    <ion-text>Final Diagnosis</ion-text>
+                  </div>
+                </ion-item>
+                <ion-item>
+
+                  <ion-text [innerHTML]="x.final_diagnosis" class="ion-text-wrap" style="font-size: 14px;"></ion-text>
+                </ion-item>
+
+              </ion-list>
+              <ion-footer>
+                <ion-row>
+                  <ion-col>
+
+                  </ion-col>
+                  <ion-col>
+                    <ion-button size="small" color="mango" shape="round" expand="block"
+                      (click)="approvePendingAPproval(x.discharge_no)">Approve</ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-footer>
+            </ion-card>
+          </div>
+
+        </ng-container>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

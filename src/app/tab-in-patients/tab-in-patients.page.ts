@@ -265,7 +265,19 @@ export class TabInPatientsPage {
     });
     floorStack.forEach((fs) => {
       data = this.inPatients.filter((x) => x.floor_desc == fs.floor);
-      xyz = { floor: fs.floor, data: data };
+      console.log(data.length);
+      let designation;
+      if (data.length == 1) {
+        designation = 'Patient';
+      } else {
+        designation = 'Patients';
+      }
+      xyz = {
+        floor: fs.floor,
+        patients: data.length,
+        designation: designation,
+        data: data,
+      };
       this.finalFullData.push(xyz);
     });
   }
