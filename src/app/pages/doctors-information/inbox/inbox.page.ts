@@ -1,5 +1,5 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { ActionSheetController, NavController } from '@ionic/angular';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
 import { takeUntil } from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -22,7 +22,8 @@ export class InboxPage implements OnInit {
     private navCtrl: NavController,
     public doctorService: DoctorService,
     public screensizeService: ScreenSizeService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    public actionSheetController: ActionSheetController
   ) {
     this.isNotification = true;
     this.screensizeService
@@ -104,5 +105,42 @@ export class InboxPage implements OnInit {
     this.ngUnsubscribe.next();
     // this.ngUnsubscribe.complete();
     this.ngUnsubscribe.complete();
+  }
+
+  async presentActionSheet(x) {
+    const actionSheet = await this.actionSheetController.create({
+      mode: 'ios',
+      header:
+        'Are you sure to Approve ' +
+        x.patient_name +
+        "'s final diagnosis approval?",
+      cssClass: 'my-custom-class',
+      buttons: [
+        {
+          text: 'Yes, Approve',
+          icon: 'thumbs-up-outline',
+          id: 'delete-button',
+          data: {
+            type: 'delete',
+          },
+          handler: () => {
+            this.approvePendingAPproval(x.discharge_no);
+          },
+        },
+
+        {
+          text: 'Back',
+          icon: 'arrow-back-outline',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          },
+        },
+      ],
+    });
+    await actionSheet.present();
+
+    const { role, data } = await actionSheet.onDidDismiss();
+    console.log('onDidDismiss resolved with role and data', role, data);
   }
 }
