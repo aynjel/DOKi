@@ -127,6 +127,9 @@ export class InPatientDetailPage {
   is_senior;
   is_pwd;
   philhealth_membership;
+  isCancelFinalDiagnosisApproval;
+  finalDiagnosisApproval;
+  patientName;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -282,7 +285,7 @@ export class InPatientDetailPage {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          ////console.log(res.admission_no);
+          this.patientName = res.last_name + ', ' + res.first_name;
           this.data1 = JSON.parse('[' + JSON.stringify(res) + ']');
           localStorage.setItem('patientData', btoa(JSON.stringify(this.data1)));
         },
@@ -581,6 +584,7 @@ export class InPatientDetailPage {
             this.isFetchDone = true;
           }
         );
+      this.getApprovalStatus(this.patient_id);
     }
 
     this.postData.DateCreated = this.functionsService.getSystemDateTime();
@@ -608,6 +612,42 @@ export class InPatientDetailPage {
       }
     );*/
     this.getProgressNotes();
+  }
+  getApprovalStatus(data) {
+    let approvalStatus = {
+      account_no: data,
+    };
+    this.doctorService
+      .getApprovalStatus(approvalStatus)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          if (res != null) {
+            this.finalDiagnosisApproval = res;
+            this.isCancelFinalDiagnosisApproval = res[0].approval_status;
+          } else {
+            this.isCancelFinalDiagnosisApproval = '';
+          }
+        },
+        (error) => {},
+        () => {}
+      );
+  }
+  cancelApproval(data1) {
+    let cancel = {
+      discharge_no: data1,
+    };
+    this.doctorService
+      .cancelApprovedFinalDiagnosis(cancel)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          console.log(res);
+          this.ionViewWillEnter();
+        },
+        (error) => {},
+        () => {}
+      );
   }
   getProgressNotes() {
     this.progessNotes = [];

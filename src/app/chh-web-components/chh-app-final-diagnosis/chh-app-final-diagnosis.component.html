@@ -22,4 +22,15 @@
       </div>
     </ion-item>
   </ion-list>
+  <ion-footer *ngIf="isCancelFinalDiagnosisApproval =='RA'">
+    <ion-row>
+      <ion-col>
+
+      </ion-col>
+      <ion-col>
+        <ion-button size="small" color="warning" shape="round" expand="block" (click)="approvePendingAPproval()">Cancel
+          Approval</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-footer>
 </ion-card>
