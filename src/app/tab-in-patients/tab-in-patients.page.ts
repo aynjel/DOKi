@@ -92,28 +92,30 @@ export class TabInPatientsPage {
         this.admittedOrDischargeLabel = '(for Discharge)';
       }
     });
-
-    this.checkInbox();
   }
 
   ngOnInit() {
     this.checkAppearance();
+    this.checkInbox();
     this.$gaService.pageView('/In-Patient', 'In-Patient Tab');
   }
   checkInbox() {
+    console.log('checkInbox');
+
     let jsonResponse = '';
     this.doctorService
       .getPendingApproval()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
+          console.log(res);
           jsonResponse = res;
         },
         (error) => {
           console.log(error);
         },
         () => {
-          if (jsonResponse == '') {
+          if (jsonResponse == null) {
             this.isNotification = false;
           } else {
             this.isNotification = true;
