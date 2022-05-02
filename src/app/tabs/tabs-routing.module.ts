@@ -62,6 +62,14 @@ const routes: Routes = [
             (m) => m.TabNewsFeedPageModule
           ),
       },
+      {
+        path: 'inbox',
+        loadChildren: () =>
+          import('../pages/doctors-information/inbox/inbox.module').then(
+            (m) => m.InboxPageModule
+          ),
+      },
+
       /*
       {
         path: 'collectibles',
