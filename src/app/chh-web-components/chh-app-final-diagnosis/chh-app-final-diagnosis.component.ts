@@ -19,6 +19,7 @@ export class ChhAppFinalDiagnosisComponent implements OnInit {
   @Input() finalDiagnosis2: any;
   @Output() cancelApproval: EventEmitter<any> = new EventEmitter();
   isDesktop: any;
+  @Input() approvedDate;
   constructor(
     private screensizeService: ScreenSizeService,
     public actionSheetController: ActionSheetController
@@ -31,9 +32,7 @@ export class ChhAppFinalDiagnosisComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    console.log(this.finalDiagnosisApproval);
-  }
+  ngOnInit() {}
   approvePendingAPproval() {
     this.presentActionSheet();
   }

@@ -72,7 +72,7 @@ export class InPatientDetailPage {
   text: string;
   checkmark: boolean = false;
   limit: number = 40;
-  truncating = true;
+  truncating = false;
   truncating1 = true;
   daysOfManage: any;
   dateAdmitted: any;
@@ -613,6 +613,7 @@ export class InPatientDetailPage {
     );*/
     this.getProgressNotes();
   }
+  approvedDate;
   getApprovalStatus(data) {
     let approvalStatus = {
       account_no: data,
@@ -623,8 +624,12 @@ export class InPatientDetailPage {
       .subscribe(
         (res: any) => {
           if (res != null) {
+            console.log('approvedDate', res);
+
             this.finalDiagnosisApproval = res;
             this.isCancelFinalDiagnosisApproval = res[0].approval_status;
+            this.approvedDate = res[0].approve_date;
+            console.log(this.approvedDate);
           } else {
             this.isCancelFinalDiagnosisApproval = '';
           }

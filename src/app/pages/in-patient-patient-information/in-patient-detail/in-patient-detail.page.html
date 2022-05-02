@@ -125,7 +125,7 @@ ___  ___        _      _  _
   <app-chh-app-final-diagnosis [data]="admissionstatus" [finalDiagnosis]="finalDiagnosis" [limit]="limit"
     [truncating]="truncating" [finalDiagnosis1]="finalDiagnosis1" [finalDiagnosis2]="finalDiagnosis2"
     [finalDiagnosisApproval]="finalDiagnosisApproval" [isCancelFinalDiagnosisApproval]='isCancelFinalDiagnosisApproval'
-    [patientName]="patientName" (cancelApproval)="cancelApproval($event)">
+    [patientName]="patientName" (cancelApproval)="cancelApproval($event)" [approvedDate]="approvedDate">
   </app-chh-app-final-diagnosis>
   <!-- <ion-card mode="ios"  *ngIf="!isDesktop" >
     <ion-list>
