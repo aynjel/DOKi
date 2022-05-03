@@ -411,7 +411,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     this.functionsService.logToConsole(this.method);
 
     if (this.method == 'Insurance') {
-      this.functionsService.logToConsole(this.InsurancePF);
+      this.InsurancePF = this.form.value.InsurancePF;
 
       if (this.InsurancePF <= 0 || this.InsurancePF == null) {
         /*this.postData.ProfFee = 0;
@@ -438,6 +438,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
         }
       }
     } else if (this.method == 'Personal-philhealth') {
+      this.PersonalPhilhealthPF = this.form.value.PersonalPhilhealthPF;
       if (this.PersonalPhilhealthPF <= 0 || this.PersonalPhilhealthPF == null) {
         /*this.postData.ProfFee = 0;
         this.postData.IsVAT = 'N';
