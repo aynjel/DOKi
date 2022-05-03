@@ -9,7 +9,11 @@ import {
 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { ModalController, AlertController } from '@ionic/angular';
+import {
+  ModalController,
+  AlertController,
+  NavController,
+} from '@ionic/angular';
 import { ChhAppFeePage } from '../../../chh-web-components/chh-app-fee/chh-app-fee.page';
 import { from } from 'rxjs';
 import { PopoverController } from '@ionic/angular';
@@ -123,7 +127,8 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     public storageService: StorageService,
     public constants: Constants,
     private renderer: Renderer2,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public nav: NavController
   ) {
     localStorage.setItem('modaled', '0');
     this.screensizeService
@@ -225,7 +230,9 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
       this.patient_name
     );
 
-    //this.checkAppearance();
+    if (this.id != this.data[0].admission_no) {
+      this.nav.back();
+    }
 
     this.initialize(this.method);
     /*

@@ -220,7 +220,9 @@ export class TransactionSummaryPage implements OnInit {
     } else {
       this.site = 'Chong Hua Hospital Mandaue';
     }
-
+    if (this.id != this.data[0].admission_no) {
+      this.nav.back();
+    }
     this.dateAdmitted = this.data[0].admission_date;
   }
   disableSubmit: boolean = false;

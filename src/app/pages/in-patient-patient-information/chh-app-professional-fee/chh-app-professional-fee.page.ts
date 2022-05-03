@@ -9,7 +9,11 @@ import {
 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { ModalController, AlertController } from '@ionic/angular';
+import {
+  ModalController,
+  AlertController,
+  NavController,
+} from '@ionic/angular';
 import { ChhAppFeePage } from '../../../chh-web-components/chh-app-fee/chh-app-fee.page';
 import { from } from 'rxjs';
 import { PopoverController } from '@ionic/angular';
@@ -114,7 +118,8 @@ export class ChhAppProfessionalFeePage implements OnInit {
     public messages: Messages,
     public storageService: StorageService,
     public constants: Constants,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private nav: NavController
   ) {
     localStorage.setItem('modaled', '0');
 
@@ -137,6 +142,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     this.routerLinkBack = '/menu/in-patients/';
 
     this.patient_id = this.activatedRoute.snapshot.params.id;
+
     /*this.postData = JSON.parse(atob(localStorage.getItem('postData'))) as InPatientData;*/
     this.professionalFeeModelv3 = JSON.parse(
       atob(localStorage.getItem('postData1'))
@@ -159,9 +165,12 @@ export class ChhAppProfessionalFeePage implements OnInit {
     this.data = JSON.parse(atob(localStorage.getItem('patientData')));
     this.is_pwd = this.data[0].is_pwd;
     this.is_senior = this.data[0].is_senior;
-    console.log(this.is_pwd, this.is_senior);
+    //console.log(this.is_pwd, this.is_senior);
     this.dateAdmitted = this.data[0].admission_date;
-
+    //console.log(this.data[0].admission_no);
+    if (this.patient_id != this.data[0].admission_no) {
+      this.nav.back();
+    }
     this.data1 = this.data[0].doctor_prof_fee;
     this.patient_name = this.data[0].first_name + ' ' + this.data[0].last_name;
     this.patient_name = this.functionsService.convertAllFirstLetterToUpperCase(

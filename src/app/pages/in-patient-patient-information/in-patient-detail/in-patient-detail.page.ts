@@ -285,9 +285,17 @@ export class InPatientDetailPage {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          this.patientName = res.last_name + ', ' + res.first_name;
-          this.data1 = JSON.parse('[' + JSON.stringify(res) + ']');
-          localStorage.setItem('patientData', btoa(JSON.stringify(this.data1)));
+          console.log(res);
+          if (res == null) {
+            this.back();
+          } else {
+            this.patientName = res.last_name + ', ' + res.first_name;
+            this.data1 = JSON.parse('[' + JSON.stringify(res) + ']');
+            localStorage.setItem(
+              'patientData',
+              btoa(JSON.stringify(this.data1))
+            );
+          }
         },
         (error) => {
           this.dismissLoading();
@@ -1109,7 +1117,9 @@ export class InPatientDetailPage {
     );
   }
 
-  back() {}
+  back() {
+    this.nav.back();
+  }
 
   checkAppearance() {
     this.functionsService.logToConsole('checkAppearance');
