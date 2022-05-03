@@ -95,14 +95,15 @@ export class TabInPatientsPage {
   }
 
   ngOnInit() {
+    //console.log('ngOnInit');
+
     this.checkAppearance();
-    this.checkInbox();
     this.$gaService.pageView('/In-Patient', 'In-Patient Tab');
   }
   checkInbox() {
-    console.log('checkInbox');
+    //console.log('checksInbox');
 
-    let jsonResponse = '';
+    let jsonResponse = null;
     this.doctorService
       .getPendingApproval()
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -115,6 +116,8 @@ export class TabInPatientsPage {
           console.log(error);
         },
         () => {
+          console.log(jsonResponse);
+
           if (jsonResponse == null) {
             this.isNotification = false;
           } else {
@@ -359,8 +362,8 @@ export class TabInPatientsPage {
   }
   //Get using Doctors API
   callPatient(data: any) {
+    this.checkInbox();
     this.isFetchDone = false;
-
     this.doctorService
       .getInPatientV3()
       .pipe(takeUntil(this.ngUnsubscribe))

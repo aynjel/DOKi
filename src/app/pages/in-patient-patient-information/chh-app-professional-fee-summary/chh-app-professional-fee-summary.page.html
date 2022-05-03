@@ -43,7 +43,8 @@
 </ion-header>
 
 <ion-content *ngIf="!isDesktop" id="content">
-  <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [is_pwd]="is_pwd" [is_senior]="is_senior">
+  <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [is_pwd]="is_pwd" [is_senior]="is_senior"
+    [forMoreOrLess]="true">
   </app-chh-app-patient-header>
 
 
@@ -116,7 +117,8 @@
     <ion-card mode="ios" *ngIf="!isDesktop && InsuranceShowVat">
       <ion-item lines="none">
         <ion-label>Add VAT?</ion-label>
-        <ion-checkbox color="primary" checked="false" [(ngModel)]="InsuranceVat" (ionChange)="insuranceVat()">
+        <ion-checkbox color="primary" checked="false" [(ngModel)]="InsuranceVat" (ionChange)="insuranceVat()"
+          [disabled]="isVatDisabled">
         </ion-checkbox>
       </ion-item>
     </ion-card>
@@ -227,7 +229,8 @@ ______   _   _   _____   _____
     <ion-card mode="ios" *ngIf="!isDesktop && PhilhealthShowVat">
       <ion-item lines="none">
         <ion-label>Add VAT?</ion-label>
-        <ion-checkbox color="primary" checked="false" [(ngModel)]="PhilhealthVat" (ionChange)="philhealthVat()">
+        <ion-checkbox color="primary" checked="false" [(ngModel)]="PhilhealthVat" (ionChange)="philhealthVat()"
+          [disabled]="isVatDisabled">
         </ion-checkbox>
       </ion-item>
     </ion-card>
@@ -345,7 +348,7 @@ ______                         ______   _   _   _____   _____
       <ion-item lines="none">
         <ion-label>Add VAT?</ion-label>
         <ion-checkbox color="primary" checked="false" [(ngModel)]="PersonalPhilhealthVat"
-          (ionChange)="personalPhilhealthVat()"></ion-checkbox>
+          (ionChange)="personalPhilhealthVat()" [disabled]="isVatDisabled"></ion-checkbox>
       </ion-item>
     </ion-card>
 
@@ -626,7 +629,7 @@ ______          _    _
                   <ion-item lines="none">
                     <ion-label>Add VAT?</ion-label>
                     <ion-checkbox color="primary" checked="false" [(ngModel)]="InsuranceVat"
-                      (ionChange)="insuranceVat()">
+                      (ionChange)="insuranceVat()" [disabled]="isVatDisabled">
                     </ion-checkbox>
                   </ion-item>
                 </ion-card>
@@ -732,7 +735,7 @@ ______   _   _   _____   _____
                   <ion-item lines="none">
                     <ion-label>Add VAT?</ion-label>
                     <ion-checkbox color="primary" checked="false" [(ngModel)]="PhilhealthVat"
-                      (ionChange)="philhealthVat()">
+                      (ionChange)="philhealthVat()" [disabled]="isVatDisabled">
                     </ion-checkbox>
                   </ion-item>
                 </ion-card>
@@ -845,7 +848,7 @@ ______                         ______   _   _   _____   _____
                   <ion-item lines="none">
                     <ion-label>Add VAT?</ion-label>
                     <ion-checkbox color="primary" checked="false" [(ngModel)]="PersonalPhilhealthVat"
-                      (ionChange)="personalPhilhealthVat()"></ion-checkbox>
+                      (ionChange)="personalPhilhealthVat()" [disabled]="isVatDisabled"></ion-checkbox>
                   </ion-item>
                 </ion-card>
 

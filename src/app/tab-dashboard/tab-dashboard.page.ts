@@ -189,7 +189,8 @@ export class TabDashboardPage implements OnInit {
     this.$gaService.pageView('/Dashboard', 'Dashboard Tab');
   }
   checkInbox() {
-    let jsonResponse = '';
+    ////console.log('CHECKS INBOX');
+    let jsonResponse = null;
     this.doctorService
       .getPendingApproval()
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -197,11 +198,9 @@ export class TabDashboardPage implements OnInit {
         (res: any) => {
           jsonResponse = res;
         },
-        (error) => {
-          console.log(error);
-        },
+        (error) => {},
         () => {
-          if (jsonResponse == '') {
+          if (jsonResponse == null) {
             this.isNotification = false;
           } else {
             this.isNotification = true;
@@ -214,6 +213,7 @@ export class TabDashboardPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.checkInbox();
     this.ngUnsubscribe = new Subject();
     localStorage.removeItem('selectedPatient');
     this.logindata = <LoginResponseModelv3>(

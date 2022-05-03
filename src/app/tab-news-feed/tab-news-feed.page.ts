@@ -35,7 +35,6 @@ export class TabNewsFeedPage implements OnInit {
         this.isDesktop = isDesktop;
       });
     this.addMoreItems();
-    this.checkInbox();
   }
   items = [];
   numTimesLeft = 5;
@@ -43,7 +42,6 @@ export class TabNewsFeedPage implements OnInit {
     this.ngUnsubscribe = new Subject();
     localStorage.removeItem('selectedPatient');
     this.checkAppearance();
-
     this.doctorService
       .getNewsFeedV3()
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -57,8 +55,12 @@ export class TabNewsFeedPage implements OnInit {
 
     console.log(this.ngUnsubscribe);
   }
+  ionViewWillEnter() {
+    this.checkInbox();
+  }
   checkInbox() {
-    let jsonResponse = '';
+    //console.log('CHECKS INBOX');
+    let jsonResponse = null;
     this.doctorService
       .getPendingApproval()
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -66,11 +68,9 @@ export class TabNewsFeedPage implements OnInit {
         (res: any) => {
           jsonResponse = res;
         },
-        (error) => {
-          console.log(error);
-        },
+        (error) => {},
         () => {
-          if (jsonResponse == '') {
+          if (jsonResponse == null) {
             this.isNotification = false;
           } else {
             this.isNotification = true;
@@ -105,6 +105,7 @@ export class TabNewsFeedPage implements OnInit {
     return await modal.present();
   }
   doRefresh(event) {
+    this.checkInbox();
     setTimeout(() => {
       this.doctorService
         .getNewsFeedV3()

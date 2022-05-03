@@ -50,6 +50,8 @@ export class LogoutService {
     localStorage.removeItem('patientData');
     localStorage.removeItem('postData1');
     localStorage.removeItem('daysManaged');
+    localStorage.removeItem('selectedPatient');
+
     localStorage.setItem('srnm', dr_username);
     localStorage.setItem('hasloggedin', '1');
     this.router.navigate(['/login']).then(() => {

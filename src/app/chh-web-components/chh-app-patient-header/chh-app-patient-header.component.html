@@ -48,6 +48,15 @@
             <ion-icon name="bed-outline" slot="start"></ion-icon>
             Room {{ x.room_no }}
           </div>
+          <div class=" font-size12" *ngIf="is_senior=='Y'">
+            <ion-icon name="accessibility-outline" slot="start"></ion-icon>
+            <span> Patient is : Senior</span>
+          </div>
+
+          <div class=" font-size12" *ngIf="is_pwd=='Y'">
+            <ion-icon name="walk-outline" slot="start"></ion-icon>
+            <span> Patient is : PWD</span>
+          </div>
           <div class=" font-size12">
             <ion-icon name="clipboard-outline" slot="start"></ion-icon>
             as {{x.doctor_Status}}&nbsp;
@@ -67,14 +76,7 @@
             <span style="font-size: 13px;"> Discharge Notice : {{ dischargeNotice }}</span>
           </div>
 
-          <div class=" font-size12" style="font-size: 13px;" *ngIf="is_pwd =='Y' && is_senior=='Y'">
-            <ion-icon name="accessibility-outline"></ion-icon>
-            <span style="font-size: 13px;">Patient is
-              <span *ngIf="is_pwd =='Y'">PWD</span>
-              <span *ngIf="is_pwd =='Y' && is_senior=='Y'">,</span>
-              <span *ngIf="is_senior =='Y'">Senior</span>
-            </span>
-          </div>
+
         </div>
       </ion-item>
       <ion-item lines="none" style="padding-bottom: 10px">
@@ -136,6 +138,16 @@
             <ion-icon name="bed-outline" slot="start"></ion-icon>
             Room {{ x.room_no }}
           </div>
+          <div class=" font-size12" *ngIf="is_senior=='Y'">
+            <ion-icon name="accessibility-outline" slot="start"></ion-icon>
+            <span> Patient is : Senior</span>
+          </div>
+
+          <div class=" font-size12" *ngIf="is_pwd=='Y'">
+            <ion-icon name="walk-outline" slot="start"></ion-icon>
+            <span> Patient is : PWD</span>
+          </div>
+
           <div class=" font-size12">
             <ion-icon name="clipboard-outline" slot="start"></ion-icon>
             as {{x.doctor_Status}}&nbsp;
@@ -155,14 +167,7 @@
             <span style="font-size: 13px;"> Discharge Notice : {{ dischargeNotice }}</span>
           </div>
 
-          <div class=" font-size12" style="font-size: 13px;" *ngIf="is_pwd =='Y' && is_senior=='Y'">
-            <ion-icon name="accessibility-outline"></ion-icon>
-            <span style="font-size: 13px;">Patient is
-              <span *ngIf="is_pwd =='Y'">PWD</span>
-              <span *ngIf="is_pwd =='Y' && is_senior=='Y'">,</span>
-              <span *ngIf="is_senior =='Y'">Senior</span>
-            </span>
-          </div>
+
         </div>
       </ion-item>
       <ion-item lines="none" style="padding-bottom: 10px">
