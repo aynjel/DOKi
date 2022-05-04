@@ -311,7 +311,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
         this.nxtBtn = false;
       }
     }*/
-
+    this.InsurancePF = this.form.value.InsurancePF;
     if (this.InsurancePF > 0) {
       /*this.InsurancePF =
         (this.InsurancePF / this.InsurancePF) * this.InsurancePF;*/
@@ -375,7 +375,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     } else {
       this.nxtBtn = false;
     }*/
-
+    this.PersonalPhilhealthPF = this.form.value.PersonalPhilhealthPF;
     if (this.PersonalPhilhealthPF > 0) {
       this.PersonalPhilhealthShowVat = true;
       this.txtPersonalPhilHealthPF = false;
