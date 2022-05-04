@@ -279,6 +279,7 @@ export class InPatientDetailPage {
     let ppatientdata = new PatientDetail();
     ppatientdata.admissionNo = this.patient_id;
     ppatientdata.doctorCode = this.dr_code;
+    this.data = [];
     this.presentLoading();
     this.executiveService
       .getPatientDetail(ppatientdata)

@@ -142,7 +142,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     this.routerLinkBack = '/menu/in-patients/';
 
     this.patient_id = this.activatedRoute.snapshot.params.id;
-
+    this.routerLinkBack = '/menu/in-patients/' + this.patient_id + '/';
     /*this.postData = JSON.parse(atob(localStorage.getItem('postData'))) as InPatientData;*/
     this.professionalFeeModelv3 = JSON.parse(
       atob(localStorage.getItem('postData1'))
