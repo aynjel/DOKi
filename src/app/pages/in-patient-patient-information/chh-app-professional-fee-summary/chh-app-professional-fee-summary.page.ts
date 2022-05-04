@@ -221,6 +221,8 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
       this.InsuranceVat = false;
       this.PhilhealthVat = false;
       this.PersonalPhilhealthVat = false;
+      this.insuranceVat();
+      this.personalPhilhealthVat();
     }
     this.dateAdmitted = this.data[0].admission_date;
     this.patient_name = this.data[0].first_name + ' ' + this.data[0].last_name;

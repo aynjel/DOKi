@@ -55,9 +55,9 @@
           <ion-accordion-group [value]='defaultAccordions'>
             <div *ngFor="let y of finalFullData">
 
-              <ion-accordion value="{{y.floor}}" toggleIcon="arrow-down">
+              <div toggleIcon="arrow-down">
                 <ion-item slot="header">
-                  <ion-label>{{y.floor}} <span style="font-size: 12px;">({{y.patients}})</span>
+                  <ion-label>{{y.floor}}
                   </ion-label>
                 </ion-item>
                 <ion-list slot="content">
@@ -144,7 +144,7 @@
 
                   </div>
                 </ion-list>
-              </ion-accordion>
+              </div>
             </div>
           </ion-accordion-group>
 

@@ -18,10 +18,11 @@
             routerLinkActive="active-link" class="link">
             News Feed
           </ion-button>
-          <ion-button id="button-settings" fill="clear" routerLink="/menu/settings" routerDirection="root"
-            routerLinkActive="active-link" class="link">
-            {{this.constants.MENU__VALUE__SETTINGS}}
+          <ion-button id="button-settings" fill="clear" routerLinkActive="active-link" class="link"
+            (click)="toggleMenu()">
+            More
           </ion-button>
+
           <ion-button id="button-logout" fill="clear" routerDirection="root" routerLinkActive="active-link" class="link"
             (click)="logout()">
             {{this.constants.MENU__VALUE__LOG_OUT}}

@@ -48,24 +48,10 @@
             <ion-icon name="bed-outline" slot="start"></ion-icon>
             Room {{ x.room_no }}
           </div>
-          <div class=" font-size12" *ngIf="is_senior=='Y'">
-            <ion-icon name="accessibility-outline" slot="start"></ion-icon>
-            <span> Patient is : Senior</span>
-          </div>
-
-          <div class=" font-size12" *ngIf="is_pwd=='Y'">
-            <ion-icon name="walk-outline" slot="start"></ion-icon>
-            <span> Patient is : PWD</span>
-          </div>
           <div class=" font-size12">
             <ion-icon name="clipboard-outline" slot="start"></ion-icon>
             as {{x.doctor_Status}}&nbsp;
-            <ion-chip *ngIf="x.admission_status == 'AC'">
-              <ion-label color="mango"><b>Admitted</b></ion-label>
-            </ion-chip>
-            <ion-chip *ngIf="x.admission_status == 'DN'">
-              <ion-label color="mango"><b>For Discharge</b></ion-label>
-            </ion-chip>
+
           </div>
           <div class=" font-size12" style="font-size: 13px;">
             <ion-icon name="calendar-outline" slot="start"></ion-icon>
@@ -74,6 +60,27 @@
           <div class=" font-size12" *ngIf="x.forDischargeDateTime != null" style="font-size: 13px;">
             <ion-icon name="calendar-outline" slot="start"></ion-icon>
             <span style="font-size: 13px;"> Discharge Notice : {{ dischargeNotice }}</span>
+          </div>
+          <ion-chip *ngIf="x.admission_status == 'AC'">
+            <ion-label color="primary" class="font-12"><b>Admitted</b></ion-label>
+          </ion-chip>
+          <ion-chip *ngIf="x.admission_status == 'DN'">
+            <ion-label color="primary" class="font-12"><b>For Discharge</b></ion-label>
+          </ion-chip>
+          <ion-chip *ngIf="is_senior=='Y'">
+            <ion-label color="primary" class="font-12"><b>Senior</b></ion-label>
+          </ion-chip>
+          <ion-chip *ngIf="is_pwd=='Y'">
+            <ion-label color="primary" class="font-12"><b>PWD</b></ion-label>
+          </ion-chip>
+
+
+          <div *ngFor="let x of data">
+
+            <div *ngIf=" x.insurance_hmo !=null">
+              <ion-icon name="information-circle-outline"></ion-icon>
+              <span style="font-size: 13px;"> {{ x.insurance_hmo }}</span>
+            </div>
           </div>
 
 
@@ -138,25 +145,11 @@
             <ion-icon name="bed-outline" slot="start"></ion-icon>
             Room {{ x.room_no }}
           </div>
-          <div class=" font-size12" *ngIf="is_senior=='Y'">
-            <ion-icon name="accessibility-outline" slot="start"></ion-icon>
-            <span> Patient is : Senior</span>
-          </div>
-
-          <div class=" font-size12" *ngIf="is_pwd=='Y'">
-            <ion-icon name="walk-outline" slot="start"></ion-icon>
-            <span> Patient is : PWD</span>
-          </div>
 
           <div class=" font-size12">
             <ion-icon name="clipboard-outline" slot="start"></ion-icon>
             as {{x.doctor_Status}}&nbsp;
-            <ion-chip *ngIf="x.admission_status == 'AC'">
-              <ion-label color="primary"><b>Admitted</b></ion-label>
-            </ion-chip>
-            <ion-chip *ngIf="x.admission_status == 'DN'">
-              <ion-label color="primary"><b>For Discharge</b></ion-label>
-            </ion-chip>
+
           </div>
           <div class=" font-size12" style="font-size: 13px;">
             <ion-icon name="calendar-outline" slot="start"></ion-icon>
@@ -168,13 +161,41 @@
           </div>
 
 
+          <ion-chip *ngIf="x.admission_status == 'AC'">
+            <ion-label color="primary" class="font-12"><b>Admitted</b></ion-label>
+          </ion-chip>
+          <ion-chip *ngIf="x.admission_status == 'DN'">
+            <ion-label color="primary" class="font-12"><b>For Discharge</b></ion-label>
+          </ion-chip>
+
+          <ion-chip *ngIf="is_senior=='Y'">
+            <ion-label color="primary" class="font-12"><b>Senior</b></ion-label>
+          </ion-chip>
+          <ion-chip *ngIf="is_pwd=='Y'">
+            <ion-label color="primary" class="font-12"><b>PWD</b></ion-label>
+          </ion-chip>
+
+
+          <div *ngFor="let x of data">
+
+            <div *ngIf=" x.insurance_hmo !=null">
+              <ion-icon name="information-circle-outline"></ion-icon>
+              <span style="font-size: 13px;"> {{ x.insurance_hmo }}</span>
+            </div>
+          </div>
+
+
         </div>
-      </ion-item>
-      <ion-item lines="none" style="padding-bottom: 10px">
         <ion-badge color="warning" slot="end" (click)="moreorless(true)">
           <ion-icon name="chevron-up-outline"></ion-icon>
         </ion-badge>
       </ion-item>
+
+      <!--ion-item lines="none" class="ion-no-margin ion-no-padding">
+        <ion-badge color="warning" slot="end" (click)="moreorless(true)">
+          <ion-icon name="chevron-up-outline"></ion-icon>
+        </ion-badge>
+      </ion-item-->
     </ion-list>
   </div>
 </ion-card>

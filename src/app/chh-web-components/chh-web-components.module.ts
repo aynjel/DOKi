@@ -54,6 +54,8 @@ import { ProgressnotesHistoryComponent } from './progressnotes-history/progressn
 import { ProgressnotesHistoryCardComponent } from './progressnotes-history-card/progressnotes-history-card.component';
 import { CollectiblesPreviewComponent } from './collectibles-preview/collectibles-preview.component';
 import { UploadComponent } from './upload/upload.component';
+import { ProfessionalFeeSummaryTextsComponent } from './professional-fee-summary-texts/professional-fee-summary-texts.component';
+import { ProfessionalFeeSummaryPatientInfoComponent } from './professional-fee-summary-patient-info/professional-fee-summary-patient-info.component';
 @NgModule({
   declarations: [
     ChhAppLogoComponent,
@@ -93,6 +95,8 @@ import { UploadComponent } from './upload/upload.component';
     ProgressnotesHistoryCardComponent,
     CollectiblesPreviewComponent,
     UploadComponent,
+    ProfessionalFeeSummaryTextsComponent,
+    ProfessionalFeeSummaryPatientInfoComponent,
   ],
   exports: [
     ChhAppLogoComponent,
@@ -132,6 +136,8 @@ import { UploadComponent } from './upload/upload.component';
     ProgressnotesHistoryCardComponent,
     CollectiblesPreviewComponent,
     UploadComponent,
+    ProfessionalFeeSummaryTextsComponent,
+    ProfessionalFeeSummaryPatientInfoComponent,
   ],
   imports: [
     CommonModule,

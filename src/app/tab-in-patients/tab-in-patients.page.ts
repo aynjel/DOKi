@@ -189,22 +189,24 @@ export class TabInPatientsPage {
           this.inPatients.push(e);
         }
       });*/
-      this.inPatients = this.inPatientsDraft1.filter((e) =>
-        (
-          e.last_name +
-          ', ' +
-          e.first_name +
-          ' ' +
-          e.middle_name +
-          ' ' +
-          e.first_name +
-          ' ' +
-          e.middle_name +
-          ' ' +
-          e.last_name
-        )
-          .toLowerCase()
-          .includes(this.searchBar.toLowerCase())
+      this.inPatients = this.inPatientsDraft1.filter(
+        (e) =>
+          (
+            e.last_name +
+            ', ' +
+            e.first_name +
+            ' ' +
+            e.middle_name +
+            ' ' +
+            e.first_name +
+            ' ' +
+            e.middle_name +
+            ' ' +
+            e.last_name
+          )
+            .toLowerCase()
+            .includes(this.searchBar.toLowerCase()) ||
+          e.floor_desc.toLowerCase().includes(this.searchBar.toLowerCase())
       );
     }
 

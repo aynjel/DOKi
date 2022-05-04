@@ -90,7 +90,7 @@ export class TransactionSummaryPage implements OnInit {
   daysManaged: any;
   site: any;
   day: any;
-  moreOrLess: boolean = true;
+  moreOrLess: boolean = false;
   professionalFeeModelv3: ProfessionalFeeModelv3 = new ProfessionalFeeModelv3();
   userSettingsModelv3: UserSettingsModelv3 = new UserSettingsModelv3();
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
@@ -129,6 +129,7 @@ export class TransactionSummaryPage implements OnInit {
   }
 
   ngOnInit() {
+    this.checkAppearance();
     if (this.isDesktop) {
       this.moreOrLess = false;
     }
@@ -201,7 +202,9 @@ export class TransactionSummaryPage implements OnInit {
       this.routerLinkBack = this.routerLinkBack3;
     }
   }
-
+  is_pwd;
+  is_senior;
+  payvenueTxt;
   ionViewWillEnter() {
     this.ngUnsubscribe = new Subject();
     //sessionStorage.removeItem('pfIsPatientSeen');
@@ -211,6 +214,10 @@ export class TransactionSummaryPage implements OnInit {
 
     // this.data = JSON.parse(atob(sessionStorage.getItem("patientData")));
     this.data = JSON.parse(atob(localStorage.getItem('patientData')));
+    console.log(this.data);
+    this.payvenueTxt = this.data[0].payvenue;
+    this.is_pwd = this.data[0].is_pwd;
+    this.is_senior = this.data[0].is_senior;
     this.patient_name = this.data[0].first_name + ' ' + this.data[0].last_name;
     this.patient_name = this.functionsService.convertAllFirstLetterToUpperCase(
       this.patient_name
@@ -350,36 +357,18 @@ export class TransactionSummaryPage implements OnInit {
   }
 
   checkAppearance() {
+    var values = JSON.parse(
+      '[' + atob(localStorage.getItem('user_settings')) + ']'
+    );
     let dr_username = atob(localStorage.getItem('username'));
-    this.patientService
-      .getUserSettingsV2(dr_username)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((res: any) => {
-        if (Object.keys(res).length >= 1) {
-          let data = JSON.stringify(res);
-          data = '[' + data + ']';
-          let adat = JSON.parse(data);
-          adat.forEach((el) => {
-            if (typeof el.appearance !== 'undefined') {
-              if (el.appearance.darkmode == 1) {
-                this.renderer.setAttribute(
-                  document.body,
-                  'color-theme',
-                  'dark'
-                );
-              } else {
-                this.renderer.setAttribute(
-                  document.body,
-                  'color-theme',
-                  'light'
-                );
-              }
-            } else {
-              this.renderer.setAttribute(document.body, 'color-theme', 'light');
-            }
-          });
-        }
-      });
+    values.forEach((element) => {
+      this.functionsService.logToConsole(element.darkmode);
+      if (element.darkmode == 1) {
+        this.renderer.setAttribute(document.body, 'color-theme', 'dark');
+      } else {
+        this.renderer.setAttribute(document.body, 'color-theme', 'light');
+      }
+    });
   }
   ionViewDidLeave() {
     this.ngUnsubscribe.next();

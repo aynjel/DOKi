@@ -65,7 +65,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
   data: any;
   patient_name: any;
   dateAdmitted: any;
-  moreOrLess: boolean = true;
+  moreOrLess: boolean = false;
   insCoor: any = 'No';
   showSelection: boolean = false;
   showSeenPatient: boolean = false;
