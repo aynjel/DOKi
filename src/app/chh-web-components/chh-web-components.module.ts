@@ -56,6 +56,7 @@ import { CollectiblesPreviewComponent } from './collectibles-preview/collectible
 import { UploadComponent } from './upload/upload.component';
 import { ProfessionalFeeSummaryTextsComponent } from './professional-fee-summary-texts/professional-fee-summary-texts.component';
 import { ProfessionalFeeSummaryPatientInfoComponent } from './professional-fee-summary-patient-info/professional-fee-summary-patient-info.component';
+import { ProfessionalFeeHelperComponent } from './professional-fee-helper/professional-fee-helper.component';
 @NgModule({
   declarations: [
     ChhAppLogoComponent,
@@ -97,6 +98,7 @@ import { ProfessionalFeeSummaryPatientInfoComponent } from './professional-fee-s
     UploadComponent,
     ProfessionalFeeSummaryTextsComponent,
     ProfessionalFeeSummaryPatientInfoComponent,
+    ProfessionalFeeHelperComponent,
   ],
   exports: [
     ChhAppLogoComponent,
@@ -138,6 +140,7 @@ import { ProfessionalFeeSummaryPatientInfoComponent } from './professional-fee-s
     UploadComponent,
     ProfessionalFeeSummaryTextsComponent,
     ProfessionalFeeSummaryPatientInfoComponent,
+    ProfessionalFeeHelperComponent,
   ],
   imports: [
     CommonModule,
