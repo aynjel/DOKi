@@ -111,9 +111,7 @@ export class InboxPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       mode: 'ios',
       header:
-        'Are you sure to Approve ' +
-        x.patient_name +
-        "'s final diagnosis approval?",
+        'Are you sure to Approve ' + x.patient_name + "'s final diagnosis?",
       cssClass: 'my-custom-class',
       buttons: [
         {

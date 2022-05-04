@@ -40,9 +40,7 @@ export class ChhAppFinalDiagnosisComponent implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       mode: 'ios',
       header:
-        'Are you sure to cancel ' +
-        this.patientName +
-        "'s final diagnosis approval?",
+        'Are you sure to cancel ' + this.patientName + "'s final diagnosis?",
       cssClass: 'my-custom-class',
       buttons: [
         {
