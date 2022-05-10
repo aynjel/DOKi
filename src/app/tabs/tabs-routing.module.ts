@@ -69,7 +69,13 @@ const routes: Routes = [
             (m) => m.InboxPageModule
           ),
       },
-
+      {
+        path: 'inbox/medcert/:opdcode',
+        loadChildren: () =>
+          import(
+            '../pages/doctors-information/view-medcert/view-medcert.module'
+          ).then((m) => m.ViewMedcertPageModule),
+      },
       /*
       {
         path: 'collectibles',

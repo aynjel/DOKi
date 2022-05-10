@@ -145,7 +145,7 @@ export class MedicalCertificatePage implements OnInit {
       site: 'C',
     };
     let medabstract = this.doctorService
-      .getMedicalCertificate()
+      .getMedicalCertificate('x')
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {

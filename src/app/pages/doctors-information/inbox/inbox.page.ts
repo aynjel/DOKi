@@ -4,6 +4,7 @@ import { DoctorService } from 'src/app/services/doctor/doctor.service';
 import { takeUntil } from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-inbox',
   templateUrl: './inbox.page.html',
@@ -23,7 +24,8 @@ export class InboxPage implements OnInit {
     public doctorService: DoctorService,
     public screensizeService: ScreenSizeService,
     private renderer: Renderer2,
-    public actionSheetController: ActionSheetController
+    public actionSheetController: ActionSheetController,
+    public router: Router
   ) {
     this.isNotification = true;
     this.screensizeService
@@ -58,7 +60,8 @@ export class InboxPage implements OnInit {
     this.navCtrl.back();
   }
   segmentChanged(e) {
-    console.log(e.detail.value);
+    //console.log(e.detail.value);
+    this.router.navigate(['/medcert/' + e.detail.value]);
   }
   getPendingApproval() {
     this.pendingApproval = [];
@@ -106,7 +109,10 @@ export class InboxPage implements OnInit {
     // this.ngUnsubscribe.complete();
     this.ngUnsubscribe.complete();
   }
-
+  viewCerticate(x) {
+    console.log(x);
+    this.router.navigate(['menu/inbox/medcert/' + x.admission_no]);
+  }
   async presentActionSheet(x) {
     const actionSheet = await this.actionSheetController.create({
       mode: 'ios',

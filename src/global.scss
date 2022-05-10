@@ -528,7 +528,7 @@ ion-modal.ion6modaltest {
 
 ion-modal.ion6modaltest {
   --width: 100%;
-  --height: 100%;
+  --height: 80%;
   --background: rgba(255, 255, 255, 0.2);
 
   &::part(content) {
@@ -551,4 +551,29 @@ ion-modal.ion6modaltest {
     border-radius: 8px;
     }
   }
+}
+
+.bdrSolid1pxBlack{
+  border:solid 1px black
+}
+
+.ToolbarVerde {
+  --padding-top: 0px !important;
+  --padding-start: 0px !important;
+  --padding-right: 0px !important;
+  --padding-end: 0px !important;
+}
+
+.noPaddingTop{
+  padding-top:0px !important;
+}
+.noPaddingBottom{
+  padding-bottom:0px !important;
+}
+
+.floatRight{
+  float:right !important;
+}
+.floatLeft {
+  float: right !important;
 }

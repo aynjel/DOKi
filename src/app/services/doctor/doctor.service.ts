@@ -517,7 +517,7 @@ export class DoctorService {
     );
   }
 
-  getMedicalCertificate() {
+  getMedicalCertificate(x) {
     const httpOptions = {
       responseType: 'blob' as 'json',
     };
