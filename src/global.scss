@@ -528,7 +528,7 @@ ion-modal.ion6modaltest {
 
 ion-modal.ion6modaltest {
   --width: 100%;
-  --height: 80%;
+  --height: 100%;
   --background: rgba(255, 255, 255, 0.2);
 
   &::part(content) {
@@ -540,7 +540,6 @@ ion-modal.ion6modaltest {
   }
   ion-content.blur {
     --background: transparent;
-    //--padding-top: 25vh;
     @media (min-width: 767px) {
 
       //--padding-end: 25%;

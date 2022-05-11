@@ -33,8 +33,15 @@
         [external-link-target]="'blank'" [autoresize]="true" [show-borders]="false" style="width: 100vh; height: 60vh;">
       </pdf-viewer>
     </pinch-zoom>
-    <ion-button *ngIf="isPDFLoading" (click)="onClick()">Sign Document</ion-button>
+
     <ion-button id="trigger-button-certificate" style="display:none">Sign Document</ion-button>
+    <ion-row>
+      <ion-col>
+        <ion-button mode="ios" size="small" color="mango" shape="" expand="block" *ngIf="isPDFLoading"
+          (click)="onClick()">Sign Document</ion-button>
+      </ion-col>
+
+    </ion-row>
   </ion-card>
 
 

@@ -217,21 +217,15 @@ export class TabSettingsPage {
 
     /*this.isProfilepic = this.functionsService.imageExists(
       'http://10.151.12.120:7229/res/profile/' + this.dr_code + '.jpg'
-    );*/
+    );
     if (this.isProfilepic) {
       this.profilePic =
         'http://10.151.12.120:7229/res/profile/' + this.dr_code + '.jpg';
-    }
+    }*/
 
     let y = '';
     //PARSE USER SETTINGS
     this.functionsService.logToConsole('ionViewWillEnter');
-    console.log(
-      this.functionsService.imageExists(
-        'http://10.151.12.120:7229/api/Upload/ProfilePic/res/profile/MD100001.jpg'
-      )
-    );
-
     this.profileExpiry = new ProfileExpiry();
     this.profileExpiry.mode = 'P';
     this.profileExpiry.drCode = this.dr_code;

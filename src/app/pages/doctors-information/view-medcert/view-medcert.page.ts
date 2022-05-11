@@ -54,7 +54,6 @@ export class ViewMedcertPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((isPortrait) => {
         if (this.isPortrait && !isPortrait) {
-          console.log('1');
           if (this.idModal) {
             this.closeModal();
             this.ngOnInit();
@@ -62,7 +61,10 @@ export class ViewMedcertPage implements OnInit {
           }
         }
         if (this.isPortrait != undefined && isPortrait) {
-          console.log('2');
+          if (this.idModal) {
+            this.closeModal();
+            this.ngOnInit();
+          }
           this.ngOnInit();
         }
         this.isPortrait = isPortrait;

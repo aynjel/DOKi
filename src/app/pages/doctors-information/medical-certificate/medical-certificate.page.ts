@@ -14,6 +14,7 @@ import { FunctionsService } from 'src/app/shared/functions/functions.service';
 import { AfterViewInit } from '@angular/core';
 import { SignaturePad } from 'angular2-signaturepad';
 import { ModalController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-medical-certificate',
@@ -40,7 +41,8 @@ export class MedicalCertificatePage implements OnInit {
     private doctorService: DoctorService,
     private functionsService: FunctionsService,
     private renderer: Renderer2,
-    private modalController: ModalController
+    private modalController: ModalController,
+    public activatedRoute: ActivatedRoute
   ) {
     this.checkAppearance();
     this.screensizeService
@@ -133,19 +135,17 @@ export class MedicalCertificatePage implements OnInit {
     this.signaturePad.clear();
   }
   getpdf() {
+    let admissionNo = this.activatedRoute.snapshot.params.admissionNo;
     this.isPDFLoading = false;
     this.data = [];
     this.pdfSrc = '';
     this.isbutton = false;
     let testJsonPDF = {
-      doctorCode: 'MD000605',
+      account_no: 'IPM000125711',
       mode: 'T',
-      fromDate: '03/01/2022',
-      toDate: '03/15/2022',
-      site: 'C',
     };
     let medabstract = this.doctorService
-      .getMedicalCertificate('x')
+      .getMedicalCertificatePOST(testJsonPDF)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {
