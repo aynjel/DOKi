@@ -528,6 +528,8 @@ export class DoctorService {
     );
   }
   getMedicalCertificatePOST(data) {
+    console.log(data);
+
     const url = 'http://10.151.12.120:7227/api/medcert/pdf';
     return this.http.post(url, data, { responseType: 'blob' });
   }

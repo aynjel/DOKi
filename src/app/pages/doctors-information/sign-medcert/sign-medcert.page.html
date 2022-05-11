@@ -35,10 +35,10 @@
     </pinch-zoom>
 
     <ion-button id="trigger-button-certificate" style="display:none">Sign Document</ion-button>
-    <ion-row *ngFor="let x of selectedPatient">
+    <ion-row>
       <ion-col>
-        <ion-button mode="ios" size="small" color="warning" shape="" expand="block" *ngIf="isPDFLoading"
-          (click)="cancelApproval(x)">Cancel Approval</ion-button>
+        <ion-button mode="ios" size="small" color="mango" shape="" expand="block" *ngIf="isPDFLoading"
+          (click)="onClick()">Sign Document</ion-button>
       </ion-col>
 
     </ion-row>

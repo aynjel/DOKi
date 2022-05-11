@@ -12,7 +12,7 @@
       </ion-buttons>
     </ion-toolbar>
   </div>
-  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="selected" color="secondary" mode='ios'>
+  <!--ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="selected" color="secondary" mode='ios'>
     <ion-segment-button value="Final Diagnosis">
       <ion-label>Final Diagnosis</ion-label>
     </ion-segment-button>
@@ -22,7 +22,7 @@
     <ion-segment-button value="Others">
       <ion-label>Others</ion-label>
     </ion-segment-button>
-  </ion-segment>
+  </ion-segment-->
 </ion-header>
 
 <ion-content>
@@ -105,6 +105,11 @@
               </ion-footer>
             </ion-card>
           </div>
+          <ion-card *ngIf="empty">
+            <ion-item>
+              No Data
+            </ion-item>
+          </ion-card>
 
         </ng-container>
       </ion-col>

@@ -130,6 +130,9 @@ export class InPatientDetailPage {
   isCancelFinalDiagnosisApproval;
   finalDiagnosisApproval;
   patientName;
+
+  admissionNo;
+  dischargeNo;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -634,7 +637,8 @@ export class InPatientDetailPage {
         (res: any) => {
           if (res != null) {
             console.log('approvedDate', res);
-
+            this.admissionNo = res[0].admission_no;
+            this.dischargeNo = res[0].discharge_no;
             this.finalDiagnosisApproval = res;
             this.isCancelFinalDiagnosisApproval = res[0].approval_status;
             this.approvedDate = res[0].approve_date;

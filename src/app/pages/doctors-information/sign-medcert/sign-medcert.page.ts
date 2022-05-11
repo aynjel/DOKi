@@ -11,11 +11,11 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SignaturePad } from 'angular2-signaturepad';
 @Component({
-  selector: 'app-view-medcert',
-  templateUrl: './view-medcert.page.html',
-  styleUrls: ['./view-medcert.page.scss'],
+  selector: 'app-sign-medcert',
+  templateUrl: './sign-medcert.page.html',
+  styleUrls: ['./sign-medcert.page.scss'],
 })
-export class ViewMedcertPage implements OnInit {
+export class SignMedcertPage implements OnInit {
   private ngUnsubscribe = new Subject();
   isNotification: boolean;
   isPortrait: boolean;
@@ -38,7 +38,7 @@ export class ViewMedcertPage implements OnInit {
   };
   isbutton = false;
   idModal: boolean = false;
-  selectedPatient;
+
   constructor(
     private navCtrl: NavController,
     public doctorService: DoctorService,
@@ -76,10 +76,6 @@ export class ViewMedcertPage implements OnInit {
   }
   ionViewWillEnter() {}
   ngOnInit() {
-    this.selectedPatient = JSON.parse(
-      atob(localStorage.getItem('patientData'))
-    );
-
     console.log('ngOnInit');
     this.getpdf();
     this.idModal = false;
@@ -110,47 +106,6 @@ export class ViewMedcertPage implements OnInit {
       };
     }
   }
-  cancelApproval(x) {
-    this.presentActionSheet(x);
-  }
-  async presentActionSheet(x) {
-    let dischargeNo = this.activatedRoute.snapshot.params.dischargeNo;
-
-    const actionSheet = await this.actionSheetController.create({
-      mode: 'ios',
-      header:
-        'Are you sure to Cancel Patient :' +
-        x.last_name +
-        "'s final diagnosis?",
-      cssClass: 'my-custom-class',
-      buttons: [
-        {
-          text: 'Yes, Cancel',
-          icon: 'thumbs-up-outline',
-          id: 'delete-button',
-          data: {
-            type: 'delete',
-          },
-          handler: () => {
-            this.cancelApprovedApproval(dischargeNo);
-          },
-        },
-
-        {
-          text: 'Back',
-          icon: 'arrow-back-outline',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          },
-        },
-      ],
-    });
-    await actionSheet.present();
-
-    const { role, data } = await actionSheet.onDidDismiss();
-    console.log('onDidDismiss resolved with role and data', role, data);
-  }
   onClick() {
     this.idModal = true;
     document.getElementById('trigger-button-certificate').click();
@@ -179,9 +134,7 @@ export class ViewMedcertPage implements OnInit {
       dismissed: true,
     });
     this.isbutton = true;
-
     const base64Data = this.signaturePad.toDataURL('image/png', 0.5);
-
     this.signatureImg = base64Data;
     let patientId = this.activatedRoute.snapshot.params.admissionNo;
     let dischargeNo = this.activatedRoute.snapshot.params.dischargeNo;
@@ -213,30 +166,28 @@ export class ViewMedcertPage implements OnInit {
         },
         () => {
           console.log('success');
-          this.signaturePad.clear();
-          this.cancelApprovedApproval(dischargeNo);
+          // this.signaturePad.clear();
+          this.approvePendingAPproval(dischargeNo);
           this.ngOnInit();
         }
       );
     this.signaturePad.clear();
     this.isPDFLoading = false;
   }
-  cancelApprovedApproval(discharge_no) {
+  approvePendingAPproval(discharge_no) {
     this.dischargeNo.discharge_no = discharge_no;
     console.log(this.dischargeNo);
-
     this.doctorService
-      .cancelApprovedFinalDiagnosis(this.dischargeNo)
+      .approvePendingApproval(this.dischargeNo)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
           console.log(res);
-          this.ionViewWillEnter();
         },
-        (error) => {},
-        () => {
-          this.back();
-        }
+        (error) => {
+          console.log(error);
+        },
+        () => {}
       );
   }
   getpdf() {

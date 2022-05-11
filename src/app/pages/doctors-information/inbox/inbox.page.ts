@@ -19,6 +19,7 @@ export class InboxPage implements OnInit {
     discharge_no: '',
   };
   isDesktop: boolean;
+  empty: boolean = false;
   constructor(
     private navCtrl: NavController,
     public doctorService: DoctorService,
@@ -27,6 +28,7 @@ export class InboxPage implements OnInit {
     public actionSheetController: ActionSheetController,
     public router: Router
   ) {
+    console.log('constructor');
     this.isNotification = true;
     this.screensizeService
       .isDesktopView()
@@ -38,10 +40,14 @@ export class InboxPage implements OnInit {
         this.isDesktop = isDesktop;
       });
   }
-
-  ngOnInit() {
-    this.checkAppearance();
+  ionViewWillEnter() {
     this.getPendingApproval();
+    console.log('ionViewWillEnter');
+  }
+  ngOnInit() {
+    console.log('ngOnInit');
+
+    this.checkAppearance();
   }
   checkAppearance() {
     var values = JSON.parse(
@@ -61,7 +67,7 @@ export class InboxPage implements OnInit {
   }
   segmentChanged(e) {
     //console.log(e.detail.value);
-    this.router.navigate(['/medcert/' + e.detail.value]);
+    this.router.navigate(['/sign-medcert/' + e.detail.value]);
   }
   getPendingApproval() {
     this.pendingApproval = [];
@@ -71,6 +77,11 @@ export class InboxPage implements OnInit {
       .subscribe(
         (res: any) => {
           this.pendingApproval = res;
+          if (this.pendingApproval == null) {
+            this.empty = true;
+          } else {
+            this.empty = false;
+          }
           console.log(this.pendingApproval);
         },
         (error) => {
@@ -104,6 +115,7 @@ export class InboxPage implements OnInit {
       event.target.complete();
     }, 1000);
   }
+
   ionViewDidLeave() {
     this.ngUnsubscribe.next();
     // this.ngUnsubscribe.complete();
@@ -111,7 +123,9 @@ export class InboxPage implements OnInit {
   }
   viewCerticate(x) {
     console.log(x);
-    this.router.navigate(['menu/inbox/medcert/' + x.admission_no]);
+    this.router.navigate([
+      'menu/inbox/sign-medcert/' + x.admission_no + '/' + x.discharge_no,
+    ]);
   }
   async presentActionSheet(x) {
     const actionSheet = await this.actionSheetController.create({

@@ -23,7 +23,7 @@
     </ion-item>
   </ion-list>
   <ion-footer *ngIf="isCancelFinalDiagnosisApproval =='RA'">
-    <ion-row>
+    <!--ion-row>
       <ion-col>
         <ion-text style="font-size: 12px;">Approved on : {{approvedDate}}</ion-text>
 
@@ -32,6 +32,13 @@
         <ion-button size="small" color="warning" shape="round" expand="block" (click)="approvePendingAPproval()">Cancel
           Approval</ion-button>
       </ion-col>
+    </ion-row-->
+    <ion-row>
+      <ion-col>
+        <ion-button mode="ios" size="small" color="mango" shape="" expand="block" (click)="viewMedicalCertificate()">
+          View Medical Certificate</ion-button>
+      </ion-col>
+
     </ion-row>
   </ion-footer>
 </ion-card>

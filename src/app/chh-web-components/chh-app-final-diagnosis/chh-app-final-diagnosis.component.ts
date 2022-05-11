@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
 
@@ -17,12 +18,15 @@ export class ChhAppFinalDiagnosisComponent implements OnInit {
   @Input() truncating: any;
   @Input() finalDiagnosis1: any;
   @Input() finalDiagnosis2: any;
+  @Input() admissionNo;
+  @Input() dischargeNo;
   @Output() cancelApproval: EventEmitter<any> = new EventEmitter();
   isDesktop: any;
   @Input() approvedDate;
   constructor(
     private screensizeService: ScreenSizeService,
-    public actionSheetController: ActionSheetController
+    public actionSheetController: ActionSheetController,
+    public router: Router
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -31,7 +35,11 @@ export class ChhAppFinalDiagnosisComponent implements OnInit {
       this.isDesktop = isDesktop;
     });
   }
-
+  viewMedicalCertificate() {
+    this.router.navigate([
+      'menu/in-patients/' + this.admissionNo + '/' + this.dischargeNo,
+    ]);
+  }
   ngOnInit() {}
   approvePendingAPproval() {
     this.presentActionSheet();
