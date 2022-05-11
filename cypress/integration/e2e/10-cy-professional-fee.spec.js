@@ -14,8 +14,6 @@ describe("Actions", () => {
     it("Test Scenario 1 - Input Professional Fee as non insurance coordinator and have not seen patient w/ SMS", () => {
       cy.login(userAccount[0].userName, userAccount[0].password, true)
 
-      // cy.SMSToggle() // send sms
-
       cy.setProfFee()
 
       cy.get('[name="ion-cb-7"]').click({ force: true }) //Have you seen this Patient?
@@ -24,7 +22,7 @@ describe("Actions", () => {
       cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsUrl") + "/IPC100230411/professional-fee-transaction-summary")
 
       cy.wait(2000)
-      cy.get('[data-testid="btnsubmit"]').click({force:true})
+      cy.get('[data-testid="btnsubmit"]').click({ force: true })
 
       cy.wait(2000)
       cy.contains("Okay").click({ force: true })
@@ -46,7 +44,7 @@ describe("Actions", () => {
       cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsUrl") + "/IPC100230411/professional-fee-transaction-summary")
 
       cy.wait(2000)
-      cy.get('[data-testid="btnsubmit"]').click({force:true})
+      cy.get('[data-testid="btnsubmit"]').click({ force: true })
 
       cy.wait(2000)
       cy.contains("Okay").click({ force: true })
@@ -56,8 +54,6 @@ describe("Actions", () => {
 
     it("Test Scenario 3 - Input Professional Fee as non insurance coordinator & have seen patient, Insurance + Philhealth  w/out SMS", () => {
       cy.login(userAccount[0].userName, userAccount[0].password, true)
-
-      // cy.SMSToggle() // should not send sms
 
       cy.setProfFee()
 
@@ -74,7 +70,7 @@ describe("Actions", () => {
 
       // cy.get('ion-button').contains("Submit").click({ force: true })
       cy.wait(2000)
-      cy.get('[data-testid="btnsubmit"]').click({force:true})
+      cy.get('[data-testid="btnsubmit"]').click({ force: true })
 
       cy.wait(2000)
       cy.contains("Okay").click({ force: true })
@@ -101,7 +97,7 @@ describe("Actions", () => {
       cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsUrl") + "/IPC100230411/professional-fee/personal-philhealth")
 
       cy.wait(2000)
-      cy.get('[data-testid="btnsubmit"]').click({force:true})
+      cy.get('[data-testid="btnsubmit"]').click({ force: true })
 
       cy.wait(2000)
       cy.contains("Okay").click({ force: true })
@@ -123,7 +119,7 @@ describe("Actions", () => {
       cy.contains("Next").click({ force: true })
 
       cy.wait(2000)
-      cy.get('[data-testid="btnsubmit"]').click({force:true})
+      cy.get('[data-testid="btnsubmit"]').click({ force: true })
 
       cy.wait(2000)
       cy.contains("Okay").click({ force: true })
@@ -133,6 +129,8 @@ describe("Actions", () => {
 
     it("Test Scenario 6 - Input Professional Fee as insurance coordinator & have seen patient, Charity ", () => {
       cy.login(userAccount[0].userName, userAccount[0].password, true)
+
+      cy.SMSToggle() // send sms
 
       cy.setProfFee()
 
@@ -146,7 +144,7 @@ describe("Actions", () => {
       cy.contains("Next").click({ force: true })
 
       cy.wait(2000)
-      cy.get('[data-testid="btnsubmit"]').click({force:true})
+      cy.get('[data-testid="btnsubmit"]').click({ force: true })
 
       cy.wait(2000)
       cy.contains("Okay").click({ force: true })
@@ -156,6 +154,8 @@ describe("Actions", () => {
 
     it("Test Scenario 7 - Scenario 3 non tax vat ", () => {
       cy.login(userAccount[0].userName, userAccount[0].password, true)
+
+      cy.SMSToggle() // send sms
 
       cy.setProfFee()
 

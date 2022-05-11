@@ -9,7 +9,7 @@ describe("Actions 1 - Login Page", () => {
             userAccount = data;
         });
     });
-    
+
     it("1. Test Scenario 1 - Username or Password is empty.", () => {
         cy.contains("LOG IN").click()
         cy.get('[id="alert-1-msg"]').should("contain.text", "Sorry, Dok. We cannot log you in at the moment. Please try again.")
@@ -27,7 +27,7 @@ describe("Actions 1 - Login Page", () => {
         cy.errLogin(userAccount[3].userName, userAccount[3].password, "invalid-user")
 
         cy.end()
-    }); 
+    });
 
     it("4. Test Scenario 4 - Invalid Password", () => {
         cy.errLogin(userAccount[2].userName, userAccount[2].password, "invalid-pass")

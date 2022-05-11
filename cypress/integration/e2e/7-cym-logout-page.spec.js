@@ -15,7 +15,7 @@ describe("Actions", () => {
     it("Test Scenario 1 - Login then Logout", () => {
       cy.login(userAccount[0].userName, userAccount[0].password, true)
 
-      cy.logout() 
+      cy.logout()
 
       cy.end()
     });

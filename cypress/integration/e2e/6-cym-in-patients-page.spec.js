@@ -24,7 +24,7 @@ describe("Actions", () => {
       cy.testInPatientsDetails("CEBU");
     });
 
-    it("Test Scenario 2 - Filter MANDAUE site", () => {
+    it.only("Test Scenario 2 - Filter MANDAUE site", () => {
       cy.login(userAccount[0].userName, userAccount[0].password, true)
 
       cy.clickmenu(1);

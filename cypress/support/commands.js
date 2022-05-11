@@ -210,14 +210,14 @@ Cypress.Commands.add('testInPatientsDetails', (site) => {
       cy.get('p').each((el) => {
         switch (site) {
           case "CEBU":
-            assert.include(el.text(), "Chong Hua Hospital")
+            cy.contains("Chong Hua Hospital").should("contain.text", "Chong Hua Hospital")
             break;
           case "MANDAUE":
-            assert.include(el.text(), "Chong Hua Hospital Mandaue")
+            cy.contains("Chong Hua Hospital").should("contain.text", "Chong Hua Hospital Mandaue")
             break;
           case "BOTH":
-            assert.include(el.text(), "Chong Hua Hospital")
-            assert.include(el.text(), "Chong Hua Hospital Mandaue")
+            cy.contains("Chong Hua Hospital").should("contain.text", "Chong Hua Hospital")
+            cy.contains("Chong Hua Hospital").should("contain.text", "Chong Hua Hospital Mandaue")
         }
       })
     };
@@ -516,9 +516,6 @@ Cypress.Commands.add('clickDashboard', (option) => {
         cy.get('[id="ion-item-dn"]').click()
         cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsDischargedUrl"))
       }
-
-      cy.url({ timeout: 30000 }).should("include", Cypress.env("dashboardUrl"))
-
     } else {
       cy.get('[id="tab-button-dashboard"]').click({ force: true })
 
@@ -529,9 +526,6 @@ Cypress.Commands.add('clickDashboard', (option) => {
         cy.get('[id="ion-item-dn"]').click()
         cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsDischargedUrl"))
       }
-
-      cy.url({ timeout: 30000 }).should("include", Cypress.env("dashboardUrl"))
-
     }
   }))
 })
@@ -540,7 +534,7 @@ Cypress.Commands.add('clickDashboard', (option) => {
 Cypress.Commands.add('optOut', (isOptOut) => {
   cy.clicktab(3)
 
-  // cy.reload()
+  cy.reload()
   cy.wait(2000)
 
   cy.get('[id="dataPrivacyToggle"]').click({ force: true })
@@ -553,20 +547,23 @@ Cypress.Commands.add('optOut', (isOptOut) => {
   } else {
     cy.url({ timeout: 30000 }).should("include", Cypress.env("settingsUrl"))
   }
+  cy.wait(3000)
 })
 
 Cypress.Commands.add('SMSToggle', () => {
   cy.clicktab(3)
+
   cy.reload()
-  cy.wait(2000)
+  cy.wait(3500)
 
   cy.get('[name="ion-tg-0"]').click({ force: true })
+  // cy.pause()
   cy.wait(2000)
 
   cy.clickmenu(1)
 })
 
-Cypress.Commands.add('setProfFee', () => { 
+Cypress.Commands.add('setProfFee', () => {
   cy.get('body').then(($body => {
     if ($body.find('h2').length) {
       cy.get('[data-testid="IPC100230411"]').click()

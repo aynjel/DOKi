@@ -16,7 +16,7 @@ describe("Actions", () => {
       cy.login(userAccount[0].userName, userAccount[0].password, true)
 
       cy.clickDashboard("Admitted")
-      
+
       cy.end()
     });
 
@@ -24,7 +24,7 @@ describe("Actions", () => {
       cy.login(userAccount[0].userName, userAccount[0].password, true)
 
       cy.clickDashboard("For Discharge")
-      
+
       cy.end()
     });
   });

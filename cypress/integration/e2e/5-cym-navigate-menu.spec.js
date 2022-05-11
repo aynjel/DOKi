@@ -33,7 +33,7 @@ describe("Actions", () => {
 
     it("Test Scenario 3 - Random Navigation 10 possibities", () => {
       cy.login(userAccount[0].userName, userAccount[0].password, true)
-      
+
       var i;
 
       for (i = 1; i <= 10; i++) {

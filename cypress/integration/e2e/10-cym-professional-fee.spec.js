@@ -18,8 +18,6 @@ describe("Actions", () => {
     it("Test Scenario 1 - Input Professional Fee as non insurance coordinator and have not seen patient w/ SMS", () => {
       cy.login(userAccount[0].userName, userAccount[0].password, true)
 
-      // cy.SMSToggle() // send sms
-
       cy.setProfFee()
 
       cy.get('[name="ion-cb-7"]').click({ force: true }) //Have you seen this Patient?
@@ -54,8 +52,6 @@ describe("Actions", () => {
 
     it("Test Scenario 3 - Input Professional Fee as non insurance coordinator & have seen patient, Insurance + Philhealth  w/out SMS", () => {
       cy.login(userAccount[0].userName, userAccount[0].password, true)
-
-      // cy.SMSToggle() // should not send sms
 
       cy.setProfFee()
 
@@ -111,8 +107,8 @@ describe("Actions", () => {
       cy.contains("Next").click()
 
       cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsUrl") + "/IPC100230411/professional-fee/philhealth")
-      cy.contains("Next").click({force:true})
-      
+      cy.contains("Next").click({ force: true })
+
       cy.contains("Submit").click()
 
       cy.contains("Okay").click()
@@ -123,6 +119,8 @@ describe("Actions", () => {
     it("Test Scenario 6 - Input Professional Fee as insurance coordinator & have seen patient, Charity ", () => {
       cy.login(userAccount[0].userName, userAccount[0].password, true)
 
+      cy.SMSToggle() // send sms
+
       cy.setProfFee()
 
       cy.get('[name="ion-cb-6"]').click({ force: true }) //click Are you an Insurance Coordinator
@@ -131,9 +129,9 @@ describe("Actions", () => {
       cy.contains("Next").click()
 
       cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsUrl") + "/IPC100230411/professional-fee/charity")
-      cy.contains("Thank you").should("contain.text","Thank you for your generosity, Dok!")
-      cy.contains("Next").click({force:true})
-      
+      cy.contains("Thank you").should("contain.text", "Thank you for your generosity, Dok!")
+      cy.contains("Next").click({ force: true })
+
       cy.contains("Submit").click()
 
       cy.contains("Okay").click({ timeout: 10000 })
@@ -143,6 +141,8 @@ describe("Actions", () => {
 
     it("Test Scenario 7 - Scenario 3 non tax vat ", () => {
       cy.login(userAccount[0].userName, userAccount[0].password, true)
+
+      cy.SMSToggle() // send sms
 
       cy.setProfFee()
 

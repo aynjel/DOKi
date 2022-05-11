@@ -17,16 +17,16 @@ describe("Actions", () => {
       cy.clicktab(3)
       cy.wait(1000)
 
-      cy.contains("Change Password").click({force: true})
+      cy.contains("Change Password").click({ force: true })
       cy.wait(1000)
-      
+
       cy.contains("Current Password")
       cy.contains("New Password")
       cy.contains("Confirm New Password")
       cy.contains("SAVE")
       cy.contains("CANCEL")
       cy.contains("Close").click()
-      
+
       cy.url().should("include", Cypress.env("settingsUrl"))
       cy.end()
     });
@@ -37,7 +37,7 @@ describe("Actions", () => {
       cy.clicktab(3)
       cy.wait(1000)
 
-      cy.contains("Change Password").click({force: true})
+      cy.contains("Change Password").click({ force: true })
       cy.wait(1000)
 
       cy.cancelChangePassword(
@@ -53,7 +53,7 @@ describe("Actions", () => {
       cy.clicktab(3)
       cy.wait(1000)
 
-      cy.contains("Change Password").click({force: true})
+      cy.contains("Change Password").click({ force: true })
       cy.wait(1000)
 
       cy.testUpdatePasswordFromSetting(
@@ -63,7 +63,7 @@ describe("Actions", () => {
 
       cy.contains("Okay").click();
 
-      cy.url({timeout: 10000}).should("include", Cypress.env("loginUrl"))
+      cy.url({ timeout: 10000 }).should("include", Cypress.env("loginUrl"))
 
       cy.visit(Cypress.env('baseUrlToTest') + Cypress.env('loginUrl'))
       cy.wait(2000)
@@ -86,7 +86,7 @@ describe("Actions", () => {
       cy.clicktab(3)
       cy.wait(1000)
 
-      cy.contains("Change Password").click({force: true})
+      cy.contains("Change Password").click({ force: true })
       cy.wait(1000)
 
       cy.wait(500)
@@ -104,7 +104,7 @@ describe("Actions", () => {
       cy.contains("SAVE").click()
 
       cy.contains("Current Password (Old and New Passwords are the same)")
-      .should("have.text", "Current Password (Old and New Passwords are the same)")
+        .should("have.text", "Current Password (Old and New Passwords are the same)")
 
     });
 
@@ -114,7 +114,7 @@ describe("Actions", () => {
       cy.clicktab(3)
       cy.wait(1000)
 
-      cy.contains("Change Password").click({force: true})
+      cy.contains("Change Password").click({ force: true })
       cy.wait(1000)
 
       cy.wait(500)

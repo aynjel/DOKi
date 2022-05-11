@@ -39,12 +39,12 @@ const goOnline = () => {
                     },
                 })
         })
-    .then(() => {
-      Cypress.automation('remote:debugger:protocol',
-        {
-          command: 'Network.disable',
+        .then(() => {
+            Cypress.automation('remote:debugger:protocol',
+                {
+                    command: 'Network.disable',
+                })
         })
-    })
 }
 
 var userAccount;
@@ -58,24 +58,24 @@ describe("Actions", () => {
             cy.fixture('testUserAccount').then(function (data) {
                 userAccount = data;
             })
-            // goOffline()
-            // goOnline()
         });
 
         afterEach(() => {
             // goOnline()
-            // cy.reload()
-            // cy.url({ timeout: 10000 }).should("include", Cypress.env("loginUrl"))
         })
 
-        it("Test Scenario 1 - Login then Set offline", () => {
-            cy.login(userAccount[0].userName, userAccount[0].password, true)
+        it("Test Scenario 1 - Offline login", () => {
+            goOffline()
 
-            // goOffline()
+            cy.get('[name="ion-input-0"]').should("exist").type(userAccount[0].userName)
+            cy.get('[name="ion-input-1"]').should("exist").type(userAccount[0].password,)
 
-            cy.contains("Dashboard")
+            goOnline()
 
-            // goOnline()
+            cy.wait(5000)
+            cy.contains("LOG IN").click()
+
+
 
             cy.end()
         });

@@ -20,6 +20,8 @@ describe("Actions", () => {
     });
 
     it("Test Scenario 1 - Decline Data Privacy.", () => {
+      cy.wait(3000)
+      
       cy.login(userAccount[0].userName, userAccount[0].password, false)
 
       cy.end();

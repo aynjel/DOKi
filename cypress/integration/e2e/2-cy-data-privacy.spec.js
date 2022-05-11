@@ -25,7 +25,7 @@ describe("Actions", () => {
     });
 
     it("Test Scenario 2 - Accept Data Privacy.", () => {
-      cy.login(userAccount[0].userName, userAccount[0].password, true) 
+      cy.login(userAccount[0].userName, userAccount[0].password, true)
 
       cy.end();
     });
