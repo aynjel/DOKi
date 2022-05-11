@@ -16,7 +16,9 @@ export class TabNewsFeedPage implements OnInit {
   isDesktop: boolean;
   private ngUnsubscribe = new Subject();
   newsfeed: any;
+  newsfeedTemp: any;
   isNotification: boolean;
+  refreshcounter;
   constructor(
     private screensizeService: ScreenSizeService,
     private modalController: ModalController,
@@ -34,11 +36,13 @@ export class TabNewsFeedPage implements OnInit {
         }
         this.isDesktop = isDesktop;
       });
-    this.addMoreItems();
   }
   items = [];
   numTimesLeft = 5;
   ngOnInit() {
+    this.refreshcounter = 1;
+    this.newsfeedTemp = [];
+    this.newsfeed = [];
     this.ngUnsubscribe = new Subject();
     localStorage.removeItem('selectedPatient');
     this.checkAppearance();
@@ -47,13 +51,20 @@ export class TabNewsFeedPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          this.newsfeed = res;
+          console.log(res);
+
+          this.newsfeedTemp = res;
         },
         (error) => {},
-        () => {}
+        () => {
+          this.initiateData();
+        }
       );
 
     console.log(this.ngUnsubscribe);
+  }
+  initiateData() {
+    this.newsfeed = this.newsfeedTemp.slice(0, 10);
   }
   ionViewWillEnter() {
     this.checkInbox();
@@ -79,18 +90,21 @@ export class TabNewsFeedPage implements OnInit {
       );
   }
   loadData(event) {
+    this.refreshcounter++;
     setTimeout(() => {
       this.functionsService.logToConsole('Done');
-      this.addMoreItems();
-      //this.numTimesLeft -= 1;
+      this.newsfeed = this.newsfeed.concat(
+        this.newsfeedTemp.slice(
+          this.refreshcounter * 10 - 10,
+          this.refreshcounter * 10
+        )
+      );
+      console.log(this.newsfeed);
+
       event.target.complete();
     }, 500);
   }
-  addMoreItems() {
-    for (let i = 0; i < 10; i++) {
-      this.items.push(i);
-    }
-  }
+
   async showaddmodal1(x) {
     var data = x;
     const modal = await this.modalController.create({
@@ -107,17 +121,7 @@ export class TabNewsFeedPage implements OnInit {
   doRefresh(event) {
     this.checkInbox();
     setTimeout(() => {
-      this.doctorService
-        .getNewsFeedV3()
-        .pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe(
-          (res: any) => {
-            this.newsfeed = res;
-          },
-          (error) => {},
-          () => {}
-        );
-      //location.reload();
+      this.ngOnInit();
       event.target.complete();
     }, 1000);
   }
