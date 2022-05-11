@@ -60,8 +60,6 @@ export class TabNewsFeedPage implements OnInit {
           this.initiateData();
         }
       );
-
-    console.log(this.ngUnsubscribe);
   }
   initiateData() {
     this.newsfeed = this.newsfeedTemp.slice(0, 10);
@@ -99,8 +97,6 @@ export class TabNewsFeedPage implements OnInit {
           this.refreshcounter * 10
         )
       );
-      console.log(this.newsfeed);
-
       event.target.complete();
     }, 500);
   }
@@ -109,7 +105,6 @@ export class TabNewsFeedPage implements OnInit {
     var data = x;
     const modal = await this.modalController.create({
       component: ChhAppNewsfeedComponent,
-
       componentProps: {
         backdropDismiss: true,
         data: data,

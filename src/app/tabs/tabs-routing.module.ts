@@ -70,7 +70,7 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'inbox/medcert/:opdcode',
+        path: 'inbox/medcert/:admissionNo',
         loadChildren: () =>
           import(
             '../pages/doctors-information/view-medcert/view-medcert.module'

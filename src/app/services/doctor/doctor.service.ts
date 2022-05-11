@@ -527,6 +527,11 @@ export class DoctorService {
       httpOptions
     );
   }
+  getMedicalCertificatePOST(data) {
+    const url = 'http://10.151.12.120:7227/api/medcert/pdf';
+    return this.http.post(url, data, { responseType: 'blob' });
+  }
+
   approveMedicalCertificate(data) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers: headers, withCredentials: false };
