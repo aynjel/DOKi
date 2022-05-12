@@ -79,12 +79,12 @@ export class AppComponent implements OnInit {
       icon: 'document-text-outline',
       type: 'med',<ion-icon name="mail-open-outline"></ion-icon>
     },*/,
-    {
+    /*{
       title: 'Inbox',
       url: 'menu/inbox',
       icon: 'mail-open-outline',
       type: 'med',
-    },
+    },*/
     {
       title: 'Settings',
       url: 'menu/settings',
