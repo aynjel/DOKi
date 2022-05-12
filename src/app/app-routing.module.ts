@@ -29,7 +29,7 @@ const routes: Routes = [
       ).then((m) => m.InpatientDetailPageModule),
   },
   {
-    path: 'menu/in-patients/:admissionNo/:dischargeNo',
+    path: 'menu/in-patients/:admissionNo/view/:dischargeNo',
     loadChildren: () =>
       import(
         './pages/doctors-information/view-medcert/view-medcert.module'

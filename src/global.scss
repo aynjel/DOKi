@@ -485,7 +485,35 @@ ion-modal.ion5modal {
     }
   }
 }
+ion-modal.ion5modalSign {
+  --width: 100%;
+  --height: 100%;
+  --background: rgba(44, 39, 45, 0.2);
+  @media (min-height: 1180px) {
+    --padding-bottom: 60%;
+  }
+  &::part(content) {
+    backdrop-filter: blur(6px);
+  }
 
+  ion-content.blur {
+    --background: transparent;
+    @media (min-width: 667px) {
+        --padding-start: 10%;
+        --padding-end: 10%;
+      }
+    @media (min-width: 1023px) {
+      --padding-start: 20%;
+      --padding-end: 20%;
+    }
+  }
+
+  ion-card {
+    @media (min-width: 676px) {
+      width: 50%;
+    }
+  }
+}
 ion-modal.ion6modal {
   --width: 100%;
   --height: 100%;
@@ -551,6 +579,36 @@ ion-modal.ion6modaltest {
     }
   }
 }
+ion-modal.ion6modalsign {
+  --width: 100%;
+  --height: 100%;
+  --background: rgba(255, 255, 255, 0.2);
+
+  &::part(content) {
+    backdrop-filter: blur(6px);
+  }
+
+  .customBackgroundColor {
+    width: 100%;
+    height: 100%;
+  }
+
+  ion-content.blur {
+    --background: transparent;
+
+    @media (min-width: 767px) {
+
+      //--padding-end: 25%;
+      // --padding-start: 25%;
+    }
+
+    ion-datetime {
+      border-radius: 8px;
+    }
+  }
+}
+
+
 
 .bdrSolid1pxBlack{
   border:solid 1px black

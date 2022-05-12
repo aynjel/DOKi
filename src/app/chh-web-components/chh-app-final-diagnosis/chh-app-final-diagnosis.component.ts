@@ -37,7 +37,7 @@ export class ChhAppFinalDiagnosisComponent implements OnInit {
   }
   viewMedicalCertificate() {
     this.router.navigate([
-      'menu/in-patients/' + this.admissionNo + '/' + this.dischargeNo,
+      'menu/in-patients/' + this.admissionNo + '/view/' + this.dischargeNo,
     ]);
   }
   ngOnInit() {}

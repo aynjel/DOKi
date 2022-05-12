@@ -10,6 +10,7 @@ import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.serv
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SignaturePad } from 'angular2-signaturepad';
+import { FunctionsService } from 'src/app/shared/functions/functions.service';
 @Component({
   selector: 'app-sign-medcert',
   templateUrl: './sign-medcert.page.html',
@@ -31,6 +32,7 @@ export class SignMedcertPage implements OnInit {
   screenHeight;
   @ViewChild(SignaturePad) signaturePad: SignaturePad;
   signatureImg: string;
+  signatureImg1;
   signaturePadOptions: Object = {
     minWidth: 5,
     canvasWidth: 500,
@@ -47,7 +49,8 @@ export class SignMedcertPage implements OnInit {
     public actionSheetController: ActionSheetController,
     public router: Router,
     public activatedRoute: ActivatedRoute,
-    public modalController: ModalController
+    public modalController: ModalController,
+    public functionService: FunctionsService
   ) {
     this.isNotification = true;
     this.screensizeService
@@ -76,6 +79,7 @@ export class SignMedcertPage implements OnInit {
   }
   ionViewWillEnter() {}
   ngOnInit() {
+    this.checkAppearance();
     console.log('ngOnInit');
     this.getpdf();
     this.idModal = false;
@@ -83,28 +87,29 @@ export class SignMedcertPage implements OnInit {
     let scHeight = screen.height;
 
     if (scWidth <= 666) {
+      console.log('sm');
       this.screenWidth = scWidth - scWidth * 0.06;
       this.screenHeight = scHeight - scHeight * 0.25;
-      console.log(this.screenWidth);
-      this.signaturePadOptions = {
-        minWidth: 5,
-        canvasWidth: this.screenWidth,
-        canvasHeight: this.screenWidth,
-        backgroundColor: 'rgba(255, 255, 255, 0)',
-        penColor: 'rgb(0, 0, 0)',
-      };
+    } else if (scWidth <= 912) {
+      console.log('md');
+      this.screenWidth = scWidth - scWidth * 0.2;
+      this.screenHeight = scHeight - scHeight * 0.2;
     } else {
-      this.screenWidth = scWidth - scWidth * 0.05;
-      this.screenHeight = scHeight - scHeight * 0.3;
-      console.log(this.screenWidth);
-      this.signaturePadOptions = {
-        minWidth: 5,
-        canvasWidth: this.screenWidth,
-        canvasHeight: this.screenHeight,
-        backgroundColor: 'rgba(255, 255, 255, 0)',
-        penColor: 'rgb(0, 0, 0)',
-      };
+      console.log('l');
+      this.screenWidth = scWidth - scWidth * 0.4;
+      this.screenHeight = scHeight - scHeight * 0.4;
     }
+    if (scHeight >= 1180) {
+      this.screenHeight = scHeight - scHeight * 0.4;
+    }
+    this.signaturePadOptions = {
+      minWidth: 5,
+      canvasWidth: this.screenWidth,
+      canvasHeight: this.screenHeight,
+      //backgroundColor: 'rgba(0, 0, 0, 1)',
+      backgroundColor: 'rgba(255, 255, 255, 0)',
+      penColor: 'rgb(0, 0, 0)',
+    };
   }
   onClick() {
     this.idModal = true;
@@ -129,29 +134,54 @@ export class SignMedcertPage implements OnInit {
   clearPad() {
     this.signaturePad.clear();
   }
+  compressImage(src, newX, newY) {
+    return new Promise((res, rej) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        const elem = document.createElement('canvas');
+        elem.width = newX;
+        elem.height = newY;
+        const ctx = elem.getContext('2d');
+        ctx.drawImage(img, 0, 0, newX, newY);
+        const data = ctx.canvas.toDataURL();
+        res(data);
+      };
+      img.onerror = (error) => rej(error);
+    });
+  }
   savePad() {
     this.modalController.dismiss({
       dismissed: true,
     });
     this.isbutton = true;
-    const base64Data = this.signaturePad.toDataURL('image/png', 0.5);
-    this.signatureImg = base64Data;
-    let patientId = this.activatedRoute.snapshot.params.admissionNo;
+    const base64Data = this.signaturePad.toDataURL('image/png');
+    let compressedImage;
+    this.compressImage(
+      base64Data,
+      this.screenWidth * 0.3,
+      this.screenHeight * 0.3
+    ).then((compressed) => {
+      compressedImage = compressed;
+      let patientId = this.activatedRoute.snapshot.params.admissionNo;
+      const myArray = compressedImage.split(',');
+      let testAprrove = {
+        mode: 'string',
+        account_no: 'string',
+        medcert_comment: 'string',
+        medcert_approve_by: 'string',
+        medcert_signature: 'string',
+      };
+      testAprrove.mode = 'T';
+      testAprrove.account_no = patientId;
+      testAprrove.medcert_comment = 'medcert_comment';
+      testAprrove.medcert_approve_by = 'medcert_approve_by';
+      testAprrove.medcert_signature = myArray[1];
+      this.saveSignature(testAprrove);
+    });
+  }
+  saveSignature(testAprrove) {
     let dischargeNo = this.activatedRoute.snapshot.params.dischargeNo;
-    this.dischargeNo.discharge_no = dischargeNo;
-    const myArray = base64Data.split(',');
-    let testAprrove = {
-      mode: 'string',
-      account_no: 'string',
-      medcert_comment: 'string',
-      medcert_approve_by: 'string',
-      medcert_signature: 'string',
-    };
-    testAprrove.mode = 'T';
-    testAprrove.account_no = patientId;
-    testAprrove.medcert_comment = 'medcert_comment';
-    testAprrove.medcert_approve_by = 'medcert_approve_by';
-    testAprrove.medcert_signature = myArray[1];
     this.isPDFLoading = false;
     this.doctorService
       .approveMedicalCertificate(testAprrove)
@@ -217,6 +247,19 @@ export class SignMedcertPage implements OnInit {
           console.log(this.pdfSrc);
         }
       );
+  }
+  checkAppearance() {
+    var values = JSON.parse(
+      '[' + atob(localStorage.getItem('user_settings')) + ']'
+    );
+    let dr_username = atob(localStorage.getItem('username'));
+    values.forEach((element) => {
+      if (element.darkmode == 1) {
+        this.renderer.setAttribute(document.body, 'color-theme', 'dark');
+      } else {
+        this.renderer.setAttribute(document.body, 'color-theme', 'light');
+      }
+    });
   }
   ionViewDidLeave() {
     this.ngUnsubscribe.next();

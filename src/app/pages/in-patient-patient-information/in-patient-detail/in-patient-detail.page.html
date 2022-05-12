@@ -307,8 +307,12 @@ ______          _    _
           [truncating1]="truncating1"></app-chh-app-admitting-diagnosis>
 
 
-        <app-chh-app-final-diagnosis [data]="data" [finalDiagnosis]="finalDiagnosis" [limit]="limit"
-          [truncating]="truncating" [finalDiagnosis1]="finalDiagnosis1" [finalDiagnosis2]="finalDiagnosis2">
+        <app-chh-app-final-diagnosis [data]="admissionstatus" [finalDiagnosis]="finalDiagnosis" [limit]="limit"
+          [truncating]="truncating" [finalDiagnosis1]="finalDiagnosis1" [finalDiagnosis2]="finalDiagnosis2"
+          [finalDiagnosisApproval]="finalDiagnosisApproval"
+          [isCancelFinalDiagnosisApproval]='isCancelFinalDiagnosisApproval' [patientName]="patientName"
+          (cancelApproval)="cancelApproval($event)" [approvedDate]="approvedDate" [admissionNo]="admissionNo"
+          [dischargeNo]="dischargeNo">
         </app-chh-app-final-diagnosis>
       </ion-col>
       <!-- Progress notes -->
