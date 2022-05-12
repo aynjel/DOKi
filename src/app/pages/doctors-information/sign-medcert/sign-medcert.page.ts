@@ -62,14 +62,16 @@ export class SignMedcertPage implements OnInit {
             this.closeModal();
             this.ngOnInit();
           } else {
+            this.ngOnInit();
           }
         }
         if (this.isPortrait != undefined && isPortrait) {
           if (this.idModal) {
             this.closeModal();
             this.ngOnInit();
+          } else {
+            this.ngOnInit();
           }
-          this.ngOnInit();
         }
         this.isPortrait = isPortrait;
       });
