@@ -88,6 +88,7 @@ export class TabsHistoricalPage implements OnInit {
   yearTreandTO: any = '2022';
   MTATotal: any;
   MTA: any;
+
   MTACeb: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   MTAMan: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   MTACebSet: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -188,8 +189,10 @@ export class TabsHistoricalPage implements OnInit {
           this.dismissLoading();
           if (tempMTA != null) {
             this.MTATotal = 0;
-            this.MTACebSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            this.MTAManSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            // this.MTACebSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            this.MTACebSet = [];
+            // this.MTAManSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            this.MTAManSet = [];
             tempMTA.forEach((element) => {
               if (element.site == 'C') {
                 this.MTATotal += element.totalAdmsMTD;
