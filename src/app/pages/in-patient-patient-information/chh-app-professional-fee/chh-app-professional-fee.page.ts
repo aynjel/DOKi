@@ -101,6 +101,8 @@ export class ChhAppProfessionalFeePage implements OnInit {
   is_senior;
   is_pwd;
   philhealth_membership;
+  insurance_hmo;
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -163,6 +165,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     this.dr_name = this.loginResponseModelv3.lastName;
     this.dr_code = this.loginResponseModelv3.doctorCode;
     this.data = JSON.parse(atob(localStorage.getItem('patientData')));
+    this.insurance_hmo = this.data[0].insurance_hmo;
     this.is_pwd = this.data[0].is_pwd;
     this.is_senior = this.data[0].is_senior;
     //console.log(this.is_pwd, this.is_senior);
