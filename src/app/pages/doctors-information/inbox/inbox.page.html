@@ -102,7 +102,12 @@
                   <ion-col>
                     <ion-button mode="ios" size="small" color="mango" shape="" expand="block"
                       (click)="viewCerticate(x)">
-                      View & Sign Medical Certificate</ion-button>
+                      <span *ngIf="selected == 'FA'">View & Sign Medical Certificate</span>
+                      <span *ngIf="selected == 'RA'">View Medical Certificate</span>
+                    </ion-button>
+
+
+
                   </ion-col>
 
                 </ion-row>

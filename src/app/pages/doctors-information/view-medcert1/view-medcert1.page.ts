@@ -11,11 +11,11 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SignaturePad } from 'angular2-signaturepad';
 @Component({
-  selector: 'app-view-medcert',
-  templateUrl: './view-medcert.page.html',
-  styleUrls: ['./view-medcert.page.scss'],
+  selector: 'app-view-medcert1',
+  templateUrl: './view-medcert1.page.html',
+  styleUrls: ['./view-medcert1.page.scss'],
 })
-export class ViewMedcertPage implements OnInit {
+export class ViewMedcert1Page implements OnInit {
   private ngUnsubscribe = new Subject();
   isNotification: boolean;
   isPortrait: boolean;
@@ -74,13 +74,23 @@ export class ViewMedcertPage implements OnInit {
   back() {
     this.navCtrl.back();
   }
-  ionViewWillEnter() {}
-  ngOnInit() {
-    this.selectedPatient = JSON.parse(
-      atob(localStorage.getItem('patientData'))
+  ionViewWillEnter() {
+    this.checkAppearance();
+  }
+  checkAppearance() {
+    var values = JSON.parse(
+      '[' + atob(localStorage.getItem('user_settings')) + ']'
     );
-    console.log(this.selectedPatient);
-
+    let dr_username = atob(localStorage.getItem('username'));
+    values.forEach((element) => {
+      if (element.darkmode == 1) {
+        this.renderer.setAttribute(document.body, 'color-theme', 'dark');
+      } else {
+        this.renderer.setAttribute(document.body, 'color-theme', 'light');
+      }
+    });
+  }
+  ngOnInit() {
     console.log('ngOnInit');
     this.getpdf();
     this.idModal = false;
@@ -111,18 +121,15 @@ export class ViewMedcertPage implements OnInit {
       };
     }
   }
-  cancelApproval(x) {
-    this.presentActionSheet(x);
+  cancelApproval() {
+    this.presentActionSheet();
   }
-  async presentActionSheet(x) {
+  async presentActionSheet() {
     let dischargeNo = this.activatedRoute.snapshot.params.dischargeNo;
 
     const actionSheet = await this.actionSheetController.create({
       mode: 'ios',
-      header:
-        'Are you sure to Cancel Patient :' +
-        x.last_name +
-        "'s final diagnosis?",
+      header: "Are you sure to Cancel Patient's final diagnosis?",
       cssClass: 'my-custom-class',
       buttons: [
         {

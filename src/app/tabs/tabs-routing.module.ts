@@ -69,7 +69,13 @@ const routes: Routes = [
             (m) => m.InboxPageModule
           ),
       },
-
+      {
+        path: 'in-patients/:admissionNo/viewAndCancel/:dischargeNo',
+        loadChildren: () =>
+          import(
+            '../pages/doctors-information/view-medcert1/view-medcert1.module'
+          ).then((m) => m.ViewMedcert1PageModule),
+      },
       {
         path: 'inbox/sign-medcert/:admissionNo/:dischargeNo',
         loadChildren: () =>

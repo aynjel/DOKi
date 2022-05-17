@@ -35,6 +35,7 @@ const routes: Routes = [
         './pages/doctors-information/view-medcert/view-medcert.module'
       ).then((m) => m.ViewMedcertPageModule),
   },
+
   /*{
     path: 'menu/in-patients/:id/progressnotes',
     loadChildren: () =>

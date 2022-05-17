@@ -47,10 +47,13 @@ export class InboxPage implements OnInit {
       });
   }
   ionViewWillEnter() {
-    this.getPendingApproval();
     console.log('ionViewWillEnter');
+
+    this.getPendingApproval();
   }
   ngOnInit() {
+    this.getPendingApproval();
+
     console.log('ngOnInit');
 
     this.checkAppearance();
@@ -75,13 +78,15 @@ export class InboxPage implements OnInit {
     //console.log(e.detail.value);
     //this.router.navigate(['/sign-medcert/' + e.detail.value]);
     console.log(e.detail.value);
-
+    this.selected = e.detail.value;
     this.pendingApproval = this.pendingApprovalFullList.filter(
       (element) => element.approval_status == e.detail.value
     );
   }
   getPendingApproval() {
+    this.selected = 'FA';
     this.pendingApproval = [];
+    this.pendingApprovalFullList = [];
     let data = {
       dt_from: '2021-01-17T08:42:50.917Z',
       dt_to: '2022-05-17T08:42:50.917Z',
@@ -142,10 +147,31 @@ export class InboxPage implements OnInit {
   }
   viewCerticate(x) {
     console.log(x);
+
+    console.log(x.admission_no);
+    console.log(x.discharge_no);
+    if (this.selected == 'FA') {
+      this.router.navigate([
+        'menu/inbox/sign-medcert/' + x.admission_no + '/' + x.discharge_no,
+      ]);
+    } else {
+      this.router.navigate([
+        'menu/in-patients/' +
+          x.admission_no +
+          '/viewAndCancel/' +
+          x.discharge_no,
+      ]);
+    }
+  }
+
+  viewAndCancelCerticate(x) {
+    console.log(x);
+
     this.router.navigate([
-      'menu/inbox/sign-medcert/' + x.admission_no + '/' + x.discharge_no,
+      'menu/in-patients/' + x.admissionNo + '/view/' + x.dischargeNo,
     ]);
   }
+
   async presentActionSheet(x) {
     const actionSheet = await this.actionSheetController.create({
       mode: 'ios',
