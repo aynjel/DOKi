@@ -1,6 +1,12 @@
 <ion-header mode="md" class="ion-no-border" *ngIf="!isDesktop">
   <div>
     <ion-toolbar color="mango">
+      <span class="padding-left-10" (click)="back()" routerDirection="backward" color="chh-css-primary2">
+        <ion-icon name="arrow-back-outline" class="my-icon vcenter"></ion-icon>
+      </span>
+      <span class="padding-left-30 font-weight-500 font-size-20"> &nbsp;&nbsp;Inbox </span>
+    </ion-toolbar>
+    <!--ion-toolbar color="mango">
       <ion-title>
         <ion-icon [name]="isNotification === true ? 'mail-unread-outline' : 'mail-outline'"></ion-icon> Inbox
       </ion-title>
@@ -10,7 +16,7 @@
           Back&nbsp; <ion-icon name="log-out-outline"></ion-icon>
         </ion-button>
       </ion-buttons>
-    </ion-toolbar>
+    </ion-toolbar-->
   </div>
   <!--ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="selected" color="secondary" mode='ios'>
     <ion-segment-button value="Final Diagnosis">
