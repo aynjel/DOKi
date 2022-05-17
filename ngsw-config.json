@@ -2,8 +2,8 @@
   "$schema": "./node_modules/@angular/service-worker/config/schema.json",
   "index": "/index.html",
   "appData": {
-    "version": "3.0.12",
-    "changelog": "Version 3.0.12 release."
+    "version": "3.0.13",
+    "changelog": "Version 3.0.13 release."
   },
   "assetGroups": [
     {
