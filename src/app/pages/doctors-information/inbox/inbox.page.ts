@@ -1,5 +1,9 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { ActionSheetController, NavController } from '@ionic/angular';
+import {
+  ActionSheetController,
+  ModalController,
+  NavController,
+} from '@ionic/angular';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
 import { takeUntil } from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -26,7 +30,8 @@ export class InboxPage implements OnInit {
     public screensizeService: ScreenSizeService,
     private renderer: Renderer2,
     public actionSheetController: ActionSheetController,
-    public router: Router
+    public router: Router,
+    public modalController: ModalController
   ) {
     console.log('constructor');
     this.isNotification = true;
@@ -41,6 +46,16 @@ export class InboxPage implements OnInit {
       });
   }
   ionViewWillEnter() {
+    console.log(this.modalController);
+    let isModal = localStorage.getItem('isModal');
+    if (isModal == '1') {
+      this.modalController.dismiss({
+        dismissed: true,
+      });
+    }
+    /* this.modalController.dismiss({
+          dismissed: true,
+        });*/
     this.getPendingApproval();
     console.log('ionViewWillEnter');
   }

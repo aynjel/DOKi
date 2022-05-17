@@ -114,11 +114,13 @@ export class SignMedcertPage implements OnInit {
     };
   }
   onClick() {
+    localStorage.setItem('isModal', '1');
     this.idModal = true;
     document.getElementById('trigger-button-certificate').click();
   }
   closeModal() {
     this.idModal = false;
+    localStorage.setItem('isModal', '0');
     this.modalController.dismiss({
       dismissed: true,
     });
