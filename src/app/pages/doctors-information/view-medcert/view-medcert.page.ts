@@ -120,13 +120,13 @@ export class ViewMedcertPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       mode: 'ios',
       header:
-        'Are you sure to Cancel Patient :' +
+        'Are you sure to revoke patient ' +
         x.last_name +
-        "'s final diagnosis?",
+        "'s final diagnosis approval?",
       cssClass: 'my-custom-class',
       buttons: [
         {
-          text: 'Yes, Cancel',
+          text: 'Yes, Revoke',
           icon: 'thumbs-up-outline',
           id: 'delete-button',
           data: {

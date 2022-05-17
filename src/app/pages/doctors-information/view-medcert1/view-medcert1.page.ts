@@ -129,11 +129,11 @@ export class ViewMedcert1Page implements OnInit {
 
     const actionSheet = await this.actionSheetController.create({
       mode: 'ios',
-      header: "Are you sure to Cancel Patient's final diagnosis?",
+      header: "Are you sure to revoke the patient's final diagnosis?",
       cssClass: 'my-custom-class',
       buttons: [
         {
-          text: 'Yes, Cancel',
+          text: 'Yes, Revoke',
           icon: 'thumbs-up-outline',
           id: 'delete-button',
           data: {
