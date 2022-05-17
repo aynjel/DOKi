@@ -114,7 +114,7 @@ ______             _     _                        _   _                   _
           <ion-checkbox color="primary" slot="end" value="insurance" [(ngModel)]="insurance"
             (click)="buttonclick('insurance',insurance)"></ion-checkbox>
         </ion-item>
-        <div class="insurance_hmo" *ngIf="insurance_hmo!=null">{{insurance_hmo}}</div>
+        <div class="insurance_hmo ion-text-wrap" *ngIf="insurance_hmo!=null">{{insurance_hmo}}</div>
         <ion-item lines="none">
           <ion-label class="ion-text-wrap">Personal + PhilHealth</ion-label>
           <ion-checkbox color="primary" slot="end" value="philhealth" [(ngModel)]="personalphilhealth"
@@ -343,7 +343,7 @@ ______             _     _                       ______             _
                 <ion-checkbox color="primary" slot="end" value="insurance" [(ngModel)]="insurance"
                   (click)="buttonclick('insurance',insurance)"></ion-checkbox>
               </ion-item>
-              <div class="insurance_hmo" *ngIf="insurance_hmo!=null">{{insurance_hmo}}</div>
+              <div class="insurance_hmo ion-text-wrap" *ngIf="insurance_hmo!=null">{{insurance_hmo}}</div>
               <ion-item lines="none">
                 <ion-label class="ion-text-wrap">Personal + PhilHealth</ion-label>
                 <ion-checkbox color="primary" slot="end" value="philhealth" [(ngModel)]="personalphilhealth"
