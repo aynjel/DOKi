@@ -208,8 +208,12 @@ export class TabsHistoricalPage implements OnInit {
             this.MTACategory = this.MTACategorySet;
             this.monthTrendFromTo();
           } else {
+            /*
             this.MTACebSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             this.MTAManSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            */
+            this.MTACebSet = [];
+            this.MTAManSet = [];
             this.monthTrendFromTo();
           }
         }

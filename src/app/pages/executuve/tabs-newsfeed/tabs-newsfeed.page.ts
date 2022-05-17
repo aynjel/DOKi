@@ -40,6 +40,8 @@ export class TabsNewsfeedPage implements OnInit {
   isDesktop: boolean;
   private ngUnsubscribe = new Subject();
   newsfeed: any;
+  refreshcounter;
+  newsfeedTemp;
   constructor(
     private screensizeService: ScreenSizeService,
     private modalController: ModalController,
@@ -66,6 +68,9 @@ export class TabsNewsfeedPage implements OnInit {
     this.router.navigate(['/executive/settings']);
   }
   ngOnInit() {
+    this.refreshcounter = 1;
+    this.newsfeedTemp = [];
+    this.newsfeed = [];
     this.ngUnsubscribe = new Subject();
     this.checkAppearance();
 
@@ -74,18 +79,28 @@ export class TabsNewsfeedPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          this.newsfeed = res;
+          this.newsfeedTemp = res;
+          //this.newsfeed = res;
         },
         (error) => {},
-        () => {}
+        () => {
+          this.initiateData();
+        }
       );
   }
-
+  initiateData() {
+    this.newsfeed = this.newsfeedTemp.slice(0, 10);
+  }
   loadData(event) {
+    this.refreshcounter++;
     setTimeout(() => {
       this.functionsService.logToConsole('Done');
-      this.addMoreItems();
-      //this.numTimesLeft -= 1;
+      this.newsfeed = this.newsfeed.concat(
+        this.newsfeedTemp.slice(
+          this.refreshcounter * 10 - 10,
+          this.refreshcounter * 10
+        )
+      );
       event.target.complete();
     }, 500);
   }
