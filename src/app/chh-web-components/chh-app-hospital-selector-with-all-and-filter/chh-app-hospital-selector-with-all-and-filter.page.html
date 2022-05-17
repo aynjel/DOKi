@@ -38,7 +38,7 @@
       <ion-select-option value="{{this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE}}">{{this.functionsService.convertAllFirstLetterToUpperCase(this.constants.ADMISSION_STATUS__VALUE__FOR_DISCHARGE)}}</ion-select-option>
     </ion-select>
   </ion-button> -->
-  <ion-fab horizontal="end" vertical="top" slot="fixed" *ngIf="!isDesktop">
+  <ion-fab horizontal="end" vertical="top" slot="fixed" *ngIf="!isDesktop" class='margintop-15'>
     <ion-fab-button color="light" class="">
       <ion-icon name="options-outline"></ion-icon>
     </ion-fab-button>
