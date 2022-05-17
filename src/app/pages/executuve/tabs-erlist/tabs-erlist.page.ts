@@ -97,6 +97,7 @@ export class TabsErlistPage implements OnInit {
     ////console.log(this.dateValue);
   }
   formatDate(value: string) {
+    this.modalController.dismiss();
     let date1 = new Date(value);
     let day1 = date1.getDate();
     let month1 = date1.getMonth() + 1;
