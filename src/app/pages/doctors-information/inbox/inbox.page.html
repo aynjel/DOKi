@@ -18,17 +18,15 @@
       </ion-buttons>
     </ion-toolbar-->
   </div>
-  <!--ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="selected" color="secondary" mode='ios'>
-    <ion-segment-button value="Final Diagnosis">
-      <ion-label>Final Diagnosis</ion-label>
+  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="selected" color="secondary" mode='ios'>
+    <ion-segment-button value="FA">
+      <ion-label>For Approval</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="Progress Notes">
-      <ion-label>Progress Notes</ion-label>
+    <ion-segment-button value="RA">
+      <ion-label>Approved</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="Others">
-      <ion-label>Others</ion-label>
-    </ion-segment-button>
-  </ion-segment-->
+
+  </ion-segment>
 </ion-header>
 
 <ion-content>

@@ -40,7 +40,7 @@
         </ion-item-->
 
 
-        <ion-item button="true" id="open-modal" *ngIf="!isDesktop">
+        <ion-item button="true" id="open-modal" *ngIf="!isDesktop" (click)="activateIsCalendarModal()">
           <ion-icon icon="calendar-outline" slot="start" color="mango"></ion-icon>
           <ion-label>Pick Date</ion-label>
           <ion-text slot="end">{{ dateToday }}</ion-text>

@@ -17,8 +17,9 @@ import { Router } from '@angular/router';
 export class InboxPage implements OnInit {
   private ngUnsubscribe = new Subject();
   isNotification: boolean;
-  selected = 'Final Diagnosis';
+  selected = 'FA';
   pendingApproval;
+  pendingApprovalFullList;
   dischargeNo = {
     discharge_no: '',
   };
@@ -46,16 +47,6 @@ export class InboxPage implements OnInit {
       });
   }
   ionViewWillEnter() {
-    console.log(this.modalController);
-    let isModal = localStorage.getItem('isModal');
-    if (isModal == '1') {
-      this.modalController.dismiss({
-        dismissed: true,
-      });
-    }
-    /* this.modalController.dismiss({
-          dismissed: true,
-        });*/
     this.getPendingApproval();
     console.log('ionViewWillEnter');
   }
@@ -82,27 +73,40 @@ export class InboxPage implements OnInit {
   }
   segmentChanged(e) {
     //console.log(e.detail.value);
-    this.router.navigate(['/sign-medcert/' + e.detail.value]);
+    //this.router.navigate(['/sign-medcert/' + e.detail.value]);
+    console.log(e.detail.value);
+
+    this.pendingApproval = this.pendingApprovalFullList.filter(
+      (element) => element.approval_status == e.detail.value
+    );
   }
   getPendingApproval() {
     this.pendingApproval = [];
+    let data = {
+      dt_from: '2021-01-17T08:42:50.917Z',
+      dt_to: '2022-05-17T08:42:50.917Z',
+    };
     this.doctorService
       .getPendingApproval()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          this.pendingApproval = res;
-          if (this.pendingApproval == null) {
+          this.pendingApprovalFullList = res;
+          if (this.pendingApprovalFullList == null) {
             this.empty = true;
           } else {
             this.empty = false;
           }
-          console.log(this.pendingApproval);
+          console.log(this.pendingApprovalFullList);
         },
         (error) => {
           console.log(error);
         },
-        () => {}
+        () => {
+          this.pendingApproval = this.pendingApprovalFullList.filter(
+            (element) => element.approval_status == 'FA'
+          );
+        }
       );
   }
   approvePendingAPproval(discharge_no) {

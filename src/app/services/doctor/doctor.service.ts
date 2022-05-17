@@ -543,13 +543,23 @@ export class DoctorService {
   }
 
   getPendingApproval() {
-    const headers = new HttpHeaders({
+    /*const headers = new HttpHeaders({
       'Content-Type': 'application/json;charset=utf-8',
     });
     const options = { headers: headers, withCredentials: true };
     const url =
       environment.apiRouterUrl + 'v3/DischargeDiagnosis/PendingApproval';
     return this.http.get(url, options);
+*/
+    let data = {
+      dt_from: '2021-01-17T08:42:50.917Z',
+      dt_to: '2022-05-17T08:42:50.917Z',
+    };
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers: headers, withCredentials: false };
+    const url =
+      environment.apiRouterUrl + 'v3/DischargeDiagnosis/PendingApproval';
+    return this.http.post(url, data, options);
   }
   getApprovalStatus(data) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });

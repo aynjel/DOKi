@@ -1,4 +1,10 @@
-import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   ActionSheetController,
@@ -113,7 +119,22 @@ export class SignMedcertPage implements OnInit {
       penColor: 'rgb(0, 0, 0)',
     };
   }
+  activateIsSignatureModal() {
+    const modalState = {
+      modal: true,
+      desc: 'fake state for our modal',
+    };
+    history.pushState(modalState, null);
+  }
+  @HostListener('window:popstate', ['$event'])
+  dismissModal() {
+    if (this.idModal) {
+      this.modalController.dismiss();
+      this.idModal = false;
+    }
+  }
   onClick() {
+    this.activateIsSignatureModal();
     localStorage.setItem('isModal', '1');
     this.idModal = true;
     document.getElementById('trigger-button-certificate').click();

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { AuthConstants, Consta } from '../../../config/auth-constants';
 import { BehaviorSubject } from 'rxjs';
@@ -36,6 +36,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { format, parseISO } from 'date-fns';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { NavigationStart } from '@angular/router';
 @Component({
   selector: 'app-tabs-erlist',
   templateUrl: './tabs-erlist.page.html',
@@ -81,7 +82,26 @@ export class TabsErlistPage implements OnInit {
       });
     this.setDate();
   }
-
+  isCalendar: boolean;
+  activateIsCalendarModal() {
+    this.isCalendar = true;
+    const modalState = {
+      modal: true,
+      desc: 'fake state for our modal',
+    };
+    history.pushState(modalState, null);
+  }
+  @HostListener('window:popstate', ['$event'])
+  dismissModal() {
+    if (this.isCalendar) {
+      this.modalController.dismiss();
+      this.isCalendar = false;
+    }
+  }
+  closeCalendar() {
+    this.isCalendar = false;
+    this.modalController.dismiss();
+  }
   setDate() {
     let date1 = new Date(this.dateValue);
 
@@ -97,7 +117,11 @@ export class TabsErlistPage implements OnInit {
     ////console.log(this.dateValue);
   }
   formatDate(value: string) {
-    this.modalController.dismiss();
+    if (this.isCalendar) {
+      this.closeCalendar();
+    }
+
+    this.isCalendar = false;
     let date1 = new Date(value);
     let day1 = date1.getDate();
     let month1 = date1.getMonth() + 1;
