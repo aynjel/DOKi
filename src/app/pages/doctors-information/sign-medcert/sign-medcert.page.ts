@@ -129,8 +129,7 @@ export class SignMedcertPage implements OnInit {
   @HostListener('window:popstate', ['$event'])
   dismissModal() {
     if (this.idModal) {
-      this.modalController.dismiss();
-      this.idModal = false;
+      this.closeModal();
     }
   }
   onClick() {
@@ -145,6 +144,7 @@ export class SignMedcertPage implements OnInit {
     this.modalController.dismiss({
       dismissed: true,
     });
+    this.navCtrl.back();
   }
   drawComplete() {
     // will be notified of szimek/signature_pad's onEnd event
@@ -176,9 +176,7 @@ export class SignMedcertPage implements OnInit {
     });
   }
   savePad() {
-    this.modalController.dismiss({
-      dismissed: true,
-    });
+    this.closeModal();
     this.isbutton = true;
     const base64Data = this.signaturePad.toDataURL('image/png');
     let compressedImage;

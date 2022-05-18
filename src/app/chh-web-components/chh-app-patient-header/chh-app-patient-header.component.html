@@ -64,8 +64,15 @@
           <ion-chip *ngIf="x.admission_status == 'AC'">
             <ion-label color="primary" class="font-12"><b>Admitted</b></ion-label>
           </ion-chip>
+
           <ion-chip *ngIf="x.admission_status == 'DN'">
             <ion-label color="primary" class="font-12"><b>For Discharge</b></ion-label>
+          </ion-chip>
+          <ion-chip *ngIf="is_philhealth_membership =='M'">
+            <ion-label color="primary" class="font-12"><b>PHIC Member</b></ion-label>
+          </ion-chip>
+          <ion-chip *ngIf="is_philhealth_membership =='D'">
+            <ion-label color="primary" class="font-12"><b>PHIC Dependent</b></ion-label>
           </ion-chip>
           <ion-chip *ngIf="is_senior=='Y'">
             <ion-label color="primary" class="font-12"><b>Senior</b></ion-label>
@@ -167,7 +174,12 @@
           <ion-chip *ngIf="x.admission_status == 'DN'">
             <ion-label color="primary" class="font-12"><b>For Discharge</b></ion-label>
           </ion-chip>
-
+          <ion-chip *ngIf="is_philhealth_membership =='M'">
+            <ion-label color="primary" class="font-12"><b>PHIC Member</b></ion-label>
+          </ion-chip>
+          <ion-chip *ngIf="is_philhealth_membership =='D'">
+            <ion-label color="primary" class="font-12"><b>PHIC Dependent</b></ion-label>
+          </ion-chip>
           <ion-chip *ngIf="is_senior=='Y'">
             <ion-label color="primary" class="font-12"><b>Senior</b></ion-label>
           </ion-chip>

@@ -130,7 +130,7 @@ export class InPatientDetailPage {
   isCancelFinalDiagnosisApproval;
   finalDiagnosisApproval;
   patientName;
-
+  is_philhealth_membership;
   admissionNo;
   dischargeNo;
   constructor(
@@ -222,11 +222,11 @@ export class InPatientDetailPage {
         this.pdfSrc = downloadURL;
       },
       (error) => {
-        console.log('error');
-        console.log(error);
+        //console.log('error');
+        //console.log(error);
       },
       () => {
-        console.log(this.pdfSrc);
+        //console.log(this.pdfSrc);
       }
     );
     this.doctorService
@@ -289,7 +289,7 @@ export class InPatientDetailPage {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          console.log(res);
+          //console.log(res);
           if (res == null) {
             this.back();
           } else {
@@ -338,11 +338,12 @@ export class InPatientDetailPage {
           } else {
             this.alert('No Data Available', 'Okay');
           }
-          console.log(this.data1);
-
+          //console.log(this.data1);
+          //console.log(this.data[0].philhealth_membership);
+          this.is_philhealth_membership = this.data[0].philhealth_membership;
           this.is_pwd = this.data1[0].is_pwd;
           this.is_senior = this.data1[0].is_senior;
-          console.log(this.is_pwd, this.is_senior);
+          //console.log(this.is_pwd, this.is_senior);
         }
       );
   }
@@ -357,7 +358,7 @@ export class InPatientDetailPage {
     await this.loading.present();
 
     const { role, data } = await this.loading.onDidDismiss();
-    //////////////console.log('Loading dismissed!');
+    ////////////////console.log('Loading dismissed!');
   }
   public async dismissLoading(): Promise<void> {
     if (this.loading) {
@@ -596,7 +597,7 @@ export class InPatientDetailPage {
             this.isFetchDone = true;
           }
         );
-      this.getApprovalStatus(this.patient_id);
+      //this.getApprovalStatus(this.patient_id);
     }
 
     this.postData.DateCreated = this.functionsService.getSystemDateTime();
@@ -609,7 +610,7 @@ export class InPatientDetailPage {
 
     /*this.doctorService.getProgressNotes('test').subscribe(
       (res: any = []) => {
-        //console.log(res[0].notes);
+        ////console.log(res[0].notes);
         this.progNot_InitDisplay = this.functionsService.truncateChar(
           res[0].notes,
           200
@@ -617,10 +618,10 @@ export class InPatientDetailPage {
         this.progNot_account_no = res[0].account_no;
       },
       (error) => {
-        //console.log(error);
+        ////console.log(error);
       },
       () => {
-        //console.log('call done');
+        ////console.log('call done');
       }
     );*/
     this.getProgressNotes();
@@ -636,13 +637,13 @@ export class InPatientDetailPage {
       .subscribe(
         (res: any) => {
           if (res != null) {
-            console.log('approvedDate', res);
+            //console.log('approvedDate', res);
             this.admissionNo = res[0].admission_no;
             this.dischargeNo = res[0].discharge_no;
             this.finalDiagnosisApproval = res;
             this.isCancelFinalDiagnosisApproval = res[0].approval_status;
             this.approvedDate = res[0].approve_date;
-            console.log(this.approvedDate);
+            //console.log(this.approvedDate);
           } else {
             this.isCancelFinalDiagnosisApproval = '';
           }
@@ -660,7 +661,7 @@ export class InPatientDetailPage {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          console.log(res);
+          //console.log(res);
           this.ionViewWillEnter();
         },
         (error) => {},
@@ -676,7 +677,7 @@ export class InPatientDetailPage {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any = []) => {
-          //console.log(res);
+          ////console.log(res);
           this.progessNotesTemp = res;
           if (this.progessNotesTemp.length > 0) {
             this.progNot_InitDisplay = this.functionsService.truncateChar(
@@ -718,7 +719,7 @@ export class InPatientDetailPage {
             }
             this.progessNotes.push(el);
           });
-          ////console.log(this.activeDays);
+          //////console.log(this.activeDays);
 
           if (this.progessNotes.length <= 0) {
             this.progressNotesIsEmpty = true;
@@ -1170,7 +1171,7 @@ export class InPatientDetailPage {
   }
 
   startDrawing(event: Event) {
-    console.log(event);
+    //console.log(event);
     // works in device not in browser
   }
 
@@ -1185,6 +1186,6 @@ export class InPatientDetailPage {
   savePad() {
     const base64Data = this.signaturePad.toDataURL();
     this.signatureImg = base64Data;
-    console.log(base64Data);
+    //console.log(base64Data);
   }*/
 }

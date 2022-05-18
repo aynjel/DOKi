@@ -109,6 +109,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   is_pwd;
   is_senior;
   isVatDisabled: boolean = false;
+  is_philhealth_membership;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -215,6 +216,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     this.dr_code = logindata.doctorCode;
     this.data = JSON.parse(atob(localStorage.getItem('patientData')));
     this.is_pwd = this.data[0].is_pwd;
+    this.is_philhealth_membership = this.data[0].philhealth_membership;
     this.is_senior = this.data[0].is_senior;
     if (this.is_pwd == 'Y' || this.is_senior == 'Y') {
       this.isVatDisabled = true;

@@ -95,7 +95,7 @@ export class TransactionSummaryPage implements OnInit {
   userSettingsModelv3: UserSettingsModelv3 = new UserSettingsModelv3();
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   btnsubmit = 'btnsubmit';
-
+  is_philhealth_membership;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -217,6 +217,7 @@ export class TransactionSummaryPage implements OnInit {
     console.log(this.data);
     this.payvenueTxt = this.data[0].payvenue;
     this.is_pwd = this.data[0].is_pwd;
+    this.is_philhealth_membership = this.data[0].philhealth_membership;
     this.is_senior = this.data[0].is_senior;
     this.patient_name = this.data[0].first_name + ' ' + this.data[0].last_name;
     this.patient_name = this.functionsService.convertAllFirstLetterToUpperCase(

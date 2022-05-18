@@ -15,6 +15,7 @@ export class ProfessionalFeeSummaryPatientInfoComponent implements OnInit {
   @Input() data1;
   @Input() withVat;
   @Input() payvenueTxt;
+  @Input() is_philhealth_membership;
   constructor() {}
 
   ngOnInit() {}

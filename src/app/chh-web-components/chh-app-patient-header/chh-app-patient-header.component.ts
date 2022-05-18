@@ -14,6 +14,7 @@ export class ChhAppPatientHeaderComponent {
   @Input() forMoreOrLess: boolean;
   @Input() is_pwd: any = 'N';
   @Input() is_senior: any = 'N';
+  @Input() is_philhealth_membership;
   isDesktop: any;
   moreOrLess: boolean = true;
 

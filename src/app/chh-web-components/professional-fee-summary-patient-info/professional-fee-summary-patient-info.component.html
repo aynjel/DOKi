@@ -32,16 +32,38 @@
       <ion-col size="5">Admission Date:</ion-col>
       <ion-col size="7">{{dateAdmitted}}</ion-col>
     </ion-row>
+    <!--ion-row *ngIf="x.philhealth_membership =='M' || x.philhealth_membership == 'D'">
+      <ion-col size="5">PhilHealth:</ion-col>
+      <ion-col size="7" *ngIf="x.philhealth_membership =='M'">Member</ion-col>
+      <ion-col size="7" *ngIf="x.philhealth_membership =='D'">Dependent</ion-col>
+    </ion-row-->
     <ion-row *ngIf="x.insurance_hmo !=null">
       <ion-col size="5">Insurance:</ion-col>
       <ion-col size="7">{{x.insurance_hmo}}</ion-col>
     </ion-row>
+
+
+    <ion-chip *ngIf="is_philhealth_membership =='M'">
+      <ion-label color="primary" class="font-12"><b>PHIC Member</b></ion-label>
+    </ion-chip>
+    <ion-chip *ngIf="is_philhealth_membership =='D'">
+      <ion-label color="primary" class="font-12"><b>PHIC Dependent</b></ion-label>
+    </ion-chip>
     <ion-chip *ngIf="is_senior=='Y'">
       <ion-label color="primary" class="font-12"><b>Senior</b></ion-label>
     </ion-chip>
     <ion-chip *ngIf="is_pwd=='Y'">
       <ion-label color="primary" class="font-12"><b>PWD</b></ion-label>
     </ion-chip>
+
+
+
+
+
+
+
+
+
   </ion-grid>
 </ion-item>
 <ion-item class="ion-no-margin" *ngIf="moreOrLess" style="font-size: 14px !important;">

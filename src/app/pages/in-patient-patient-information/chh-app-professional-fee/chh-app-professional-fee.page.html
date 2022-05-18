@@ -66,7 +66,8 @@ ______             _     _                        _   _                   _
 
 
     <pfSummaryPxInfo [data]="data" [site]="site" [is_pwd]="is_pwd" [is_senior]="is_senior" [dateAdmitted]="dateAdmitted"
-      [data1]="data1" [withVat]="withVat" [payvenueTxt]="payvenueTxt">
+      [data1]="data1" [withVat]="withVat" [payvenueTxt]="payvenueTxt"
+      [is_philhealth_membership]="is_philhealth_membership">
     </pfSummaryPxInfo>
 
     <pfsummary [payvenueN]="payvenueN" [data1]="data1" [withVatN]="withVatN"></pfsummary>
@@ -89,7 +90,7 @@ ______             _     _                        _   _                   _
 -->
   <div *ngIf="ifShowSummary == false">
     <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [forMoreOrLess]="true" [is_pwd]="is_pwd"
-      [is_senior]="is_senior">
+      [is_senior]="is_senior" [is_philhealth_membership]="is_philhealth_membership">
     </app-chh-app-patient-header>
     <ion-card mode="ios" [disabled]="!areyouaninsurancecoordinator">
       <ion-item lines="none">
