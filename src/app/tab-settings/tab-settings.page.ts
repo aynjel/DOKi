@@ -435,8 +435,19 @@ export class TabSettingsPage {
         }
       );
   }
-  async testUpdateUserSettings() {
-    this.updateUserSettings();
+  optOutUpdateUserSettings() {
+    this.doctorService
+      .updateUserSettingsV3(this.userSettingsModelv3)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          this.functionsService.logToConsole(res);
+        },
+        (error) => {},
+        () => {
+          this.logoutService.out();
+        }
+      );
   }
   onDarkModeEnable(data: any) {
     this.functionsService.logToConsole('onDarkModeEnable');
@@ -495,7 +506,6 @@ export class TabSettingsPage {
     this.revokeTokenV3.jwt = decodeURIComponent(
       this.functionsService.getcookie('refreshToken')
     );
-    console.log(this.revokeTokenV3);
 
     this.doctorService
       .revokeTokenV3(this.revokeTokenV3)
@@ -522,9 +532,8 @@ export class TabSettingsPage {
             handler: () => {
               this.userSettingsModelv3.privacyPolicy = '0';
               //this.updateUserSettings();
-              this.testUpdateUserSettings().then(() => {
-                this.logoutService.out();
-              });
+              this.optOutUpdateUserSettings();
+
               /*let smpJSON =
                 '{"username": "' +
                 this.dr_code +
