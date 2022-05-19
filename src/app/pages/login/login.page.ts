@@ -358,8 +358,6 @@ export class LoginPage {
           this.btnDisable = false;
         },
         () => {
-          console.log(jsonResponse);
-
           let x = true;
           Object.keys(jsonResponse).forEach((key) => {
             if (x) {
