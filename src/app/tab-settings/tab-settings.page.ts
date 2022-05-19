@@ -435,7 +435,9 @@ export class TabSettingsPage {
         }
       );
   }
-
+  async testUpdateUserSettings() {
+    this.updateUserSettings();
+  }
   onDarkModeEnable(data: any) {
     this.functionsService.logToConsole('onDarkModeEnable');
     if (data == '1') {
@@ -519,7 +521,10 @@ export class TabSettingsPage {
             icon: 'arrow-undo-outline',
             handler: () => {
               this.userSettingsModelv3.privacyPolicy = '0';
-              this.updateUserSettings();
+              //this.updateUserSettings();
+              this.testUpdateUserSettings().then(() => {
+                this.logoutService.out();
+              });
               /*let smpJSON =
                 '{"username": "' +
                 this.dr_code +
@@ -535,7 +540,7 @@ export class TabSettingsPage {
               this.privacyPolicy = true;
               this.userData$.next('');
               */
-              this.logoutService.out();
+
               /*
               let dr_username = atob(localStorage.getItem('username'));
             
