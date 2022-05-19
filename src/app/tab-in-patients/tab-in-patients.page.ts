@@ -371,8 +371,9 @@ export class TabInPatientsPage {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          //console.log(res);
-
+          if (res == null) {
+            res = [];
+          }
           if (res.length) {
             this.objecthandler = true;
           } else {
