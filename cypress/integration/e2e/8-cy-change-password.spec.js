@@ -122,8 +122,37 @@ describe("Actions", () => {
         .type(userAccount[9].oldPassword, { parseSpecialCharSequences: false, delay: 10 })
 
       cy.get('[id="btn-confirm"]').should("have.attr", "ng-reflect-disabled", "true")
+    });
 
+    it("Test Scenario 6 - Restore Changed Password", () => {
+      cy.login(userAccount[6].userName, userAccount[7].newPassword, true)
 
+      cy.clicktab(3)
+      cy.wait(1000)
+
+      cy.contains("Change Password").click({ force: true })
+      cy.wait(1000)
+
+      cy.testUpdatePasswordFromSetting(
+        userAccount[7].newPassword,
+        userAccount[6].password,
+        userAccount[6].password);
+
+      cy.contains("Okay").click();
+
+      cy.url({ timeout: 10000 }).should("include", Cypress.env("loginUrl"))
+
+      cy.visit(Cypress.env('baseUrlToTest') + Cypress.env('loginUrl'))
+      cy.wait(2000)
+
+      cy.get('[name="ion-input-0"]').should("exist").type(userAccount[6].userName)
+      cy.get('[name="ion-input-1"]').should("exist").type(userAccount[6].password)
+
+      cy.contains("LOG IN").click()
+
+      cy.url({ timeout: 5000 }).should("include", Cypress.env("inpatientsUrl"))
+
+      cy.end()
     });
 
   });
