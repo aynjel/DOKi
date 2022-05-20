@@ -261,18 +261,24 @@ export class TabsHistoricalPage implements OnInit {
     }
     this.monthTrendFromTo2();
   }
+  dynamicSizeLos: number = 0;
+
   monthTrendFromTo2() {
+    this.dynamicSizeLos = 0;
     if (this.monthTrendTo >= this.monthTrendFrom) {
       this.cebuCritical = [];
       this.cebuNonCritical = [];
       this.mandaueCritical = [];
       this.mandaueNonCritical = [];
       for (let i = this.monthTrendFrom - 1; i <= this.monthTrendTo - 1; i++) {
+        this.dynamicSizeLos++;
         this.cebuCritical.push(this.cebuCriticalTmp[i]);
         this.cebuNonCritical.push(this.cebuNonCriticalTmp[i]);
         this.mandaueCritical.push(this.mandaueCriticalTmp[i]);
         this.mandaueNonCritical.push(this.mandaueNonCriticalTmp[i]);
       }
+      console.log(this.dynamicSizeLos);
+
       this.buildYTDAverageLOSByMonth();
     }
   }
@@ -404,7 +410,9 @@ export class TabsHistoricalPage implements OnInit {
   mandaueCovidTmp = [];
   mandaueNonCovid = [];
   mandaueNonCovidTmp = [];
+  isgenerateYTDDailyAvgCensusByMonth: boolean = false;
   generateYTDDailyAvgCensusByMonth() {
+    this.isgenerateYTDDailyAvgCensusByMonth = false;
     this.cebuCovid = [];
     this.cebuCovidTmp = [];
     this.cebuNonCovid = [];
@@ -419,13 +427,16 @@ export class TabsHistoricalPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
+          this.isgenerateYTDDailyAvgCensusByMonth = true;
           this.dismissLoading();
           tempMTA = res;
         },
         (error) => {
+          this.isgenerateYTDDailyAvgCensusByMonth = true;
           this.dismissLoading();
         },
         () => {
+          this.isgenerateYTDDailyAvgCensusByMonth = true;
           tempMTA = this.orderBy(tempMTA);
           tempMTA.forEach((el) => {
             for (let i = 1; i <= 12; i++) {
@@ -561,7 +572,9 @@ export class TabsHistoricalPage implements OnInit {
   mandaueCriticalTmp = [];
   mandaueNonCritical = [];
   mandaueNonCriticalTmp = [];
+  isgenerateYTDAverageLOSByMonth: boolean = false;
   generateYTDAverageLOSByMonth() {
+    this.isgenerateYTDAverageLOSByMonth = false;
     this.cebuCritical = [];
     this.cebuCriticalTmp = [];
     this.cebuNonCritical = [];
@@ -576,13 +589,16 @@ export class TabsHistoricalPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
+          this.isgenerateYTDAverageLOSByMonth = true;
           this.dismissLoading();
           tempMTA = res;
         },
         (error) => {
+          this.isgenerateYTDAverageLOSByMonth = true;
           this.dismissLoading();
         },
         () => {
+          this.isgenerateYTDAverageLOSByMonth = true;
           tempMTA.forEach((el) => {
             for (let i = 1; i <= 12; i++) {
               if (
@@ -632,33 +648,24 @@ export class TabsHistoricalPage implements OnInit {
       this.albm.destroy();
     }
     this.albm = HighCharts.chart('YTDAverageLOSByMonth', {
-      chart: {
+      /*chart: {
         type: 'column',
       },
       title: {
-        //text: 'Total Admissions ' + this.yearTreandTO + ' : ' + this.MTATotal,
         text: '',
       },
       xAxis: {
         categories: this.MTACategory,
       },
       yAxis: {
-        title: { text: '' },
-        stackLabels: {
-          enabled: true,
-          style: {
-            fontWeight: 'bold',
-          },
+        allowDecimals: false,
+        min: 0,
+        title: {
+          text: '',
         },
       },
-      /*tooltip: {
-        headerFormat: '<b>{point.x}</b><br/>',
-        pointFormat: '{series.name}: {point.y}',
-      },*/
       tooltip: {
         headerFormat: '<b>{point.x}</b><br/>',
-        pointFormat:
-          '{series.name}: {point.y}<br/><br/>Total: {point.stackTotal}',
       },
       plotOptions: {
         column: {
@@ -667,7 +674,30 @@ export class TabsHistoricalPage implements OnInit {
             enabled: true,
           },
         },
+      },*/
+      chart: {
+        type: 'bar',
       },
+      title: {
+        text: '',
+      },
+      xAxis: {
+        categories: this.MTACategory,
+      },
+      yAxis: {
+        min: 0,
+        labels: {
+          overflow: 'justify',
+        },
+      },
+      plotOptions: {
+        bar: {
+          dataLabels: {
+            enabled: true,
+          },
+        },
+      },
+
       series: [
         {
           name: 'Critical Cebu',

@@ -99,7 +99,13 @@
                     </div>
                   </ion-item>
                 </ion-col>
+                <div *ngIf="!isgenerateYTDDailyAvgCensusByMonth">
+                  <ion-spinner></ion-spinner>
+                </div>
                 <div id="YTDDailyAvgCensusByMonth"></div>
+
+
+
                 <br />
                 <br />
                 <ion-col>
@@ -109,7 +115,18 @@
                     </div>
                   </ion-item>
                 </ion-col>
-                <div id="YTDAverageLOSByMonth"></div>
+                <div *ngIf="!isgenerateYTDAverageLOSByMonth">
+                  <ion-spinner></ion-spinner>
+                </div>
+                <div id="YTDAverageLOSByMonth" [ngClass]="{
+                  'height300': dynamicSizeLos >= 1 && dynamicSizeLos <= 2,
+                  'height400': dynamicSizeLos >= 3 && dynamicSizeLos <= 4,
+                  'height500': dynamicSizeLos >= 5 && dynamicSizeLos <= 6,
+                  'height600': dynamicSizeLos >= 7 && dynamicSizeLos <= 8,
+                  'height700': dynamicSizeLos >= 9 && dynamicSizeLos <= 10,
+                  'height800': dynamicSizeLos >= 11 && dynamicSizeLos <= 12
+                }">
+                </div>
               </ion-col>
             </ion-row>
           </ion-card>
