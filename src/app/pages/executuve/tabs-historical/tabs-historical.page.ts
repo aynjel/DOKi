@@ -694,7 +694,14 @@ export class TabsHistoricalPage implements OnInit {
         bar: {
           dataLabels: {
             enabled: true,
+            style: {
+              textShadow: false,
+            },
           },
+        },
+        series: {
+          //stacking: 'normal',
+          borderWidth: 0,
         },
       },
 
@@ -703,28 +710,24 @@ export class TabsHistoricalPage implements OnInit {
           name: 'Critical Cebu',
           data: this.cebuCritical,
           type: undefined,
-          stack: 'Cebu',
           color: '#05c75f',
         },
         {
           name: 'Non-Critical Cebu',
           data: this.cebuNonCritical,
           type: undefined,
-          stack: 'Cebu',
           color: '#275228',
         },
         {
           name: 'Critical Mandaue',
           data: this.mandaueCritical,
           type: undefined,
-          stack: 'mandaue',
           color: '#e78c8f',
         },
         {
           name: 'Non-Critical Mandaue',
           data: this.mandaueNonCritical,
           type: undefined,
-          stack: 'mandaue',
           color: '#d12027',
         },
       ],
