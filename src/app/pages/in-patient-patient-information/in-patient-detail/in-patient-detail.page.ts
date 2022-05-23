@@ -597,7 +597,7 @@ export class InPatientDetailPage {
             this.isFetchDone = true;
           }
         );
-      //this.getApprovalStatus(this.patient_id);
+      this.getApprovalStatus(this.patient_id);
     }
 
     this.postData.DateCreated = this.functionsService.getSystemDateTime();
