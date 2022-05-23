@@ -7,7 +7,6 @@ import { DoctorService } from '../../services/doctor/doctor.service';
 import { PatientService } from '../../services/patient/patient.service';
 import { StorageService } from '../../services/storage/storage.service';
 import { ToastService } from '../../services/toast/toast.service';
-import { BehaviorSubject } from 'rxjs';
 import { DoctorInfoGlobal } from '../../shared/doctor-info-global';
 import { LoginData } from '../../models/login-data.model';
 import {
@@ -50,6 +49,8 @@ import { ChhAppCaseratesComponent } from '../../chh-web-components/chh-app-caser
 
 import { tick } from '@angular/core/testing';
 import { ChhAppForgotPasswordComponent } from '../../chh-web-components/chh-app-forgot-password/chh-app-forgot-password.component';
+import { takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -64,6 +65,7 @@ export class LoginPage {
   public changePasswordModel: ChangePasswordModel;
   public appSettingsModelv3: AppSettingsModelv3;
   public userSettingsModelv3: UserSettingsModelv3;
+  private ngUnsubscribe = new Subject();
   saltRounds = 10;
   resultJson;
   testDB: boolean = false;
@@ -112,6 +114,7 @@ export class LoginPage {
   btnDisable: boolean = false;
 
   ngOnInit() {
+    this.ngUnsubscribe = new Subject();
     this.postData.username = localStorage.getItem('srnm');
     this.loginResponseModel = new LoginResponseModel();
     this.onDarkModeEnable();
@@ -147,80 +150,87 @@ export class LoginPage {
     let userIndentifier;
     let dualFlag1: boolean = false;
     let dualFlag2: boolean = false;
-    this.doctorService.loginV3(this.loginModelv3).subscribe(
-      (res: any) => {
-        this.loginResponseModelv3 = <LoginResponseModelv3>res;
-        let execflag: boolean = true;
+    this.doctorService
+      .loginV3(this.loginModelv3)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          this.loginResponseModelv3 = <LoginResponseModelv3>res;
+          let execflag: boolean = true;
 
-        if (this.loginResponseModelv3.isAuthenticated == true) {
-          this.loginResponseModelv3.roles.forEach((element) => {
-            if (execflag) {
-              if (element == 'Administrator') {
-                userIndentifier = 'Administrator';
-              } else if (element == 'Executive') {
-                userIndentifier = 'Executive';
-                localStorage.setItem('role_flag', 'exec');
-                execflag = false;
-              } else {
-              }
-            }
-
-            if (element == 'Executive') {
-              dualFlag1 = true;
-            }
-            if (element == 'MedicalConsultant') {
-              dualFlag2 = true;
-            }
-          });
-          //console.log("userIndentifier : "+userIndentifier);
-        }
-      },
-      (error) => {
-        //this.functionsService.logToConsole(error);
-        this.functionsService.sorryDoc();
-        this.btnDisable = false;
-      },
-      () => {
-        if (this.loginResponseModelv3.isAuthenticated == true) {
-          if (dualFlag1 == true && dualFlag2 == true) {
-            this.loginAsMedExec();
-          } else {
-            if (userIndentifier == 'Administrator') {
-              localStorage.setItem('id_token', this.loginResponseModelv3.jwt);
-              this.storageService.store(
-                AuthConstants.AUTH,
-                this.loginResponseModelv3
-              );
-              this.userRolegetUserSettingsV3('administrator');
-            } else if (userIndentifier == 'Executive') {
-              localStorage.setItem('id_token', this.loginResponseModelv3.jwt);
-              this.storageService.store(
-                AuthConstants.AUTH,
-                this.loginResponseModelv3
-              );
-              this.userRolegetUserSettingsV3('executive');
-            } else {
-              // this.loginResponseModelv3.roles.forEach(element => {
-              if (this.loginResponseModelv3.jwt != null) {
-                localStorage.setItem('id_token', this.loginResponseModelv3.jwt);
-              }
-              if (this.loginResponseModelv3.isDefaultPasswordChanged) {
-                this.getUserSettingsV3();
-              } else {
-                this.updatePasswordV3();
+          if (this.loginResponseModelv3.isAuthenticated == true) {
+            this.loginResponseModelv3.roles.forEach((element) => {
+              if (execflag) {
+                if (element == 'Administrator') {
+                  userIndentifier = 'Administrator';
+                } else if (element == 'Executive') {
+                  userIndentifier = 'Executive';
+                  localStorage.setItem('role_flag', 'exec');
+                  execflag = false;
+                } else {
+                  localStorage.setItem('role_flag', 'med');
+                }
               }
 
-              // });
-            }
+              if (element == 'Executive') {
+                dualFlag1 = true;
+              }
+              if (element == 'MedicalConsultant') {
+                dualFlag2 = true;
+              }
+            });
+            ////console.log("userIndentifier : "+userIndentifier);
           }
-        } else {
-          this.functionsService.alert(
-            this.loginResponseModelv3.message,
-            'Okay'
-          );
+        },
+        (error) => {
+          //this.functionsService.logToConsole(error);
+          this.functionsService.sorryDoc();
           this.btnDisable = false;
-        }
-        /*
+        },
+        () => {
+          if (this.loginResponseModelv3.isAuthenticated == true) {
+            if (dualFlag1 == true && dualFlag2 == true) {
+              this.loginAsMedExec();
+            } else {
+              if (userIndentifier == 'Administrator') {
+                localStorage.setItem('id_token', this.loginResponseModelv3.jwt);
+                this.storageService.store(
+                  AuthConstants.AUTH,
+                  this.loginResponseModelv3
+                );
+                this.userRolegetUserSettingsV3('administrator');
+              } else if (userIndentifier == 'Executive') {
+                localStorage.setItem('id_token', this.loginResponseModelv3.jwt);
+                this.storageService.store(
+                  AuthConstants.AUTH,
+                  this.loginResponseModelv3
+                );
+                this.userRolegetUserSettingsV3('executive');
+              } else {
+                // this.loginResponseModelv3.roles.forEach(element => {
+                if (this.loginResponseModelv3.jwt != null) {
+                  localStorage.setItem(
+                    'id_token',
+                    this.loginResponseModelv3.jwt
+                  );
+                }
+                if (this.loginResponseModelv3.isDefaultPasswordChanged) {
+                  this.getUserSettingsV3();
+                } else {
+                  this.updatePasswordV3();
+                }
+
+                // });
+              }
+            }
+          } else {
+            this.functionsService.alert(
+              this.loginResponseModelv3.message,
+              'Okay'
+            );
+            this.btnDisable = false;
+          }
+          /*
         if(this.loginResponseModelv3.jwt != null){
           localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
         }
@@ -230,47 +240,50 @@ export class LoginPage {
           this.getUserSettingsV3();
           //this.updatePasswordV3();
         }*/
-      }
-    );
+        }
+      );
   }
   /*V3 App*/
 
   userRolegetUserSettingsV3(linkTo: any) {
     let jsonResponse: any;
     let settingsIndicator: any;
-    this.doctorService.getUserSettingsV3().subscribe(
-      (res: any) => {
-        jsonResponse = res;
-        jsonResponse = <UserSettingsModelv3>res;
-        localStorage.setItem(
-          'user_settings',
-          btoa(JSON.stringify(jsonResponse))
-        );
-      },
-      (error) => {},
-      () => {
-        Object.keys(jsonResponse).forEach((key) => {
-          if (jsonResponse[key] == null) {
-            settingsIndicator = false;
-          } else {
-            settingsIndicator = true;
-          }
+    this.doctorService
+      .getUserSettingsV3()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          jsonResponse = res;
+          jsonResponse = <UserSettingsModelv3>res;
+          localStorage.setItem(
+            'user_settings',
+            btoa(JSON.stringify(jsonResponse))
+          );
+        },
+        (error) => {},
+        () => {
+          Object.keys(jsonResponse).forEach((key) => {
+            if (jsonResponse[key] == null) {
+              settingsIndicator = false;
+            } else {
+              settingsIndicator = true;
+            }
 
-          //this.storageService.store(AuthConstants.AUTH, this.loginResponseModelv3);
-          if (settingsIndicator) {
-            //this.getAppsettingsV3();
-            this.router.navigate(['/' + linkTo]).then(() => {
-              window.location.reload();
-            });
-          } else {
-            this.getAppsettingsV3();
-            this.router.navigate(['/' + linkTo]).then(() => {
-              window.location.reload();
-            });
-          }
-        });
-      }
-    );
+            //this.storageService.store(AuthConstants.AUTH, this.loginResponseModelv3);
+            if (settingsIndicator) {
+              //this.getAppsettingsV3();
+              this.router.navigate(['/' + linkTo]).then(() => {
+                window.location.reload();
+              });
+            } else {
+              this.getAppsettingsV3();
+              this.router.navigate(['/' + linkTo]).then(() => {
+                window.location.reload();
+              });
+            }
+          });
+        }
+      );
   }
 
   async loginAsMedExec() {
@@ -285,7 +298,7 @@ export class LoginPage {
               localStorage.setItem('role_flag', 'medcons');
               let xFlag: boolean = false;
               //this.loginResponseModelv3.roles.forEach(element => {
-              //console.log('check flag');
+              ////console.log('check flag');
               if (this.loginResponseModelv3.jwt != null) {
                 localStorage.setItem('id_token', this.loginResponseModelv3.jwt);
               }
@@ -326,102 +339,114 @@ export class LoginPage {
     this.userSettingsModelv3 = new UserSettingsModelv3();
     let settingsIndicator: any;
     let jsonResponse: any;
-    this.doctorService.getUserSettingsV3().subscribe(
-      (res: any) => {
-        jsonResponse = res;
-        this.userSettingsModelv3 = <UserSettingsModelv3>res;
-        localStorage.setItem(
-          'user_settings',
-          btoa(JSON.stringify(this.userSettingsModelv3))
-        );
-        //this.functionsService.logToConsole(this.userSettingsModelv3);
-      },
-      (error) => {
-        // this.functionsService.sorryDoc();
-        this.functionsService.sorryDoc();
-        this.btnDisable = false;
-      },
-      () => {
-        let x = true;
-        Object.keys(jsonResponse).forEach((key) => {
-          if (x) {
-            if (jsonResponse[key] == null) {
-              settingsIndicator = false;
-              x = false;
-            } else {
-              settingsIndicator = true;
-            }
-          }
-        });
-        if (settingsIndicator) {
-          this.checkPrivacyPolicyV3();
-        } else {
-          this.doctorService.getAppSettingsV3().subscribe(
-            (resdata: any) => {
-              this.appSettingsModelv3 = <AppSettingsModelv3>resdata;
-              this.userSettingsModelv3 = <UserSettingsModelv3>resdata;
-              localStorage.setItem(
-                'user_settings',
-                btoa(JSON.stringify(this.userSettingsModelv3))
-              );
-              //this.functionsService.logToConsole(this.appSettingsModelv3);
-            },
-            (error) => {
-              this.functionsService.sorryDoc();
-              this.btnDisable = false;
-            },
-            () => {
-              this.doctorService
-                .insertUserSettingsV3(this.appSettingsModelv3)
-                .subscribe(
-                  (resInsert: any) => {
-                    //this.functionsService.logToConsole('insertUserSettingsV3 : '+resInsert);
-                  },
-                  (error) => {
-                    // this.functionsService.sorryDoc();
-                  },
-                  () => {
-                    this.checkPrivacyPolicyV3();
-                  }
-                );
-            }
+    this.doctorService
+      .getUserSettingsV3()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          jsonResponse = res;
+          this.userSettingsModelv3 = <UserSettingsModelv3>res;
+          localStorage.setItem(
+            'user_settings',
+            btoa(JSON.stringify(this.userSettingsModelv3))
           );
+          //this.functionsService.logToConsole(this.userSettingsModelv3);
+        },
+        (error) => {
+          // this.functionsService.sorryDoc();
+          this.functionsService.sorryDoc();
+          this.btnDisable = false;
+        },
+        () => {
+          let x = true;
+          Object.keys(jsonResponse).forEach((key) => {
+            if (x) {
+              if (jsonResponse[key] == null) {
+                settingsIndicator = false;
+                x = false;
+              } else {
+                settingsIndicator = true;
+              }
+            }
+          });
+          if (settingsIndicator) {
+            this.checkPrivacyPolicyV3();
+          } else {
+            this.doctorService
+              .getAppSettingsV3()
+              .pipe(takeUntil(this.ngUnsubscribe))
+              .subscribe(
+                (resdata: any) => {
+                  this.appSettingsModelv3 = <AppSettingsModelv3>resdata;
+                  this.userSettingsModelv3 = <UserSettingsModelv3>resdata;
+                  localStorage.setItem(
+                    'user_settings',
+                    btoa(JSON.stringify(this.userSettingsModelv3))
+                  );
+                  //this.functionsService.logToConsole(this.appSettingsModelv3);
+                },
+                (error) => {
+                  this.functionsService.sorryDoc();
+                  this.btnDisable = false;
+                },
+                () => {
+                  this.doctorService
+                    .insertUserSettingsV3(this.appSettingsModelv3)
+                    .pipe(takeUntil(this.ngUnsubscribe))
+                    .subscribe(
+                      (resInsert: any) => {
+                        //this.functionsService.logToConsole('insertUserSettingsV3 : '+resInsert);
+                      },
+                      (error) => {
+                        // this.functionsService.sorryDoc();
+                      },
+                      () => {
+                        this.checkPrivacyPolicyV3();
+                      }
+                    );
+                }
+              );
+          }
         }
-      }
-    );
+      );
   }
 
   getAppsettingsV3() {
-    this.doctorService.getAppSettingsV3().subscribe(
-      (resdata: any) => {
-        this.appSettingsModelv3 = <AppSettingsModelv3>resdata;
-        this.userSettingsModelv3 = <UserSettingsModelv3>resdata;
-        localStorage.setItem(
-          'user_settings',
-          btoa(JSON.stringify(this.userSettingsModelv3))
-        );
-        //this.functionsService.logToConsole(this.appSettingsModelv3);
-      },
-      (error) => {
-        this.functionsService.sorryDoc();
-        this.btnDisable = false;
-      },
-      () => {
-        this.doctorService
-          .insertUserSettingsV3(this.appSettingsModelv3)
-          .subscribe(
-            (resInsert: any) => {
-              //this.functionsService.logToConsole('insertUserSettingsV3 : '+resInsert);
-            },
-            (error) => {
-              // this.functionsService.sorryDoc();
-            },
-            () => {
-              //this.checkPrivacyPolicyV3();
-            }
+    this.doctorService
+      .getAppSettingsV3()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (resdata: any) => {
+          this.appSettingsModelv3 = <AppSettingsModelv3>resdata;
+          this.userSettingsModelv3 = <UserSettingsModelv3>resdata;
+          localStorage.setItem(
+            'user_settings',
+            btoa(JSON.stringify(this.userSettingsModelv3))
           );
-      }
-    );
+          //this.functionsService.logToConsole(this.appSettingsModelv3);
+        },
+        (error) => {
+          this.functionsService.sorryDoc();
+          this.btnDisable = false;
+        },
+        () => {
+          this.doctorService
+            .insertUserSettingsV3(this.appSettingsModelv3)
+
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe(
+              (resInsert: any) => {
+                //this.functionsService.logToConsole('insertUserSettingsV3 : '+resInsert);
+              },
+              (error) => {
+                // this.functionsService.sorryDoc();
+              },
+              () => {
+                //this.checkPrivacyPolicyV3();
+              }
+            );
+        }
+      );
   }
   /*V3 App*/
   checkPrivacyPolicyV3() {
@@ -452,6 +477,7 @@ export class LoginPage {
         //this.functionsService.logToConsole(this.userSettingsModelv3);
         this.doctorService
           .updateUserSettingsV3(this.userSettingsModelv3)
+          .pipe(takeUntil(this.ngUnsubscribe))
           .subscribe();
         this.loginV3();
       }
@@ -489,7 +515,7 @@ export class LoginPage {
         );
       } else if (data.data == 'None') {
         this.btnDisable = false;
-        console.log('none');
+        //console.log('none');
       } else {
         this.btnDisable = false;
         this.modalUpdateV3(
@@ -595,27 +621,30 @@ export class LoginPage {
     this.loginModelv3.password = this.postData.password;
     //this.functionsService.logToConsole(this.loginModelv3);
 
-    this.patientService.loginv2(this.loginModelv3).subscribe(
-      (res: any) => {
-        this.loginResponseModelv3 = <LoginResponseModelv3>res;
-        //this.resultJson = res;
+    this.patientService
+      .loginv2(this.loginModelv3)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          this.loginResponseModelv3 = <LoginResponseModelv3>res;
+          //this.resultJson = res;
 
-        if (this.loginResponseModelv3.jwt != null) {
-          localStorage.setItem('id_token', this.loginResponseModelv3.jwt);
-        }
-      },
-      (error) => {
-        //this.functionsService.logToConsole(error);
-      },
-      () => {
-        //this.functionsService.logToConsole(this.loginResponseModelv3);
-        //this.functionsService.logToConsole(this.loginResponseModelv3.isDefaultPasswordChanged);
-        if (this.loginResponseModelv3.isDefaultPasswordChanged) {
-          this.checkPrivacyPolicyV2();
-        } else {
-          //this.updatePassword();
-        }
-        /*
+          if (this.loginResponseModelv3.jwt != null) {
+            localStorage.setItem('id_token', this.loginResponseModelv3.jwt);
+          }
+        },
+        (error) => {
+          //this.functionsService.logToConsole(error);
+        },
+        () => {
+          //this.functionsService.logToConsole(this.loginResponseModelv3);
+          //this.functionsService.logToConsole(this.loginResponseModelv3.isDefaultPasswordChanged);
+          if (this.loginResponseModelv3.isDefaultPasswordChanged) {
+            this.checkPrivacyPolicyV2();
+          } else {
+            //this.updatePassword();
+          }
+          /*
         if (!(typeof this.resultJson.ErrorCode !== 'undefined')) {
           if (this.resultJson.hl <= 7) {
             this.updatePassword();
@@ -627,7 +656,7 @@ export class LoginPage {
           this.functionsService.alert(this.resultJson.ErrorDescription, 'Okay');
         }*/
 
-        /*this.changePasswordModel.appCode = 'DPP';
+          /*this.changePasswordModel.appCode = 'DPP';
                   this.changePasswordModel.mode = 'T';
                   this.changePasswordModel.newPassword = '@Dell150790';
                   this.changePasswordModel.oldPassword = '1234abcd';
@@ -644,8 +673,8 @@ export class LoginPage {
                  
                     }
                   );*/
-      }
-    );
+        }
+      );
   }
   onDarkModeEnable() {
     this.renderer.setAttribute(document.body, 'color-theme', 'light');
@@ -887,42 +916,48 @@ export class LoginPage {
 
     let rsmJson;
     let y = 0;
-    this.patientService.getUserSettingsV2(this.postData.username).subscribe(
-      (res: any) => {
-        rsmJson = res;
-        //this.functionsService.logToConsole(res);
-      },
-      (error) => {
-        this.functionsService.sorryDoc();
-      },
-      () => {
-        if (Object.keys(rsmJson).length >= 1) {
-          let data = JSON.stringify(rsmJson);
-          data = '[' + data + ']';
-          let adat = JSON.parse(data);
-          adat.forEach((el) => {
-            if (typeof el.privacyPolicy !== 'undefined') {
-              if (el.privacyPolicy.accepted == 1) {
-                this.isSetPrivacyPolicy = true;
-                this.isPrivacyPolicy = true;
+    this.patientService
+      .getUserSettingsV2(this.postData.username)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          rsmJson = res;
+          //this.functionsService.logToConsole(res);
+        },
+        (error) => {
+          this.functionsService.sorryDoc();
+        },
+        () => {
+          if (Object.keys(rsmJson).length >= 1) {
+            let data = JSON.stringify(rsmJson);
+            data = '[' + data + ']';
+            let adat = JSON.parse(data);
+            adat.forEach((el) => {
+              if (typeof el.privacyPolicy !== 'undefined') {
+                if (el.privacyPolicy.accepted == 1) {
+                  this.isSetPrivacyPolicy = true;
+                  this.isPrivacyPolicy = true;
+                } else {
+                  this.isSetPrivacyPolicy = true;
+                  this.isPrivacyPolicy = false;
+                }
               } else {
-                this.isSetPrivacyPolicy = true;
-                this.isPrivacyPolicy = false;
+                this.isSetPrivacyPolicy = false;
               }
-            } else {
-              this.isSetPrivacyPolicy = false;
-            }
-          });
-        } else {
-          this.isSetPrivacyPolicy = false;
+            });
+          } else {
+            this.isSetPrivacyPolicy = false;
+          }
+          if (
+            this.isSetPrivacyPolicy == false ||
+            this.isPrivacyPolicy == false
+          ) {
+            this.showPrivacyPolicy();
+          } else {
+            this.loginAction();
+          }
         }
-        if (this.isSetPrivacyPolicy == false || this.isPrivacyPolicy == false) {
-          this.showPrivacyPolicy();
-        } else {
-          this.loginAction();
-        }
-      }
-    );
+      );
   }
   ionViewWillLeave() {
     this.btnDisable = false;
@@ -949,45 +984,49 @@ export class LoginPage {
     //this.functionsService.logToConsole('loginaction');
 
     if (this.isSetPrivacyPolicy == false) {
-      this.patientService.getAppSettingV2().subscribe(
-        (res: any) => {
-          Object.keys(res).forEach((key) => {
-            var value = res[key];
-            Object.keys(value).forEach((lock) => {
-              var valuex = value[lock];
-              if (key != 'appCode') {
-                if (key == 'privacyPolicy' && lock == 'accepted') {
-                  valuex = 1;
-                }
-                if (key == 'billingContact') {
-                  ////this.functionsService.logToConsole(lock);
-                }
+      this.patientService
+        .getAppSettingV2()
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(
+          (res: any) => {
+            Object.keys(res).forEach((key) => {
+              var value = res[key];
+              Object.keys(value).forEach((lock) => {
+                var valuex = value[lock];
+                if (key != 'appCode') {
+                  if (key == 'privacyPolicy' && lock == 'accepted') {
+                    valuex = 1;
+                  }
+                  if (key == 'billingContact') {
+                    ////this.functionsService.logToConsole(lock);
+                  }
 
-                let tempJson1 = new InserUSerSettingsModel();
-                tempJson1.username = this.postData.username;
-                tempJson1.userReference = this.loginResponseModel.dr_code;
-                tempJson1.appCode = Consta.appCode;
-                tempJson1.mode = Consta.mode;
-                tempJson1.setting = key;
-                tempJson1.property = lock;
-                tempJson1.value = valuex;
-                //this.functionsService.logToConsole('tempJson1 :');
-                //this.functionsService.logToConsole(JSON.stringify(tempJson1));
+                  let tempJson1 = new InserUSerSettingsModel();
+                  tempJson1.username = this.postData.username;
+                  tempJson1.userReference = this.loginResponseModel.dr_code;
+                  tempJson1.appCode = Consta.appCode;
+                  tempJson1.mode = Consta.mode;
+                  tempJson1.setting = key;
+                  tempJson1.property = lock;
+                  tempJson1.value = valuex;
+                  //this.functionsService.logToConsole('tempJson1 :');
+                  //this.functionsService.logToConsole(JSON.stringify(tempJson1));
 
-                this.patientService
-                  .insertUserSettingsV2(tempJson1)
-                  .subscribe((res2: any) => {
-                    //this.functionsService.logToConsole(res2);
-                  });
-              }
+                  this.patientService
+                    .insertUserSettingsV2(tempJson1)
+                    .pipe(takeUntil(this.ngUnsubscribe))
+                    .subscribe((res2: any) => {
+                      //this.functionsService.logToConsole(res2);
+                    });
+                }
+              });
             });
-          });
-        },
-        (error) => {},
-        () => {
-          this.loginaction1();
-        }
-      );
+          },
+          (error) => {},
+          () => {
+            this.loginaction1();
+          }
+        );
     } else if (this.isSetPrivacyPolicy == true) {
       let smpJSON1 = new InserUSerSettingsModel();
       smpJSON1.username = this.postData.username;
@@ -1000,6 +1039,8 @@ export class LoginPage {
       if (!this.isPrivacyPolicy) {
         this.patientService
           .updateUserSettings(smpJSON1)
+
+          .pipe(takeUntil(this.ngUnsubscribe))
           .subscribe((res1: any) => {
             this.loginaction1();
           });
@@ -1110,4 +1151,8 @@ export class LoginPage {
   /*For Doctors Portal
 
         /*For Doctors Portal */
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.unsubscribe();
+  }
 }

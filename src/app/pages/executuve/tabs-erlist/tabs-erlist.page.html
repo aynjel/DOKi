@@ -1,4 +1,4 @@
-<ion-header mode="md" class="ion-no-border">
+<ion-header mode="md" class="ion-no-border" collapse="fade">
   <div *ngIf="!isDesktop">
     <ion-toolbar color="mango">
       <ion-title>
@@ -22,12 +22,42 @@
     </ion-row>
     <ion-row class="">
       <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4" class="ion-no-border">
-        <ion-item style="font-size: 13px !important;" *ngIf="!isDesktop">
+        <!--ion-item style="font-size: 13px !important;" *ngIf="!isDesktop">
           <ion-label>Select Start Date (MM-DD-YY)</ion-label>
           <ion-datetime displayFormat="MM DD YY" placeholder="Select Date" [(ngModel)]="dateToday"
             (ionChange)="dateChanged()"></ion-datetime>
+        </ion-item-->
+        <!--ion-item button="true" id="open-date-input">
+          <ion-label>Date</ion-label>
+          <ion-text slot="end">{{ dateValue }}</ion-text>
+          <ion-popover trigger="open-date-input" show-backdrop="false">
+            <ng-template>
+              <ion-datetime #popoverDatetime presentation="date"
+                (ionChange)="dateChangeddd(formatDate(popoverDatetime.value))">
+              </ion-datetime>
+            </ng-template>
+          </ion-popover>
+        </ion-item-->
+
+
+        <ion-item button="true" id="open-modal" *ngIf="!isDesktop" (click)="activateIsCalendarModal()">
+          <ion-icon icon="calendar-outline" slot="start" color="mango"></ion-icon>
+          <ion-label>Pick Date</ion-label>
+          <ion-text slot="end">{{ dateToday }}</ion-text>
         </ion-item>
-        <ion-searchbar [(ngModel)]="searchBar" (ionChange)="filterList()" mode="ios"></ion-searchbar>
+        <ion-modal trigger="open-modal" show-backdrop="true" class="ion6modal" *ngIf="!isDesktop">
+          <ng-template>
+            <ion-content class="blur testssss" style="width:100% !important">
+              <ion-datetime #popoverDatetime presentation="date" (ionChange)="formatDate(popoverDatetime.value)"
+                showDefaultButtons="false" [value]="dateValue">
+              </ion-datetime>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+
+
+        <ion-searchbar [(ngModel)]=" searchBar" (ionChange)="filterList()" mode="ios">
+        </ion-searchbar>
         <ion-segment scrollable value="heart" class="scrollable-element" (ionChange)="segmentChanged()"
           [(ngModel)]="segmentModel" value="Clean ER" *ngIf="!isDesktop">
           <!--ion-segment-button value="ALL">
@@ -74,12 +104,23 @@
 
       <ion-col size-md="4" size-lg="3" *ngIf="isDesktop">
         <ion-card mode="ios" class="pointer">
-          <ion-item style="font-size: 13px !important;">
-            <ion-label>Select Start Date (MM-DD-YY)</ion-label>
-            <ion-datetime displayFormat="MM DD YY" placeholder="Select Date" [(ngModel)]="dateToday"
-              (ionChange)="dateChanged()">
-            </ion-datetime>
+          <ion-item button="true" id="open-modal">
+            <ion-icon icon="calendar-outline" slot="start" color="mango"></ion-icon>
+            <ion-label>Pick Date</ion-label>
+            <ion-text slot="end">{{ dateToday }}</ion-text>
           </ion-item>
+          <ion-modal trigger="open-modal" show-backdrop="true" class="ion6modal">
+            <ng-template>
+              <ion-content class="blur testssss" style="width:100% !important">
+                <ion-datetime #popoverDatetime presentation="date" (ionChange)="formatDate(popoverDatetime.value)"
+                  showDefaultButtons="false" [value]="dateValue">
+                </ion-datetime>
+              </ion-content>
+            </ng-template>
+          </ion-modal>
+
+
+
           <ion-segment scrollable value="heart" class="scrollable-element" (ionChange)="segmentChanged()"
             [(ngModel)]="segmentModel" value="Clean ER">
             <!--ion-segment-button value="ALL">
@@ -111,7 +152,7 @@
       <ion-col size-md="8" size-lg="6">
         <ng-container>
 
-          <div *ngFor="let x of listOfPatients">
+          <div *ngFor="let x of listOfPatientsFinal">
             <ion-card mode="ios" class="pointer">
 
               <ion-item lines="none">
@@ -248,5 +289,8 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

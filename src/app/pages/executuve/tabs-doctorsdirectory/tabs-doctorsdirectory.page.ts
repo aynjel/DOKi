@@ -23,19 +23,21 @@ import { PatientdetailComponent } from '../components/patientdetail/patientdetai
 
 import { DoctordirectorydetailComponent } from '../components/doctordirectorydetail/doctordirectorydetail.component';
 import { FunctionsService } from '../../../shared/functions/functions.service'; //"@ionic/angular";
-
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-tabs-doctorsdirectory',
   templateUrl: './tabs-doctorsdirectory.page.html',
   styleUrls: ['./tabs-doctorsdirectory.page.scss'],
 })
 export class TabsDoctorsdirectoryPage implements OnInit {
+  private ngUnsubscribe = new Subject();
   @ViewChild(IonContent) content: IonContent;
   isDesktop: boolean;
   dateToday: any = '12/31/2021';
   listOfDoctors: any = [];
-  listOfDoctorsTemp300: any;
-  listOfDoctorsTemp1: any;
+  listOfDoctorsTempList: any;
+  listOfDoctorsTempFullList: any;
   listOfDoctorsTemp2: any;
   searchBar: any = '';
   responseData: any;
@@ -61,12 +63,16 @@ export class TabsDoctorsdirectoryPage implements OnInit {
     public functionsService: FunctionsService,
     public alertController: AlertController
   ) {
-    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
-      this.isDesktop = isDesktop;
-    });
+    this.screensizeService
+      .isDesktopView()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((isDesktop) => {
+        this.isDesktop = isDesktop;
+      });
   }
 
   ngOnInit() {
+    this.ngUnsubscribe = new Subject();
     this.refreshcounter = 1;
     this.getDocotrsDirectory();
   }
@@ -85,28 +91,38 @@ export class TabsDoctorsdirectoryPage implements OnInit {
     this.listOfDoctors = [];
     this.showSkeleton = true;
     this.noData = false;
-    this.executiveService.getDoctorsDirectory().subscribe(
-      (res: any) => {
-        ////console.log(res);
-        this.listOfDoctorsTemp1 = res;
-        this.listOfDoctorsTemp300 = res;
-        //////console.log(this.listOfDoctorsTemp300);
-        this.isReady = false;
-      },
-      (error) => {},
-      () => {
-        if (this.listOfDoctorsTemp300 != []) {
-          this.listlength = this.listOfDoctorsTemp300.lenth;
-          //////console.log(this.listlength);
-          //////console.log(this.listOfDoctorsTemp300);
+    this.executiveService
+      .getDoctorsDirectory()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          //////console.log(res);
+          this.listOfDoctorsTempFullList = res;
+          this.listOfDoctorsTempList = res;
+          ////////console.log(this.listOfDoctorsTemp300);
+          this.isReady = false;
+        },
+        (error) => {},
+        () => {
+          if (this.listOfDoctorsTempList != []) {
+            this.listlength = this.listOfDoctorsTempList.lenth;
+            ////////console.log(this.listlength);
+            ////////console.log(this.listOfDoctorsTemp300);
+          }
+          this.initialload();
         }
-        this.initialload();
-      }
-    );
+      );
   }
   loadData(event) {
     this.refreshcounter++;
     setTimeout(() => {
+      this.listOfDoctors = this.listOfDoctors.concat(
+        this.listOfDoctorsTempList.slice(
+          this.refreshcounter * 10 - 10,
+          this.refreshcounter * 10
+        )
+      );
+      /*
       let i = 1;
       this.listOfDoctorsTemp1.forEach((element) => {
         if (
@@ -117,6 +133,7 @@ export class TabsDoctorsdirectoryPage implements OnInit {
         }
         i++;
       });
+      */
       event.target.complete();
       if (this.listOfDoctors.length == this.listlength) {
         event.target.disabled = true;
@@ -129,27 +146,31 @@ export class TabsDoctorsdirectoryPage implements OnInit {
     this.isReady = true;
     this.segmentModel = 'ALL';
     let i = 1;
-    this.listOfDoctorsTemp1 = [];
-    //////console.log(this.listOfDoctorsTemp300);
-    let asdasd = this.listOfDoctorsTemp300;
+    // this.listOfDoctorsTemp1 = [];
+    ////////console.log(this.listOfDoctorsTemp300);
+    /*let asdasd = this.listOfDoctorsTemp300;
     asdasd.forEach((ex) => {
       if (i <= 10) {
         this.listOfDoctors.push(ex);
       }
       this.listOfDoctorsTemp1.push(ex);
       i++;
-    });
+    });*/
+
+    this.listOfDoctors = this.listOfDoctorsTempList.slice(0, 10);
+    // this.listOfDoctorsTemp1 = this.listOfDoctorsTemp300;
+
     this.isReady = false;
   }
   segmentChanged() {
-    //////console.log('segmentChanged');
+    ////////console.log('segmentChanged');
     this.content.scrollToTop();
     this.refreshcounter = 1;
     this.searchBar = '';
-    //////////console.log(da.detail.value);
+    ////////////console.log(da.detail.value);
     let x;
     let y;
-    ////console.log(this.segmentModel);
+    //////console.log(this.segmentModel);
 
     if (this.segmentModel == 'SUR') {
       x = 'SURA';
@@ -163,31 +184,27 @@ export class TabsDoctorsdirectoryPage implements OnInit {
       this.initialload();
     } else {
       this.listOfDoctors = [];
-      this.listOfDoctorsTemp1 = [];
-      let x = 1;
-      this.listOfDoctorsTemp300.forEach((element) => {
-        if (element.deptCode == x || element.deptCode == y) {
-          ////console.log(this.segmentModel, element.deptCode);
-          if (x <= 10) {
-            this.listOfDoctors.push(element);
-          }
-          this.listOfDoctorsTemp1.push(element);
-          x++;
-        }
-      });
+      this.listOfDoctorsTempList = [];
+
+      this.listOfDoctorsTempList = this.listOfDoctorsTempFullList.filter(
+        (element) => element.deptCode == x || element.deptCode == y
+      );
+
+      this.listOfDoctors = this.listOfDoctorsTempList.slice(0, 10);
+      //console.log(this.listOfDoctorsTempList);
     }
   }
   filterList() {
     this.isReady = true;
-    //////console.log('filter list');
+    ////////console.log('filter list');
 
     this.refreshcounter = 1;
     this.listOfDoctors = [];
-    this.listOfDoctorsTemp1 = [];
+    //this.listOfDoctorsTemp1 = [];
     if (this.searchBar == '') {
       this.initialload();
     } else {
-      this.listOfDoctorsTemp300.forEach((el) => {
+      /*this.listOfDoctorsTempFullList.forEach((el) => {
         let fnamelname =
           el.firstName.toLowerCase() + ' ' + el.lastName.toLowerCase();
         let lnamefname =
@@ -204,16 +221,36 @@ export class TabsDoctorsdirectoryPage implements OnInit {
           deptName.includes(this.searchBar.toLowerCase()) ||
           expertise.includes(this.searchBar.toLowerCase())
         ) {
-          ////////console.log('found');
+          //////////console.log('found');
 
           let x = 1;
           if (x <= 10) {
             this.listOfDoctors.push(el);
           }
-          this.listOfDoctorsTemp1.push(el);
+          //this.listOfDoctorsTemp1.push(el);
           x++;
         }
-      });
+      });*/
+      this.listOfDoctorsTempList = this.listOfDoctorsTempFullList.filter(
+        (el) =>
+          el.firstName.toLowerCase().includes(this.searchBar.toLowerCase()) ||
+          el.middleName.toLowerCase().includes(this.searchBar.toLowerCase()) ||
+          el.lastName.toLowerCase().includes(this.searchBar.toLowerCase()) ||
+          (
+            el.firstName.toLowerCase() +
+            ' ' +
+            el.lastName.toLowerCase()
+          ).includes(this.searchBar.toLowerCase()) ||
+          (
+            el.lastName.toLowerCase() +
+            ' ' +
+            el.firstName.toLowerCase()
+          ).includes(this.searchBar.toLowerCase()) ||
+          el.deptName.toLowerCase().includes(this.searchBar.toLowerCase()) ||
+          el.expertise.toLowerCase().includes(this.searchBar.toLowerCase())
+      );
+      this.listOfDoctors = this.listOfDoctorsTempList.slice(0, 10);
+
       this.isReady = false;
     }
   }
@@ -221,10 +258,10 @@ export class TabsDoctorsdirectoryPage implements OnInit {
     this.router.navigate(['/executive/settings']);
   }
   detail(mdCode, firstname, middleName, lastName, gender) {
-    ////console.log(mdCode);
-    ////console.log(firstname);
-    ////console.log(middleName);
-    ////console.log(lastName);
+    //////console.log(mdCode);
+    //////console.log(firstname);
+    //////console.log(middleName);
+    //////console.log(lastName);
     this.showModal(mdCode, firstname, middleName, lastName, gender);
   }
   async showModal(
@@ -246,5 +283,9 @@ export class TabsDoctorsdirectoryPage implements OnInit {
       },
     });
     return await modal.present();
+  }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

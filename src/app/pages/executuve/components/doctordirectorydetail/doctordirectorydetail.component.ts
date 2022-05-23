@@ -10,13 +10,15 @@ import {
 } from '@angular/core';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { ExecutiveService } from 'src/app/services/executive/executive.service';
-
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-doctordirectorydetail',
   templateUrl: './doctordirectorydetail.component.html',
   styleUrls: ['./doctordirectorydetail.component.scss'],
 })
 export class DoctordirectorydetailComponent implements OnInit {
+  private ngUnsubscribe = new Subject();
   loading: any;
   information: any = [];
   @Input() mdcode: any;
@@ -34,6 +36,7 @@ export class DoctordirectorydetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.ngUnsubscribe = new Subject();
     const modalState = {
       modal: true,
       desc: 'fake state for our modal',
@@ -41,15 +44,18 @@ export class DoctordirectorydetailComponent implements OnInit {
     history.pushState(modalState, null);
     //console.log(this.gender);
     this.jsonData.doctorCode = this.mdcode;
-    this.executiveService.getDoctorInfo(this.jsonData).subscribe(
-      (res: any) => {
-        this.information = JSON.parse('[' + JSON.stringify(res) + ']');
-      },
-      (error) => {},
-      () => {
-        //console.log(this.information);
-      }
-    );
+    this.executiveService
+      .getDoctorInfo(this.jsonData)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          this.information = JSON.parse('[' + JSON.stringify(res) + ']');
+        },
+        (error) => {},
+        () => {
+          //console.log(this.information);
+        }
+      );
   }
   async presentLoading() {
     this.loading = await this.loadingController.create({
@@ -75,5 +81,9 @@ export class DoctordirectorydetailComponent implements OnInit {
     if (window.history.state.modal) {
       history.back();
     }
+  }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

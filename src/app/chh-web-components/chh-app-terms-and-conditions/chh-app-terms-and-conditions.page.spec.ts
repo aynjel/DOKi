@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { ChhAppTermsAndConditionsPage } from './chh-app-terms-and-conditions.page';
@@ -7,7 +7,7 @@ describe('ChhAppTermsAndConditionsPage', () => {
   let component: ChhAppTermsAndConditionsPage;
   let fixture: ComponentFixture<ChhAppTermsAndConditionsPage>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ChhAppTermsAndConditionsPage ],
       imports: [IonicModule.forRoot()]

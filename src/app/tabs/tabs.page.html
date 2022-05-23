@@ -20,13 +20,19 @@
     </ion-tab-button>
 
 
-    
 
 
-    <ion-tab-button id="button-settings" tab="settings">
+
+    <!--ion-tab-button id="button-settings" tab="settings">
       <ion-icon name="settings-outline"></ion-icon>
       <ion-label class="tab-font-family">{{this.constants.MENU__VALUE__SETTINGS}}</ion-label>
+    </ion-tab-button-->
+
+    <ion-tab-button id="button-in-patients" (click)="toggleMenu()">
+      <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
+      <ion-label class="tab-font-family">More</ion-label>
     </ion-tab-button>
+
   </ion-tab-bar>
 </ion-tabs>
 
@@ -35,28 +41,16 @@
     <ion-toolbar>
       <ion-row class="ion-align-items-center">
         <ion-col size="2">
-          <chh-app-logo-sm ></chh-app-logo-sm>
+          <chh-app-logo-sm></chh-app-logo-sm>
         </ion-col>
         <ion-col size="10">
           <div class="navbar" class="ion-text-center chh-bg">
-            <ion-button
-              id="button-dashboard"
-              fill="clear"
-              routerLink="/menu/dashboard"
-              routerDirection="root"
-              routerLinkActive="active-link"
-              class="link"
-            >
+            <ion-button id="button-dashboard" fill="clear" routerLink="/menu/dashboard" routerDirection="root"
+              routerLinkActive="active-link" class="link">
               {{this.constants.MENU__VALUE__DASHBOARD}}
             </ion-button>
-            <ion-button
-              id="button-in-patients"
-              fill="clear"
-              routerLink="/menu/in-patients"
-              routerDirection="root"
-              routerLinkActive="active-link"
-              class="link"
-            >
+            <ion-button id="button-in-patients" fill="clear" routerLink="/menu/in-patients" routerDirection="root"
+              routerLinkActive="active-link" class="link">
               {{this.constants.MENU__VALUE__IN_PATIENTS}}
             </ion-button>
             <!--ion-button
@@ -71,39 +65,24 @@
             </ion-button-->
 
 
-            <ion-button
-              id="button-appointments"
-              fill="clear"
-              routerLink="/menu/news-feed"
-              routerDirection="root"
-              routerLinkActive="active-link"
-              class="link"
-            >
+            <ion-button id="button-appointments" fill="clear" routerLink="/menu/news-feed" routerDirection="root"
+              routerLinkActive="active-link" class="link">
               News Feed
             </ion-button>
 
 
-
-            
-            <ion-button
-              id="button-settings"
-              fill="clear"
-              routerLink="/menu/settings"
-              routerDirection="root"
-              routerLinkActive="active-link"
-              class="link"
-            >
-            {{this.constants.MENU__VALUE__SETTINGS}}
+            <ion-button id="button-settings" fill="clear" routerLinkActive="active-link" class="link"
+              (click)="toggleMenu()">
+              More
             </ion-button>
-            <ion-button
-              id="button-logout"
-              fill="clear"
-              routerDirection="root"
-              routerLinkActive="active-link"
-              class="link"
-              (click)="logout()"
-            >
-            {{this.constants.MENU__VALUE__LOG_OUT}}
+
+            <!--ion-button id="button-settings" fill="clear" routerLink="/menu/settings" routerDirection="root"
+              routerLinkActive="active-link" class="link">
+              {{this.constants.MENU__VALUE__SETTINGS}}
+            </ion-button-->
+            <ion-button id="button-logout" fill="clear" routerDirection="root" routerLinkActive="active-link"
+              class="link" (click)="logout()">
+              {{this.constants.MENU__VALUE__LOG_OUT}}
             </ion-button>
           </div>
         </ion-col>

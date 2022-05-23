@@ -16,12 +16,15 @@ import { DoctorService } from 'src/app/services/doctor/doctor.service';
 import { FunctionsService } from 'src/app/shared/functions/functions.service';
 import { LogoutService } from 'src/app/services/logout/logout.service';
 import { MenuController } from '@ionic/angular';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.page.html',
   styleUrls: ['./tabs.page.scss'],
 })
 export class TabsPage implements OnInit {
+  private ngUnsubscribe = new Subject();
   isDesktop: boolean;
   public logindata: LoginResponseModelv3;
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
@@ -39,19 +42,23 @@ export class TabsPage implements OnInit {
     private logoutService: LogoutService,
     private menu: MenuController
   ) {
-    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
-      if (this.isDesktop && !isDesktop) {
-        // Reload because our routing is out of place
-        //window.location.reload();
-      }
+    this.screensizeService
+      .isDesktopView()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((isDesktop) => {
+        if (this.isDesktop && !isDesktop) {
+          // Reload because our routing is out of place
+          //window.location.reload();
+        }
 
-      this.isDesktop = isDesktop;
-    });
+        this.isDesktop = isDesktop;
+      });
   }
   toggleMenu() {
     this.menu.toggle(); //Add this method to your button click function
   }
   ngOnInit() {
+    this.ngUnsubscribe = new Subject();
     this.loginResponseModelv3 = new LoginResponseModelv3();
     localStorage.setItem('tokenExpired', '0');
     this.checkAppearance();
@@ -73,6 +80,7 @@ export class TabsPage implements OnInit {
 
     this.doctorService
       .revokeTokenV3(this.revokeTokenV3)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((res: any) => {
         this.functionsService.logToConsole(res);
       });
@@ -102,5 +110,9 @@ export class TabsPage implements OnInit {
         this.renderer.setAttribute(document.body, 'color-theme', 'light');
       }
     });
+  }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

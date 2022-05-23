@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   //apiRouterUrl: 'https://doctorsportal.chonghua.com.ph/api/', /* If possible, dev use this to test the behavior of API calls in PROD env. */
   //apiRouterUrl: 'http://10.130.21.166:5002/api/',
-  apiRouterUrl: 'http://10.130.21.226:5002/api/',
+  apiRouterUrl: 'http://10.151.12.120:7223/api/',
   linkRouterUrl: 'http://10.128.18.112:9092/',
   //apiRouterUrl: 'http://10.130.21.214:59201/api/',
 
@@ -20,4 +20,4 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

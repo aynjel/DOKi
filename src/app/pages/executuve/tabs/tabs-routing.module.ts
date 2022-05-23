@@ -45,6 +45,27 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'allpatients/:doctorCode/:admissionNo',
+        loadChildren: () =>
+          import('../pages/patient-detail/patient-detail.module').then(
+            (m) => m.PatientDetailPageModule
+          ),
+      },
+      {
+        path: 'doctors/:doctorCode',
+        loadChildren: () =>
+          import('../pages/doctordetails/doctordetails.module').then(
+            (m) => m.DoctordetailsPageModule
+          ),
+      },
+      {
+        path: 'doctors/:doctorCode/:admissionNo',
+        loadChildren: () =>
+          import('../pages/patient-detail/patient-detail.module').then(
+            (m) => m.PatientDetailPageModule
+          ),
+      },
+      {
         path: 'historical',
         loadChildren: () =>
           import('../tabs-historical/tabs-historical.module').then(
@@ -79,13 +100,7 @@ const routes: Routes = [
             (m) => m.TabsSettingsPageModule
           ),
       },
-      {
-        path: 'doctors/:id',
-        loadChildren: () =>
-          import('../pages/doctordetails/doctordetails.module').then(
-            (m) => m.DoctordetailsPageModule
-          ),
-      },
+
       {
         path: 'doctors/:id/:patientid',
         loadChildren: () =>

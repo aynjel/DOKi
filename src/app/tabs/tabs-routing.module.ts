@@ -33,13 +33,14 @@ const routes: Routes = [
             (m) => m.TabInPatientsPageModule
           ),
       },
+      /*
       {
         path: 'appointments',
         loadChildren: () =>
           import('../tab-appointments/tab-appointments.module').then(
             (m) => m.TabAppointmentsPageModule
           ),
-      },
+      },*/
       {
         path: 'settings',
         loadChildren: () =>
@@ -61,6 +62,51 @@ const routes: Routes = [
             (m) => m.TabNewsFeedPageModule
           ),
       },
+      /*
+      {
+        path: 'inbox',
+        loadChildren: () =>
+          import('../pages/doctors-information/inbox/inbox.module').then(
+            (m) => m.InboxPageModule
+          ),
+      },
+      {
+        path: 'in-patients/:admissionNo/viewAndCancel/:dischargeNo',
+        loadChildren: () =>
+          import(
+            '../pages/doctors-information/view-medcert1/view-medcert1.module'
+          ).then((m) => m.ViewMedcert1PageModule),
+      },
+      {
+        path: 'inbox/sign-medcert/:admissionNo/:dischargeNo',
+        loadChildren: () =>
+          import(
+            '../pages/doctors-information/sign-medcert/sign-medcert.module'
+          ).then((m) => m.SignMedcertPageModule),
+      },*/
+      /*
+      {
+        path: 'collectibles',
+        loadChildren: () =>
+          import(
+            '../pages/doctors-information/collectibles/collectibles.module'
+          ).then((m) => m.CollectiblesPageModule),
+      },
+      {
+        path: 'medical-abstract',
+        loadChildren: () =>
+          import(
+            '../pages/doctors-information/medical-abstract/medical-abstract.module'
+          ).then((m) => m.MedicalAbstractPageModule),
+      },
+      {
+        path: 'medical-certificate',
+        loadChildren: () =>
+          import(
+            '../pages/doctors-information/medical-certificate/medical-certificate.module'
+          ).then((m) => m.MedicalCertificatePageModule),
+      },*/
+
       {
         path: '',
         redirectTo: '/menu/dashboard',

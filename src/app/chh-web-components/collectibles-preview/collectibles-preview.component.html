@@ -1,0 +1,127 @@
+<ion-card mode="ios" (click)="showmore()">
+  <ion-item>
+    <ion-label>Payment</ion-label>
+    <ion-note slot="end" color="primary">&#8369; {{netpf}}</ion-note>
+
+  </ion-item>
+
+  <div style="padding-inline-start: 20px;">
+    <ion-text style="font-size: 12px;">{{name}}</ion-text>
+  </div>
+  <div style="padding-inline-start: 20px;" *ngIf="showMore">
+    <ion-label style="font-size: 12px;">Collection Date : </ion-label>
+    <ion-note slot="end" color="primary" style="font-size: 12px;">{{collection_date}}</ion-note>
+  </div>
+  <ion-item style="font-size: 12px;" *ngIf="!showMore">
+    <ion-grid class="ion-no-padding">
+      <ion-row *ngIf="first_case != undefined">
+        <ion-col size="8" *ngIf="admission_date != undefined">
+          <div>Admission Date</div>
+        </ion-col>
+        <ion-col>
+          <div>{{admission_date}}</div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="8">
+          <div>Collection Date</div>
+        </ion-col>
+        <ion-col>
+          <div>{{collection_date}}</div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="8">
+          <div>Account No</div>
+        </ion-col>
+        <ion-col>
+          <div>{{account_no}}</div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="reference_no != undefined">
+        <ion-col size="8">
+          <div>Reference No </div>
+        </ion-col>
+        <ion-col>
+          <div>{{reference_no}}</div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="unit_gd != undefined">
+        <ion-col size="8">
+          <div>Unit GD</div>
+        </ion-col>
+        <ion-col>
+          <div>{{unit_gd}}</div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="procedure != undefined">
+        <ion-col size="4">
+          <div>Procedure</div>
+        </ion-col>
+        <ion-col>
+          <div>{{procedure}}</div>
+        </ion-col>
+      </ion-row>
+
+
+
+
+
+      <ion-row *ngIf="first_case != undefined">
+        <ion-col size="8">
+          <div>Package</div>
+        </ion-col>
+        <ion-col>
+          <div>{{first_case}}</div>
+        </ion-col>
+        <ion-col size="12" class="ion-text-wrap">
+          {{first_case_desc}}
+        </ion-col>
+      </ion-row>
+
+
+
+      <ion-row *ngIf="amounttt != undefined">
+        <ion-col size="8">
+          <div>Amount</div>
+        </ion-col>
+        <ion-col>
+          <div>{{amounttt}}</div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="surcharge != undefined">
+        <ion-col size="8">
+          <div>Surcharge</div>
+        </ion-col>
+        <ion-col>
+          <div>{{surcharge}}</div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="disc_amount != undefined">
+        <ion-col size="8">
+          <div>Discount</div>
+        </ion-col>
+        <ion-col>
+          <div>{{disc_amount}}</div>
+        </ion-col>
+      </ion-row>
+
+
+
+
+      <ion-row *ngIf="netpf != undefined">
+        <ion-col size="8">
+          <div>Net PF</div>
+        </ion-col>
+        <ion-col>
+          <div>{{netpf}}</div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+</ion-card>

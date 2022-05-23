@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { IonicModule } from "@ionic/angular";
 import { ChhAppDateSelectorComponent } from "./chh-app-date-selector.component";
 
@@ -6,7 +6,7 @@ describe("ChhAppDateSelectorComponent", () => {
   let component: ChhAppDateSelectorComponent;
   let fixture: ComponentFixture<ChhAppDateSelectorComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ChhAppDateSelectorComponent],
       imports: [IonicModule.forRoot()],

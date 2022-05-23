@@ -4,15 +4,10 @@
       <ion-title>
         <ion-icon name="settings-outline"></ion-icon> {{this.constants.MENU__VALUE__SETTINGS}}
       </ion-title>
-      <ion-buttons
-        slot="end"
-        class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated"
-      >
-        <ion-button
-          (click)="logout()"
-          color="chh-css-primary2"
-          class="ios button button-clear ion-activatable ion-focusable hydrated"
-          >{{this.constants.MENU__VALUE__LOG_OUT}}&nbsp; <ion-icon name="log-out-outline"></ion-icon>
+      <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
+        <ion-button (click)="logout()" color="chh-css-primary2"
+          class="ios button button-clear ion-activatable ion-focusable hydrated">
+          {{this.constants.MENU__VALUE__LOG_OUT}}&nbsp; <ion-icon name="log-out-outline"></ion-icon>
         </ion-button>
       </ion-buttons>
     </ion-toolbar>
@@ -27,8 +22,11 @@
           <ion-card mode="ios">
             <br />
             <ion-item lines="none">
-              <ion-avatar slot="start">
+              <ion-avatar slot="start" *ngIf="!isProfilepic">
                 <chh-app-text-avatar [text]="x.lastName" [color]=""></chh-app-text-avatar>
+              </ion-avatar>
+              <ion-avatar *ngIf="isProfilepic">
+                <img src="{{profilePic}}">
               </ion-avatar>
               <ion-label style="margin-top: -5px;">
                 <ion-item class="ion-no-padding">
@@ -50,80 +48,63 @@
                 <ion-item>
                   <br />
                 </ion-item>
-
-
-                <!--div *ngFor="let item of tmpData| keyvalue">
-                  <div *ngFor="let data of item.value | keyvalue">
-                   
-                    <div *ngFor="let value of data.value | keyvalue">
-                      {{ data.key }}:  {{ value.key }} - {{ value.value }}
-
-
-
-                  </div>
-                </div>
-              </div-->
-
-                <!--ion-item *ngFor="let x of tmpData"> 
-                  <ion-icon slot="end" name="notifications-outline"></ion-icon>
-                  <b>{{x.appearance.darkmode}}</b>
+                <!--ion-item>
+                  <app-upload></app-upload>
                 </ion-item-->
 
-        
+
+
+
+
+
                 <ion-item>
                   <ion-icon slot="end" name="trash-bin-outline"></ion-icon>
                   <b>Expiry</b>
                 </ion-item>
-              <!-- ADMITTED -->
+                <!-- ADMITTED -->
 
-            
 
-              <!-- ADMITTED -->
-              <ion-item lines="none">
-                <ion-label class="ion-no-margin">
-                  <ion-item class="ion-no-padding ion-no-margin">
-                    <label class="ion-text-left">PRC License Expiry</label>
-                    <label slot="end" class="ion-no-margin ion-text-right">
-                        {{prc}}<br /> 
-                        <ion-text style="font-size:12px"  class="ion-text-right"  color="{{prcBarColor}}">{{prcDays}} Days Left</ion-text>
-                    </label>
-                  </ion-item>
-                  <ion-progress-bar
-                  value="{{prcBar}}"
-                  buffer="1"
-                  color="{{prcBarColor}}"
-                  class="{{prcBarHide}}"
-                ></ion-progress-bar>
-            
-            
-                
-            
-                </ion-label>
-              </ion-item>
-                        
+
                 <!-- ADMITTED -->
                 <ion-item lines="none">
                   <ion-label class="ion-no-margin">
                     <ion-item class="ion-no-padding ion-no-margin">
-                      <label class="ion-text-left">PHIC Accreditation  Expiry</label>
+                      <label class="ion-text-left">PRC License Expiry</label>
                       <label slot="end" class="ion-no-margin ion-text-right">
-                          {{phic}}<br /> 
-                          <ion-text style="font-size:12px"  class="ion-text-right" color="{{phicBarColor}}">{{phicDays}} Days Left</ion-text>
+                        {{prc}}<br />
+                        <ion-text style="font-size:12px" class="ion-text-right" color="{{prcBarColor}}">{{prcDays}} Days
+                          Left</ion-text>
                       </label>
                     </ion-item>
-                    <ion-progress-bar
-                    value="{{phicBar}}"
-                    buffer="1"
-                    color="{{phicBarColor}}"
-                    class="{{phicBarHide}}"
-                  ></ion-progress-bar>
-              
-              
-                  
-              
+                    <ion-progress-bar value="{{prcBar}}" buffer="1" color="{{prcBarColor}}" class="{{prcBarHide}}">
+                    </ion-progress-bar>
+
+
+
+
                   </ion-label>
                 </ion-item>
-                                    
+
+                <!-- ADMITTED -->
+                <ion-item lines="none">
+                  <ion-label class="ion-no-margin">
+                    <ion-item class="ion-no-padding ion-no-margin">
+                      <label class="ion-text-left">PHIC Accreditation Expiry</label>
+                      <label slot="end" class="ion-no-margin ion-text-right">
+                        {{phic}}<br />
+                        <ion-text style="font-size:12px" class="ion-text-right" color="{{phicBarColor}}">{{phicDays}}
+                          Days Left</ion-text>
+                      </label>
+                    </ion-item>
+                    <ion-progress-bar value="{{phicBar}}" buffer="1" color="{{phicBarColor}}" class="{{phicBarHide}}">
+                    </ion-progress-bar>
+
+
+
+
+                  </ion-label>
+                </ion-item>
+
 
 
                 <ion-item>
@@ -140,25 +121,20 @@
                 </ion-item>
 
 
-              <!-- SMS NOTIFICATION -->
-              <!-- ADMITTED -->
+                <!-- SMS NOTIFICATION -->
+                <!-- ADMITTED -->
                 <ion-item>
-                  <ion-label class="ion-text-wrap"
-                    >{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_SMS_NOTIFICATIONS_ADMITTED}}</ion-label
-                  >
-                  <ion-toggle
-                    color="mango"
-                    
-                    [(ngModel)]="smsAdmitted"
-                    (ionChange)="toggleV3($event,'smsNotification','patientAdmitted',isset_smsAdmitted)"
-                  ></ion-toggle>
+                  <ion-label class="ion-text-wrap">
+                    {{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_SMS_NOTIFICATIONS_ADMITTED}}</ion-label>
+                  <ion-toggle color="mango" [(ngModel)]="smsAdmitted"
+                    (ionChange)="toggleV3($event,'smsNotification','patientAdmitted',isset_smsAdmitted)"></ion-toggle>
                 </ion-item>
 
 
 
 
-              <!-- SMS NOTIFICATION -->
-              <!-- DISCHARGE -->
+                <!-- SMS NOTIFICATION -->
+                <!-- DISCHARGE -->
                 <!--ion-item>
                   <ion-label class="ion-text-wrap"
                     >{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_SMS_NOTIFICATIONS_FOR_DISCHARGE}}</ion-label
@@ -172,33 +148,25 @@
                 </ion-item-->
 
 
-              <!-- PUSH NOTIFICATION -->
-              <!-- ADMITTED -->
+                <!-- PUSH NOTIFICATION -->
+                <!-- ADMITTED -->
                 <ion-item>
-                  <ion-label class="ion-text-wrap"
-                    >{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_PUSH_NOTIFICATIONS_ADMITTED}}</ion-label
-                  >
-                  <ion-toggle
-                    color="mango"
-                    disabled="true"
-                    [(ngModel)]="pushNotiAdmitted"
-                    (ionChange)="toggleV3($event,'pushNotification','patientAdmitted',isset_pushNotiAdmitted)"
-                  ></ion-toggle>
+                  <ion-label class="ion-text-wrap">
+                    {{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_PUSH_NOTIFICATIONS_ADMITTED}}</ion-label>
+                  <ion-toggle color="mango" disabled="true" [(ngModel)]="pushNotiAdmitted"
+                    (ionChange)="toggleV3($event,'pushNotification','patientAdmitted',isset_pushNotiAdmitted)">
+                  </ion-toggle>
                 </ion-item>
 
 
                 <!-- PUSH NOTIFICATION -->
                 <!-- DISCHARGED -->
                 <ion-item>
-                  <ion-label class="ion-text-wrap"
-                    >{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_PUSH_NOTIFICATIONS_FOR_DISCHARGE}}</ion-label
-                  >
-                  <ion-toggle
-                    color="mango"
-                    disabled="true"
-                    [(ngModel)]="pushNotiDischarge"
-                    (ionChange)="toggleV3($event,'pushNotification','patientDischarged',isset_pushNotiDischarge)"
-                  ></ion-toggle>
+                  <ion-label class="ion-text-wrap">
+                    {{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_PUSH_NOTIFICATIONS_FOR_DISCHARGE}}</ion-label>
+                  <ion-toggle color="mango" disabled="true" [(ngModel)]="pushNotiDischarge"
+                    (ionChange)="toggleV3($event,'pushNotification','patientDischarged',isset_pushNotiDischarge)">
+                  </ion-toggle>
                 </ion-item>
 
                 <!-- PRIVACY POLICY -->
@@ -210,41 +178,34 @@
                 <ion-item>
                   <ion-label class="ion-text-wrap">Privacy Policy</ion-label>
 
-                  <ion-toggle id="dataPrivacyToggle"
-                    color="mango"
-                    [(ngModel)]="privacyPolicy"
-                    (ionChange)="optoutofprivacy($event)"
-                  ></ion-toggle>
+                  <ion-toggle id="dataPrivacyToggle" color="mango" [(ngModel)]="privacyPolicy"
+                    (ionChange)="optoutofprivacy($event)"></ion-toggle>
                 </ion-item>
                 <ion-item>
                   <ion-label class="ion-text-wrap" (click)="viewPrivacyPolicy() ">View</ion-label>
-         
-                 
-                </ion-item>               
 
 
-               <!-- APPEARANCE -->
+                </ion-item>
+
+
+                <!-- APPEARANCE -->
                 <!-- POLICY -->
                 <ion-item>
                   <ion-icon slot="end" name="color-palette-outline"></ion-icon>
                   <b>{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_APPEARANCE}}</b>
                 </ion-item>
                 <ion-item>
-                  <ion-label class="ion-text-wrap"
-                    >{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_APPEARANCE_DARK_MODE}}</ion-label
-                  >
-                  <ion-toggle
-                    color="mango"
-                    checked = "{{darkmode}}"
-                    (ionChange)="toggleV3($event,'darkmode','darkmode',isset_darkmode)"
-                  ></ion-toggle>
+                  <ion-label class="ion-text-wrap">
+                    {{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_APPEARANCE_DARK_MODE}}</ion-label>
+                  <ion-toggle color="mango" checked="{{darkmode}}"
+                    (ionChange)="toggleV3($event,'darkmode','darkmode',isset_darkmode)"></ion-toggle>
                 </ion-item>
 
                 <ion-item>
                   <br />
                 </ion-item>
 
-               <!-- TERMS & CONDITION -->
+                <!-- TERMS & CONDITION -->
                 <!-- POLICY -->
                 <ion-item color="danger" (click)="resetUserSettings() ">
                   <ion-icon name="refresh-outline" slot="end"></ion-icon>
@@ -256,11 +217,16 @@
                 </ion-item>
 
                 <ion-item lines="none">
-                  <p>{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO}} (<b><a href="tel: +63322338000">{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_TELEPHONE}}</a></b>). <br/> <br />{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_APP_VERSION}} {{this.constants.DOCTOR_PORTAL__VALUE__VERSION}}</p>
+                  <p>{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO}} (<b><a
+                        href="tel: +63322338000">{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_TELEPHONE}}</a></b>).
+                    <br /> <br />{{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_INFO_APP_VERSION}}
+                    {{this.constants.DOCTOR_PORTAL__VALUE__VERSION}}
+                  </p>
                 </ion-item>
 
                 <ion-item lines="none">
-                  <p>Other Credits: <a href="https://storyset.com/user" target="_BLANK"> User illustrations by Storyset</a></p>
+                  <p>Other Credits: <a href="https://storyset.com/user" target="_BLANK"> User illustrations by
+                      Storyset</a></p>
                 </ion-item>
               </ion-list>
             </ion-card-content>

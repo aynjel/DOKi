@@ -63,11 +63,8 @@
 </ion-header>
 <ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
-    <ion-refresher-content
-      pullingIcon="chevron-down-circle-outline"
-      pullingText="Pull to refresh"
-      refreshingSpinner="circles"
-      refreshingText="Refreshing...">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+      refreshingSpinner="circles" refreshingText="Refreshing...">
     </ion-refresher-content>
   </ion-refresher>
 
@@ -93,12 +90,12 @@
                   </ion-item>
                   <ion-row class="ion-no-padding" lines="none" style="padding-top: 1px !important;">
                     <p>
-  
+
                       <span>
-                        <ion-icon name="newspaper-outline" slot="start"></ion-icon> {{x.deptName}}
+                        {{x.deptName}}
                       </span><br />
                       <span>
-                        <ion-icon name="clipboard-outline" slot="start"></ion-icon> {{x.expertise}}
+                        {{x.expertise}}
                       </span>
                     </p>
                     <br />
@@ -156,7 +153,8 @@
                   <ion-skeleton-text animated></ion-skeleton-text>
                 </ion-label>
               </ion-item>
-            </ion-card>            <ion-card mode="ios" class="pointer">
+            </ion-card>
+            <ion-card mode="ios" class="pointer">
               <ion-item lines="none">
                 <ion-avatar slot="start">
                   <ion-skeleton-text animated></ion-skeleton-text>

@@ -1,0 +1,56 @@
+<ion-header mode="md" class="ion-no-border ">
+  <ion-toolbar color="mango" class="ios hydrated">
+
+    <ion-title class="ios title-ios hydrated">({{day}}) - Progress Notes History</ion-title>
+    <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
+      <ion-button (click)="closeModal()" class="ios button button-clear ion-activatable ion-focusable hydrated">
+        Close
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+
+</ion-header>
+<ion-content #scroller>
+  <ion-grid class="ion-no-padding" lines="none">
+    <ion-row class="custom-padding">
+      <ion-col size="12" class=" ion-no-border ">
+
+        <ion-list>
+          <ion-refresher slot="fixed" (ionRefresh)="loadData($event)" mode="ios">
+            <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+              refreshingSpinner="circles" refreshingText="Refreshing...">
+            </ion-refresher-content>
+          </ion-refresher>
+          <ion-card *ngIf="isEmpty">
+            <ion-item lines="none">No update history.</ion-item>
+          </ion-card>
+          <ng-container>
+            <div *ngFor="let x of progessNotes" class="groupList">
+              <history-card [dateCreateConverted]="x.dateCreateConverted"
+                [dateCreateTimeConverted]="x.dateCreateTimeConverted" [notes]="x.notes" [noteslength]="x.noteslength"
+                [notesmall]="x.notessmall" [counter]="x.counter" [user_created]="x.user_created" [type]="x.type"
+                [scroller]="scroller">
+              </history-card>
+            </div>
+          </ng-container>
+        </ion-list>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="10">
+          <ion-textarea [(ngModel)]="summary.msg"></ion-textarea>
+        </ion-col>
+        <ion-col size="2">
+          <ion-button (click)="sendComment()">Send</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

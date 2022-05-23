@@ -28,13 +28,22 @@ const routes: Routes = [
         './pages/in-patient-patient-information/in-patient-detail/in-patient-detail.module'
       ).then((m) => m.InpatientDetailPageModule),
   },
+  /*
   {
-    path: 'menu/in-patients/:id/progressnotes/:accountNo',
+    path: 'menu/in-patients/:admissionNo/view/:dischargeNo',
+    loadChildren: () =>
+      import(
+        './pages/doctors-information/view-medcert/view-medcert.module'
+      ).then((m) => m.ViewMedcertPageModule),
+  },*/
+
+  /*{
+    path: 'menu/in-patients/:id/progressnotes',
     loadChildren: () =>
       import(
         './pages/in-patient-patient-information/progress-notes/progress-notes.module'
       ).then((m) => m.ProgressNotesPageModule),
-  },
+  },*/
 
   {
     path: 'menu/in-patients/:id/professional-fee',
@@ -64,7 +73,7 @@ const routes: Routes = [
         './pages/in-patient-patient-information/transaction-summary/transaction-summary.module'
       ).then((m) => m.TransactionSummaryPageModule),
   },
-  {
+  /*{
     path: 'icdrvs',
     loadChildren: () =>
       import(
@@ -84,7 +93,7 @@ const routes: Routes = [
       import(
         './pages/in-patient-patient-information/laboratory-test-modal/laboratory-test-modal.module'
       ).then((m) => m.LaboratoryTestModalPageModule),
-  },
+  },*/
   {
     path: 'resetpassword',
     loadChildren: () =>
@@ -92,11 +101,11 @@ const routes: Routes = [
         (m) => m.ResetpasswordPageModule
       ),
   },
-  {
+  /* {
     path: 'administrator',
     loadChildren: () =>
       import('./pages/admin/tabs/tabs.module').then((m) => m.TabsPageModule),
-  },
+  },*/
   {
     path: 'executive',
     loadChildren: () =>
@@ -187,7 +196,7 @@ const routes: Routes = [
 */,
 ];
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

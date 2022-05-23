@@ -20,7 +20,7 @@ definitions:
       - npm
       - cypress
       - node # pre-defined cache
-    image: cypress/base:10
+    image: cypress/base:12
     script:
       - npm install -g @angular/cli
       - npm install -g @ionic/cli
@@ -62,7 +62,7 @@ definitions:
           - npm
           - cypress
           - node # pre-defined cache
-        image: cypress/base:10
+        image: cypress/base:12
         script:
           - npm install -g @angular/cli
           - npm install -g @ionic/cli
@@ -80,7 +80,7 @@ definitions:
           - npm
           - cypress
           - node # pre-defined cache
-        image: cypress/base:10
+        image: cypress/base:12
         script:
           - npm install -g @angular/cli
           - npm install -g @ionic/cli
@@ -92,13 +92,31 @@ definitions:
           - cypress/screenshots/**
           - cypress/reports/**
           - cypress/videos/**
+    - step: &e2e-parallel-tests
+        name: E2E (parallel)
+        caches:
+          - npm
+          - cypress
+          - node # pre-defined cache
+        image: cypress/base:12
+        script:
+          - npm install -g @angular/cli
+          - npm install -g @ionic/cli
+          - npm install -g wait-on
+          - npm install
+          - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
+          - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --group parallel-tests --parallel --spec "cypress/integration/e2e/parallel/*"
+        artifacts:
+          - cypress/screenshots/**
+          - cypress/reports/**
+          - cypress/videos/**
     - step: &e2e-egress
         name: E2E (Egress)
         caches:
           - npm
           - cypress
           - node # pre-defined cache
-        image: cypress/base:10
+        image: cypress/base:12
         script:
           - npm install -g @angular/cli
           - npm install -g @ionic/cli
@@ -112,7 +130,7 @@ definitions:
           - cypress/videos/**
     - step: &build-artifacts
         name: Build PWA Artifacts
-        image: cypress/base:10 # Because of Cypress dev dependency.
+        image: cypress/base:12 # Because of Cypress dev dependency.
         # image: atlassian/default-image:2  # Image with Zip already installed
         script:
           - apt-get update && apt-get install -y zip
@@ -288,6 +306,33 @@ pipelines:
       #         <<: *e2e
       #         name: Cypress on Machine (5)
       # - step: *e2e-egress
+      - step: *build-artifacts
+      # - step: *deploy-staging-to-firebase
+      - step: *deploy-to-azure-staging
+
+    '{release/v3.2.5-e2e-update}':
+      - step: *code-linting
+      # - step: *snyk-security-scan
+      # - step: *e2e-ingress
+      - step: *e2e-parallel-tests 
+      - parallel:
+          # Run Cypress Tests in parallel (6 machines)
+          - step: 
+              <<: *e2e
+              name: Cypress on Machine (1)
+          - step:
+              <<: *e2e
+              name: Cypress on Machine (2)
+          - step:
+              <<: *e2e
+              name: Cypress on Machine (3)
+          - step:
+              <<: *e2e
+              name: Cypress on Machine (4)
+          - step:
+              <<: *e2e
+              name: Cypress on Machine (5)
+      - step: *e2e-egress
       - step: *build-artifacts
       # - step: *deploy-staging-to-firebase
       - step: *deploy-to-azure-staging

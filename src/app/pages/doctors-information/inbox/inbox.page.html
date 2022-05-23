@@ -1,0 +1,127 @@
+<ion-header mode="md" class="ion-no-border" *ngIf="!isDesktop">
+  <div>
+    <ion-toolbar color="mango">
+      <span class="padding-left-10" (click)="back()" routerDirection="backward" color="chh-css-primary2">
+        <ion-icon name="arrow-back-outline" class="my-icon vcenter"></ion-icon>
+      </span>
+      <span class="padding-left-30 font-weight-500 font-size-20"> &nbsp;&nbsp;Inbox </span>
+    </ion-toolbar>
+    <!--ion-toolbar color="mango">
+      <ion-title>
+        <ion-icon [name]="isNotification === true ? 'mail-unread-outline' : 'mail-outline'"></ion-icon> Inbox
+      </ion-title>
+      <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
+        <ion-button (click)="back()" color="chh-css-primary2"
+          class="ios button button-clear ion-activatable ion-focusable hydrated">
+          Back&nbsp; <ion-icon name="log-out-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar-->
+  </div>
+  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="selected" color="secondary" mode='ios'>
+    <ion-segment-button value="FA">
+      <ion-label>For Approval</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="RA">
+      <ion-label>Approved</ion-label>
+    </ion-segment-button>
+
+  </ion-segment>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+      refreshingSpinner="circles" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
+        <ng-container>
+
+          <div *ngFor="let x of pendingApproval">
+            <ion-card mode="ios">
+
+              <ion-list>
+                <ion-item style="padding-bottom: 10px">
+                  <div class="ion-text-wrap">
+                    <ion-label>
+                      <h2 class="ion-text-wrap" style="padding-top: 10px;">
+                        <b>{{ x.patient_name }}</b>
+                        <ion-text color="primary">
+                          <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong>
+                              {{x.gender}}</b></p>
+                        </ion-text>
+                      </h2>
+                    </ion-label>
+                  </div>
+                  <ion-badge color="warning" slot="end" class="font-size12"
+                    *ngIf=" x.admission_status == 'DN' && x.doctor_prof_fee == null && x.is_posted == null ">PF
+                  </ion-badge>
+                  <ion-badge color="success" slot="end" class="font-size12"
+                    *ngIf="x.doctor_prof_fee != null && x.is_posted != null">PF OK</ion-badge>
+                </ion-item>
+                <ion-item lines="none" style="padding-bottom: 10px;font-size: 12px;">
+                  <div class="ion-text-wrap" style="padding-top: 5px">
+                    <div *ngIf="x.site == 'C'" class=" font-size12">
+                      <ion-icon name="location-outline" slot="start"></ion-icon>
+                      Chong Hua Hospital
+                    </div>
+                    <div *ngIf="x.site == 'M'" class=" font-size12">
+                      <ion-icon name="location-outline" slot="start"></ion-icon>
+                      Chong Hua Hospital Mandaue
+                    </div>
+                    <div class=" font-size12">
+                      <ion-icon name="bed-outline" slot="start"></ion-icon>
+                      Room {{ x.room_no }}
+                    </div>
+                    <div class=" font-size12" style="font-size: 13px;">
+                      <ion-icon name="calendar-outline" slot="start"></ion-icon>
+                      <span style="font-size: 13px;"> Admission Date &nbsp;&nbsp;: {{ x.dateAdmitted }}</span>
+                    </div>
+
+
+                  </div>
+
+                </ion-item>
+                <ion-item>
+                  <div class="ion-text-wrap">
+                    <ion-text>Final Diagnosis</ion-text>
+                  </div>
+                </ion-item>
+                <ion-item>
+
+                  <ion-text [innerHTML]="x.final_diagnosis" class="ion-text-wrap custom-font" style="font-size: 14px;">
+                  </ion-text>
+                </ion-item>
+
+              </ion-list>
+              <ion-footer>
+                <ion-row>
+                  <ion-col>
+                    <ion-button mode="ios" size="small" color="mango" shape="" expand="block"
+                      (click)="viewCerticate(x)">
+                      <span *ngIf="selected == 'FA'">View & Sign Medical Certificate</span>
+                      <span *ngIf="selected == 'RA'">View Medical Certificate</span>
+                    </ion-button>
+
+
+
+                  </ion-col>
+
+                </ion-row>
+              </ion-footer>
+            </ion-card>
+          </div>
+          <ion-card *ngIf="empty">
+            <ion-item>
+              No Data
+            </ion-item>
+          </ion-card>
+
+        </ng-container>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

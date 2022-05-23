@@ -1,5 +1,5 @@
-import { Component, HostListener } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { Component, HostListener, OnInit, NgZone } from '@angular/core';
+import { MenuController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ScreenSizeService } from './services/screen-size/screen-size.service';
@@ -26,36 +26,84 @@ import { LogoutService } from './services/logout/logout.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   role_flag: any;
   isDesktop: boolean;
+  isPortrait: boolean;
   public appPages = [
     {
       title: 'Doctors',
       url: '/executive/doctors',
       icon: 'git-network-outline',
+      type: 'exec',
     },
     {
       title: 'Patients',
       url: '/executive/allpatients',
       icon: 'person-circle-outline',
+      type: 'exec',
     },
     {
       title: 'Physician Directory',
       url: '/executive/directory',
       icon: 'book-outline',
+      type: 'exec',
     },
     {
       title: 'Case Rates',
       url: '/executive/caserates',
       icon: 'file-tray-full-outline',
+      type: 'exec',
     },
     {
       title: 'Log Out',
       url: 'logout',
       icon: 'log-out-outline',
+      type: 'exec',
+    } /*
+    {
+      title: 'Collectibles',
+      url: 'menu/collectibles',
+      icon: 'wallet-outline',
+      type: 'med',
+    },
+    {
+      title: 'Medical Abstract',
+      url: 'menu/medical-abstract',
+      icon: 'reader-outline',
+      type: 'med',
+    },
+    {
+      title: 'Medical Certificate',
+      url: 'menu/medical-certificate',
+      icon: 'document-text-outline',
+      type: 'med',<ion-icon name="mail-open-outline"></ion-icon>
+    },*/,
+    /*,
+    {
+      title: 'Inbox',
+      url: 'menu/inbox',
+      icon: 'mail-open-outline',
+      type: 'med',
+    }*/ {
+      title: 'Settings',
+      url: 'menu/settings',
+      icon: 'settings-outline',
+      type: 'med',
+    },
+    {
+      title: 'Log Out',
+      url: 'logout',
+      icon: 'log-out-outline',
+      type: 'med',
     },
   ];
+  logindata;
+  firstName;
+  lastName = 'D';
+  dr_name;
+  dr_code;
+  dr_username;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -70,32 +118,49 @@ export class AppComponent {
     public router: Router,
     private doctorService: DoctorService,
     private storageService: StorageService,
-    private logoutService: LogoutService
+    private logoutService: LogoutService,
+    private menu: MenuController,
+    private ngZone: NgZone
   ) {
     this.initializeApp();
     this.updateClient();
     this.role_flag = localStorage.getItem('role_flag');
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
-      if (this.isDesktop && !isDesktop) {
-        window.location.reload();
-      }
       this.isDesktop = isDesktop;
+    });
+    this.screensizeService.isPortraitView().subscribe((isPortrait) => {
+      this.isPortrait = isPortrait;
     });
   }
   userData$ = new BehaviorSubject<any>([]);
   public revokeTokenV3: RevokeTokenV3;
   onSplitPaneVisible(event) {
-    console.log(event);
+    // console.log(event);
+  }
+  ngOnInit() {
+    this.storageService.get(AuthConstants.AUTH).then((res) => {
+      this.ngZone.run(() => {
+        this.logindata = res;
+        this.lastName = this.logindata.lastName;
+        this.firstName = this.logindata.firstName;
+        this.dr_code = this.logindata.doctorCode;
+        this.dr_username = this.logindata.userName;
+      });
+    });
   }
   initializeApp() {
     this.revokeTokenV3 = new RevokeTokenV3();
     this.functionsService.logToConsole('initializeApp');
-
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.screensizeService.onResize(this.platform.width());
+      this.screensizeService.onPortrait(screen.orientation.angle);
     });
+
+    /* this.dr_name = this.logindata.lastName;
+    this.dr_code = this.logindata.doctorCode;
+    this.dr_username = this.logindata.userName;*/
 
     /*
     if (localStorage.getItem('isIdle') == '1') {
@@ -194,6 +259,7 @@ export class AppComponent {
     });
     await alert.present();
   }
+
   logout() {
     let dr_username = atob(localStorage.getItem('username'));
     this.revokeTokenV3 = new RevokeTokenV3();
@@ -213,8 +279,12 @@ export class AppComponent {
       this.logout();
     }
   }
+  @HostListener('window:orientationchange', ['$event'])
   @HostListener('window:resize', ['$event'])
   private onResize(event) {
+    // console.log('event', event.target.innerWidth);
+
     this.screensizeService.onResize(event.target.innerWidth);
+    this.screensizeService.onPortrait(screen.orientation.angle);
   }
 }

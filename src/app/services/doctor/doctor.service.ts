@@ -399,7 +399,185 @@ export class DoctorService {
     });
     const options = { headers: headers, withCredentials: true };
     //const url = environment.apiResident + 'api/ProgressNotes/' + data;
-    const url = 'http://10.151.12.120/api/ProgressNotes/'+data;
+    const url = 'http://10.151.12.120/api/ProgressNotes/' + data;
     return this.http.post(url, data, options);
+  }
+  getPatientProgressNotesHistory(data) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json;',
+    });
+    const options = { headers: headers, withCredentials: true };
+    const url = 'http://10.151.12.120/api/ProgressNotes/Logs/' + data;
+    return this.http.post(url, data, options);
+  }
+  addComment(data) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers: headers, withCredentials: true };
+    const url = 'http://10.151.12.120/api/ProgressNotesComment/Insert';
+    return this.http.post(url, data, options);
+  }
+
+  testViewpdf() {
+    const httpOptions = {
+      responseType: 'blob' as 'json',
+    };
+    return this.http.get(
+      'http://10.151.12.120:7227/api/dokipfregcollect/pdf',
+      httpOptions
+    );
+    /*const options = { headers: headers };
+    const url = 'http://10.130.21.225:6113/api/PdfGenerator';
+    return this.http.get(url, options);*/
+  }
+
+  getDOKiPFRegularSOA(data) {
+    const url = 'http://10.151.12.120:7227/api/dokipfregcollect/pdf';
+    return this.http.post(url, data, { responseType: 'blob' });
+  }
+  getDOKiPFRegularSOAPreview(drCode, mode, fromDate, toDate, site) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json;charset=utf-8',
+    });
+    const options = { headers: headers, withCredentials: true };
+    const url =
+      'http://10.151.12.120:7227/api/dokipfregcollect/datapreview?drCode=' +
+      drCode +
+      '&mode=' +
+      mode +
+      '&fromDate=' +
+      fromDate +
+      '&toDate=' +
+      toDate +
+      '&site=' +
+      site;
+    return this.http.get(url, options);
+  }
+  getDOKiPFPhicCaseRatesSOA(data) {
+    const url = 'http://10.151.12.120:7227/api/dokipfphiccaserates/pdf';
+    return this.http.post(url, data, { responseType: 'blob' });
+  }
+  getDOKiPFPhicCaseRatesSOAPreview(drCode, mode, fromDate, toDate, site) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json;charset=utf-8',
+    });
+    const options = { headers: headers, withCredentials: true };
+    const url =
+      'http://10.151.12.120:7227/api/dokipfphiccaserates/datapreview?drCode=' +
+      drCode +
+      '&mode=' +
+      mode +
+      '&fromDate=' +
+      fromDate +
+      '&toDate=' +
+      toDate +
+      '&site=' +
+      site;
+    return this.http.get(url, options);
+  }
+
+  getDOKiPFReadersFeeSOA(data) {
+    const url = 'http://10.151.12.120:7227/api/dokipfreadersfee/pdf';
+    return this.http.post(url, data, { responseType: 'blob' });
+  }
+  getDOKiPFReadersFeeSOAPreview(drCode, mode, fromDate, toDate, site) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json;charset=utf-8',
+    });
+    const options = { headers: headers, withCredentials: true };
+    const url =
+      'http://10.151.12.120:7227/api/dokipfreadersfee/datapreview?drCode=' +
+      drCode +
+      '&mode=' +
+      mode +
+      '&fromDate=' +
+      fromDate +
+      '&toDate=' +
+      toDate +
+      '&site=' +
+      site;
+    return this.http.get(url, options);
+  }
+
+  testAdultApproval(data) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers: headers, withCredentials: false };
+    const url = 'http://10.151.12.120/api/MedicalAbstract/AdultApproval';
+    //return this.http.put(url, JSON.stringify(data), options);
+    return this.http.put(url, data, options);
+  }
+  getMedicalAbstract(data) {
+    const httpOptions = {
+      responseType: 'blob' as 'json',
+    };
+    //10.151.12.120:7227/api/medicalabstract/pdf/IPM000125711
+
+    http: return this.http.get(
+      'http://10.151.12.120:7227/api/medicalabstract/pdf?accountNo=' + data,
+      httpOptions
+    );
+  }
+
+  getMedicalCertificate(x) {
+    const httpOptions = {
+      responseType: 'blob' as 'json',
+    };
+    //10.151.12.120:7227/api/medicalabstract/pdf/IPM000125711
+    http: return this.http.get(
+      'http://10.151.12.120:7227/api/medcert/pdf?mode=T&account_no=IPM000125711',
+      httpOptions
+    );
+  }
+  getMedicalCertificatePOST(data) {
+    console.log(data);
+
+    const url = 'http://10.151.12.120:7227/api/medcert/pdf';
+    return this.http.post(url, data, { responseType: 'blob' });
+  }
+
+  approveMedicalCertificate(data) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers: headers, withCredentials: false };
+    const url = 'http://10.151.12.120:7227/api/medcert/approve';
+    //return this.http.put(url, JSON.stringify(data), options);
+    return this.http.put(url, data, options);
+  }
+
+  getPendingApproval() {
+    /*const headers = new HttpHeaders({
+      'Content-Type': 'application/json;charset=utf-8',
+    });
+    const options = { headers: headers, withCredentials: true };
+    const url =
+      environment.apiRouterUrl + 'v3/DischargeDiagnosis/PendingApproval';
+    return this.http.get(url, options);
+*/
+    let data = {
+      dt_from: '2021-01-17T08:42:50.917Z',
+      dt_to: '2022-05-17T08:42:50.917Z',
+    };
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers: headers, withCredentials: false };
+    const url =
+      environment.apiRouterUrl + 'v3/DischargeDiagnosis/PendingApproval';
+    return this.http.post(url, data, options);
+  }
+  getApprovalStatus(data) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers: headers, withCredentials: false };
+    const url = environment.apiRouterUrl + 'v3/DischargeDiagnosis/Status';
+    return this.http.post(url, data, options);
+  }
+  cancelApprovedFinalDiagnosis(data) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers: headers, withCredentials: false };
+    const url =
+      environment.apiRouterUrl + 'v3/DischargeDiagnosis/CancelApproval';
+    return this.http.put(url, data, options);
+  }
+  approvePendingApproval(data) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers: headers, withCredentials: false };
+    const url = environment.apiRouterUrl + 'v3/DischargeDiagnosis/Approve';
+    return this.http.put(url, data, options);
   }
 }

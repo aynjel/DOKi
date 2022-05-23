@@ -1,30 +1,36 @@
-import { Component, Renderer2 } from "@angular/core";
-import { ScreenSizeService } from "../services/screen-size/screen-size.service";
+import { Component, Renderer2 } from '@angular/core';
+import { ScreenSizeService } from '../services/screen-size/screen-size.service';
 //import { SignalRService } from '../services/signal-r.service';
-import { StorageService } from "../services/storage/storage.service";
-import { AuthConstants } from "../config/auth-constants";
-import { Constants } from "../shared/constants";
+import { StorageService } from '../services/storage/storage.service';
+import { AuthConstants } from '../config/auth-constants';
+import { Constants } from '../shared/constants';
 
-import { FunctionsService } from "../shared/functions/functions.service"
+import { FunctionsService } from '../shared/functions/functions.service';
 import { Route } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
 import { PatientService } from '../services/patient/patient.service';
 import { AuthService } from '../services/auth/auth.service';
-import { LoginData } from "../models/login-data.model";
-import {UserSettingsModelv3,LoginResponseModelv3,RevokeTokenV3} from 'src/app/models/doctor';
-import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
+import { LoginData } from '../models/login-data.model';
+import {
+  UserSettingsModelv3,
+  LoginResponseModelv3,
+  RevokeTokenV3,
+} from 'src/app/models/doctor';
+import {
+  InPatientData,
+  ProfessionalFeeModelv3,
+} from 'src/app/models/in-patient.model';
 import { BehaviorSubject, fromEvent } from 'rxjs';
-import { DoctorService } from "../services/doctor/doctor.service";
-import { UserIdleService } from "angular-user-idle";
-import { AlertController } from "@ionic/angular";
-import { merge } from "highcharts";
-import { LogoutService } from "../services/logout/logout.service";
-
+import { DoctorService } from '../services/doctor/doctor.service';
+import { UserIdleService } from 'angular-user-idle';
+import { AlertController, MenuController } from '@ionic/angular';
+import { merge } from 'highcharts';
+import { LogoutService } from '../services/logout/logout.service';
 
 @Component({
-  selector: "app-tabs",
-  templateUrl: "tabs.page.html",
-  styleUrls: ["tabs.page.scss"],
+  selector: 'app-tabs',
+  templateUrl: 'tabs.page.html',
+  styleUrls: ['tabs.page.scss'],
 })
 export class TabsPage {
   public logindata: LoginResponseModelv3;
@@ -32,43 +38,36 @@ export class TabsPage {
   userData$ = new BehaviorSubject<any>([]);
   badgecount = 0;
   isDesktop: boolean;
+  isPortrait: boolean;
   signalList: any = [];
   dr_code;
   dr_username;
-  public revokeTokenV3: RevokeTokenV3; 
+  public revokeTokenV3: RevokeTokenV3;
   constructor(
     private screensizeService: ScreenSizeService,
     private storageService: StorageService,
     private renderer: Renderer2,
     public constants: Constants,
     public functionsService: FunctionsService,
-    public router:Router,
-    private patientService:PatientService,
+    public router: Router,
+    private patientService: PatientService,
     private authService: AuthService,
     private doctorService: DoctorService,
     private userIdle: UserIdleService,
     public alertController: AlertController,
-    private logoutService:LogoutService
+    private logoutService: LogoutService,
+    private menu: MenuController
   ) {
     this.functionsService.logToConsole('constructor');
-    this.userIdle.setCustomActivityEvents(
-    
-      fromEvent(document, 'touchstart')
-  );
-  this.userIdle.setCustomActivityEvents(
-    
-    fromEvent(document, 'touchend')
-);
+    this.userIdle.setCustomActivityEvents(fromEvent(document, 'touchstart'));
+    this.userIdle.setCustomActivityEvents(fromEvent(document, 'touchend'));
 
-    
-    localStorage.removeItem("isIdlestarted");
+    localStorage.removeItem('isIdlestarted');
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
-      if (this.isDesktop && !isDesktop) {
-        // Reload because our routing is out of place
-        //window.location.reload();
-      }
-
       this.isDesktop = isDesktop;
+    });
+    this.screensizeService.isPortraitView().subscribe((isPortrait) => {
+      this.isPortrait = isPortrait;
     });
     /*this.signalRService.signalReceived.subscribe((signal: any) => {
       this.functionsService.logToConsole("-->" + signal.msg);
@@ -76,59 +75,55 @@ export class TabsPage {
       this.signalList.push(signal);
     });*/
   }
-
-  ngOnInit() {
-
-    localStorage.setItem('tokenExpired','0');
-    
-    if (localStorage.getItem('isIdle') == '1') {
-        if (localStorage.getItem('isIdlestarted')==null) {
-          this.functionsService.logToConsole("IDLE WATCH : "+localStorage.getItem('isIdlestarted'));
-          this.userIdle.stopTimer();
-          this.userIdle.startWatching();
-          
-          localStorage.setItem('isIdlestarted', '1');
-        }else{
-         this.functionsService.logToConsole("IDLE WATCH ALREADY STARTED");
-        }
-        
-       
-      }
-
-
-      // Start watching when user idle is starting.
-      this.userIdle.onTimerStart().subscribe((count) => {
-        if (localStorage.getItem('isIdle') == '1') {
-          this.functionsService.logToConsole(count);
-          if (count == 1) {
-            if(this.alert.length == 0){
-              this.timerExpired();
-            }
-          }
-        } else {
-          this.functionsService.logToConsole("timer stopped");
-          
-          this.userIdle.stopTimer();
-          this.userIdle.stopWatching();
-        }
-      });
-  
-      // Start watch when time is up.
-      let dr_username = atob(localStorage.getItem('username'));
-      this.userIdle.onTimeout().subscribe(() => {
-        localStorage.setItem('promptLogout', '1');
-        this.userIdle.stopWatching();
-        this.alertController.dismiss();
-        this.logout();
-        this.alert=[];
-      });
-  
-  
-  
-  
-
+  toggleMenu() {
+    this.menu.toggle(); //Add this method to your button click function
   }
-  alert:any = [];
+  ngOnInit() {
+    localStorage.setItem('tokenExpired', '0');
+
+    if (localStorage.getItem('isIdle') == '1') {
+      if (localStorage.getItem('isIdlestarted') == null) {
+        this.functionsService.logToConsole(
+          'IDLE WATCH : ' + localStorage.getItem('isIdlestarted')
+        );
+        this.userIdle.stopTimer();
+        this.userIdle.startWatching();
+
+        localStorage.setItem('isIdlestarted', '1');
+      } else {
+        this.functionsService.logToConsole('IDLE WATCH ALREADY STARTED');
+      }
+    }
+
+    // Start watching when user idle is starting.
+    this.userIdle.onTimerStart().subscribe((count) => {
+      if (localStorage.getItem('isIdle') == '1') {
+        console.log(count);
+        // this.functionsService.logToConsole(count);
+        if (count == 1) {
+          if (this.alert.length == 0) {
+            this.timerExpired();
+          }
+        }
+      } else {
+        this.functionsService.logToConsole('timer stopped');
+
+        this.userIdle.stopTimer();
+        this.userIdle.stopWatching();
+      }
+    });
+
+    // Start watch when time is up.
+    let dr_username = atob(localStorage.getItem('username'));
+    this.userIdle.onTimeout().subscribe(() => {
+      localStorage.setItem('promptLogout', '1');
+      this.userIdle.stopWatching();
+      this.alertController.dismiss();
+      this.logout();
+      this.alert = [];
+    });
+  }
+  alert: any = [];
   async timerExpired() {
     //localStorage.setItem('timerPrompt', '1');
     this.alert = await this.alertController.create({
@@ -145,7 +140,7 @@ export class TabsPage {
           cssClass: 'secondary',
           handler: () => {
             this.logout();
-            this.alert=[];
+            this.alert = [];
           },
         },
         {
@@ -154,42 +149,13 @@ export class TabsPage {
             //localStorage.removeItem("timerPrompt");
             this.alertController.dismiss();
             this.userIdle.stopTimer();
-            this.alert=[];
+            this.alert = [];
           },
         },
       ],
     });
     await this.alert.present();
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   ionViewWillEnter() {
     /*
@@ -205,11 +171,13 @@ export class TabsPage {
       this.renderer.setAttribute(document.body, "color-theme", "light");
     }*/
     this.functionsService.logToConsole('checkAppearance');
-    
-    this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
+
+    this.logindata = <LoginResponseModelv3>(
+      this.authService.userData$.getValue()
+    );
     this.dr_code = this.logindata.doctorCode;
-    this.dr_username = atob(localStorage.getItem("username"));
-/*
+    this.dr_username = atob(localStorage.getItem('username'));
+    /*
     this.patientService.getUserSettingsV2(this.dr_username).subscribe(
       (res: any) => {       
         this.functionsService.logToConsole(res);
@@ -234,22 +202,26 @@ export class TabsPage {
       });
       */
   }
-
   logout() {
     this.revokeTokenV3 = new RevokeTokenV3();
- 
+
     //this.revokeTokenV3 = new RevokeTokenV3();
     //this.revokeTokenV3.jwt = localStorage.getItem("id_token");
     this.functionsService.logToConsole('Logging out');
-    
-    this.functionsService.logToConsole(this.functionsService.getcookie('refreshToken'));
 
-    this.revokeTokenV3.jwt = decodeURIComponent(this.functionsService.getcookie('refreshToken'));
+    this.functionsService.logToConsole(
+      this.functionsService.getcookie('refreshToken')
+    );
 
-    this.doctorService.revokeTokenV3(this.revokeTokenV3).subscribe((res: any) => {
-      this.functionsService.logToConsole(res);
-    });
-    
+    this.revokeTokenV3.jwt = decodeURIComponent(
+      this.functionsService.getcookie('refreshToken')
+    );
+
+    this.doctorService
+      .revokeTokenV3(this.revokeTokenV3)
+      .subscribe((res: any) => {
+        this.functionsService.logToConsole(res);
+      });
 
     this.logoutService.out();
     /*
@@ -264,6 +236,5 @@ export class TabsPage {
       this.userIdle.stopWatching();
       this.router.navigate(['/login']);
     });*/
-
   }
 }

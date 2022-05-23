@@ -161,7 +161,7 @@ export class Constants {
   /**
    * Version
    */
-  public DOCTOR_PORTAL__VALUE__VERSION: string = '2.4.9';
+  public DOCTOR_PORTAL__VALUE__VERSION: string = '3.2.5';
 
   // (W)
   /**
@@ -181,4 +181,67 @@ export class Constants {
   public WEEK_DAY__VALUE__FRIDAY: string = 'FRIDAY';
   public WEEK_DAY__CODE__SATURDAY: number = 6;
   public WEEK_DAY__VALUE__SATURDAY: string = 'SATURDAY';
+
+  public cebuRooms = [
+    '3B',
+    '3C',
+    '4B',
+    '4C',
+    '5A',
+    '5B',
+    '5C',
+    '6A',
+    '6B',
+    '7A',
+    '7B',
+    '8A',
+    '8B',
+    '9A',
+    '9B',
+    '10A',
+    '10B',
+    '11A',
+    '11B',
+    'NCU',
+    'ICU',
+    'INT',
+    'CCU',
+    'PICU',
+    'DRM',
+    'NICU',
+    'PWD',
+  ];
+  public mandaueRooms = [
+    '6A',
+    '6B',
+    '7A',
+    '7B',
+    '7C',
+    '7D',
+    '8A',
+    '8B',
+    '8C',
+    '8D',
+    '9A',
+    '9B',
+    '9C',
+    '9D',
+    '10A',
+    '10B',
+    '10C',
+    '10D',
+    '11A',
+    '11B',
+    '11C',
+    '11D',
+    '12A',
+    '12B',
+    '12C',
+    '12D',
+    'MICU',
+    'PICU',
+    'NICU',
+    'NUR',
+    'DRM',
+  ];
 }

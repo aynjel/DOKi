@@ -67,7 +67,8 @@ ___  ___        _      _  _
 </ion-header>
 <ion-content *ngIf="!isDesktop">
   <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [dischargeNotice]="dischargeNotice"
-    [forMoreOrLess]="true">
+    [forMoreOrLess]="true" [is_pwd]="is_pwd" [is_senior]="is_senior"
+    [is_philhealth_membership]="is_philhealth_membership">
   </app-chh-app-patient-header>
 
   <app-chh-app-admitting-diagnosis [admittingDiagnosis]="admittingDiagnosis" [admittingDiagnosis1]="admittingDiagnosis1"
@@ -75,7 +76,7 @@ ___  ___        _      _  _
   </app-chh-app-admitting-diagnosis>
 
   <!-- progress notes -->
-  <ion-card mode="ios" *ngIf="progNot_account_no != ''">
+  <!--ion-card mode="ios" *ngIf="progNot_account_no != ''">
     <ion-list>
       <ion-item style="padding-top: 10px;">
         <div class="ion-text-wrap"><b>Progress Notes</b><br /></div>
@@ -85,19 +86,48 @@ ___  ___        _      _  _
           <div *ngIf="progNot_InitDisplay" class="custom-font">
             <div [innerHTML]="progNot_InitDisplay">
             </div>
-            <button (click)="showProgressNotes()">show
-              more</button>
+            <ion-button color="light" size="small" (click)="showProgressNotes()">show
+              more</ion-button>
 
           </div>
         </div>
       </ion-item>
     </ion-list>
-  </ion-card>
+  </ion-card-->
+
+  <!--ion-card mode="ios">
+    <pinch-zoom>
+
+      <pdf-viewer [src]="pdfSrc" [rotation]="0" [original-size]="false" [show-all]="true" [fit-to-page]="false"
+        [zoom]="1" [zoom-scale]="'page-width'" [stick-to-page]="false" [render-text]="true"
+        [external-link-target]="'blank'" [autoresize]="true" [show-borders]="false" style="width: 100vh; height: 30vh;">
+      </pdf-viewer>
+
+    </pinch-zoom>
 
 
+  </ion-card-->
+
+  <!--ion-card mode="ios">
+    <canvas #canvas (touchstart)="startDrawing($event)" (touchmove)="moved($event)" width="350" height="200"></canvas>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+          <ion-button color="danger" (click)="clearPad()">Clear</ion-button>
+        </ion-col>
+        <ion-col size="4" offset="2">
+          <ion-button color="secondary" (click)="savePad()">Save</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  <img src='{{ signatureImg }}' />
+  </ion-card-->
 
   <app-chh-app-final-diagnosis [data]="admissionstatus" [finalDiagnosis]="finalDiagnosis" [limit]="limit"
-    [truncating]="truncating" [finalDiagnosis1]="finalDiagnosis1" [finalDiagnosis2]="finalDiagnosis2">
+    [truncating]="truncating" [finalDiagnosis1]="finalDiagnosis1" [finalDiagnosis2]="finalDiagnosis2"
+    [finalDiagnosisApproval]="finalDiagnosisApproval" [isCancelFinalDiagnosisApproval]='isCancelFinalDiagnosisApproval'
+    [patientName]="patientName" (cancelApproval)="cancelApproval($event)" [approvedDate]="approvedDate"
+    [admissionNo]="admissionNo" [dischargeNo]="dischargeNo">
   </app-chh-app-final-diagnosis>
   <!-- <ion-card mode="ios"  *ngIf="!isDesktop" >
     <ion-list>
@@ -256,7 +286,8 @@ ______          _    _
         </ion-col> -->
       <ion-col size-lg="4" size-md="6">
         <!--app-chh-app-card-newline></app-chh-app-card-newline-->
-        <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [forMoreOrLess]="true">
+        <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [forMoreOrLess]="true" [is_pwd]="is_pwd"
+          [is_senior]="is_senior">
         </app-chh-app-patient-header>
 
         <ion-card mode="ios" class="shadow-remove">
@@ -277,43 +308,35 @@ ______          _    _
           [truncating1]="truncating1"></app-chh-app-admitting-diagnosis>
 
 
-        <app-chh-app-final-diagnosis [data]="data" [finalDiagnosis]="finalDiagnosis" [limit]="limit"
-          [truncating]="truncating" [finalDiagnosis1]="finalDiagnosis1" [finalDiagnosis2]="finalDiagnosis2">
+        <app-chh-app-final-diagnosis [data]="admissionstatus" [finalDiagnosis]="finalDiagnosis" [limit]="limit"
+          [truncating]="truncating" [finalDiagnosis1]="finalDiagnosis1" [finalDiagnosis2]="finalDiagnosis2"
+          [finalDiagnosisApproval]="finalDiagnosisApproval"
+          [isCancelFinalDiagnosisApproval]='isCancelFinalDiagnosisApproval' [patientName]="patientName"
+          (cancelApproval)="cancelApproval($event)" [approvedDate]="approvedDate" [admissionNo]="admissionNo"
+          [dischargeNo]="dischargeNo">
         </app-chh-app-final-diagnosis>
       </ion-col>
+      <!-- Progress notes -->
       <!--ion-col size-lg="3" size-md="6" class=" max-height-82vh overflow-scroll">
-        <ion-card mode="ios">
+        <ion-card mode="ios" *ngIf="progNot_account_no != ''">
           <ion-list>
             <ion-item style="padding-top: 10px;">
               <div class="ion-text-wrap"><b>Progress Notes</b><br /></div>
             </ion-item>
-            <ng-container>
-              <div *ngFor="let x of progessNotes">
-                <ion-item>
-                  Day #<b>{{x.notes_id}}</b>
-                </ion-item>
-                <cardshowhide [notes]="x.notes" [noteslength]="x.noteslength" [notesmall]="x.notessmall">
-                </cardshowhide>
-                <ion-footer>
-                  <ion-grid>
-                    <ion-row>
-                      <ion-col center text-center>
-                        <div style="padding:5px">Date Created : {{x.dateCreateConverted}}
-                          {{x.dateCreateTimeConverted}}
-                        </div>
-                      </ion-col>
-                      <ion-col center text-center>
-                        <div style="padding:5px">Date Updated : {{x.dateUpdateConverted}}
-                          {{x.dateUpdateTimeConverted}}
-                        </div>
-                      </ion-col>
-                    </ion-row>
-                  </ion-grid>
-                </ion-footer>
+            <ion-item style="padding-top: 10px;" lines="none">
+              <div class="ion-text-wrap">
+                <div *ngIf="progNot_InitDisplay" class="custom-font">
+                  <div [innerHTML]="progNot_InitDisplay">
+                  </div>
+                  <button (click)="showProgressNotes()">show
+                    more</button>
+
+                </div>
               </div>
-            </ng-container>
+            </ion-item>
           </ion-list>
         </ion-card>
+
       </ion-col-->
 
       <ion-col size-lg="3" size-md="6" class=" max-height-82vh overflow-scroll">

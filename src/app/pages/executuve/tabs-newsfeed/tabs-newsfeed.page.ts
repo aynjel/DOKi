@@ -29,7 +29,8 @@ import { OnInit } from '@angular/core';
 import { ChhAppChangePassPage } from '../../../chh-web-components/chh-app-change-pass/chh-app-change-pass.page';
 
 import { ChhAppNewsfeedComponent } from '../../../chh-web-components/chh-app-newsfeed/chh-app-newsfeed.component';
-
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-tabs-newsfeed',
   templateUrl: './tabs-newsfeed.page.html',
@@ -37,8 +38,10 @@ import { ChhAppNewsfeedComponent } from '../../../chh-web-components/chh-app-new
 })
 export class TabsNewsfeedPage implements OnInit {
   isDesktop: boolean;
-
+  private ngUnsubscribe = new Subject();
   newsfeed: any;
+  refreshcounter;
+  newsfeedTemp;
   constructor(
     private screensizeService: ScreenSizeService,
     private modalController: ModalController,
@@ -48,12 +51,15 @@ export class TabsNewsfeedPage implements OnInit {
     public router: Router
   ) {
     this.functionsService.logToConsole('In-patient : Constructor');
-    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
-      if (this.isDesktop && !isDesktop) {
-        window.location.reload();
-      }
-      this.isDesktop = isDesktop;
-    });
+    this.screensizeService
+      .isDesktopView()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((isDesktop) => {
+        if (this.isDesktop && !isDesktop) {
+          window.location.reload();
+        }
+        this.isDesktop = isDesktop;
+      });
     this.addMoreItems();
   }
   items = [];
@@ -62,22 +68,39 @@ export class TabsNewsfeedPage implements OnInit {
     this.router.navigate(['/executive/settings']);
   }
   ngOnInit() {
+    this.refreshcounter = 1;
+    this.newsfeedTemp = [];
+    this.newsfeed = [];
+    this.ngUnsubscribe = new Subject();
     this.checkAppearance();
 
-    this.doctorService.getNewsFeedV3().subscribe(
-      (res: any) => {
-        this.newsfeed = res;
-      },
-      (error) => {},
-      () => {}
-    );
+    this.doctorService
+      .getNewsFeedV3()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          this.newsfeedTemp = res;
+          //this.newsfeed = res;
+        },
+        (error) => {},
+        () => {
+          this.initiateData();
+        }
+      );
   }
-
+  initiateData() {
+    this.newsfeed = this.newsfeedTemp.slice(0, 10);
+  }
   loadData(event) {
+    this.refreshcounter++;
     setTimeout(() => {
       this.functionsService.logToConsole('Done');
-      this.addMoreItems();
-      //this.numTimesLeft -= 1;
+      this.newsfeed = this.newsfeed.concat(
+        this.newsfeedTemp.slice(
+          this.refreshcounter * 10 - 10,
+          this.refreshcounter * 10
+        )
+      );
       event.target.complete();
     }, 500);
   }
@@ -101,13 +124,16 @@ export class TabsNewsfeedPage implements OnInit {
   }
   doRefresh(event) {
     setTimeout(() => {
-      this.doctorService.getNewsFeedV3().subscribe(
-        (res: any) => {
-          this.newsfeed = res;
-        },
-        (error) => {},
-        () => {}
-      );
+      this.doctorService
+        .getNewsFeedV3()
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(
+          (res: any) => {
+            this.newsfeed = res;
+          },
+          (error) => {},
+          () => {}
+        );
       //location.reload();
       event.target.complete();
     }, 1000);
@@ -126,5 +152,9 @@ export class TabsNewsfeedPage implements OnInit {
         this.renderer.setAttribute(document.body, 'color-theme', 'light');
       }
     });
+  }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

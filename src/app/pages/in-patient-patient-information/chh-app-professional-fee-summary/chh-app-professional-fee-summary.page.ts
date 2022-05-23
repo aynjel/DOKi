@@ -9,7 +9,11 @@ import {
 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { ModalController, AlertController } from '@ionic/angular';
+import {
+  ModalController,
+  AlertController,
+  NavController,
+} from '@ionic/angular';
 import { ChhAppFeePage } from '../../../chh-web-components/chh-app-fee/chh-app-fee.page';
 import { from } from 'rxjs';
 import { PopoverController } from '@ionic/angular';
@@ -51,12 +55,15 @@ import {
   FormControl,
   Validators,
 } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
 @Component({
   selector: 'app-chh-app-professional-fee-summary',
   templateUrl: './chh-app-professional-fee-summary.page.html',
   styleUrls: ['./chh-app-professional-fee-summary.page.scss'],
 })
 export class ChhAppProfessionalFeeSummaryPage implements OnInit {
+  private ngUnsubscribe = new Subject();
   isDesktop: any;
   routerLinkBack: any;
   routerLinkBack1: any;
@@ -99,6 +106,10 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   form: FormGroup = new FormGroup({});
   numRegex = /^-?\d*[.,]?\d{0,2}$/;
+  is_pwd;
+  is_senior;
+  isVatDisabled: boolean = false;
+  is_philhealth_membership;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -117,15 +128,19 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     public storageService: StorageService,
     public constants: Constants,
     private renderer: Renderer2,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public nav: NavController
   ) {
     localStorage.setItem('modaled', '0');
-    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
-      if (this.isDesktop && !isDesktop) {
-        window.location.reload();
-      }
-      this.isDesktop = isDesktop;
-    });
+    this.screensizeService
+      .isDesktopView()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((isDesktop) => {
+        if (this.isDesktop && !isDesktop) {
+          window.location.reload();
+        }
+        this.isDesktop = isDesktop;
+      });
     this.form = fb.group({
       InsurancePF: [
         '0',
@@ -195,10 +210,22 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.ngUnsubscribe = new Subject();
     let logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
     this.dr_name = logindata.lastName;
     this.dr_code = logindata.doctorCode;
     this.data = JSON.parse(atob(localStorage.getItem('patientData')));
+    this.is_pwd = this.data[0].is_pwd;
+    this.is_philhealth_membership = this.data[0].philhealth_membership;
+    this.is_senior = this.data[0].is_senior;
+    if (this.is_pwd == 'Y' || this.is_senior == 'Y') {
+      this.isVatDisabled = true;
+      this.InsuranceVat = false;
+      this.PhilhealthVat = false;
+      this.PersonalPhilhealthVat = false;
+      this.insuranceVat();
+      this.personalPhilhealthVat();
+    }
     this.dateAdmitted = this.data[0].admission_date;
     this.patient_name = this.data[0].first_name + ' ' + this.data[0].last_name;
     //this.functionsService.logToConsole(this.data);
@@ -207,7 +234,9 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
       this.patient_name
     );
 
-    //this.checkAppearance();
+    if (this.id != this.data[0].admission_no) {
+      this.nav.back();
+    }
 
     this.initialize(this.method);
     /*
@@ -286,7 +315,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
         this.nxtBtn = false;
       }
     }*/
-
+    this.InsurancePF = this.form.value.InsurancePF;
     if (this.InsurancePF > 0) {
       /*this.InsurancePF =
         (this.InsurancePF / this.InsurancePF) * this.InsurancePF;*/
@@ -350,7 +379,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     } else {
       this.nxtBtn = false;
     }*/
-
+    this.PersonalPhilhealthPF = this.form.value.PersonalPhilhealthPF;
     if (this.PersonalPhilhealthPF > 0) {
       this.PersonalPhilhealthShowVat = true;
       this.txtPersonalPhilHealthPF = false;
@@ -386,7 +415,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
     this.functionsService.logToConsole(this.method);
 
     if (this.method == 'Insurance') {
-      this.functionsService.logToConsole(this.InsurancePF);
+      this.InsurancePF = this.form.value.InsurancePF;
 
       if (this.InsurancePF <= 0 || this.InsurancePF == null) {
         /*this.postData.ProfFee = 0;
@@ -413,6 +442,7 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
         }
       }
     } else if (this.method == 'Personal-philhealth') {
+      this.PersonalPhilhealthPF = this.form.value.PersonalPhilhealthPF;
       if (this.PersonalPhilhealthPF <= 0 || this.PersonalPhilhealthPF == null) {
         /*this.postData.ProfFee = 0;
         this.postData.IsVAT = 'N';
@@ -497,5 +527,9 @@ export class ChhAppProfessionalFeeSummaryPage implements OnInit {
   goToBottom() {
     window.scrollTo(document.body.scrollHeight, document.body.scrollHeight);
     //window.scrollY(document.body.scrollHeight);
+  }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

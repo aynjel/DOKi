@@ -53,6 +53,29 @@ export class ExecutiveService {
       year;
     return this.http.get(url, options);
   }
+  getYTDDailyAvgCensusByMonth(data) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json;charset=utf-8',
+    });
+    const options = { headers: headers, withCredentials: true };
+    const url =
+      environment.apiRouterUrl +
+      'v3/Dashboard/Admin/YTDDailyAvgCensusByMonth?year=' +
+      data;
+    return this.http.get(url, options);
+  }
+
+  getYTDAverageLOSByMonth(data) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json;charset=utf-8',
+    });
+    const options = { headers: headers, withCredentials: true };
+    const url =
+      environment.apiRouterUrl +
+      'v3/Dashboard/Admin/YTDAverageLOSByMonth?year=' +
+      data;
+    return this.http.get(url, options);
+  }
 
   forDischargeV3() {
     const headers = new HttpHeaders({

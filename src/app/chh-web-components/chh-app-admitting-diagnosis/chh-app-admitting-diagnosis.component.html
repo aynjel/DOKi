@@ -1,23 +1,26 @@
-
-  <ion-card mode="ios"  >
+<ion-card mode="ios">
   <ion-list>
-  <ion-item style="padding-top: 10px;">
-  <div class="ion-text-wrap"><b>Admitting Diagnosis</b><br /></div>
-  </ion-item>
-  <ion-item style="padding-top: 10px;" lines="none">
-  <div class="ion-text-wrap">
-  <div *ngIf="admittingDiagnosis" class="custom-font">
-  <div *ngIf="admittingDiagnosis.length <= 100" [innerHTML]="admittingDiagnosis">
-  </div>
-  <div class="" *ngIf="truncating1 && admittingDiagnosis.length > 100" [innerHTML]="admittingDiagnosis1">
-  </div>
-  <button *ngIf="truncating1 && admittingDiagnosis.length > 100" ion-button (click)="truncating1 = false">show more</button>
-  <div *ngIf="!truncating1 && admittingDiagnosis.length > 100" [innerHTML]="admittingDiagnosis2">
-  <ion-text class="ion-text-wrap "><br/></ion-text>
-  </div>
-  <button *ngIf="!truncating1 && admittingDiagnosis.length > 100" ion-button (click)="truncating1 = true">show less</button>
-  </div>
-  </div>
-  </ion-item>
+    <ion-item style="padding-top: 10px;">
+      <div class="ion-text-wrap"><b>Admitting Diagnosis</b><br /></div>
+    </ion-item>
+    <ion-item style="padding-top: 10px;" lines="none">
+      <div class="ion-text-wrap">
+        <div *ngIf="admittingDiagnosis" class="custom-font">
+          <div *ngIf="admittingDiagnosis.length <= 100" [innerHTML]="admittingDiagnosis">
+          </div>
+          <div class="" *ngIf="truncating1 && admittingDiagnosis.length > 100" [innerHTML]="admittingDiagnosis1">
+          </div>
+          <ion-button color="light" size="small" *ngIf="truncating1 && admittingDiagnosis.length > 100"
+            (click)="truncating1 = false">show
+            more</ion-button>
+          <div *ngIf="!truncating1 && admittingDiagnosis.length > 100" [innerHTML]="admittingDiagnosis2">
+            <ion-text class="ion-text-wrap "><br /></ion-text>
+          </div>
+          <ion-button color="light" size="small" *ngIf="!truncating1 && admittingDiagnosis.length > 100"
+            (click)="truncating1 = true">show
+            less</ion-button>
+        </div>
+      </div>
+    </ion-item>
   </ion-list>
-  </ion-card>
+</ion-card>
