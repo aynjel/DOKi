@@ -92,6 +92,24 @@ definitions:
           - cypress/screenshots/**
           - cypress/reports/**
           - cypress/videos/**
+    - step: &e2e-parallel-run
+        name: E2E (non-parallel)
+        caches:
+          - npm
+          - cypress
+          - node # pre-defined cache
+        image: cypress/base:12
+        script:
+          - npm install -g @angular/cli
+          - npm install -g @ionic/cli
+          - npm install -g wait-on
+          - npm install
+          - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
+          - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --group parallel-tests --spec "cypress/integration/e2e/parallel/*"
+        artifacts:
+          - cypress/screenshots/**
+          - cypress/reports/**
+          - cypress/videos/**
     - step: &e2e-egress
         name: E2E (Egress)
         caches:
@@ -288,6 +306,33 @@ pipelines:
       #         <<: *e2e
       #         name: Cypress on Machine (5)
       # - step: *e2e-egress
+      - step: *build-artifacts
+      # - step: *deploy-staging-to-firebase
+      - step: *deploy-to-azure-staging
+
+    '{release/v3.2.5}':
+      - step: *code-linting
+      - step: *snyk-security-scan
+      # - step: *e2e-ingress
+      - step: *e2e-parallel-tests 
+      - parallel:
+          # Run Cypress Tests in parallel (6 machines)
+          - step: 
+              <<: *e2e
+              name: Cypress on Machine (1)
+          - step:
+              <<: *e2e
+              name: Cypress on Machine (2)
+          - step:
+              <<: *e2e
+              name: Cypress on Machine (3)
+          - step:
+              <<: *e2e
+              name: Cypress on Machine (4)
+          - step:
+              <<: *e2e
+              name: Cypress on Machine (5)
+      - step: *e2e-egress
       - step: *build-artifacts
       # - step: *deploy-staging-to-firebase
       - step: *deploy-to-azure-staging
