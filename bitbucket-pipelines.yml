@@ -312,7 +312,7 @@ pipelines:
 
     '{release/v3.2.5-e2e-update}':
       - step: *code-linting
-      - step: *snyk-security-scan
+      # - step: *snyk-security-scan
       # - step: *e2e-ingress
       - step: *e2e-parallel-tests 
       - parallel:
