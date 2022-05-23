@@ -91,7 +91,7 @@ export class ViewMedcert1Page implements OnInit {
     });
   }
   ngOnInit() {
-    console.log('ngOnInit');
+    //console.log('ngOnInit');
     this.getpdf();
     this.idModal = false;
     let scWidth = screen.width;
@@ -100,7 +100,7 @@ export class ViewMedcert1Page implements OnInit {
     if (scWidth <= 666) {
       this.screenWidth = scWidth - scWidth * 0.06;
       this.screenHeight = scHeight - scHeight * 0.25;
-      console.log(this.screenWidth);
+      //console.log(this.screenWidth);
       this.signaturePadOptions = {
         minWidth: 5,
         canvasWidth: this.screenWidth,
@@ -111,7 +111,7 @@ export class ViewMedcert1Page implements OnInit {
     } else {
       this.screenWidth = scWidth - scWidth * 0.05;
       this.screenHeight = scHeight - scHeight * 0.3;
-      console.log(this.screenWidth);
+      //console.log(this.screenWidth);
       this.signaturePadOptions = {
         minWidth: 5,
         canvasWidth: this.screenWidth,
@@ -149,7 +149,7 @@ export class ViewMedcert1Page implements OnInit {
           icon: 'arrow-back-outline',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
+            //console.log('Cancel clicked');
           },
         },
       ],
@@ -157,7 +157,7 @@ export class ViewMedcert1Page implements OnInit {
     await actionSheet.present();
 
     const { role, data } = await actionSheet.onDidDismiss();
-    console.log('onDidDismiss resolved with role and data', role, data);
+    //console.log('onDidDismiss resolved with role and data', role, data);
   }
   onClick() {
     this.idModal = true;
@@ -171,12 +171,12 @@ export class ViewMedcert1Page implements OnInit {
   }
   drawComplete() {
     // will be notified of szimek/signature_pad's onEnd event
-    console.log(this.signaturePad.toDataURL());
+    //console.log(this.signaturePad.toDataURL());
   }
 
   drawStart() {
     // will be notified of szimek/signature_pad's onBegin event
-    console.log('begin drawing');
+    //console.log('begin drawing');
   }
 
   clearPad() {
@@ -213,14 +213,14 @@ export class ViewMedcert1Page implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {
-          console.log(data);
+          //console.log(data);
         },
         (error) => {
-          console.log('error');
-          console.log(error);
+          //console.log('error');
+          //console.log(error);
         },
         () => {
-          console.log('success');
+          //console.log('success');
           this.signaturePad.clear();
           this.cancelApprovedApproval(dischargeNo);
           this.ngOnInit();
@@ -231,14 +231,14 @@ export class ViewMedcert1Page implements OnInit {
   }
   cancelApprovedApproval(discharge_no) {
     this.dischargeNo.discharge_no = discharge_no;
-    console.log(this.dischargeNo);
+    //console.log(this.dischargeNo);
 
     this.doctorService
       .cancelApprovedFinalDiagnosis(this.dischargeNo)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          console.log(res);
+          //console.log(res);
           this.ionViewWillEnter();
         },
         (error) => {},
@@ -254,6 +254,7 @@ export class ViewMedcert1Page implements OnInit {
     let testJsonPDF = {
       account_no: patientId,
       mode: 'T',
+      print_header_footer_flg: true,
     };
     let medabstract = this.doctorService
       .getMedicalCertificatePOST(testJsonPDF)
@@ -266,12 +267,12 @@ export class ViewMedcert1Page implements OnInit {
         },
         (error) => {
           this.isPDFLoading = true;
-          console.log('error');
-          console.log(error);
+          //console.log('error');
+          //console.log(error);
         },
         () => {
           this.isPDFLoading = true;
-          console.log(this.pdfSrc);
+          //console.log(this.pdfSrc);
         }
       );
   }

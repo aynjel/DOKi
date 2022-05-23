@@ -250,6 +250,7 @@ export class SignMedcertPage implements OnInit {
     let testJsonPDF = {
       account_no: patientId,
       mode: 'T',
+      print_header_footer_flg: true,
     };
     let medabstract = this.doctorService
       .getMedicalCertificatePOST(testJsonPDF)

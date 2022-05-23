@@ -143,6 +143,7 @@ export class MedicalCertificatePage implements OnInit {
     let testJsonPDF = {
       account_no: 'IPM000125711',
       mode: 'T',
+      print_header_footer_flg: true,
     };
     let medabstract = this.doctorService
       .getMedicalCertificatePOST(testJsonPDF)
