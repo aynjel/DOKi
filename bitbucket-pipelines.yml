@@ -130,7 +130,7 @@ definitions:
           - cypress/videos/**
     - step: &build-artifacts
         name: Build PWA Artifacts
-        image: cypress/base:10 # Because of Cypress dev dependency.
+        image: cypress/base:12 # Because of Cypress dev dependency.
         # image: atlassian/default-image:2  # Image with Zip already installed
         script:
           - apt-get update && apt-get install -y zip
