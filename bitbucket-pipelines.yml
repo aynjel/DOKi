@@ -92,8 +92,8 @@ definitions:
           - cypress/screenshots/**
           - cypress/reports/**
           - cypress/videos/**
-    - step: &e2e-parallel-run
-        name: E2E (non-parallel)
+    - step: &e2e-parallel-tests
+        name: E2E (parallel)
         caches:
           - npm
           - cypress
@@ -105,7 +105,7 @@ definitions:
           - npm install -g wait-on
           - npm install
           - ng run app:serve --host=localhost --port=8100 & wait-on http://localhost:8100
-          - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --group parallel-tests --spec "cypress/integration/e2e/parallel/*"
+          - npx cypress run --record --key $DPP_CYPRESS_RECORD_KEY --group parallel-tests --parallel --spec "cypress/integration/e2e/parallel/*"
         artifacts:
           - cypress/screenshots/**
           - cypress/reports/**
@@ -310,7 +310,7 @@ pipelines:
       # - step: *deploy-staging-to-firebase
       - step: *deploy-to-azure-staging
 
-    '{release/v3.2.5}':
+    '{release/v3.2.5-e2e-update}':
       - step: *code-linting
       - step: *snyk-security-scan
       # - step: *e2e-ingress
