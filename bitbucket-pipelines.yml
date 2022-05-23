@@ -20,7 +20,7 @@ definitions:
       - npm
       - cypress
       - node # pre-defined cache
-    image: cypress/base:10
+    image: cypress/base:12
     script:
       - npm install -g @angular/cli
       - npm install -g @ionic/cli
@@ -62,7 +62,7 @@ definitions:
           - npm
           - cypress
           - node # pre-defined cache
-        image: cypress/base:10
+        image: cypress/base:12
         script:
           - npm install -g @angular/cli
           - npm install -g @ionic/cli
@@ -80,7 +80,7 @@ definitions:
           - npm
           - cypress
           - node # pre-defined cache
-        image: cypress/base:10
+        image: cypress/base:12
         script:
           - npm install -g @angular/cli
           - npm install -g @ionic/cli
@@ -116,7 +116,7 @@ definitions:
           - npm
           - cypress
           - node # pre-defined cache
-        image: cypress/base:10
+        image: cypress/base:12
         script:
           - npm install -g @angular/cli
           - npm install -g @ionic/cli
