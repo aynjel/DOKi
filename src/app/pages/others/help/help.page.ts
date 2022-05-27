@@ -1,0 +1,50 @@
+import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Router } from '@angular/router';
+import {
+  ActionSheetController,
+  ModalController,
+  NavController,
+} from '@ionic/angular';
+import { DoctorService } from 'src/app/services/doctor/doctor.service';
+import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
+import { takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
+@Component({
+  selector: 'app-help',
+  templateUrl: './help.page.html',
+  styleUrls: ['./help.page.scss'],
+})
+export class HelpPage implements OnInit {
+  private ngUnsubscribe = new Subject();
+  isDesktop: boolean;
+  constructor(
+    private navCtrl: NavController,
+    public doctorService: DoctorService,
+    public screensizeService: ScreenSizeService,
+    private renderer: Renderer2,
+    public actionSheetController: ActionSheetController,
+    public router: Router,
+    public modalController: ModalController
+  ) {
+    console.log('constructor');
+    this.screensizeService
+      .isDesktopView()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((isDesktop) => {
+        if (this.isDesktop && !isDesktop) {
+          window.location.reload();
+        }
+        this.isDesktop = isDesktop;
+      });
+  }
+  back() {
+    this.navCtrl.back();
+  }
+  ngOnInit() {}
+
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    // this.ngUnsubscribe.complete();
+    this.ngUnsubscribe.complete();
+  }
+}

@@ -85,10 +85,17 @@ export class AppComponent implements OnInit {
       icon: 'mail-open-outline',
       type: 'med',
     },
+
     {
       title: 'Settings',
       url: 'menu/settings',
       icon: 'settings-outline',
+      type: 'med',
+    },
+    {
+      title: 'Help',
+      url: 'menu/help',
+      icon: 'help-outline',
       type: 'med',
     },
     {
