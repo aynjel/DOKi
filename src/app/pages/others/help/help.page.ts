@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   ActionSheetController,
@@ -40,11 +40,33 @@ export class HelpPage implements OnInit {
   back() {
     this.navCtrl.back();
   }
+  closeModal() {
+    this.idModal = false;
+    this.modalController.dismiss({
+      dismissed: true,
+    });
+    this.navCtrl.back();
+  }
+  addFakeState() {
+    this.idModal = true;
+    const modalState = {
+      modal: true,
+      desc: 'fake state for our modal',
+    };
+    history.pushState(modalState, null);
+  }
   ngOnInit() {}
 
   ionViewDidLeave() {
     this.ngUnsubscribe.next();
     // this.ngUnsubscribe.complete();
     this.ngUnsubscribe.complete();
+  }
+  idModal;
+  @HostListener('window:popstate', ['$event'])
+  dismissModal() {
+    if (this.idModal) {
+      this.closeModal();
+    }
   }
 }
