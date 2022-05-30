@@ -10,6 +10,8 @@ import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.serv
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SignaturePad } from 'angular2-signaturepad';
+import { Constants } from 'src/app/shared/constants';
+import { SignatureApproval } from 'src/app/models/doctor';
 @Component({
   selector: 'app-view-medcert1',
   templateUrl: './view-medcert1.page.html',
@@ -47,7 +49,8 @@ export class ViewMedcert1Page implements OnInit {
     public actionSheetController: ActionSheetController,
     public router: Router,
     public activatedRoute: ActivatedRoute,
-    public modalController: ModalController
+    public modalController: ModalController,
+    public constants: Constants
   ) {
     this.isNotification = true;
     this.screensizeService
@@ -125,8 +128,6 @@ export class ViewMedcert1Page implements OnInit {
     this.presentActionSheet();
   }
   async presentActionSheet() {
-    let dischargeNo = this.activatedRoute.snapshot.params.dischargeNo;
-
     const actionSheet = await this.actionSheetController.create({
       mode: 'ios',
       header: "Are you sure to revoke the patient's final diagnosis?",
@@ -140,7 +141,7 @@ export class ViewMedcert1Page implements OnInit {
             type: 'delete',
           },
           handler: () => {
-            this.cancelApprovedApproval(dischargeNo);
+            this.clearSignature();
           },
         },
 
@@ -231,8 +232,6 @@ export class ViewMedcert1Page implements OnInit {
   }
   cancelApprovedApproval(discharge_no) {
     this.dischargeNo.discharge_no = discharge_no;
-    //console.log(this.dischargeNo);
-
     this.doctorService
       .cancelApprovedFinalDiagnosis(this.dischargeNo)
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -244,6 +243,48 @@ export class ViewMedcert1Page implements OnInit {
         (error) => {},
         () => {
           this.back();
+        }
+      );
+  }
+  compressImage(src, newX, newY) {
+    return new Promise((res, rej) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        const elem = document.createElement('canvas');
+        elem.width = newX;
+        elem.height = newY;
+        const ctx = elem.getContext('2d');
+        ctx.drawImage(img, 0, 0, newX, newY);
+        const data = ctx.canvas.toDataURL();
+        res(data);
+      };
+      img.onerror = (error) => rej(error);
+    });
+  }
+  //loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
+  clearSignature() {
+    let patientId = this.activatedRoute.snapshot.params.admissionNo;
+    let testAprrove: SignatureApproval = new SignatureApproval();
+    testAprrove.mode = this.constants.TestServer;
+    testAprrove.account_no = patientId;
+    testAprrove.medcert_comment = 'medcert_comment';
+    testAprrove.medcert_approve_by = 'medcert_approve_by';
+    testAprrove.medcert_signature = this.constants.blankBase64img;
+    this.saveSignature(testAprrove);
+  }
+  saveSignature(testAprrove) {
+    let dischargeNo = this.activatedRoute.snapshot.params.dischargeNo;
+    this.doctorService
+      .approveMedicalCertificate(testAprrove)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (data: any) => {},
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          this.cancelApprovedApproval(dischargeNo);
         }
       );
   }
