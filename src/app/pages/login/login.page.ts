@@ -168,7 +168,7 @@ export class LoginPage {
                   localStorage.setItem('role_flag', 'exec');
                   execflag = false;
                 } else {
-                  localStorage.setItem('role_flag', 'med');
+                  localStorage.setItem('role_flag', 'medcons');
                 }
               }
 

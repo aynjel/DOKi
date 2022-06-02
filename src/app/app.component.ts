@@ -89,13 +89,13 @@ export class AppComponent implements OnInit {
       title: 'Settings',
       url: 'menu/settings',
       icon: 'settings-outline',
-      type: 'med',
+      type: 'medcons',
     },
     {
       title: 'Log Out',
       url: 'logout',
       icon: 'log-out-outline',
-      type: 'med',
+      type: 'medcons',
     },
   ];
   logindata;
