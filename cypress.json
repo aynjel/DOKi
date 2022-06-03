@@ -14,6 +14,7 @@
     "collectiblesUrl" : "/menu/collectibles",
     "medicalAbstractUrl" : "/menu/medical-abstract",
     "medicalCertUrl" : "/menu/medical-certificate",
-    "settingsUrl": "/menu/settings"
+    "settingsUrl": "/menu/settings",
+    "executiveUrl": "/executive/dashboard"
   }
 }
