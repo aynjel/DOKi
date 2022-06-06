@@ -35,8 +35,79 @@
           <ion-button id="trigger-button-certificate" style="display:none">Sign Document</ion-button>
           <ion-row>
             <ion-col>
-              <ion-button mode="ios" size="small" color="mango" shape="" expand="block" *ngIf="isPDFLoading"
-                (click)="onClick()">Sign and Approve Document</ion-button>
+              <!--ion-button mode="ios" size="small" color="mango" shape="" expand="block" *ngIf="isPDFLoading"
+                (click)="openSignaturePad()">Sign and Approve Document</ion-button-->
+
+              <ion-button (click)="openConsent()" id="trigger-button" mode="ios" size="small" color="mango" shape=""
+                expand="block">Sign and Approve Document
+              </ion-button>
+
+              <ion-modal trigger="trigger-button">
+                <ng-template>
+                  <ion-header mode="md" class="ion-no-border">
+                    <ion-toolbar class="in-toolbar ios toolbar-title-default hydrated" color="mango">
+                      <ion-title>
+                        <ion-icon name="lock-closed-outline"></ion-icon> Consent Form
+                      </ion-title>
+                      <ion-buttons slot="end"
+                        class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
+                        <ion-button id="buttonPrivatePolicyAlertClose" (click)="closeModal()" color="chh-css-primary2">
+                          Close&nbsp;
+                          <ion-icon name="close-outline"></ion-icon>
+
+                        </ion-button>
+                      </ion-buttons>
+                    </ion-toolbar>
+                  </ion-header>
+                  <ion-content>
+                    <ion-grid class="my-backbround ion-no-padding">
+                      <ion-row>
+                        <ion-col>
+                          <ion-card mode="ios">
+                            <ion-list>
+                              <ion-item style="padding-top: 10px;" class="font-size15">
+                                ELECTRONIC SIGNATURE ACKNOWLEDGEMENT AND CONSENT FORM
+                                <br /><br />
+                                I agree and understand that by signing the Electronic Signature Acknowledgment and
+                                Consent Form, that my electronic
+                                signature is the legal equivalent of my manual/handwritten signature and I consent to be
+                                legally bound to this Medical
+                                Certificate.<br /><br />
+                                Under penalty of perjury, I herewith affirm that my electronic signature is signed by
+                                myself with full knowledge and
+                                consent and am legally bound to the terms and conditions stated herein.
+                                <br />
+                              </ion-item>
+                              <ion-item>
+                                <ion-checkbox id="acceptCheckBox" color="mango" slot="start"
+                                  [(ngModel)]="signatureConsent">
+                                </ion-checkbox>
+                                <ion-label>Accept</ion-label>
+                              </ion-item>
+                            </ion-list>
+                            <ion-grid>
+                              <ion-row>
+                                <ion-col size-xs="12">
+                                  <ion-button expand="block" shape="round" id="btn-confirm" (click)="saveConsent()"
+                                    color="mango">
+                                    SAVE
+                                  </ion-button>
+                                </ion-col>
+
+                              </ion-row>
+                            </ion-grid>
+
+
+                          </ion-card>
+
+
+
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </ion-content>
+                </ng-template>
+              </ion-modal>
             </ion-col>
 
           </ion-row>

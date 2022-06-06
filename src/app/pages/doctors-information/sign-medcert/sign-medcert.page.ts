@@ -88,22 +88,22 @@ export class SignMedcertPage implements OnInit {
   ionViewWillEnter() {}
   ngOnInit() {
     this.checkAppearance();
-    console.log('ngOnInit');
+    //console.log('ngOnInit');
     this.getpdf();
     this.idModal = false;
     let scWidth = screen.width;
     let scHeight = screen.height;
 
     if (scWidth <= 666) {
-      console.log('sm');
+      //console.log('sm');
       this.screenWidth = scWidth - scWidth * 0.06;
       this.screenHeight = scHeight - scHeight * 0.35;
     } else if (scWidth <= 912) {
-      console.log('md');
+      //console.log('md');
       this.screenWidth = scWidth - scWidth * 0.2;
       this.screenHeight = scHeight - scHeight * 0.35;
     } else {
-      console.log('l');
+      //console.log('l');
       this.screenWidth = scWidth - scWidth * 0.4;
       this.screenHeight = scHeight - scHeight * 0.4;
     }
@@ -120,23 +120,52 @@ export class SignMedcertPage implements OnInit {
     };
   }
   activateIsSignatureModal() {
-    const modalState = {
-      modal: true,
-      desc: 'fake state for our modal',
-    };
-    history.pushState(modalState, null);
+    if (!this.idModal) {
+      const modalState = {
+        modal: true,
+        desc: 'fake state for our modal',
+      };
+      history.pushState(modalState, null);
+    }
   }
   @HostListener('window:popstate', ['$event'])
   dismissModal() {
     if (this.idModal) {
-      this.closeModal();
+      this.manualBack();
     }
   }
-  onClick() {
-    this.activateIsSignatureModal();
+
+  signatureConsent: boolean = true;
+  setidModalTrue() {
     localStorage.setItem('isModal', '1');
     this.idModal = true;
+  }
+  openConsent() {
+    //console.log(history);
+
+    this.activateIsSignatureModal();
+    this.setidModalTrue();
+  }
+  saveConsent() {
+    if (this.signatureConsent) {
+      this.modalController.dismiss();
+      this.openSignaturePad();
+    }
+  }
+  openSignaturePad() {
+    if (!this.idModal) {
+      this.activateIsSignatureModal();
+      this.setidModalTrue();
+    }
+
     document.getElementById('trigger-button-certificate').click();
+  }
+  manualBack() {
+    this.idModal = false;
+    localStorage.setItem('isModal', '0');
+    this.modalController.dismiss({
+      dismissed: true,
+    });
   }
   closeModal() {
     this.idModal = false;
@@ -148,12 +177,12 @@ export class SignMedcertPage implements OnInit {
   }
   drawComplete() {
     // will be notified of szimek/signature_pad's onEnd event
-    console.log(this.signaturePad.toDataURL());
+    ////console.log(this.signaturePad.toDataURL());
   }
 
   drawStart() {
     // will be notified of szimek/signature_pad's onBegin event
-    console.log('begin drawing');
+    ////console.log('begin drawing');
   }
 
   clearPad() {
@@ -211,14 +240,14 @@ export class SignMedcertPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {
-          console.log(data);
+          // //console.log(data);
         },
         (error) => {
-          console.log('error');
-          console.log(error);
+          // //console.log('error');
+          // //console.log(error);
         },
         () => {
-          console.log('success');
+          // //console.log('success');
           // this.signaturePad.clear();
           this.approvePendingAPproval(dischargeNo);
           this.ngOnInit();
@@ -229,16 +258,16 @@ export class SignMedcertPage implements OnInit {
   }
   approvePendingAPproval(discharge_no) {
     this.dischargeNo.discharge_no = discharge_no;
-    console.log(this.dischargeNo);
+    //console.log(this.dischargeNo);
     this.doctorService
       .approvePendingApproval(this.dischargeNo)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          console.log(res);
+          //console.log(res);
         },
         (error) => {
-          console.log(error);
+          //console.log(error);
         },
         () => {}
       );
@@ -263,12 +292,12 @@ export class SignMedcertPage implements OnInit {
         },
         (error) => {
           this.isPDFLoading = true;
-          console.log('error');
-          console.log(error);
+          //console.log('error');
+          //console.log(error);
         },
         () => {
           this.isPDFLoading = true;
-          console.log(this.pdfSrc);
+          //console.log(this.pdfSrc);
         }
       );
   }
