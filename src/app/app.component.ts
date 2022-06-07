@@ -83,7 +83,7 @@ export class AppComponent implements OnInit {
       title: 'Inbox',
       url: 'menu/inbox',
       icon: 'mail-open-outline',
-      type: 'med',
+      type: 'medcons',
     },
 
     {
@@ -96,7 +96,7 @@ export class AppComponent implements OnInit {
       title: 'Help',
       url: 'menu/help',
       icon: 'help-outline',
-      type: 'med',
+      type: 'medcons',
     },
     {
       title: 'Log Out',

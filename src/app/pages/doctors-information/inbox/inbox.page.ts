@@ -3,6 +3,7 @@ import {
   ActionSheetController,
   ModalController,
   NavController,
+  PopoverController,
 } from '@ionic/angular';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
 import { takeUntil } from 'rxjs/operators';
@@ -32,7 +33,8 @@ export class InboxPage implements OnInit {
     private renderer: Renderer2,
     public actionSheetController: ActionSheetController,
     public router: Router,
-    public modalController: ModalController
+    public modalController: ModalController,
+    public popover: PopoverController
   ) {
     console.log('constructor');
     this.isNotification = true;
@@ -48,6 +50,8 @@ export class InboxPage implements OnInit {
   }
   ionViewWillEnter() {
     console.log('ionViewWillEnter');
+    this.selected = 'FA';
+    this.changeMode(this.selected);
 
     this.getPendingApproval();
   }
@@ -74,7 +78,29 @@ export class InboxPage implements OnInit {
   back() {
     this.navCtrl.back();
   }
-  segmentChanged(e) {
+  getType(e) {
+    if (this.selected == 'e') {
+      return 'boldMe';
+    } else {
+      return 'unboldMe';
+    }
+  }
+  modeSelected: string = 'for Approval';
+  changeMode(e) {
+    this.selected = e;
+    if (this.selected == 'FA') {
+      this.modeSelected = 'for Approval';
+    } else if (this.selected == 'FR') {
+      this.modeSelected = 'for Revision';
+    } else if (this.selected == 'RA') {
+      this.modeSelected = 'Approved';
+    }
+    this.pendingApproval = this.pendingApprovalFullList.filter(
+      (element) => element.approval_status == e
+    );
+    this.popover.dismiss();
+  }
+  /*segmentChanged(e) {
     //console.log(e.detail.value);
     //this.router.navigate(['/sign-medcert/' + e.detail.value]);
     console.log(e.detail.value);
@@ -82,7 +108,7 @@ export class InboxPage implements OnInit {
     this.pendingApproval = this.pendingApprovalFullList.filter(
       (element) => element.approval_status == e.detail.value
     );
-  }
+  }*/
   getPendingApproval() {
     this.selected = 'FA';
     this.pendingApproval = [];
