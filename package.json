@@ -47,6 +47,7 @@
     "ng-lottie": "^0.3.2",
     "ng2-pdf-viewer": "^8.0.1",
     "ngx-google-analytics": "^9.0.0",
+    "ngx-indexed-db": "^11.0.2",
     "ngx-pinch-zoom": "^2.6.2",
     "pdfmake": "^0.1.68",
     "rxjs": "~6.5.1",

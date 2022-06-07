@@ -10,7 +10,30 @@ import { SignMedcertPage } from './sign-medcert.page';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PinchZoomModule } from 'ngx-pinch-zoom';
 import { SignaturePadModule } from 'angular2-signaturepad';
-
+import { NgxIndexedDBModule } from 'ngx-indexed-db';
+const dbConfig = {
+  name: 'signatureDB',
+  version: 1,
+  objectStoresMeta: [
+    {
+      store: 'people',
+      storeConfig: { keyPath: 'id', autoIncrement: true },
+      storeSchema: [
+        { name: 'drCode', keypath: 'drCode', options: { unique: false } },
+        {
+          name: 'base64image',
+          keypath: 'base64image',
+          options: { unique: false },
+        },
+        {
+          name: 'base64imageFull',
+          keypath: 'base64imageFull',
+          options: { unique: false },
+        },
+      ],
+    },
+  ],
+};
 @NgModule({
   imports: [
     CommonModule,
@@ -20,6 +43,7 @@ import { SignaturePadModule } from 'angular2-signaturepad';
     PdfViewerModule,
     PinchZoomModule,
     SignaturePadModule,
+    NgxIndexedDBModule.forRoot(dbConfig),
   ],
   declarations: [SignMedcertPage],
 })

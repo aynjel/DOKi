@@ -17,6 +17,9 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SignaturePad } from 'angular2-signaturepad';
 import { FunctionsService } from 'src/app/shared/functions/functions.service';
+import { NgxIndexedDBService } from 'ngx-indexed-db';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { LoginResponseModelv3, SignatureApproval } from 'src/app/models/doctor';
 @Component({
   selector: 'app-sign-medcert',
   templateUrl: './sign-medcert.page.html',
@@ -56,7 +59,10 @@ export class SignMedcertPage implements OnInit {
     public router: Router,
     public activatedRoute: ActivatedRoute,
     public modalController: ModalController,
-    public functionService: FunctionsService
+    public functionService: FunctionsService,
+    private dbService: NgxIndexedDBService,
+    private authService: AuthService,
+    public functionsService: FunctionsService
   ) {
     this.isNotification = true;
     this.screensizeService
@@ -85,25 +91,77 @@ export class SignMedcertPage implements OnInit {
   back() {
     this.navCtrl.back();
   }
-  ionViewWillEnter() {}
+  ionViewWillEnter() {
+    this.logindata = <LoginResponseModelv3>(
+      this.authService.userData$.getValue()
+    );
+    this.functionsService.logToConsole(this.logindata);
+    this.dr_code = this.logindata.doctorCode;
+    this.getSignaturefromIndexedDB(this.dr_code);
+  }
+
+  logindata;
+  dr_code;
+  signatureBase64;
+  signatureBase64Full;
+  signatureID;
+  isSignature: boolean = false;
+  getSignaturefromIndexedDB(data) {
+    this.dbService
+      .getByIndex('people', 'drCode', data)
+      .subscribe((signature: any) => {
+        if (signature == undefined) {
+          this.isSignature = false;
+        } else {
+          console.log(signature);
+          this.signatureID = signature.id;
+          this.signatureBase64 = signature.base64image;
+          this.signatureBase64Full = signature.base64imageFull;
+          this.isSignature = true;
+        }
+      });
+  }
+  saveSignaturetoIndexdb(drCode, base64image, base64imageFull) {
+    this.dbService
+      .add('people', {
+        drCode: drCode,
+        base64image: base64image,
+        base64imageFull: base64imageFull,
+      })
+      .subscribe((key) => {
+        this.getSignaturefromIndexedDB(this.dr_code);
+      });
+  }
+  updateSignatureonIndexedDB(drCode, base64image, base64imageFull) {
+    this.dbService
+      .update('people', {
+        id: this.signatureID,
+        drCode: drCode,
+        base64image: base64image,
+        base64imageFull: base64imageFull,
+      })
+      .subscribe((storeData) => {
+        this.getSignaturefromIndexedDB(this.dr_code);
+      });
+  }
   ngOnInit() {
     this.checkAppearance();
-    //console.log('ngOnInit');
+    ////console.log('ngOnInit');
     this.getpdf();
     this.idModal = false;
     let scWidth = screen.width;
     let scHeight = screen.height;
 
     if (scWidth <= 666) {
-      //console.log('sm');
+      ////console.log('sm');
       this.screenWidth = scWidth - scWidth * 0.06;
       this.screenHeight = scHeight - scHeight * 0.35;
     } else if (scWidth <= 912) {
-      //console.log('md');
+      ////console.log('md');
       this.screenWidth = scWidth - scWidth * 0.2;
       this.screenHeight = scHeight - scHeight * 0.35;
     } else {
-      //console.log('l');
+      ////console.log('l');
       this.screenWidth = scWidth - scWidth * 0.4;
       this.screenHeight = scHeight - scHeight * 0.4;
     }
@@ -119,7 +177,10 @@ export class SignMedcertPage implements OnInit {
       penColor: 'rgb(0, 0, 0)',
     };
   }
+
+  //id=""
   activateIsSignatureModal() {
+    this.getSignaturefromIndexedDB(this.dr_code);
     if (!this.idModal) {
       const modalState = {
         modal: true,
@@ -135,22 +196,48 @@ export class SignMedcertPage implements OnInit {
     }
   }
 
-  signatureConsent: boolean = true;
+  signatureConsent: boolean = false;
   setidModalTrue() {
     localStorage.setItem('isModal', '1');
     this.idModal = true;
   }
+  isConsent: boolean = true;
   openConsent() {
-    //console.log(history);
+    ////console.log(history);
 
     this.activateIsSignatureModal();
     this.setidModalTrue();
+
+    if (this.isConsent) {
+      document.getElementById('trigger-button-consent').click();
+    } else {
+      document.getElementById('trigger-button-show-signature').click();
+    }
+  }
+  useOldSignature() {
+    this.modalController.dismiss();
+    let patientId = this.activatedRoute.snapshot.params.admissionNo;
+    let testAprrove: SignatureApproval = new SignatureApproval();
+    testAprrove.mode = 'T';
+    testAprrove.account_no = patientId;
+    testAprrove.medcert_comment = 'medcert_comment';
+    testAprrove.medcert_approve_by = 'medcert_approve_by';
+    testAprrove.medcert_signature = this.signatureBase64;
+    this.saveSignature(testAprrove);
   }
   saveConsent() {
     if (this.signatureConsent) {
       this.modalController.dismiss();
-      this.openSignaturePad();
+      if (this.isSignature) {
+        document.getElementById('trigger-button-show-signature').click();
+      } else {
+        this.openSignaturePad();
+      }
     }
+  }
+  resignSignature() {
+    this.modalController.dismiss();
+    this.openSignaturePad();
   }
   openSignaturePad() {
     if (!this.idModal) {
@@ -177,12 +264,12 @@ export class SignMedcertPage implements OnInit {
   }
   drawComplete() {
     // will be notified of szimek/signature_pad's onEnd event
-    ////console.log(this.signaturePad.toDataURL());
+    //////console.log(this.signaturePad.toDataURL());
   }
 
   drawStart() {
     // will be notified of szimek/signature_pad's onBegin event
-    ////console.log('begin drawing');
+    //////console.log('begin drawing');
   }
 
   clearPad() {
@@ -209,6 +296,7 @@ export class SignMedcertPage implements OnInit {
     this.isbutton = true;
     const base64Data = this.signaturePad.toDataURL('image/png');
     let compressedImage;
+    this.signatureBase64Full = base64Data;
     this.compressImage(
       base64Data,
       this.screenWidth * 0.3,
@@ -229,6 +317,7 @@ export class SignMedcertPage implements OnInit {
       testAprrove.medcert_comment = 'medcert_comment';
       testAprrove.medcert_approve_by = 'medcert_approve_by';
       testAprrove.medcert_signature = myArray[1];
+      this.signaturePad.clear();
       this.saveSignature(testAprrove);
     });
   }
@@ -240,34 +329,43 @@ export class SignMedcertPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {
-          // //console.log(data);
+          // ////console.log(data);
         },
-        (error) => {
-          // //console.log('error');
-          // //console.log(error);
-        },
+        (error) => {},
         () => {
-          // //console.log('success');
-          // this.signaturePad.clear();
+          if (this.isSignature) {
+            this.updateSignatureonIndexedDB(
+              this.dr_code,
+              testAprrove.medcert_signature,
+              this.signatureBase64Full
+            );
+          } else {
+            this.saveSignaturetoIndexdb(
+              this.dr_code,
+              testAprrove.medcert_signature,
+              this.signatureBase64Full
+            );
+          }
+
           this.approvePendingAPproval(dischargeNo);
           this.ngOnInit();
         }
       );
-    this.signaturePad.clear();
+
     this.isPDFLoading = false;
   }
   approvePendingAPproval(discharge_no) {
     this.dischargeNo.discharge_no = discharge_no;
-    //console.log(this.dischargeNo);
+    ////console.log(this.dischargeNo);
     this.doctorService
       .approvePendingApproval(this.dischargeNo)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          //console.log(res);
+          ////console.log(res);
         },
         (error) => {
-          //console.log(error);
+          ////console.log(error);
         },
         () => {}
       );
@@ -292,12 +390,12 @@ export class SignMedcertPage implements OnInit {
         },
         (error) => {
           this.isPDFLoading = true;
-          //console.log('error');
-          //console.log(error);
+          ////console.log('error');
+          ////console.log(error);
         },
         () => {
           this.isPDFLoading = true;
-          //console.log(this.pdfSrc);
+          ////console.log(this.pdfSrc);
         }
       );
   }

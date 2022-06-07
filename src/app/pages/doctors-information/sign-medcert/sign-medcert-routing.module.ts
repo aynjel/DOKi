@@ -6,8 +6,8 @@ import { SignMedcertPage } from './sign-medcert.page';
 const routes: Routes = [
   {
     path: '',
-    component: SignMedcertPage
-  }
+    component: SignMedcertPage,
+  },
 ];
 
 @NgModule({
