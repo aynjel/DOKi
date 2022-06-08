@@ -36,7 +36,7 @@ export class InboxPage implements OnInit {
     public modalController: ModalController,
     public popover: PopoverController
   ) {
-    console.log('constructor');
+    //console.log('constructor');
     this.isNotification = true;
     this.screensizeService
       .isDesktopView()
@@ -49,8 +49,8 @@ export class InboxPage implements OnInit {
       });
   }
   ionViewWillEnter() {
-    console.log('ionViewWillEnter');
-    this.selected = 'FA';
+    //console.log('ionViewWillEnter');
+    this.selected = localStorage.getItem('changeMode');
     this.changeMode(this.selected);
 
     this.getPendingApproval();
@@ -58,7 +58,7 @@ export class InboxPage implements OnInit {
   ngOnInit() {
     this.getPendingApproval();
 
-    console.log('ngOnInit');
+    //console.log('ngOnInit');
 
     this.checkAppearance();
   }
@@ -88,6 +88,7 @@ export class InboxPage implements OnInit {
   modeSelected: string = 'for Approval';
   changeMode(e) {
     this.selected = e;
+    localStorage.setItem('changeMode', e);
     if (this.selected == 'FA') {
       this.modeSelected = 'for Approval';
     } else if (this.selected == 'FR') {
@@ -98,19 +99,18 @@ export class InboxPage implements OnInit {
     this.pendingApproval = this.pendingApprovalFullList.filter(
       (element) => element.approval_status == e
     );
-    this.popover.dismiss();
+    //this.popover.dismiss();
   }
   /*segmentChanged(e) {
-    //console.log(e.detail.value);
+    ////console.log(e.detail.value);
     //this.router.navigate(['/sign-medcert/' + e.detail.value]);
-    console.log(e.detail.value);
+    //console.log(e.detail.value);
     this.selected = e.detail.value;
     this.pendingApproval = this.pendingApprovalFullList.filter(
       (element) => element.approval_status == e.detail.value
     );
   }*/
   getPendingApproval() {
-    this.selected = 'FA';
     this.pendingApproval = [];
     this.pendingApprovalFullList = [];
     let data = {
@@ -128,30 +128,30 @@ export class InboxPage implements OnInit {
           } else {
             this.empty = false;
           }
-          console.log(this.pendingApprovalFullList);
+          //console.log(this.pendingApprovalFullList);
         },
         (error) => {
-          console.log(error);
+          //console.log(error);
         },
         () => {
           this.pendingApproval = this.pendingApprovalFullList.filter(
-            (element) => element.approval_status == 'FA'
+            (element) => element.approval_status == this.selected
           );
         }
       );
   }
   approvePendingAPproval(discharge_no) {
     this.dischargeNo.discharge_no = discharge_no;
-    console.log(this.dischargeNo);
+    //console.log(this.dischargeNo);
     this.doctorService
       .approvePendingApproval(this.dischargeNo)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          console.log(res);
+          //console.log(res);
         },
         (error) => {
-          console.log(error);
+          //console.log(error);
         },
         () => {
           this.getPendingApproval();
@@ -172,10 +172,6 @@ export class InboxPage implements OnInit {
     this.ngUnsubscribe.complete();
   }
   viewCerticate(x) {
-    console.log(x);
-
-    console.log(x.admission_no);
-    console.log(x.discharge_no);
     if (this.selected == 'FA') {
       this.router.navigate([
         'menu/inbox/sign-medcert/' + x.admission_no + '/' + x.discharge_no,
@@ -191,7 +187,7 @@ export class InboxPage implements OnInit {
   }
 
   viewAndCancelCerticate(x) {
-    console.log(x);
+    //console.log(x);
 
     this.router.navigate([
       'menu/in-patients/' + x.admissionNo + '/view/' + x.dischargeNo,
@@ -222,7 +218,7 @@ export class InboxPage implements OnInit {
           icon: 'arrow-back-outline',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
+            //console.log('Cancel clicked');
           },
         },
       ],
@@ -230,6 +226,6 @@ export class InboxPage implements OnInit {
     await actionSheet.present();
 
     const { role, data } = await actionSheet.onDidDismiss();
-    console.log('onDidDismiss resolved with role and data', role, data);
+    //console.log('onDidDismiss resolved with role and data', role, data);
   }
 }
