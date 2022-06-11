@@ -10,6 +10,8 @@ import { takeUntil } from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
 import { Router } from '@angular/router';
+import { SignatureApproval } from 'src/app/models/doctor';
+import { Constants } from 'src/app/shared/constants';
 @Component({
   selector: 'app-inbox',
   templateUrl: './inbox.page.html',
@@ -34,7 +36,8 @@ export class InboxPage implements OnInit {
     public actionSheetController: ActionSheetController,
     public router: Router,
     public modalController: ModalController,
-    public popover: PopoverController
+    public popover: PopoverController,
+    public constants: Constants
   ) {
     //console.log('constructor');
     this.isNotification = true;
@@ -171,6 +174,15 @@ export class InboxPage implements OnInit {
     // this.ngUnsubscribe.complete();
     this.ngUnsubscribe.complete();
   }
+
+  reviseRevokeApproval(x) {
+    console.log(x);
+
+    if (this.selected == 'FA') {
+    } else {
+      this.presentRevokeApproval(x);
+    }
+  }
   viewCerticate(x) {
     if (this.selected == 'FA') {
       this.router.navigate([
@@ -227,5 +239,77 @@ export class InboxPage implements OnInit {
 
     const { role, data } = await actionSheet.onDidDismiss();
     //console.log('onDidDismiss resolved with role and data', role, data);
+  }
+
+  async presentRevokeApproval(x) {
+    const actionSheet = await this.actionSheetController.create({
+      mode: 'ios',
+      header: "Are you sure to revoke the patient's final diagnosis?",
+      cssClass: 'my-custom-class',
+      buttons: [
+        {
+          text: 'Yes, Revoke',
+          icon: 'thumbs-up-outline',
+          id: 'delete-button',
+          data: {
+            type: 'delete',
+          },
+          handler: () => {
+            this.clearSignature(x);
+          },
+        },
+        {
+          text: 'Back',
+          icon: 'arrow-back-outline',
+          role: 'cancel',
+          handler: () => {
+            //console.log('Cancel clicked');
+          },
+        },
+      ],
+    });
+    await actionSheet.present();
+    const { role, data } = await actionSheet.onDidDismiss();
+  }
+  clearSignature(x) {
+    let patientId = x.discharge_no;
+    let revokeApproval: SignatureApproval = new SignatureApproval();
+    revokeApproval.mode = this.constants.TestServer;
+    revokeApproval.account_no = patientId;
+    revokeApproval.medcert_comment = 'medcert_comment';
+    revokeApproval.medcert_approve_by = 'medcert_approve_by';
+    revokeApproval.medcert_signature = this.constants.blankBase64img;
+    this.saveSignature(revokeApproval, x.discharge_no);
+  }
+  saveSignature(testAprrove, x) {
+    let dischargeNo = x;
+    this.doctorService
+      .approveMedicalCertificate(testAprrove)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (data: any) => {},
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          this.cancelApprovedApproval(dischargeNo);
+        }
+      );
+  }
+  cancelApprovedApproval(discharge_no) {
+    this.dischargeNo.discharge_no = discharge_no;
+    this.doctorService
+      .cancelApprovedFinalDiagnosis(this.dischargeNo)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          //console.log(res);
+          this.ionViewWillEnter();
+        },
+        (error) => {},
+        () => {
+          //this.back();
+        }
+      );
   }
 }

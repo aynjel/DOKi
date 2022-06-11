@@ -1,65 +1,43 @@
 <ion-header mode="md" class="ion-no-border">
   <div>
-    <ion-toolbar color="mango">
-      <span class="padding-left-10" (click)="back()" routerDirection="backward" color="chh-css-primary2"
-        *ngIf="!isDesktop">
-        <ion-icon name="arrow-back-outline" class="my-icon vcenter"></ion-icon>
-      </span>
-      <span class="padding-left-30 font-weight-500 font-size-20"> &nbsp;&nbsp;Inbox <span class="font-12">(Medical
-          Certificate)</span>
-        <ion-icon style="float:right; padding-right:20px" name="ellipsis-vertical-outline" id="trigger-inbox-popover"
-          class="pointer">
-        </ion-icon>
-      </span>
-      <ion-popover trigger="trigger-inbox-popover" dismiss-on-select="true">
-        <ng-template>
-          <ion-content>
-            <ion-list>
-              <ion-list-header>Medical Certificate </ion-list-header>
+    <ion-toolbar [color]="isDesktop?'':'mango'">
+      <ion-grid class="ion-no-padding">
+        <ion-row>
+          <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
+            <span class="padding-left-10" (click)="back()" routerDirection="backward" color="chh-css-primary2">
+              <ion-icon name="arrow-back-outline" class="my-icon vcenter"></ion-icon>
+            </span>
+            <span class="padding-left-30 font-weight-500 fontSize-16"> &nbsp;&nbsp;Medical
+              Certificate <span class="fontSize-14">({{modeSelected}}) </span>
+              <ion-icon style="float:right; padding-right:20px" name="ellipsis-vertical-outline"
+                id="trigger-inbox-popover" class="pointer">
+              </ion-icon>
+            </span>
+            <ion-popover trigger="trigger-inbox-popover" dismiss-on-select="true">
+              <ng-template>
+                <ion-content>
+                  <ion-list>
+                    <ion-list-header>Medical Certificate </ion-list-header>
 
-              <ion-item (click)="changeMode('FA')" [ngClass]="{'boldMe': selected === 'FA'}">
-                <ion-label>&nbsp;For Approval</ion-label>
-              </ion-item>
-              <ion-item (click)="changeMode('FR')" [ngClass]="{'boldMe': selected === 'FR'}">
-                <ion-label>&nbsp;For Revision</ion-label>
-              </ion-item>
-              <ion-item (click)="changeMode('RA')" [ngClass]="{'boldMe': selected === 'RA'}">
-                <ion-label>&nbsp;Approved</ion-label>
-              </ion-item>
-            </ion-list>
-          </ion-content>
-        </ng-template>
-      </ion-popover>
-
+                    <ion-item (click)="changeMode('FA')" [ngClass]="{'boldMe': selected === 'FA'}" class="pointer">
+                      <ion-label>&nbsp;For Approval</ion-label>
+                    </ion-item>
+                    <ion-item (click)="changeMode('FR')" [ngClass]="{'boldMe': selected === 'FR'}" class="pointer">
+                      <ion-label>&nbsp;For Revision</ion-label>
+                    </ion-item>
+                    <ion-item (click)="changeMode('RA')" [ngClass]="{'boldMe': selected === 'RA'}" class="pointer">
+                      <ion-label>&nbsp;Approved</ion-label>
+                    </ion-item>
+                  </ion-list>
+                </ion-content>
+              </ng-template>
+            </ion-popover>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-toolbar>
-
-    <!--ion-toolbar color="mango">
-      <ion-title>
-        <ion-icon [name]="isNotification === true ? 'mail-unread-outline' : 'mail-outline'"></ion-icon> Inbox
-      </ion-title>
-      <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
-        <ion-button (click)="back()" color="chh-css-primary2"
-          class="ios button button-clear ion-activatable ion-focusable hydrated">
-          Back&nbsp; <ion-icon name="log-out-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar-->
   </div>
-  <!--ion-segment [(ngModel)]="selected" color="secondary" mode='ios'>
-    <ion-segment-button value="FA">
-      <ion-label>For Approval</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="RA">
-      <ion-label>Approved</ion-label>
-    </ion-segment-button>
-  </ion-segment-->
-  <ion-grid>
-    <ion-row>
-      <ion-col size-md="6" offset-md="3" size-lg="4" offset-lg="4">
-        <ion-item lines="none"><label> : {{modeSelected}}</label></ion-item>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+
 </ion-header>
 
 <ion-content>
@@ -89,11 +67,7 @@
                       </h2>
                     </ion-label>
                   </div>
-                  <ion-badge color="warning" slot="end" class="font-size12"
-                    *ngIf=" x.admission_status == 'DN' && x.doctor_prof_fee == null && x.is_posted == null ">PF
-                  </ion-badge>
-                  <ion-badge color="success" slot="end" class="font-size12"
-                    *ngIf="x.doctor_prof_fee != null && x.is_posted != null">PF OK</ion-badge>
+
                 </ion-item>
                 <ion-item lines="none" style="padding-bottom: 10px;font-size: 12px;">
                   <div class="ion-text-wrap" style="padding-top: 5px">
@@ -132,22 +106,25 @@
               </ion-list>
               <ion-footer>
                 <ion-row>
-                  <ion-col>
+                  <ion-col size="6">
                     <ion-button mode="ios" size="small" color="mango" shape="" expand="block"
                       (click)="viewCerticate(x)">
-                      <span *ngIf="selected == 'FA'">View & Sign Medical Certificate</span>
-                      <span *ngIf="selected == 'RA'">View Medical Certificate</span>
+                      <span *ngIf="selected == 'FA'">View & Sign</span>
+                      <span *ngIf="selected == 'RA'">View</span>
                     </ion-button>
-
-
-
                   </ion-col>
-
+                  <ion-col size="6">
+                    <ion-button mode="ios" size="small" color="warning" shape="" expand="block"
+                      (click)="reviseRevokeApproval(x)">
+                      <span *ngIf="selected == 'FA'">Send for Revision</span>
+                      <span *ngIf="selected == 'RA'">Revoke</span>
+                    </ion-button>
+                  </ion-col>
                 </ion-row>
               </ion-footer>
             </ion-card>
           </div>
-          <ion-card *ngIf="empty">
+          <ion-card *ngIf="pendingApproval == ''">
             <ion-item>
               No Data
             </ion-item>
