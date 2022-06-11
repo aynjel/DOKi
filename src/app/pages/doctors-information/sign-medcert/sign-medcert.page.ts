@@ -87,6 +87,15 @@ export class SignMedcertPage implements OnInit {
         }
         this.isPortrait = isPortrait;
       });
+    this.screensizeService
+      .isDesktopView()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((isDesktop) => {
+        if (this.isDesktop && !isDesktop) {
+          window.location.reload();
+        }
+        this.isDesktop = isDesktop;
+      });
   }
   back() {
     ////console.log(this.idModal);
