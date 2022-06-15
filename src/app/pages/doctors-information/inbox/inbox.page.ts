@@ -4,6 +4,7 @@ import {
   ModalController,
   NavController,
   PopoverController,
+  ToastController,
 } from '@ionic/angular';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
 import { takeUntil } from 'rxjs/operators';
@@ -12,6 +13,7 @@ import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.serv
 import { Router } from '@angular/router';
 import { SignatureApproval } from 'src/app/models/doctor';
 import { Constants } from 'src/app/shared/constants';
+import { FunctionsService } from 'src/app/shared/functions/functions.service';
 @Component({
   selector: 'app-inbox',
   templateUrl: './inbox.page.html',
@@ -37,7 +39,9 @@ export class InboxPage implements OnInit {
     public router: Router,
     public modalController: ModalController,
     public popover: PopoverController,
-    public constants: Constants
+    public constants: Constants,
+    public toastController: ToastController,
+    public functionService: FunctionsService
   ) {
     //console.log('constructor');
     this.isNotification = true;
@@ -52,14 +56,16 @@ export class InboxPage implements OnInit {
       });
   }
   ionViewWillEnter() {
+    this.setDate();
     //console.log('ionViewWillEnter');
     this.selected = localStorage.getItem('changeMode');
     this.changeMode(this.selected);
 
-    this.getPendingApproval();
+    this.getPendingApproval(this.dateToday, this.dateNow);
   }
   ngOnInit() {
-    this.getPendingApproval();
+    this.setDate();
+    this.getPendingApproval(this.dateToday, this.dateNow);
 
     //console.log('ngOnInit');
 
@@ -113,15 +119,17 @@ export class InboxPage implements OnInit {
       (element) => element.approval_status == e.detail.value
     );
   }*/
-  getPendingApproval() {
+  getPendingApproval(dateFrom, dateTo) {
+    console.log(dateFrom, dateTo);
+
     this.pendingApproval = [];
     this.pendingApprovalFullList = [];
     let data = {
-      dt_from: '2021-01-17T08:42:50.917Z',
-      dt_to: '2022-05-17T08:42:50.917Z',
+      dt_from: dateFrom + 'T00:00:00.000Z',
+      dt_to: dateTo + 'T00:00:00.000Z',
     };
     this.doctorService
-      .getPendingApproval()
+      .getPendingApproval(data)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
@@ -157,13 +165,13 @@ export class InboxPage implements OnInit {
           //console.log(error);
         },
         () => {
-          this.getPendingApproval();
+          this.getPendingApproval(this.dateToday, this.dateNow);
         }
       );
   }
   doRefresh(event) {
     setTimeout(() => {
-      this.getPendingApproval();
+      this.getPendingApproval(this.dateToday, this.dateNow);
       //location.reload();
       event.target.complete();
     }, 1000);
@@ -311,5 +319,75 @@ export class InboxPage implements OnInit {
           //this.back();
         }
       );
+  }
+  dateToday: any = '12/31/2021';
+  dateValue = '2021-12-31';
+  isCalendar: boolean;
+  dateNow = '';
+  activateIsCalendarModal() {
+    this.isCalendar = true;
+    const modalState = {
+      modal: true,
+      desc: 'fake state for our modal',
+    };
+    history.pushState(modalState, null);
+  }
+  setDate() {
+    /*let date1 = new Date();
+    let day1 = date1.getDate();
+    let month1 = date1.getMonth() + 1;
+    let year1 = date1.getFullYear();
+    let sendDatedateToday =
+      ('0' + month1).slice(-2) + '/' + ('0' + day1).slice(-2) + '/' + year1;
+    let sendDatedateValue =
+      year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
+    this.dateValue = sendDatedateValue;
+    this.dateToday = sendDatedateValue;
+    let today = new Date();
+    let days = 86400000; //number of milliseconds in a day
+    let fiveDaysAgo = new Date(today.getTime() - 90 * days);
+    let day11 = fiveDaysAgo.getDate();
+    let month11 = fiveDaysAgo.getMonth() + 1;
+    let year11 = fiveDaysAgo.getFullYear();
+    let sendDatedateValue11 =
+      year11 + '-' + ('0' + month11).slice(-2) + '-' + ('0' + day11).slice(-2);
+    this.dateValue = sendDatedateValue11;
+    this.dateToday = sendDatedateValue11;
+    this.dateNow = sendDatedateValue;*/
+    this.dateValue = this.functionService.getDateYYYYMMDD(90);
+    this.dateToday = this.functionService.getDateYYYYMMDD(90);
+    this.dateNow = this.functionService.getDateYYYYMMDD();
+  }
+  formatDate(value: string) {
+    if (this.isCalendar) {
+      this.closeCalendar();
+    }
+    console.log(value);
+    let dateOne = new Date(value);
+    let dateTwo = new Date(this.dateNow);
+    if (dateOne > dateTwo) {
+      this.functionService.presentToast(
+        'Date selected is greater than date now'
+      );
+      return false;
+    }
+    this.isCalendar = false;
+    let date1 = new Date(value);
+    let day1 = date1.getDate();
+    let month1 = date1.getMonth() + 1;
+    let year1 = date1.getFullYear();
+    let sendDatedateToday =
+      ('0' + month1).slice(-2) + '/' + ('0' + day1).slice(-2) + '/' + year1;
+    let sendDatedateValue =
+      year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
+    this.dateValue = sendDatedateValue;
+    this.dateToday = sendDatedateValue;
+    this.getPendingApproval(this.dateToday, this.dateNow);
+    //this.dateChanged();
+  }
+
+  closeCalendar() {
+    this.isCalendar = false;
+    this.modalController.dismiss();
   }
 }

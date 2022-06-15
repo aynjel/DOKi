@@ -542,7 +542,7 @@ export class DoctorService {
     return this.http.put(url, data, options);
   }
 
-  getPendingApproval() {
+  getPendingApproval(data) {
     /*const headers = new HttpHeaders({
       'Content-Type': 'application/json;charset=utf-8',
     });
@@ -551,10 +551,7 @@ export class DoctorService {
       environment.apiRouterUrl + 'v3/DischargeDiagnosis/PendingApproval';
     return this.http.get(url, options);
 */
-    let data = {
-      dt_from: '2021-01-17T08:42:50.917Z',
-      dt_to: '2022-05-17T08:42:50.917Z',
-    };
+
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers: headers, withCredentials: false };
     const url =

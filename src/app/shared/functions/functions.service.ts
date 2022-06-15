@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { Constants } from '../constants';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
@@ -14,6 +14,7 @@ export class FunctionsService {
   constructor(
     public alertController: AlertController,
     public constants: Constants,
+    public toastController: ToastController,
     @Inject(DOCUMENT) private document: any,
     @Inject(PLATFORM_ID) private platformId: InjectionToken<Object>
   ) {
@@ -351,5 +352,48 @@ export class FunctionsService {
     http.send();
 
     return http.status != 404;
+  }
+  getDateYYYYMMDD(date: any = '') {
+    let dateReturn;
+    if (date == '') {
+      let date1 = new Date();
+      let day1 = date1.getDate();
+      let month1 = date1.getMonth() + 1;
+      let year1 = date1.getFullYear();
+      dateReturn =
+        year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
+    } else {
+      let today = new Date();
+      let days = 86400000; //number of milliseconds in a day
+      let fiveDaysAgo = new Date(today.getTime() - date * days);
+      let day11 = fiveDaysAgo.getDate();
+      let month11 = fiveDaysAgo.getMonth() + 1;
+      let year11 = fiveDaysAgo.getFullYear();
+      dateReturn =
+        year11 +
+        '-' +
+        ('0' + month11).slice(-2) +
+        '-' +
+        ('0' + day11).slice(-2);
+    }
+    return dateReturn;
+  }
+  getDateYYYYMMDD_90() {
+    let today = new Date();
+    let days = 86400000; //number of milliseconds in a day
+    let fiveDaysAgo = new Date(today.getTime() - 15 * days);
+    let day11 = fiveDaysAgo.getDate();
+    let month11 = fiveDaysAgo.getMonth() + 1;
+    let year11 = fiveDaysAgo.getFullYear();
+    let sendDatedateValue11 =
+      year11 + '-' + ('0' + month11).slice(-2) + '-' + ('0' + day11).slice(-2);
+    return sendDatedateValue11;
+  }
+  async presentToast(data) {
+    const toast = await this.toastController.create({
+      message: data,
+      duration: 2000,
+    });
+    toast.present();
   }
 }

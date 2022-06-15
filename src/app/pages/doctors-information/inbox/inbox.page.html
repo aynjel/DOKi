@@ -32,10 +32,31 @@
                 </ion-content>
               </ng-template>
             </ion-popover>
+
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-toolbar>
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
+          <ion-item button="true" id="open-modal" *ngIf="!isDesktop" (click)="activateIsCalendarModal()">
+            <ion-icon icon="calendar-outline" slot="start" color="mango"></ion-icon>
+            <ion-label>From : {{ dateToday }}</ion-label>
+            <ion-text slot="end">To :{{ dateNow }}</ion-text>
+          </ion-item>
+          <ion-modal trigger="open-modal" show-backdrop="true" class="ion6modal" *ngIf="!isDesktop">
+            <ng-template>
+              <ion-content class="blur testssss" style="width:100% !important">
+                <ion-datetime #popoverDatetime presentation="date" (ionChange)="formatDate(popoverDatetime.value)"
+                  showDefaultButtons="false" [value]="dateValue">
+                </ion-datetime>
+              </ion-content>
+            </ng-template>
+          </ion-modal>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
 
 </ion-header>

@@ -63,7 +63,6 @@ export class TabDashboardPage implements OnInit {
         this.isDesktop = isDesktop;
       });
     this.checkAppearance();
-    this.checkInbox();
   }
 
   doRefresh(event) {
@@ -188,11 +187,18 @@ export class TabDashboardPage implements OnInit {
   ngOnInit() {
     this.$gaService.pageView('/Dashboard', 'Dashboard Tab');
   }
+  dateToday;
+  dateNow;
   checkInbox() {
-    ////console.log('CHECKS INBOX');
+    let data = {
+      dt_from: this.functionsService.getDateYYYYMMDD(90) + 'T00:00:00.000Z',
+      dt_to: this.functionsService.getDateYYYYMMDD() + 'T00:00:00.000Z',
+    };
+    console.log(data);
+
     let jsonResponse = null;
     this.doctorService
-      .getPendingApproval()
+      .getPendingApproval(data)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {

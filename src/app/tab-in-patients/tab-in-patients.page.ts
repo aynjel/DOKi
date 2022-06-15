@@ -100,16 +100,22 @@ export class TabInPatientsPage {
     this.checkAppearance();
     this.$gaService.pageView('/In-Patient', 'In-Patient Tab');
   }
+  dateToday;
+  dateNow;
+
   checkInbox() {
-    //console.log('checksInbox');
+    let data = {
+      dt_from: this.functionsService.getDateYYYYMMDD(90) + 'T00:00:00.000Z',
+      dt_to: this.functionsService.getDateYYYYMMDD() + 'T00:00:00.000Z',
+    };
+    console.log(data);
 
     let jsonResponse = null;
     this.doctorService
-      .getPendingApproval()
+      .getPendingApproval(data)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          console.log(res);
           jsonResponse = res;
         },
         (error) => {
