@@ -533,7 +533,7 @@ export class DoctorService {
     const url = 'http://10.151.12.120:7227/api/medcert/pdf';
     return this.http.post(url, data, { responseType: 'blob' });
   }
-
+  //save medcert
   approveMedicalCertificate(data) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers: headers, withCredentials: false };
@@ -571,6 +571,7 @@ export class DoctorService {
       environment.apiRouterUrl + 'v3/DischargeDiagnosis/CancelApproval';
     return this.http.put(url, data, options);
   }
+  //approve discharge diagnosis
   approvePendingApproval(data) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers: headers, withCredentials: false };

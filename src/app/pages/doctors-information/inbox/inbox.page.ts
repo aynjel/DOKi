@@ -320,10 +320,17 @@ export class InboxPage implements OnInit {
         }
       );
   }
+  pastdays: any = '15';
   dateToday: any = '12/31/2021';
   dateValue = '2021-12-31';
   isCalendar: boolean;
   dateNow = '';
+  viewRecordDays() {
+    this.dateValue = this.functionService.getDateYYYYMMDD(this.pastdays);
+    this.dateToday = this.functionService.getDateYYYYMMDD(this.pastdays);
+    this.dateNow = this.functionService.getDateYYYYMMDD();
+    this.getPendingApproval(this.dateToday, this.dateNow);
+  }
   activateIsCalendarModal() {
     this.isCalendar = true;
     const modalState = {
@@ -354,8 +361,8 @@ export class InboxPage implements OnInit {
     this.dateValue = sendDatedateValue11;
     this.dateToday = sendDatedateValue11;
     this.dateNow = sendDatedateValue;*/
-    this.dateValue = this.functionService.getDateYYYYMMDD(90);
-    this.dateToday = this.functionService.getDateYYYYMMDD(90);
+    this.dateValue = this.functionService.getDateYYYYMMDD(this.pastdays);
+    this.dateToday = this.functionService.getDateYYYYMMDD(this.pastdays);
     this.dateNow = this.functionService.getDateYYYYMMDD();
   }
   formatDate(value: string) {

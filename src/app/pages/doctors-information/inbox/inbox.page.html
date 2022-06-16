@@ -54,6 +54,17 @@
               </ion-content>
             </ng-template>
           </ion-modal>
+
+          <ion-item>
+            <ion-label>View Record</ion-label>
+            <ion-select [(ngModel)]="pastdays" value="{{pastdays}}" (ionChange)="viewRecordDays()" okText="Okay"
+              cancelText="Dismiss">
+              <ion-select-option value="15">Past 15 days</ion-select-option>
+              <ion-select-option value="30">Past 30 days</ion-select-option>
+              <ion-select-option value="45">Past 45 days</ion-select-option>
+              <ion-select-option value="60">Past 60 days</ion-select-option>
+            </ion-select>
+          </ion-item>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -135,11 +146,19 @@
                     </ion-button>
                   </ion-col>
                   <ion-col size="6">
-                    <ion-button mode="ios" size="small" color="warning" shape="" expand="block"
-                      (click)="reviseRevokeApproval(x)">
-                      <span *ngIf="selected == 'FA'">Send for Revision</span>
-                      <span *ngIf="selected == 'RA'">Revoke</span>
+                    <ion-button mode="ios" size="small" fill="outline" color="default" shape="" expand="block"
+                      (click)="reviseRevokeApproval(x)" *ngIf="selected == 'FA'">
+                      <span>Send for Revision</span>
+
                     </ion-button>
+
+                    <ion-button mode="ios" size="small" fill="outline" color="danger" shape="" expand="block"
+                      (click)="reviseRevokeApproval(x)" *ngIf="selected == 'RA'">
+                      <span>Revoke</span>
+                    </ion-button>
+
+
+
                   </ion-col>
                 </ion-row>
               </ion-footer>
