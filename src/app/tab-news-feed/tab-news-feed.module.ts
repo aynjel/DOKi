@@ -13,8 +13,8 @@ import { TabNewsFeedPage } from './tab-news-feed.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    TabNewsFeedPageRoutingModule
+    TabNewsFeedPageRoutingModule,
   ],
-  declarations: [TabNewsFeedPage]
+  declarations: [TabNewsFeedPage],
 })
 export class TabNewsFeedPageModule {}

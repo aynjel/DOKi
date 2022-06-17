@@ -57,6 +57,7 @@ import { UploadComponent } from './upload/upload.component';
 import { ProfessionalFeeSummaryTextsComponent } from './professional-fee-summary-texts/professional-fee-summary-texts.component';
 import { ProfessionalFeeSummaryPatientInfoComponent } from './professional-fee-summary-patient-info/professional-fee-summary-patient-info.component';
 import { ProfessionalFeeHelperComponent } from './professional-fee-helper/professional-fee-helper.component';
+import { PinchZoomModule } from 'ngx-pinch-zoom';
 @NgModule({
   declarations: [
     ChhAppLogoComponent,
@@ -148,6 +149,7 @@ import { ProfessionalFeeHelperComponent } from './professional-fee-helper/profes
     ChhAppTextAvatarModule,
     RouterModule,
     FormsModule,
+    PinchZoomModule,
   ],
 })
 export class ChhWebComponentsModule {}
