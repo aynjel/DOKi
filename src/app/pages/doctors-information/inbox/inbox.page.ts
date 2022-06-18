@@ -187,6 +187,7 @@ export class InboxPage implements OnInit {
     console.log(x);
 
     if (this.selected == 'FA') {
+      document.getElementById('trigger-modal-forRevision').click();
     } else {
       this.presentRevokeApproval(x);
     }
