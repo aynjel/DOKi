@@ -397,4 +397,12 @@ export class InboxPage implements OnInit {
     this.isCalendar = false;
     this.modalController.dismiss();
   }
+
+  autoGrowTextZone(e) {
+    if (e.target.scrollHeight + 25 <= 350) {
+      e.target.style.height = '0px';
+      e.target.style.height = e.target.scrollHeight + 25 + 'px';
+    }
+    console.log(e.target.scrollHeight + 25);
+  }
 }
