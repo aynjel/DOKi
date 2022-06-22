@@ -554,8 +554,10 @@ export class DoctorService {
 
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers: headers, withCredentials: false };
+    //const url =      environment.apiRouterUrl + 'v3/DischargeDiagnosis/PendingApproval';
+
     const url =
-      environment.apiRouterUrl + 'v3/DischargeDiagnosis/PendingApproval';
+      'http://10.151.12.120:7224/api/v3/DischargeDiagnosis/PendingApproval';
     return this.http.post(url, data, options);
   }
   getApprovalStatus(data) {
@@ -567,8 +569,11 @@ export class DoctorService {
   cancelApprovedFinalDiagnosis(data) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers: headers, withCredentials: false };
+    // const url =      environment.apiRouterUrl + 'v3/DischargeDiagnosis/CancelApproval';
+
     const url =
-      environment.apiRouterUrl + 'v3/DischargeDiagnosis/CancelApproval';
+      'http://10.151.12.120:7224/api/v3/DischargeDiagnosis/CancelApproval';
+
     return this.http.put(url, data, options);
   }
   //approve discharge diagnosis

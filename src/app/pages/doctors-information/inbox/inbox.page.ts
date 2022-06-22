@@ -98,11 +98,11 @@ export class InboxPage implements OnInit {
   changeMode(e) {
     this.selected = e;
     localStorage.setItem('changeMode', e);
-    if (this.selected == 'FA') {
+    if (this.selected == 'FA' || this.selected == 'RA') {
       this.modeSelected = 'for Approval';
     } else if (this.selected == 'FR') {
       this.modeSelected = 'for Revision';
-    } else if (this.selected == 'RA') {
+    } else if (this.selected == 'DA') {
       this.modeSelected = 'Approved';
     }
     this.pendingApproval = this.pendingApprovalFullList.filter(
@@ -184,10 +184,11 @@ export class InboxPage implements OnInit {
   }
 
   reviseRevokeApproval(x) {
-    console.log(x);
+    console.log(this.selected);
 
     if (this.selected == 'FA') {
-      document.getElementById('trigger-modal-forRevision').click();
+      //document.getElementById('trigger-modal-forRevision').click();
+      this.presentForRevision(x);
     } else {
       this.presentRevokeApproval(x);
     }
@@ -249,7 +250,37 @@ export class InboxPage implements OnInit {
     const { role, data } = await actionSheet.onDidDismiss();
     //console.log('onDidDismiss resolved with role and data', role, data);
   }
-
+  async presentForRevision(x) {
+    const actionSheet = await this.actionSheetController.create({
+      mode: 'ios',
+      header: "Set patient's final diagnosis for Revision",
+      cssClass: 'my-custom-class',
+      buttons: [
+        {
+          text: 'Yes, Send for Revision',
+          icon: 'thumbs-up-outline',
+          id: 'delete-button',
+          data: {
+            type: 'delete',
+          },
+          handler: () => {
+            console.log(x.discharge_no);
+            this.cancelApprovedApproval(x.discharge_no);
+          },
+        },
+        {
+          text: 'Back',
+          icon: 'arrow-back-outline',
+          role: 'cancel',
+          handler: () => {
+            //console.log('Cancel clicked');
+          },
+        },
+      ],
+    });
+    await actionSheet.present();
+    const { role, data } = await actionSheet.onDidDismiss();
+  }
   async presentRevokeApproval(x) {
     const actionSheet = await this.actionSheetController.create({
       mode: 'ios',
@@ -313,7 +344,7 @@ export class InboxPage implements OnInit {
       .subscribe(
         (res: any) => {
           //console.log(res);
-          this.ionViewWillEnter();
+          //this.ionViewWillEnter();
         },
         (error) => {},
         () => {
