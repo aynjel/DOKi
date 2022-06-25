@@ -206,11 +206,12 @@ export class TabDashboardPage implements OnInit {
         },
         (error) => {},
         () => {
-          if (jsonResponse == null) {
-            this.isNotification = false;
-          } else {
-            this.isNotification = true;
-          }
+          this.isNotification = false;
+          jsonResponse.forEach((element) => {
+            if (element.approval_status == 'FA') {
+              this.isNotification = true;
+            }
+          });
         }
       );
   }

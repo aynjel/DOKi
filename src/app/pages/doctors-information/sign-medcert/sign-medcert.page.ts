@@ -8,6 +8,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   ActionSheetController,
+  IonModal,
   ModalController,
   NavController,
 } from '@ionic/angular';
@@ -426,5 +427,44 @@ export class SignMedcertPage implements OnInit {
   ionViewDidLeave() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+  autoGrowTextZone(e) {
+    if (e.target.scrollHeight + 25 <= 350) {
+      e.target.style.height = '0px';
+      e.target.style.height = e.target.scrollHeight + 25 + 'px';
+    }
+  }
+  forRevisionText = '';
+  @ViewChild(IonModal) modal: IonModal;
+  dismissForRevisionModal() {
+    this.modalController.dismiss(null, 'cancel');
+  }
+  saveForRevisionModal() {
+    let forRevisionText = this.forRevisionText;
+    let dischargeNo = this.activatedRoute.snapshot.params.dischargeNo;
+    this.forRevisionText = '';
+    this.cancelApprovedApproval(dischargeNo, forRevisionText);
+    this.modalController.dismiss(null, 'cancel');
+  }
+  cancelApprovedApproval(discharge_no: any, revision_dx_remarks: any) {
+    let dischargeNo = {
+      discharge_no: discharge_no,
+      revision_dx_remarks: revision_dx_remarks,
+    };
+    this.doctorService
+      .cancelApprovedFinalDiagnosis(dischargeNo)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          console.log(res);
+        },
+        (error) => {},
+        () => {
+          this.ionViewWillEnter();
+        }
+      );
+  }
+  reviseRevokeApproval() {
+    document.getElementById('trigger-modal-forRevision').click();
   }
 }

@@ -1,6 +1,7 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
 import {
   ActionSheetController,
+  IonModal,
   ModalController,
   NavController,
   PopoverController,
@@ -27,6 +28,7 @@ export class InboxPage implements OnInit {
   pendingApprovalFullList;
   dischargeNo = {
     discharge_no: '',
+    revision_dx_remarks: '',
   };
   isDesktop: boolean;
   empty: boolean = false;
@@ -59,13 +61,12 @@ export class InboxPage implements OnInit {
     this.setDate();
     //console.log('ionViewWillEnter');
     this.selected = localStorage.getItem('changeMode');
-    this.changeMode(this.selected);
 
     this.getPendingApproval(this.dateToday, this.dateNow);
   }
   ngOnInit() {
-    this.setDate();
-    this.getPendingApproval(this.dateToday, this.dateNow);
+    //this.setDate();
+    //this.getPendingApproval(this.dateToday, this.dateNow);
 
     //console.log('ngOnInit');
 
@@ -105,10 +106,16 @@ export class InboxPage implements OnInit {
     } else if (this.selected == 'DA') {
       this.modeSelected = 'Approved';
     }
-    this.pendingApproval = this.pendingApprovalFullList.filter(
-      (element) => element.approval_status == e
-    );
-    //this.popover.dismiss();
+    if (this.selected == 'FR' || this.selected == 'DA') {
+      this.pendingApproval = this.pendingApprovalFullList.filter(
+        (element) => element.approval_status == e
+      );
+    } else {
+      this.pendingApproval = this.pendingApprovalFullList.filter(
+        (element) =>
+          element.approval_status == 'RA' || element.approval_status == 'FA'
+      );
+    }
   }
   /*segmentChanged(e) {
     ////console.log(e.detail.value);
@@ -120,8 +127,7 @@ export class InboxPage implements OnInit {
     );
   }*/
   getPendingApproval(dateFrom, dateTo) {
-    console.log(dateFrom, dateTo);
-
+    console.log(this.selected);
     this.pendingApproval = [];
     this.pendingApprovalFullList = [];
     let data = {
@@ -145,9 +151,7 @@ export class InboxPage implements OnInit {
           //console.log(error);
         },
         () => {
-          this.pendingApproval = this.pendingApprovalFullList.filter(
-            (element) => element.approval_status == this.selected
-          );
+          this.changeMode(this.selected);
         }
       );
   }
@@ -183,12 +187,13 @@ export class InboxPage implements OnInit {
     this.ngUnsubscribe.complete();
   }
 
+  dischargeNumber: any;
   reviseRevokeApproval(x) {
-    console.log(this.selected);
-
+    console.log(x);
+    this.dischargeNo = x.discharge_no;
     if (this.selected == 'FA') {
-      //document.getElementById('trigger-modal-forRevision').click();
-      this.presentForRevision(x);
+      document.getElementById('trigger-modal-forRevision').click();
+      //this.presentForRevision(x);
     } else {
       this.presentRevokeApproval(x);
     }
@@ -265,7 +270,7 @@ export class InboxPage implements OnInit {
           },
           handler: () => {
             console.log(x.discharge_no);
-            this.cancelApprovedApproval(x.discharge_no);
+            //this.cancelApprovedApproval(x.discharge_no);
           },
         },
         {
@@ -332,23 +337,25 @@ export class InboxPage implements OnInit {
           console.log(error);
         },
         () => {
-          this.cancelApprovedApproval(dischargeNo);
+          //this.cancelApprovedApproval(dischargeNo);
         }
       );
   }
-  cancelApprovedApproval(discharge_no) {
-    this.dischargeNo.discharge_no = discharge_no;
+  cancelApprovedApproval(discharge_no: any, revision_dx_remarks: any) {
+    let dischargeNo = {
+      discharge_no: discharge_no,
+      revision_dx_remarks: revision_dx_remarks,
+    };
     this.doctorService
-      .cancelApprovedFinalDiagnosis(this.dischargeNo)
+      .cancelApprovedFinalDiagnosis(dischargeNo)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          //console.log(res);
-          //this.ionViewWillEnter();
+          console.log(res);
         },
         (error) => {},
         () => {
-          //this.back();
+          this.ionViewWillEnter();
         }
       );
   }
@@ -372,27 +379,6 @@ export class InboxPage implements OnInit {
     history.pushState(modalState, null);
   }
   setDate() {
-    /*let date1 = new Date();
-    let day1 = date1.getDate();
-    let month1 = date1.getMonth() + 1;
-    let year1 = date1.getFullYear();
-    let sendDatedateToday =
-      ('0' + month1).slice(-2) + '/' + ('0' + day1).slice(-2) + '/' + year1;
-    let sendDatedateValue =
-      year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
-    this.dateValue = sendDatedateValue;
-    this.dateToday = sendDatedateValue;
-    let today = new Date();
-    let days = 86400000; //number of milliseconds in a day
-    let fiveDaysAgo = new Date(today.getTime() - 90 * days);
-    let day11 = fiveDaysAgo.getDate();
-    let month11 = fiveDaysAgo.getMonth() + 1;
-    let year11 = fiveDaysAgo.getFullYear();
-    let sendDatedateValue11 =
-      year11 + '-' + ('0' + month11).slice(-2) + '-' + ('0' + day11).slice(-2);
-    this.dateValue = sendDatedateValue11;
-    this.dateToday = sendDatedateValue11;
-    this.dateNow = sendDatedateValue;*/
     this.dateValue = this.functionService.getDateYYYYMMDD(this.pastdays);
     this.dateToday = this.functionService.getDateYYYYMMDD(this.pastdays);
     this.dateNow = this.functionService.getDateYYYYMMDD();
@@ -435,6 +421,19 @@ export class InboxPage implements OnInit {
       e.target.style.height = '0px';
       e.target.style.height = e.target.scrollHeight + 25 + 'px';
     }
-    console.log(e.target.scrollHeight + 25);
+  }
+  forRevisionText = '';
+  @ViewChild(IonModal) modal: IonModal;
+  dismissForRevisionModal() {
+    this.modalController.dismiss(null, 'cancel');
+  }
+  saveForRevisionModal() {
+    let forRevisionText = this.forRevisionText;
+    let dischargeNo = this.dischargeNo;
+    this.forRevisionText = '';
+    this.dischargeNumber = '';
+    this.cancelApprovedApproval(dischargeNo, forRevisionText);
+
+    this.modalController.dismiss(null, 'cancel');
   }
 }
