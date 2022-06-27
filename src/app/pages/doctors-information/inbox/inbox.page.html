@@ -159,12 +159,22 @@
                 </div>
               </ion-list>
               <ion-footer>
+
+                <ion-row *ngIf="selected == 'DA'">
+                  <ion-col size="12">
+                    <ion-button mode="ios" size="small" color="mango" shape="" expand="block"
+                      (click)="viewCerticate(x)">
+                      <span>View</span>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+
+
                 <ion-row>
                   <ion-col size="6">
                     <ion-button mode="ios" size="small" color="mango" shape="" expand="block" (click)="viewCerticate(x)"
-                      *ngIf="selected == 'FA' || selected == 'DA'">
-                      <span *ngIf="selected == 'FA'">View & Sign</span>
-                      <span *ngIf="selected == 'DA'">View</span>
+                      *ngIf="selected == 'FA'">
+                      <span>View & Sign</span>
                     </ion-button>
                   </ion-col>
                   <ion-col size="6">
