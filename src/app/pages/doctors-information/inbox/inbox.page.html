@@ -109,21 +109,21 @@
                       <h2 class="ion-text-wrap" style="padding-top: 10px;">
                         <b>{{ x.patient_name }}</b>
                         <ion-text color="primary">
-                          <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong>
+                          <p color="primary"><b>{{x.bdayConverted}} <strong>|</strong> {{x.age}} <strong>|</strong>
                               {{x.gender}}</b>&nbsp;
 
 
 
                             <ion-badge color="danger" mode="ios" *ngIf="x.rework_dx_flg == 'W'">Reworked</ion-badge>
                             <ion-badge color="warning" mode="ios" *ngIf="x.rework_dx_flg == 'V'">Revised</ion-badge>
-                            &nbsp;<ion-badge color="mango" mode="ios"
+                            &nbsp;<ion-badge color="success" mode="ios"
                               *ngIf="x.approval_status == 'FA' || x.approval_status == 'RA' ">For Approval
                             </ion-badge>
 
-                            &nbsp;<ion-badge color="mango" mode="ios" *ngIf="x.approval_status == 'FR' ">For Revision
+                            &nbsp;<ion-badge color="success" mode="ios" *ngIf="x.approval_status == 'FR' ">For Revision
                             </ion-badge>
 
-                            &nbsp;<ion-badge color="mango" mode="ios" *ngIf="x.approval_status == 'DA' ">Approved
+                            &nbsp;<ion-badge color="success" mode="ios" *ngIf="x.approval_status == 'DA' ">Approved
                             </ion-badge>
                           </p>
 
@@ -148,7 +148,7 @@
                     </div>
                     <div class=" font-size12" style="font-size: 13px;">
                       <ion-icon name="calendar-outline" slot="start"></ion-icon>
-                      <span style="font-size: 13px;"> Admission Date &nbsp;&nbsp;: {{ x.dateAdmitted }}</span>
+                      <span style="font-size: 13px;"> Admission Date &nbsp;&nbsp;: {{ x.dateAdmissionConverted }}</span>
                     </div>
                   </div>
                 </ion-item>

@@ -145,12 +145,33 @@ export class InboxPage implements OnInit {
           } else {
             this.empty = false;
           }
-          //console.log(this.pendingApprovalFullList);
+
+          /* console.log(this.pendingApprovalFullList[0].birthdate);
+          console.log(
+            this.functionService.convertDatetoMMDDYYYY(
+              this.pendingApprovalFullList[0].birthdate
+            )
+          );*/
         },
         (error) => {
           //console.log(error);
         },
         () => {
+          let testPending = [];
+          this.pendingApprovalFullList.forEach((element) => {
+            element.bdayConverted = this.functionService.convertDatetoMMDDYYYY(
+              element.birthdate
+            );
+
+            element.dateAdmissionConverted =
+              this.functionService.convertDatetoMMDDYYYYHHMMSS(
+                element.admission_date
+              );
+
+            testPending.push(element);
+          });
+          this.pendingApprovalFullList = testPending;
+
           this.changeMode(this.selected);
         }
       );
