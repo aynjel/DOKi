@@ -360,13 +360,14 @@ export class SignMedcertPage implements OnInit {
           }
 
           this.approvePendingAPproval(dischargeNo);
-          this.ngOnInit();
         }
       );
 
     this.isPDFLoading = false;
   }
   approvePendingAPproval(discharge_no) {
+    console.log('approvePendingAPproval');
+
     this.dischargeNo.discharge_no = discharge_no;
     //////console.log(this.dischargeNo);
     this.doctorService
@@ -374,12 +375,17 @@ export class SignMedcertPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
+          console.log('approvePendingAPproval', res);
           //////console.log(res);
         },
         (error) => {
+          console.log(error);
+
           //////console.log(error);
         },
-        () => {}
+        () => {
+          this.ngOnInit();
+        }
       );
   }
   getpdf() {

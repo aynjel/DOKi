@@ -60,7 +60,7 @@
               <ion-select-option value="30">Past 30 days</ion-select-option>
               <ion-select-option value="45">Past 45 days</ion-select-option>
               <ion-select-option value="60">Past 60 days</ion-select-option>
-              <ion-select-option value="9999">Max</ion-select-option>
+              <ion-select-option value="9999">All</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>
@@ -110,7 +110,23 @@
                         <b>{{ x.patient_name }}</b>
                         <ion-text color="primary">
                           <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong>
-                              {{x.gender}}</b></p>
+                              {{x.gender}}</b>&nbsp;
+
+
+
+                            <ion-badge color="danger" mode="ios" *ngIf="x.rework_dx_flg == 'W'">Reworked</ion-badge>
+                            <ion-badge color="warning" mode="ios" *ngIf="x.rework_dx_flg == 'V'">Revised</ion-badge>
+                            &nbsp;<ion-badge color="mango" mode="ios"
+                              *ngIf="x.approval_status == 'FA' || x.approval_status == 'RA' ">For Approval
+                            </ion-badge>
+
+                            &nbsp;<ion-badge color="mango" mode="ios" *ngIf="x.approval_status == 'FR' ">For Revision
+                            </ion-badge>
+
+                            &nbsp;<ion-badge color="mango" mode="ios" *ngIf="x.approval_status == 'DA' ">Approved
+                            </ion-badge>
+                          </p>
+
                         </ion-text>
                       </h2>
                     </ion-label>
@@ -148,7 +164,7 @@
                 <div *ngIf="x.revision_dx_remarks != null">
                   <ion-item>
                     <div class="ion-text-wrap">
-                      <ion-text>Note</ion-text>
+                      <ion-text>Revision Note</ion-text>
                     </div>
                   </ion-item>
                   <ion-item>
