@@ -103,7 +103,7 @@
           <div *ngFor=" let x of pendingApproval">
             <ion-card mode="ios">
               <ion-list>
-                <ion-item style="padding-bottom: 10px">
+                <ion-item style="padding-bottom: 10px;" class="item-background-color">
                   <div class="ion-text-wrap">
                     <ion-label>
                       <h2 class="ion-text-wrap" style="padding-top: 10px;">
@@ -111,16 +111,14 @@
                         <ion-text color="primary">
                           <p color="primary"><b>{{x.bdayConverted}} <strong>|</strong> {{x.age}} <strong>|</strong>
                               {{x.gender}}</b>&nbsp;
-
-
-
                             <ion-badge color="danger" mode="ios" *ngIf="x.rework_dx_flg == 'W'">Reworked</ion-badge>
                             <ion-badge color="warning" mode="ios" *ngIf="x.rework_dx_flg == 'V'">Revised</ion-badge>
                             &nbsp;<ion-badge color="success" mode="ios"
                               *ngIf="x.approval_status == 'FA' || x.approval_status == 'RA' ">For Approval
                             </ion-badge>
 
-                            &nbsp;<ion-badge color="success" mode="ios" *ngIf="x.approval_status == 'FR' ">For Revision
+                            &nbsp;<ion-badge color="success" mode="ios" *ngIf="x.approval_status == 'FR' ">For
+                              Revision
                             </ion-badge>
 
                             &nbsp;<ion-badge color="success" mode="ios" *ngIf="x.approval_status == 'DA' ">Approved

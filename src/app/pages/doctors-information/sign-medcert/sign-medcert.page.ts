@@ -111,7 +111,7 @@ export class SignMedcertPage implements OnInit {
     this.dr_code = this.logindata.doctorCode;
     this.getSignaturefromIndexedDB(this.dr_code);
   }
-
+  isApproved;
   logindata;
   dr_code;
   signatureBase64;
@@ -232,8 +232,8 @@ export class SignMedcertPage implements OnInit {
     let testAprrove: SignatureApproval = new SignatureApproval();
     testAprrove.mode = 'T';
     testAprrove.account_no = patientId;
-    testAprrove.medcert_comment = 'medcert_comment';
-    testAprrove.medcert_approve_by = 'medcert_approve_by';
+    testAprrove.medcert_comment = '';
+    testAprrove.medcert_approve_by = this.dr_code;
     testAprrove.medcert_signature = this.signatureBase64;
     this.saveSignature(testAprrove);
   }
@@ -274,6 +274,23 @@ export class SignMedcertPage implements OnInit {
     this.idModal = false;
     this.navCtrl.back();
   }
+  isModalOpen: boolean = false;
+  createFakeState() {
+    this.isModalOpen = true;
+    const modalState = {
+      modal: true,
+      desc: 'fake state for our modal',
+    };
+    history.pushState(modalState, null);
+  }
+  removeFakeState() {
+    this.isModalOpen = false;
+    this.navCtrl.back();
+  }
+  closeConsentModal() {
+    this.modalController.dismiss();
+  }
+
   drawComplete() {
     // will be notified of szimek/signature_pad's onEnd event
     ////////console.log(this.signaturePad.toDataURL());
@@ -326,8 +343,8 @@ export class SignMedcertPage implements OnInit {
       };
       testAprrove.mode = 'T';
       testAprrove.account_no = patientId;
-      testAprrove.medcert_comment = 'medcert_comment';
-      testAprrove.medcert_approve_by = 'medcert_approve_by';
+      testAprrove.medcert_comment = '';
+      testAprrove.medcert_approve_by = this.dr_code;
       testAprrove.medcert_signature = myArray[1];
       this.signaturePad.clear();
       this.saveSignature(testAprrove);

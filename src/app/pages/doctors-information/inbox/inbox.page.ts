@@ -12,9 +12,10 @@ import { takeUntil } from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
 import { Router } from '@angular/router';
-import { SignatureApproval } from 'src/app/models/doctor';
+import { LoginResponseModelv3, SignatureApproval } from 'src/app/models/doctor';
 import { Constants } from 'src/app/shared/constants';
 import { FunctionsService } from 'src/app/shared/functions/functions.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 @Component({
   selector: 'app-inbox',
   templateUrl: './inbox.page.html',
@@ -43,7 +44,8 @@ export class InboxPage implements OnInit {
     public popover: PopoverController,
     public constants: Constants,
     public toastController: ToastController,
-    public functionService: FunctionsService
+    public functionService: FunctionsService,
+    private authService: AuthService
   ) {
     //console.log('constructor');
     this.isNotification = true;
@@ -59,17 +61,16 @@ export class InboxPage implements OnInit {
   }
   ionViewWillEnter() {
     this.setDate();
-    //console.log('ionViewWillEnter');
     this.selected = localStorage.getItem('changeMode');
-
     this.getPendingApproval(this.dateToday, this.dateNow);
+    this.logindata = <LoginResponseModelv3>(
+      this.authService.userData$.getValue()
+    );
+    this.dr_code = this.logindata.doctorCode;
   }
+  logindata;
+  dr_code;
   ngOnInit() {
-    //this.setDate();
-    //this.getPendingApproval(this.dateToday, this.dateNow);
-
-    //console.log('ngOnInit');
-
     this.checkAppearance();
   }
   checkAppearance() {
@@ -342,8 +343,8 @@ export class InboxPage implements OnInit {
     let revokeApproval: SignatureApproval = new SignatureApproval();
     revokeApproval.mode = this.constants.TestServer;
     revokeApproval.account_no = patientId;
-    revokeApproval.medcert_comment = 'medcert_comment';
-    revokeApproval.medcert_approve_by = 'medcert_approve_by';
+    revokeApproval.medcert_comment = '';
+    revokeApproval.medcert_approve_by = this.dr_code;
     revokeApproval.medcert_signature = this.constants.blankBase64img;
     this.saveSignature(revokeApproval, x.discharge_no);
   }
