@@ -107,7 +107,7 @@ export class AppComponent implements OnInit {
   ];
   logindata;
   firstName;
-  lastName = 'D';
+  lastName;
   dr_name;
   dr_code;
   dr_username;

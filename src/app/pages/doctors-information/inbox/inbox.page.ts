@@ -146,13 +146,6 @@ export class InboxPage implements OnInit {
           } else {
             this.empty = false;
           }
-
-          /* console.log(this.pendingApprovalFullList[0].birthdate);
-          console.log(
-            this.functionService.convertDatetoMMDDYYYY(
-              this.pendingApprovalFullList[0].birthdate
-            )
-          );*/
         },
         (error) => {
           //console.log(error);
@@ -377,6 +370,7 @@ export class InboxPage implements OnInit {
         },
         (error) => {},
         () => {
+          this.functionService.presentToast('Successfully Sent for Revision');
           this.ionViewWillEnter();
         }
       );

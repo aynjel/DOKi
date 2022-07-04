@@ -378,6 +378,7 @@ export class FunctionsService {
     }
     return dateReturn;
   }
+
   convertDatetoMMDDYYYYHHMMSS(date) {
     let dateCreate = new Date(date);
     let dd = String(dateCreate.getDate()).padStart(2, '0');
@@ -385,13 +386,27 @@ export class FunctionsService {
     let yyyy = dateCreate.getFullYear();
     let xtoday = mm + '/' + dd + '/' + yyyy;
 
-    let hour = dateCreate.getHours(); // => 9
-    let min = dateCreate.getMinutes(); // =>  30
-    let sec = dateCreate.getSeconds(); // => 51
-    let xtime = hour + ':' + min + ':' + sec;
+    var hours = dateCreate.getHours();
+    var minutes = dateCreate.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    let minute = minutes < 10 ? '0' + minutes : minutes;
+    var strTime = hours + ':' + minute + ' ' + ampm;
 
-    return xtoday + ' ' + xtime;
+    return xtoday + ' ' + strTime;
   }
+  getFormatAMPM(date) {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+  }
+
   getDateYYYYMMDD_90() {
     let today = new Date();
     let days = 86400000; //number of milliseconds in a day

@@ -1,17 +1,39 @@
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&display=swap');
 
 .custom-font {
-    font-family: 'Inconsolata', monospace;
+  font-family: 'Inconsolata', monospace;
 }
 
-.boldMe{
-    font-weight: bold;
+.boldMe {
+  font-weight: bold;
 }
 
-.unboldMe{
-    font-weight: normal;
+.unboldMe {
+  font-weight: normal;
 }
 
 .item-background-color {
-    --ion-item-background: #f8f6f6d5;
+  --ion-item-background: #e6e6e6;
+}
+
+.item-divider-color {
+    --background: #f1f1f1;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.text {
+  display: inline-block;
+  vertical-align: middle;
 }

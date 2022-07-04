@@ -6,12 +6,8 @@
             </ion-toolbar>a
         </ion-header-->
         <ion-content>
-            <div color="mango" class="menu-header-bg" style="background: #275228">
+            <div color="mango" class="menu-header-bg" style="background: #275228" *ngIf="lastName!=null">
                 <ion-item lines="none" color="mango" class='menu-header-bg'>
-
-
-
-
                     <ion-avatar slot="start">
                         <chh-app-text-avatar [text]="lastName" [color]=""></chh-app-text-avatar>
                     </ion-avatar>

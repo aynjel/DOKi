@@ -572,7 +572,7 @@ export class DoctorService {
     // const url =      environment.apiRouterUrl + 'v3/DischargeDiagnosis/CancelApproval';
 
     const url =
-      'http://10.151.12.120:7224/api/v3/DischargeDiagnosis/CancelApproval';
+      environment.apiRouterUrl + 'v3/DischargeDiagnosis/CancelApproval';
 
     return this.http.put(url, data, options);
   }
