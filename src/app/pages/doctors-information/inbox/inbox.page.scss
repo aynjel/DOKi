@@ -11,22 +11,8 @@
 .unboldMe {
   font-weight: normal;
 }
-.item-background-color {
-  --ion-item-background: #e6e6e6;
-}
 
-.item-divider-color {
-  --background: #f1f1f1;
-}
-@media (prefers-color-scheme: dark) {
-  .item-background-color {
-    --ion-item-background: #000000 !important;
-  }
 
-  .item-divider-color {
-    --background: #000000 !important;
-  }
-}
 
 .center {
     display: flex;

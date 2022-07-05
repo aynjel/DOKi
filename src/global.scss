@@ -680,3 +680,24 @@ ion-modal.ion6modalviewsignature {
 .floatLeft {
   float: right !important;
 }
+
+
+.item-background-color {
+  --ion-item-background: #e6e6e6 !important;
+}
+
+.item-divider-color {
+  --background: #f1f1f1 !important;
+
+}
+.ios body[color-theme='dark'], body[color-theme='dark'] {
+  .item-background-color {
+    --ion-item-background: #000000 !important;
+  }
+
+  .item-divider-color {
+    --background: #000000 !important;
+  }
+}
+
+
