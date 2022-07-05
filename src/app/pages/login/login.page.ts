@@ -23,7 +23,7 @@ import {
 } from '../../models/doctor';
 
 import { FunctionsService } from '../../shared/functions/functions.service'; //"@ionic/angular";
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+//import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Constants } from '../../shared/constants';
 
 import {
@@ -76,7 +76,7 @@ export class LoginPage {
     private toast: ToastService,
     private doctorService: DoctorService,
     public functionsService: FunctionsService,
-    protected $gaService: GoogleAnalyticsService,
+    //protected $gaService: GoogleAnalyticsService,
     public constants: Constants,
     private gestureCtrl: GestureController,
     private element: ElementRef,
@@ -118,7 +118,7 @@ export class LoginPage {
     this.postData.username = localStorage.getItem('srnm');
     this.loginResponseModel = new LoginResponseModel();
     this.onDarkModeEnable();
-    this.$gaService.pageView('/login', 'Login Page');
+    //this.$gaService.pageView('/login', 'Login Page');
     if (localStorage.getItem('promptLogout') == '1') {
       this.timerExpired();
     }

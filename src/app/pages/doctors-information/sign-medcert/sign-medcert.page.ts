@@ -99,7 +99,7 @@ export class SignMedcertPage implements OnInit {
       });
   }
   back() {
-    //////console.log(this.idModal);
+    ////////console.log(this.idModal);
 
     this.closeModal();
   }
@@ -125,7 +125,7 @@ export class SignMedcertPage implements OnInit {
         if (signature == undefined) {
           this.isSignature = false;
         } else {
-          ////console.log(signature);
+          //////console.log(signature);
           this.signatureID = signature.id;
           this.signatureBase64 = signature.base64image;
           this.signatureBase64Full = signature.base64imageFull;
@@ -158,22 +158,22 @@ export class SignMedcertPage implements OnInit {
   }
   ngOnInit() {
     this.checkAppearance();
-    ////////console.log('ngOnInit');
+    //////////console.log('ngOnInit');
     this.getpdf();
     this.idModal = false;
     let scWidth = screen.width;
     let scHeight = screen.height;
 
     if (scWidth <= 666) {
-      ////////console.log('sm');
+      //////////console.log('sm');
       this.screenWidth = scWidth - scWidth * 0.06;
       this.screenHeight = scHeight - scHeight * 0.35;
     } else if (scWidth <= 912) {
-      ////////console.log('md');
+      //////////console.log('md');
       this.screenWidth = scWidth - scWidth * 0.2;
       this.screenHeight = scHeight - scHeight * 0.35;
     } else {
-      ////////console.log('l');
+      //////////console.log('l');
       this.screenWidth = scWidth - scWidth * 0.4;
       this.screenHeight = scHeight - scHeight * 0.4;
     }
@@ -215,7 +215,7 @@ export class SignMedcertPage implements OnInit {
   }
   isConsent: boolean = true;
   openConsent() {
-    ////////console.log(history);
+    //////////console.log(history);
 
     this.activateIsSignatureModal();
     this.setidModalTrue();
@@ -293,12 +293,12 @@ export class SignMedcertPage implements OnInit {
 
   drawComplete() {
     // will be notified of szimek/signature_pad's onEnd event
-    //////////console.log(this.signaturePad.toDataURL());
+    ////////////console.log(this.signaturePad.toDataURL());
   }
 
   drawStart() {
     // will be notified of szimek/signature_pad's onBegin event
-    //////////console.log('begin drawing');
+    ////////////console.log('begin drawing');
   }
 
   clearPad() {
@@ -320,13 +320,14 @@ export class SignMedcertPage implements OnInit {
       img.onerror = (error) => rej(error);
     });
   }
-  testing;
   savePad() {
     this.closeModal();
     this.isbutton = true;
     const base64Data = this.signaturePad.toDataURL('image/png');
     let compressedImage;
     this.signatureBase64Full = base64Data;
+    //console.log(this.signatureBase64Full.length);
+
     this.compressImage(
       base64Data,
       this.screenWidth * 0.3,
@@ -347,10 +348,7 @@ export class SignMedcertPage implements OnInit {
       testAprrove.medcert_comment = '';
       testAprrove.medcert_approve_by = this.dr_code;
       testAprrove.medcert_signature = myArray[1];
-      //console.log(this.signatureBase64Full);
-      //console.log(myArray[1]);
       this.signaturePad.clear();
-      this.testing = myArray[1];
       this.saveSignature(testAprrove);
     });
   }
@@ -362,7 +360,7 @@ export class SignMedcertPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {
-          // ////////console.log(data);
+          // //////////console.log(data);
         },
         (error) => {},
         () => {
@@ -394,16 +392,18 @@ export class SignMedcertPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          //console.log('approvePendingAPproval', res);
-          ////////console.log(res);
+          ////console.log('approvePendingAPproval', res);
+          //////////console.log(res);
         },
         (error) => {
-          //console.log(error);
-          ////////console.log(error);
+          ////console.log(error);
+          //////////console.log(error);
         },
         () => {
           this.isUploaded = true;
-          this.functionService.presentToast('Uploading Signature Complete');
+          this.functionService.presentToast(
+            'Approving and Uploading of Signature Completed.'
+          );
           this.ngOnInit();
         }
       );
@@ -422,18 +422,19 @@ export class SignMedcertPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {
+          //console.log(data);
+
           let blob = new Blob([data], { type: 'application/pdf' });
           let downloadURL = window.URL.createObjectURL(data);
           this.pdfSrc = downloadURL;
         },
         (error) => {
+          //console.log(error);
+
           this.isPDFLoading = true;
-          ////////console.log('error');
-          ////////console.log(error);
         },
         () => {
           this.isPDFLoading = true;
-          ////////console.log(this.pdfSrc);
         }
       );
   }
@@ -477,14 +478,14 @@ export class SignMedcertPage implements OnInit {
       discharge_no: discharge_no,
       revision_dx_remarks: revision_dx_remarks,
     };
-    console.log(dischargeNo);
+    //console.log(dischargeNo);
 
     this.doctorService
       .cancelApprovedFinalDiagnosis(dischargeNo)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          //console.log(res);
+          ////console.log(res);
         },
         (error) => {},
         () => {

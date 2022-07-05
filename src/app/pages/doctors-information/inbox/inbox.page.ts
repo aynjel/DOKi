@@ -375,7 +375,7 @@ export class InboxPage implements OnInit {
         }
       );
   }
-  pastdays: any = '15';
+  pastdays: any = '9999';
   dateToday: any = '12/31/2021';
   dateValue = '2021-12-31';
   isCalendar: boolean;

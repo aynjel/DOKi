@@ -56,11 +56,15 @@
             <ion-label>View Record</ion-label>
             <ion-select [(ngModel)]="pastdays" value="{{pastdays}}" (ionChange)="viewRecordDays()" okText="Okay"
               cancelText="Dismiss">
-              <ion-select-option value="15">Past 15 days</ion-select-option>
-              <ion-select-option value="30">Past 30 days</ion-select-option>
+              <ion-select-option value="9999">All</ion-select-option>
               <ion-select-option value="45">Past 45 days</ion-select-option>
               <ion-select-option value="60">Past 60 days</ion-select-option>
-              <ion-select-option value="9999">All</ion-select-option>
+              <ion-select-option value="30">Past 30 days</ion-select-option>
+              <ion-select-option value="15">Past 15 days</ion-select-option>
+
+
+
+
             </ion-select>
           </ion-item>
         </ion-col>
