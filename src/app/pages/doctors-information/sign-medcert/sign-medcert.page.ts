@@ -165,19 +165,21 @@ export class SignMedcertPage implements OnInit {
     let scHeight = screen.height;
 
     if (scWidth <= 666) {
-      //////////console.log('sm');
+      console.log('1');
+
       this.screenWidth = scWidth - scWidth * 0.06;
       this.screenHeight = scHeight - scHeight * 0.35;
     } else if (scWidth <= 912) {
-      //////////console.log('md');
+      console.log('2');
       this.screenWidth = scWidth - scWidth * 0.2;
-      this.screenHeight = scHeight - scHeight * 0.35;
+      this.screenHeight = scHeight - scHeight * 0.2;
     } else {
-      //////////console.log('l');
+      console.log('3');
       this.screenWidth = scWidth - scWidth * 0.4;
       this.screenHeight = scHeight - scHeight * 0.4;
     }
     if (scHeight >= 1180) {
+      console.log('4');
       this.screenHeight = scHeight - scHeight * 0.4;
     }
     this.signaturePadOptions = {
