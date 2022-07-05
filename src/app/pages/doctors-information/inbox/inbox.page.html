@@ -161,10 +161,12 @@
                     </ion-label>
                   </ion-item-divider>
                   <ion-item lines="none">
-                    <ion-text [innerHTML]="x.final_diagnosis" class="ion-text-wrap custom-font"
+                    <!--ion-text [innerHTML]="x.final_diagnosis" class="ion-text-wrap custom-font"
                       style="font-size: 14px;">
-                    </ion-text>
+                    </ion-text-->
+                    <see-more [final_diagnosis]="x.final_diagnosis" [greaterThan]="200"></see-more>
                   </ion-item>
+
                 </ion-list>
                 <ion-list *ngIf="x.revision_dx_remarks != null">
                   <ion-item-divider class="item-divider-color">
