@@ -178,7 +178,7 @@ export class SignMedcertPage implements OnInit {
       console.log('=', this.screenHeight);
     } else if (scWidth <= 1000) {
       this.screenWidth = scWidth - scWidth * 0.05;
-      this.screenHeight = scHeight - scHeight * 0.15;
+      this.screenHeight = scHeight - scHeight * 0.2;
       console.log('Screen less than 912');
       console.log('Width 1: ', scWidth);
       console.log('Width 2: ', scWidth * 0.05);
