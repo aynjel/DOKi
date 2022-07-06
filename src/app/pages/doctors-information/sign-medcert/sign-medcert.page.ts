@@ -8,6 +8,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   ActionSheetController,
+  AnimationController,
   IonModal,
   ModalController,
   NavController,
@@ -63,7 +64,8 @@ export class SignMedcertPage implements OnInit {
     public functionService: FunctionsService,
     private dbService: NgxIndexedDBService,
     private authService: AuthService,
-    public functionsService: FunctionsService
+    public functionsService: FunctionsService,
+    private animationCtrl: AnimationController
   ) {
     this.isNotification = true;
     this.screensizeService
@@ -171,7 +173,8 @@ export class SignMedcertPage implements OnInit {
       this.screenHeight = scHeight - scHeight * 0.35;
     } else if (scWidth <= 912) {
       console.log('2');
-      this.screenWidth = scWidth - scWidth * 0.2;
+      // this.screenWidth = scWidth - scWidth * 0.2;
+      this.screenWidth = scWidth - scWidth * 0.05;
       this.screenHeight = scHeight - scHeight * 0.15;
     } else {
       console.log('3');
@@ -180,7 +183,8 @@ export class SignMedcertPage implements OnInit {
     }
     if (scHeight >= 1180) {
       console.log('4');
-      this.screenHeight = scHeight - scHeight * 0.4;
+      // this.screenHeight = scHeight - scHeight * 0.4;
+      this.screenHeight = scHeight - scHeight * 0.6;
     }
     this.signaturePadOptions = {
       minWidth: 5,
@@ -500,4 +504,32 @@ export class SignMedcertPage implements OnInit {
   reviseRevokeApproval() {
     document.getElementById('trigger-modal-forRevision-signmedcert').click();
   }
+
+  enterAnimation = (baseEl: HTMLElement) => {
+    const root = baseEl.shadowRoot;
+
+    const backdropAnimation = this.animationCtrl
+      .create()
+      .addElement(root.querySelector('ion-backdrop')!)
+      .fromTo('opacity', '0.01', 'var(--backdrop-opacity)');
+
+    const wrapperAnimation = this.animationCtrl
+      .create()
+      .addElement(root.querySelector('.modal-wrapper')!)
+      .keyframes([
+        { offset: 0, opacity: '0', transform: 'scale(0)' },
+        { offset: 1, opacity: '0.99', transform: 'scale(1)' },
+      ]);
+
+    return this.animationCtrl
+      .create()
+      .addElement(baseEl)
+      .easing('ease-out')
+      .duration(500)
+      .addAnimation([backdropAnimation, wrapperAnimation]);
+  };
+
+  leaveAnimation = (baseEl: HTMLElement) => {
+    return this.enterAnimation(baseEl).direction('reverse');
+  };
 }

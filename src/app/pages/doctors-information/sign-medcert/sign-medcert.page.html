@@ -218,10 +218,11 @@
   </ion-grid>
 
 
-  <ion-modal trigger="trigger-button-certificate-signmedcert" show-backdrop="true" class="ion5modalSign">
+  <ion-modal trigger="trigger-button-certificate-signmedcert" [enterAnimation]="enterAnimation"
+    [leaveAnimation]="leaveAnimation">
 
     <ng-template>
-      <ion-content class="blur testssss">
+      <ion-content>
         <div class="  customBackground">
           <div class="  customBackgroundColor" style="padding:10px">
             <!--ion-icon style="float:right" size="large" name="close-outline" (click)="closeModal()"></ion-icon-->
@@ -253,18 +254,6 @@
                 </ion-col>
               </ion-row>
             </ion-grid>
-            <!--ion-grid>
-              <ion-row>
-                <ion-col size="4">
-                  <ion-button color="danger" (click)="clearPad()">Clear</ion-button>
-                </ion-col>
-                <ion-col size="5"></ion-col>
-                <ion-col size="3">
-                  <ion-button color="secondary" (click)="savePad()">Save</ion-button>
-                </ion-col>
-              </ion-row>
-            </ion-grid-->
-
           </div>
         </div>
       </ion-content>
