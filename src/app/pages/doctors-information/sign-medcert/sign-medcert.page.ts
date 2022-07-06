@@ -172,7 +172,7 @@ export class SignMedcertPage implements OnInit {
     } else if (scWidth <= 912) {
       console.log('2');
       this.screenWidth = scWidth - scWidth * 0.2;
-      this.screenHeight = scHeight - scHeight * 0.2;
+      this.screenHeight = scHeight - scHeight * 0.15;
     } else {
       console.log('3');
       this.screenWidth = scWidth - scWidth * 0.4;
@@ -190,6 +190,7 @@ export class SignMedcertPage implements OnInit {
       backgroundColor: 'rgba(255, 255, 255, 0)',
       penColor: 'rgb(0, 0, 0)',
     };
+    console.log(this.signaturePadOptions);
   }
 
   //id=""
