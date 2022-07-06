@@ -167,25 +167,47 @@ export class SignMedcertPage implements OnInit {
     let scHeight = screen.height;
 
     if (scWidth <= 666) {
-      console.log('1');
-
       this.screenWidth = scWidth - scWidth * 0.06;
       this.screenHeight = scHeight - scHeight * 0.35;
+      console.log('Screen less than 666');
+      console.log('Width 1: ', scWidth);
+      console.log('Width 2: ', scWidth * 0.06);
+      console.log('=', this.screenWidth);
+      console.log('Height 1: ', scHeight);
+      console.log('Height 2: ', scHeight * 0.35);
+      console.log('=', this.screenHeight);
     } else if (scWidth <= 912) {
-      console.log('2');
-      // this.screenWidth = scWidth - scWidth * 0.2;
       this.screenWidth = scWidth - scWidth * 0.05;
       this.screenHeight = scHeight - scHeight * 0.15;
+      console.log('Screen less than 912');
+      console.log('Width 1: ', scWidth);
+      console.log('Width 2: ', scWidth * 0.05);
+      console.log('=', this.screenWidth);
+      console.log('Height 1: ', scHeight);
+      console.log('Height 2: ', scHeight * 0.15);
+      console.log('=', this.screenHeight);
     } else {
-      console.log('3');
       this.screenWidth = scWidth - scWidth * 0.4;
       this.screenHeight = scHeight - scHeight * 0.4;
+
+      console.log('ELSE = BIG');
+      console.log('Width 1: ', scWidth);
+      console.log('Width 2: ', scWidth * 0.4);
+      console.log('=', this.screenWidth);
+      console.log('Height 1: ', scHeight);
+      console.log('Height 2: ', scHeight * 0.4);
+      console.log('=', this.screenHeight);
     }
     if (scHeight >= 1180) {
-      console.log('4');
-      // this.screenHeight = scHeight - scHeight * 0.4;
       this.screenHeight = scHeight - scHeight * 0.6;
+      console.log('Greater than 1180');
+      console.log('Width 1: ', scWidth);
+      console.log('=', this.screenWidth);
+      console.log('Height 1: ', scHeight);
+      console.log('Height 2: ', scHeight * 0.6);
+      console.log('=', this.screenHeight);
     }
+    console.log('LOGGGGGGGGGGGGG');
     this.signaturePadOptions = {
       minWidth: 5,
       canvasWidth: this.screenWidth,
