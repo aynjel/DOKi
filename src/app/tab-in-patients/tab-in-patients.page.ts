@@ -105,7 +105,7 @@ export class TabInPatientsPage {
 
   checkInbox() {
     let data = {
-      dt_from: this.functionsService.getDateYYYYMMDD(90) + 'T00:00:00.000Z',
+      dt_from: this.functionsService.getDateYYYYMMDD(9999) + 'T00:00:00.000Z',
       dt_to: this.functionsService.getDateYYYYMMDD() + 'T00:00:00.000Z',
     };
     console.log(data);
@@ -124,7 +124,10 @@ export class TabInPatientsPage {
         () => {
           this.isNotification = false;
           jsonResponse.forEach((element) => {
-            if (element.approval_status == 'FA') {
+            if (
+              element.approval_status == 'FA' ||
+              element.approval_status == 'RA'
+            ) {
               this.isNotification = true;
             }
           });
