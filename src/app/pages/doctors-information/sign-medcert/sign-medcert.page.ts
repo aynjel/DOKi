@@ -187,8 +187,8 @@ export class SignMedcertPage implements OnInit {
       console.log('Height 2: ', scHeight * 0.15);
       console.log('=', this.screenHeight);
     } else {
-      this.screenWidth = scWidth - scWidth * 0.4;
-      this.screenHeight = scHeight - scHeight * 0.4;
+      this.screenWidth = scWidth - scWidth * 0.6;
+      this.screenHeight = scHeight - scHeight * 0.6;
 
       console.log('ELSE = BIG');
       console.log('Width 1: ', scWidth);
