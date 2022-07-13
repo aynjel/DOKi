@@ -127,7 +127,9 @@ export class InboxPage implements OnInit {
       (element) => element.approval_status == e.detail.value
     );
   }*/
+  pendingApprovalCount = 0;
   getPendingApproval(dateFrom, dateTo) {
+    this.pendingApprovalCount = 0;
     console.log(this.selected);
     this.pendingApproval = [];
     this.pendingApprovalFullList = [];
@@ -140,6 +142,11 @@ export class InboxPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
+          this.pendingApprovalCount = res.filter(function (x) {
+            return x.approval_status == 'FA' || x.approval_status == 'RA';
+          }).length;
+
+          //res.reduce((total, x) => (x == 2 ? total + 1 : total), 0);
           this.pendingApprovalFullList = res;
           if (this.pendingApprovalFullList == null) {
             this.empty = true;

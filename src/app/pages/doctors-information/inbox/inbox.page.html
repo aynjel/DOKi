@@ -19,7 +19,10 @@
                   <ion-list>
                     <ion-list-header>Medical Certificate </ion-list-header>
                     <ion-item (click)="changeMode('FA')" [ngClass]="{'boldMe': selected === 'FA'}" class="pointer">
-                      <ion-label>&nbsp;For Approval</ion-label>
+                      <ion-label>&nbsp;For Approval <sup *ngIf="pendingApprovalCount >= 1">
+                          ({{pendingApprovalCount}})
+                        </sup>
+                      </ion-label>
                     </ion-item>
                     <ion-item (click)="changeMode('FR')" [ngClass]="{'boldMe': selected === 'FR'}" class="pointer">
                       <ion-label>&nbsp;For Revision</ion-label>
