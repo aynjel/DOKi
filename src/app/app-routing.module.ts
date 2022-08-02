@@ -28,7 +28,13 @@ const routes: Routes = [
         './pages/in-patient-patient-information/in-patient-detail/in-patient-detail.module'
       ).then((m) => m.InpatientDetailPageModule),
   },
-
+  {
+    path: 'menu/in-patients/:id/progressnotes',
+    loadChildren: () =>
+      import(
+        './pages/in-patient-patient-information/progress-notes/progress-notes.module'
+      ).then((m) => m.ProgressNotesPageModule),
+  },
   {
     path: 'menu/in-patients/:admissionNo/view/:dischargeNo',
     loadChildren: () =>

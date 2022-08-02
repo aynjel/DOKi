@@ -28,36 +28,23 @@
 
       <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
         <ng-container>
-
           <div *ngFor="let x of progessNotes">
-            <ion-card class="pointer">
+            <ion-card class="pointer" (click)="gotoPerday(x.event_date,x.day)" *ngIf="!progressNotesIsNotReady">
               <ion-item>
-                Day #<b>{{x.notes_id}}</b>
-                <ion-button size="small" fill="outline" slot="end" (click)="viewhistory(x.trans_no,'Day #'+x.notes_id)">
-                  View History
-                </ion-button>
-                <!--ion-button fill="outline" slot="end" (click)="viewhistory(x.trans_no)">
-                  View History</ion-button>
-                <ion-button fill="outline" color="secondary" slot="end" (click)="detail(x)">
-                  Modify</ion-button-->
-
+                Day #<b>{{x.day}} | {{x.dateCreateConverted}}</b>
               </ion-item>
-              <cardshowhide [notes]="x.notes" [noteslength]="x.noteslength" [notesmall]="x.notessmall"></cardshowhide>
-
-              <ion-footer>
-                <ion-grid>
+              <ion-card-content>
+                <ion-grid class="ion-no-padding ion-no-margin">
                   <ion-row>
-                    <ion-col center text-center>
-                      <div style="padding:5px">Date Created : {{x.dateCreateConverted}} {{x.dateCreateTimeConverted}}
-                      </div>
-                    </ion-col>
-                    <ion-col center text-center>
-                      <div style="padding:5px">Date Updated : {{x.dateUpdateConverted}} {{x.dateUpdateTimeConverted}}
-                      </div>
+                    <ion-col size-md="2" size-xs="4" *ngFor="let y of x.resi_notes">
+                      <p class="fontSize-12">{{y.resi_code}} <ion-icon name="checkmark-circle-outline"
+                          class="icon-center" style="padding-bottom:2px" *ngIf="y.number_of_notes >= 1">
+                        </ion-icon>
+                      </p>
                     </ion-col>
                   </ion-row>
                 </ion-grid>
-              </ion-footer>
+              </ion-card-content>
             </ion-card>
           </div>
         </ng-container>

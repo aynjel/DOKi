@@ -284,12 +284,14 @@ export class InPatientDetailPage {
     ppatientdata.doctorCode = this.dr_code;
     this.data = [];
     this.presentLoading();
+    console.log('123');
+
     this.executiveService
       .getPatientDetail(ppatientdata)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          //console.log(res);
+          console.log(res);
           if (res == null) {
             this.back();
           } else {
@@ -386,6 +388,8 @@ export class InPatientDetailPage {
     this.router.navigate(['/menu/in-patients/']);
   }
   operate() {
+    console.log('operate');
+
     this.dateAdmitted = this.data[0].admission_date;
     this.dischargeNotice = this.data[0].forDischargeDateTime;
 
@@ -597,7 +601,7 @@ export class InPatientDetailPage {
             this.isFetchDone = true;
           }
         );
-      this.getApprovalStatus(this.patient_id);
+      //this.getApprovalStatus(this.patient_id);
     }
 
     this.postData.DateCreated = this.functionsService.getSystemDateTime();
@@ -624,10 +628,13 @@ export class InPatientDetailPage {
         ////console.log('call done');
       }
     );*/
-    this.getProgressNotes();
+    //this.getProgressNotes();
   }
   approvedDate;
+
   getApprovalStatus(data) {
+    console.log('getApprovalStatus');
+
     let approvalStatus = {
       account_no: data,
     };

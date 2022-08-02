@@ -1,5 +1,5 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
@@ -7,6 +7,7 @@ import { FunctionsService } from 'src/app/shared/functions/functions.service';
 import { ProgressnotesHistoryComponent } from 'src/app/chh-web-components/progressnotes-history/progressnotes-history.component';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { ResiService } from 'src/app/services/resi/resi.service';
 @Component({
   selector: 'app-progress-notes',
   templateUrl: './progress-notes.page.html',
@@ -34,7 +35,9 @@ export class ProgressNotesPage implements OnInit {
     private functionService: FunctionsService,
     public modalController: ModalController,
     private functionsService: FunctionsService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private router: Router,
+    private residentService: ResiService
   ) {
     this.screensizeService
       .isDesktopView()
@@ -54,6 +57,8 @@ export class ProgressNotesPage implements OnInit {
     this.patient_id = this.activatedRoute.snapshot.params.id;
     this.getProgressNote();
     this.data = JSON.parse(atob(localStorage.getItem('selectedPatient')));
+    console.log(this.data);
+
     this.dateAdmitted = this.data[0].admission_date;
     this.checkAppearance();
   }
@@ -76,44 +81,60 @@ export class ProgressNotesPage implements OnInit {
     this.progessNotes = [];
     this.progessNotesTemp = [];
     this.progressNotesIsNotReady = true;
-    this.doctorService
-      .getProgressNotes(this.patient_id)
-      .pipe(takeUntil(this.ngUnsubscribe))
+    let perAdmission = {
+      account_no: '',
+    };
+    perAdmission.account_no = this.patient_id;
+    this.residentService
+      .getPatientProgressNotesPerAdmission(perAdmission)
       .subscribe(
         (res: any) => {
           this.progessNotesTemp = res;
         },
         (error) => {},
         () => {
+          ////console.log(this.progessNotesTemp);
+
           this.activeDays = [];
           this.progessNotesTemp.forEach((el) => {
+            let x = 0;
+            let xdateadmitted = this.dateAdmitted.substring(0, 11);
+
+            x = this.functionsService.countDays(xdateadmitted, el.event_date);
+
             this.activeDays.push(el.notes_id);
-            el.dateCreateConverted = this.functionService.convertDatetoMMDDYYYY(
-              el.date_created
+            el.dateCreateConverted =
+              this.functionsService.convertDatetoMMDDYYYY(el.event_date);
+
+            if (
+              this.functionsService.convertDatetoMMDDYYYY(this.dateAdmitted) ==
+              el.dateCreateConverted
+            ) {
+              x = 0;
+            }
+
+            el.day = x;
+            el.dateCreateTimeConverted = this.functionsService.getTime(
+              el.event_date
             );
 
-            el.dateCreateTimeConverted = this.functionService.getTime(
-              el.date_created
-            );
-
-            el.dateUpdateConverted = this.functionService.convertDatetoMMDDYYYY(
-              el.date_updated
-            );
-            el.dateUpdateTimeConverted = this.functionService.getTime(
+            el.dateUpdateConverted =
+              this.functionsService.convertDatetoMMDDYYYY(el.date_updated);
+            el.dateUpdateTimeConverted = this.functionsService.getTime(
               el.date_updated
             );
             if (el.date_updated == '0001-01-01T00:00:00') {
               el.dateUpdateConverted = '';
             }
-            el.notessmall = this.functionService.truncateChar(el.notes, 300);
-            if (el.notes.length > 200) {
+            el.notessmall = this.functionsService.truncateChar(el.notes, 300);
+            /*if (el.notes.length > 200) {
               el.noteslength = true;
             } else {
               el.noteslength = false;
-            }
+            }*/
             this.progessNotes.push(el);
           });
-          //console.log(this.activeDays);
+          ////console.log(this.progessNotes);
 
           if (this.progessNotes.length <= 0) {
             this.progressNotesIsEmpty = true;
@@ -172,5 +193,14 @@ export class ProgressNotesPage implements OnInit {
   ionViewDidLeave() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+
+  gotoPerday(date, dayselected) {
+    localStorage.setItem('dayselected', dayselected);
+    console.log(dayselected);
+    let day = this.functionService.convertDatedash(date);
+    this.router.navigate([
+      '/menu/patient/' + this.patientId + '/progressnotes/' + day,
+    ]);
   }
 }

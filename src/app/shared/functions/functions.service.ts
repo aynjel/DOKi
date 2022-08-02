@@ -425,4 +425,19 @@ export class FunctionsService {
     });
     toast.present();
   }
+  convertDatedash(date) {
+    let dateCreate = new Date(date);
+    let dd = String(dateCreate.getDate()).padStart(2, '0');
+    let mm = String(dateCreate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = dateCreate.getFullYear();
+    let xtoday = mm + '-' + dd + '-' + yyyy;
+    return xtoday;
+  }
+  countDays(from, to) {
+    from = new Date(from);
+    to = new Date(to);
+    const diffTime = Math.abs(to - from);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  }
 }

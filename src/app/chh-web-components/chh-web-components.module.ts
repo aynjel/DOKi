@@ -58,6 +58,7 @@ import { ProfessionalFeeSummaryTextsComponent } from './professional-fee-summary
 import { ProfessionalFeeSummaryPatientInfoComponent } from './professional-fee-summary-patient-info/professional-fee-summary-patient-info.component';
 import { ProfessionalFeeHelperComponent } from './professional-fee-helper/professional-fee-helper.component';
 import { PinchZoomModule } from 'ngx-pinch-zoom';
+import { ChhAppResiProgressNotesComponent } from './chh-app-resi-progress-notes/chh-app-resi-progress-notes.component';
 @NgModule({
   declarations: [
     ChhAppLogoComponent,
@@ -100,6 +101,7 @@ import { PinchZoomModule } from 'ngx-pinch-zoom';
     ProfessionalFeeSummaryTextsComponent,
     ProfessionalFeeSummaryPatientInfoComponent,
     ProfessionalFeeHelperComponent,
+    ChhAppResiProgressNotesComponent,
   ],
   exports: [
     ChhAppLogoComponent,
@@ -142,6 +144,7 @@ import { PinchZoomModule } from 'ngx-pinch-zoom';
     ProfessionalFeeSummaryTextsComponent,
     ProfessionalFeeSummaryPatientInfoComponent,
     ProfessionalFeeHelperComponent,
+    ChhAppResiProgressNotesComponent,
   ],
   imports: [
     CommonModule,
