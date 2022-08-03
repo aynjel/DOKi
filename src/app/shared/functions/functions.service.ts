@@ -397,8 +397,9 @@ export class FunctionsService {
     return xtoday + ' ' + strTime;
   }
   getFormatAMPM(date) {
-    var hours = date.getHours();
-    var minutes = date.getMinutes();
+    let newdate = new Date(date);
+    var hours = newdate.getHours();
+    var minutes: any = newdate.getMinutes();
     var ampm = hours >= 12 ? 'pm' : 'am';
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
@@ -439,5 +440,21 @@ export class FunctionsService {
     const diffTime = Math.abs(to - from);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays;
+  }
+  calculateAge(birthDate, otherDate) {
+    birthDate = new Date(birthDate);
+    otherDate = new Date(otherDate);
+
+    var years = otherDate.getFullYear() - birthDate.getFullYear();
+
+    if (
+      otherDate.getMonth() < birthDate.getMonth() ||
+      (otherDate.getMonth() == birthDate.getMonth() &&
+        otherDate.getDate() < birthDate.getDate())
+    ) {
+      years--;
+    }
+
+    return years;
   }
 }

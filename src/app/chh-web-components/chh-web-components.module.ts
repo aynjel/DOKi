@@ -59,6 +59,9 @@ import { ProfessionalFeeSummaryPatientInfoComponent } from './professional-fee-s
 import { ProfessionalFeeHelperComponent } from './professional-fee-helper/professional-fee-helper.component';
 import { PinchZoomModule } from 'ngx-pinch-zoom';
 import { ChhAppResiProgressNotesComponent } from './chh-app-resi-progress-notes/chh-app-resi-progress-notes.component';
+import { PatientNameComponent } from './patient-name/patient-name.component';
+import { SoapShowHideComponent } from './soap-show-hide/soap-show-hide.component';
+import { ApprovePopOverComponent } from './approve-pop-over/approve-pop-over.component';
 @NgModule({
   declarations: [
     ChhAppLogoComponent,
@@ -102,6 +105,9 @@ import { ChhAppResiProgressNotesComponent } from './chh-app-resi-progress-notes/
     ProfessionalFeeSummaryPatientInfoComponent,
     ProfessionalFeeHelperComponent,
     ChhAppResiProgressNotesComponent,
+    PatientNameComponent,
+    SoapShowHideComponent,
+    ApprovePopOverComponent,
   ],
   exports: [
     ChhAppLogoComponent,
@@ -145,6 +151,9 @@ import { ChhAppResiProgressNotesComponent } from './chh-app-resi-progress-notes/
     ProfessionalFeeSummaryPatientInfoComponent,
     ProfessionalFeeHelperComponent,
     ChhAppResiProgressNotesComponent,
+    PatientNameComponent,
+    SoapShowHideComponent,
+    ApprovePopOverComponent,
   ],
   imports: [
     CommonModule,

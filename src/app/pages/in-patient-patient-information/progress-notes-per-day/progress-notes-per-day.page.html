@@ -1,0 +1,168 @@
+<ion-header mode="md" class="ion-no-border">
+  <div>
+    <ion-toolbar color="mango">
+      <ion-title>
+        <ion-icon name="arrow-back-outline" (click)="back()" class="pointer icon-center "></ion-icon> Progress Notes |
+        {{event_date}}
+      </ion-title>
+    </ion-toolbar>
+  </div>
+  <ion-grid class="ion-no-padding " *ngIf="!isDesktop">
+    <ion-row class="">
+      <ion-col size-md="10" offset-md="1" size-lg="4" offset-lg="4" class="ion-no-border">
+        <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [dischargeNotice]="dischargeNotice"
+          [forMoreOrLess]="true" [is_pwd]="is_pwd" [is_senior]="is_senior"
+          [is_philhealth_membership]="is_philhealth_membership">
+        </app-chh-app-patient-header>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+      refreshingSpinner="circles" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-grid class="ion-no-padding">
+    <ion-row class="custom-padding">
+      <ion-col size-lg="1" *ngIf="isDesktop"></ion-col>
+      <ion-col size-lg="3" *ngIf="isDesktop">
+
+        <patientName [patient_name]="patientInfo.patient_name" [patient_no]="patientInfo.patient_no"
+          [account_no]="patientInfo.account_no" [ap_name]="patientInfo.ap_name" [dateCreated]="patientInfo.date_created"
+          [birthday]="birthday" [age]="age">
+        </patientName>
+      </ion-col>
+      <ion-col size-md="1" size-xs="12" *ngIf="!isDesktop">
+
+      </ion-col>
+      <ion-col size-md="10" size-lg="6" class="custom-border-bottom ion-no-border ">
+
+        <ng-container>
+
+          <ion-list>
+            <ion-list-header> {{event_date}} </ion-list-header>
+            <div *ngFor="let x of progessNotes">
+              <ion-card mode="ios">
+                <ion-item>
+                  <ion-label class="ion-text-wrap">
+                    <h2>{{x.user_created}} | <ion-text> {{x.event_time_c}}</ion-text> |
+                      <ion-badge class="icon-center" [color]="x.is_approve == '0' ? 'medium' : 'mango'">
+                        <span *ngIf="x.is_approve == '0'">Uncertain</span>
+                        <span *ngIf="x.is_approve != '0'">Approved</span>
+                      </ion-badge>
+                      <!--ion-icon class="icon-center floatRight" name="ellipsis-vertical-outline"
+                        id="trigger-inbox-popover"></ion-icon-->
+
+                      <ion-icon name="ellipsis-vertical-outline" class="pointer icon-center floatRight"
+                        (click)="presentPopover($event,x)" *ngIf="x.is_approve == '0'">
+                      </ion-icon>
+                    </h2>
+
+                    <div *ngFor="let y of x.soap">
+                      <app-soap-show-hide [SOAP]="y.note_type" [comment]="y.notes" class="padding-top15">
+                      </app-soap-show-hide>
+                    </div>
+
+                  </ion-label>
+                </ion-item>
+              </ion-card>
+            </div>
+
+
+          </ion-list>
+
+
+
+        </ng-container>
+
+
+
+        <ng-container>
+          <ion-list>
+            <br /><br /><br />
+          </ion-list>
+        </ng-container>
+
+
+
+
+
+
+
+        <ng-container *ngIf="progressNotesIsNotReady">
+          <div class="ion-padding custom-skeleton">
+            <ion-card mode="ios" class="pointer">
+              <ion-item lines="none">
+                <ion-label style="margin-top: -10px;">
+                  <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+            <ion-card mode="ios" class="pointer">
+              <ion-item lines="none">
+                <ion-label style="margin-top: -10px;">
+                  <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+            <ion-card mode="ios" class="pointer">
+              <ion-item lines="none">
+                <ion-label style="margin-top: -10px;">
+                  <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+            <ion-card mode="ios" class="pointer">
+              <ion-item lines="none">
+                <ion-label style="margin-top: -10px;">
+                  <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+          </div>
+        </ng-container>
+
+
+
+        <div *ngIf="progressNotesIsEmpty">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="8" offset="2">
+                <div class="vertical-center">
+                  <div class="center">
+                    <img src="assets/img/no-data-rafiki.png" />
+                  </div>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-modal trigger="trigger-button" cssClass="custom-modal" [swipeToClose]="true"
+    [presentingElement]="routerOutlet.nativeEl">
+    <!-- [breakpoints]="[0, 0.25, 0.5, 0.9, 1]"
+      [initialBreakpoint]="0.9" -->
+    <ng-template>
+      test only
+    </ng-template>
+  </ion-modal>
+</ion-content>

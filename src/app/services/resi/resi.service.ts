@@ -22,4 +22,21 @@ export class ResiService {
     const url = environment.apiResident + 'api/ProgressNotes/PerAdmission';
     return this.http.post(url, data, options);
   }
+  getPatientProgressNotesPerDay(data) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json;',
+    });
+    const options = { headers: headers, withCredentials: true };
+    const url = environment.apiResident + 'api/ProgressNotes/PerDay';
+    return this.http.post(url, data, options);
+  }
+
+  approveProgressNote(data) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json;',
+    });
+    const options = { headers: headers, withCredentials: true };
+    const url = environment.apiResident + 'api/ProgressNotesApproval/' + data;
+    return this.http.post(url, data, options);
+  }
 }

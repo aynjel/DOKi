@@ -200,7 +200,7 @@ export class ProgressNotesPage implements OnInit {
     console.log(dayselected);
     let day = this.functionService.convertDatedash(date);
     this.router.navigate([
-      '/menu/patient/' + this.patientId + '/progressnotes/' + day,
+      '/menu/in-patients/' + this.patient_id + '/progressnotes/' + day,
     ]);
   }
 }

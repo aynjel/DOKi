@@ -36,6 +36,13 @@ const routes: Routes = [
       ).then((m) => m.ProgressNotesPageModule),
   },
   {
+    path: 'menu/in-patients/:id/progressnotes/:perday',
+    loadChildren: () =>
+      import(
+        './pages/in-patient-patient-information/progress-notes-per-day/progress-notes-per-day.module'
+      ).then((m) => m.ProgressNotesPerDayPageModule),
+  },
+  {
     path: 'menu/in-patients/:admissionNo/view/:dischargeNo',
     loadChildren: () =>
       import(

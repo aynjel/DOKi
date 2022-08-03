@@ -1,0 +1,54 @@
+<ion-card mode="ios" class="sticky">
+  <ion-list *ngIf="moreOrLess == true">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-label>
+            <h2 class="ion-text-wrap" style="padding-top: 10px;">
+              <b>{{patient_name}}
+                <ion-badge color="warning" style="float:right" class="pointer">
+                  <ion-icon name="chevron-down-outline" (click)="moreorless(false)"></ion-icon>
+                </ion-badge>
+              </b>
+              <ion-text color="mango">
+                <p color="primary"><b>Birthdate : {{birthday}}<strong> | Age : </strong>{{age}}</b></p>
+              </ion-text>
+            </h2>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-list>
+  <ion-list *ngIf="moreOrLess == false">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-label>
+            <h2 class="ion-text-wrap" style="padding-top: 10px;">
+              <b>{{patient_name}}
+                <ion-badge color="warning" style="float:right" class="pointer">
+                  <ion-icon name="chevron-up-outline" (click)="moreorless(true)"></ion-icon>
+                </ion-badge>
+              </b>
+              <ion-text color="mango">
+                <p color="primary"><b>Birthdate : {{birthday}}<strong> | Age : </strong>{{age}}</b></p>
+              </ion-text>
+              <ion-text color="mango">
+                <p color="primary"><b>Date Created : <strong>{{date}} {{time}}</strong></b></p>
+              </ion-text>
+              <ion-text color="mango">
+                <p color="primary"><b>Patient No : <strong>{{patient_no}}</strong></b></p>
+              </ion-text>
+              <ion-text color="mango">
+                <p color="primary"><b>Account No : <strong>{{account_no}}</strong></b></p>
+              </ion-text>
+              <ion-text color="mango">
+                <p color="primary"><b>Attending Physician : <strong>{{ap_name}}</strong></b></p>
+              </ion-text>
+            </h2>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-list>
+</ion-card>
