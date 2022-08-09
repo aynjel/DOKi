@@ -16,7 +16,8 @@ import { ResiService } from 'src/app/services/resi/resi.service';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
 import { FunctionsService } from 'src/app/shared/functions/functions.service';
 import { ViewCommentsPopOverComponent } from 'src/app/chh-web-components/view-comments-pop-over/view-comments-pop-over.component';
-import { ProgressNoteCommentsComponent } from 'src/app/chh-web-components/progress-note-comments/progress-note-comments.component';
+
+import { ProgressnotesHistoryComponent } from 'src/app/chh-web-components/progressnotes-history/progressnotes-history.component';
 @Component({
   selector: 'app-progress-notes-per-day',
   templateUrl: './progress-notes-per-day.page.html',
@@ -222,7 +223,7 @@ export class ProgressNotesPerDayPage implements OnInit {
     await popover.onDidDismiss().then((data) => {
       //console.log(data.data);
       if (data.data != undefined) {
-        this.openModal();
+        this.openModal(dataJson);
       }
       /*if (data.data != undefined) {
         this.presentAlertConfirmApprove(data.data);
@@ -293,9 +294,12 @@ export class ProgressNotesPerDayPage implements OnInit {
     const { role } = await alert.onDidDismiss();
     this.roleMessage = `Dismissed with role: ${role}`;
   }
-  async openModal() {
+  async openModal(dataJson) {
     const modal = await this.modalController.create({
-      component: ProgressNoteCommentsComponent,
+      component: ProgressnotesHistoryComponent,
+      componentProps: {
+        dataJson: dataJson,
+      },
     });
     modal.present();
 

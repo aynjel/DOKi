@@ -403,17 +403,18 @@ export class DoctorService {
     return this.http.post(url, data, options);
   }
   getPatientProgressNotesHistory(data) {
+    //http://10.151.12.120:7230/api/ProgressNotes/Logs/PerTransNo
     const headers = new HttpHeaders({
       'Content-Type': 'application/json;',
     });
     const options = { headers: headers, withCredentials: true };
-    const url = 'http://10.151.12.120/api/ProgressNotes/Logs/' + data;
+    const url = environment.apiResident + 'api/ProgressNotes/Logs/PerTransNo';
     return this.http.post(url, data, options);
   }
   addComment(data) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers: headers, withCredentials: true };
-    const url = 'http://10.151.12.120/api/ProgressNotesComment/Insert';
+    const url = environment.apiResident + 'api/ProgressNotesComment/Insert';
     return this.http.post(url, data, options);
   }
 

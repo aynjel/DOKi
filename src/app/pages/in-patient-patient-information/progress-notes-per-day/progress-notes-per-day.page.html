@@ -55,7 +55,7 @@
               <ion-card mode="ios">
                 <ion-item>
                   <ion-label class="ion-text-wrap">
-                    <h2>{{x.user_created}} | <ion-text> {{x.event_time_c}}</ion-text>
+                    <h2 class="icon-center ">{{x.user_created}} | <ion-text> {{x.event_time_c}}</ion-text>
                       <!--|
                       <ion-badge class="icon-center" [color]="x.is_approve == '0' ? 'medium' : 'mango'">
                         <span *ngIf="x.is_approve == '0'">Uncertain</span>
@@ -63,10 +63,14 @@
                       </ion-badge>-->
                       <!--ion-icon class="icon-center floatRight" name="ellipsis-vertical-outline"
                         id="trigger-inbox-popover"></ion-icon-->
+                      <!--ion-button color="medium" fill="clear" class="pointer icon-center  floatRight testletter"
+                        (click)="presentPopover($event,x)" *ngIf="x.is_approve == '0'"><b>Comments</b>
+                      </ion-button-->
+                      <ion-button color="mango" fill="clear" class="pointer icon-center  floatRight testletter"
+                        (click)="openModal(x)" *ngIf="x.is_approve == '0'"><b>View Comments</b>
+                      </ion-button>
 
-                      <ion-icon name="ellipsis-vertical-outline" class="pointer icon-center floatRight"
-                        (click)="presentPopover($event,x)" *ngIf="x.is_approve == '0'">
-                      </ion-icon>
+
                     </h2>
 
                     <div *ngFor="let y of x.soap">
