@@ -62,6 +62,8 @@ import { ChhAppResiProgressNotesComponent } from './chh-app-resi-progress-notes/
 import { PatientNameComponent } from './patient-name/patient-name.component';
 import { SoapShowHideComponent } from './soap-show-hide/soap-show-hide.component';
 import { ApprovePopOverComponent } from './approve-pop-over/approve-pop-over.component';
+import { ViewCommentsPopOverComponent } from './view-comments-pop-over/view-comments-pop-over.component';
+import { ProgressNoteCommentsComponent } from './progress-note-comments/progress-note-comments.component';
 @NgModule({
   declarations: [
     ChhAppLogoComponent,
@@ -108,6 +110,8 @@ import { ApprovePopOverComponent } from './approve-pop-over/approve-pop-over.com
     PatientNameComponent,
     SoapShowHideComponent,
     ApprovePopOverComponent,
+    ViewCommentsPopOverComponent,
+    ProgressNoteCommentsComponent,
   ],
   exports: [
     ChhAppLogoComponent,
@@ -154,6 +158,8 @@ import { ApprovePopOverComponent } from './approve-pop-over/approve-pop-over.com
     PatientNameComponent,
     SoapShowHideComponent,
     ApprovePopOverComponent,
+    ViewCommentsPopOverComponent,
+    ProgressNoteCommentsComponent,
   ],
   imports: [
     CommonModule,

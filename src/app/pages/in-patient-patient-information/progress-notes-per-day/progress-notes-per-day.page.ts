@@ -15,7 +15,8 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { ResiService } from 'src/app/services/resi/resi.service';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
 import { FunctionsService } from 'src/app/shared/functions/functions.service';
-
+import { ViewCommentsPopOverComponent } from 'src/app/chh-web-components/view-comments-pop-over/view-comments-pop-over.component';
+import { ProgressNoteCommentsComponent } from 'src/app/chh-web-components/progress-note-comments/progress-note-comments.component';
 @Component({
   selector: 'app-progress-notes-per-day',
   templateUrl: './progress-notes-per-day.page.html',
@@ -98,6 +99,13 @@ export class ProgressNotesPerDayPage implements OnInit {
   patient_id;
   patient_name;
   dischargeNotice;
+  approvePN = {
+    account_no: 'string',
+    event_date: 'string',
+    approved_by: 'string',
+    dr_code: 'string',
+    dr_name: 'string',
+  };
   ionViewWillEnter() {
     let x = JSON.parse(
       unescape(atob(localStorage.getItem('_cap_userDataKey')))
@@ -105,9 +113,14 @@ export class ProgressNotesPerDayPage implements OnInit {
     this.logindata = x;
 
     console.log('ionViewWillEnter');
-    console.log(this.logindata);
+    //console.log(this.logindata);
   }
+  isApproved;
   ngOnInit() {
+    let x = JSON.parse(
+      unescape(atob(localStorage.getItem('_cap_userDataKey')))
+    );
+    this.logindata = x;
     this.dateToday = this.funcServ.getDateTodayMMDDYYYY();
     this.user_created = atob(localStorage.getItem('username'));
     this.progressNoteSummaryUpdate.summary_updated_by = this.user_created;
@@ -132,7 +145,7 @@ export class ProgressNotesPerDayPage implements OnInit {
     this.is_philhealth_membership = this.data[0].philhealth_membership;
     this.is_pwd = this.data[0].is_pwd;
     this.is_senior = this.data[0].is_senior;
-    ////console.log(this.is_pwd, this.is_senior);
+    //////console.log(this.is_pwd, this.is_senior);
     this.dateAdmitted = this.data[0].admission_date;
     this.patient_id = this.activatedRoute.snapshot.params.id;
     this.dischargeNotice = this.data[0].forDischargeDateTime;
@@ -144,7 +157,7 @@ export class ProgressNotesPerDayPage implements OnInit {
     this.patient_name = this.funcServ.convertAllFirstLetterToUpperCase(
       this.patient_name
     );
-    //console.log(this.progressNotesPerDay);
+    ////console.log(this.progressNotesPerDay);
 
     this.getProgressNotesPerDay(this.progressNotesPerDay);
   }
@@ -168,30 +181,38 @@ export class ProgressNotesPerDayPage implements OnInit {
     this.progessNotes = [];
     this.residentService.getPatientProgressNotesPerDay(data).subscribe(
       (res: any) => {
-        //console.log(res);
+        ////console.log(res);
 
         tempPn = res;
       },
       (error) => {},
       () => {
         tempPn.forEach((el) => {
-          console.log(el);
-          console.log(this.funcServ.getFormatAMPM(el.event_time));
           el.event_time_c = this.funcServ.getFormatAMPM(el.event_time);
           this.progessNotes.push(el);
         });
+        console.log(this.progessNotes);
+
+        this.isApproved = this.progessNotes[0].is_approve;
+        this.approvePN.account_no = this.progessNotes[0].account_no;
+        this.approvePN.approved_by =
+          this.logindata.lastName + ', ' + this.logindata.firstName;
+        this.approvePN.dr_code = this.logindata.doctorCode;
+        this.approvePN.dr_name =
+          this.logindata.lastName + ', ' + this.logindata.firstName;
+        this.approvePN.event_date = this.progessNotes[0].event_date;
         this.progressNotesIsNotReady = false;
       }
     );
   }
   async presentPopover(e: Event, dataJson) {
-    console.log(dataJson);
-    console.log(this.logindata);
+    //console.log(dataJson);
+    //console.log(this.logindata);
 
     this.progressNoteApproval.account_no = dataJson.account_no;
     this.progressNoteApproval.event_date = dataJson.event_date;
     const popover = await this.popoverController.create({
-      component: ApprovePopOverComponent,
+      component: ViewCommentsPopOverComponent,
       event: e,
       componentProps: {
         dataJson: dataJson,
@@ -199,10 +220,13 @@ export class ProgressNotesPerDayPage implements OnInit {
     });
     await popover.present();
     await popover.onDidDismiss().then((data) => {
-      console.log(data.data);
+      //console.log(data.data);
       if (data.data != undefined) {
-        this.presentAlertConfirmApprove(data.data);
+        this.openModal();
       }
+      /*if (data.data != undefined) {
+        this.presentAlertConfirmApprove(data.data);
+      }*/
     });
   }
   async presentAlertConfirmApprove(dataxs) {
@@ -218,7 +242,7 @@ export class ProgressNotesPerDayPage implements OnInit {
           text: 'Yes',
           cssClass: 'alert-button-confirm',
           handler: (data) => {
-            this.approveProgressNote(dataxs);
+            this.approveProgressNote(this.progessNotes.trans_no);
           },
         },
       ],
@@ -228,14 +252,53 @@ export class ProgressNotesPerDayPage implements OnInit {
   }
 
   approveProgressNote(data) {
-    console.log('approveProgressNote');
+    console.log(data);
 
     this.residentService.approveProgressNote(data).subscribe(
       (res: any) => {
-        console.log(res);
+        //console.log(res);
       },
       (error) => {},
-      () => {}
+      () => {
+        this.ngOnInit();
+      }
     );
+  }
+  handlerMessage;
+  roleMessage;
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Approve Progress Note ' + this.event_date + '?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            this.handlerMessage = 'Alert canceled';
+          },
+        },
+        {
+          text: 'Approve',
+          role: 'confirm',
+          handler: () => {
+            this.approveProgressNote(this.approvePN);
+            this.handlerMessage = 'Alert confirmed';
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    this.roleMessage = `Dismissed with role: ${role}`;
+  }
+  async openModal() {
+    const modal = await this.modalController.create({
+      component: ProgressNoteCommentsComponent,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
   }
 }

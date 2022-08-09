@@ -44,16 +44,23 @@
         <ng-container>
 
           <ion-list>
-            <ion-list-header> {{event_date}} </ion-list-header>
+            <ion-item><b>{{event_date}}</b>
+              <ion-button slot="end" color="warning" (click)="presentAlert()" *ngIf="isApproved !='1'">Approve
+              </ion-button>
+              <ion-button slot="end" *ngIf="isApproved =='1'">Approved
+              </ion-button>
+            </ion-item>
+
             <div *ngFor="let x of progessNotes">
               <ion-card mode="ios">
                 <ion-item>
                   <ion-label class="ion-text-wrap">
-                    <h2>{{x.user_created}} | <ion-text> {{x.event_time_c}}</ion-text> |
+                    <h2>{{x.user_created}} | <ion-text> {{x.event_time_c}}</ion-text>
+                      <!--|
                       <ion-badge class="icon-center" [color]="x.is_approve == '0' ? 'medium' : 'mango'">
                         <span *ngIf="x.is_approve == '0'">Uncertain</span>
                         <span *ngIf="x.is_approve != '0'">Approved</span>
-                      </ion-badge>
+                      </ion-badge>-->
                       <!--ion-icon class="icon-center floatRight" name="ellipsis-vertical-outline"
                         id="trigger-inbox-popover"></ion-icon-->
 

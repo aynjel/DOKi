@@ -36,7 +36,7 @@ export class ResiService {
       'Content-Type': 'application/json;',
     });
     const options = { headers: headers, withCredentials: true };
-    const url = environment.apiResident + 'api/ProgressNotesApproval/' + data;
+    const url = environment.apiResident + 'api/ProgressNotesApproval/insert';
     return this.http.post(url, data, options);
   }
 }
