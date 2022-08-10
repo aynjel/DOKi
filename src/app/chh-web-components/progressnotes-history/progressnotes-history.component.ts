@@ -79,9 +79,9 @@ export class ProgressnotesHistoryComponent implements OnInit {
       this.dataJson.event_date
     );
     this.getProgressNotesHistory();
-    /*
+
     this.connect();
-    this.modified = true;
+    /* this.modified = true;
 
 
     this.summary.user_created = atob(localStorage.getItem('username'));
@@ -201,7 +201,10 @@ export class ProgressnotesHistoryComponent implements OnInit {
       .withUrl('http://10.151.12.120/chat')
       .build();
 
-    this._hubConnection.on('broadcasttoresigroup', (message: any) => {
+    /* this._hubConnection.on('broadcasttoresigroup', (message: any) => {
+      console.log(message);
+
+  
       let txtMessage = '[' + JSON.stringify(message) + ']';
       let jsonMessage = JSON.parse(txtMessage);
       let counter = jsonMessage.length;
@@ -229,19 +232,20 @@ export class ProgressnotesHistoryComponent implements OnInit {
           this.toBot = true;
           this.progessNotes.push(el);
         });
-      });
+      })
     });
+;*/
 
     this._hubConnection
       .start()
       .then(() => {
-        //console.log('connection started');
+        /*console.log('connection started');
         this._hubConnection
-          .invoke('addtoresigroup', this.data)
+          .invoke('addtoresigroup', this.dataJson.trans_no)
           .then((res) => {
-            ////console.log(res);
+            console.log(res);
           })
-          .catch((err) => console.error(err));
+          .catch((err) => console.error(err));*/
       })
       .catch((err) =>
         console.log('error while establishing signalr connection: ' + err)
