@@ -198,7 +198,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
 
   private connect(): void {
     this._hubConnection = new HubConnectionBuilder()
-      .withUrl('http://10.151.12.120/chat')
+      .withUrl('http://10.151.12.120:7230/chat')
       .build();
 
     /* this._hubConnection.on('broadcasttoresigroup', (message: any) => {
@@ -239,13 +239,15 @@ export class ProgressnotesHistoryComponent implements OnInit {
     this._hubConnection
       .start()
       .then(() => {
-        /*console.log('connection started');
+        console.log(this.dataJson.trans_no);
+
+        console.log('connection started');
         this._hubConnection
-          .invoke('addtoresigroup', this.dataJson.trans_no)
+          .invoke('AddToResiGroup', this.dataJson.trans_no)
           .then((res) => {
             console.log(res);
           })
-          .catch((err) => console.error(err));*/
+          .catch((err) => console.error(err));
       })
       .catch((err) =>
         console.log('error while establishing signalr connection: ' + err)
