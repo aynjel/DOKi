@@ -59,7 +59,9 @@
             <ion-segment [(ngModel)]="selected">
               <ion-segment-button value="FA" (click)="changeMode('FA')" [ngClass]="{'boldMe': selected === 'FA'}"
                 class="pointer">
-                <ion-label>for Approval</ion-label>
+                <ion-label>for Approval<sup *ngIf="pendingApprovalCount >= 1">
+                    ({{pendingApprovalCount}})
+                  </sup></ion-label>
               </ion-segment-button>
               <ion-segment-button value="FR" (click)="changeMode('FR')" [ngClass]="{'boldMe': selected === 'FR'}"
                 class="pointer">
