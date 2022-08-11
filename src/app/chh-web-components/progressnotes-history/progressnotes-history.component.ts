@@ -170,7 +170,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
           (error) => {},
           () => {
             this.progressNotesComment.msg = '';
-            this.getProgressNotesHistory();
+            //this.getProgressNotesHistory();
           }
         );
     }
@@ -201,19 +201,21 @@ export class ProgressnotesHistoryComponent implements OnInit {
       .withUrl('http://10.151.12.120:7230/chat')
       .build();
 
-    /* this._hubConnection.on('broadcasttoresigroup', (message: any) => {
+    this._hubConnection.on('broadcasttoresigroup', (message: any) => {
       console.log(message);
 
-  
       let txtMessage = '[' + JSON.stringify(message) + ']';
       let jsonMessage = JSON.parse(txtMessage);
       let counter = jsonMessage.length;
       jsonMessage.forEach((el) => {
-        if (el.account_no == '') {
+        console.log('foreach');
+        if (el.account_no == ' ') {
           el.type = 'comment';
         } else {
           el.type = 'progressnotes';
         }
+        this.summary.pnotes_trans_no = el.trans_no;
+
         el.dateCreateConverted = this.functionService.convertDatetoMMDDYYYY(
           el.date_created
         );
@@ -228,13 +230,14 @@ export class ProgressnotesHistoryComponent implements OnInit {
         );
         el.counter = counter;
         counter++;
-        this.ngZone.run(() => {
-          this.toBot = true;
-          this.progessNotes.push(el);
-        });
-      })
+        console.log('push to json');
+       this.ngZone.run(() => {
+         this.progessNotes.push(el);
+       });
+      });
+      console.log('scroll down');
+      this.ScrollToBottom();
     });
-;*/
 
     this._hubConnection
       .start()
@@ -243,7 +246,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
 
         console.log('connection started');
         this._hubConnection
-          .invoke('AddToResiGroup', this.dataJson.trans_no)
+          .invoke('AddToResiGroup', this.dataJson.trans_no.toString())
           .then((res) => {
             console.log(res);
           })
