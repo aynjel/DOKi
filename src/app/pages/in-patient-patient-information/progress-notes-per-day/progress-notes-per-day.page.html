@@ -67,7 +67,10 @@
                         (click)="presentPopover($event,x)" *ngIf="x.is_approve == '0'"><b>Comments</b>
                       </ion-button-->
                       <ion-button color="mango" fill="clear" class="pointer icon-center  floatRight testletter"
-                        (click)="openModal(x)"><b>View Comments</b>
+                        (click)="openModal(x)"><b>Comments <sup>
+                            <app-chat-new-message [toSearch]="x.new_message"></app-chat-new-message>
+                          </sup>
+                        </b>
                       </ion-button>
 
 

@@ -63,6 +63,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
     pn_trans_no: 0,
     msg: '',
     user_created: 'string',
+    username: 'string',
   };
   logindata;
   ngOnInit() {
@@ -71,10 +72,12 @@ export class ProgressnotesHistoryComponent implements OnInit {
       unescape(atob(localStorage.getItem('_cap_userDataKey')))
     );
     this.logindata = x;
-    ////console.log(this.logindata);
+    console.log(this.logindata);
 
     this.progressNotesComment.pn_trans_no = this.dataJson.trans_no;
-    this.progressNotesComment.user_created = this.logindata.doctorCode;
+    this.progressNotesComment.user_created = this.logindata.userCode;
+      
+    this.progressNotesComment.username = this.logindata.lastName + ', ' + this.logindata.firstName;
     ////console.log(this.progressNotesComment);
     this.day = this.functionService.convertDatetoMMDDYYYY(
       this.dataJson.event_date

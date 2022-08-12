@@ -63,6 +63,7 @@ import { PatientNameComponent } from './patient-name/patient-name.component';
 import { SoapShowHideComponent } from './soap-show-hide/soap-show-hide.component';
 import { ApprovePopOverComponent } from './approve-pop-over/approve-pop-over.component';
 import { ViewCommentsPopOverComponent } from './view-comments-pop-over/view-comments-pop-over.component';
+import { ChatNewMessageComponent } from './chat-new-message/chat-new-message.component';
 
 @NgModule({
   declarations: [
@@ -111,6 +112,7 @@ import { ViewCommentsPopOverComponent } from './view-comments-pop-over/view-comm
     SoapShowHideComponent,
     ApprovePopOverComponent,
     ViewCommentsPopOverComponent,
+    ChatNewMessageComponent,
   ],
   exports: [
     ChhAppLogoComponent,
@@ -158,6 +160,7 @@ import { ViewCommentsPopOverComponent } from './view-comments-pop-over/view-comm
     SoapShowHideComponent,
     ApprovePopOverComponent,
     ViewCommentsPopOverComponent,
+    ChatNewMessageComponent,
   ],
   imports: [
     CommonModule,

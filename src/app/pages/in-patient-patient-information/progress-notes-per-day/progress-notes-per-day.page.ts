@@ -112,9 +112,6 @@ export class ProgressNotesPerDayPage implements OnInit {
       unescape(atob(localStorage.getItem('_cap_userDataKey')))
     );
     this.logindata = x;
-
-    console.log('ionViewWillEnter');
-    //console.log(this.logindata);
   }
   isApproved;
   ngOnInit() {
@@ -146,7 +143,7 @@ export class ProgressNotesPerDayPage implements OnInit {
     this.is_philhealth_membership = this.data[0].philhealth_membership;
     this.is_pwd = this.data[0].is_pwd;
     this.is_senior = this.data[0].is_senior;
-    //////console.log(this.is_pwd, this.is_senior);
+    //////////console.log(this.is_pwd, this.is_senior);
     this.dateAdmitted = this.data[0].admission_date;
     this.patient_id = this.activatedRoute.snapshot.params.id;
     this.dischargeNotice = this.data[0].forDischargeDateTime;
@@ -158,7 +155,7 @@ export class ProgressNotesPerDayPage implements OnInit {
     this.patient_name = this.funcServ.convertAllFirstLetterToUpperCase(
       this.patient_name
     );
-    ////console.log(this.progressNotesPerDay);
+    ////////console.log(this.progressNotesPerDay);
 
     this.getProgressNotesPerDay(this.progressNotesPerDay);
   }
@@ -177,23 +174,29 @@ export class ProgressNotesPerDayPage implements OnInit {
       event.target.complete();
     }, 1000);
   }
+
   getProgressNotesPerDay(data) {
     let tempPn;
     this.progessNotes = [];
     this.residentService.getPatientProgressNotesPerDay(data).subscribe(
       (res: any) => {
-        ////console.log(res);
+        ////////console.log(res);
 
         tempPn = res;
       },
       (error) => {},
       () => {
         tempPn.forEach((el) => {
+          let getNewComment = {
+            resi_code: '',
+            trans_no: 0,
+          };
+          getNewComment.resi_code = this.logindata.doctorCode;
+          getNewComment.trans_no = el.trans_no;
+          el.new_message = getNewComment;
           el.event_time_c = this.funcServ.getFormatAMPM(el.event_time);
           this.progessNotes.push(el);
         });
-        console.log(this.progessNotes);
-
         this.isApproved = this.progessNotes[0].is_approve;
         this.approvePN.account_no = this.progessNotes[0].account_no;
         this.approvePN.approved_by =
@@ -207,8 +210,8 @@ export class ProgressNotesPerDayPage implements OnInit {
     );
   }
   async presentPopover(e: Event, dataJson) {
-    //console.log(dataJson);
-    //console.log(this.logindata);
+    //////console.log(dataJson);
+    //////console.log(this.logindata);
 
     this.progressNoteApproval.account_no = dataJson.account_no;
     this.progressNoteApproval.event_date = dataJson.event_date;
@@ -221,7 +224,7 @@ export class ProgressNotesPerDayPage implements OnInit {
     });
     await popover.present();
     await popover.onDidDismiss().then((data) => {
-      //console.log(data.data);
+      //////console.log(data.data);
       if (data.data != undefined) {
         this.openModal(dataJson);
       }
@@ -253,11 +256,11 @@ export class ProgressNotesPerDayPage implements OnInit {
   }
 
   approveProgressNote(data) {
-    console.log(data);
+    ////console.log(data);
 
     this.residentService.approveProgressNote(data).subscribe(
       (res: any) => {
-        //console.log(res);
+        //////console.log(res);
       },
       (error) => {},
       () => {

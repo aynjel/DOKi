@@ -30,7 +30,22 @@ export class ResiService {
     const url = environment.apiResident + 'api/ProgressNotes/PerDay';
     return this.http.post(url, data, options);
   }
-
+  getNewCommentFlag(data) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json;',
+    });
+    const options = { headers: headers, withCredentials: true };
+    const url =
+      environment.apiResident + 'api/ProgressNotesComment/NewCommentFlg';
+    return this.http.post(url, data, options);
+  }
+  readCommentFlag(data) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers: headers, withCredentials: false };
+    const url =
+      environment.apiResident + 'api/ProgressNotesComment/ReadCommentFlg';
+    return this.http.put(url, data, options);
+  }
   approveProgressNote(data) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json;',
