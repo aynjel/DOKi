@@ -24,6 +24,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-progressnotes-history',
   templateUrl: './progressnotes-history.component.html',
@@ -70,11 +71,11 @@ export class ProgressnotesHistoryComponent implements OnInit {
       unescape(atob(localStorage.getItem('_cap_userDataKey')))
     );
     this.logindata = x;
-    //console.log(this.logindata);
+    ////console.log(this.logindata);
 
     this.progressNotesComment.pn_trans_no = this.dataJson.trans_no;
     this.progressNotesComment.user_created = this.logindata.doctorCode;
-    //console.log(this.progressNotesComment);
+    ////console.log(this.progressNotesComment);
     this.day = this.functionService.convertDatetoMMDDYYYY(
       this.dataJson.event_date
     );
@@ -94,14 +95,14 @@ export class ProgressnotesHistoryComponent implements OnInit {
     request.trans_no = this.dataJson.trans_no;
     this.progessNotes = [];
     this.progessNotes1 = [];
-    //console.log(request);
+    ////console.log(request);
 
     this.doctorService
       .getPatientProgressNotesHistory(request)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          console.log(res);
+          //console.log(res);
           if (res.length > 0) {
             this.isEmpty = false;
             this.progessNotesTemp = res;
@@ -129,7 +130,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
               counter++;
               this.progessNotes1.push(el);
             });
-            //////console.log(this.progessNotes);
+            ////////console.log(this.progessNotes);
           } else {
             this.isEmpty = true;
           }
@@ -143,7 +144,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
   }
   upto = 0;
   processJson(x) {
-    //console.log(this.progessNotes.length);
+    ////console.log(this.progessNotes.length);
     this.upto += x;
     let i = 0;
     this.progessNotes = [];
@@ -160,7 +161,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
   sendComment() {
     if (this.progressNotesComment.msg != '') {
       this.progressNotesComment.msg;
-      console.log(this.progressNotesComment);
+      //console.log(this.progressNotesComment);
 
       this.doctorService
         .addComment(this.progressNotesComment)
@@ -198,17 +199,17 @@ export class ProgressnotesHistoryComponent implements OnInit {
 
   private connect(): void {
     this._hubConnection = new HubConnectionBuilder()
-      .withUrl('http://10.151.12.120:7230/chat')
+      .withUrl(environment.apiResident + 'chat')
       .build();
 
     this._hubConnection.on('broadcasttoresigroup', (message: any) => {
-      console.log(message);
+      //console.log(message);
 
       let txtMessage = '[' + JSON.stringify(message) + ']';
       let jsonMessage = JSON.parse(txtMessage);
       let counter = jsonMessage.length;
       jsonMessage.forEach((el) => {
-        console.log('foreach');
+        //console.log('foreach');
         if (el.account_no == ' ') {
           el.type = 'comment';
         } else {
@@ -230,25 +231,25 @@ export class ProgressnotesHistoryComponent implements OnInit {
         );
         el.counter = counter;
         counter++;
-        console.log('push to json');
-       this.ngZone.run(() => {
-         this.progessNotes.push(el);
-       });
+        //console.log('push to json');
+        this.ngZone.run(() => {
+          this.progessNotes.push(el);
+        });
       });
-      console.log('scroll down');
+      //console.log('scroll down');
       this.ScrollToBottom();
     });
 
     this._hubConnection
       .start()
       .then(() => {
-        console.log(this.dataJson.trans_no);
+        //console.log(this.dataJson.trans_no);
 
-        console.log('connection started');
+        //console.log('connection started');
         this._hubConnection
           .invoke('AddToResiGroup', this.dataJson.trans_no.toString())
           .then((res) => {
-            console.log(res);
+            //console.log(res);
           })
           .catch((err) => console.error(err));
       })
@@ -257,7 +258,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
       );
   }
   ngOnDestroy() {
-    //console.log('ngOnDestroy');
+    ////console.log('ngOnDestroy');
 
     this._hubConnection.stop();
   }
