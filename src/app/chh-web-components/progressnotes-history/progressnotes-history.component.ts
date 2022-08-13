@@ -25,6 +25,7 @@ import { HttpClient } from '@angular/common/http';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { ResiService } from 'src/app/services/resi/resi.service';
 @Component({
   selector: 'app-progressnotes-history',
   templateUrl: './progressnotes-history.component.html',
@@ -54,7 +55,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
   toBot: boolean;
   constructor(
     private modalController: ModalController,
-    // private residentService: ResidentService,
+    private residentService: ResiService,
     private functionService: FunctionsService,
     private doctorService: DoctorService,
     private ngZone: NgZone
@@ -66,6 +67,10 @@ export class ProgressnotesHistoryComponent implements OnInit {
     username: 'string',
   };
   logindata;
+  readComment = {
+    resi_code: 'string',
+    trans_no: 0,
+  };
   ngOnInit() {
     this.ngUnsubscribe = new Subject();
     let x = JSON.parse(
@@ -76,14 +81,19 @@ export class ProgressnotesHistoryComponent implements OnInit {
 
     this.progressNotesComment.pn_trans_no = this.dataJson.trans_no;
     this.progressNotesComment.user_created = this.logindata.userCode;
-      
-    this.progressNotesComment.username = this.logindata.lastName + ', ' + this.logindata.firstName;
+
+    this.progressNotesComment.username =
+      this.logindata.lastName + ', ' + this.logindata.firstName;
     ////console.log(this.progressNotesComment);
     this.day = this.functionService.convertDatetoMMDDYYYY(
       this.dataJson.event_date
     );
     this.getProgressNotesHistory();
+    console.log(this.logindata);
 
+    this.readComment.resi_code = this.logindata.doctorCode;
+    this.readComment.trans_no = this.dataJson.trans_no;
+    this.read(this.readComment);
     this.connect();
     /* this.modified = true;
 
@@ -277,5 +287,12 @@ export class ProgressnotesHistoryComponent implements OnInit {
   ionViewDidLeave() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+  read(data) {
+    console.log(data);
+
+    this.residentService.readCommentFlag(data).subscribe((res) => {
+      console.log(res);
+    });
   }
 }
