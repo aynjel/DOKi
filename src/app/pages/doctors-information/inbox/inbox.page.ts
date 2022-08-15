@@ -98,6 +98,8 @@ export class InboxPage implements OnInit {
   }
   modeSelected: string = 'for Approval';
   changeMode(e) {
+    console.log(e);
+
     this.selected = e;
     localStorage.setItem('changeMode', e);
     if (this.selected == 'FA' || this.selected == 'RA') {
@@ -459,4 +461,6 @@ export class InboxPage implements OnInit {
 
     this.modalController.dismiss(null, 'cancel');
   }
+
+  segmentChanged1(e) {}
 }
