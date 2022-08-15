@@ -80,7 +80,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
     console.log(this.logindata);
 
     this.progressNotesComment.pn_trans_no = this.dataJson.trans_no;
-    this.progressNotesComment.user_created = this.logindata.userCode;
+    this.progressNotesComment.user_created = this.logindata.doctorCode;
 
     this.progressNotesComment.username =
       this.logindata.lastName + ', ' + this.logindata.firstName;
@@ -131,11 +131,11 @@ export class ProgressnotesHistoryComponent implements OnInit {
               el.dateCreateConverted =
                 this.functionService.convertDatetoMMDDYYYY(el.date_created);
               el.notessmall = this.functionService.truncateChar(el.msg, 300);
-              if (el.msg.length > 200) {
+              /* if (el.msg.length > 200) {
                 el.noteslength = true;
               } else {
                 el.noteslength = false;
-              }
+              }*/
               el.dateCreateTimeConverted = this.functionService.getTime(
                 el.date_created
               );
@@ -174,7 +174,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
   sendComment() {
     if (this.progressNotesComment.msg != '') {
       this.progressNotesComment.msg;
-      //console.log(this.progressNotesComment);
+      console.log(this.progressNotesComment);
 
       this.doctorService
         .addComment(this.progressNotesComment)
@@ -217,7 +217,9 @@ export class ProgressnotesHistoryComponent implements OnInit {
 
     this._hubConnection.on('broadcasttoresigroup', (message: any) => {
       //console.log(message);
-
+      this.readComment.resi_code = this.logindata.doctorCode;
+      this.readComment.trans_no = this.dataJson.trans_no;
+      this.read(this.readComment);
       let txtMessage = '[' + JSON.stringify(message) + ']';
       let jsonMessage = JSON.parse(txtMessage);
       let counter = jsonMessage.length;
@@ -247,6 +249,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
         //console.log('push to json');
         this.ngZone.run(() => {
           this.progessNotes.push(el);
+          this.ScrollToBottom();
         });
       });
       //console.log('scroll down');

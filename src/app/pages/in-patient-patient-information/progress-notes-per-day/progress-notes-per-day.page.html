@@ -29,23 +29,23 @@
   <ion-grid class="ion-no-padding">
     <ion-row class="custom-padding">
       <ion-col size-lg="1" *ngIf="isDesktop"></ion-col>
-      <ion-col size-lg="3" *ngIf="isDesktop">
+      <ion-col size-lg="3" size-md="12" *ngIf="isDesktop">
 
-        <patientName [patient_name]="patientInfo.patient_name" [patient_no]="patientInfo.patient_no"
-          [account_no]="patientInfo.account_no" [ap_name]="patientInfo.ap_name" [dateCreated]="patientInfo.date_created"
-          [birthday]="birthday" [age]="age">
-        </patientName>
+        <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [dischargeNotice]="dischargeNotice"
+          [forMoreOrLess]="true" [is_pwd]="is_pwd" [is_senior]="is_senior"
+          [is_philhealth_membership]="is_philhealth_membership">
+        </app-chh-app-patient-header>
       </ion-col>
       <ion-col size-md="1" size-xs="12" *ngIf="!isDesktop">
 
       </ion-col>
-      <ion-col size-md="10" size-lg="6" class="custom-border-bottom ion-no-border ">
+      <ion-col size-md="12" size-lg="6" class="custom-border-bottom ion-no-border ">
 
         <ng-container>
 
           <ion-list>
             <ion-item><b>{{event_date}}</b>
-              <ion-button slot="end" color="warning" (click)="presentAlert()" *ngIf="isApproved !='1'">Approve
+              <ion-button slot="end" color="warning" (click)="presentAlert()" *ngIf="isApproved !='1'">Approve?
               </ion-button>
               <ion-button slot="end" *ngIf="isApproved =='1'">Approved
               </ion-button>
