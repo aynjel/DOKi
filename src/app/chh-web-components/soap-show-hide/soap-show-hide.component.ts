@@ -18,10 +18,10 @@ export class SoapShowHideComponent implements OnInit {
     //console.log(this.noteslength);
     //console.log(this.comment);
 
-    if (this.comment.length >= 50) {
+    if (this.comment.length >= 150) {
       this.noteslength = true;
       this.truncating = true;
-      this.comment_small = this.funcServ.truncateChar(this.comment, 50);
+      this.comment_small = this.funcServ.truncateChar(this.comment, 150);
     } else {
       this.noteslength = false;
       this.truncating = false;
