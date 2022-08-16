@@ -101,7 +101,7 @@ export class SignMedcertPage implements OnInit {
       });
   }
   back() {
-    ////////console.log(this.idModal);
+    //////////console.log(this.idModal);
 
     this.closeModal();
   }
@@ -127,7 +127,7 @@ export class SignMedcertPage implements OnInit {
         if (signature == undefined) {
           this.isSignature = false;
         } else {
-          //////console.log(signature);
+          ////////console.log(signature);
           this.signatureID = signature.id;
           this.signatureBase64 = signature.base64image;
           this.signatureBase64Full = signature.base64imageFull;
@@ -160,7 +160,7 @@ export class SignMedcertPage implements OnInit {
   }
   ngOnInit() {
     this.checkAppearance();
-    //////////console.log('ngOnInit');
+    ////////////console.log('ngOnInit');
     this.getpdf();
     this.idModal = false;
     let scWidth = screen.width;
@@ -169,45 +169,45 @@ export class SignMedcertPage implements OnInit {
     if (scWidth <= 666) {
       this.screenWidth = scWidth - scWidth * 0.06;
       this.screenHeight = scHeight - scHeight * 0.35;
-      console.log('Screen less than 666');
-      console.log('Width 1: ', scWidth);
-      console.log('Width 2: ', scWidth * 0.06);
-      console.log('=', this.screenWidth);
-      console.log('Height 1: ', scHeight);
-      console.log('Height 2: ', scHeight * 0.35);
-      console.log('=', this.screenHeight);
+      //console.log('Screen less than 666');
+      //console.log('Width 1: ', scWidth);
+      //console.log('Width 2: ', scWidth * 0.06);
+      //console.log('=', this.screenWidth);
+      //console.log('Height 1: ', scHeight);
+      //console.log('Height 2: ', scHeight * 0.35);
+      //console.log('=', this.screenHeight);
     } else if (scWidth <= 1000) {
       this.screenWidth = scWidth - scWidth * 0.05;
       this.screenHeight = scHeight - scHeight * 0.25;
-      console.log('Screen less than 912');
-      console.log('Width 1: ', scWidth);
-      console.log('Width 2: ', scWidth * 0.05);
-      console.log('=', this.screenWidth);
-      console.log('Height 1: ', scHeight);
-      console.log('Height 2: ', scHeight * 0.15);
-      console.log('=', this.screenHeight);
+      //console.log('Screen less than 912');
+      //console.log('Width 1: ', scWidth);
+      //console.log('Width 2: ', scWidth * 0.05);
+      //console.log('=', this.screenWidth);
+      //console.log('Height 1: ', scHeight);
+      //console.log('Height 2: ', scHeight * 0.15);
+      //console.log('=', this.screenHeight);
     } else {
       this.screenWidth = scWidth - scWidth * 0.6;
       this.screenHeight = scHeight - scHeight * 0.6;
 
-      console.log('ELSE = BIG');
-      console.log('Width 1: ', scWidth);
-      console.log('Width 2: ', scWidth * 0.4);
-      console.log('=', this.screenWidth);
-      console.log('Height 1: ', scHeight);
-      console.log('Height 2: ', scHeight * 0.4);
-      console.log('=', this.screenHeight);
+      //console.log('ELSE = BIG');
+      //console.log('Width 1: ', scWidth);
+      //console.log('Width 2: ', scWidth * 0.4);
+      //console.log('=', this.screenWidth);
+      //console.log('Height 1: ', scHeight);
+      //console.log('Height 2: ', scHeight * 0.4);
+      //console.log('=', this.screenHeight);
     }
     if (scHeight >= 1180) {
       this.screenHeight = scHeight - scHeight * 0.6;
-      console.log('Greater than 1180');
-      console.log('Width 1: ', scWidth);
-      console.log('=', this.screenWidth);
-      console.log('Height 1: ', scHeight);
-      console.log('Height 2: ', scHeight * 0.6);
-      console.log('=', this.screenHeight);
+      //console.log('Greater than 1180');
+      //console.log('Width 1: ', scWidth);
+      //console.log('=', this.screenWidth);
+      //console.log('Height 1: ', scHeight);
+      //console.log('Height 2: ', scHeight * 0.6);
+      //console.log('=', this.screenHeight);
     }
-    console.log('LOGGGGGGGGGGGGG');
+    //console.log('LOGGGGGGGGGGGGG');
     this.signaturePadOptions = {
       minWidth: 5,
       canvasWidth: this.screenWidth,
@@ -216,7 +216,7 @@ export class SignMedcertPage implements OnInit {
       backgroundColor: 'rgba(255, 255, 255, 0)',
       penColor: 'rgb(0, 0, 0)',
     };
-    console.log(this.signaturePadOptions);
+    //console.log(this.signaturePadOptions);
   }
 
   //id=""
@@ -244,7 +244,7 @@ export class SignMedcertPage implements OnInit {
   }
   isConsent: boolean = true;
   openConsent() {
-    //////////console.log(history);
+    ////////////console.log(history);
 
     this.activateIsSignatureModal();
     this.setidModalTrue();
@@ -322,12 +322,12 @@ export class SignMedcertPage implements OnInit {
 
   drawComplete() {
     // will be notified of szimek/signature_pad's onEnd event
-    ////////////console.log(this.signaturePad.toDataURL());
+    //////////////console.log(this.signaturePad.toDataURL());
   }
 
   drawStart() {
     // will be notified of szimek/signature_pad's onBegin event
-    ////////////console.log('begin drawing');
+    //////////////console.log('begin drawing');
   }
 
   clearPad() {
@@ -355,7 +355,7 @@ export class SignMedcertPage implements OnInit {
     const base64Data = this.signaturePad.toDataURL('image/png');
     let compressedImage;
     this.signatureBase64Full = base64Data;
-    //console.log(this.signatureBase64Full.length);
+    ////console.log(this.signatureBase64Full.length);
 
     this.compressImage(
       base64Data,
@@ -389,7 +389,7 @@ export class SignMedcertPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {
-          // //////////console.log(data);
+          // ////////////console.log(data);
         },
         (error) => {},
         () => {
@@ -421,12 +421,12 @@ export class SignMedcertPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          ////console.log('approvePendingAPproval', res);
-          //////////console.log(res);
+          //////console.log('approvePendingAPproval', res);
+          ////////////console.log(res);
         },
         (error) => {
-          ////console.log(error);
-          //////////console.log(error);
+          //////console.log(error);
+          ////////////console.log(error);
         },
         () => {
           this.isUploaded = true;
@@ -443,7 +443,7 @@ export class SignMedcertPage implements OnInit {
     let patientId = this.activatedRoute.snapshot.params.admissionNo;
     let testJsonPDF = {
       account_no: patientId,
-      mode: 'T',
+      mode: 'P',
       print_header_footer_flg: true,
     };
     let medabstract = this.doctorService
@@ -451,14 +451,14 @@ export class SignMedcertPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {
-          //console.log(data);
+          ////console.log(data);
 
           let blob = new Blob([data], { type: 'application/pdf' });
           let downloadURL = window.URL.createObjectURL(data);
           this.pdfSrc = downloadURL;
         },
         (error) => {
-          //console.log(error);
+          ////console.log(error);
 
           this.isPDFLoading = true;
         },
@@ -507,14 +507,14 @@ export class SignMedcertPage implements OnInit {
       discharge_no: discharge_no,
       revision_dx_remarks: revision_dx_remarks,
     };
-    //console.log(dischargeNo);
+    ////console.log(dischargeNo);
 
     this.doctorService
       .cancelApprovedFinalDiagnosis(dischargeNo)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          ////console.log(res);
+          //////console.log(res);
         },
         (error) => {},
         () => {

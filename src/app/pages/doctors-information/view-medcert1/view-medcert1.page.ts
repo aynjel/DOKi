@@ -294,7 +294,7 @@ export class ViewMedcert1Page implements OnInit {
     let patientId = this.activatedRoute.snapshot.params.admissionNo;
     let testJsonPDF = {
       account_no: patientId,
-      mode: 'T',
+      mode: 'P',
       print_header_footer_flg: true,
     };
     let medabstract = this.doctorService
