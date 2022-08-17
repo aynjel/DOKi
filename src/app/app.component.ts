@@ -92,12 +92,12 @@ export class AppComponent implements OnInit {
       icon: 'settings-outline',
       type: 'medcons',
     },
-    /*{
+    {
       title: 'Help',
       url: 'menu/help',
       icon: 'help-outline',
       type: 'medcons',
-    },*/
+    },
     {
       title: 'Log Out',
       url: 'logout',

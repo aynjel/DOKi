@@ -69,4 +69,8 @@ export class HelpPage implements OnInit {
       this.closeModal();
     }
   }
+  slideOpts = {
+    initialSlide: 0,
+    speed: 400,
+  };
 }

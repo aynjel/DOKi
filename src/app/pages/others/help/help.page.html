@@ -16,19 +16,13 @@
   <!-- list one -->
   <ion-list>
     <ion-item [routerDirection]="'root'" routerLink="/menu/help">
-      <ion-label id="open-modal-1" (click)="addFakeState()">
-        Click to open Helper - 1
+      <ion-label id="open-modal-1" class="ion-text-wrap" (click)="addFakeState()">
+        How to approve Final Diagnosis & Medical Certificate?
       </ion-label>
     </ion-item>
   </ion-list>
   <!-- list two -->
-  <ion-list>
-    <ion-item [routerDirection]="'root'" routerLink="/menu/help">
-      <ion-label id="open-modal-2" (click)="addFakeState()">
-        Click to open Helper - 2
-      </ion-label>
-    </ion-item>
-  </ion-list>
+
   <!-- Modal for list one -->
   <ion-modal trigger="open-modal-1">
     <ng-template>
@@ -38,13 +32,104 @@
             <span class="padding-left-10" (click)="closeModal()" routerDirection="backward" color="chh-css-primary2">
               <ion-icon name="arrow-back-outline" class="my-icon vcenter"></ion-icon>
             </span>
-            <span class="padding-left-30 font-weight-500 font-size-20"> &nbsp;&nbsp;Helper - 1 </span>
+            <span class="padding-left-30 "> &nbsp;&nbsp;Final Diagnosis &
+              Medical Certificate?</span>
           </ion-toolbar>
         </div>
       </ion-header>
       <ion-content>
         <ion-card mode="ios">
-          <ion-item>Content Date Here</ion-item>
+          <ion-item lines="none">
+            <ion-text>Final Diagnosis Approval in DOKi App | Work Instruction</ion-text>
+          </ion-item>
+          <ion-item lines="none"></ion-item>
+          <ion-item>
+            <ion-slides pager="true" [options]="slideOpts">
+
+              <ion-slide>
+                <ion-img src="assets/help/medcertdx/1.jpg"></ion-img>
+                <div class="slider-text">
+                  <p>1. Log in to DOKi app. Then, tap the inbox icon at the upper right portion of the page.</p>
+                </div>
+              </ion-slide>
+              <ion-slide>
+                <ion-img src="assets/help/medcertdx/2.jpg"></ion-img>
+                <div class="slider-text">
+                  <p>2. Tap “FOR APPROVAL” tab.</p>
+                </div>
+              </ion-slide>
+              <ion-slide>
+                <ion-img src="assets/help/medcertdx/3.jpg"></ion-img>
+                <div class="slider-text">
+                  <p>3. If no revisions are needed, tap “View & Sign” button.</p>
+                </div>
+              </ion-slide>
+              <ion-slide>
+                <ion-img src="assets/help/medcertdx/4.jpg"></ion-img>
+                <div class="slider-text">
+                  <p>4. Preview of Medical Certificate is displayed. Tap “Sign and Approve” button to proceed.</p>
+                </div>
+              </ion-slide>
+              <ion-slide>
+                <ion-img src="assets/help/medcertdx/5.jpg"></ion-img>
+                <div class="slider-text">
+                  <p>Acknowledge the Consent Form. Then, tap SAVE button to proceed.</p>
+                </div>
+              </ion-slide>
+              <ion-slide>
+                <ion-img src="assets/help/medcertdx/6.jpg"></ion-img>
+                <div class="slider-text">
+                  <p>Affix your electronic signature. Then, tap Save button.</p>
+                </div>
+              </ion-slide>
+              <ion-slide>
+                <ion-img src="assets/help/medcertdx/7.jpg"></ion-img>
+                <div class="slider-text">
+                  <p>Signatures are saved so it can be reused in the succeeding approvals. To reuse, tap “Yes” button.
+                    Otherwise, tap “Sign
+                    Again” and follow the previous step.</p>
+                </div>
+              </ion-slide>
+              <ion-slide>
+                <ion-img src="assets/help/medcertdx/8.jpg"></ion-img>
+                <div class="slider-text">
+                  <p>Approved Final Diagnosis will be transferred to “APPROVED” tab, tap to check.</p>
+                </div>
+              </ion-slide>
+              <ion-slide>
+                <ion-img src="assets/help/medcertdx/9.jpg"></ion-img>
+                <div class="slider-text">
+                  <p>If revision is necessary, tap “Send for Revision” button.</p>
+                </div>
+              </ion-slide>
+              <ion-slide>
+                <ion-img src="assets/help/medcertdx/10.jpg"></ion-img>
+                <div class="slider-text">
+                  <p>Specify the revision/s and tap “Save”.</p>
+                </div>
+              </ion-slide>
+              <ion-slide>
+                <ion-img src="assets/help/medcertdx/11.jpg"></ion-img>
+                <div class="slider-text">
+                  <p>It will then be displayed under “FOR REVISION” tab, tap to check.</p>
+                </div>
+              </ion-slide>
+              <ion-slide>
+                <ion-img src="assets/help/medcertdx/12.jpg"></ion-img>
+                <div class="slider-text">
+                  <p>Once revised and resubmitted for approval thru HIS, an SMS notification is sent to AP.</p>
+                </div>
+              </ion-slide>
+              <ion-slide>
+                <ion-img src="assets/help/medcertdx/13.jpg"></ion-img>
+                <div class="slider-text">
+                  <p>It will be displayed under “FOR APPROVAL” tab with “Revised” tagging. Tap to check and
+                    approve.
+                  </p>
+                </div>
+              </ion-slide>
+            </ion-slides>
+          </ion-item>
         </ion-card>
       </ion-content>
     </ng-template>

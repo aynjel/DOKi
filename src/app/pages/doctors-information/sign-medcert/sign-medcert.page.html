@@ -48,6 +48,8 @@
               style="width: 100vh; height: 60vh;">
             </pdf-viewer>
           </pinch-zoom>
+          <ion-text *ngIf="isPDFLoading">Disclaimer: Discharge Date will be displayed once Discharge Notice is saved in
+            HIS.</ion-text>
 
           <ion-button id="trigger-button-certificate-signmedcert" style="display:none">Sign Document</ion-button>
           <ion-item>
