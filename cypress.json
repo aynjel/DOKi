@@ -15,6 +15,7 @@
     "medicalAbstractUrl" : "/menu/medical-abstract",
     "medicalCertUrl" : "/menu/medical-certificate",
     "settingsUrl": "/menu/settings",
-    "executiveUrl": "/executive/dashboard"
+    "executiveUrl": "/executive/dashboard",
+    "inboxUrl": "/menu/inbox"
   }
 }

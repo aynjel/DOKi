@@ -647,6 +647,9 @@ Cypress.Commands.add('clicktab', (tabno) => {
   if (taboptions[tabno] == "Log Out")
     cy.url({ timeout: 10000 }).should("include", Cypress.env("loginUrl"))
 
+  if (taboptions[tabno] == "Inbox")
+    cy.url({ timeout: 10000 }).should("include", Cypress.env("inboxUrl"))
+
   // cy.reload()
 })
 
@@ -676,7 +679,8 @@ var taboptions = ["Collectibles",
   "Medical Abstract",
   "Medical Certificate",
   "Settings",
-  "Log Out"
+  "Log Out",
+  "Inbox"
 ];
 
 var menuoptions = ["button-dashboard",
