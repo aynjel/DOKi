@@ -10,6 +10,7 @@ import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.serv
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SignaturePad } from 'angular2-signaturepad';
+import { Constants } from 'src/app/shared/constants';
 @Component({
   selector: 'app-view-medcert',
   templateUrl: './view-medcert.page.html',
@@ -39,6 +40,7 @@ export class ViewMedcertPage implements OnInit {
   isbutton = false;
   idModal: boolean = false;
   selectedPatient;
+  mode = this.constant.modeForProd;
   constructor(
     private navCtrl: NavController,
     public doctorService: DoctorService,
@@ -47,7 +49,8 @@ export class ViewMedcertPage implements OnInit {
     public actionSheetController: ActionSheetController,
     public router: Router,
     public activatedRoute: ActivatedRoute,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private constant: Constants
   ) {
     this.isNotification = true;
     this.screensizeService
@@ -195,7 +198,7 @@ export class ViewMedcertPage implements OnInit {
       medcert_approve_by: 'string',
       medcert_signature: 'string',
     };
-    testAprrove.mode = 'T';
+    testAprrove.mode = this.mode;
     testAprrove.account_no = patientId;
     testAprrove.medcert_comment = 'medcert_comment';
     testAprrove.medcert_approve_by = 'medcert_approve_by';
@@ -246,7 +249,7 @@ export class ViewMedcertPage implements OnInit {
     let patientId = this.activatedRoute.snapshot.params.admissionNo;
     let testJsonPDF = {
       account_no: patientId,
-      mode: 'P',
+      mode: this.mode,
       print_header_footer_flg: true,
     };
     let medabstract = this.doctorService

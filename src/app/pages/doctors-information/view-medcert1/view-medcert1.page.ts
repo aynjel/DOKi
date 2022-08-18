@@ -41,6 +41,7 @@ export class ViewMedcert1Page implements OnInit {
   isbutton = false;
   idModal: boolean = false;
   selectedPatient;
+  mode = this.constants.modeForProd;
   constructor(
     private navCtrl: NavController,
     public doctorService: DoctorService,
@@ -203,7 +204,7 @@ export class ViewMedcert1Page implements OnInit {
       medcert_approve_by: 'string',
       medcert_signature: 'string',
     };
-    testAprrove.mode = 'T';
+    testAprrove.mode = this.mode;
     testAprrove.account_no = patientId;
     testAprrove.medcert_comment = 'medcert_comment';
     testAprrove.medcert_approve_by = 'medcert_approve_by';
@@ -294,7 +295,7 @@ export class ViewMedcert1Page implements OnInit {
     let patientId = this.activatedRoute.snapshot.params.admissionNo;
     let testJsonPDF = {
       account_no: patientId,
-      mode: 'P',
+      mode: this.mode,
       print_header_footer_flg: true,
     };
     let medabstract = this.doctorService

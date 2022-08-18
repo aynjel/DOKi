@@ -22,6 +22,7 @@ import { FunctionsService } from 'src/app/shared/functions/functions.service';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { LoginResponseModelv3, SignatureApproval } from 'src/app/models/doctor';
+import { Constants } from 'src/app/shared/constants';
 @Component({
   selector: 'app-sign-medcert',
   templateUrl: './sign-medcert.page.html',
@@ -51,7 +52,7 @@ export class SignMedcertPage implements OnInit {
   };
   isbutton = false;
   idModal: boolean = false;
-
+  mode = this.constant.modeForProd;
   constructor(
     private navCtrl: NavController,
     public doctorService: DoctorService,
@@ -65,7 +66,8 @@ export class SignMedcertPage implements OnInit {
     private dbService: NgxIndexedDBService,
     private authService: AuthService,
     public functionsService: FunctionsService,
-    private animationCtrl: AnimationController
+    private animationCtrl: AnimationController,
+    private constant: Constants
   ) {
     this.isNotification = true;
     this.screensizeService
@@ -259,7 +261,7 @@ export class SignMedcertPage implements OnInit {
     this.closeModal();
     let patientId = this.activatedRoute.snapshot.params.admissionNo;
     let testAprrove: SignatureApproval = new SignatureApproval();
-    testAprrove.mode = 'T';
+    testAprrove.mode = this.mode;
     testAprrove.account_no = patientId;
     testAprrove.medcert_comment = '';
     testAprrove.medcert_approve_by = this.dr_code;
@@ -372,7 +374,7 @@ export class SignMedcertPage implements OnInit {
         medcert_approve_by: 'string',
         medcert_signature: 'string',
       };
-      testAprrove.mode = 'T';
+      testAprrove.mode = this.mode;
       testAprrove.account_no = patientId;
       testAprrove.medcert_comment = '';
       testAprrove.medcert_approve_by = this.dr_code;
@@ -443,7 +445,7 @@ export class SignMedcertPage implements OnInit {
     let patientId = this.activatedRoute.snapshot.params.admissionNo;
     let testJsonPDF = {
       account_no: patientId,
-      mode: 'P',
+      mode: this.mode,
       print_header_footer_flg: true,
     };
     let medabstract = this.doctorService
