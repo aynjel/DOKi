@@ -8,7 +8,7 @@
       color="chh-css-primary2"        
       >
       <ion-icon 
-        name="chevron-back-outline" 
+        name="arrow-back-outline" 
         class="my-icon vcenter">
       </ion-icon>
     </span>
@@ -29,6 +29,51 @@
 </ion-header>
 <!-- <app-chh-app-desktop-navigation *ngIf="isDesktop"></app-chh-app-desktop-navigation> -->
 <ion-content *ngIf="ccCase=='first'">
+
+
+
+
+
+
+
+
+
+
+
+  <ion-list>
+    <ion-item *ngFor="let x of caseRateResponse_first">
+      <ion-label>asd
+        <h2 class="ion-text-wrap">{{x.case_desc}}</h2>
+        <h3 class="ion-text-wrap" slot="end">Case Code : {{x.case_code}}</h3>
+        <ion-badge
+          ><h3 class="ion-text-wrap">
+            <b>PF : {{x.case_pf }}</b>
+          </h3></ion-badge
+        >
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <div class="custom-skeleton" *ngIf="ionSkeleton">
     <ion-list>
       <ion-item>
@@ -85,12 +130,12 @@
   </div>
   <ion-list>
     <ion-item *ngFor="let x of caseRateResponse_first">
-      <ion-label>
+      <ion-label>asd
         <h2 class="ion-text-wrap">{{x.case_desc}}</h2>
         <h3 class="ion-text-wrap" slot="end">Case Code : {{x.case_code}}</h3>
         <ion-badge
           ><h3 class="ion-text-wrap">
-            <b>PF : {{x.case_pf | number}}</b>
+            <b>PF : {{x.case_pf }}</b>
           </h3></ion-badge
         >
       </ion-label>
@@ -159,7 +204,7 @@
         <h3 class="ion-text-wrap" slot="end">Case Code : {{x.case_code}}</h3>
         <ion-badge
           ><h3 class="ion-text-wrap">
-            <b>PF : {{x.case_pf | number}}</b>
+            <b>PF : {{x.case_pf }}</b>
           </h3></ion-badge
         >
       </ion-label>
@@ -182,14 +227,14 @@
   </ion-segment>
   <ion-item>
     <ion-label position="floating">Code : </ion-label>
-    <ion-input [(ngModel)]="caseRateData.CaseSearchCode"></ion-input>
+    <ion-input [(ngModel)]="caseRateData.CaseSearchCode" id="input-code"></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label position="floating" [class.activedescription]="activedescription"
       >Description :
     </ion-label>
-    <ion-input [(ngModel)]="caseRateData.CaseSearchDesc"></ion-input>
+    <ion-input [(ngModel)]="caseRateData.CaseSearchDesc" id="input-searchdesc"></ion-input>
   </ion-item>
   <ion-grid class="ion-no-padding">
     <ion-row>

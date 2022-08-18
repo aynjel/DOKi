@@ -1,6 +1,6 @@
 {
   "baseUrl": "http://localhost:8100",
-  "projectId": "v1wydv",
+  "projectId":"7xogx8",
   "retries": 2,
   "env": {
     "baseUrlToTest": "http://localhost:8100",
@@ -10,6 +10,12 @@
     "inpatientsAdmittedUrl": "/menu/in-patients/AC",
     "inpatientsDischargedUrl": "/menu/in-patients/DN",
     "appointmentsUrl": "/menu/appointments",
-    "settingsUrl": "/menu/settings"
+    "newsfeedUrl": "/menu/appointments",
+    "collectiblesUrl" : "/menu/collectibles",
+    "medicalAbstractUrl" : "/menu/medical-abstract",
+    "medicalCertUrl" : "/menu/medical-certificate",
+    "settingsUrl": "/menu/settings",
+    "executiveUrl": "/executive/dashboard",
+    "inboxUrl": "/menu/inbox"
   }
 }

@@ -1,0 +1,185 @@
+<ion-header mode="md" class="ion-no-border">
+  <div *ngIf="!isDesktop">
+    <ion-toolbar color="mango">
+      <ion-title>
+        <ion-icon name="wallet-outline"></ion-icon> Collectibles<ion-text style="font-size:14px">
+        </ion-text>
+      </ion-title>
+    </ion-toolbar>
+  </div>
+
+
+
+
+  <ion-grid class="ion-no-padding chh-darkmode">
+    <ion-row class="custom-padding">
+      <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3" class="custom-border-bottom ion-no-border ">
+
+        <ion-segment (ionChange)="selectDoctor($event)" [(ngModel)]="drCode">
+          <ion-segment-button value="MD000047">
+            <ion-label>Dr. Abalos</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="MD000220">
+            <ion-label>Dr. Quiza</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment (ionChange)="selectSite($event)" [(ngModel)]="site">
+          <ion-segment-button value="C">
+            <ion-label>Cebu</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="M">
+            <ion-label>Mandaue</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-item>
+          <ion-label>Choose</ion-label>
+          <ion-select placeholder="Select One" [(ngModel)]="mode" (ionChange)="selectedMode()">
+            <ion-select-option value="regpf">Regular PF</ion-select-option>
+            <ion-select-option value="phicpf">PhilHealth PF</ion-select-option>
+            <ion-select-option value="readersfee">Readers Fee</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <div>
+          <ion-grid class="ion-no-padding">
+            <ion-row class="custom-padding">
+              <ion-col size="6">
+                <ion-item button="true" id="open-modalFrom" style="font-size: 13px !important;">
+                  <ion-label>From</ion-label>
+                  <ion-text slot="end">{{ dateTodayFrom }}</ion-text>
+                </ion-item>
+              </ion-col>
+              <ion-col size="6">
+                <ion-item button="true" id="open-modalTo" style="font-size: 13px !important;">
+                  <ion-label>To</ion-label>
+                  <ion-text slot="end">{{ dateTodayTo }}</ion-text>
+                </ion-item>
+
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <ion-modal trigger="open-modalFrom" class="ion6modal">
+            <ng-template>
+              <ion-content class="blur">
+                <ion-datetime #popoverDatetime presentation="date"
+                  (ionChange)="formatDateRegularPF('from',popoverDatetime.value)" showDefaultButtons="true"
+                  [value]="dateValueFrom">
+                </ion-datetime>
+              </ion-content>
+            </ng-template>
+          </ion-modal>
+          <ion-modal trigger="open-modalTo" class="ion6modal">
+            <ng-template>
+              <ion-content class="blur">
+                <ion-datetime #popoverDatetime presentation="date"
+                  (ionChange)="formatDateRegularPF('to',popoverDatetime.value)" showDefaultButtons="true"
+                  [value]="dateValueTo">
+                </ion-datetime>
+              </ion-content>
+            </ng-template>
+          </ion-modal>
+          <!--ion-item button="true" id="open-modalYear" style="font-size: 13px !important;">
+              <ion-label>Year</ion-label>
+              <ion-text slot="end">{{ dateTodayYear }}</ion-text>
+            </ion-item>
+            <ion-modal trigger="open-modalYear" class="ion6modal">
+              <ng-template>
+                <ion-content class="blur">
+                  <ion-datetime #popoverDatetime presentation="year"
+                    (ionChange)="formatDateRegularPF('year',popoverDatetime.value)" showDefaultButtons="true"
+                    [value]="dateValueYear">
+                  </ion-datetime>
+                </ion-content>
+              </ng-template>
+            </ion-modal-->
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-no-padding">
+    <ion-row class="custom-padding">
+      <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3" class="custom-border-bottom ion-no-border ">
+
+        <ion-list *ngIf="DOKiPFRegularPreview">
+          <div *ngFor="let x of DOKiPFRegularPreview">
+            <collectibles [dataCollection]="x" [name]="x.name" [collection_date]="x.collection_date"></collectibles>
+          </div>
+        </ion-list>
+
+
+
+        <ion-card *ngIf="isPreviewLoading">
+          <ion-item>
+            <ion-label style="margin-top: -10px;">
+              <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-item>
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-label>
+          </ion-item>
+        </ion-card>
+        <ion-card *ngIf="emptyState">
+          <ion-item>
+            <ion-label style="margin-top: -10px;">
+              <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                No Data
+              </ion-item>
+
+            </ion-label>
+          </ion-item>
+        </ion-card>
+
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-modal trigger="trigger-button" [isOpen]="false" [breakpoints]="[0, 1]" [initialBreakpoint]="1">
+    <ng-template>
+      <ion-header mode="md" class="ion-no-border">
+        <div *ngIf="!isDesktop">
+          <ion-toolbar color="mango">
+            <ion-title>
+              <ion-icon name="wallet-outline"></ion-icon> PDF View<ion-text style="font-size:14px">
+              </ion-text>
+            </ion-title>
+          </ion-toolbar>
+        </div>
+      </ion-header>
+      <ion-content>
+        <ion-card *ngIf="isPDFLoading">
+          <ion-item>
+            <ion-label style="margin-top: -10px;">
+              <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-item>
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-label>
+          </ion-item>
+        </ion-card>
+        <pinch-zoom style="background-color: rgb(255, 255, 255);">
+          <pdf-viewer [src]="pdfSrc" [rotation]="0" [original-size]="false" [show-all]="true" [fit-to-page]="false"
+            [zoom]="1" [zoom-scale]="'page-width'" [stick-to-page]="false" [render-text]="true"
+            [external-link-target]="'blank'" [autoresize]="true" [show-borders]="false"
+            style="width: 100vh; height: 60vh;">
+          </pdf-viewer>
+        </pinch-zoom>
+      </ion-content>
+      <ion-footer>
+        <ion-toolbar>
+          <ion-title>
+            <ion-button expand="block" color="mango" (click)="downloadpdf()">Download</ion-button>
+          </ion-title>
+        </ion-toolbar>
+      </ion-footer>
+    </ng-template>
+  </ion-modal>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button id="trigger-button" (click)="savepdf()">
+      <ion-icon name="document-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

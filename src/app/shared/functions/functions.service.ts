@@ -1,17 +1,25 @@
 import { Injectable } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { Constants } from '../constants';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import * as bcrypt from 'bcryptjs';
+import { Inject, PLATFORM_ID, InjectionToken, Component } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 @Injectable({
   providedIn: 'root',
 })
 export class FunctionsService {
+  private readonly documentIsAccessible: boolean;
   constructor(
     public alertController: AlertController,
-    public constants: Constants
-  ) {}
+    public constants: Constants,
+    public toastController: ToastController,
+    @Inject(DOCUMENT) private document: any,
+    @Inject(PLATFORM_ID) private platformId: InjectionToken<Object>
+  ) {
+    this.documentIsAccessible = isPlatformBrowser(this.platformId);
+  }
 
   /**
    * Alert
@@ -22,6 +30,7 @@ export class FunctionsService {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       message: data1,
+      backdropDismiss: false,
       buttons: [{ text: data2, handler: () => {} }],
     });
     await alert.present();
@@ -78,7 +87,7 @@ export class FunctionsService {
     let myarr = data.split('T');
     if (myarr[1]) {
       let myarr2 = myarr[1].split('.');
-      // console.log(myarr[0] + " | " + myarr2[0]);
+      // //console.log(myarr[0] + " | " + myarr2[0]);
       return myarr[0] + ' | ' + myarr2[0];
     }
   }
@@ -214,7 +223,7 @@ export class FunctionsService {
    */
   logToConsole(message: any) {
     if (environment.consoleLog) {
-      console.log(message);
+      //console.log(message);
     }
   }
 
@@ -225,11 +234,227 @@ export class FunctionsService {
     );
   }
 
+  isLocalorLive(data: any) {
+    if (localStorage.getItem('testdb') == '1') {
+      return data + 'Test';
+    } else {
+      return data;
+    }
+  }
   // numberWithCommas(x) {
   //   return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
   // }
-  
+
   isEmptyObject(obj) {
     return !Object.keys(obj).length;
+  }
+
+  check(name: string): boolean {
+    if (!this.documentIsAccessible) {
+      return false;
+    }
+
+    name = encodeURIComponent(name);
+
+    const regExp: RegExp = this.getCookieRegExp(name);
+    const exists: boolean = regExp.test(this.document.cookie);
+
+    return exists;
+  }
+  getcookie(name: string): string {
+    if (this.documentIsAccessible && this.check(name)) {
+      name = encodeURIComponent(name);
+
+      const regExp: RegExp = this.getCookieRegExp(name);
+      const result: RegExpExecArray = regExp.exec(this.document.cookie);
+
+      return decodeURIComponent(result[1]);
+    } else {
+      return '';
+    }
+  }
+  private getCookieRegExp(name: string): RegExp {
+    const escapedName: string = name.replace(
+      /([\[\]\{\}\(\)\|\=\;\+\?\,\.\*\^\$])/gi,
+      '\\$1'
+    );
+
+    return new RegExp(
+      '(?:^' + escapedName + '|;\\s*' + escapedName + ')=(.*?)(?:;|$)',
+      'g'
+    );
+  }
+
+  getAdmissionStatus(data: any) {
+    let x = '';
+    if (data == 'RE') {
+      x = 'Registered';
+    } else if (data == 'AC') {
+      x = 'Admitted';
+    } else if (data == 'DN') {
+      x = 'For Discharge';
+    } else if (data == 'BP') {
+      x = 'Partially Settled';
+    } else if (data == 'PP') {
+      x = 'Ok For Checkout';
+    } else if (data == 'CO') {
+      x = 'Checkout';
+    } else if (data == 'BA') {
+      x = 'Billing Approved';
+    } else if (data == 'CC') {
+      x = 'Checked-out With Balance';
+    } else if (data == 'FP') {
+      x = 'Ok For Checkout';
+    } else if (data == 'CA') {
+      x = 'Cancelled';
+    } else if (data == 'PA') {
+      x = 'Pre-Admitted';
+    } else if (data == 'OP') {
+      x = 'Re-Opened (w/o b)';
+    } else if (data == 'ON') {
+      x = 'Re-Opened (wb)';
+    } else if (data == 'UA') {
+      x = 'Unit Admission';
+    } else if (data == 'BB') {
+      x = 'Fully Settled';
+    }
+
+    return x;
+  }
+  getDateTodayMMDDYYYY() {
+    let dateCreate = new Date();
+    let dd = String(dateCreate.getDate()).padStart(2, '0');
+    let mm = String(dateCreate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = dateCreate.getFullYear();
+    let xtoday = mm + '/' + dd + '/' + yyyy;
+    return xtoday;
+  }
+  convertDatetoMMDDYYYY(date) {
+    let dateCreate = new Date(date);
+    let dd = String(dateCreate.getDate()).padStart(2, '0');
+    let mm = String(dateCreate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = dateCreate.getFullYear();
+    let xtoday = mm + '/' + dd + '/' + yyyy;
+    return xtoday;
+  }
+  getTime(date) {
+    var d = new Date(date); // for now
+    let Hour = d.getHours(); // => 9
+    let Min = d.getMinutes(); // =>  30
+    let Sec = d.getSeconds(); // => 51
+    let xtime = Hour + ':' + Min + ':' + Sec;
+    return xtime;
+  }
+  imageExists(image_url) {
+    var http = new XMLHttpRequest();
+
+    http.open('HEAD', image_url, false);
+    http.send();
+
+    return http.status != 404;
+  }
+  getDateYYYYMMDD(date: any = '') {
+    let dateReturn;
+    if (date == '') {
+      let date1 = new Date();
+      let day1 = date1.getDate();
+      let month1 = date1.getMonth() + 1;
+      let year1 = date1.getFullYear();
+      dateReturn =
+        year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
+    } else {
+      let today = new Date();
+      let days = 86400000; //number of milliseconds in a day
+      let fiveDaysAgo = new Date(today.getTime() - date * days);
+      let day11 = fiveDaysAgo.getDate();
+      let month11 = fiveDaysAgo.getMonth() + 1;
+      let year11 = fiveDaysAgo.getFullYear();
+      dateReturn =
+        year11 +
+        '-' +
+        ('0' + month11).slice(-2) +
+        '-' +
+        ('0' + day11).slice(-2);
+    }
+    return dateReturn;
+  }
+
+  convertDatetoMMDDYYYYHHMMSS(date) {
+    let dateCreate = new Date(date);
+    let dd = String(dateCreate.getDate()).padStart(2, '0');
+    let mm = String(dateCreate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = dateCreate.getFullYear();
+    let xtoday = mm + '/' + dd + '/' + yyyy;
+
+    var hours = dateCreate.getHours();
+    var minutes = dateCreate.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    let minute = minutes < 10 ? '0' + minutes : minutes;
+    var strTime = hours + ':' + minute + ' ' + ampm;
+
+    return xtoday + ' ' + strTime;
+  }
+  getFormatAMPM(date) {
+    let newdate = new Date(date);
+    var hours = newdate.getHours();
+    var minutes: any = newdate.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+  }
+
+  getDateYYYYMMDD_90() {
+    let today = new Date();
+    let days = 86400000; //number of milliseconds in a day
+    let fiveDaysAgo = new Date(today.getTime() - 15 * days);
+    let day11 = fiveDaysAgo.getDate();
+    let month11 = fiveDaysAgo.getMonth() + 1;
+    let year11 = fiveDaysAgo.getFullYear();
+    let sendDatedateValue11 =
+      year11 + '-' + ('0' + month11).slice(-2) + '-' + ('0' + day11).slice(-2);
+    return sendDatedateValue11;
+  }
+  async presentToast(data) {
+    const toast = await this.toastController.create({
+      message: data,
+      duration: 2000,
+    });
+    toast.present();
+  }
+  convertDatedash(date) {
+    let dateCreate = new Date(date);
+    let dd = String(dateCreate.getDate()).padStart(2, '0');
+    let mm = String(dateCreate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = dateCreate.getFullYear();
+    let xtoday = mm + '-' + dd + '-' + yyyy;
+    return xtoday;
+  }
+  countDays(from, to) {
+    from = new Date(from);
+    to = new Date(to);
+    const diffTime = Math.abs(to - from);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  }
+  calculateAge(birthDate, otherDate) {
+    birthDate = new Date(birthDate);
+    otherDate = new Date(otherDate);
+
+    var years = otherDate.getFullYear() - birthDate.getFullYear();
+
+    if (
+      otherDate.getMonth() < birthDate.getMonth() ||
+      (otherDate.getMonth() == birthDate.getMonth() &&
+        otherDate.getDate() < birthDate.getDate())
+    ) {
+      years--;
+    }
+
+    return years;
   }
 }

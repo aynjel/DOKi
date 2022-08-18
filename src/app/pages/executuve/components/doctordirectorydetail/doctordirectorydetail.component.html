@@ -1,0 +1,97 @@
+<!--ion-header mode="md" class="ion-no-border">
+  <ion-toolbar color="mango">
+    <span class="padding-left-10" (click)="closemodal()" routerDirection="backward" color="chh-css-primary2">
+      <ion-icon name="arrow-back-outline" class="my-icon vcenter"></ion-icon>
+    </span>
+    <span class="padding-left-30 font-weight-500 font-size-20"> &nbsp;&nbsp;Information </span>
+  </ion-toolbar>
+  <ion-list style=" box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);">
+    <ion-item>
+      <ion-avatar slot="start">
+        <chh-app-text-avatar [text]="lastName" [color]=""></chh-app-text-avatar>
+      </ion-avatar>
+      <ion-label style="margin-top: -5px;">
+        <ion-item slot="start" lines="" class="ion-no-padding" style="padding-bottom: 5px;">
+          <h2 class="ion-text-wrap" style="padding-top: 20px;">
+            {{ firstname }} {{ middleName }} {{ lastName }}
+          </h2>
+
+        </ion-item>
+
+        <ion-row class="ion-no-padding" lines="none" style="padding-top: 10px !important;">
+          <p>
+            <span>
+              <ion-icon name="newspaper-outline" slot="start"></ion-icon> {{deptCode}}
+            </span>
+          </p>
+          <br />
+        </ion-row>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-header>
+<ion-content>
+
+</ion-content-->
+
+<ion-header mode="md" class="ion-no-border">
+  <ion-toolbar color="mango">
+    <span class="padding-left-10" (click)="closemodal()" routerDirection="backward" color="chh-css-primary2">
+      <ion-icon name="arrow-back-outline" class="my-icon vcenter"></ion-icon>
+    </span>
+    <span class="padding-left-30 font-weight-500 font-size-20"> &nbsp;&nbsp;Information </span>
+  </ion-toolbar>
+  <!--ion-list style=" box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);">
+    <ion-item>
+      <ion-avatar slot="start">
+        <chh-app-text-avatar [text]="lastName" [color]=""></chh-app-text-avatar>
+      </ion-avatar>
+      <ion-label style="margin-top: -5px;">
+        <ion-item slot="start" lines="" class="ion-no-padding" style="padding-bottom: 5px;">
+          <h2 class="ion-text-wrap" style="padding-top: 20px;">
+            {{ firstname }} {{ middleName }} {{ lastName }}
+          </h2>
+
+        </ion-item>
+
+        <ion-row class="ion-no-padding" lines="none" style="padding-top: 10px !important;">
+          <p>
+            <span>
+              <ion-icon name="newspaper-outline" slot="start"></ion-icon> {{deptCode}}
+            </span>
+          </p>
+          <br />
+        </ion-row>
+      </ion-label>
+    </ion-item>
+  </ion-list-->
+
+</ion-header>
+
+<ion-content fullscreen="true" slot="fixed">
+  <div class="bg-content">
+    <div class="card">
+
+      <div class="header">
+        <div class="avatar">
+          <img src="../../../../../assets/img/default_female.jpg" alt="" *ngIf="gender == 'F'">
+          <img src="../../../../../assets/img/default_male.jpg" alt="" *ngIf="gender == 'M'">
+        </div>
+      </div>
+      <div class="card-body" *ngFor="let x of information">
+
+        <div class="user-meta ion-text-center">
+          <h4 class="playername">{{ firstname }} {{ middleName }} {{ lastName }}, M.D.</h4>
+          <h6 class="country ion-text-wrap">{{x.expertise}}</h6>
+        </div>
+        <a href="tel:{{x.mobileNo}}">
+          <ion-button expand="full" color="primary">{{x.mobileNo}}</ion-button>
+        </a>
+
+        <!--ion-button expand="full" color="secondary">@RogerFederer on Twitter</ion-button>
+        <ion-button expand="full" color="secondary">View profile at ATP</ion-button-->
+      </div>
+    </div>
+  </div>
+</ion-content>

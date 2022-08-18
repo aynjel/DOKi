@@ -1,0 +1,12 @@
+<ion-card-content id="asdasd{{counter}}" class="" style="padding-top:0; white-space: pre-wrap;" #target>
+  <div *ngIf="truncating">
+    <ion-text class="custom-font" [innerHtml]="notesmall"></ion-text>
+    <br />
+    <ion-button color="light" size="small" color="light" (click)="process()" *ngIf="noteslength">show more</ion-button>
+  </div>
+  <div *ngIf="!truncating">
+    <ion-text class="custom-font" [innerHtml]="notes"></ion-text>
+    <br />
+    <ion-button color="light" size="small" color="light" (click)="process();" *ngIf="noteslength">show less</ion-button>
+  </div>
+</ion-card-content>

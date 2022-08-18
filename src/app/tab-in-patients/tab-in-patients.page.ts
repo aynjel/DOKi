@@ -2,20 +2,12 @@ import { Component, Renderer2 } from '@angular/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { StorageService } from '../services/storage/storage.service';
-import { AuthConstants } from '../config/auth-constants';
+import { Consta } from '../config/auth-constants';
+
 import { DoctorService } from '../services/doctor/doctor.service';
-import {
-  ModalController,
-  AlertController,
-  NavController,
-} from '@ionic/angular';
-import { ChhAppPatientDetailsPage } from '../chh-web-components/chh-app-patient-details/chh-app-patient-details.page';
+import { ModalController, NavController } from '@ionic/angular';
 import { ScreenSizeService } from '../services/screen-size/screen-size.service';
 import { PopoverController } from '@ionic/angular';
-import { ChhAppInPatientModalPage } from '../chh-web-components/chh-app-in-patient-modal/chh-app-in-patient-modal.page';
-import { timeStamp } from 'console';
-import { DoctorInfoGlobal } from '../shared/doctor-info-global';
-import { LoginData } from '../models/login-data.model';
 import { InPatientData } from '../models/in-patient.model';
 import { Location } from '@angular/common';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
@@ -23,16 +15,23 @@ import { FunctionsService } from '../shared/functions/functions.service';
 import { Constants } from '../shared/constants';
 import { Messages } from '../shared/messages';
 import { PatientService } from '../services/patient/patient.service';
+import {
+  InpatientModelInpatients,
+  LoginResponseModelv3,
+} from '../models/doctor';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import { takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
 @Component({
   selector: 'app-tab-in-patients',
   templateUrl: 'tab-in-patients.page.html',
   styleUrls: ['tab-in-patients.page.scss'],
 })
 export class TabInPatientsPage {
-  public logindata: LoginData;
+  inpatientModelInpatients = new InpatientModelInpatients();
+  public logindata: LoginResponseModelv3;
   public inPatientData: InPatientData;
   isDesktop: boolean;
   isFetchDone: boolean = false;
@@ -40,44 +39,47 @@ export class TabInPatientsPage {
   inPatients: any;
   inPatientsDraft: any;
   inPatientsDraft1: any;
-  site: any = this.constants.CHH_SITE__CODE__ALL; //"A";
+  site: any = this.constants.CHH_SITE__CODE__CEBU; //"A";
   searchBar: any;
   name: any;
   admittedOrDischarge = this.constants.ADMISSION_STATUS_SELECTION__VALUE__ALL; //"ALL";
   admittedOrDischargeLabel = '';
   route: string;
   objecthandler: boolean = false;
-
+  data: any = [];
+  isNotification: boolean;
+  finalFullData = [];
+  defaultAccordions;
+  private ngUnsubscribe = new Subject();
   constructor(
     private authService: AuthService,
     private router: Router,
-    private storageService: StorageService,
     private doctorService: DoctorService,
-    private modalController: ModalController,
     private screensizeService: ScreenSizeService,
-    private popover: PopoverController,
     private location: Location,
     public functionsService: FunctionsService,
     private renderer: Renderer2,
     protected $gaService: GoogleAnalyticsService,
     public constants: Constants,
     public messages: Messages,
-    private patientService: PatientService,
     public nav: NavController
   ) {
-    console.log('In-patient : Constructor');
-    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
-      if (this.isDesktop && !isDesktop) {
-        window.location.reload();
-      }
-      this.isDesktop = isDesktop;
-    });
-    router.events.subscribe((val) => {
+    this.screensizeService
+      .isDesktopView()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((isDesktop) => {
+        if (this.isDesktop && !isDesktop) {
+          window.location.reload();
+        }
+        this.isDesktop = isDesktop;
+      });
+    router.events.pipe(takeUntil(this.ngUnsubscribe)).subscribe((val) => {
       if (location.path() == '/menu/in-patients') {
         this.admittedOrDischarge = this.constants.CHH_SITE__VALUE__ALL; //"ALL";
         this.admittedOrDischargeLabel = '';
       } else if (location.path() == '/menu/in-patients/AC') {
-        this.admittedOrDischarge = this.constants.ADMISSION_STATUS__CODE__ADMITTED; //"AC";
+        this.admittedOrDischarge =
+          this.constants.ADMISSION_STATUS__CODE__ADMITTED; //"AC";
         this.admittedOrDischargeLabel =
           '(' +
           this.functionsService.convertAllFirstLetterToUpperCase(
@@ -85,17 +87,53 @@ export class TabInPatientsPage {
           ) +
           ')'; //"(Admitted)";
       } else if (location.path() == '/menu/in-patients/DN') {
-        this.admittedOrDischarge = this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE; //"DN";
+        this.admittedOrDischarge =
+          this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE; //"DN";
         this.admittedOrDischargeLabel = '(for Discharge)';
       }
     });
   }
 
   ngOnInit() {
-    console.log('In-patient : ngOnInit');
+    ////console.log('ngOnInit');
+
+    this.checkAppearance();
     this.$gaService.pageView('/In-Patient', 'In-Patient Tab');
   }
+  dateToday;
+  dateNow;
 
+  checkInbox() {
+    let data = {
+      dt_from: this.functionsService.getDateYYYYMMDD(9999) + 'T00:00:00.000Z',
+      dt_to: this.functionsService.getDateYYYYMMDD() + 'T00:00:00.000Z',
+    };
+    //console.log(data);
+
+    let jsonResponse = null;
+    this.doctorService
+      .getPendingApproval(data)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          jsonResponse = res;
+        },
+        (error) => {
+          //console.log(error);
+        },
+        () => {
+          this.isNotification = false;
+          jsonResponse.forEach((element) => {
+            if (
+              element.approval_status == 'FA' ||
+              element.approval_status == 'RA'
+            ) {
+              this.isNotification = true;
+            }
+          });
+        }
+      );
+  }
   /* async Alert(data1: any, data2: any) {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
@@ -109,26 +147,40 @@ export class TabInPatientsPage {
     if (this.site == this.constants.CHH_SITE__CODE__ALL /*"A"*/) {
       this.inPatients = [];
       this.inPatients = this.inPatientsDraft;
+      this.finalFullData = [];
     } else {
       this.inPatients = [];
+      this.finalFullData = [];
+      /*
       this.inPatientsDraft.forEach((element) => {
-        if (this.site == this.constants.CHH_SITE__CODE__CEBU /*"C"*/) {
-          if (element.site == this.constants.CHH_SITE__CODE__CEBU /*"C"*/) {
+        if (this.site == this.constants.CHH_SITE__CODE__CEBU ) {
+          if (element.site == this.constants.CHH_SITE__CODE__CEBU ) {
             this.inPatients.push(element);
           }
         } else if (
-          this.site == this.constants.CHH_SITE__CODE__MANDAUE /*"M"*/
+          this.site == this.constants.CHH_SITE__CODE__MANDAUE 
         ) {
-          if (element.site == this.constants.CHH_SITE__CODE__MANDAUE /*"M"*/) {
+          if (element.site == this.constants.CHH_SITE__CODE__MANDAUE ) {
             this.inPatients.push(element);
           }
         }
       });
+    */
+
+      if (this.site == this.constants.CHH_SITE__CODE__CEBU) {
+        this.inPatients = this.inPatientsDraft.filter(
+          (x) => x.site == this.constants.CHH_SITE__CODE__CEBU
+        );
+      } else if (this.site == this.constants.CHH_SITE__CODE__MANDAUE) {
+        this.inPatients = this.inPatientsDraft.filter(
+          (x) => x.site == this.constants.CHH_SITE__CODE__MANDAUE
+        );
+      }
     }
     this.inPatientsDraft1 = this.inPatients;
     if (this.searchBar) {
       this.inPatients = [];
-      this.inPatientsDraft1.forEach((e) => {
+      /*this.inPatientsDraft1.forEach((e) => {
         this.name =
           e.last_name +
           ', ' +
@@ -144,7 +196,26 @@ export class TabInPatientsPage {
         if (this.name.toLowerCase().includes(this.searchBar.toLowerCase())) {
           this.inPatients.push(e);
         }
-      });
+      });*/
+      this.inPatients = this.inPatientsDraft1.filter(
+        (e) =>
+          (
+            e.last_name +
+            ', ' +
+            e.first_name +
+            ' ' +
+            e.middle_name +
+            ' ' +
+            e.first_name +
+            ' ' +
+            e.middle_name +
+            ' ' +
+            e.last_name
+          )
+            .toLowerCase()
+            .includes(this.searchBar.toLowerCase()) ||
+          e.floor_desc.toLowerCase().includes(this.searchBar.toLowerCase())
+      );
     }
 
     /*check if ALL - ADMITTED - FOR DISCHARGE*/
@@ -153,51 +224,127 @@ export class TabInPatientsPage {
     ) {
       let verifier: boolean = false; //to verify if naa ba jud na check na value AC or DN
       let sampleInPatients1 = [];
+      /*
       this.inPatients.forEach((element) => {
         if (
           this.admittedOrDischarge ==
-          this.constants.ADMISSION_STATUS__CODE__ADMITTED /*"AC"*/
+          this.constants.ADMISSION_STATUS__CODE__ADMITTED 
         ) {
           verifier = true;
           if (
             element.admission_status ==
-            this.constants.ADMISSION_STATUS__CODE__ADMITTED /*"AC"*/
+            this.constants.ADMISSION_STATUS__CODE__ADMITTED 
           ) {
             sampleInPatients1.push(element);
           }
         } else if (
           this.admittedOrDischarge ==
-          this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE /*"DN"*/
+          this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE 
         ) {
           verifier = true;
           if (
             element.admission_status ==
-            this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE /*"DN"*/
+            this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE 
           ) {
             sampleInPatients1.push(element);
           }
         }
       });
+      */
+      if (
+        this.admittedOrDischarge ==
+        this.constants.ADMISSION_STATUS__CODE__ADMITTED
+      ) {
+        verifier = true;
 
+        sampleInPatients1 = this.inPatients.filter(
+          (x) =>
+            x.admission_status ==
+            this.constants.ADMISSION_STATUS__CODE__ADMITTED
+        );
+      } else if (
+        this.admittedOrDischarge ==
+        this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE
+      ) {
+        verifier = true;
+
+        sampleInPatients1 = this.inPatients.filter(
+          (x) =>
+            x.admission_status ==
+            this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE
+        );
+      }
       if (verifier) {
         this.inPatients = [];
         this.inPatients = sampleInPatients1;
       }
     }
+    let floorStack = [];
+    let data;
+    let xyz;
+    let reference;
+    if (this.site == 'C') {
+      reference = this.constants.cebuRooms;
+    } else {
+      reference = this.constants.mandaueRooms;
+    }
+
+    let stack = [...new Set(this.inPatients.map((d) => d.floor_desc))];
+    stack = this.sortOrder(reference, stack);
+    stack.forEach((element) => {
+      if (this.defaultAccordions == null) {
+        this.defaultAccordions = element;
+      }
+      floorStack.push({ floor: element });
+    });
+    floorStack.forEach((fs) => {
+      data = this.inPatients.filter((x) => x.floor_desc == fs.floor);
+      let designation;
+      if (data.length == 1) {
+        designation = 'Patient';
+      } else {
+        designation = 'Patients';
+      }
+      xyz = {
+        floor: fs.floor,
+        patients: data.length,
+        designation: designation,
+        data: data,
+      };
+      this.finalFullData.push(xyz);
+    });
+  }
+
+  sortOrder(getOrder, getArr) {
+    return getOrder.filter(function (order) {
+      return getArr.some(function (list) {
+        return order === list;
+      });
+    });
   }
 
   //Fired when the component routing to is about to animate into view.
   ionViewWillEnter() {
-    console.log('In-patient : ionViewWillEnter');
+    this.ngUnsubscribe = new Subject();
+    localStorage.removeItem('selectedPatient');
+    this.logindata = <LoginResponseModelv3>(
+      this.authService.userData$.getValue()
+    );
+    this.functionsService.logToConsole(this.logindata);
 
-    this.logindata = <LoginData>this.authService.userData$.getValue();
+    this.dr_code = this.logindata.doctorCode;
+    this.inpatientModelInpatients.accountNo = 'none';
 
-    this.dr_code = this.logindata[0].dr_code;
-    let dr_name = this.logindata[0].last_name;
+    //this.inpatientModelInpatients.drCode = 'MD000175';
+    this.inpatientModelInpatients.drCode = this.dr_code;
+    this.inpatientModelInpatients.mode = Consta.mode;
+    let dr_name = this.logindata.lastName;
     this.$gaService.event('In-Patient', 'User Flow', dr_name);
 
     let x: boolean = true;
-    this.patientService.getAppSetting('DPP').subscribe((res: any) => {
+    /*
+    deleted by jessie oct 20 2021
+    this.patientService.getAppSettingV2().subscribe((res: any) => {
       Object.keys(res).forEach((key) => {
         var value = res[key];
         Object.keys(value).forEach((lock) => {
@@ -208,25 +355,33 @@ export class TabInPatientsPage {
             }
 
             if (key == 'smsGateway') {
-              console.log(value);
-
               localStorage.setItem('smsGateway', JSON.stringify(value));
             }
           }
         });
       });
-    });
+    });*/
+    this.functionsService.logToConsole('call patient');
 
     this.callPatient(this.site);
   }
-
+  hasId(data, id) {
+    return data.some(function (el) {
+      return el.floor === id;
+    });
+  }
   //Get using Doctors API
   callPatient(data: any) {
+    this.checkInbox();
     this.isFetchDone = false;
-
-    setTimeout(() => {
-      this.doctorService.getInPatient(this.dr_code).subscribe(
+    this.doctorService
+      .getInPatientV3()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
         (res: any) => {
+          if (res == null) {
+            res = [];
+          }
           if (res.length) {
             this.objecthandler = true;
           } else {
@@ -234,15 +389,9 @@ export class TabInPatientsPage {
           }
           this.inPatientsDraft = [];
           res.forEach((element) => {
-            /*
-            let d = new Date(element.admission_date);
-            element.admission_date = d.toUTCString();
-*/
-
             element.last_name = element.last_name.toUpperCase();
             element.middle_name = this.camelCase(element.middle_name);
             element.first_name = this.camelCase(element.first_name);
-
             this.inPatientsDraft.push(element);
           });
           this.filterList();
@@ -258,7 +407,6 @@ export class TabInPatientsPage {
           this.isFetchDone = true;
         }
       );
-    }, 1000);
   }
 
   //swipe down refresh
@@ -271,6 +419,19 @@ export class TabInPatientsPage {
   }
 
   async detail(data: any) {
+    this.data = [];
+    /*
+    this.functionsService.logToConsole(data);
+    this.inPatients.forEach(element => {
+       
+        if( element.patient_no == data){
+          this.data.push(element);
+          localStorage.setItem('patientData',btoa(JSON.stringify(this.data)));
+        }
+    });
+    this.functionsService.logToConsole( this.data);
+  */
+
     /*
   this.router.navigate(['menu/in-patients/', data]);
 */
@@ -295,8 +456,10 @@ export class TabInPatientsPage {
       this.callPatient(this.site);
     });*/
   }
-  
+
   locationAction(data: any) {
+    this.defaultAccordions = null;
+
     if (
       data == this.constants.CHH_SITE__CODE__ALL /*"A"*/ ||
       data == this.constants.CHH_SITE__CODE__CEBU /*"C"*/ ||
@@ -333,5 +496,54 @@ export class TabInPatientsPage {
     ) {
       this.router.navigate(['/menu/in-patients/DN']);
     }
+  }
+  checkAppearance() {
+    this.functionsService.logToConsole('checkAppearance');
+    var values = JSON.parse(
+      '[' + atob(localStorage.getItem('user_settings')) + ']'
+    );
+    let dr_username = atob(localStorage.getItem('username'));
+    values.forEach((element) => {
+      this.functionsService.logToConsole(element.darkmode);
+      if (element.darkmode == 1) {
+        this.renderer.setAttribute(document.body, 'color-theme', 'dark');
+      } else {
+        this.renderer.setAttribute(document.body, 'color-theme', 'light');
+      }
+    });
+
+    /* this.patientService
+      .getUserSettingsV2(dr_username)
+      .subscribe((res: any) => {
+        if (Object.keys(res).length >= 1) {
+          let data = JSON.stringify(res);
+          data = '[' + data + ']';
+          let adat = JSON.parse(data);
+          adat.forEach((el) => {
+            if (typeof el.appearance !== 'undefined') {
+              if (el.appearance.darkmode == 1) {
+                this.renderer.setAttribute(
+                  document.body,
+                  'color-theme',
+                  'dark'
+                );
+              } else {
+                this.renderer.setAttribute(
+                  document.body,
+                  'color-theme',
+                  'light'
+                );
+              }
+            } else {
+              this.renderer.setAttribute(document.body, 'color-theme', 'light');
+            }
+          });
+        }
+      });*/
+  }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    // this.ngUnsubscribe.complete();
+    this.ngUnsubscribe.complete();
   }
 }

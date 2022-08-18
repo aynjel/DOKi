@@ -1,0 +1,158 @@
+<div *ngIf="InsurancePlusPhilhealth">
+  <ul *ngIf="txtInsurancePF">
+    <li class="lineheight-80">
+      <ion-text class="font-12 ion-text-wrap" color="danger">Amenable to Insurance (HMO) and PhilHealth rates.
+      </ion-text>
+    </li>
+    <li class="lineheight-80 paddingtop-10">
+      <ion-text class="font-12 ion-text-wrap" color="danger">Receivables: Insurance (HMO) + PhilHealth
+      </ion-text>
+    </li>
+  </ul>
+
+  <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==true">
+    <li class="lineheight-80">
+      <ion-text class="font-12 ion-text-wrap" color="danger">Insurance (HMO) and PhilHealth coverage applies.
+      </ion-text>
+    </li>
+    <li class="lineheight-80 paddingtop-10">
+      <ion-text class="font-12 ion-text-wrap" color="danger">Only the excess amount of <b>&#8369;{{InsurancePF |
+            number}}</b> (+ VAT) will be collected from your patient.</ion-text>
+    </li>
+    <li class="lineheight-80 paddingtop-10">
+      <ion-text class="font-12 ion-text-wrap" color="danger">Receivables: Insurance (HMO) + PhilHealth +
+        <b>&#8369;{{InsurancePF | number}}</b> (+ VAT)
+      </ion-text>
+    </li>
+    <li class="lineheight-80 paddingtop-10">
+      <ion-text class="font-12 ion-text-wrap" color="danger">Please note that actual receivable amount may vary after
+        final computations from Accounting.</ion-text>
+    </li>
+  </ul>
+
+  <ul *ngIf="txtInsurancePF==false && txtInsuranceVAT==false">
+    <li class="lineheight-80">
+      <ion-text class="font-12 ion-text-wrap" color="danger">Insurance (HMO) and PhilHealth coverage applies.</ion-text>
+    </li>
+    <li class="lineheight-80 paddingtop-10">
+      <ion-text class="font-12 ion-text-wrap" color="danger">Only the excess amount of <b>&#8369;{{InsurancePF |
+            number}}</b> will be collected from your patient.</ion-text>
+    </li>
+    <li class="lineheight-80 paddingtop-10">
+      <ion-text class="font-12 ion-text-wrap" color="danger">Receivables: Insurance (HMO) + PhilHealth +
+        <b>&#8369;{{InsurancePF | number}}</b>
+      </ion-text>
+    </li>
+    <li class="lineheight-80 paddingtop-10">
+      <ion-text class="font-12 ion-text-wrap" color="danger">Please note that actual receivable amount may vary after
+        final computations from Accounting.
+      </ion-text>
+    </li>
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div *ngIf="Philhealth">
+  <ul *ngIf="txtPhilHealthPF">
+    <li class="lineheight-80">
+      <ion-text class="font-12 ion-text-wrap" color="danger">Amenable to PhilHealth rates.</ion-text>
+    </li>
+    <li class="lineheight-80 paddingtop-10">
+      <ion-text class="font-12 ion-text-wrap" color="danger">Receivable: PhilHealth
+      </ion-text>
+    </li>
+  </ul>
+
+  <ul *ngIf="!txtPhilHealthPF && txtPhilHealthVAT">
+    <li class="lineheight-80">
+      <ion-text class="font-12 ion-text-wrap" color="danger">This is the overall professional fee that will be charged
+        to your patient.</ion-text>
+    </li>
+    <li class="lineheight-80 paddingtop-10">
+      <ion-text class="font-12 ion-text-wrap" color="danger">Net amount will vary after deducting your patient's
+        PhilHealth case
+        coverage.</ion-text>
+    </li>
+    <li class="lineheight-80 paddingtop-10">
+      <ion-text class="font-12 ion-text-wrap" color="danger">VAT percentage will be added to your overall professional
+        fee.</ion-text>
+    </li>
+  </ul>
+
+  <ul *ngIf="!txtPhilHealthPF && !txtPhilHealthVAT">
+    <li class="lineheight-80">
+      <ion-text class="font-12 ion-text-wrap" color="danger">This is the overall professional fee that will be charged
+        to your
+        patient.</ion-text>
+    </li>
+    <li class="lineheight-80 paddingtop-10">
+      <ion-text class="font-12 ion-text-wrap" color="danger">Net amount will vary after deducting your patient's
+        PhilHealth case
+        coverage.</ion-text>
+    </li>
+    <li class="lineheight-80 paddingtop-10">
+      <ion-text class="font-12 ion-text-wrap" color="danger">No VAT will be added to your overall professional fee.
+      </ion-text>
+    </li>
+  </ul>
+</div>
+
+
+
+
+
+
+
+<div *ngIf="PersonalPlusPhilhealth">
+
+  <ul *ngIf="txtPersonalPhilHealthPF">
+    <li class="lineheight-80">
+      <ion-text class="font-12 ion-text-wrap" color="danger">Amenable to PhilHealth rates.</ion-text>
+    </li>
+    <li class="lineheight-80 paddingtop-10">
+      <ion-text class="font-12 ion-text-wrap" color="danger">Receivable: PhilHealth
+      </ion-text>
+    </li>
+  </ul>
+
+  <ul *ngIf="!txtPersonalPhilHealthPF && txtPersonalPhilHealthVAT">
+    <li class="lineheight-80">
+      <ion-text class="font-12 ion-text-wrap" color="danger">Total amount of <b>&#8369;{{PersonalPhilhealthPF |
+            number}}</b> (+ VAT) will be collected from your patient.</ion-text>
+    </li>
+    <li class="lineheight-80 paddingtop-10">
+      <ion-text class="font-12 ion-text-wrap" color="danger">Receivables: <b>&#8369;{{PersonalPhilhealthPF |
+            number}}</b> (+ VAT) + PhilHealth</ion-text>
+    </li>
+    <li class="lineheight-80 paddingtop-10">
+      <ion-text class="font-12 ion-text-wrap" color="danger">Please note that actual receivable amount may vary after
+        final computations from Accounting.</ion-text>
+    </li>
+  </ul>
+
+  <ul *ngIf="!txtPersonalPhilHealthPF && !txtPersonalPhilHealthVAT">
+    <li class="lineheight-80">
+      <ion-text class="font-12 ion-text-wrap" color="danger">Total amount of <b>&#8369;{{PersonalPhilhealthPF |
+            number}}</b> will be collected from your patient.</ion-text>
+    </li>
+    <li class="lineheight-80 paddingtop-10">
+      <ion-text class="font-12 ion-text-wrap" color="danger">Receivables: <b>&#8369;{{PersonalPhilhealthPF |
+            number}}</b> + PhilHealth</ion-text>
+    </li>
+    <li class="lineheight-80 paddingtop-10">
+      <ion-text class="font-12 ion-text-wrap" color="danger">Please note that actual receivable amount may vary after
+        final computations from Accounting.
+      </ion-text>
+    </li>
+  </ul>
+</div>

@@ -26,14 +26,15 @@ import { ScreenSizeService } from '../../services/screen-size/screen-size.servic
 import { ChhAppTestChemistryComponent } from '../chh-app-test/chh-app-test-chemistry/chh-app-test-chemistry.component';
 import { ChhAppTestFecalysisComponent } from '../chh-app-test/chh-app-test-fecalysis/chh-app-test-fecalysis.component';
 import { ChhAppTestSerologyComponent } from '../chh-app-test/chh-app-test-serology/chh-app-test-serology.component';
-
+import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
 @Component({
   selector: 'chh-app-in-patient-modal',
   templateUrl: './chh-app-in-patient-modal.page.html',
   styleUrls: ['./chh-app-in-patient-modal.page.scss'],
 })
 export class ChhAppInPatientModalPage implements OnInit {
-  public logindata: LoginData;
+  public logindata: LoginResponseModelv3;
+  loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   @Input() data: any;
   @ViewChild('processContainer', { read: ViewContainerRef })
   container: ViewContainerRef;
@@ -292,9 +293,9 @@ export class ChhAppInPatientModalPage implements OnInit {
       '/In-Patient/Patient Details',
       'Patient Details Modal'
     );
-    let logindata = <LoginData>this.authService.userData$.getValue();
-    let dr_name = logindata[0].last_name;
-    this.postData.DoctorMobileNumber = logindata[0].mobile_no;
+    let logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
+    let dr_name = logindata.lastName;
+    this.postData.DoctorMobileNumber = logindata.mobileNo;
     this.$gaService.event('Patient Information', 'User Flow', dr_name);
     this.getExamList(this.data.patient_no);
 
@@ -509,7 +510,7 @@ export class ChhAppInPatientModalPage implements OnInit {
               );
             } else {
               this.functionsService.alert(
-                'SAVING of Professional Fee was Unsuccessful',
+                'SAVING of Professional Fee was unsuccessful. Please try again.',
                 'Okay'
               );
             }

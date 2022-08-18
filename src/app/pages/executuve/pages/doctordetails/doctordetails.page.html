@@ -1,0 +1,104 @@
+<ion-header mode="md" class="ion-no-border" *ngIf="!isDesktop">
+
+
+  <ion-toolbar color="mango">
+    <span class="padding-left-10" routerLink="/executive/doctors" routerDirection="backward" color="chh-css-primary2">
+      <ion-icon name="arrow-back-outline" class="my-icon vcenter"></ion-icon>
+      <!--ion-icon 
+          name="chevron-back-outline" 
+          class="my-icon vcenter">
+        </ion-icon-->
+    </span>
+
+
+    <span class="padding-left-30 font-weight-500 font-size-20"> &nbsp;&nbsp; Patient Lists </span>
+  </ion-toolbar>
+
+
+
+  <ion-list style=" box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);">
+    <ion-item lines="none">
+      <ion-avatar slot="start">
+        <chh-app-text-avatar [text]="dr_name" [color]=""></chh-app-text-avatar>
+      </ion-avatar>
+      <ion-label style="margin-top: -5px;">
+        <ion-item slot="start" lines="" class="ion-no-padding" style="padding-bottom: 5px;">
+          <h2 class="ion-text-wrap" style="padding-top: 20px;">
+            {{ dr_name }}
+          </h2>
+
+        </ion-item>
+
+        <ion-row class="ion-no-padding" lines="none" style="padding-top: 10px !important;">
+          <p>
+            {{deptName}}
+          </p>
+          <br />
+        </ion-row>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
+        <ng-container>
+          <div *ngFor="let x of listOfPatients">
+
+
+            <ion-card (click)="detail(x)" mode="ios" class="pointer">
+
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <chh-app-text-avatar [text]="x.last_name" [color]=""></chh-app-text-avatar>
+                </ion-avatar>
+                <ion-label style="margin-top: -5px;">
+                  <ion-item slot="start" lines="" class="ion-no-padding" style="padding-bottom: 5px;">
+                    <h2 class="ion-text-wrap" style="padding-top: 20px;">
+                      {{ x.last_name }}, {{x.first_name}} {{x.middle_name}}
+                    </h2>
+
+                  </ion-item>
+
+                  <ion-row class="ion-no-padding" lines="none" style="padding-top: 10px !important;">
+                    <p>
+                      <span *ngIf="x.site =='C' ">
+                        <ion-icon name="location-outline" slot="start"></ion-icon>
+                        {{this.constants.CHH_NAME__VALUE__CEBU}}
+                      </span>
+                      <span *ngIf="x.site == 'M'">
+                        <ion-icon name="location-outline" slot="start"></ion-icon>
+                        {{this.constants.CHH_NAME__VALUE__MANDAUE}}
+                      </span><br />
+                      <ion-icon name="bed-outline" slot="start"></ion-icon> Room
+                      {{x.room_no}}<br />
+
+
+                      <ion-badge color="warning" slot="end" *ngIf="x.admission_status == 'DN'">
+                        for discharge</ion-badge>
+                    </p>
+                    <br />
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+
+
+
+
+
+          </div>
+        </ng-container>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

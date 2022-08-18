@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 //import { Platform } from '@angular/cdk/platform';
-import { AlertController, Platform } from '@ionic/angular';
+import { AlertController, IonSlides, Platform } from '@ionic/angular';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
 import { FunctionsService } from '../../shared/functions/functions.service';
@@ -19,20 +19,21 @@ export class IndexPage implements OnInit {
   ios: boolean = false;
   isDesktop: boolean;
   sampleVariable: boolean = true;
+  iosVerifier: boolean = false;
+  @ViewChild(IonSlides) slides: IonSlides;
   constructor(
     private platform: Platform,
     public functionsService: FunctionsService,
     protected $gaService: GoogleAnalyticsService,
     private screensizeService: ScreenSizeService,
-    public router:Router
+    public router: Router
   ) {
-    console.log(localStorage.getItem('hasloggedin'));
-    
-    if(localStorage.getItem('hasloggedin')=='1'){
+    this.functionsService.logToConsole(localStorage.getItem('hasloggedin'));
+
+    if (localStorage.getItem('hasloggedin') == '1') {
       this.router.navigate(['/login']);
-     // this.timerExpired();
-    }else{
-  
+      // this.timerExpired();
+    } else {
     }
     this.initPwaPrompt();
     this.$gaService.pageView('/index', 'Index Page');
@@ -44,38 +45,58 @@ export class IndexPage implements OnInit {
 
       this.isDesktop = isDesktop;
     });
-
   }
-  slideOpts = {
-    initialSlide: 0,
-    speed: 400,
-    pager: true,
-  };
+  // slideOpts = {
+  //   initialSlide: 0,
+  //   speed: 400,
+  //   pager: true,
+  // };
 
-  ngOnInit() {
+  ngOnInit() {}
 
- 
-  }
-
-  moveToNext(slides) {
-    //console.log(slides);
-    slides.slideNext();
+  next() {
+    this.slides.slideNext();
   }
 
-  moveToPrev(slides) {
-    //console.log(slides);
-    slides.slidePrev();
+  prev() {
+    this.slides.slidePrev();
   }
+
+  skip() {
+    if (this.iosVerifier) {
+      this.slides.slideTo(4);
+    } else {
+      this.slides.slideTo(3);
+    }
+  }
+
+  goback() {
+    this.slides.slideTo(0);
+  }
+
+  gobackToInstallInstructions() {
+    this.slides.slideTo(4);
+  }
+
+  // moveToNext(slides) {
+  //   ////console.log(slides);
+  //   slides.slideNext();
+  // }
+
+  // moveToPrev(slides) {
+  //   ////console.log(slides);
+  //   slides.slidePrev();
+  // }
 
   initPwaPrompt() {
-    console.log('init PWA prompt');
-    
+    this.functionsService.logToConsole('init PWA prompt');
+
     this.platform.ready().then(() => {
-      console.log('platform ready');
+      this.functionsService.logToConsole('platform ready');
       if (this.platform.is('android') || this.platform.is('desktop')) {
-        console.log('platform android');
+        this.functionsService.logToConsole('platform android');
         window.addEventListener('beforeinstallprompt', (event: any) => {
-          console.log('beforeinstallprompt');
+          this.functionsService.logToConsole('beforeinstallprompt');
           event.preventDefault();
           this.promptEvent = event;
           this.openPromptComponent('android');
@@ -92,11 +113,17 @@ export class IndexPage implements OnInit {
   }
 
   async openPromptComponent(mobileType: 'ios' | 'android') {
+    //console.log('first iosVerifier : '+this.iosVerifier);
+
     if (mobileType == 'android') {
+      this.iosVerifier = false;
+      //console.log('2nd iosVerifier : '+this.iosVerifier);
       if (this.android1 == false) {
         this.android = true;
       }
     } else {
+      this.iosVerifier = true;
+      //console.log('2nd iosVerifier : '+this.iosVerifier);
       if (!this.ios) {
         this.ios = true;
         this.functionsService.alert(

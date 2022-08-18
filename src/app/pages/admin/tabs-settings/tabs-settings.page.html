@@ -1,0 +1,24 @@
+<ion-header mode="md" class="ion-no-border">
+  <div >
+    <ion-toolbar color="mango">
+      <ion-title>
+        <ion-icon name="settings-outline"></ion-icon> {{this.constants.MENU__VALUE__SETTINGS}}
+      </ion-title>
+      <ion-buttons
+        slot="end"
+        class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated"
+      >
+        <ion-button
+          (click)="logout()"
+          color="chh-css-primary2"
+          class="ios button button-clear ion-activatable ion-focusable hydrated"
+          >{{this.constants.MENU__VALUE__LOG_OUT}}&nbsp; <ion-icon name="log-out-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </div>
+</ion-header>
+
+<ion-content>
+
+</ion-content>

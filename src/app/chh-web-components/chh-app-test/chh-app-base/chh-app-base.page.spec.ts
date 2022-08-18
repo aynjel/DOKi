@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { ChhAppBasePage } from './chh-app-base.page';
@@ -7,7 +7,7 @@ describe('ChhAppBasePage', () => {
   let component: ChhAppBasePage;
   let fixture: ComponentFixture<ChhAppBasePage>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ChhAppBasePage ],
       imports: [IonicModule.forRoot()]

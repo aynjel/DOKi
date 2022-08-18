@@ -1,1 +1,50 @@
-<ion-router-outlet></ion-router-outlet>
+<ion-split-pane contentId="menu-content" when="xs" [disabled]="true">
+    <ion-menu contentId="menu-content" menuId="menu-content" side="start" type="overlay">
+        <!--ion-header>
+            <ion-toolbar color="mango">
+                <ion-title>More</ion-title>
+            </ion-toolbar>a
+        </ion-header-->
+        <ion-content>
+            <div color="mango" class="menu-header-bg" style="background: #275228" *ngIf="lastName!=null">
+                <ion-item lines="none" color="mango" class='menu-header-bg'>
+                    <ion-avatar slot="start">
+                        <chh-app-text-avatar [text]="lastName" [color]=""></chh-app-text-avatar>
+                    </ion-avatar>
+                    <ion-label style="margin-top: -5px;" color="mango">
+                        <ion-item slot="start" lines="none" class="ion-no-padding" style="padding-bottom: 5px;"
+                            color="mango">
+                            <h2 class="ion-text-wrap" style="padding-top: 20px;">
+                                {{ lastName }}, {{firstName}}
+                            </h2>
+                        </ion-item>
+
+                    </ion-label>
+
+                </ion-item>
+            </div>
+
+            <ion-list *ngFor="let p of appPages">
+                <ion-menu-toggle auto-hide="false" *ngIf="role_flag == p.type" (click)="whattodo(p.url)">
+                    <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" *ngIf="p.url != 'logout'">
+                        <ion-icon color="primary" slot="start" [name]="p.icon"></ion-icon>
+                        <ion-label>
+                            {{p.title}}
+                        </ion-label>
+                    </ion-item>
+                    <ion-item *ngIf="p.url == 'logout'">
+                        <ion-icon color="primary" slot="start" [name]="p.icon"></ion-icon>
+                        <ion-label>
+                            {{p.title}}
+                        </ion-label>
+                    </ion-item>
+                </ion-menu-toggle>
+            </ion-list>
+        </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="menu-content"></ion-router-outlet>
+</ion-split-pane>
+
+<!--ion-router-outlet id="menu-content"
+    *ngIf="(role_flag != 'exec' && isDesktop) || (role_flag != 'exec' && !isDesktop)|| (role_flag == 'exec' && isDesktop)">
+</ion-router-outlet-->

@@ -36,10 +36,10 @@
 
           <ion-list>
             <ion-item lines="none"  style="padding-top: 10px;">
-              <div class="ion-text-wrap" #psWord0 id="pWord0"><b>Old Password</b><i>{{errMessage}}</i><br /></div>
+              <div class="ion-text-wrap" #psWord0 id="pWord0"><b>Current Password</b><i>{{errMessage}}</i><br /></div>
             </ion-item>
             <ion-item>
-              <ion-input type="password" id="input-password1" placeholder = "Old Password" [type]="getType1()"  [(ngModel)]="OldPassword"></ion-input>
+              <ion-input type="password" id="input-password1" placeholder = "Current Password" [type]="getType1()"  [(ngModel)]="OldPassword" (ionChange)="inputchange()"></ion-input>
               <ion-icon  name="eye-off-outline" [name]="getName1()" item-right  (click)="showPassword1()"  class="rectangle1"></ion-icon>
             </ion-item>
           </ion-list>
@@ -112,11 +112,11 @@
 
 
                 <ion-item lines="none" >
-                  <ion-label  for="confirmPassword" [ngClass]="frmSignup.controls['confirmPassword'].invalid ? 'text-danger' : ''" class=" pWord" #psWord1 id="pWord2" ><b>Confirm Password</b> <i>{{errMessage}}</i></ion-label><br />
+                  <ion-label  for="confirmPassword" [ngClass]="frmSignup.controls['confirmPassword'].invalid ? 'text-danger' : ''" class=" pWord" #psWord1 id="pWord2" ><b>Confirm New Password</b> <i>{{errMessage}}</i></ion-label><br />
                 </ion-item>
                 <ion-item lines="none">
                   <ion-input id="confirmPassword" formControlName="confirmPassword" type="password" class="form-control"
-                  [ngClass]="frmSignup.controls['confirmPassword'].invalid ? 'is-invalid' : ''"[type]="getType3()"  [(ngModel)]="ConfirmPassword" placeholder = "Confirm Password"></ion-input>
+                  [ngClass]="frmSignup.controls['confirmPassword'].invalid ? 'is-invalid' : ''"[type]="getType3()"  [(ngModel)]="ConfirmPassword" (ionChange)="inputchange()" placeholder = "Confirm New Password"></ion-input>
                   <ion-icon  name="eye-off-outline" [name]="getName3()"item-right (click)="showPassword3()"  class="rectangle3"></ion-icon>
                 </ion-item>
 
@@ -144,7 +144,7 @@
                     id="btn-confirm"
                     (click)="save()"
                     color="mango"
-                    [disabled]="frmSignup.invalid"
+                    [disabled]="!btnSubmit"
                   >
                     SAVE
                   </ion-button>

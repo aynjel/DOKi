@@ -1,53 +1,60 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  ViewChild,
-  ViewContainerRef,
-  ComponentFactoryResolver,
-  Renderer2,
-} from '@angular/core';
+import { Component, Renderer2 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import {
   ModalController,
   AlertController,
   NavController,
+  LoadingController,
 } from '@ionic/angular';
 import { ChhAppFeePage } from '../../../chh-web-components/chh-app-fee/chh-app-fee.page';
-import { from } from 'rxjs';
 import { PopoverController } from '@ionic/angular';
-import { timeStamp } from 'console';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { LoginData } from '../../../models/login-data.model';
+
 import { FunctionsService } from '../../../shared/functions/functions.service';
 import { PatientService } from 'src/app/services/patient/patient.service';
-import { logWarnings } from 'protractor/built/driverProviders';
-//import { ChemistryPage } from "../../../chh-web-components/chh-app-test/chemistry/chemistry.page";
 import { ChhAppBasePage } from '../../../chh-web-components/chh-app-test/chh-app-base/chh-app-base.page';
 import { Messages } from '../../../shared/messages';
 import { ScreenSizeService } from '../../../services/screen-size/screen-size.service';
-import { ChhAppTestChemistryComponent } from '../../../chh-web-components/chh-app-test/chh-app-test-chemistry/chh-app-test-chemistry.component';
-import { ChhAppTestFecalysisComponent } from '../../../chh-web-components/chh-app-test/chh-app-test-fecalysis/chh-app-test-fecalysis.component';
-import { ChhAppTestSerologyComponent } from '../../../chh-web-components/chh-app-test/chh-app-test-serology/chh-app-test-serology.component';
 import { StorageService } from '../../../services/storage/storage.service';
-import { AuthConstants } from '../../../config/auth-constants';
-import { executionAsyncResource } from 'async_hooks';
+import { Consta } from '../../../config/auth-constants';
+
 import { Constants } from 'src/app/shared/constants';
 
-import { InPatientData } from 'src/app/models/in-patient.model';
-import { LaboratoryTestModalPage } from '../laboratory-test-modal/laboratory-test-modal.page';
+import {
+  InPatientData,
+  ProfessionalFeeModelv3,
+} from 'src/app/models/in-patient.model';
 
+import {
+  UserSettingsModelv3,
+  LoginResponseModelv3,
+  PatientDetail,
+} from 'src/app/models/doctor';
+
+import { LaboratoryTestModalPage } from '../laboratory-test-modal/laboratory-test-modal.page';
+import {
+  InpatientModelInpatients,
+  InpatientDetails,
+} from '../../../models/doctor';
+import { AESEncryptDecryptServiceService } from 'src/app/services/encryption/aesencrypt-decrypt-service.service';
+import { ExecutiveService } from 'src/app/services/executive/executive.service';
+import { takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import SignaturePad from 'signature_pad';
 @Component({
   selector: 'app-in-patient-detail',
   templateUrl: './in-patient-detail.page.html',
   styleUrls: ['./in-patient-detail.page.scss'],
 })
 export class InPatientDetailPage {
-  public logindata: LoginData;
+  inpatientModelInpatients = new InpatientModelInpatients();
+  private ngUnsubscribe = new Subject();
   data: any = [];
+  data1: any;
   site: any;
   date: any;
   professionalFee: any;
@@ -65,10 +72,11 @@ export class InPatientDetailPage {
   text: string;
   checkmark: boolean = false;
   limit: number = 40;
-  truncating = true;
+  truncating = false;
   truncating1 = true;
   daysOfManage: any;
   dateAdmitted: any;
+  dischargeNotice: any;
   ionSkeleton: boolean = false;
   currentExamList: any;
   currentExamList_filtered: any = [];
@@ -83,6 +91,7 @@ export class InPatientDetailPage {
   urinalysis: boolean = false;
   refresher: boolean = true;
   searchBar: any;
+  routerLinkBack: any;
   HighlightRow: number;
   ClickedRow: any;
   dr_code: any;
@@ -90,7 +99,40 @@ export class InPatientDetailPage {
   patient_name: any;
   patient_no: any;
   postData: InPatientData = new InPatientData();
+  professionalFeeModelv3: ProfessionalFeeModelv3 = new ProfessionalFeeModelv3();
+  userSettingsModelv3: UserSettingsModelv3 = new UserSettingsModelv3();
+  loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
+
+  inpatientDetails: InpatientDetails = new InpatientDetails();
   location: boolean;
+  patient_id: any;
+  opd_code: any;
+  admissionstatus: any;
+  progNot_InitDisplay: any;
+  progNot_account_no: any = '';
+
+  patientId: any;
+  patientInfo: any;
+
+  progessNotes: any = [];
+  progessNotesTemp: any = [];
+  progressNotesIsEmpty: boolean = false;
+  progressNotesIsNotReady: boolean = false;
+  dateToday: any;
+  user_created: any;
+  activeDays: any = [];
+  birthday: any;
+  age: any;
+  pdfSrc = '';
+  is_senior;
+  is_pwd;
+  philhealth_membership;
+  isCancelFinalDiagnosisApproval;
+  finalDiagnosisApproval;
+  patientName;
+  is_philhealth_membership;
+  admissionNo;
+  dischargeNo;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -109,62 +151,177 @@ export class InPatientDetailPage {
     public storageService: StorageService,
     public constants: Constants,
     private renderer: Renderer2,
-    public nav: NavController
+    public nav: NavController,
+    public aes: AESEncryptDecryptServiceService,
+    public executiveService: ExecutiveService,
+    public loadingController: LoadingController,
+    private functionService: FunctionsService
   ) {
-    //console.log('In-patient detail : Constructor');
-
-    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
-      if (this.isDesktop && !isDesktop) {
-        window.location.reload();
-      }
-      this.isDesktop = isDesktop;
-    });
+    //this.functionsService.logToConsole('In-patient detail : Constructor');
+    localStorage.setItem('modaled', '0');
+    this.screensizeService
+      .isDesktopView()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((isDesktop) => {
+        if (this.isDesktop && !isDesktop) {
+          window.location.reload();
+        }
+        this.isDesktop = isDesktop;
+      });
     this.ClickedRow = function (index) {
       this.HighlightRow = index;
     };
   }
 
   ionViewWillEnter() {
-    //console.log('In-patient detail : ionViewWillEnter');
+    this.ngUnsubscribe = new Subject();
+    this.loginResponseModelv3 = new LoginResponseModelv3();
+    this.inpatientDetails = new InpatientDetails();
+    //this.functionsService.logToConsole();
+    this.patient_id = this.activatedRoute.snapshot.params.id;
+    this.routerLinkBack = '/menu/in-patients/';
+    //this.functionsService.logToConsole('In-patient detail : ionViewWillEnter');
     //sessionStorage.removeItem('pfIsPatientSeen');
     // sessionStorage.removeItem('pfInsCoor');
-    this.checkAppearance();
-    let logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_name = logindata[0].last_name;
-    this.dr_code = logindata[0].dr_code;
-    this.postData.DoctorMobileNumber = logindata[0].mobile_no;
-    this.data = [];
-    this.doctorService.getInPatient(this.dr_code).subscribe(
-      (res: any) => {
-        res.forEach((element) => {
-          if (element.patient_no == this.activatedRoute.snapshot.params.id) {
-            this.data.push(element);
-            this.patient_name = element.first_name + ' ' + element.last_name;
-            if (element.payvenue != null) {
-              this.checkmark = true;
-            }
-          }
-        });
-      },
-      (error) => {},
-      () => {
-        let n = this.data[0].admission_no.indexOf('IPC');
-        //console.log(n);
 
-        if (n >= 0) {
-          this.location = true;
-        } else {
-          this.location = false;
-        }
-        this.operate();
-        localStorage.setItem('patientData', btoa(JSON.stringify(this.data)));
-      }
+    //this.checkAppearance();
+
+    //let logindata = <LoginData>this.authService.userData$.getValue();
+    this.loginResponseModelv3 = <LoginResponseModelv3>(
+      this.authService.userData$.getValue()
     );
+    this.userSettingsModelv3 = new UserSettingsModelv3();
+    this.userSettingsModelv3 = JSON.parse(
+      '[' + atob(localStorage.getItem('user_settings')) + ']'
+    );
+
+    this.loginResponseModelv3 = this.authService.userData$.getValue();
+    this.dr_name = this.loginResponseModelv3.lastName;
+    this.dr_code = this.loginResponseModelv3.doctorCode;
+    this.inpatientModelInpatients.drCode = this.dr_code;
+    this.inpatientModelInpatients.mode = Consta.mode;
+    this.postData.DoctorMobileNumber = this.loginResponseModelv3.mobileNo;
+    this.professionalFeeModelv3.doctor_mobile_no =
+      this.loginResponseModelv3.mobileNo;
+    this.professionalFeeModelv3.smsGatewayCHH =
+      this.userSettingsModelv3[0].smsGatewayCHH;
+    this.professionalFeeModelv3.smsGatewaySmart =
+      this.userSettingsModelv3[0].smsGatewaySmart;
+
+    let ppatientdata = new PatientDetail();
+    ppatientdata.admissionNo = this.patient_id;
+    ppatientdata.doctorCode = this.dr_code;
+    this.data = [];
+    this.presentLoading();
+    //console.log('123');
+
+    this.executiveService
+      .getPatientDetail(ppatientdata)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          //console.log(res);
+          if (res == null) {
+            this.back();
+          } else {
+            this.patientName = res.last_name + ', ' + res.first_name;
+            this.data1 = JSON.parse('[' + JSON.stringify(res) + ']');
+            localStorage.setItem(
+              'patientData',
+              btoa(JSON.stringify(this.data1))
+            );
+          }
+        },
+        (error) => {
+          this.dismissLoading();
+        },
+        () => {
+          this.dismissLoading();
+          if (this.data1 != '') {
+            this.data1.forEach((element) => {
+              this.opd_code = element.admission_no;
+              this.inpatientModelInpatients.accountNo = this.opd_code;
+              this.inpatientDetails.admission_no = this.opd_code;
+              this.data.push(element);
+              localStorage.setItem(
+                'selectedPatient',
+                btoa(JSON.stringify(this.data))
+              );
+              this.admissionstatus = element.admission_status;
+              this.patient_name = element.first_name + ' ' + element.last_name;
+              this.patient_name =
+                this.functionsService.convertAllFirstLetterToUpperCase(
+                  this.patient_name
+                );
+              if (element.payvenue != null) {
+                this.checkmark = true;
+              }
+            });
+            let n = this.data[0].admission_no.indexOf('IPC');
+            //this.functionsService.logToConsole(n);
+
+            if (n >= 0) {
+              this.location = true;
+            } else {
+              this.location = false;
+            }
+            this.operate();
+          } else {
+            this.alert('No Data Available', 'Okay');
+          }
+          ////console.log(this.data1);
+          ////console.log(this.data[0].philhealth_membership);
+          this.is_philhealth_membership = this.data[0].philhealth_membership;
+          this.is_pwd = this.data1[0].is_pwd;
+          this.is_senior = this.data1[0].is_senior;
+          ////console.log(this.is_pwd, this.is_senior);
+        }
+      );
   }
 
+  loading: any;
+  async presentLoading() {
+    this.loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+      duration: 2000,
+    });
+    await this.loading.present();
+
+    const { role, data } = await this.loading.onDidDismiss();
+    //////////////////console.log('Loading dismissed!');
+  }
+  public async dismissLoading(): Promise<void> {
+    if (this.loading) {
+      this.loading.dismiss();
+    }
+  }
+  async alert(data1: any, data2: any) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      message: data1,
+      backdropDismiss: false,
+      buttons: [
+        {
+          text: data2,
+          handler: () => {
+            this.closemodal();
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
+
+  closemodal() {
+    this.router.navigate(['/menu/in-patients/']);
+  }
   operate() {
-    let d = new Date(this.data[0].admission_date);
-    this.dateAdmitted = d.toUTCString();
+    //console.log('operate');
+
+    this.dateAdmitted = this.data[0].admission_date;
+    this.dischargeNotice = this.data[0].forDischargeDateTime;
+
     this.$gaService.pageView(
       '/In-Patient/Patient Details',
       'Patient Details Modal'
@@ -178,18 +335,32 @@ export class InPatientDetailPage {
     this.postData.Remarks = '';
     this.postData.ProfFee = 0;
     this.postData.OldProfFee = 0;
-    //console.log(this.data[0].site);
+
+    this.professionalFeeModelv3.is_vat = '';
+    this.professionalFeeModelv3.payvenue = '';
+    this.professionalFeeModelv3.remarks = '';
+    this.professionalFeeModelv3.doctor_prof_fee = 0;
+    this.professionalFeeModelv3.old_prof_fee = 0;
+
+    //this.functionsService.logToConsole(this.data[0].site);
 
     if (this.data[0].site == 'C') {
       this.site = 'CHHC';
       //this.postData.PatientSite = "CEBU";
       this.postData.BillingMobileNumber = atob(localStorage.getItem('C'));
+      this.professionalFeeModelv3.billing_mobile_no =
+        this.userSettingsModelv3[0].billingContactCebu;
     } else {
       this.site = 'CHHM';
       //this.postData.PatientSite = "MANDAUE";
       this.postData.BillingMobileNumber = atob(localStorage.getItem('M'));
+      this.professionalFeeModelv3.billing_mobile_no =
+        this.userSettingsModelv3[0].billingContactMandaue;
     }
+
     this.postData.RoomNumber = this.data[0].room_no;
+    this.professionalFeeModelv3.room_no = this.data[0].room_no;
+    /*
     let smsgateway = JSON.parse(localStorage.getItem('smsGateway'));
     let ssms = [];
     Object.keys(smsgateway).forEach((key) => {
@@ -202,7 +373,7 @@ export class InPatientDetailPage {
         '"}';
       ssms.push(JSON.parse(sms));
     });
-    this.postData.SmsGateWay = ssms;
+    this.postData.SmsGateWay = ssms;*/
     this.professionalFee = this.data[0].doctor_prof_fee;
     this.remarks = this.data[0].remarks;
 
@@ -212,10 +383,17 @@ export class InPatientDetailPage {
       this.method = '';
     }
     this.postData.AdmisisonNo = this.data[0].admission_no;
+    this.professionalFeeModelv3.admission_no = this.data[0].admission_no;
     this.postData.DoctorCode = this.data[0].dr_code;
+
     //this.postData.DoctorCode = this.data.dr_code;
     this.postData.DoctorStatusCode = this.data[0].Doctor_Status_code;
+    this.professionalFeeModelv3.doctor_status_code =
+      this.data[0].doctor_Status_code;
+
     this.postData.site = this.data[0].site;
+    this.professionalFeeModelv3.site = this.data[0].site;
+
     this.postData.CreatedBy = this.data[0].dr_code;
     let coDoctors1 = [];
     let coDoctors2 = [];
@@ -228,79 +406,83 @@ export class InPatientDetailPage {
     //  | |  _  |  __|    | |        | |     | | | |      | | | | | | | | | |       | |   | | | | |  _  /
     //  | |_| | | |___    | |        | |___  | |_| |      | |_| | | |_| | | |___    | |   | |_| | | | \ \
     //  \_____/ |_____|   |_|        \_____| \_____/      |_____/ \_____/ \_____|   |_|   \_____/ |_|  \_\
-    this.doctorService.getCoDoctors(this.data[0].admission_no).subscribe(
-      (res: any) => {
-        res.forEach((element) => {
-          if (element.dr_code == this.data[0].dr_code) {
-            if (element.no_of_days_manage == null) {
-              this.daysOfManage = 0;
-            } else {
-              this.daysOfManage = element.no_of_days_manage;
-            }
-            //sessionStorage.setItem('daysManaged', btoa(this.daysOfManage));
-            localStorage.setItem('daysManaged', btoa(this.daysOfManage));
-          }
-          //
-        });
-        if (res.length) {
-          this.objecthandler = true;
-        } else {
-          this.objecthandler = false;
-        }
-        //this.functionsService.logToConsole(res);
-        res.forEach((element) => {
-          if (element.status == 'Primary Attending Physician') {
-            coDoctors1.push(element);
-          } else if (element.status == 'Co-Manage') {
-            coDoctors2.push(element);
-          } else {
-            coDoctors3.push(element);
-          }
-        });
-
-        this.coDoctors = coDoctors1.concat(coDoctors2).concat(coDoctors3);
-        //this.coDoctors.push(coDoctors2);
-      },
-      (error) => {
-        this.isFetchDone = true;
-        this.functionsService.alert('Server Error', 'Okay');
-      },
-      () => {
-        this.isFetchDone = true;
-      }
-    );
-    //
-
     this.doctorService
-      .getAdmittingDiagnosis(this.data[0].admission_no)
+      .getCoDoctorsV3(this.inpatientDetails)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          this.admittingDiagnosis = res[0].admitting_diagnosis2.replace(
-            /(\r\n|\n|\r)/gm,
-            '<br />'
-          );
-          this.functionsService.logToConsole(
-            'admittingDiagnosis : ' + this.admittingDiagnosis
-          );
-          this.admittingDiagnosis1 = this.functionsService.truncateChar(
-            res[0].admitting_diagnosis2,
-            100
-          );
-          this.admittingDiagnosis1 = this.admittingDiagnosis1.replace(
-            /(\r\n|\n|\r)/gm,
-            '<br />'
-          );
-          this.admittingDiagnosis2 = this.admittingDiagnosis.replace(
-            /(,)/gm,
-            ',<br />'
-          );
-          this.functionsService.logToConsole(
-            'admittingDiagnosis2 : ' + this.admittingDiagnosis2
-          );
+          res.forEach((element) => {
+            if (element.dr_code == this.data[0].dr_code) {
+              if (element.no_of_days_manage == null) {
+                this.daysOfManage = 0;
+              } else {
+                this.daysOfManage = element.no_of_days_manage;
+              }
+              //sessionStorage.setItem('daysManaged', btoa(this.daysOfManage));
+              localStorage.setItem('daysManaged', btoa(this.daysOfManage));
+            }
+            //
+          });
+          if (res.length) {
+            this.objecthandler = true;
+          } else {
+            this.objecthandler = false;
+          }
+          //this.functionsService.logToConsole(res);
+          res.forEach((element) => {
+            if (element.status == 'Primary Attending Physician') {
+              coDoctors1.push(element);
+            } else if (element.status == 'Co-Manage') {
+              coDoctors2.push(element);
+            } else {
+              coDoctors3.push(element);
+            }
+          });
+
+          this.coDoctors = coDoctors1.concat(coDoctors2).concat(coDoctors3);
+          //this.coDoctors.push(coDoctors2);
         },
         (error) => {
           this.isFetchDone = true;
-          this.functionsService.alert('Server Error', 'Okay');
+          //this.functionsService.alert('Server Error', 'Okay');
+        },
+        () => {
+          this.isFetchDone = true;
+        }
+      );
+    //
+
+    this.doctorService
+      .getAdmittingDiagnosisV3(this.inpatientDetails)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          if (!Object.keys(res).length) {
+            //this.functionsService.logToConsole("no data found");
+          } else {
+            this.admittingDiagnosis = res.admitting_diagnosis2.replace(
+              /(\r\n|\n|\r)/gm,
+              '<br />'
+            );
+            //this.functionsService.logToConsole('admittingDiagnosis : ' + this.admittingDiagnosis);
+            this.admittingDiagnosis1 = this.functionsService.truncateChar(
+              res.admitting_diagnosis2,
+              100
+            );
+            this.admittingDiagnosis1 = this.admittingDiagnosis1.replace(
+              /(\r\n|\n|\r)/gm,
+              '<br />'
+            );
+            this.admittingDiagnosis2 = this.admittingDiagnosis.replace(
+              /(,)/gm,
+              ',<br />'
+            );
+            //this.functionsService.logToConsole('admittingDiagnosis2 : ' + this.admittingDiagnosis2);
+          }
+        },
+        (error) => {
+          this.isFetchDone = true;
+          //this.functionsService.alert('Server Error', 'Okay');
         },
         () => {
           this.isFetchDone = true;
@@ -308,45 +490,198 @@ export class InPatientDetailPage {
       );
     //final diagnosis
     if (this.data[0].admission_status == 'DN') {
-      this.doctorService.getFinalDiagnosis(this.data[0].admission_no).subscribe(
-        (res: any) => {
-          this.finalDiagnosis = res[0].final_diagnosis;
-          this.finalDiagnosis1 = this.functionsService.truncateChar(
-            this.finalDiagnosis,
-            50
-          );
-          this.finalDiagnosis2 = this.finalDiagnosis
-            .replace(/(\r\n|\n|\r)/gm, '')
-            .split('.)');
-          this.finalDiagnosis2.shift();
-          for (let i = 0; i < this.finalDiagnosis2.length - 1; i++) {
-            this.finalDiagnosis2[i] = this.finalDiagnosis2[i].substring(
-              0,
-              this.finalDiagnosis2[i].length - 1
-            );
-            this.functionsService.logToConsole(this.finalDiagnosis2[i]);
+      this.doctorService
+        .getFinalDiagnosisV3(this.inpatientDetails)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(
+          (res: any) => {
+            if (!Object.keys(res).length) {
+              // this.functionsService.logToConsole("no data found");
+            } else {
+              this.finalDiagnosis = res.final_diagnosis;
+              //this.functionsService.logToConsole(this.finalDiagnosis);
+
+              this.finalDiagnosis1 = this.functionsService.truncateChar(
+                this.finalDiagnosis,
+                50
+              );
+              this.finalDiagnosis2 = this.finalDiagnosis
+                .replace(/(\r\n|\n|\r)/gm, '')
+                .split('.)');
+              this.finalDiagnosis2.shift();
+              for (let i = 0; i < this.finalDiagnosis2.length - 1; i++) {
+                this.finalDiagnosis2[i] = this.finalDiagnosis2[i].substring(
+                  0,
+                  this.finalDiagnosis2[i].length - 1
+                );
+                this.functionsService.logToConsole(this.finalDiagnosis2[i]);
+              }
+              for (let i = 0; i < this.finalDiagnosis2.length; i++) {
+                this.finalDiagnosis2[i] =
+                  i + 1 + '.) ' + this.finalDiagnosis2[i];
+              }
+            }
+          },
+          (error) => {
+            this.isFetchDone = true;
+            //this.functionsService.alert('Server Error', 'Okay');
+          },
+          () => {
+            this.isFetchDone = true;
           }
-          for (let i = 0; i < this.finalDiagnosis2.length; i++) {
-            this.finalDiagnosis2[i] = i + 1 + '.) ' + this.finalDiagnosis2[i];
-          }
-        },
-        (error) => {
-          this.isFetchDone = true;
-          this.functionsService.alert('Server Error', 'Okay');
-        },
-        () => {
-          this.isFetchDone = true;
-        }
-      );
+        );
+      //this.getApprovalStatus(this.patient_id);
     }
 
     this.postData.DateCreated = this.functionsService.getSystemDateTime();
     //sessionStorage.setItem('postData', btoa(JSON.stringify(this.postData)));
-    localStorage.setItem('postData', btoa(JSON.stringify(this.postData)));
+    //localStorage.setItem('postData', btoa(JSON.stringify(this.postData)));
+    localStorage.setItem(
+      'postData1',
+      btoa(JSON.stringify(this.professionalFeeModelv3))
+    );
+
+    /*this.doctorService.getProgressNotes('test').subscribe(
+      (res: any = []) => {
+        //////console.log(res[0].notes);
+        this.progNot_InitDisplay = this.functionsService.truncateChar(
+          res[0].notes,
+          200
+        );
+        this.progNot_account_no = res[0].account_no;
+      },
+      (error) => {
+        //////console.log(error);
+      },
+      () => {
+        //////console.log('call done');
+      }
+    );*/
+    //this.getProgressNotes();
+  }
+  approvedDate;
+
+  getApprovalStatus(data) {
+    //console.log('getApprovalStatus');
+
+    let approvalStatus = {
+      account_no: data,
+    };
+    this.doctorService
+      .getApprovalStatus(approvalStatus)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          if (res != null) {
+            ////console.log('approvedDate', res);
+            this.admissionNo = res[0].admission_no;
+            this.dischargeNo = res[0].discharge_no;
+            this.finalDiagnosisApproval = res;
+            this.isCancelFinalDiagnosisApproval = res[0].approval_status;
+            this.approvedDate = res[0].approve_date;
+            ////console.log(this.approvedDate);
+          } else {
+            this.isCancelFinalDiagnosisApproval = '';
+          }
+        },
+        (error) => {},
+        () => {}
+      );
+  }
+  cancelApproval(data1) {
+    let cancel = {
+      discharge_no: data1,
+    };
+    this.doctorService
+      .cancelApprovedFinalDiagnosis(cancel)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          ////console.log(res);
+          this.ionViewWillEnter();
+        },
+        (error) => {},
+        () => {}
+      );
+  }
+  getProgressNotes() {
+    this.progessNotes = [];
+    this.progessNotesTemp = [];
+    this.progressNotesIsNotReady = true;
+    this.doctorService
+      .getProgressNotes(this.data1[0].admission_no)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any = []) => {
+          //////console.log(res);
+          this.progessNotesTemp = res;
+          if (this.progessNotesTemp.length > 0) {
+            this.progNot_InitDisplay = this.functionsService.truncateChar(
+              res[0].notes,
+              200
+            );
+            this.progNot_account_no = res[0].account_no;
+          } else {
+            this.progNot_account_no = '';
+          }
+        },
+        (error) => {},
+        () => {
+          this.activeDays = [];
+          this.progessNotesTemp.forEach((el) => {
+            this.activeDays.push(el.notes_id);
+            el.dateCreateConverted = this.functionService.convertDatetoMMDDYYYY(
+              el.date_created
+            );
+
+            el.dateCreateTimeConverted = this.functionService.getTime(
+              el.date_created
+            );
+
+            el.dateUpdateConverted = this.functionService.convertDatetoMMDDYYYY(
+              el.date_updated
+            );
+            el.dateUpdateTimeConverted = this.functionService.getTime(
+              el.date_updated
+            );
+            if (el.date_updated == '0001-01-01T00:00:00') {
+              el.dateUpdateConverted = '';
+            }
+            el.notessmall = this.functionService.truncateChar(el.notes, 300);
+            if (el.notes.length > 200) {
+              el.noteslength = true;
+            } else {
+              el.noteslength = false;
+            }
+            this.progessNotes.push(el);
+          });
+          ////////console.log(this.activeDays);
+
+          if (this.progessNotes.length <= 0) {
+            this.progressNotesIsEmpty = true;
+          } else {
+            this.progressNotesIsEmpty = false;
+          }
+          this.progressNotesIsNotReady = false;
+          //this.scrolltotop();
+        }
+      );
+  }
+  showProgressNotes() {
+    if (this.isDesktop) {
+      this.router.navigate([
+        '/menu/in-patients/' + this.patient_id + '/progressnotes/',
+      ]);
+    } else {
+      this.router.navigate([
+        '/menu/in-patients/' + this.patient_id + '/progressnotes/',
+      ]);
+    }
   }
 
   ngOnInit() {
-   // console.log('In-patient detail : ngOnInit');
+    this.checkAppearance();
+    // this.functionsService.logToConsole('In-patient detail : ngOnInit');
   }
 
   updateDisplay(data: boolean) {
@@ -397,14 +732,14 @@ export class InPatientDetailPage {
   }
 
   async examDetails(data: any, site: any, i) {
-    //console.log(site);
+    //this.functionsService.logToConsole(site);
 
     this.HighlightRow = i;
     this.ExamData = data;
     this.hospitalSite = site;
 
     if (!this.isDesktop) {
-      //console.log(this.hospitalSite);
+      //this.functionsService.logToConsole(this.hospitalSite);
 
       const modal = await this._modalController.create({
         component: ChhAppBasePage,
@@ -456,7 +791,7 @@ export class InPatientDetailPage {
   }
 
   getExamList(data) {
-    //console.log(this.data[0].admission_no);
+    //this.functionsService.logToConsole(this.data[0].admission_no);
 
     this.ionSkeleton = true;
     var date1 = new Date(this.data[0].admission_date);
@@ -464,30 +799,33 @@ export class InPatientDetailPage {
     this.currentExamList = [];
     this.examListSkeleton = true;
 
-    this.patientService.getExamList(this.location, data).subscribe(
-      (res: any) => {
-        res.forEach((element) => {
-          var date = new Date(element.RequestDateTime);
-          var seconds = date.getTime() / 1000; //1440516958
-          if (seconds >= seconds1) {
-            element.RequestDateTime = new Date(
-              element.RequestDateTime
-            ).toLocaleDateString();
-            element.Exam = this.functionsService.convertToCamelCase(
-              element.Exam
-            );
-            this.currentExamList.push(element);
-            this.currentExamList_filtered.push(element);
-          }
-        });
-      },
-      (error) => {
-        this.examListSkeleton = false;
-      },
-      () => {
-        this.examListSkeleton = false;
-      }
-    );
+    this.patientService
+      .getExamList(this.location, data)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          res.forEach((element) => {
+            var date = new Date(element.RequestDateTime);
+            var seconds = date.getTime() / 1000; //1440516958
+            if (seconds >= seconds1) {
+              element.RequestDateTime = new Date(
+                element.RequestDateTime
+              ).toLocaleDateString();
+              element.Exam = this.functionsService.convertToCamelCase(
+                element.Exam
+              );
+              this.currentExamList.push(element);
+              this.currentExamList_filtered.push(element);
+            }
+          });
+        },
+        (error) => {
+          this.examListSkeleton = false;
+        },
+        () => {
+          this.examListSkeleton = false;
+        }
+      );
 
     // this.patientService.getCebuExamList(data).subscribe(
     //   (res: any) => {
@@ -548,46 +886,54 @@ export class InPatientDetailPage {
         let x = data.data.method;
         this.postData.ProfFee = data.data.professionalFee;
         if (x == 'POST') {
-          this.doctorService.insertPF(this.postData).subscribe((res: any) => {
-            if (res == true) {
-              this.professionalFee = data.data.professionalFee;
-              this.remarks = data.data.remarks;
-              this.postData.ProfFee = data.data.professionalFee;
-              this.postData.Remarks = data.data.remarks;
-              this.postData.DateCreated = this.functionsService.getSystemDateTime();
-              this.data[0].doctor_prof_fee = data.data.professionalFee;
-              this.modalUpdate(
-                'SUCCESS',
-                'Thank you, Dok! You have successfully SAVED your Professional Fee.'
-              );
-            } else {
-              this.functionsService.alert(
-                'SAVING of Professional Fee was Unsuccessful',
-                'Okay'
-              );
-            }
-          });
+          this.doctorService
+            .insertPF(this.postData)
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe((res: any) => {
+              if (res == true) {
+                this.professionalFee = data.data.professionalFee;
+                this.remarks = data.data.remarks;
+                this.postData.ProfFee = data.data.professionalFee;
+                this.postData.Remarks = data.data.remarks;
+                this.postData.DateCreated =
+                  this.functionsService.getSystemDateTime();
+                this.data[0].doctor_prof_fee = data.data.professionalFee;
+                this.modalUpdate(
+                  'SUCCESS',
+                  'Thank you, Dok! You have successfully SAVED your Professional Fee.'
+                );
+              } else {
+                this.functionsService.alert(
+                  'SAVING of Professional Fee was unsuccessful. Please try again.',
+                  'Okay'
+                );
+              }
+            });
         } else if (x == 'PUT') {
           this.postData.OldProfFee = this.data[0].doctor_prof_fee;
-          this.doctorService.updatePF(this.postData).subscribe((res: any) => {
-            if (res == true) {
-              this.professionalFee = data.data.professionalFee;
-              this.remarks = data.data.remarks;
-              this.postData.ProfFee = data.data.professionalFee;
-              this.postData.Remarks = data.data.remarks;
-              this.postData.DateCreated = this.functionsService.getSystemDateTime();
-              this.data[0].doctor_prof_fee = data.data.professionalFee;
-              this.modalUpdate(
-                'SUCCESS',
-                'Successfully UPDATED your Professional Fee.'
-              );
-            } else {
-              this.functionsService.alert(
-                'UPDATING of Professional Fee was Unsuccessful',
-                'Okay'
-              );
-            }
-          });
+          this.doctorService
+            .updatePF(this.postData)
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe((res: any) => {
+              if (res == true) {
+                this.professionalFee = data.data.professionalFee;
+                this.remarks = data.data.remarks;
+                this.postData.ProfFee = data.data.professionalFee;
+                this.postData.Remarks = data.data.remarks;
+                this.postData.DateCreated =
+                  this.functionsService.getSystemDateTime();
+                this.data[0].doctor_prof_fee = data.data.professionalFee;
+                this.modalUpdate(
+                  'SUCCESS',
+                  'Successfully UPDATED your Professional Fee.'
+                );
+              } else {
+                this.functionsService.alert(
+                  'UPDATING of Professional Fee was Unsuccessful',
+                  'Okay'
+                );
+              }
+            });
         } else if (x == 'DELETE') {
           this.functionsService.logToConsole('DELETE: ' + this.postData);
           this.doctorService
@@ -596,6 +942,7 @@ export class InPatientDetailPage {
               this.postData.DoctorStatusCode,
               this.postData.DoctorCode
             )
+            .pipe(takeUntil(this.ngUnsubscribe))
             .subscribe((res: any) => {
               if (res == true) {
                 this.professionalFee = data.data.professionalFee;
@@ -604,7 +951,8 @@ export class InPatientDetailPage {
                 this.remarks = data.data.remarks;
                 this.postData.ProfFee = data.data.professionalFee;
                 this.postData.Remarks = data.data.remarks;
-                this.postData.DateCreated = this.functionsService.getSystemDateTime();
+                this.postData.DateCreated =
+                  this.functionsService.getSystemDateTime();
                 this.data[0].doctor_prof_fee = data.data.professionalFee;
                 this.modalUpdate(
                   'SUCCESS',
@@ -711,38 +1059,24 @@ export class InPatientDetailPage {
     );
   }
 
-  back() {}
+  back() {
+    this.nav.back();
+  }
 
   checkAppearance() {
+    this.functionsService.logToConsole('checkAppearance');
+    var values = JSON.parse(
+      '[' + atob(localStorage.getItem('user_settings')) + ']'
+    );
     let dr_username = atob(localStorage.getItem('username'));
-    this.patientService
-      .getUserSettings('DPP', dr_username)
-      .subscribe((res: any) => {
-        if (Object.keys(res).length >= 1) {
-          let data = JSON.stringify(res);
-          data = '[' + data + ']';
-          let adat = JSON.parse(data);
-          adat.forEach((el) => {
-            if (typeof el.appearance !== 'undefined') {
-              if (el.appearance.darkmode == 1) {
-                this.renderer.setAttribute(
-                  document.body,
-                  'color-theme',
-                  'dark'
-                );
-              } else {
-                this.renderer.setAttribute(
-                  document.body,
-                  'color-theme',
-                  'light'
-                );
-              }
-            } else {
-              this.renderer.setAttribute(document.body, 'color-theme', 'light');
-            }
-          });
-        }
-      });
+    values.forEach((element) => {
+      this.functionsService.logToConsole(element.darkmode);
+      if (element.darkmode == 1) {
+        this.renderer.setAttribute(document.body, 'color-theme', 'dark');
+      } else {
+        this.renderer.setAttribute(document.body, 'color-theme', 'light');
+      }
+    });
   }
 
   async presentlabtestresult() {
@@ -755,4 +1089,39 @@ export class InPatientDetailPage {
     });
     return await modal.present();
   }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+  /***************SIGNATURE**********************/
+
+  /*
+  signaturePad: SignaturePad;
+  @ViewChild('canvas') canvasEl: ElementRef;
+
+  signatureImg: string;
+
+  ngAfterViewInit() {
+    this.signaturePad = new SignaturePad(this.canvasEl.nativeElement);
+    //this.resizeCanvas();
+  }
+
+  startDrawing(event: Event) {
+    ////console.log(event);
+    // works in device not in browser
+  }
+
+  moved(event: Event) {
+    // works in device not in browser
+  }
+
+  clearPad() {
+    this.signaturePad.clear();
+  }
+
+  savePad() {
+    const base64Data = this.signaturePad.toDataURL();
+    this.signatureImg = base64Data;
+    ////console.log(base64Data);
+  }*/
 }

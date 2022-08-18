@@ -5,3 +5,9 @@ export class AuthConstants {
 export class DoctorConstants {
     public static readonly KEY = 'getDoctorName'
 };
+
+export class Consta {
+    public static readonly appCode = 'DPP'
+    public static readonly mode = 'T'
+};
+

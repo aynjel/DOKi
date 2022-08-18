@@ -19,6 +19,7 @@ npm-debug.log*
 
 /.idea
 /.ionic
+/.ionide
 /.sass-cache
 /.sourcemaps
 /.versions
@@ -45,3 +46,5 @@ npm-debug.log*
 
 # Ignore VS Code Counter files
 /.VSCodeCounter
+
+.fake

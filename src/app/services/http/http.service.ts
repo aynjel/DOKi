@@ -150,7 +150,8 @@ export class HttpService {
       'Content-Type': 'application/json;charset=utf-8',
     });
     const options = { headers: headers, withCredentials: false, data };
-    const url = environment.apiRouterUrl + 'PhilHealthCaseRates/Search' + data;
+    let newLink = this.functionsService.isLocalorLive("PhilHealthCaseRates");
+    const url = environment.apiRouterUrl +newLink+ '/Search' + data;
     return this.http.get(url);
   }
 }

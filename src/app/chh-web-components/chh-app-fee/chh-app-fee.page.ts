@@ -4,6 +4,8 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { LoginData } from 'src/app/models/login-data.model';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { FunctionsService } from "../../shared/functions/functions.service";
+import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
+import { InPatientData,ProfessionalFeeModelv3 } from 'src/app/models/in-patient.model';
 @Component({
   selector: "chh-app-fee",
   templateUrl: "./chh-app-fee.page.html",
@@ -15,7 +17,8 @@ export class ChhAppFeePage implements OnInit {
   public initialFeePopOverRemarks: string = "";
   public initialFeePopOverMethod: string = "";
   public disableSaveBtn = false;
-  public logindata: LoginData;
+  public logindata: LoginResponseModelv3;
+  loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
   public dr_name:any;
   public postData = {
     professionalFee: "",
@@ -42,8 +45,8 @@ export class ChhAppFeePage implements OnInit {
     this.initialFeePopOverMethod = this.method;
 
     
-    this.logindata = <LoginData>this.authService.userData$.getValue();
-    this.dr_name = this.logindata[0].last_name;
+    this.logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
+    this.dr_name = this.logindata.lastName;
     this.$gaService.event('Professional Fee','User Flow',this.dr_name);
   }
 

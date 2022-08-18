@@ -10,7 +10,6 @@ import { ChhAppTextAvatarModule } from "../../chh-web-components/chh-app-text-av
 
 @NgModule({
   imports: [
-    CommonModule,
     FormsModule,
     IonicModule,
     CaseRatesPageRoutingModule,

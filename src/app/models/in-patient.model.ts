@@ -37,6 +37,7 @@ export class InPatientData{
     IsVAT:string
     PayVenue:string
     SelectedPayVenue:string
+    Mode:any
 }
 
 
@@ -44,6 +45,25 @@ export class InPatientData{
 export class PatientNo{
     pfInsCoor: string
     pfIsPatientSeen: string
+
+}
+
+
+export class ProfessionalFeeModelv3{
+    admission_no: string
+    doctor_status_code: string
+    doctor_prof_fee: number
+    is_vat: string
+    selected_payvenue: string
+    payvenue: string
+    site: string
+    remarks: string
+    doctor_mobile_no: string
+    billing_mobile_no: string
+    room_no: string
+    smsGatewayCHH: string
+    smsGatewaySmart: string
+    old_prof_fee:number
 
 }
 

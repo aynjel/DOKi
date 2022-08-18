@@ -10,20 +10,20 @@
  */
 
 /* Core CSS required for Ionic components to work properly */
-@import "~@ionic/angular/css/core.css";
+@import '~@ionic/angular/css/core.css';
 
 /* Basic CSS for apps built with Ionic */
-@import "~@ionic/angular/css/normalize.css";
-@import "~@ionic/angular/css/structure.css";
-@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/normalize.css';
+@import '~@ionic/angular/css/structure.css';
+@import '~@ionic/angular/css/typography.css';
 @import '~@ionic/angular/css/display.css';
 
 /* Optional CSS utils that can be commented out */
-@import "~@ionic/angular/css/padding.css";
-@import "~@ionic/angular/css/float-elements.css";
-@import "~@ionic/angular/css/text-alignment.css";
-@import "~@ionic/angular/css/text-transformation.css";
-@import "~@ionic/angular/css/flex-utils.css";
+@import '~@ionic/angular/css/padding.css';
+@import '~@ionic/angular/css/float-elements.css';
+@import '~@ionic/angular/css/text-alignment.css';
+@import '~@ionic/angular/css/text-transformation.css';
+@import '~@ionic/angular/css/flex-utils.css';
 
 /*For Google Web Font*/
 //@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');  // Inter
@@ -48,284 +48,290 @@
 */
 
 .tab-font-family {
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
 }
 
 .desktop-wrapper {
-   ion-toolbar {
-     text-align: center;
-   }
-   
-   ion-header {
-     &.header-md:after {
-       background: none;
-     }
-   }
- }
+  ion-toolbar {
+    text-align: center;
+  }
 
- .modal-30 .modal-wrapper{
+  ion-header {
+    &.header-md:after {
+      background: none;
+    }
+  }
+}
+
+.modal-30 .modal-wrapper {
   top: 5;
-  position: absolute; 
-  display: block;  
+  position: absolute;
+  display: block;
 
-  overflow:hidden;
+  overflow: hidden;
 
   @media only screen and (min-width: 767px) {
     min-width: 30%;
     max-width: 50%;
     height: 80%;
   }
+}
 
- }
-
- .my-custom-modal-inpatient-css .modal-wrapper {
-  
+.my-custom-modal-inpatient-css .modal-wrapper {
   --background: transparent !important;
 
   width: 100%;
   height: 100%;
- }
- .my-custom-modal-appointment-css .modal-wrapper {
-   height: 50%;
-   width: 50%;
-   top: 15;
-   position: absolute; 
-   display: block;  
 }
-  .fontSize-12{
-    font-size:12px
-  }
-  .fontSize-14{
-    font-size:14px
-  }
-  .font-weight-bold{
-    font-weight: bold;
-  }
-  .overflow-scroll{
-    overflow-y:auto;
-  }
-  .max-height-300{
-    max-height: 300px;
-  }
+.my-custom-modal-appointment-css .modal-wrapper {
+  height: 50%;
+  width: 50%;
+  top: 15;
+  position: absolute;
+  display: block;
+}
+.fontSize-12 {
+  font-size: 12px;
+}
+.font-12 {
+  font-size: 12px !important;
+}
+.fontSize-14 {
+  font-size: 14px;
+}
+.fontSize-16 {
+  font-size: 16px;
+}
+.font-weight-bold {
+  font-weight: bold;
+}
+.overflow-scroll {
+  overflow-y: auto;
+}
+.max-height-300 {
+  max-height: 300px;
+}
 
-  .max-height-73vh{
-    max-height: 73vh;
+.max-height-73vh {
+  max-height: 73vh;
+}
+.max-height-87vh {
+  max-height: 87vh;
+}
+.max-height-82vh {
+  max-height: 82vh;
+}
+.max-height-34vh {
+  max-height: 32vh;
+}
 
-  }
-  .max-height-87vh{
-    max-height: 87vh;
-
-  }
-  .max-height-82vh{
-    max-height: 82vh;
-
-  }
-  .max-height-34vh{
-    max-height: 32vh;
-
-  }
-
-  .max-height-500{
-    max-height: 500px;
-  }
-  .max-height-800{
-    max-height: 800px;
-  } 
-  .border-left{
-    border-left: 1px solid rgba(0, 0, 0, 0.3);
-  }
-  .border-bottom{
-    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-  }
-
-
+.max-height-500 {
+  max-height: 500px;
+}
+.max-height-800 {
+  max-height: 800px;
+}
+.border-left {
+  border-left: 1px solid rgba(0, 0, 0, 0.3);
+}
+.border-bottom {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
 
 .my-privacy-modal-css .modal-wrapper {
   height: 70%;
   width: 40%;
   top: 15;
-  position: absolute; 
-  display: block;  
+  position: absolute;
+  display: block;
 }
-.small-ion-item{
-  --background:red;
+.small-ion-item {
+  --background: red;
   --padding-end: 0px;
   --inner-padding-end: 0px;
 }
 .with-header {
   height: auto;
-  top: 12px;  // height of your app-header component
+  top: 12px; // height of your app-header component
 }
 
-.pointer {cursor: pointer;}
- .my-custom-modal-css .modal-wrapper {
-   height: 90%;
-   width: 95%;
-   top: 5%;
-   position: absolute; 
-   display: block;  
+.pointer {
+  cursor: pointer;
+}
+.my-custom-modal-css .modal-wrapper {
+  height: 90%;
+  width: 95%;
+  top: 10%;
+  position: absolute;
+  display: block;
+  @media (min-width: 768px) {
+    width: 50%;
+  }
+}
+.my-custom-css .modal-wrapper {
+  height: 90%;
+  top: 5%;
+  position: absolute;
+  display: block;
+}
+.modal-wrapper {
+  background: transparent !important;
+  --box-shadow: 0 28px 48px rgba(0, 0, 0, 0);
+}
+ion-popover {
+  ion-backdrop {
+    opacity: 0.5 !important;
+  }
+  .popover-wrapper {
+    .popover-content {
+      width: 80vw;
+      max-width: 500px;
+    }
+  }
 }
 
-ion-popover{
-   ion-backdrop{
-   opacity: 0.5 !important;
-   }
-   .popover-wrapper{
-   .popover-content{
-   width:80vw;
-   max-width:500px;
-   }
-   }
-   }
-
-.custom-border-top{
-   border-top: 1px solid #275228 !important;
+.custom-border-top {
+  border-top: 1px solid #275228 !important;
 }
-.custom-border-bottom{
-   border-bottom: 1px solid rgb(39, 82, 40, 0.3) !important;
-
+.custom-border-bottom {
+  border-bottom: 1px solid rgb(39, 82, 40, 0.3) !important;
 }
-   
-
 
 .li-ionic4-datePicker {
-   .modal-wrapper {
-       height: 75%;
-       max-height: 478px;
-       width: 312px;
-       border-radius: 5px;
-       border: 1px solid #275228 ;
-       --ion-color-primary: #275228 ; // This Variable used for the change of colour ion-datepicker only.
-       --ion-color-primary-tint: rgb(214, 153, 153); // This Variable changes the tint colour of background when click button.
-       ion-button {
-          
-           // --ion-color-primary: green; // This Variable used for the change colour of buttons only.
-           // --ion-color-primary-tint: lightgreen; // This Variable changes the tint color of background when click buttons.
-           // --border-radious: 0px; // This Variable changes the border radious of buttons.
-           // button customization css write here...
-       }
-       @media (min-width: 768px) {
-           width: 350px;
-           height: 65%;
-       }
-   }
+  .modal-wrapper {
+    height: 75%;
+    max-height: 478px;
+    width: 312px;
+    border-radius: 5px;
+    border: 1px solid #275228;
+    --ion-color-primary: #275228; // This Variable used for the change of colour ion-datepicker only.
+    --ion-color-primary-tint: rgb(
+      214,
+      153,
+      153
+    ); // This Variable changes the tint colour of background when click button.
+    ion-button {
+      // --ion-color-primary: green; // This Variable used for the change colour of buttons only.
+      // --ion-color-primary-tint: lightgreen; // This Variable changes the tint color of background when click buttons.
+      // --border-radious: 0px; // This Variable changes the border radious of buttons.
+      // button customization css write here...
+    }
+    @media (min-width: 768px) {
+      width: 350px;
+      height: 65%;
+    }
+  }
 }
 
 .floatingwithicon {
-   .clearButton {
-       right: 37px !important;
-       bottom: 11px !important;
-   }
+  .clearButton {
+    right: 37px !important;
+    bottom: 11px !important;
+  }
 }
 
 ion-toggle {
-   .ng-valid[required],
-   .ng-valid.required,
-   .ng-valid:not(form) {
-       border-bottom: none !important;
-       /* green */
-   }
-   .ng-invalid:not(form) {
-       //border-bottom: 1px solid #a94442 !important;
-       /* red */
-   }
-   .ng-pristine:not(form) {
-      // border-bottom: 1px solid #ccc !important;
-   }
+  .ng-valid[required],
+  .ng-valid.required,
+  .ng-valid:not(form) {
+    border-bottom: none !important;
+    /* green */
+  }
+  .ng-invalid:not(form) {
+    //border-bottom: 1px solid #a94442 !important;
+    /* red */
+  }
+  .ng-pristine:not(form) {
+    // border-bottom: 1px solid #ccc !important;
+  }
 }
 
 li-ionic4-datepicker {
-   input[_ngcontent-c1] {
-     //  border-bottom: unset !important;
-   }
+  input[_ngcontent-c1] {
+    //  border-bottom: unset !important;
+  }
 }
 
 .ng-valid[required],
 .ng-valid.required,
 .ng-valid:not(form) {
-   //border-bottom: 1px solid #42A948;
-   /* green */
+  //border-bottom: 1px solid #42A948;
+  /* green */
 }
 
 .ng-invalid:not(form) {
-   //border-bottom: 1px solid #a94442;
-   /* red */
+  //border-bottom: 1px solid #a94442;
+  /* red */
 }
 
 .ng-pristine:not(form) {
   // border-bottom: 1px solid #ccc;
 }
 
-body{
+body {
   // --ion-background-color:rgb(233, 235, 238);
 }
 
-ion-toolbar{
+ion-toolbar {
   // --min-height:40px;
 }
 
 /****/
 .desktop {
-   ion-router-outlet {
-     margin-top: 4.5%;
-     margin-bottom: 35px;
-   }
-  
-   .logo {
-     max-height: 100%;
-   }
-  
- 
-  
-   .link {
-     --color: #528d53;
-   }
-  
-   .active-link {
-     --color: #275228;
-     border-bottom: 1px solid #275228;
-     font-weight: bold;
-   }
- 
- }
+  ion-router-outlet {
+    margin-top: 4.5%;
+    margin-bottom: 35px;
+  }
 
- .link {
-   --color: #528d53;
- }
+  .logo {
+    max-height: 100%;
+  }
 
- .active-link {
-   --color: #275228;
-   border-bottom: 2px solid #275228;
-   font-weight: bold;
- }
- .chh-darkmode{
+  .link {
+    --color: #528d53;
+  }
+
+  .active-link {
+    --color: #275228;
+    border-bottom: 1px solid #275228;
+    font-weight: bold;
+  }
+}
+
+.link {
+  --color: #528d53;
+}
+
+.active-link {
+  --color: #275228;
+  border-bottom: 2px solid #275228;
+  font-weight: bold;
+}
+.chh-darkmode {
   background-color: var(--background-color);
 }
 
-
-:root { 
-	--background-color: #ffffff;
-
+:root {
+  --background-color: #ffffff;
 }
 
-@media (prefers-color-scheme: dark) { 
-    :root {
-        background-color:var(background-color);
-        font: var(--text-color);
-
-    }
-    // .highcharts-color-0 {
-    //     fill: #0460ba;
-    //     stroke: #0460ba;
-    // }
-    // .highcharts-color-1 {
-    //     fill: #9696ab;
-    //     stroke: #9696ab;
-    // }
+@media (prefers-color-scheme: dark) {
+  :root {
+    background-color: var(background-color);
+    font: var(--text-color);
+  }
+  // .highcharts-color-0 {
+  //     fill: #0460ba;
+  //     stroke: #0460ba;
+  // }
+  // .highcharts-color-1 {
+  //     fill: #9696ab;
+  //     stroke: #9696ab;
+  // }
 }
 
 body {
-    background-color: var(--background-color);
+  background-color: var(--background-color);
 }
 
 /*for charts*/
@@ -333,25 +339,25 @@ body {
 @import './assets/highcharts/highcharts.css';
 
 .highcharts-background {
-    fill: var(--background-color);
+  fill: var(--background-color);
 }
 .highcharts-container text {
-    fill: var(--text-color);
+  fill: var(--text-color);
 }
 .highcharts-subtitle,
 .highcharts-credits,
 .highcharts-axis-title {
-    fill-opacity: 0.7;
+  fill-opacity: 0.7;
 }
 .highcharts-grid-line {
-    stroke: var(--text-color);
-    stroke-opacity: 0.2;
+  stroke: var(--text-color);
+  stroke-opacity: 0.2;
 }
 .highcharts-tooltip-box {
-    fill: var(--background-color);
+  fill: var(--background-color);
 }
 .highcharts-column-series rect.highcharts-point {
-    stroke: var(--background-color);
+  stroke: var(--background-color);
 }
 .alert-radio-label.sc-ion-alert-md {
   white-space: pre-line !important;
@@ -362,92 +368,340 @@ body {
 }
 
 .swiper-pagination {
-  bottom: 97% !important;
-}
-body[color-theme="dark"] {
-  .darkmode{
-    display: block;
-  }
-  .lightmode{
-    display: none;
-  }
-}
-body[color-theme="light"] {
-  .darkmode{
-    display: none;
-  }
-  .lightmode{
-    display: block;
-  }
+  //bottom: 97% !important;
+  width: 50% !important;
+  left: 25% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.swiper-pagination-bullet {
+  transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+}
+
+.swiper-pagination-bullet-active {
+  width: 12px;
+  height: 12px;
+  background: var(--ion-color-primary);
+  border: 2px solid var(--bullet-backround-active);
+}
+
+body[color-theme='dark'] {
+  .darkmode {
+    display: block;
+  }
+  .lightmode {
+    display: none;
+  }
+}
+body[color-theme='light'] {
+  .darkmode {
+    display: none;
+  }
+  .lightmode {
+    display: block;
+  }
+}
 
 .nav-primary.active {
   color: #275228;
   font-weight: 1000 !important;
   background-color: yellow;
   //font-weight:bolder;
-
 }
-
 
 /* Breadcrumb */
 .breadcrumb {
+  list-style: none;
 
-list-style: none;
-
-font-weight: normal;
-//color: #FFF;
-overflow: hidden;
-li {
-  display: inline-block;
+  font-weight: normal;
   //color: #FFF;
+  overflow: hidden;
+  li {
+    display: inline-block;
+    //color: #FFF;
+  }
+  a {
+    //color:#E9A7A1;
+    text-decoration: none;
+  }
+  .ion-chevron-right {
+    font-size: 13px;
+    // color: #E9A7A1;
+  }
 }
-a {
-  //color:#E9A7A1;
-  text-decoration: none;
-}
-.ion-chevron-right {
 
-  font-size: 13px;
- // color: #E9A7A1;
-}
-
-
-
-}
-
-
-.icon-center{
+.icon-center {
   vertical-align: middle !important;
 }
-.padding-left-10{
+.padding-left-10 {
   padding-left: 10px !important;
 }
-.vcenter{
+.vcenter {
   margin: 0;
   position: absolute;
   top: 50%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
-.padding-left-30{
-  padding-left: 30px!important;
+.padding-left-30 {
+  padding-left: 30px !important;
 }
-.font-weight-500{
+.font-weight-500 {
   font-weight: 500 !important;
 }
-.font-size-20{
+.font-size-20 {
   font-size: 20px !important;
 }
 
-.my-icon { zoom : 2;}
+.my-icon {
+  zoom: 2;
+}
 
-
-
-
+.buttonActive:active {
+  border: 3px solid;
+  // box-shadow: 1px 1px red;
+}
 // html {
 //   min-height: calc(100% + env(safe-area-inset-top));
 //   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 
-// }
+// }rgb(245, 0, 0)
+
+ion-modal.ion5modal {
+  --width: 100%;
+  --height: 100%;
+  --background: rgba(44, 39, 45, 0.2);
+  &::part(content) {
+    backdrop-filter: blur(6px);
+  }
+  ion-content.blur {
+    --background: transparent;
+    @media (min-width: 676px) {
+      --padding-start: 30%;
+    }
+  }
+  ion-card {
+    @media (min-width: 676px) {
+      width: 50%;
+    }
+  }
+}
+ion-modal.ion5modalSign {
+  --width: 100%;
+  --height: 100%;
+  --background: rgba(44, 39, 45, 0.2);
+  @media (min-height: 1180px) {
+    --padding-bottom: 60%;
+  }
+  &::part(content) {
+    backdrop-filter: blur(6px);
+  }
+
+  ion-content.blur {
+    --background: transparent;
+    @media (min-width: 667px) {
+        --padding-start: 10%;
+        --padding-end: 10%;
+      }
+    @media (min-width: 1023px) {
+      --padding-start: 20%;
+      --padding-end: 20%;
+    }
+  }
+
+  ion-card {
+    @media (min-width: 676px) {
+      width: 50%;
+    }
+  }
+}
+ion-modal.ion6modal {
+  --width: 100%;
+  --height: 100%;
+  --background: rgba(255, 255, 255, 0.2);
+  &::part(content) {
+    backdrop-filter: blur(6px);
+  }
+  ion-content.blur {
+    --background: transparent;
+    --padding-top: 25vh;
+    --padding-start: 40%;
+    --padding-end: 40%;
+    @media (max-width: 676px) {
+      --padding-start: 25px;
+      --padding-end: 25px;
+    }
+    ion-datetime {
+      border-radius: 8px;
+    }
+  }
+}
+
+/*
+ion-modal.ion6modaltest {
+  --width: 100%;
+  --height: 60%;
+  --background: rgba(255, 255, 255, 0.2);
+  &::part(content) {
+    backdrop-filter: blur(6px);
+  }
+    
+    @media (min-width: 767px) {
+  --width: 50%;
+  --height: 60%;
+    }
+
+
+}
+*/
+
+ion-modal.ion6modaltest {
+  --width: 100%;
+  --height: 100%;
+  --background: rgba(255, 255, 255, 0.2);
+
+  &::part(content) {
+    backdrop-filter: blur(6px);
+  }
+  .customBackgroundColor{
+    width: 100%;
+    height: 100%;
+  }
+  ion-content.blur {
+    --background: transparent;
+    @media (min-width: 767px) {
+
+      //--padding-end: 25%;
+     // --padding-start: 25%;
+    }
+
+    ion-datetime {
+    border-radius: 8px;
+    }
+  }
+}
+ion-modal.ion6modalsign {
+  --width: 100%;
+  --height: 100%;
+  --background: rgba(255, 255, 255, 0.2);
+
+  &::part(content) {
+    backdrop-filter: blur(6px);
+  }
+
+  .customBackgroundColor {
+    width: 100%;
+    height: 100%;
+  }
+
+  ion-content.blur {
+    --background: transparent;
+
+    @media (min-width: 767px) {
+
+      //--padding-end: 25%;
+      // --padding-start: 25%;
+    }
+
+    ion-datetime {
+      border-radius: 8px;
+    }
+  }
+}
+ion-modal.ion6modalviewsignature {
+  --width: 100%;
+  --height: 100%;
+  --background: rgba(255, 255, 255, 0.2);
+
+  &::part(content) {
+    backdrop-filter: blur(6px);
+  }
+
+  .customBackgroundColor {
+    width: 100%;
+    height: 100%;
+  }
+
+  ion-content.blur {
+    --background: transparent;
+  --padding-top: 25%;
+    @media (min-width: 767px) {
+   
+      --padding-end: 25%;
+      --padding-start: 25%;
+    }
+
+    ion-datetime {
+      border-radius: 8px;
+    }
+  }
+}
+.margintop-15{
+  margin-top: -15px !important;
+}
+
+.bdrSolid1pxBlack{
+  border:solid 1px black
+}
+
+.ToolbarVerde {
+  --padding-top: 0px !important;
+  --padding-start: 0px !important;
+  --padding-right: 0px !important;
+  --padding-end: 0px !important;
+}
+
+.noPaddingTop{
+  padding-top:0px !important;
+}
+.noPaddingBottom{
+  padding-bottom:0px !important;
+}
+.paddingBottom5{
+  padding-bottom: 5px !important;
+}
+.paddingBottom10 {
+  padding-bottom: 10 !important;
+}
+.paddingTop5{
+    padding-top: 5px !important;
+}
+
+.paddingTop10 {
+  padding-top: 10px !important;
+}
+
+
+.floatRight{
+  float:right !important;
+}
+.floatLeft {
+  float: right !important;
+}
+
+
+.item-background-color {
+  --ion-item-background: #bebebe !important;
+}
+
+.item-divider-color {
+  --background: #f1f1f1 !important;
+
+}
+.ios body[color-theme='dark'], body[color-theme='dark'] {
+  .item-background-color {
+    --ion-item-background: #000000 !important;
+  }
+
+  .item-divider-color {
+    --background: #000000 !important;
+  }
+}
+
+.pointHand{
+  cursor:pointer;
+}
+
+
