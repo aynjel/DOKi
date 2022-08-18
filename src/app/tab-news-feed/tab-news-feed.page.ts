@@ -51,7 +51,7 @@ export class TabNewsFeedPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          console.log(res);
+          //console.log(res);
 
           this.newsfeedTemp = res;
         },
@@ -73,7 +73,7 @@ export class TabNewsFeedPage implements OnInit {
       dt_from: this.functionsService.getDateYYYYMMDD(9999) + 'T00:00:00.000Z',
       dt_to: this.functionsService.getDateYYYYMMDD() + 'T00:00:00.000Z',
     };
-    console.log(data);
+    //console.log(data);
 
     let jsonResponse = null;
     this.doctorService

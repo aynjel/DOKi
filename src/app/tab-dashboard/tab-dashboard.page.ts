@@ -194,7 +194,7 @@ export class TabDashboardPage implements OnInit {
       dt_from: this.functionsService.getDateYYYYMMDD(9999) + 'T00:00:00.000Z',
       dt_to: this.functionsService.getDateYYYYMMDD() + 'T00:00:00.000Z',
     };
-    console.log(data);
+    //console.log(data);
 
     let jsonResponse = null;
     this.doctorService
@@ -349,7 +349,7 @@ export class TabDashboardPage implements OnInit {
     this.revokeTokenV3.jwt = decodeURIComponent(
       this.functionsService.getcookie('refreshToken')
     );
-    console.log(this.revokeTokenV3);
+    //console.log(this.revokeTokenV3);
 
     this.doctorService
       .revokeTokenV3(this.revokeTokenV3)

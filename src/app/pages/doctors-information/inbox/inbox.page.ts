@@ -47,7 +47,7 @@ export class InboxPage implements OnInit {
     public functionService: FunctionsService,
     private authService: AuthService
   ) {
-    //console.log('constructor');
+    ////console.log('constructor');
     this.isNotification = true;
     this.screensizeService
       .isDesktopView()
@@ -98,7 +98,7 @@ export class InboxPage implements OnInit {
   }
   modeSelected: string = 'for Approval';
   changeMode(e) {
-    console.log(e);
+    //console.log(e);
 
     this.selected = e;
     localStorage.setItem('changeMode', e);
@@ -121,9 +121,9 @@ export class InboxPage implements OnInit {
     }
   }
   /*segmentChanged(e) {
-    ////console.log(e.detail.value);
+    //////console.log(e.detail.value);
     //this.router.navigate(['/sign-medcert/' + e.detail.value]);
-    //console.log(e.detail.value);
+    ////console.log(e.detail.value);
     this.selected = e.detail.value;
     this.pendingApproval = this.pendingApprovalFullList.filter(
       (element) => element.approval_status == e.detail.value
@@ -132,7 +132,7 @@ export class InboxPage implements OnInit {
   pendingApprovalCount = 0;
   getPendingApproval(dateFrom, dateTo) {
     this.pendingApprovalCount = 0;
-    console.log(this.selected);
+    //console.log(this.selected);
     this.pendingApproval = [];
     this.pendingApprovalFullList = [];
     let data = {
@@ -157,7 +157,7 @@ export class InboxPage implements OnInit {
           }
         },
         (error) => {
-          //console.log(error);
+          ////console.log(error);
         },
         () => {
           let testPending = [];
@@ -181,16 +181,16 @@ export class InboxPage implements OnInit {
   }
   approvePendingAPproval(discharge_no) {
     this.dischargeNo.discharge_no = discharge_no;
-    //console.log(this.dischargeNo);
+    ////console.log(this.dischargeNo);
     this.doctorService
       .approvePendingApproval(this.dischargeNo)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          //console.log(res);
+          ////console.log(res);
         },
         (error) => {
-          //console.log(error);
+          ////console.log(error);
         },
         () => {
           this.getPendingApproval(this.dateToday, this.dateNow);
@@ -213,7 +213,7 @@ export class InboxPage implements OnInit {
 
   dischargeNumber: any;
   reviseRevokeApproval(x) {
-    console.log(x);
+    //console.log(x);
     this.dischargeNo = x.discharge_no;
     if (this.selected == 'FA') {
       document.getElementById('trigger-modal-forRevision').click();
@@ -238,7 +238,7 @@ export class InboxPage implements OnInit {
   }
 
   viewAndCancelCerticate(x) {
-    //console.log(x);
+    ////console.log(x);
 
     this.router.navigate([
       'menu/in-patients/' + x.admissionNo + '/view/' + x.dischargeNo,
@@ -269,7 +269,7 @@ export class InboxPage implements OnInit {
           icon: 'arrow-back-outline',
           role: 'cancel',
           handler: () => {
-            //console.log('Cancel clicked');
+            ////console.log('Cancel clicked');
           },
         },
       ],
@@ -277,7 +277,7 @@ export class InboxPage implements OnInit {
     await actionSheet.present();
 
     const { role, data } = await actionSheet.onDidDismiss();
-    //console.log('onDidDismiss resolved with role and data', role, data);
+    ////console.log('onDidDismiss resolved with role and data', role, data);
   }
   async presentForRevision(x) {
     const actionSheet = await this.actionSheetController.create({
@@ -293,7 +293,7 @@ export class InboxPage implements OnInit {
             type: 'delete',
           },
           handler: () => {
-            console.log(x.discharge_no);
+            //console.log(x.discharge_no);
             //this.cancelApprovedApproval(x.discharge_no);
           },
         },
@@ -302,7 +302,7 @@ export class InboxPage implements OnInit {
           icon: 'arrow-back-outline',
           role: 'cancel',
           handler: () => {
-            //console.log('Cancel clicked');
+            ////console.log('Cancel clicked');
           },
         },
       ],
@@ -332,7 +332,7 @@ export class InboxPage implements OnInit {
           icon: 'arrow-back-outline',
           role: 'cancel',
           handler: () => {
-            //console.log('Cancel clicked');
+            ////console.log('Cancel clicked');
           },
         },
       ],
@@ -358,7 +358,7 @@ export class InboxPage implements OnInit {
       .subscribe(
         (data: any) => {},
         (error) => {
-          console.log(error);
+          //console.log(error);
         },
         () => {
           //this.cancelApprovedApproval(dischargeNo);
@@ -375,7 +375,7 @@ export class InboxPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          console.log(res);
+          //console.log(res);
         },
         (error) => {},
         () => {
@@ -412,7 +412,7 @@ export class InboxPage implements OnInit {
     if (this.isCalendar) {
       this.closeCalendar();
     }
-    console.log(value);
+    //console.log(value);
     let dateOne = new Date(value);
     let dateTwo = new Date(this.dateNow);
     if (dateOne > dateTwo) {

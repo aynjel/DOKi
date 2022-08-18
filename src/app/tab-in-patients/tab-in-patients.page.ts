@@ -95,7 +95,7 @@ export class TabInPatientsPage {
   }
 
   ngOnInit() {
-    //console.log('ngOnInit');
+    ////console.log('ngOnInit');
 
     this.checkAppearance();
     this.$gaService.pageView('/In-Patient', 'In-Patient Tab');
@@ -108,7 +108,7 @@ export class TabInPatientsPage {
       dt_from: this.functionsService.getDateYYYYMMDD(9999) + 'T00:00:00.000Z',
       dt_to: this.functionsService.getDateYYYYMMDD() + 'T00:00:00.000Z',
     };
-    console.log(data);
+    //console.log(data);
 
     let jsonResponse = null;
     this.doctorService
@@ -119,7 +119,7 @@ export class TabInPatientsPage {
           jsonResponse = res;
         },
         (error) => {
-          console.log(error);
+          //console.log(error);
         },
         () => {
           this.isNotification = false;

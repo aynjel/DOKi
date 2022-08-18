@@ -33,7 +33,7 @@ export class AuthService {
   getUserData() {
     this.storageService.get(AuthConstants.AUTH).then((res) => {
       this.userData$.next(res);
-      console.log(res);
+      //console.log(res);
     });
   }
   /*

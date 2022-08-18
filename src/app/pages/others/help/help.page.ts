@@ -28,7 +28,7 @@ export class HelpPage implements OnInit {
     public modalController: ModalController,
     public functionsService: FunctionsService
   ) {
-    console.log('constructor');
+    //console.log('constructor');
     this.screensizeService
       .isDesktopView()
       .pipe(takeUntil(this.ngUnsubscribe))

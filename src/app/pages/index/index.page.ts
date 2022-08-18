@@ -19,8 +19,8 @@ export class IndexPage implements OnInit {
   ios: boolean = false;
   isDesktop: boolean;
   sampleVariable: boolean = true;
-  iosVerifier:boolean = false;
-  @ViewChild(IonSlides) slides:IonSlides;
+  iosVerifier: boolean = false;
+  @ViewChild(IonSlides) slides: IonSlides;
   constructor(
     private platform: Platform,
     public functionsService: FunctionsService,
@@ -29,8 +29,8 @@ export class IndexPage implements OnInit {
     public router: Router
   ) {
     this.functionsService.logToConsole(localStorage.getItem('hasloggedin'));
-    
-    if(localStorage.getItem('hasloggedin')=='1'){
+
+    if (localStorage.getItem('hasloggedin') == '1') {
       this.router.navigate(['/login']);
       // this.timerExpired();
     } else {
@@ -63,12 +63,11 @@ export class IndexPage implements OnInit {
   }
 
   skip() {
-    if(this.iosVerifier){
+    if (this.iosVerifier) {
       this.slides.slideTo(4);
-    }else{
+    } else {
       this.slides.slideTo(3);
     }
-      
   }
 
   goback() {
@@ -80,18 +79,18 @@ export class IndexPage implements OnInit {
   }
 
   // moveToNext(slides) {
-  //   //console.log(slides);
+  //   ////console.log(slides);
   //   slides.slideNext();
   // }
 
   // moveToPrev(slides) {
-  //   //console.log(slides);
+  //   ////console.log(slides);
   //   slides.slidePrev();
   // }
 
   initPwaPrompt() {
     this.functionsService.logToConsole('init PWA prompt');
-    
+
     this.platform.ready().then(() => {
       this.functionsService.logToConsole('platform ready');
       if (this.platform.is('android') || this.platform.is('desktop')) {
@@ -114,17 +113,17 @@ export class IndexPage implements OnInit {
   }
 
   async openPromptComponent(mobileType: 'ios' | 'android') {
-    console.log('first iosVerifier : '+this.iosVerifier);
-    
+    //console.log('first iosVerifier : '+this.iosVerifier);
+
     if (mobileType == 'android') {
       this.iosVerifier = false;
-      console.log('2nd iosVerifier : '+this.iosVerifier);
+      //console.log('2nd iosVerifier : '+this.iosVerifier);
       if (this.android1 == false) {
         this.android = true;
       }
     } else {
       this.iosVerifier = true;
-      console.log('2nd iosVerifier : '+this.iosVerifier);
+      //console.log('2nd iosVerifier : '+this.iosVerifier);
       if (!this.ios) {
         this.ios = true;
         this.functionsService.alert(

@@ -529,7 +529,7 @@ export class DoctorService {
     );
   }
   getMedicalCertificatePOST(data) {
-    console.log(data);
+    //console.log(data);
 
     const url = environment.apiRouterUrlTest + '/gw/doki/medcert/pdf';
     return this.http.post(url, data, { responseType: 'blob' });

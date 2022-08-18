@@ -179,7 +179,7 @@ export class LoginPage {
                 dualFlag2 = true;
               }
             });
-            ////console.log("userIndentifier : "+userIndentifier);
+            //////console.log("userIndentifier : "+userIndentifier);
           }
         },
         (error) => {
@@ -298,7 +298,7 @@ export class LoginPage {
               localStorage.setItem('role_flag', 'medcons');
               let xFlag: boolean = false;
               //this.loginResponseModelv3.roles.forEach(element => {
-              ////console.log('check flag');
+              //////console.log('check flag');
               if (this.loginResponseModelv3.jwt != null) {
                 localStorage.setItem('id_token', this.loginResponseModelv3.jwt);
               }
@@ -515,7 +515,7 @@ export class LoginPage {
         );
       } else if (data.data == 'None') {
         this.btnDisable = false;
-        //console.log('none');
+        ////console.log('none');
       } else {
         this.btnDisable = false;
         this.modalUpdateV3(
