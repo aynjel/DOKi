@@ -95,34 +95,42 @@ export class TabInPatientsPage {
   }
 
   ngOnInit() {
-    //console.log('ngOnInit');
+    ////console.log('ngOnInit');
 
     this.checkAppearance();
     this.$gaService.pageView('/In-Patient', 'In-Patient Tab');
   }
+  dateToday;
+  dateNow;
+
   checkInbox() {
-    //console.log('checksInbox');
+    let data = {
+      dt_from: this.functionsService.getDateYYYYMMDD(9999) + 'T00:00:00.000Z',
+      dt_to: this.functionsService.getDateYYYYMMDD() + 'T00:00:00.000Z',
+    };
+    //console.log(data);
 
     let jsonResponse = null;
     this.doctorService
-      .getPendingApproval()
+      .getPendingApproval(data)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          console.log(res);
           jsonResponse = res;
         },
         (error) => {
-          console.log(error);
+          //console.log(error);
         },
         () => {
-          console.log(jsonResponse);
-
-          if (jsonResponse == null) {
-            this.isNotification = false;
-          } else {
-            this.isNotification = true;
-          }
+          this.isNotification = false;
+          jsonResponse.forEach((element) => {
+            if (
+              element.approval_status == 'FA' ||
+              element.approval_status == 'RA'
+            ) {
+              this.isNotification = true;
+            }
+          });
         }
       );
   }

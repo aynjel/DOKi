@@ -1,0 +1,10 @@
+<div *ngIf="truncating">
+  <ion-text class="custom-font" [innerHtml]="final_diagnosis_small"></ion-text>
+  <br />
+  <ion-button color="light" size="small" color="light" (click)="process()" *ngIf="showBtn">show more</ion-button>
+</div>
+<div *ngIf="!truncating">
+  <ion-text class="custom-font" [innerHtml]="final_diagnosis"></ion-text>
+  <br />
+  <ion-button color="light" size="small" color="light" (click)="process();" *ngIf="showBtn">show less</ion-button>
+</div>

@@ -30,7 +30,8 @@
           </ion-label>
         </div>
         <ion-badge color="warning" slot="end" class="font-size12"
-          *ngIf=" x.admission_status == 'DN' && x.doctor_prof_fee == null && x.is_posted == null ">PF</ion-badge>
+          *ngIf=" x.admission_status == 'DN' && (x.doctor_prof_fee == null || x.doctor_prof_fee == '0') && x.is_posted == null ">
+          PF</ion-badge>
         <ion-badge color="success" slot="end" class="font-size12"
           *ngIf="x.doctor_prof_fee != null && x.is_posted != null">PF OK</ion-badge>
       </ion-item>
@@ -134,7 +135,8 @@
           </ion-label>
         </div>
         <ion-badge color="warning" slot="end" class="font-size12"
-          *ngIf=" x.admission_status == 'DN' && x.doctor_prof_fee == null && x.is_posted == null ">PF</ion-badge>
+          *ngIf=" x.admission_status == 'DN' && (x.doctor_prof_fee == null || x.doctor_prof_fee == '0') && x.is_posted == null ">
+          PF</ion-badge>
         <ion-badge color="success" slot="end" class="font-size12"
           *ngIf="x.doctor_prof_fee != null && x.is_posted != null">PF OK</ion-badge>
       </ion-item>

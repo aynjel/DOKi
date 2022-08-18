@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { Constants } from '../constants';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
@@ -14,6 +14,7 @@ export class FunctionsService {
   constructor(
     public alertController: AlertController,
     public constants: Constants,
+    public toastController: ToastController,
     @Inject(DOCUMENT) private document: any,
     @Inject(PLATFORM_ID) private platformId: InjectionToken<Object>
   ) {
@@ -86,7 +87,7 @@ export class FunctionsService {
     let myarr = data.split('T');
     if (myarr[1]) {
       let myarr2 = myarr[1].split('.');
-      // console.log(myarr[0] + " | " + myarr2[0]);
+      // //console.log(myarr[0] + " | " + myarr2[0]);
       return myarr[0] + ' | ' + myarr2[0];
     }
   }
@@ -222,7 +223,7 @@ export class FunctionsService {
    */
   logToConsole(message: any) {
     if (environment.consoleLog) {
-      console.log(message);
+      //console.log(message);
     }
   }
 
@@ -351,5 +352,109 @@ export class FunctionsService {
     http.send();
 
     return http.status != 404;
+  }
+  getDateYYYYMMDD(date: any = '') {
+    let dateReturn;
+    if (date == '') {
+      let date1 = new Date();
+      let day1 = date1.getDate();
+      let month1 = date1.getMonth() + 1;
+      let year1 = date1.getFullYear();
+      dateReturn =
+        year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
+    } else {
+      let today = new Date();
+      let days = 86400000; //number of milliseconds in a day
+      let fiveDaysAgo = new Date(today.getTime() - date * days);
+      let day11 = fiveDaysAgo.getDate();
+      let month11 = fiveDaysAgo.getMonth() + 1;
+      let year11 = fiveDaysAgo.getFullYear();
+      dateReturn =
+        year11 +
+        '-' +
+        ('0' + month11).slice(-2) +
+        '-' +
+        ('0' + day11).slice(-2);
+    }
+    return dateReturn;
+  }
+
+  convertDatetoMMDDYYYYHHMMSS(date) {
+    let dateCreate = new Date(date);
+    let dd = String(dateCreate.getDate()).padStart(2, '0');
+    let mm = String(dateCreate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = dateCreate.getFullYear();
+    let xtoday = mm + '/' + dd + '/' + yyyy;
+
+    var hours = dateCreate.getHours();
+    var minutes = dateCreate.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    let minute = minutes < 10 ? '0' + minutes : minutes;
+    var strTime = hours + ':' + minute + ' ' + ampm;
+
+    return xtoday + ' ' + strTime;
+  }
+  getFormatAMPM(date) {
+    let newdate = new Date(date);
+    var hours = newdate.getHours();
+    var minutes: any = newdate.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+  }
+
+  getDateYYYYMMDD_90() {
+    let today = new Date();
+    let days = 86400000; //number of milliseconds in a day
+    let fiveDaysAgo = new Date(today.getTime() - 15 * days);
+    let day11 = fiveDaysAgo.getDate();
+    let month11 = fiveDaysAgo.getMonth() + 1;
+    let year11 = fiveDaysAgo.getFullYear();
+    let sendDatedateValue11 =
+      year11 + '-' + ('0' + month11).slice(-2) + '-' + ('0' + day11).slice(-2);
+    return sendDatedateValue11;
+  }
+  async presentToast(data) {
+    const toast = await this.toastController.create({
+      message: data,
+      duration: 2000,
+    });
+    toast.present();
+  }
+  convertDatedash(date) {
+    let dateCreate = new Date(date);
+    let dd = String(dateCreate.getDate()).padStart(2, '0');
+    let mm = String(dateCreate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = dateCreate.getFullYear();
+    let xtoday = mm + '-' + dd + '-' + yyyy;
+    return xtoday;
+  }
+  countDays(from, to) {
+    from = new Date(from);
+    to = new Date(to);
+    const diffTime = Math.abs(to - from);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  }
+  calculateAge(birthDate, otherDate) {
+    birthDate = new Date(birthDate);
+    otherDate = new Date(otherDate);
+
+    var years = otherDate.getFullYear() - birthDate.getFullYear();
+
+    if (
+      otherDate.getMonth() < birthDate.getMonth() ||
+      (otherDate.getMonth() == birthDate.getMonth() &&
+        otherDate.getDate() < birthDate.getDate())
+    ) {
+      years--;
+    }
+
+    return years;
   }
 }

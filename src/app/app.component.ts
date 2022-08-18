@@ -79,28 +79,35 @@ export class AppComponent implements OnInit {
       icon: 'document-text-outline',
       type: 'med',<ion-icon name="mail-open-outline"></ion-icon>
     },*/,
-    /*,
     {
       title: 'Inbox',
       url: 'menu/inbox',
       icon: 'mail-open-outline',
-      type: 'med',
-    }*/ {
+      type: 'medcons',
+    },
+
+    {
       title: 'Settings',
       url: 'menu/settings',
       icon: 'settings-outline',
-      type: 'med',
+      type: 'medcons',
+    },
+    {
+      title: 'Help',
+      url: 'menu/help',
+      icon: 'help-outline',
+      type: 'medcons',
     },
     {
       title: 'Log Out',
       url: 'logout',
       icon: 'log-out-outline',
-      type: 'med',
+      type: 'medcons',
     },
   ];
   logindata;
   firstName;
-  lastName = 'D';
+  lastName;
   dr_name;
   dr_code;
   dr_username;

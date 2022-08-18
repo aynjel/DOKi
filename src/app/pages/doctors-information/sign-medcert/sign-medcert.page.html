@@ -1,4 +1,21 @@
-<ion-header mode="md" class="ion-no-border" *ngIf="!isDesktop">
+<ion-header mode="md" class="ion-no-border">
+  <div>
+    <ion-toolbar [color]="isDesktop?'':'mango'">
+      <ion-grid class="ion-no-padding">
+        <ion-row>
+          <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
+            <span class="padding-left-10" (click)="back()" routerDirection="backward" color="chh-css-primary2">
+              <ion-icon name="arrow-back-outline" class="my-icon vcenter pointer"></ion-icon>
+            </span>
+            <span class="padding-left-30 font-weight-500 font-size-20"> &nbsp;&nbsp;Medical Certificate </span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-toolbar>
+  </div>
+
+</ion-header>
+<!--ion-header mode="md" class="ion-no-border">
   <div>
     <ion-toolbar color="mango">
       <span class="padding-left-10" (click)="back()" routerDirection="backward" color="chh-css-primary2">
@@ -7,7 +24,7 @@
       <span class="padding-left-30 font-weight-500 font-size-20"> &nbsp;&nbsp;Medical Certificate </span>
     </ion-toolbar>
   </div>
-</ion-header>
+</ion-header-->
 <ion-content>
   <!--button (click)="generatePDF()">Generate PDF</button-->
   <ion-grid class="ion-no-padding">
@@ -31,27 +48,186 @@
               style="width: 100vh; height: 60vh;">
             </pdf-viewer>
           </pinch-zoom>
+          <ion-item lines="none">
+            <ion-text *ngIf="isPDFLoading">Disclaimer: Discharge Date will be displayed once Discharge Notice is saved
+              in
+              HIS.</ion-text>
+          </ion-item>
 
-          <ion-button id="trigger-button-certificate" style="display:none">Sign Document</ion-button>
-          <ion-row>
-            <ion-col>
-              <ion-button mode="ios" size="small" color="mango" shape="" expand="block" *ngIf="isPDFLoading"
-                (click)="onClick()">Sign and Approve Document</ion-button>
-            </ion-col>
+          <ion-button id="trigger-button-certificate-signmedcert" style="display:none">Sign Document</ion-button>
+          <ion-item>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-button (click)="openConsent()" mode="ios" size="small" color="mango" shape="" expand="block">Sign
+                    and
+                    Approve
+                  </ion-button>
+                </ion-col>
+                <ion-col size="6" *ngIf="!isUploaded">
+                  <ion-button mode="ios" size="small" fill="outline" color="default" shape="" expand="block"
+                    (click)="reviseRevokeApproval()">
+                    <span>Send for Revision</span>
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+          <ion-button id="trigger-button-consent-signmedcert" style="display:none">trigger-button-consent-signmedcert
+          </ion-button>
+          <ion-modal trigger="trigger-button-consent-signmedcert">
+            <ng-template>
+              <ion-header mode="md" class="ion-no-border">
+                <ion-toolbar class="in-toolbar ios toolbar-title-default hydrated" color="mango">
+                  <ion-title>
+                    <ion-icon name="lock-closed-outline"></ion-icon> Consent Form
+                  </ion-title>
+                  <ion-buttons slot="end"
+                    class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
+                    <ion-button id="buttonPrivatePolicyAlertClose" (click)="closeModal()" color="chh-css-primary2">
+                      Close&nbsp;
+                      <ion-icon name="close-outline"></ion-icon>
 
-          </ion-row>
+                    </ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content>
+                <ion-grid class="my-backbround ion-no-padding">
+                  <ion-row>
+                    <ion-col>
+                      <ion-card mode="ios">
+                        <ion-list>
+                          <ion-item style="padding-top: 10px;" class="font-size15">
+                            ELECTRONIC SIGNATURE ACKNOWLEDGEMENT AND CONSENT FORM
+                            <br /><br />
+                            I agree and understand that by signing the Electronic Signature Acknowledgment and
+                            Consent Form, that my electronic
+                            signature is the legal equivalent of my manual/handwritten signature and I consent to be
+                            legally bound to this Medical
+                            Certificate.<br /><br />
+                            Under penalty of perjury, I herewith affirm that my electronic signature is signed by
+                            myself with full knowledge and
+                            consent and am legally bound to the terms and conditions stated herein.
+                            <br />
+                          </ion-item>
+                          <ion-item>
+                            <ion-checkbox id="acceptCheckBox" color="mango" slot="start" [(ngModel)]="signatureConsent">
+                            </ion-checkbox>
+                            <ion-label>Accept</ion-label>
+                          </ion-item>
+                        </ion-list>
+                        <ion-grid>
+                          <ion-row>
+                            <ion-col size-xs="12">
+                              <ion-button expand="block" shape="round" id="btn-confirm" (click)="saveConsent()"
+                                color="mango">
+                                SAVE
+                              </ion-button>
+                            </ion-col>
+
+                          </ion-row>
+                        </ion-grid>
 
 
+                      </ion-card>
+
+
+
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-content>
+            </ng-template>
+          </ion-modal>
+          <ion-button id="trigger-modal-forRevision-signmedcert" style="display:none">Click to open modal</ion-button>
+          <ion-modal trigger="trigger-modal-forRevision-signmedcert" [isOpen]="false" [breakpoints]="[ 0, 0.5]"
+            [initialBreakpoint]="0.5">
+            <ng-template>
+              <ion-header>
+                <ion-toolbar color="mango">
+                  <ion-buttons slot="start">
+                    <ion-button (click)="dismissForRevisionModal()">Cancel</ion-button>
+                  </ion-buttons>
+                  <ion-title>Send for Revision</ion-title>
+                  <ion-buttons slot="end">
+                    <ion-button (click)="saveForRevisionModal()">Save</ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content>
+                <ion-item style="height: 100%">
+                  <ion-textarea rows="12" (keyup)="autoGrowTextZone($event)" [(ngModel)]="forRevisionText">
+                  </ion-textarea>
+                </ion-item>
+              </ion-content>
+            </ng-template>
+          </ion-modal>
+          <ion-button id="trigger-button-show-signature" style="display:none">Click to open modal</ion-button>
+          <ion-modal trigger="trigger-button-show-signature">
+            <ng-template>
+              <ion-header mode="md" class="ion-no-border">
+                <ion-toolbar class="in-toolbar ios toolbar-title-default hydrated" color="mango">
+                  <ion-title>
+                    <ion-icon name="pencil-outline"></ion-icon> Confirm Signature
+                  </ion-title>
+                  <ion-buttons slot="end"
+                    class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
+                    <ion-button id="buttonPrivatePolicyAlertClose" (click)="closeModal()" color="chh-css-primary2">
+                      Close&nbsp;
+                      <ion-icon name="close-outline"></ion-icon>
+
+                    </ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content>
+
+                <ion-item lines="none">
+                  <div class="whiteBg">
+                    <img src="{{signatureBase64Full}}" />
+                  </div>
+                </ion-item>
+                <ion-item lines="none">
+                  <ion-text>
+                    Would you like to reuse your saved signature?
+                  </ion-text>
+
+                </ion-item>
+
+
+
+
+              </ion-content>
+              <ion-footer collapse="fade">
+                <ion-toolbar>
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col size="6">
+                        <ion-button color="warning" expand="block" shape="round" (click)="resignSignature()">Sign Again
+                        </ion-button>
+                      </ion-col>
+                      <ion-col size="6">
+                        <ion-button color="mango" expand="block" shape="round" (click)="useOldSignature()">Yes
+                        </ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-toolbar>
+              </ion-footer>
+            </ng-template>
+          </ion-modal>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
 
 
-  <ion-modal trigger="trigger-button-certificate" show-backdrop="true" class="ion5modalSign">
+  <ion-modal trigger="trigger-button-certificate-signmedcert" [enterAnimation]="enterAnimation"
+    [leaveAnimation]="leaveAnimation">
 
     <ng-template>
-      <ion-content class="blur testssss">
+      <ion-content>
         <div class="  customBackground">
           <div class="  customBackgroundColor" style="padding:10px">
             <!--ion-icon style="float:right" size="large" name="close-outline" (click)="closeModal()"></ion-icon-->
@@ -67,31 +243,22 @@
             <ion-grid class="noPaddingTop noPaddingBottom">
               <ion-row class="noPaddingTop noPaddingBottom">
                 <ion-col class="noPaddingTop noPaddingBottom ">
-                  <ion-button size="small" color="medium" style="padding-top: 0px !important;" (click)="closeModal()">
+                  <ion-button size="small" color="medium" expand="block" shape="round"
+                    style="padding-top: 0px !important;" (click)="closeModal()">
                     Close</ion-button>
                 </ion-col>
                 <ion-col class="noPaddingTop noPaddingBottom">
-                  <ion-button size="small" color="tertiary" class="" (click)="clearPad()">Clear
+                  <ion-button size="small" color="tertiary" expand="block" shape="round" class="" (click)="clearPad()">
+                    Clear
                   </ion-button>
                 </ion-col>
                 <ion-col class="noPaddingTop noPaddingBottom ">
-                  <ion-button size="small" color="primary" class="" (click)="savePad()">Save
+                  <ion-button size="small" color="primary" expand="block" shape="round" class="" (click)="savePad()">
+                    Save
                   </ion-button>
                 </ion-col>
               </ion-row>
             </ion-grid>
-            <!--ion-grid>
-              <ion-row>
-                <ion-col size="4">
-                  <ion-button color="danger" (click)="clearPad()">Clear</ion-button>
-                </ion-col>
-                <ion-col size="5"></ion-col>
-                <ion-col size="3">
-                  <ion-button color="secondary" (click)="savePad()">Save</ion-button>
-                </ion-col>
-              </ion-row>
-            </ion-grid-->
-
           </div>
         </div>
       </ion-content>

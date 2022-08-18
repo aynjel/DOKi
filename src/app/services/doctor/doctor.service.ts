@@ -403,17 +403,18 @@ export class DoctorService {
     return this.http.post(url, data, options);
   }
   getPatientProgressNotesHistory(data) {
+    //http://10.151.12.120:7230/api/ProgressNotes/Logs/PerTransNo
     const headers = new HttpHeaders({
       'Content-Type': 'application/json;',
     });
     const options = { headers: headers, withCredentials: true };
-    const url = 'http://10.151.12.120/api/ProgressNotes/Logs/' + data;
+    const url = environment.apiResident + 'api/ProgressNotes/Logs/PerTransNo';
     return this.http.post(url, data, options);
   }
   addComment(data) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers: headers, withCredentials: true };
-    const url = 'http://10.151.12.120/api/ProgressNotesComment/Insert';
+    const url = environment.apiResident + 'api/ProgressNotesComment/Insert';
     return this.http.post(url, data, options);
   }
 
@@ -528,21 +529,21 @@ export class DoctorService {
     );
   }
   getMedicalCertificatePOST(data) {
-    console.log(data);
+    //console.log(data);
 
-    const url = 'http://10.151.12.120:7227/api/medcert/pdf';
+    const url = environment.apiRouterUrlTest + '/gw/doki/medcert/pdf';
     return this.http.post(url, data, { responseType: 'blob' });
   }
-
+  //save medcert
   approveMedicalCertificate(data) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers: headers, withCredentials: false };
-    const url = 'http://10.151.12.120:7227/api/medcert/approve';
+    const url = environment.apiRouterUrlTest + '/gw/doki/medcert/approve';
     //return this.http.put(url, JSON.stringify(data), options);
     return this.http.put(url, data, options);
   }
 
-  getPendingApproval() {
+  getPendingApproval(data) {
     /*const headers = new HttpHeaders({
       'Content-Type': 'application/json;charset=utf-8',
     });
@@ -551,14 +552,13 @@ export class DoctorService {
       environment.apiRouterUrl + 'v3/DischargeDiagnosis/PendingApproval';
     return this.http.get(url, options);
 */
-    let data = {
-      dt_from: '2021-01-17T08:42:50.917Z',
-      dt_to: '2022-05-17T08:42:50.917Z',
-    };
+
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers: headers, withCredentials: false };
     const url =
-      environment.apiRouterUrl + 'v3/DischargeDiagnosis/PendingApproval';
+      environment.apiRouterUrlTest +
+      '/gw/doki/DischargeDiagnosis/PendingApproval';
+
     return this.http.post(url, data, options);
   }
   getApprovalStatus(data) {
@@ -570,14 +570,19 @@ export class DoctorService {
   cancelApprovedFinalDiagnosis(data) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers: headers, withCredentials: false };
+    // const url =      environment.apiRouterUrl + 'v3/DischargeDiagnosis/CancelApproval';
+
     const url =
       environment.apiRouterUrl + 'v3/DischargeDiagnosis/CancelApproval';
+
     return this.http.put(url, data, options);
   }
+  //approve discharge diagnosis
   approvePendingApproval(data) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers: headers, withCredentials: false };
-    const url = environment.apiRouterUrl + 'v3/DischargeDiagnosis/Approve';
+    const url =
+      environment.apiRouterUrlTest + '/gw/doki/DischargeDiagnosis/Approve';
     return this.http.put(url, data, options);
   }
 }

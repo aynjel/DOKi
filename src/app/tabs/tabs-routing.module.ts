@@ -62,7 +62,7 @@ const routes: Routes = [
             (m) => m.TabNewsFeedPageModule
           ),
       },
-      /*
+
       {
         path: 'inbox',
         loadChildren: () =>
@@ -83,7 +83,14 @@ const routes: Routes = [
           import(
             '../pages/doctors-information/sign-medcert/sign-medcert.module'
           ).then((m) => m.SignMedcertPageModule),
-      },*/
+      },
+      {
+        path: 'help',
+        loadChildren: () =>
+          import('../pages/others/help/help.module').then(
+            (m) => m.HelpPageModule
+          ),
+      },
       /*
       {
         path: 'collectibles',

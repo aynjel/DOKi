@@ -63,7 +63,6 @@ export class TabDashboardPage implements OnInit {
         this.isDesktop = isDesktop;
       });
     this.checkAppearance();
-    this.checkInbox();
   }
 
   doRefresh(event) {
@@ -188,11 +187,18 @@ export class TabDashboardPage implements OnInit {
   ngOnInit() {
     this.$gaService.pageView('/Dashboard', 'Dashboard Tab');
   }
+  dateToday;
+  dateNow;
   checkInbox() {
-    ////console.log('CHECKS INBOX');
+    let data = {
+      dt_from: this.functionsService.getDateYYYYMMDD(9999) + 'T00:00:00.000Z',
+      dt_to: this.functionsService.getDateYYYYMMDD() + 'T00:00:00.000Z',
+    };
+    //console.log(data);
+
     let jsonResponse = null;
     this.doctorService
-      .getPendingApproval()
+      .getPendingApproval(data)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
@@ -200,11 +206,15 @@ export class TabDashboardPage implements OnInit {
         },
         (error) => {},
         () => {
-          if (jsonResponse == null) {
-            this.isNotification = false;
-          } else {
-            this.isNotification = true;
-          }
+          this.isNotification = false;
+          jsonResponse.forEach((element) => {
+            if (
+              element.approval_status == 'FA' ||
+              element.approval_status == 'RA'
+            ) {
+              this.isNotification = true;
+            }
+          });
         }
       );
   }
@@ -339,7 +349,7 @@ export class TabDashboardPage implements OnInit {
     this.revokeTokenV3.jwt = decodeURIComponent(
       this.functionsService.getcookie('refreshToken')
     );
-    console.log(this.revokeTokenV3);
+    //console.log(this.revokeTokenV3);
 
     this.doctorService
       .revokeTokenV3(this.revokeTokenV3)

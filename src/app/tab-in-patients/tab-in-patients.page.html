@@ -6,9 +6,9 @@
         {{this.constants.MENU__VALUE__IN_PATIENTS}} <ion-text style="font-size:14px">
           {{admittedOrDischargeLabel}}
         </ion-text>
-        <!--ion-icon [name]="isNotification === true ? 'mail-unread-outline' : 'mail-outline'" style="float:right"
+        <ion-icon [name]="isNotification === true ? 'mail-unread-outline' : 'mail-outline'" style="float:right"
           routerLink="/menu/inbox" routerDirection="root">
-        </ion-icon-->
+        </ion-icon>
 
 
         <!--ion-icon *ngIf="isNotification==false" name="mail-outline" style="float:right" routerLink="/menu/inbox"
@@ -82,7 +82,7 @@
                             </h2>
 
                             <ion-badge color="warning" slot="end"
-                              *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE && x.doctor_prof_fee == this.constants.ANY__VALUE__NULL && x.is_posted == this.constants.ANY__VALUE__NULL">
+                              *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE && (x.doctor_prof_fee == null || x.doctor_prof_fee == '0') && x.is_posted == this.constants.ANY__VALUE__NULL">
                               {{this.constants.DOCTOR__CODE__PROFESSIONAL_FEE}}</ion-badge>
                             <ion-badge color="success" slot="end"
                               *ngIf="x.doctor_prof_fee != this.constants.ANY__VALUE__NULL && x.is_posted !=this.constants.ANY__VALUE__NULL">

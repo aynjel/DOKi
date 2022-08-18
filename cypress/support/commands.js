@@ -455,7 +455,7 @@ var settingsUrl = Cypress.env("baseUrlToTest") + Cypress.env("settingsUrl")
  * Dev defined command
  * Updated by: Mark Sibi
  * Date Updated: Apr-12-2022
- * Remarks: New
+ * Remarks: Updated
  */
 // ===============================================================================
 Cypress.Commands.add('login', (username, password, accept) => {
@@ -484,6 +484,49 @@ Cypress.Commands.add('login', (username, password, accept) => {
   }
 
   cy.wait(2000)
+})
+
+Cypress.Commands.add('loginAsMedDirector', (username, password, accept, selection) => {
+  cy.get('[name="ion-input-0"]').should("exist").type(username)
+  cy.get('[name="ion-input-1"]').should("exist").type(password)
+
+  cy.contains("LOG IN").click()
+  cy.wait(2000)
+
+  cy.get('body').then(($body => {
+    if (cy.contains("Confirm Login")) {
+      if(selection == "executive"){
+        cy.contains("Executive").click()
+      } else {
+        cy.contains("Medical").click()
+      }
+    }
+  }))
+
+  cy.get('body').then(($body => {
+    if ($body.find('[id="acceptCheckBox"]').length > 0) {
+      if (accept) {
+        cy.get('[id="acceptCheckBox"]').click()
+        cy.contains("SAVE").click()
+      } else {
+        cy.contains("Close").click()
+      }
+    }
+  }))
+
+  if (accept) {
+    if(selection == "executive"){
+      cy.url({ timeout: 30000 }).should("include", Cypress.env("executiveUrl"))
+    } else {
+      cy.url({ timeout: 30000 }).should("include", Cypress.env("inpatientsUrl"))
+    }
+  } else {
+    cy.url({ timeout: 30000 }).should("include", Cypress.env("loginUrl"))
+  }
+
+  cy.wait(2000)
+  
+  cy.clicktab(4)
 })
 
 Cypress.Commands.add('errLogin', (username, password, err) => {
@@ -604,6 +647,9 @@ Cypress.Commands.add('clicktab', (tabno) => {
   if (taboptions[tabno] == "Log Out")
     cy.url({ timeout: 10000 }).should("include", Cypress.env("loginUrl"))
 
+  if (taboptions[tabno] == "Inbox")
+    cy.url({ timeout: 10000 }).should("include", Cypress.env("inboxUrl"))
+
   // cy.reload()
 })
 
@@ -633,7 +679,8 @@ var taboptions = ["Collectibles",
   "Medical Abstract",
   "Medical Certificate",
   "Settings",
-  "Log Out"
+  "Log Out",
+  "Inbox"
 ];
 
 var menuoptions = ["button-dashboard",

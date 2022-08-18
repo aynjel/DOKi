@@ -28,14 +28,27 @@ const routes: Routes = [
         './pages/in-patient-patient-information/in-patient-detail/in-patient-detail.module'
       ).then((m) => m.InpatientDetailPageModule),
   },
-  /*
+  {
+    path: 'menu/in-patients/:id/progressnotes',
+    loadChildren: () =>
+      import(
+        './pages/in-patient-patient-information/progress-notes/progress-notes.module'
+      ).then((m) => m.ProgressNotesPageModule),
+  },
+  {
+    path: 'menu/in-patients/:id/progressnotes/:perday',
+    loadChildren: () =>
+      import(
+        './pages/in-patient-patient-information/progress-notes-per-day/progress-notes-per-day.module'
+      ).then((m) => m.ProgressNotesPerDayPageModule),
+  },
   {
     path: 'menu/in-patients/:admissionNo/view/:dischargeNo',
     loadChildren: () =>
       import(
         './pages/doctors-information/view-medcert/view-medcert.module'
       ).then((m) => m.ViewMedcertPageModule),
-  },*/
+  },
 
   /*{
     path: 'menu/in-patients/:id/progressnotes',

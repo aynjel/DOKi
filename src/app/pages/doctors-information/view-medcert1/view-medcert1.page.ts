@@ -10,6 +10,8 @@ import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.serv
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SignaturePad } from 'angular2-signaturepad';
+import { Constants } from 'src/app/shared/constants';
+import { SignatureApproval } from 'src/app/models/doctor';
 @Component({
   selector: 'app-view-medcert1',
   templateUrl: './view-medcert1.page.html',
@@ -39,6 +41,7 @@ export class ViewMedcert1Page implements OnInit {
   isbutton = false;
   idModal: boolean = false;
   selectedPatient;
+  mode = this.constants.modeForProd;
   constructor(
     private navCtrl: NavController,
     public doctorService: DoctorService,
@@ -47,7 +50,8 @@ export class ViewMedcert1Page implements OnInit {
     public actionSheetController: ActionSheetController,
     public router: Router,
     public activatedRoute: ActivatedRoute,
-    public modalController: ModalController
+    public modalController: ModalController,
+    public constants: Constants
   ) {
     this.isNotification = true;
     this.screensizeService
@@ -91,7 +95,7 @@ export class ViewMedcert1Page implements OnInit {
     });
   }
   ngOnInit() {
-    console.log('ngOnInit');
+    //console.log('ngOnInit');
     this.getpdf();
     this.idModal = false;
     let scWidth = screen.width;
@@ -100,7 +104,7 @@ export class ViewMedcert1Page implements OnInit {
     if (scWidth <= 666) {
       this.screenWidth = scWidth - scWidth * 0.06;
       this.screenHeight = scHeight - scHeight * 0.25;
-      console.log(this.screenWidth);
+      //console.log(this.screenWidth);
       this.signaturePadOptions = {
         minWidth: 5,
         canvasWidth: this.screenWidth,
@@ -111,7 +115,7 @@ export class ViewMedcert1Page implements OnInit {
     } else {
       this.screenWidth = scWidth - scWidth * 0.05;
       this.screenHeight = scHeight - scHeight * 0.3;
-      console.log(this.screenWidth);
+      //console.log(this.screenWidth);
       this.signaturePadOptions = {
         minWidth: 5,
         canvasWidth: this.screenWidth,
@@ -125,8 +129,6 @@ export class ViewMedcert1Page implements OnInit {
     this.presentActionSheet();
   }
   async presentActionSheet() {
-    let dischargeNo = this.activatedRoute.snapshot.params.dischargeNo;
-
     const actionSheet = await this.actionSheetController.create({
       mode: 'ios',
       header: "Are you sure to revoke the patient's final diagnosis?",
@@ -140,7 +142,7 @@ export class ViewMedcert1Page implements OnInit {
             type: 'delete',
           },
           handler: () => {
-            this.cancelApprovedApproval(dischargeNo);
+            this.clearSignature();
           },
         },
 
@@ -149,7 +151,7 @@ export class ViewMedcert1Page implements OnInit {
           icon: 'arrow-back-outline',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
+            //console.log('Cancel clicked');
           },
         },
       ],
@@ -157,7 +159,7 @@ export class ViewMedcert1Page implements OnInit {
     await actionSheet.present();
 
     const { role, data } = await actionSheet.onDidDismiss();
-    console.log('onDidDismiss resolved with role and data', role, data);
+    //console.log('onDidDismiss resolved with role and data', role, data);
   }
   onClick() {
     this.idModal = true;
@@ -171,12 +173,12 @@ export class ViewMedcert1Page implements OnInit {
   }
   drawComplete() {
     // will be notified of szimek/signature_pad's onEnd event
-    console.log(this.signaturePad.toDataURL());
+    //console.log(this.signaturePad.toDataURL());
   }
 
   drawStart() {
     // will be notified of szimek/signature_pad's onBegin event
-    console.log('begin drawing');
+    //console.log('begin drawing');
   }
 
   clearPad() {
@@ -202,7 +204,7 @@ export class ViewMedcert1Page implements OnInit {
       medcert_approve_by: 'string',
       medcert_signature: 'string',
     };
-    testAprrove.mode = 'T';
+    testAprrove.mode = this.mode;
     testAprrove.account_no = patientId;
     testAprrove.medcert_comment = 'medcert_comment';
     testAprrove.medcert_approve_by = 'medcert_approve_by';
@@ -213,14 +215,14 @@ export class ViewMedcert1Page implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {
-          console.log(data);
+          //console.log(data);
         },
         (error) => {
-          console.log('error');
-          console.log(error);
+          //console.log('error');
+          //console.log(error);
         },
         () => {
-          console.log('success');
+          //console.log('success');
           this.signaturePad.clear();
           this.cancelApprovedApproval(dischargeNo);
           this.ngOnInit();
@@ -231,19 +233,59 @@ export class ViewMedcert1Page implements OnInit {
   }
   cancelApprovedApproval(discharge_no) {
     this.dischargeNo.discharge_no = discharge_no;
-    console.log(this.dischargeNo);
-
     this.doctorService
       .cancelApprovedFinalDiagnosis(this.dischargeNo)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          console.log(res);
+          //console.log(res);
           this.ionViewWillEnter();
         },
         (error) => {},
         () => {
           this.back();
+        }
+      );
+  }
+  compressImage(src, newX, newY) {
+    return new Promise((res, rej) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        const elem = document.createElement('canvas');
+        elem.width = newX;
+        elem.height = newY;
+        const ctx = elem.getContext('2d');
+        ctx.drawImage(img, 0, 0, newX, newY);
+        const data = ctx.canvas.toDataURL();
+        res(data);
+      };
+      img.onerror = (error) => rej(error);
+    });
+  }
+  //loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
+  clearSignature() {
+    let patientId = this.activatedRoute.snapshot.params.admissionNo;
+    let testAprrove: SignatureApproval = new SignatureApproval();
+    testAprrove.mode = this.constants.TestServer;
+    testAprrove.account_no = patientId;
+    testAprrove.medcert_comment = 'medcert_comment';
+    testAprrove.medcert_approve_by = 'medcert_approve_by';
+    testAprrove.medcert_signature = this.constants.blankBase64img;
+    this.saveSignature(testAprrove);
+  }
+  saveSignature(testAprrove) {
+    let dischargeNo = this.activatedRoute.snapshot.params.dischargeNo;
+    this.doctorService
+      .approveMedicalCertificate(testAprrove)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (data: any) => {},
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          this.cancelApprovedApproval(dischargeNo);
         }
       );
   }
@@ -253,7 +295,8 @@ export class ViewMedcert1Page implements OnInit {
     let patientId = this.activatedRoute.snapshot.params.admissionNo;
     let testJsonPDF = {
       account_no: patientId,
-      mode: 'T',
+      mode: this.mode,
+      print_header_footer_flg: true,
     };
     let medabstract = this.doctorService
       .getMedicalCertificatePOST(testJsonPDF)
@@ -266,12 +309,12 @@ export class ViewMedcert1Page implements OnInit {
         },
         (error) => {
           this.isPDFLoading = true;
-          console.log('error');
-          console.log(error);
+          //console.log('error');
+          //console.log(error);
         },
         () => {
           this.isPDFLoading = true;
-          console.log(this.pdfSrc);
+          //console.log(this.pdfSrc);
         }
       );
   }

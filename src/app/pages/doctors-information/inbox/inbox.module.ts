@@ -8,7 +8,7 @@ import { InboxPageRoutingModule } from './inbox-routing.module';
 
 import { InboxPage } from './inbox.page';
 import { ChhAppTextAvatarModule } from 'src/app/chh-web-components/chh-app-text-avatar';
-
+import { SeeMoreHelperComponent } from 'src/app/chh-web-components/see-more-helper/see-more-helper.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -17,6 +17,7 @@ import { ChhAppTextAvatarModule } from 'src/app/chh-web-components/chh-app-text-
     InboxPageRoutingModule,
     ChhAppTextAvatarModule,
   ],
-  declarations: [InboxPage],
+  declarations: [InboxPage, SeeMoreHelperComponent],
+  exports: [SeeMoreHelperComponent],
 })
 export class InboxPageModule {}

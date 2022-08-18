@@ -1,34 +1,99 @@
-<ion-header mode="md" class="ion-no-border" *ngIf="!isDesktop">
+<ion-header mode="md" class="ion-no-border">
   <div>
-    <ion-toolbar color="mango">
-      <span class="padding-left-10" (click)="back()" routerDirection="backward" color="chh-css-primary2">
-        <ion-icon name="arrow-back-outline" class="my-icon vcenter"></ion-icon>
-      </span>
-      <span class="padding-left-30 font-weight-500 font-size-20"> &nbsp;&nbsp;Inbox </span>
+    <ion-toolbar [color]="isDesktop?'':'mango'">
+      <ion-grid class="ion-no-padding">
+        <ion-row>
+          <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
+            <span class="padding-left-10" (click)="back()" routerDirection="backward" color="chh-css-primary2">
+              <ion-icon name="arrow-back-outline" class="my-icon vcenter pointer"></ion-icon>
+            </span>
+            <span class="padding-left-30 font-weight-500 fontSize-16"> &nbsp;&nbsp;Medical
+              Certificate <span class="fontSize-14">({{modeSelected}}) </span>
+              <!--<ion-icon style="float:right; padding-right:20px" name="ellipsis-vertical-outline"
+                id="trigger-inbox-popover" class="pointer">
+              </ion-icon>-->
+            </span>
+            <!--<ion-popover trigger="trigger-inbox-popover" dismiss-on-select="true">
+              <ng-template>
+                <ion-content>
+                  <ion-list>
+                    <ion-list-header>Medical Certificate </ion-list-header>
+                    <ion-item (click)="changeMode('FA')" [ngClass]="{'boldMe': selected === 'FA'}" class="pointer">
+                      <ion-label>&nbsp;For Approval <sup *ngIf="pendingApprovalCount >= 1">
+                          ({{pendingApprovalCount}})
+                        </sup>
+                      </ion-label>
+                    </ion-item>
+                    <ion-item (click)="changeMode('FR')" [ngClass]="{'boldMe': selected === 'FR'}" class="pointer">
+                      <ion-label>&nbsp;For Revision</ion-label>
+                    </ion-item>
+                    <ion-item (click)="changeMode('DA')" [ngClass]="{'boldMe': selected === 'DA'}" class="pointer">
+                      <ion-label>&nbsp;Approved</ion-label>
+                    </ion-item>
+                  </ion-list>
+                </ion-content>
+              </ng-template>
+            </ion-popover>-->
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-toolbar>
-    <!--ion-toolbar color="mango">
-      <ion-title>
-        <ion-icon [name]="isNotification === true ? 'mail-unread-outline' : 'mail-outline'"></ion-icon> Inbox
-      </ion-title>
-      <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
-        <ion-button (click)="back()" color="chh-css-primary2"
-          class="ios button button-clear ion-activatable ion-focusable hydrated">
-          Back&nbsp; <ion-icon name="log-out-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar-->
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
+          <!--ion-item button="true" id="open-modal" *ngIf="!isDesktop" (click)="activateIsCalendarModal()">
+            <ion-icon icon="calendar-outline" slot="start" color="mango"></ion-icon>
+            <ion-label>From : {{ dateToday }}</ion-label>
+            <ion-text slot="end">To :{{ dateNow }}</ion-text>
+          </ion-item>
+          <ion-modal trigger="open-modal" show-backdrop="true" class="ion6modal" *ngIf="!isDesktop">
+            <ng-template>
+              <ion-content class="blur testssss" style="width:100% !important">
+                <ion-datetime #popoverDatetime presentation="date" (ionChange)="formatDate(popoverDatetime.value)"
+                  showDefaultButtons="false" [value]="dateValue">
+                </ion-datetime>
+              </ion-content>
+            </ng-template>
+          </ion-modal-->
+          <ion-item>
+            <ion-segment [(ngModel)]="selected">
+              <ion-segment-button value="FA" (click)="changeMode('FA')" [ngClass]="{'boldMe': selected === 'FA'}"
+                class="pointer">
+                <ion-label>for Approval<sup *ngIf="pendingApprovalCount >= 1">
+                    ({{pendingApprovalCount}})
+                  </sup></ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="FR" (click)="changeMode('FR')" [ngClass]="{'boldMe': selected === 'FR'}"
+                class="pointer">
+                <ion-label>for Revision</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="DA" (click)="changeMode('DA')" [ngClass]="{'boldMe': selected === 'DA'}"
+                class="pointer">
+                <ion-label>Approved</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+
+          </ion-item>
+          <ion-item>
+            <ion-label>View Record</ion-label>
+            <ion-select [(ngModel)]="pastdays" value="{{pastdays}}" (ionChange)="viewRecordDays()" okText="Okay"
+              cancelText="Dismiss">
+              <ion-select-option value="9999">All</ion-select-option>
+              <ion-select-option value="45">Past 45 days</ion-select-option>
+              <ion-select-option value="60">Past 60 days</ion-select-option>
+              <ion-select-option value="30">Past 30 days</ion-select-option>
+              <ion-select-option value="15">Past 15 days</ion-select-option>
+
+
+
+
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
-  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="selected" color="secondary" mode='ios'>
-    <ion-segment-button value="FA">
-      <ion-label>For Approval</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="RA">
-      <ion-label>Approved</ion-label>
-    </ion-segment-button>
-
-  </ion-segment>
 </ion-header>
-
 <ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
     <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
@@ -38,29 +103,64 @@
   <ion-grid class="ion-no-padding">
     <ion-row>
       <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
+        <ion-button id="trigger-modal-forRevision" style="display:none">Click to open modal</ion-button>
+        <ion-modal trigger="trigger-modal-forRevision" [isOpen]="false" [breakpoints]="[ 0, 0.5]"
+          [initialBreakpoint]="0.5">
+          <ng-template>
+            <ion-header>
+              <ion-toolbar color="mango">
+                <ion-buttons slot="start">
+                  <ion-button (click)="dismissForRevisionModal()">Cancel</ion-button>
+                </ion-buttons>
+                <ion-title>Send for Revision</ion-title>
+                <ion-buttons slot="end">
+                  <ion-button (click)="saveForRevisionModal()">Save</ion-button>
+                </ion-buttons>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content>
+              <ion-item style="height: 100%">
+                <ion-textarea rows="12" (keyup)="autoGrowTextZone($event)" [(ngModel)]="forRevisionText"></ion-textarea>
+              </ion-item>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
         <ng-container>
-
           <div *ngFor="let x of pendingApproval">
             <ion-card mode="ios">
-
               <ion-list>
-                <ion-item style="padding-bottom: 10px">
-                  <div class="ion-text-wrap">
+                <ion-item class="item-background-color paddingBottom10" lines="none">
+                  <div class="ion-text-wrap paddingBottom5">
                     <ion-label>
-                      <h2 class="ion-text-wrap" style="padding-top: 10px;">
+                      <h2 class="ion-text-wrap paddingTop10">
                         <b>{{ x.patient_name }}</b>
                         <ion-text color="primary">
-                          <p color="primary"><b>{{x.dob}} <strong>|</strong> {{x.age}} <strong>|</strong>
-                              {{x.gender}}</b></p>
+                          <p color="primary"><b>{{x.bdayConverted}} <strong>|</strong> {{x.age}} <strong>|</strong>
+                              {{x.gender}}</b>&nbsp;
+                            <ion-badge class="icon" color="danger" mode="ios" *ngIf="x.rework_dx_flg == 'W'">Reworked
+                            </ion-badge>
+                            <ion-badge class="icon" color="warning" mode="ios" *ngIf="x.rework_dx_flg == 'V'">Revised
+                            </ion-badge>
+                            <ion-badge class="icon" color="success" mode="ios" *ngIf="x.approval_status == 'FA' ">For
+                              Approval
+                            </ion-badge>
+                            <ion-badge class="icon" color="success" mode="ios" *ngIf="x.approval_status == 'FR' ">For
+                              Revision
+                            </ion-badge>
+                            <ion-badge class="icon" color="success" mode="ios" *ngIf="x.approval_status == 'DA' ">
+                              Approved
+                            </ion-badge>
+                            <ion-badge class="icon" color="mango" mode="ios" *ngIf="x.approval_status == 'RA' ">
+                              Approved by RES
+                            </ion-badge>
+
+
+
+                          </p>
                         </ion-text>
                       </h2>
                     </ion-label>
                   </div>
-                  <ion-badge color="warning" slot="end" class="font-size12"
-                    *ngIf=" x.admission_status == 'DN' && x.doctor_prof_fee == null && x.is_posted == null ">PF
-                  </ion-badge>
-                  <ion-badge color="success" slot="end" class="font-size12"
-                    *ngIf="x.doctor_prof_fee != null && x.is_posted != null">PF OK</ion-badge>
                 </ion-item>
                 <ion-item lines="none" style="padding-bottom: 10px;font-size: 12px;">
                   <div class="ion-text-wrap" style="padding-top: 5px">
@@ -78,43 +178,82 @@
                     </div>
                     <div class=" font-size12" style="font-size: 13px;">
                       <ion-icon name="calendar-outline" slot="start"></ion-icon>
-                      <span style="font-size: 13px;"> Admission Date &nbsp;&nbsp;: {{ x.dateAdmitted }}</span>
+                      <span style="font-size: 13px;"> Admission Date &nbsp;&nbsp;: {{ x.dateAdmissionConverted }}</span>
                     </div>
-
-
-                  </div>
-
-                </ion-item>
-                <ion-item>
-                  <div class="ion-text-wrap">
-                    <ion-text>Final Diagnosis</ion-text>
                   </div>
                 </ion-item>
-                <ion-item>
+                <ion-list>
+                  <ion-item-divider class="item-divider-color">
+                    <ion-label>
+                      Final Diagnosis
+                    </ion-label>
+                  </ion-item-divider>
+                  <ion-item lines="none">
+                    <!--ion-text [innerHTML]="x.final_diagnosis" class="ion-text-wrap custom-font"
+                      style="font-size: 14px;">
+                    </ion-text-->
+                    <see-more [final_diagnosis]="x.final_diagnosis" [greaterThan]="200"></see-more>
+                  </ion-item>
 
-                  <ion-text [innerHTML]="x.final_diagnosis" class="ion-text-wrap custom-font" style="font-size: 14px;">
-                  </ion-text>
-                </ion-item>
+                </ion-list>
+                <ion-list *ngIf="x.revision_dx_remarks != null">
+                  <ion-item-divider class="item-divider-color">
+                    <ion-label>
+                      Revision Note
+                    </ion-label>
+                  </ion-item-divider>
+                  <ion-item lines="none">
+                    <ion-text [innerHTML]="x.revision_dx_remarks" class="ion-text-wrap custom-font"
+                      style="font-size: 14px;">
+                    </ion-text>
+                  </ion-item>
+                </ion-list>
 
               </ion-list>
-              <ion-footer>
-                <ion-row>
-                  <ion-col>
-                    <ion-button mode="ios" size="small" color="mango" shape="" expand="block"
+              <ion-footer *ngIf="selected != 'FR'">
+                <ion-row *ngIf="selected == 'DA'">
+                  <ion-col size="12">
+                    <ion-button mode="ios" size="small" fill="outline" color="mango" shape="" expand="block"
                       (click)="viewCerticate(x)">
-                      <span *ngIf="selected == 'FA'">View & Sign Medical Certificate</span>
-                      <span *ngIf="selected == 'RA'">View Medical Certificate</span>
+                      <span>View Approved Medical Certificate</span>
                     </ion-button>
-
-
-
+                    <!--div class="center">
+                      <ion-item lines="none">
+                        <ion-text (click)="viewCerticate(x)">
+                          <b>View</b>
+                        </ion-text>
+                      </ion-item>
+                    </div-->
                   </ion-col>
-
                 </ion-row>
+                <ion-item lines="none" *ngIf="selected != 'DA'">
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col size="6">
+                        <ion-button mode="ios" size="small" color="mango" shape="" expand="block"
+                          (click)="viewCerticate(x)" *ngIf="selected == 'FA'">
+                          <span>View & Sign</span>
+                        </ion-button>
+                      </ion-col>
+                      <ion-col size="6">
+                        <ion-button mode="ios" size="small" fill="outline" color="default" shape="" expand="block"
+                          (click)="reviseRevokeApproval(x)" *ngIf="selected == 'FA'">
+                          <span>Send for Revision</span>
+                        </ion-button>
+                        <div>
+                          <ion-button mode="ios" size="small" fill="outline" color="danger" shape="" expand="block"
+                            (click)="reviseRevokeApproval(x)" *ngIf="selected == 'RA'">
+                            <span>Revoke</span>
+                          </ion-button>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-item>
               </ion-footer>
             </ion-card>
           </div>
-          <ion-card *ngIf="empty">
+          <ion-card *ngIf="pendingApproval == ''">
             <ion-item>
               No Data
             </ion-item>

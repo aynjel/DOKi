@@ -207,83 +207,14 @@ export class InPatientDetailPage {
       this.userSettingsModelv3[0].smsGatewayCHH;
     this.professionalFeeModelv3.smsGatewaySmart =
       this.userSettingsModelv3[0].smsGatewaySmart;
-    /*
-    this.data = [];
-    let testJsonPDF = {
-      doctorCode: 'MD000175',
-      fromDate: '03/01/2022',
-      toDate: '03/15/2022',
-      site: 'C',
-    };
-    this.doctorService.testViewpdfpost(testJsonPDF).subscribe(
-      (data) => {
-        let blob = new Blob([data], { type: 'application/pdf' });
-        let downloadURL = window.URL.createObjectURL(data);
-        this.pdfSrc = downloadURL;
-      },
-      (error) => {
-        //console.log('error');
-        //console.log(error);
-      },
-      () => {
-        //console.log(this.pdfSrc);
-      }
-    );
-    this.doctorService
-      .testViewpdf()
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((data: any) => {
-        let blob = new Blob([data], { type: 'application/pdf' });
-        let downloadURL = window.URL.createObjectURL(data);
-        this.pdfSrc = downloadURL;
-        //var link = document.createElement('a');
-        //link.href = downloadURL;
-        //link.download = 'help.pdf';
-        //link.click();
-      });*/
-
-    /*this.doctorService.getInPatientV2(this.inpatientModelInpatients).subscribe(
-      (res: any) => {
-       
-        
-        res.forEach((element) => {
-          if (element.patient_no == this.activatedRoute.snapshot.params.id) {
-            this.opd_code = element.admission_no;
-            this.inpatientModelInpatients.accountNo = this.opd_code;
-            this.data.push(element);
-            this.admissionstatus = element.admission_status;
-            this.patient_name = element.first_name + ' ' + element.last_name;
-            this.patient_name = this.functionsService.convertAllFirstLetterToUpperCase(
-              this.patient_name
-            );
-            if (element.payvenue != null) {
-              this.checkmark = true;
-            }
-          }
-        });
-      },
-      (error) => {},
-      () => {
-        let n = this.data[0].admission_no.indexOf('IPC');
-        //this.functionsService.logToConsole(n);
-
-        if (n >= 0) {
-          this.location = true;
-        } else {
-          this.location = false;
-        }
-        this.operate();
-        localStorage.setItem('patientData', btoa(JSON.stringify(this.data)));
-      }
-    );*/
-
-    //let ppatientdata = JSON.parse(this.aes.decrypt((localStorage.getItem("patientData"))));
 
     let ppatientdata = new PatientDetail();
     ppatientdata.admissionNo = this.patient_id;
     ppatientdata.doctorCode = this.dr_code;
     this.data = [];
     this.presentLoading();
+    //console.log('123');
+
     this.executiveService
       .getPatientDetail(ppatientdata)
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -338,12 +269,12 @@ export class InPatientDetailPage {
           } else {
             this.alert('No Data Available', 'Okay');
           }
-          //console.log(this.data1);
-          //console.log(this.data[0].philhealth_membership);
+          ////console.log(this.data1);
+          ////console.log(this.data[0].philhealth_membership);
           this.is_philhealth_membership = this.data[0].philhealth_membership;
           this.is_pwd = this.data1[0].is_pwd;
           this.is_senior = this.data1[0].is_senior;
-          //console.log(this.is_pwd, this.is_senior);
+          ////console.log(this.is_pwd, this.is_senior);
         }
       );
   }
@@ -358,7 +289,7 @@ export class InPatientDetailPage {
     await this.loading.present();
 
     const { role, data } = await this.loading.onDidDismiss();
-    ////////////////console.log('Loading dismissed!');
+    //////////////////console.log('Loading dismissed!');
   }
   public async dismissLoading(): Promise<void> {
     if (this.loading) {
@@ -386,6 +317,8 @@ export class InPatientDetailPage {
     this.router.navigate(['/menu/in-patients/']);
   }
   operate() {
+    //console.log('operate');
+
     this.dateAdmitted = this.data[0].admission_date;
     this.dischargeNotice = this.data[0].forDischargeDateTime;
 
@@ -610,7 +543,7 @@ export class InPatientDetailPage {
 
     /*this.doctorService.getProgressNotes('test').subscribe(
       (res: any = []) => {
-        ////console.log(res[0].notes);
+        //////console.log(res[0].notes);
         this.progNot_InitDisplay = this.functionsService.truncateChar(
           res[0].notes,
           200
@@ -618,16 +551,19 @@ export class InPatientDetailPage {
         this.progNot_account_no = res[0].account_no;
       },
       (error) => {
-        ////console.log(error);
+        //////console.log(error);
       },
       () => {
-        ////console.log('call done');
+        //////console.log('call done');
       }
     );*/
-    this.getProgressNotes();
+    //this.getProgressNotes();
   }
   approvedDate;
+
   getApprovalStatus(data) {
+    //console.log('getApprovalStatus');
+
     let approvalStatus = {
       account_no: data,
     };
@@ -637,13 +573,13 @@ export class InPatientDetailPage {
       .subscribe(
         (res: any) => {
           if (res != null) {
-            //console.log('approvedDate', res);
+            ////console.log('approvedDate', res);
             this.admissionNo = res[0].admission_no;
             this.dischargeNo = res[0].discharge_no;
             this.finalDiagnosisApproval = res;
             this.isCancelFinalDiagnosisApproval = res[0].approval_status;
             this.approvedDate = res[0].approve_date;
-            //console.log(this.approvedDate);
+            ////console.log(this.approvedDate);
           } else {
             this.isCancelFinalDiagnosisApproval = '';
           }
@@ -661,7 +597,7 @@ export class InPatientDetailPage {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          //console.log(res);
+          ////console.log(res);
           this.ionViewWillEnter();
         },
         (error) => {},
@@ -677,7 +613,7 @@ export class InPatientDetailPage {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any = []) => {
-          ////console.log(res);
+          //////console.log(res);
           this.progessNotesTemp = res;
           if (this.progessNotesTemp.length > 0) {
             this.progNot_InitDisplay = this.functionsService.truncateChar(
@@ -719,7 +655,7 @@ export class InPatientDetailPage {
             }
             this.progessNotes.push(el);
           });
-          //////console.log(this.activeDays);
+          ////////console.log(this.activeDays);
 
           if (this.progessNotes.length <= 0) {
             this.progressNotesIsEmpty = true;
@@ -1171,7 +1107,7 @@ export class InPatientDetailPage {
   }
 
   startDrawing(event: Event) {
-    //console.log(event);
+    ////console.log(event);
     // works in device not in browser
   }
 
@@ -1186,6 +1122,6 @@ export class InPatientDetailPage {
   savePad() {
     const base64Data = this.signaturePad.toDataURL();
     this.signatureImg = base64Data;
-    //console.log(base64Data);
+    ////console.log(base64Data);
   }*/
 }

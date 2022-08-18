@@ -23,7 +23,7 @@ import {
 } from '../../models/doctor';
 
 import { FunctionsService } from '../../shared/functions/functions.service'; //"@ionic/angular";
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+//import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Constants } from '../../shared/constants';
 
 import {
@@ -76,7 +76,7 @@ export class LoginPage {
     private toast: ToastService,
     private doctorService: DoctorService,
     public functionsService: FunctionsService,
-    protected $gaService: GoogleAnalyticsService,
+    //protected $gaService: GoogleAnalyticsService,
     public constants: Constants,
     private gestureCtrl: GestureController,
     private element: ElementRef,
@@ -118,7 +118,7 @@ export class LoginPage {
     this.postData.username = localStorage.getItem('srnm');
     this.loginResponseModel = new LoginResponseModel();
     this.onDarkModeEnable();
-    this.$gaService.pageView('/login', 'Login Page');
+    //this.$gaService.pageView('/login', 'Login Page');
     if (localStorage.getItem('promptLogout') == '1') {
       this.timerExpired();
     }
@@ -168,7 +168,7 @@ export class LoginPage {
                   localStorage.setItem('role_flag', 'exec');
                   execflag = false;
                 } else {
-                  localStorage.setItem('role_flag', 'med');
+                  localStorage.setItem('role_flag', 'medcons');
                 }
               }
 
@@ -179,7 +179,7 @@ export class LoginPage {
                 dualFlag2 = true;
               }
             });
-            ////console.log("userIndentifier : "+userIndentifier);
+            //////console.log("userIndentifier : "+userIndentifier);
           }
         },
         (error) => {
@@ -298,7 +298,7 @@ export class LoginPage {
               localStorage.setItem('role_flag', 'medcons');
               let xFlag: boolean = false;
               //this.loginResponseModelv3.roles.forEach(element => {
-              ////console.log('check flag');
+              //////console.log('check flag');
               if (this.loginResponseModelv3.jwt != null) {
                 localStorage.setItem('id_token', this.loginResponseModelv3.jwt);
               }
@@ -515,7 +515,7 @@ export class LoginPage {
         );
       } else if (data.data == 'None') {
         this.btnDisable = false;
-        //console.log('none');
+        ////console.log('none');
       } else {
         this.btnDisable = false;
         this.modalUpdateV3(

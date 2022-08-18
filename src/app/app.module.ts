@@ -13,10 +13,8 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { Ionic4DatepickerModule } from '@logisticinfotech/ionic4-datepicker';
 //import { InpatientmodalPageModule } from "./components/inpatientmodal/inpatientmodal.module";
 import { ChhAppInPatientModalPageModule } from '../app/chh-web-components/chh-app-in-patient-modal/chh-app-in-patient-modal.module';
-import { ChhAppAddAppointmentsModalPageModule } from '../app/chh-web-components/chh-app-add-appointments-modal/chh-app-add-appointments-modal.module';
 
 import { ChhAppChangePassPageModule } from '../app/chh-web-components/chh-app-change-pass/chh-app-change-pass.module';
 import { ChhAppChangePasswordPageModule } from '../app/chh-web-components/chh-app-change-password/chh-app-change-password.module';
@@ -64,9 +62,7 @@ import { ChhAppTextAvatarModule } from './chh-web-components/chh-app-text-avatar
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
-    Ionic4DatepickerModule,
     ChhAppInPatientModalPageModule,
-    ChhAppAddAppointmentsModalPageModule,
     ChhAppPrivacyPolicyPageModule,
     ChemistryPageModule,
     ChhAppBasePageModule,

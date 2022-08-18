@@ -18,7 +18,7 @@ import {
   MenuController,
   ModalController,
 } from '@ionic/angular';
-import { ChhAppAddAppointmentsModalPage } from '../chh-web-components/chh-app-add-appointments-modal/chh-app-add-appointments-modal.page';
+
 import { ChhAppChangePasswordPage } from '../chh-web-components/chh-app-change-password/chh-app-change-password.page';
 import { ChhAppChangePassPage } from '../chh-web-components/chh-app-change-pass/chh-app-change-pass.page';
 import { ChhAppPrivacyPolicyPage } from '../chh-web-components/chh-app-privacy-policy/chh-app-privacy-policy.page';

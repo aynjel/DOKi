@@ -99,6 +99,9 @@
 .fontSize-14 {
   font-size: 14px;
 }
+.fontSize-16 {
+  font-size: 16px;
+}
 .font-weight-bold {
   font-weight: bold;
 }
@@ -607,7 +610,34 @@ ion-modal.ion6modalsign {
     }
   }
 }
+ion-modal.ion6modalviewsignature {
+  --width: 100%;
+  --height: 100%;
+  --background: rgba(255, 255, 255, 0.2);
 
+  &::part(content) {
+    backdrop-filter: blur(6px);
+  }
+
+  .customBackgroundColor {
+    width: 100%;
+    height: 100%;
+  }
+
+  ion-content.blur {
+    --background: transparent;
+  --padding-top: 25%;
+    @media (min-width: 767px) {
+   
+      --padding-end: 25%;
+      --padding-start: 25%;
+    }
+
+    ion-datetime {
+      border-radius: 8px;
+    }
+  }
+}
 .margintop-15{
   margin-top: -15px !important;
 }
@@ -629,6 +659,20 @@ ion-modal.ion6modalsign {
 .noPaddingBottom{
   padding-bottom:0px !important;
 }
+.paddingBottom5{
+  padding-bottom: 5px !important;
+}
+.paddingBottom10 {
+  padding-bottom: 10 !important;
+}
+.paddingTop5{
+    padding-top: 5px !important;
+}
+
+.paddingTop10 {
+  padding-top: 10px !important;
+}
+
 
 .floatRight{
   float:right !important;
@@ -636,3 +680,28 @@ ion-modal.ion6modalsign {
 .floatLeft {
   float: right !important;
 }
+
+
+.item-background-color {
+  --ion-item-background: #bebebe !important;
+}
+
+.item-divider-color {
+  --background: #f1f1f1 !important;
+
+}
+.ios body[color-theme='dark'], body[color-theme='dark'] {
+  .item-background-color {
+    --ion-item-background: #000000 !important;
+  }
+
+  .item-divider-color {
+    --background: #000000 !important;
+  }
+}
+
+.pointHand{
+  cursor:pointer;
+}
+
+
