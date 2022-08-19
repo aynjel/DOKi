@@ -127,7 +127,9 @@
                   <ion-label class="ion-text-wrap">
                     {{this.constants.UI_COMPONENT_TEXT__VALUE__SETTINGS_SMS_NOTIFICATIONS_ADMITTED}}</ion-label>
                   <ion-toggle color="mango" [(ngModel)]="smsAdmitted"
-                    (ionChange)="toggleV3($event,'smsNotification','patientAdmitted',isset_smsAdmitted)"></ion-toggle>
+                    (ionChange)="toggleV3($event,'smsNotification','patientAdmitted',isset_smsAdmitted)"
+                    disabled="true">
+                  </ion-toggle>
                 </ion-item>
 
 

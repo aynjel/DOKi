@@ -123,14 +123,17 @@ export class TabInPatientsPage {
         },
         () => {
           this.isNotification = false;
-          jsonResponse.forEach((element) => {
-            if (
-              element.approval_status == 'FA' ||
-              element.approval_status == 'RA'
-            ) {
-              this.isNotification = true;
-            }
-          });
+
+          if (jsonResponse != null) {
+            jsonResponse.forEach((element) => {
+              if (
+                element.approval_status == 'FA' ||
+                element.approval_status == 'RA'
+              ) {
+                this.isNotification = true;
+              }
+            });
+          }
         }
       );
   }
