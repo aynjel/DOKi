@@ -352,37 +352,40 @@ export class SignMedcertPage implements OnInit {
     });
   }
   savePad() {
-    this.closeModal();
-    this.isbutton = true;
-    const base64Data = this.signaturePad.toDataURL('image/png');
-    let compressedImage;
-    this.signatureBase64Full = base64Data;
-    ////console.log(this.signatureBase64Full.length);
-
-    this.compressImage(
-      base64Data,
-      this.screenWidth * 0.3,
-      this.screenHeight * 0.3
-    ).then((compressed) => {
-      compressedImage = compressed;
-      let patientId = this.activatedRoute.snapshot.params.admissionNo;
-      const myArray = compressedImage.split(',');
-      let testAprrove = {
-        mode: 'string',
-        account_no: 'string',
-        medcert_comment: 'string',
-        medcert_approve_by: 'string',
-        medcert_signature: 'string',
-      };
-      testAprrove.mode = this.mode;
-      testAprrove.account_no = patientId;
-      testAprrove.medcert_comment = '';
-      testAprrove.medcert_approve_by = this.dr_code;
-      testAprrove.medcert_signature = myArray[1];
-      this.signaturePad.clear();
-      this.saveSignature(testAprrove);
-    });
+    if (!this.signaturePad.isEmpty()) {
+      this.closeModal();
+      this.isbutton = true;
+      const base64Data = this.signaturePad.toDataURL('image/png');
+      let compressedImage;
+      this.signatureBase64Full = base64Data;
+      this.compressImage(
+        base64Data,
+        this.screenWidth * 0.3,
+        this.screenHeight * 0.3
+      ).then((compressed) => {
+        compressedImage = compressed;
+        let patientId = this.activatedRoute.snapshot.params.admissionNo;
+        const myArray = compressedImage.split(',');
+        let testAprrove = {
+          mode: 'string',
+          account_no: 'string',
+          medcert_comment: 'string',
+          medcert_approve_by: 'string',
+          medcert_signature: 'string',
+        };
+        testAprrove.mode = this.mode;
+        testAprrove.account_no = patientId;
+        testAprrove.medcert_comment = '';
+        testAprrove.medcert_approve_by = this.dr_code;
+        testAprrove.medcert_signature = myArray[1];
+        this.signaturePad.clear();
+        this.saveSignature(testAprrove);
+      });
+    } else {
+      this.functionService.presentToast('Please sign Signature Pad');
+    }
   }
+  errorMessage;
   saveSignature(testAprrove) {
     let dischargeNo = this.activatedRoute.snapshot.params.dischargeNo;
     this.isPDFLoading = false;
