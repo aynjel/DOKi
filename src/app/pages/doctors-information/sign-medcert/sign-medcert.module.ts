@@ -13,7 +13,7 @@ import { SignaturePadModule } from 'angular2-signaturepad';
 import { NgxIndexedDBModule } from 'ngx-indexed-db';
 const dbConfig = {
   name: 'signatureDB',
-  version: 1,
+  version: 2,
   objectStoresMeta: [
     {
       store: 'people',
