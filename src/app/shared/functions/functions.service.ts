@@ -524,4 +524,35 @@ export class FunctionsService {
       img.onerror = (error) => rej(error);
     });
   }
+  monthNames = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+  cdateampm(date) {
+    let dateCreate = new Date(date);
+    let dd = String(dateCreate.getDate()).padStart(2, '0');
+    let mm = String(dateCreate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = dateCreate.getFullYear();
+    let xtoday = this.monthNames[dateCreate.getMonth()] + ' ' + dd + ' ' + yyyy;
+
+    var hours = dateCreate.getHours();
+    var minutes = dateCreate.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    let minute = minutes < 10 ? '0' + minutes : minutes;
+    var strTime = hours + ':' + minute + ' ' + ampm;
+
+    return xtoday + ' ' + strTime;
+  }
 }

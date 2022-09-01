@@ -172,8 +172,12 @@ export class InPatientDetailPage {
       this.HighlightRow = index;
     };
   }
-
+  patientDetailfromApi_from;
+  patientDetailfromApi_to;
+  admission_status;
   ionViewWillEnter() {
+    console.log('ionViewWillEnter');
+
     this.ngUnsubscribe = new Subject();
     this.loginResponseModelv3 = new LoginResponseModelv3();
     this.inpatientDetails = new InpatientDetails();
@@ -220,7 +224,20 @@ export class InPatientDetailPage {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          //console.log(res);
+          this.admission_status = res.admission_status;
+          this.patientDetailfromApi_from = this.functionService.cdateampm(
+            res.manage_from
+          );
+          this.patientDetailfromApi_to = this.functionService.cdateampm(
+            res.manage_to
+          );
+          localStorage.setItem('admission_status', btoa(this.admission_status));
+          localStorage.setItem(
+            'Api_from',
+            btoa(this.patientDetailfromApi_from)
+          );
+          localStorage.setItem('Api_to', btoa(this.patientDetailfromApi_to));
+          //convertDatetoMMDDYYYYHHMMSS;
           if (res == null) {
             this.back();
           } else {

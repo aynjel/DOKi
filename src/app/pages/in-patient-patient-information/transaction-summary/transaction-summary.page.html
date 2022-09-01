@@ -62,7 +62,10 @@
   </ion-grid>
 
   <pfSummaryPxInfo [data]="data" [site]="site" [is_pwd]="is_pwd" [is_senior]="is_senior" [dateAdmitted]="dateAdmitted"
-    [data1]="data1" [withVat]="withVat" [payvenueTxt]="payvenue" [is_philhealth_membership]="is_philhealth_membership">
+    [data1]="data1" [withVat]="withVat" [payvenueTxt]="payvenue" [is_philhealth_membership]="is_philhealth_membership"
+    [patientDetailfromApi_from]="patientDetailfromApi_from" [patientDetailfromApi_to]="patientDetailfromApi_to"
+    [patientDetailfromApi_from]="patientDetailfromApi_from" [patientDetailfromApi_to]="patientDetailfromApi_to"
+    [admission_status]="admission_status">
   </pfSummaryPxInfo>
 
   <pfsummary [payvenueN]="payvenueN" [data1]="data1" [withVatN]="withVatN"></pfsummary>
@@ -144,7 +147,8 @@
           </ion-row>
         </ion-grid>
         <pfSummaryPxInfo [data]="data" [site]="site" [is_pwd]="is_pwd" [is_senior]="is_senior"
-          [dateAdmitted]="dateAdmitted" [data1]="data1" [withVat]="withVat" [payvenueTxt]="payvenue">
+          [dateAdmitted]="dateAdmitted" [data1]="data1" [withVat]="withVat" [payvenueTxt]="payvenue"
+          [patientDetailfromApi_from]="patientDetailfromApi_from" [patientDetailfromApi_to]="patientDetailfromApi_to">
         </pfSummaryPxInfo>
         <pfsummary [payvenueN]="payvenueN" [data1]="data1" [withVatN]="withVatN"></pfsummary>
         <ion-button *ngIf="isDesktop" color="mango" class="buttonActive" size="default" expand="block" shape="round"

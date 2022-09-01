@@ -58,10 +58,12 @@
             <ion-icon name="calendar-outline" slot="start"></ion-icon>
             <span style="font-size: 13px;"> Admission Date &nbsp;&nbsp;: {{ dateAdmitted }}</span>
           </div>
+
           <div class=" font-size12" *ngIf="x.forDischargeDateTime != null" style="font-size: 13px;">
             <ion-icon name="calendar-outline" slot="start"></ion-icon>
-            <span style="font-size: 13px;"> Discharge Notice : {{ dischargeNotice }}</span>
+            <span style="font-size: 13px;"> Discharge Notice : {{ x.forDischargeDateTime }}</span>
           </div>
+
           <ion-chip *ngIf="x.admission_status == 'AC'">
             <ion-label color="primary" class="font-12"><b>Admitted</b></ion-label>
           </ion-chip>
@@ -91,7 +93,16 @@
             </div>
           </div>
 
-
+          <div class=" font-size12" style="font-size: 13px;">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <span style="font-size: 13px;"> Managed from &nbsp;&nbsp;:
+              {{ patientDetailfromApi_from }}</span>
+          </div>
+          <div class=" font-size12" style="font-size: 13px;">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <span style="font-size: 13px;"> Managed to &nbsp;&nbsp;:
+              {{ patientDetailfromApi_to }}</span>
+          </div>
         </div>
       </ion-item>
       <ion-item lines="none" style="padding-bottom: 10px">
@@ -164,9 +175,10 @@
             <ion-icon name="calendar-outline" slot="start"></ion-icon>
             <span style="font-size: 13px;"> Admission Date &nbsp;&nbsp;: {{ dateAdmitted }}</span>
           </div>
+
           <div class=" font-size12" *ngIf="x.forDischargeDateTime != null" style="font-size: 13px;">
             <ion-icon name="calendar-outline" slot="start"></ion-icon>
-            <span style="font-size: 13px;"> Discharge Notice : {{ dischargeNotice }}</span>
+            <span style="font-size: 13px;"> Discharge Notice : {{ x.forDischargeDateTime }}</span>
           </div>
 
 
@@ -198,7 +210,16 @@
             </div>
           </div>
 
-
+          <div class=" font-size12" style="font-size: 13px;">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <span style="font-size: 13px;"> Managed from &nbsp;&nbsp;:
+              {{ patientDetailfromApi_from }}</span>
+          </div>
+          <div class=" font-size12" style="font-size: 13px;" *ngIf="admission_status == 'DN'">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <span style="font-size: 13px;"> Managed to &nbsp;&nbsp;:
+              {{ patientDetailfromApi_to }}</span>
+          </div>
         </div>
         <ion-badge color="warning" slot="end" (click)="moreorless(true)">
           <ion-icon name="chevron-up-outline"></ion-icon>

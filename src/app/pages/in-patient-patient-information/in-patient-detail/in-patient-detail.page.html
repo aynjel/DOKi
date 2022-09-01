@@ -68,7 +68,8 @@ ___  ___        _      _  _
 <ion-content *ngIf="!isDesktop">
   <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [dischargeNotice]="dischargeNotice"
     [forMoreOrLess]="true" [is_pwd]="is_pwd" [is_senior]="is_senior"
-    [is_philhealth_membership]="is_philhealth_membership">
+    [is_philhealth_membership]="is_philhealth_membership" [patientDetailfromApi_from]="patientDetailfromApi_from"
+    [patientDetailfromApi_to]="patientDetailfromApi_to" [admission_status]="admission_status">
   </app-chh-app-patient-header>
 
   <app-chh-app-admitting-diagnosis [admittingDiagnosis]="admittingDiagnosis" [admittingDiagnosis1]="admittingDiagnosis1"
@@ -289,7 +290,8 @@ ______          _    _
       <ion-col size-lg="4" size-md="6">
         <!--app-chh-app-card-newline></app-chh-app-card-newline-->
         <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [forMoreOrLess]="true" [is_pwd]="is_pwd"
-          [is_senior]="is_senior">
+          [is_senior]="is_senior" [patientDetailfromApi_from]="patientDetailfromApi_from"
+          [patientDetailfromApi_to]="patientDetailfromApi_to" [admission_status]="admission_status">
         </app-chh-app-patient-header>
 
         <ion-card mode="ios" class="shadow-remove">

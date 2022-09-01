@@ -67,7 +67,8 @@ ______             _     _                        _   _                   _
 
     <pfSummaryPxInfo [data]="data" [site]="site" [is_pwd]="is_pwd" [is_senior]="is_senior" [dateAdmitted]="dateAdmitted"
       [data1]="data1" [withVat]="withVat" [payvenueTxt]="payvenueTxt"
-      [is_philhealth_membership]="is_philhealth_membership">
+      [is_philhealth_membership]="is_philhealth_membership" [patientDetailfromApi_from]="patientDetailfromApi_from"
+      [patientDetailfromApi_to]="patientDetailfromApi_to">
     </pfSummaryPxInfo>
 
     <pfsummary [payvenueN]="payvenueN" [data1]="data1" [withVatN]="withVatN"></pfsummary>
@@ -90,7 +91,9 @@ ______             _     _                        _   _                   _
 -->
   <div *ngIf="ifShowSummary == false">
     <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [forMoreOrLess]="true" [is_pwd]="is_pwd"
-      [is_senior]="is_senior" [is_philhealth_membership]="is_philhealth_membership">
+      [is_senior]="is_senior" [is_philhealth_membership]="is_philhealth_membership"
+      [patientDetailfromApi_from]="patientDetailfromApi_from" [patientDetailfromApi_to]="patientDetailfromApi_to"
+      [admission_status]="admission_status">
     </app-chh-app-patient-header>
     <ion-card mode="ios" [disabled]="!areyouaninsurancecoordinator">
       <ion-item lines="none">
@@ -278,8 +281,10 @@ ______             _     _                       ______             _
     <ion-row>
       <ion-col size-lg="1" size-md="12"></ion-col>
       <ion-col size-lg="3" size-md="6">
-        <app-chh-app-patient-header [forMoreOrLess]="true" [data]="data" [dateAdmitted]="dateAdmitted"
-          *ngIf="!ifShowSummary" [is_pwd]="is_pwd" [is_senior]="is_senior">
+        <app-chh-app-patient-header [forMoreOrLess]="true" [data]="data" [dischargeNotice]="dischargeNotice"
+          [dateAdmitted]="dateAdmitted" *ngIf="!ifShowSummary" [is_pwd]="is_pwd" [is_senior]="is_senior"
+          [patientDetailfromApi_from]="patientDetailfromApi_from" [patientDetailfromApi_to]="patientDetailfromApi_to"
+          [admission_status]="admission_status">
         </app-chh-app-patient-header>
         <div *ngIf="ifShowSummary == true">
 
@@ -302,7 +307,8 @@ ______             _     _                       ______             _
 
 
           <pfSummaryPxInfo [data]="data" [site]="site" [is_pwd]="is_pwd" [is_senior]="is_senior"
-            [dateAdmitted]="dateAdmitted" [data1]="data1" [withVat]="withVat" [payvenueTxt]="payvenueTxt">
+            [dateAdmitted]="dateAdmitted" [data1]="data1" [withVat]="withVat" [payvenueTxt]="payvenueTxt"
+            [patientDetailfromApi_from]="patientDetailfromApi_from" [patientDetailfromApi_to]="patientDetailfromApi_to">
           </pfSummaryPxInfo>
           <pfsummary [payvenueN]="payvenueN" [data1]="data1" [withVatN]="withVatN"></pfsummary>
           <ion-button color="mango" size="default" expand="block" shape="round" class="buttonActive"
