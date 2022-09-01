@@ -251,5 +251,5 @@ export class Constants {
   public TestServer = 'T';
   public ProductionServer = 'P';
 
-  public modeForProd = 'T';
+  public modeForProd = 'P';
 }
