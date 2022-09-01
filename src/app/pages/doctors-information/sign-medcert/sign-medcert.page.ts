@@ -236,7 +236,9 @@ export class SignMedcertPage implements OnInit {
       document.getElementById('trigger-button-show-signature').click();
     }
   }
+  isOldSignature: boolean = false;
   useOldSignature() {
+    this.isOldSignature = true;
     this.closeModal();
     let patientId = this.activatedRoute.snapshot.params.admissionNo;
     let testAprrove: SignatureApproval = new SignatureApproval();
@@ -316,6 +318,7 @@ export class SignMedcertPage implements OnInit {
   }
 
   savePad() {
+    this.isOldSignature = false;
     if (!this.signaturePad.isEmpty()) {
       this.closeModal();
       this.isbutton = true;
@@ -371,11 +374,13 @@ export class SignMedcertPage implements OnInit {
         (error) => {},
         () => {
           if (this.isSignature) {
-            this.updateSignatureonIndexedDB(
-              this.dr_code,
-              testAprrove.medcert_signature,
-              this.signatureBase64Full
-            );
+            if (!this.isOldSignature) {
+              this.updateSignatureonIndexedDB(
+                this.dr_code,
+                testAprrove.medcert_signature,
+                this.signatureBase64Full
+              );
+            }
           } else {
             this.saveSignaturetoIndexdb(
               this.dr_code,
