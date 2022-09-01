@@ -162,7 +162,11 @@ export class AppComponent implements OnInit {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.screensizeService.onResize(this.platform.width());
-      this.screensizeService.onPortrait(screen.orientation.angle);
+      if (screen.width > screen.height) {
+        this.screensizeService.onPortrait(90);
+      } else {
+        this.screensizeService.onPortrait(0);
+      }
     });
 
     /* this.dr_name = this.logindata.lastName;
@@ -290,8 +294,11 @@ export class AppComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   private onResize(event) {
     // console.log('event', event.target.innerWidth);
-
+    if (screen.width > screen.height) {
+      this.screensizeService.onPortrait(90);
+    } else {
+      this.screensizeService.onPortrait(0);
+    }
     this.screensizeService.onResize(event.target.innerWidth);
-    this.screensizeService.onPortrait(screen.orientation.angle);
   }
 }
