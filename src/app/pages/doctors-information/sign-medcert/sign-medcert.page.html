@@ -41,7 +41,6 @@
           </ion-item>
         </ion-card>
         <ion-card>
-          <img [src]="this.signatureBase64Full" style="border: solid 1px #275229;">
           <pinch-zoom style="background-color: rgb(255, 255, 255);" *ngIf="isPDFLoading">
             <pdf-viewer [src]="pdfSrc" [rotation]="0" [original-size]="false" [show-all]="true" [fit-to-page]="false"
               [zoom]="1" [zoom-scale]="'page-width'" [stick-to-page]="false" [render-text]="true"
