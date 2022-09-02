@@ -15,6 +15,9 @@ export class ChhAppPatientHeaderComponent {
   @Input() is_pwd: any = 'N';
   @Input() is_senior: any = 'N';
   @Input() is_philhealth_membership;
+  @Input() patientDetailfromApi_from;
+  @Input() patientDetailfromApi_to;
+  @Input() admission_status;
   isDesktop: any;
   moreOrLess: boolean = true;
 

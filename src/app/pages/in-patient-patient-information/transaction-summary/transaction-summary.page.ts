@@ -201,7 +201,13 @@ export class TransactionSummaryPage implements OnInit {
     } else {
       this.routerLinkBack = this.routerLinkBack3;
     }
+    this.admission_status = atob(localStorage.getItem('admission_status'));
+    this.patientDetailfromApi_from = atob(localStorage.getItem('Api_from'));
+    this.patientDetailfromApi_to = atob(localStorage.getItem('Api_to'));
   }
+  admission_status;
+  patientDetailfromApi_from;
+  patientDetailfromApi_to;
   is_pwd;
   is_senior;
   payvenueTxt;

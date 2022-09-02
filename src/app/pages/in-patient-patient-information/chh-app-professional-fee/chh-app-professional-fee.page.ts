@@ -135,7 +135,9 @@ export class ChhAppProfessionalFeePage implements OnInit {
         this.isDesktop = isDesktop;
       });
   }
-
+  patientDetailfromApi_from;
+  patientDetailfromApi_to;
+  admission_status;
   ngOnInit() {
     this.checkAppearance();
     let getValue = this.activatedRoute.snapshot.paramMap.get('state');
@@ -150,8 +152,12 @@ export class ChhAppProfessionalFeePage implements OnInit {
       atob(localStorage.getItem('postData1'))
     );
     this.functionsService.logToConsole(this.professionalFeeModelv3);
-  }
 
+    this.admission_status = atob(localStorage.getItem('admission_status'));
+    this.patientDetailfromApi_from = atob(localStorage.getItem('Api_from'));
+    this.patientDetailfromApi_to = atob(localStorage.getItem('Api_to'));
+  }
+  dischargeNotice;
   ionViewWillEnter() {
     this.ngUnsubscribe = new Subject();
     this.userSettingsModelv3 = JSON.parse(
@@ -171,6 +177,8 @@ export class ChhAppProfessionalFeePage implements OnInit {
     this.is_senior = this.data[0].is_senior;
     //console.log(this.is_pwd, this.is_senior);
     this.dateAdmitted = this.data[0].admission_date;
+    this.dischargeNotice = this.data[0].forDischargeDateTime;
+
     //console.log(this.data[0].admission_no);
     if (this.patient_id != this.data[0].admission_no) {
       this.nav.back();

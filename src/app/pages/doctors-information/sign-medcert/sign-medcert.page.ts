@@ -129,11 +129,18 @@ export class SignMedcertPage implements OnInit {
         if (signature == undefined) {
           this.isSignature = false;
         } else {
-          ////////console.log(signature);
-          this.signatureID = signature.id;
-          this.signatureBase64 = signature.base64image;
-          this.signatureBase64Full = signature.base64imageFull;
-          this.isSignature = true;
+          let myArray: any;
+          let compressedSignature =
+            'data:image/png;base64,' + signature.base64image;
+          this.functionService
+            .cropImage(compressedSignature)
+            .then((compressed: any) => {
+              myArray = compressed.split(',');
+              this.signatureID = signature.id;
+              this.signatureBase64 = myArray[1];
+              this.signatureBase64Full = compressed;
+              this.isSignature = true;
+            });
         }
       });
   }
@@ -171,43 +178,15 @@ export class SignMedcertPage implements OnInit {
     if (scWidth <= 666) {
       this.screenWidth = scWidth - scWidth * 0.06;
       this.screenHeight = scHeight - scHeight * 0.35;
-      //console.log('Screen less than 666');
-      //console.log('Width 1: ', scWidth);
-      //console.log('Width 2: ', scWidth * 0.06);
-      //console.log('=', this.screenWidth);
-      //console.log('Height 1: ', scHeight);
-      //console.log('Height 2: ', scHeight * 0.35);
-      //console.log('=', this.screenHeight);
     } else if (scWidth <= 1000) {
       this.screenWidth = scWidth - scWidth * 0.05;
       this.screenHeight = scHeight - scHeight * 0.25;
-      //console.log('Screen less than 912');
-      //console.log('Width 1: ', scWidth);
-      //console.log('Width 2: ', scWidth * 0.05);
-      //console.log('=', this.screenWidth);
-      //console.log('Height 1: ', scHeight);
-      //console.log('Height 2: ', scHeight * 0.15);
-      //console.log('=', this.screenHeight);
     } else {
       this.screenWidth = scWidth - scWidth * 0.6;
       this.screenHeight = scHeight - scHeight * 0.6;
-
-      //console.log('ELSE = BIG');
-      //console.log('Width 1: ', scWidth);
-      //console.log('Width 2: ', scWidth * 0.4);
-      //console.log('=', this.screenWidth);
-      //console.log('Height 1: ', scHeight);
-      //console.log('Height 2: ', scHeight * 0.4);
-      //console.log('=', this.screenHeight);
     }
     if (scHeight >= 1180) {
       this.screenHeight = scHeight - scHeight * 0.6;
-      //console.log('Greater than 1180');
-      //console.log('Width 1: ', scWidth);
-      //console.log('=', this.screenWidth);
-      //console.log('Height 1: ', scHeight);
-      //console.log('Height 2: ', scHeight * 0.6);
-      //console.log('=', this.screenHeight);
     }
     //console.log('LOGGGGGGGGGGGGG');
     this.signaturePadOptions = {
@@ -257,7 +236,9 @@ export class SignMedcertPage implements OnInit {
       document.getElementById('trigger-button-show-signature').click();
     }
   }
+  isOldSignature: boolean = false;
   useOldSignature() {
+    this.isOldSignature = true;
     this.closeModal();
     let patientId = this.activatedRoute.snapshot.params.admissionNo;
     let testAprrove: SignatureApproval = new SignatureApproval();
@@ -335,52 +316,46 @@ export class SignMedcertPage implements OnInit {
   clearPad() {
     this.signaturePad.clear();
   }
-  compressImage(src, newX, newY) {
-    return new Promise((res, rej) => {
-      const img = new Image();
-      img.src = src;
-      img.onload = () => {
-        const elem = document.createElement('canvas');
-        elem.width = newX;
-        elem.height = newY;
-        const ctx = elem.getContext('2d');
-        ctx.drawImage(img, 0, 0, newX, newY);
-        const data = ctx.canvas.toDataURL();
-        res(data);
-      };
-      img.onerror = (error) => rej(error);
-    });
-  }
+
   savePad() {
+    this.isOldSignature = false;
     if (!this.signaturePad.isEmpty()) {
       this.closeModal();
       this.isbutton = true;
       const base64Data = this.signaturePad.toDataURL('image/png');
       let compressedImage;
       this.signatureBase64Full = base64Data;
-      this.compressImage(
-        base64Data,
-        this.screenWidth * 0.3,
-        this.screenHeight * 0.3
-      ).then((compressed) => {
-        compressedImage = compressed;
-        let patientId = this.activatedRoute.snapshot.params.admissionNo;
-        const myArray = compressedImage.split(',');
-        let testAprrove = {
-          mode: 'string',
-          account_no: 'string',
-          medcert_comment: 'string',
-          medcert_approve_by: 'string',
-          medcert_signature: 'string',
-        };
-        testAprrove.mode = this.mode;
-        testAprrove.account_no = patientId;
-        testAprrove.medcert_comment = '';
-        testAprrove.medcert_approve_by = this.dr_code;
-        testAprrove.medcert_signature = myArray[1];
-        this.signaturePad.clear();
-        this.saveSignature(testAprrove);
-      });
+      this.functionService
+        .compressImage(
+          base64Data,
+          this.screenWidth * 0.3,
+          this.screenHeight * 0.3
+        )
+        .then((compressed: any) => {
+          this.functionService
+            .cropImage(compressed)
+            .then((croppedImag: any) => {
+              this.signatureBase64Full = croppedImag;
+
+              let patientId = this.activatedRoute.snapshot.params.admissionNo;
+              const myArray = croppedImag.split(',');
+
+              let testAprrove = {
+                mode: 'string',
+                account_no: 'string',
+                medcert_comment: 'string',
+                medcert_approve_by: 'string',
+                medcert_signature: 'string',
+              };
+              testAprrove.mode = this.mode;
+              testAprrove.account_no = patientId;
+              testAprrove.medcert_comment = '';
+              testAprrove.medcert_approve_by = this.dr_code;
+              testAprrove.medcert_signature = myArray[1];
+              this.signaturePad.clear();
+              this.saveSignature(testAprrove);
+            });
+        });
     } else {
       this.functionService.presentToast('Please sign Signature Pad');
     }
@@ -399,11 +374,13 @@ export class SignMedcertPage implements OnInit {
         (error) => {},
         () => {
           if (this.isSignature) {
-            this.updateSignatureonIndexedDB(
-              this.dr_code,
-              testAprrove.medcert_signature,
-              this.signatureBase64Full
-            );
+            if (!this.isOldSignature) {
+              this.updateSignatureonIndexedDB(
+                this.dr_code,
+                testAprrove.medcert_signature,
+                this.signatureBase64Full
+              );
+            }
           } else {
             this.saveSignaturetoIndexdb(
               this.dr_code,
