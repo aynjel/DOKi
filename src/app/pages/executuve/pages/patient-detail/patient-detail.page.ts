@@ -169,7 +169,9 @@ export class PatientDetailPage implements OnInit {
   closemodal() {
     this.navCtrl.back();
   }
-
+  patientDetailfromApi_from;
+  patientDetailfromApi_to;
+  admission_status;
   ngOnInit() {
     console.log('YAHOO');
     this.patientDetail = new PatientDetail();
@@ -189,6 +191,18 @@ export class PatientDetailPage implements OnInit {
       .subscribe(
         (res: any) => {
           responsebe = res;
+          this.patientDetailfromApi_from = this.functionsService.cdateampm(
+            res.manage_from
+          );
+          this.patientDetailfromApi_to = this.functionsService.cdateampm(
+            res.manage_to
+          );
+          localStorage.setItem('admission_status', btoa(this.admission_status));
+          localStorage.setItem(
+            'Api_from',
+            btoa(this.patientDetailfromApi_from)
+          );
+          localStorage.setItem('Api_to', btoa(this.patientDetailfromApi_to));
         },
         (error) => {
           this.dismissLoading();
