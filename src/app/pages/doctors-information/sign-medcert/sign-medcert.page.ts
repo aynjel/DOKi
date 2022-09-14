@@ -172,8 +172,8 @@ export class SignMedcertPage implements OnInit {
     ////////////console.log('ngOnInit');
     this.getpdf();
     this.idModal = false;
-    let scWidth = screen.width;
-    let scHeight = screen.height;
+    let scWidth = window.innerWidth;
+    let scHeight = window.innerHeight;
 
     if (scWidth <= 666) {
       this.screenWidth = scWidth - scWidth * 0.06;
