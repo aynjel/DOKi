@@ -168,6 +168,9 @@ export class SignMedcertPage implements OnInit {
       });
   }
   ngOnInit() {
+    if (this.idModal) {
+      this.closeModal();
+    }
     this.checkAppearance();
     ////////////console.log('ngOnInit');
     this.getpdf();
