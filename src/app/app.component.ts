@@ -293,12 +293,12 @@ export class AppComponent implements OnInit {
   @HostListener('window:orientationchange', ['$event'])
   @HostListener('window:resize', ['$event'])
   private onResize(event) {
-    // console.log('event', event.target.innerWidth);
-    if (screen.width > screen.height) {
+    this.screensizeService.onPortrait(window.orientation);
+    /*if (screen.width > screen.height) {
       this.screensizeService.onPortrait(90);
     } else {
       this.screensizeService.onPortrait(0);
-    }
+    }*/
     this.screensizeService.onResize(event.target.innerWidth);
   }
 }
