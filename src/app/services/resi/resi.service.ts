@@ -54,4 +54,10 @@ export class ResiService {
     const url = environment.apiResident + 'api/ProgressNotesApproval/insert';
     return this.http.post(url, data, options);
   }
+  getProgressNoteSummary(data) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers: headers, withCredentials: true };
+    const url = environment.apiResident + 'api/ProgressNotesSummary';
+    return this.http.post(url, data, options);
+  }
 }

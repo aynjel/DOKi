@@ -45,7 +45,8 @@
 
           <ion-list>
             <ion-item><b>{{event_date}}</b>
-              <ion-button slot="end" color="warning" (click)="presentAlert()" *ngIf="isApproved !='1'">Approve?
+              <ion-button slot="end" color="warning" (click)="presentAlert()"
+                *ngIf="isApproved !='1' && summary_status =='FA'">Approve?
               </ion-button>
               <ion-button slot="end" *ngIf="isApproved =='1'">Approved
               </ion-button>
@@ -96,9 +97,22 @@
 
 
         <ng-container>
-          <ion-list>
-            <br /><br /><br />
-          </ion-list>
+          <ion-card mode="ios">
+            <ion-item>
+              <ion-label class="ion-text-wrap">
+                <h2>Summary
+
+                </h2>
+
+              </ion-label>
+
+            </ion-item>
+            <ion-item lines="none">
+              <!--ion-text class="ion-text-wrap">{{progressNoteSummary}}</ion-text-->
+              <app-show-hide [comment]="progressNoteSummary" [dataZoom]="progressNoteSummary"></app-show-hide>
+            </ion-item>
+          </ion-card>
+
         </ng-container>
 
 

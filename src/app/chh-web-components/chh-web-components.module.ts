@@ -64,6 +64,7 @@ import { SoapShowHideComponent } from './soap-show-hide/soap-show-hide.component
 import { ApprovePopOverComponent } from './approve-pop-over/approve-pop-over.component';
 import { ViewCommentsPopOverComponent } from './view-comments-pop-over/view-comments-pop-over.component';
 import { ChatNewMessageComponent } from './chat-new-message/chat-new-message.component';
+import { ShowHideComponent } from './show-hide/show-hide.component';
 
 @NgModule({
   declarations: [
@@ -113,6 +114,7 @@ import { ChatNewMessageComponent } from './chat-new-message/chat-new-message.com
     ApprovePopOverComponent,
     ViewCommentsPopOverComponent,
     ChatNewMessageComponent,
+    ShowHideComponent,
   ],
   exports: [
     ChhAppLogoComponent,
@@ -161,6 +163,7 @@ import { ChatNewMessageComponent } from './chat-new-message/chat-new-message.com
     ApprovePopOverComponent,
     ViewCommentsPopOverComponent,
     ChatNewMessageComponent,
+    ShowHideComponent,
   ],
   imports: [
     CommonModule,

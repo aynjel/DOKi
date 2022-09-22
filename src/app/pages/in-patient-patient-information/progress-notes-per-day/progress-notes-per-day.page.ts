@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, NgZone, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   AlertController,
@@ -84,7 +84,8 @@ export class ProgressNotesPerDayPage implements OnInit {
     public popoverController: PopoverController,
     public authService: AuthService,
     public nav: NavController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private ngZone: NgZone
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       this.isDesktop = isDesktop;
@@ -143,7 +144,7 @@ export class ProgressNotesPerDayPage implements OnInit {
     this.is_philhealth_membership = this.data[0].philhealth_membership;
     this.is_pwd = this.data[0].is_pwd;
     this.is_senior = this.data[0].is_senior;
-    //////////console.log(this.is_pwd, this.is_senior);
+    ////////////console.log(this.is_pwd, this.is_senior);
     this.dateAdmitted = this.data[0].admission_date;
     this.patient_id = this.activatedRoute.snapshot.params.id;
     this.dischargeNotice = this.data[0].forDischargeDateTime;
@@ -155,9 +156,10 @@ export class ProgressNotesPerDayPage implements OnInit {
     this.patient_name = this.funcServ.convertAllFirstLetterToUpperCase(
       this.patient_name
     );
-    ////////console.log(this.progressNotesPerDay);
+    //////////console.log(this.progressNotesPerDay);
 
     this.getProgressNotesPerDay(this.progressNotesPerDay);
+    this.getProgressNotesSummary();
   }
   back() {
     this.navCtrl.back();
@@ -180,7 +182,7 @@ export class ProgressNotesPerDayPage implements OnInit {
     this.progessNotes = [];
     this.residentService.getPatientProgressNotesPerDay(data).subscribe(
       (res: any) => {
-        ////////console.log(res);
+        //////////console.log(res);
 
         tempPn = res;
       },
@@ -209,9 +211,50 @@ export class ProgressNotesPerDayPage implements OnInit {
       }
     );
   }
+  isSummaryComplete: boolean = false;
+  progressNoteSummary;
+  summary_status;
+  getProgressNotesSummary() {
+    //console.log(this.patientInfo);
+
+    this.isSummaryComplete = false;
+    let data = {
+      account_no: this.patientInfo[0].admission_no,
+      event_date: this.event_date,
+    };
+    let x;
+    //console.log(data);
+
+    this.residentService.getProgressNoteSummary(data).subscribe(
+      (res: any) => {
+        //console.log('getProgressNotesSummary');
+        //console.log(res);
+        x = res;
+      },
+      (error) => {},
+      () => {
+        //console.log('getProgressNoteSummary');
+        ////////console.log(x[0].trans_no);
+
+        if (x.length <= 0) {
+        } else {
+          this.progressNoteSummary = x[0].summary;
+          this.summary_status = x[0].summary_status;
+
+          if (this.progressNoteSummary != null) {
+            this.ngZone.run(() => {
+              this.isSummaryComplete = true;
+            });
+          }
+        }
+        //console.log('getProgressNotesSummary');
+        //console.log(this.isSummaryComplete);
+      }
+    );
+  }
   async presentPopover(e: Event, dataJson) {
-    //////console.log(dataJson);
-    //////console.log(this.logindata);
+    ////////console.log(dataJson);
+    ////////console.log(this.logindata);
 
     this.progressNoteApproval.account_no = dataJson.account_no;
     this.progressNoteApproval.event_date = dataJson.event_date;
@@ -224,7 +267,7 @@ export class ProgressNotesPerDayPage implements OnInit {
     });
     await popover.present();
     await popover.onDidDismiss().then((data) => {
-      //////console.log(data.data);
+      ////////console.log(data.data);
       if (data.data != undefined) {
         this.openModal(dataJson);
       }
@@ -256,11 +299,11 @@ export class ProgressNotesPerDayPage implements OnInit {
   }
 
   approveProgressNote(data) {
-    ////console.log(data);
+    //////console.log(data);
 
     this.residentService.approveProgressNote(data).subscribe(
       (res: any) => {
-        //////console.log(res);
+        ////////console.log(res);
       },
       (error) => {},
       () => {
