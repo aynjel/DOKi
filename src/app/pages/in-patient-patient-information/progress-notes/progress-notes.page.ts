@@ -205,4 +205,12 @@ export class ProgressNotesPage implements OnInit {
       '/menu/in-patients/' + this.patient_id + '/progressnotes/' + day,
     ]);
   }
+
+  checkNumberofNotes(data) {
+    if (data >= 1) {
+      return 'mango';
+    } else {
+      return '';
+    }
+  }
 }
