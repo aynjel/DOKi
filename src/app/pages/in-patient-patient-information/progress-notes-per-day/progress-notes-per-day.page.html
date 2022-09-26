@@ -48,7 +48,8 @@
               <ion-button slot="end" color="warning" (click)="presentAlert()"
                 *ngIf="isApproved !='1' && summary_status =='FA'">Approve?
               </ion-button>
-              <ion-button slot="end" *ngIf="isApproved =='1'">Approved
+
+              <ion-button slot="end" *ngIf="isApproved !='1' && summary_status =='AC'">Approved
               </ion-button>
             </ion-item>
 

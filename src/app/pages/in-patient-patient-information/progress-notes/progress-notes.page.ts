@@ -89,6 +89,8 @@ export class ProgressNotesPage implements OnInit {
       .getPatientProgressNotesPerAdmission(perAdmission)
       .subscribe(
         (res: any) => {
+          console.log(res);
+
           this.progessNotesTemp = res;
         },
         (error) => {},

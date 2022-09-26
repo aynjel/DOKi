@@ -227,6 +227,8 @@ export class TabDashboardPage implements OnInit {
   ionViewWillEnter() {
     this.checkInbox();
     this.ngUnsubscribe = new Subject();
+    console.log('DASHBOARD');
+
     localStorage.removeItem('selectedPatient');
     this.logindata = <LoginResponseModelv3>(
       this.authService.userData$.getValue()

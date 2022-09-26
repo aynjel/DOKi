@@ -44,6 +44,7 @@ export class TabNewsFeedPage implements OnInit {
     this.newsfeedTemp = [];
     this.newsfeed = [];
     this.ngUnsubscribe = new Subject();
+    console.log('newsfeed');
     localStorage.removeItem('selectedPatient');
     this.checkAppearance();
     this.doctorService

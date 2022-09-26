@@ -329,6 +329,7 @@ export class TabInPatientsPage {
   //Fired when the component routing to is about to animate into view.
   ionViewWillEnter() {
     this.ngUnsubscribe = new Subject();
+    console.log('INpatient');
     localStorage.removeItem('selectedPatient');
     this.logindata = <LoginResponseModelv3>(
       this.authService.userData$.getValue()
