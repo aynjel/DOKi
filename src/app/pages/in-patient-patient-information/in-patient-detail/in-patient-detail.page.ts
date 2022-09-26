@@ -224,6 +224,7 @@ export class InPatientDetailPage {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
+          localStorage.setItem('doctor_Status_code', res.doctor_Status_code);
           this.admission_status = res.admission_status;
           this.patientDetailfromApi_from = this.functionService.cdateampm(
             res.manage_from

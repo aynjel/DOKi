@@ -115,7 +115,10 @@ export class ProgressNotesPerDayPage implements OnInit {
     this.logindata = x;
   }
   isApproved;
+  doctor_Status_code;
+
   ngOnInit() {
+    this.doctor_Status_code = localStorage.getItem('doctor_Status_code');
     let x = JSON.parse(
       unescape(atob(localStorage.getItem('_cap_userDataKey')))
     );
@@ -240,7 +243,7 @@ export class ProgressNotesPerDayPage implements OnInit {
         } else {
           this.progressNoteSummary = x[0].summary;
           this.summary_status = x[0].summary_status;
-
+          localStorage.setItem('summary_status', this.summary_status);
           if (this.progressNoteSummary != null) {
             this.ngZone.run(() => {
               this.isSummaryComplete = true;

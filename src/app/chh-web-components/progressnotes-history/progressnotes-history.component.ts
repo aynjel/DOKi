@@ -71,7 +71,9 @@ export class ProgressnotesHistoryComponent implements OnInit {
     resi_code: 'string',
     trans_no: 0,
   };
+  summary_status;
   ngOnInit() {
+    this.summary_status = localStorage.getItem('summary_status');
     this.ngUnsubscribe = new Subject();
     let x = JSON.parse(
       unescape(atob(localStorage.getItem('_cap_userDataKey')))

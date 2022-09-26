@@ -46,10 +46,10 @@
           <ion-list>
             <ion-item><b>{{event_date}}</b>
               <ion-button slot="end" color="warning" (click)="presentAlert()"
-                *ngIf="isApproved !='1' && summary_status =='FA'">Approve?
+                *ngIf="isApproved !='1' && summary_status =='FA' && doctor_Status_code=='AP'">Approve?
               </ion-button>
 
-              <ion-button slot="end" *ngIf="isApproved !='1' && summary_status =='AC'">Approved
+              <ion-button slot="end" *ngIf="summary_status =='RA'">Approved
               </ion-button>
             </ion-item>
 
@@ -57,7 +57,7 @@
               <ion-card mode="ios">
                 <ion-item>
                   <ion-label class="ion-text-wrap">
-                    <h2 class="icon-center ">{{x.user_created}} | <ion-text> {{x.event_time_c}}</ion-text>
+                    <h2 class="icon-center ">{{x.username}} | <ion-text> {{x.event_time_c}}</ion-text>
                       <!--|
                       <ion-badge class="icon-center" [color]="x.is_approve == '0' ? 'medium' : 'mango'">
                         <span *ngIf="x.is_approve == '0'">Uncertain</span>
