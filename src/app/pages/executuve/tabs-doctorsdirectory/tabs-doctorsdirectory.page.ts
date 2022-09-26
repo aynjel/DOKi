@@ -104,7 +104,7 @@ export class TabsDoctorsdirectoryPage implements OnInit {
         },
         (error) => {},
         () => {
-          if (this.listOfDoctorsTempList != []) {
+          if (this.listOfDoctorsTempList) {
             this.listlength = this.listOfDoctorsTempList.lenth;
             ////////console.log(this.listlength);
             ////////console.log(this.listOfDoctorsTemp300);

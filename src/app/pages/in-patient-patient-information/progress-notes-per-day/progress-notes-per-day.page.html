@@ -11,8 +11,9 @@
     <ion-row class="">
       <ion-col size-md="10" offset-md="1" size-lg="4" offset-lg="4" class="ion-no-border">
         <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [dischargeNotice]="dischargeNotice"
-          [forMoreOrLess]="true" [is_pwd]="is_pwd" [is_senior]="is_senior"
-          [is_philhealth_membership]="is_philhealth_membership">
+          [forMoreOrLess]="false" [is_pwd]="is_pwd" [is_senior]="is_senior"
+          [is_philhealth_membership]="is_philhealth_membership" [patientDetailfromApi_from]="patientDetailfromApi_from"
+          [patientDetailfromApi_to]="patientDetailfromApi_to" [admission_status]="admission_status">
         </app-chh-app-patient-header>
 
       </ion-col>
@@ -45,9 +46,11 @@
 
           <ion-list>
             <ion-item><b>{{event_date}}</b>
-              <ion-button slot="end" color="warning" (click)="presentAlert()" *ngIf="isApproved !='1'">Approve?
+              <ion-button slot="end" color="warning" (click)="presentAlert()"
+                *ngIf="isApproved !='1' && summary_status =='FA' && doctor_Status_code=='AP'">Approve?
               </ion-button>
-              <ion-button slot="end" *ngIf="isApproved =='1'">Approved
+
+              <ion-button slot="end" *ngIf="summary_status =='RA'">Approved
               </ion-button>
             </ion-item>
 
@@ -55,7 +58,7 @@
               <ion-card mode="ios">
                 <ion-item>
                   <ion-label class="ion-text-wrap">
-                    <h2 class="icon-center ">{{x.user_created}} | <ion-text> {{x.event_time_c}}</ion-text>
+                    <h2 class="icon-center ">{{x.username}} | <ion-text> {{x.event_time_c}}</ion-text>
                       <!--|
                       <ion-badge class="icon-center" [color]="x.is_approve == '0' ? 'medium' : 'mango'">
                         <span *ngIf="x.is_approve == '0'">Uncertain</span>
@@ -96,9 +99,22 @@
 
 
         <ng-container>
-          <ion-list>
-            <br /><br /><br />
-          </ion-list>
+          <ion-card mode="ios">
+            <ion-item>
+              <ion-label class="ion-text-wrap">
+                <h2>Summary
+
+                </h2>
+
+              </ion-label>
+
+            </ion-item>
+            <ion-item lines="none">
+              <!--ion-text class="ion-text-wrap">{{progressNoteSummary}}</ion-text-->
+              <app-show-hide [comment]="progressNoteSummary" [dataZoom]="progressNoteSummary"></app-show-hide>
+            </ion-item>
+          </ion-card>
+
         </ng-container>
 
 

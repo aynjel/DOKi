@@ -202,6 +202,7 @@ export class TabSettingsPage {
 
   ionViewWillEnter() {
     this.ngUnsubscribe = new Subject();
+    console.log('settings');
     localStorage.removeItem('selectedPatient');
     this.$gaService.pageView('/Settings', 'Settings Tab');
 
