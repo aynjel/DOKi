@@ -163,7 +163,13 @@ export class ProgressNotesPerDayPage implements OnInit {
 
     this.getProgressNotesPerDay(this.progressNotesPerDay);
     this.getProgressNotesSummary();
+    this.admission_status = atob(localStorage.getItem('admission_status'));
+    this.patientDetailfromApi_from = atob(localStorage.getItem('Api_from'));
+    this.patientDetailfromApi_to = atob(localStorage.getItem('Api_to'));
   }
+  admission_status;
+  patientDetailfromApi_from;
+  patientDetailfromApi_to;
   back() {
     this.navCtrl.back();
     //this.router.navigate(['menu/patient/' + this.patientId]);

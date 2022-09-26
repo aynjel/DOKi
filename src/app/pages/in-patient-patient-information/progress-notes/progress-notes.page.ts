@@ -49,7 +49,13 @@ export class ProgressNotesPage implements OnInit {
         this.isDesktop = isDesktop;
       });
   }
-
+  dischargeNotice;
+  is_philhealth_membership;
+  is_pwd;
+  is_senior;
+  admission_status;
+  patientDetailfromApi_to;
+  patientDetailfromApi_from;
   ngOnInit() {
     console.log('ngOnInit');
 
@@ -61,6 +67,15 @@ export class ProgressNotesPage implements OnInit {
 
     this.dateAdmitted = this.data[0].admission_date;
     this.checkAppearance();
+    this.dateAdmitted = this.data[0].admission_date;
+    this.dischargeNotice = this.data[0].forDischargeDateTime;
+    ////console.log(this.data[0].philhealth_membership);
+    this.is_philhealth_membership = this.data[0].philhealth_membership;
+    this.is_pwd = this.data[0].is_pwd;
+    this.is_senior = this.data[0].is_senior;
+    this.admission_status = atob(localStorage.getItem('admission_status'));
+    this.patientDetailfromApi_from = atob(localStorage.getItem('Api_from'));
+    this.patientDetailfromApi_to = atob(localStorage.getItem('Api_to'));
   }
   checkAppearance() {
     this.functionsService.logToConsole('checkAppearance');

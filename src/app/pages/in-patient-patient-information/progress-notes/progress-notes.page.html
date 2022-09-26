@@ -9,7 +9,11 @@
   <ion-grid class="ion-no-padding">
     <ion-row class="custom-padding">
       <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
-        <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [forMoreOrLess]="false">
+
+        <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [dischargeNotice]="dischargeNotice"
+          [forMoreOrLess]="false" [is_pwd]="is_pwd" [is_senior]="is_senior"
+          [is_philhealth_membership]="is_philhealth_membership" [patientDetailfromApi_from]="patientDetailfromApi_from"
+          [patientDetailfromApi_to]="patientDetailfromApi_to" [admission_status]="admission_status">
         </app-chh-app-patient-header>
       </ion-col>
     </ion-row>
