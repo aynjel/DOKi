@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 //import { Platform } from '@angular/cdk/platform';
 import { AlertController, IonSlides, Platform } from '@ionic/angular';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+//import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
 import { FunctionsService } from '../../shared/functions/functions.service';
 
@@ -24,7 +24,7 @@ export class IndexPage implements OnInit {
   constructor(
     private platform: Platform,
     public functionsService: FunctionsService,
-    protected $gaService: GoogleAnalyticsService,
+
     private screensizeService: ScreenSizeService,
     public router: Router
   ) {
@@ -36,7 +36,7 @@ export class IndexPage implements OnInit {
     } else {
     }
     this.initPwaPrompt();
-    this.$gaService.pageView('/index', 'Index Page');
+
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         // Reload because our routing is out of place

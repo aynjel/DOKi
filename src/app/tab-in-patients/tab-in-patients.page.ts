@@ -10,7 +10,7 @@ import { ScreenSizeService } from '../services/screen-size/screen-size.service';
 import { PopoverController } from '@ionic/angular';
 import { InPatientData } from '../models/in-patient.model';
 import { Location } from '@angular/common';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+//import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { FunctionsService } from '../shared/functions/functions.service';
 import { Constants } from '../shared/constants';
 import { Messages } from '../shared/messages';
@@ -59,7 +59,7 @@ export class TabInPatientsPage {
     private location: Location,
     public functionsService: FunctionsService,
     private renderer: Renderer2,
-    protected $gaService: GoogleAnalyticsService,
+
     public constants: Constants,
     public messages: Messages,
     public nav: NavController
@@ -98,7 +98,6 @@ export class TabInPatientsPage {
     ////console.log('ngOnInit');
 
     this.checkAppearance();
-    this.$gaService.pageView('/In-Patient', 'In-Patient Tab');
   }
   dateToday;
   dateNow;
@@ -343,7 +342,6 @@ export class TabInPatientsPage {
     this.inpatientModelInpatients.drCode = this.dr_code;
     this.inpatientModelInpatients.mode = Consta.mode;
     let dr_name = this.logindata.lastName;
-    this.$gaService.event('In-Patient', 'User Flow', dr_name);
 
     let x: boolean = true;
     /*

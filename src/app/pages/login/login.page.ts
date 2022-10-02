@@ -23,7 +23,7 @@ import {
 } from '../../models/doctor';
 
 import { FunctionsService } from '../../shared/functions/functions.service'; //"@ionic/angular";
-//import { GoogleAnalyticsService } from 'ngx-google-analytics';
+////import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Constants } from '../../shared/constants';
 
 import {
@@ -76,7 +76,7 @@ export class LoginPage {
     private toast: ToastService,
     private doctorService: DoctorService,
     public functionsService: FunctionsService,
-    //protected $gaService: GoogleAnalyticsService,
+    ////protected $gaService: GoogleAnalyticsService,
     public constants: Constants,
     private gestureCtrl: GestureController,
     private element: ElementRef,
