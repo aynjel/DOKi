@@ -186,16 +186,15 @@ export class ProgressnotesHistoryComponent implements OnInit {
           (error) => {},
           () => {
             this._hubConnection
-              .invoke(
-                'BroadCastToResiGroup',
-                // this.progressNotesComment.pn_trans_no.toString()
-                this.progressNotesComment
-              )
+              .invoke('BroadCastToResiGroup', this.progressNotesComment)
               .then((res) => {
                 console.log('after sendinng');
                 this.progressNotesComment.msg = '';
               })
-              .catch((err) => console.error(err));
+              .catch((err) => {
+                console.error(err);
+                this.progressNotesComment.msg = '';
+              });
           }
         );
     }
@@ -226,7 +225,6 @@ export class ProgressnotesHistoryComponent implements OnInit {
       .withUrl('https://signalrhub.chonghua.com.ph/broadcasthub', {
         transport: signalR.HttpTransportType.LongPolling,
       })
-
       .build();
     this._hubConnection
       .start()
