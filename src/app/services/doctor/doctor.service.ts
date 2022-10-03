@@ -408,7 +408,8 @@ export class DoctorService {
       'Content-Type': 'application/json;',
     });
     const options = { headers: headers, withCredentials: true };
-    const url = environment.apiResident + 'api/ProgressNotes/Logs/PerTransNo';
+    const url =
+      environment.apiRouterUrlTest + '/gw/resi/ProgressNotes/Logs/PerTransNo';
     return this.http.post(url, data, options);
   }
   addComment(data) {

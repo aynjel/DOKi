@@ -57,19 +57,19 @@ export class ProgressNotesPage implements OnInit {
   patientDetailfromApi_to;
   patientDetailfromApi_from;
   ngOnInit() {
-    console.log('ngOnInit');
+    //console.log('ngOnInit');
 
     this.ngUnsubscribe = new Subject();
     this.patient_id = this.activatedRoute.snapshot.params.id;
     this.getProgressNote();
     this.data = JSON.parse(atob(localStorage.getItem('selectedPatient')));
-    console.log(this.data);
+    //console.log(this.data);
 
     this.dateAdmitted = this.data[0].admission_date;
     this.checkAppearance();
     this.dateAdmitted = this.data[0].admission_date;
     this.dischargeNotice = this.data[0].forDischargeDateTime;
-    ////console.log(this.data[0].philhealth_membership);
+    //////console.log(this.data[0].philhealth_membership);
     this.is_philhealth_membership = this.data[0].philhealth_membership;
     this.is_pwd = this.data[0].is_pwd;
     this.is_senior = this.data[0].is_senior;
@@ -104,13 +104,13 @@ export class ProgressNotesPage implements OnInit {
       .getPatientProgressNotesPerAdmission(perAdmission)
       .subscribe(
         (res: any) => {
-          console.log(res);
+          //console.log(res);
 
           this.progessNotesTemp = res;
         },
         (error) => {},
         () => {
-          ////console.log(this.progessNotesTemp);
+          //////console.log(this.progessNotesTemp);
 
           this.activeDays = [];
           this.progessNotesTemp.forEach((el) => {
@@ -151,7 +151,7 @@ export class ProgressNotesPage implements OnInit {
             }*/
             this.progessNotes.push(el);
           });
-          ////console.log(this.progessNotes);
+          //////console.log(this.progessNotes);
 
           if (this.progessNotes.length <= 0) {
             this.progressNotesIsEmpty = true;
@@ -191,7 +191,7 @@ export class ProgressNotesPage implements OnInit {
       componentProps: { data: data, day: day },
     });
     modal.onDidDismiss().then((data) => {
-      console.log(data);
+      //console.log(data);
     });
     return await modal.present();*/
     const options = {
@@ -214,7 +214,7 @@ export class ProgressNotesPage implements OnInit {
 
   gotoPerday(date, dayselected) {
     localStorage.setItem('dayselected', dayselected);
-    console.log(dayselected);
+    //console.log(dayselected);
     let day = this.functionService.convertDatedash(date);
     this.router.navigate([
       '/menu/in-patients/' + this.patient_id + '/progressnotes/' + day,
