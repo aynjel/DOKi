@@ -415,7 +415,8 @@ export class DoctorService {
   addComment(data) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers: headers, withCredentials: true };
-    const url = environment.apiResident + 'api/ProgressNotesComment/Insert';
+    const url =
+      environment.apiRouterUrlTest + '/gw/resi/ProgressNotesComment/Insert';
     return this.http.post(url, data, options);
   }
 
