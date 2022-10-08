@@ -224,14 +224,21 @@ export class InPatientDetailPage {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
+          console.log('res.manage_to', res.manage_to);
+
           localStorage.setItem('doctor_Status_code', res.doctor_Status_code);
           this.admission_status = res.admission_status;
           this.patientDetailfromApi_from = this.functionService.cdateampm(
             res.manage_from
           );
-          this.patientDetailfromApi_to = this.functionService.cdateampm(
-            res.manage_to
-          );
+          if (res.manage_to == null) {
+            this.patientDetailfromApi_to = '';
+          } else {
+            this.patientDetailfromApi_to = this.functionService.cdateampm(
+              res.manage_to
+            );
+          }
+
           localStorage.setItem('admission_status', btoa(this.admission_status));
           localStorage.setItem(
             'Api_from',
