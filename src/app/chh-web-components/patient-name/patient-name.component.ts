@@ -15,6 +15,7 @@ export class PatientNameComponent implements OnInit {
   @Input() wholeJson: any;
   @Input() age: any;
   @Input() birthday: any;
+  @Input() room_no;
   moreOrLess: boolean = false;
   constructor(private functionService: FunctionsService) {}
   date;
