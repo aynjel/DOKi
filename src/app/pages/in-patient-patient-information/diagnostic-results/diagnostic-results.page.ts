@@ -47,7 +47,7 @@ export class DiagnosticResultsPage implements OnInit {
   }
   doRefresh(event) {
     setTimeout(() => {
-      this.ngOnInit;
+      this.ngOnInit();
       event.target.complete();
     }, 1000);
   }

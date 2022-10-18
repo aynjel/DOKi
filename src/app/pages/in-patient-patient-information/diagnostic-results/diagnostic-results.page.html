@@ -38,7 +38,8 @@
                 [dischargeNotice]="dischargeNotice" [forMoreOrLess]="false" [is_pwd]="is_pwd" [is_senior]="is_senior"
                 [is_philhealth_membership]="is_philhealth_membership"
                 [patientDetailfromApi_from]="patientDetailfromApi_from"
-                [patientDetailfromApi_to]="patientDetailfromApi_to" [admission_status]="admission_status">
+                [patientDetailfromApi_to]="patientDetailfromApi_to" [admission_status]="admission_status"
+                *ngIf="isDesktop">
               </app-chh-app-patient-header>
               <ion-list>
                 <ion-item class="pointHand" [ngClass]="{'my_class': selected === 'laboratory-by-account-no'}"
