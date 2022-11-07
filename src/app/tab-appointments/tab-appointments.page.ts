@@ -14,7 +14,7 @@ import { FunctionsService } from '../shared/functions/functions.service';
 import { ToastService } from '../services/toast/toast.service';
 import { LoadingController } from '@ionic/angular';
 import { LoginData } from '../models/login-data.model';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+//import { GoogleAnalyticsService } from 'ngx-google-analytics';
 
 import {
   AfterViewInit,
@@ -76,7 +76,7 @@ export class TabAppointmentsPage {
     public functionsService: FunctionsService,
     private toast: ToastService,
     public loadingController: LoadingController,
-    protected $gaService: GoogleAnalyticsService,
+
     private gestureCtrl: GestureController,
     private element: ElementRef,
     private renderer: Renderer2,
@@ -376,7 +376,6 @@ export class TabAppointmentsPage {
   }
 
   ngOnInit() {
-    this.$gaService.pageView('/Appointments', 'Appointments Tab');
     //this.selectedDate = this.yyyymmdd();
     //this.selectedLocation = "C";
     //this.getDate(this.selectedDate,this.selectedLocation);
@@ -390,7 +389,7 @@ export class TabAppointmentsPage {
     let dr_name = this.logindata.lastName;
     console.log('ionViewWillEnter');
     console.log(this.logindata);
-    this.$gaService.event('Appointments', 'User Flow', dr_name);
+
     if (this.selectedDate == null) {
       this.selectedDate = this.functionsService.getSystemDate();
       this.selectedLocation = this.constants.CHH_SITE__CODE__CEBU; /*"C"*/

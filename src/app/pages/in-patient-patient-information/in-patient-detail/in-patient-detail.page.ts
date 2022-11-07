@@ -10,7 +10,7 @@ import {
 import { ChhAppFeePage } from '../../../chh-web-components/chh-app-fee/chh-app-fee.page';
 import { PopoverController } from '@ionic/angular';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+//import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 import { FunctionsService } from '../../../shared/functions/functions.service';
@@ -142,7 +142,7 @@ export class InPatientDetailPage {
     public popover: PopoverController,
     private doctorService: DoctorService,
     public alertController: AlertController,
-    protected $gaService: GoogleAnalyticsService,
+
     private authService: AuthService,
     public functionsService: FunctionsService,
     private patientService: PatientService,
@@ -224,14 +224,21 @@ export class InPatientDetailPage {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
+          console.log('res.manage_to', res.manage_to);
+
           localStorage.setItem('doctor_Status_code', res.doctor_Status_code);
           this.admission_status = res.admission_status;
           this.patientDetailfromApi_from = this.functionService.cdateampm(
             res.manage_from
           );
-          this.patientDetailfromApi_to = this.functionService.cdateampm(
-            res.manage_to
-          );
+          if (res.manage_to == null) {
+            this.patientDetailfromApi_to = '';
+          } else {
+            this.patientDetailfromApi_to = this.functionService.cdateampm(
+              res.manage_to
+            );
+          }
+
           localStorage.setItem('admission_status', btoa(this.admission_status));
           localStorage.setItem(
             'Api_from',
@@ -340,11 +347,6 @@ export class InPatientDetailPage {
     this.dateAdmitted = this.data[0].admission_date;
     this.dischargeNotice = this.data[0].forDischargeDateTime;
 
-    this.$gaService.pageView(
-      '/In-Patient/Patient Details',
-      'Patient Details Modal'
-    );
-    this.$gaService.event('Patient Information', 'User Flow', this.dr_name);
     this.patient_no = this.data[0].patient_no;
     //this.getExamList(this.data[0].patient_no);
     //populate empty feild

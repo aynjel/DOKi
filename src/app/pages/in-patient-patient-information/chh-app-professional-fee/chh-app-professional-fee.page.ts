@@ -19,7 +19,7 @@ import { from } from 'rxjs';
 import { PopoverController } from '@ionic/angular';
 import { timeStamp } from 'console';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+//import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { LoginData } from '../../../models/login-data.model';
 import { FunctionsService } from '../../../shared/functions/functions.service';
@@ -112,7 +112,7 @@ export class ChhAppProfessionalFeePage implements OnInit {
     public popover: PopoverController,
     private doctorService: DoctorService,
     public alertController: AlertController,
-    protected $gaService: GoogleAnalyticsService,
+    //protected $gaService: GoogleAnalyticsService,
     private authService: AuthService,
     public functionsService: FunctionsService,
     private patientService: PatientService,

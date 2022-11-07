@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, NgZone, OnInit, Renderer2, ViewChild } from '@angular/core';
 import {
   ActionSheetController,
   IonModal,
@@ -45,7 +45,8 @@ export class InboxPage implements OnInit {
     public constants: Constants,
     public toastController: ToastController,
     public functionService: FunctionsService,
-    private authService: AuthService
+    private authService: AuthService,
+    private ngZone: NgZone
   ) {
     ////console.log('constructor');
     this.isNotification = true;
@@ -97,11 +98,8 @@ export class InboxPage implements OnInit {
     }
   }
   modeSelected: string = 'for Approval';
-  changeMode(e) {
-    //console.log(e);
-
-    this.selected = e;
-    localStorage.setItem('changeMode', e);
+  changeMode() {
+    localStorage.setItem('changeMode', this.selected);
     if (this.selected == 'FA' || this.selected == 'RA') {
       this.modeSelected = 'for Approval';
     } else if (this.selected == 'FR') {
@@ -110,14 +108,22 @@ export class InboxPage implements OnInit {
       this.modeSelected = 'Approved';
     }
     if (this.selected == 'FR' || this.selected == 'DA') {
-      this.pendingApproval = this.pendingApprovalFullList.filter(
-        (element) => element.approval_status == e
-      );
+      this.ngZone.run(() => {
+        this.pendingApproval = [];
+        this.pendingApproval = this.pendingApprovalFullList.filter(
+          (element) => element.approval_status == this.selected
+        );
+      });
+      console.log(this.pendingApproval);
     } else {
-      this.pendingApproval = this.pendingApprovalFullList.filter(
-        (element) =>
-          element.approval_status == 'RA' || element.approval_status == 'FA'
-      );
+      this.ngZone.run(() => {
+        this.pendingApproval = [];
+        this.pendingApproval = this.pendingApprovalFullList.filter(
+          (element) =>
+            element.approval_status == 'RA' || element.approval_status == 'FA'
+        );
+      });
+      console.log(this.pendingApproval);
     }
   }
   /*segmentChanged(e) {
@@ -177,7 +183,7 @@ export class InboxPage implements OnInit {
           });
           this.pendingApprovalFullList = testPending;
 
-          this.changeMode(this.selected);
+          this.changeMode();
         }
       );
   }

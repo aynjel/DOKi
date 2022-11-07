@@ -20,7 +20,7 @@ import {
   HubConnectionBuilder,
   LogLevel,
 } from '@microsoft/signalr';
-
+import * as signalR from '@microsoft/signalr';
 import { HttpClient } from '@angular/common/http';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -79,19 +79,19 @@ export class ProgressnotesHistoryComponent implements OnInit {
       unescape(atob(localStorage.getItem('_cap_userDataKey')))
     );
     this.logindata = x;
-    console.log(this.logindata);
+    //console.log(this.logindata);
 
     this.progressNotesComment.pn_trans_no = this.dataJson.trans_no;
     this.progressNotesComment.user_created = this.logindata.doctorCode;
 
     this.progressNotesComment.username =
       this.logindata.lastName + ', ' + this.logindata.firstName;
-    ////console.log(this.progressNotesComment);
+    //////console.log(this.progressNotesComment);
     this.day = this.functionService.convertDatetoMMDDYYYY(
       this.dataJson.event_date
     );
     this.getProgressNotesHistory();
-    console.log(this.logindata);
+    //console.log(this.logindata);
 
     this.readComment.resi_code = this.logindata.doctorCode;
     this.readComment.trans_no = this.dataJson.trans_no;
@@ -110,14 +110,14 @@ export class ProgressnotesHistoryComponent implements OnInit {
     request.trans_no = this.dataJson.trans_no;
     this.progessNotes = [];
     this.progessNotes1 = [];
-    ////console.log(request);
+    //////console.log(request);
 
     this.doctorService
       .getPatientProgressNotesHistory(request)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          //console.log(res);
+          ////console.log(res);
           if (res.length > 0) {
             this.isEmpty = false;
             this.progessNotesTemp = res;
@@ -145,7 +145,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
               counter++;
               this.progessNotes1.push(el);
             });
-            ////////console.log(this.progessNotes);
+            //////////console.log(this.progessNotes);
           } else {
             this.isEmpty = true;
           }
@@ -159,7 +159,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
   }
   upto = 0;
   processJson(x) {
-    ////console.log(this.progessNotes.length);
+    //////console.log(this.progessNotes.length);
     this.upto += x;
     let i = 0;
     this.progessNotes = [];
@@ -176,7 +176,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
   sendComment() {
     if (this.progressNotesComment.msg != '') {
       this.progressNotesComment.msg;
-      console.log(this.progressNotesComment);
+      //console.log(this.progressNotesComment);
 
       this.doctorService
         .addComment(this.progressNotesComment)
@@ -185,8 +185,16 @@ export class ProgressnotesHistoryComponent implements OnInit {
           (res: any) => {},
           (error) => {},
           () => {
-            this.progressNotesComment.msg = '';
-            //this.getProgressNotesHistory();
+            this._hubConnection
+              .invoke('BroadCastToResiGroup', this.progressNotesComment)
+              .then((res) => {
+                console.log('after sendinng');
+                this.progressNotesComment.msg = '';
+              })
+              .catch((err) => {
+                console.error(err);
+                this.progressNotesComment.msg = '';
+              });
           }
         );
     }
@@ -213,27 +221,39 @@ export class ProgressnotesHistoryComponent implements OnInit {
   }
 
   private connect(): void {
-    this._hubConnection = new HubConnectionBuilder()
-      .withUrl(environment.apiResident + 'chat')
+    this._hubConnection = new signalR.HubConnectionBuilder()
+      .withUrl('https://signalrhub.chonghua.com.ph/broadcasthub', {
+        transport: signalR.HttpTransportType.LongPolling,
+      })
       .build();
+    this._hubConnection
+      .start()
+      .then(() => {
+        console.log('connection started');
+        this._hubConnection
+          .invoke('AddToResiGroup', this.dataJson.trans_no.toString())
+          .then((res) => {
+            console.log('connection started : 2');
+          })
+          .catch((err) => console.error(err));
+      })
+      .catch((err) =>
+        console.log('error while establishing signalr connection: ' + err)
+      );
 
     this._hubConnection.on('broadcasttoresigroup', (message: any) => {
-      //console.log(message);
-      this.readComment.resi_code = this.logindata.doctorCode;
-      this.readComment.trans_no = this.dataJson.trans_no;
-      this.read(this.readComment);
+      console.log('dawat 3');
+
       let txtMessage = '[' + JSON.stringify(message) + ']';
       let jsonMessage = JSON.parse(txtMessage);
       let counter = jsonMessage.length;
       jsonMessage.forEach((el) => {
-        //console.log('foreach');
         if (el.account_no == ' ') {
           el.type = 'comment';
         } else {
           el.type = 'progressnotes';
         }
         this.summary.pnotes_trans_no = el.trans_no;
-
         el.dateCreateConverted = this.functionService.convertDatetoMMDDYYYY(
           el.date_created
         );
@@ -248,35 +268,16 @@ export class ProgressnotesHistoryComponent implements OnInit {
         );
         el.counter = counter;
         counter++;
-        //console.log('push to json');
         this.ngZone.run(() => {
           this.progessNotes.push(el);
-          this.ScrollToBottom();
         });
+        this.ScrollToBottom();
       });
-      //console.log('scroll down');
       this.ScrollToBottom();
     });
-
-    this._hubConnection
-      .start()
-      .then(() => {
-        //console.log(this.dataJson.trans_no);
-
-        //console.log('connection started');
-        this._hubConnection
-          .invoke('AddToResiGroup', this.dataJson.trans_no.toString())
-          .then((res) => {
-            //console.log(res);
-          })
-          .catch((err) => console.error(err));
-      })
-      .catch((err) =>
-        console.log('error while establishing signalr connection: ' + err)
-      );
   }
   ngOnDestroy() {
-    ////console.log('ngOnDestroy');
+    //////console.log('ngOnDestroy');
 
     this._hubConnection.stop();
   }
@@ -294,10 +295,10 @@ export class ProgressnotesHistoryComponent implements OnInit {
     this.ngUnsubscribe.complete();
   }
   read(data) {
-    console.log(data);
+    //console.log(data);
 
     this.residentService.readCommentFlag(data).subscribe((res) => {
-      console.log(res);
+      //console.log(res);
     });
   }
 }

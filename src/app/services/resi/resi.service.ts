@@ -19,7 +19,8 @@ export class ResiService {
       'Content-Type': 'application/json;',
     });
     const options = { headers: headers, withCredentials: true };
-    const url = environment.apiResident + 'api/ProgressNotes/PerAdmission';
+    const url =
+      environment.apiRouterUrlTest + '/gw/resi/ProgressNotes/PerAdmission';
     return this.http.post(url, data, options);
   }
   getPatientProgressNotesPerDay(data) {
@@ -27,7 +28,7 @@ export class ResiService {
       'Content-Type': 'application/json;',
     });
     const options = { headers: headers, withCredentials: true };
-    const url = environment.apiResident + 'api/ProgressNotes/PerDay';
+    const url = environment.apiRouterUrlTest + '/gw/resi/ProgressNotes/PerDay';
     return this.http.post(url, data, options);
   }
   getNewCommentFlag(data) {
@@ -36,14 +37,16 @@ export class ResiService {
     });
     const options = { headers: headers, withCredentials: true };
     const url =
-      environment.apiResident + 'api/ProgressNotesComment/NewCommentFlg';
+      environment.apiRouterUrlTest +
+      '/gw/resi/ProgressNotesComment/NewCommentFlg';
     return this.http.post(url, data, options);
   }
   readCommentFlag(data) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers: headers, withCredentials: false };
     const url =
-      environment.apiResident + 'api/ProgressNotesComment/ReadCommentFlg';
+      environment.apiRouterUrlTest +
+      '/gw/resi/ProgressNotesComment/ReadCommentFlg';
     return this.http.put(url, data, options);
   }
   approveProgressNote(data) {
@@ -51,13 +54,14 @@ export class ResiService {
       'Content-Type': 'application/json;',
     });
     const options = { headers: headers, withCredentials: true };
-    const url = environment.apiResident + 'api/ProgressNotesApproval/insert';
+    const url =
+      environment.apiRouterUrlTest + '/gw/resi/ProgressNotesApproval/insert';
     return this.http.post(url, data, options);
   }
   getProgressNoteSummary(data) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers: headers, withCredentials: true };
-    const url = environment.apiResident + 'api/ProgressNotesSummary';
+    const url = environment.apiRouterUrlTest + '/gw/resi/ProgressNotesSummary';
     return this.http.post(url, data, options);
   }
 }

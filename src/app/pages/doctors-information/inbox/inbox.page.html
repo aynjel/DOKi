@@ -56,19 +56,16 @@
             </ng-template>
           </ion-modal-->
           <ion-item>
-            <ion-segment [(ngModel)]="selected">
-              <ion-segment-button value="FA" (click)="changeMode('FA')" [ngClass]="{'boldMe': selected === 'FA'}"
-                class="pointer">
+            <ion-segment [(ngModel)]="selected" (ionChange)="changeMode()">
+              <ion-segment-button value="FA" [ngClass]="{'boldMe': selected === 'FA'}" class="pointer">
                 <ion-label>for Approval<sup *ngIf="pendingApprovalCount >= 1">
                     ({{pendingApprovalCount}})
                   </sup></ion-label>
               </ion-segment-button>
-              <ion-segment-button value="FR" (click)="changeMode('FR')" [ngClass]="{'boldMe': selected === 'FR'}"
-                class="pointer">
+              <ion-segment-button value="FR" [ngClass]="{'boldMe': selected === 'FR'}" class="pointer">
                 <ion-label>for Revision</ion-label>
               </ion-segment-button>
-              <ion-segment-button value="DA" (click)="changeMode('DA')" [ngClass]="{'boldMe': selected === 'DA'}"
-                class="pointer">
+              <ion-segment-button value="DA" [ngClass]="{'boldMe': selected === 'DA'}" class="pointer">
                 <ion-label>Approved</ion-label>
               </ion-segment-button>
             </ion-segment>
