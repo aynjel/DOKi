@@ -65,6 +65,9 @@ import { ApprovePopOverComponent } from './approve-pop-over/approve-pop-over.com
 import { ViewCommentsPopOverComponent } from './view-comments-pop-over/view-comments-pop-over.component';
 import { ChatNewMessageComponent } from './chat-new-message/chat-new-message.component';
 import { ShowHideComponent } from './show-hide/show-hide.component';
+import { Loading1Component } from './loading1/loading1.component';
+import { ExamResultsModalComponent } from './exam-results-modal/exam-results-modal.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -115,6 +118,8 @@ import { ShowHideComponent } from './show-hide/show-hide.component';
     ViewCommentsPopOverComponent,
     ChatNewMessageComponent,
     ShowHideComponent,
+    Loading1Component,
+    ExamResultsModalComponent,
   ],
   exports: [
     ChhAppLogoComponent,
@@ -164,6 +169,8 @@ import { ShowHideComponent } from './show-hide/show-hide.component';
     ViewCommentsPopOverComponent,
     ChatNewMessageComponent,
     ShowHideComponent,
+    Loading1Component,
+    ExamResultsModalComponent,
   ],
   imports: [
     CommonModule,
@@ -172,6 +179,7 @@ import { ShowHideComponent } from './show-hide/show-hide.component';
     RouterModule,
     FormsModule,
     PinchZoomModule,
+    PdfViewerModule,
   ],
 })
 export class ChhWebComponentsModule {}

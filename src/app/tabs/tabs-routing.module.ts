@@ -62,7 +62,20 @@ const routes: Routes = [
             (m) => m.TabNewsFeedPageModule
           ),
       },
-
+      {
+        path: 'in-patients/:id/progressnotes',
+        loadChildren: () =>
+          import(
+            '../pages/in-patient-patient-information/progress-notes/progress-notes.module'
+          ).then((m) => m.ProgressNotesPageModule),
+      },
+      {
+        path: 'in-patients/:id/diagnostic-results',
+        loadChildren: () =>
+          import(
+            '../pages/in-patient-patient-information/diagnostic-results/diagnostic-results.module'
+          ).then((m) => m.DiagnosticResultsPageModule),
+      },
       {
         path: 'inbox',
         loadChildren: () =>
