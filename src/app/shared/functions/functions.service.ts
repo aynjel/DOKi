@@ -555,4 +555,22 @@ export class FunctionsService {
 
     return xtoday + ' ' + strTime;
   }
+  getMmDdYyyy(date: any = '') {
+    let dateReturn;
+    if (date == '') {
+      let dateCreate = new Date();
+      let dd = String(dateCreate.getDate()).padStart(2, '0');
+      let mm = String(dateCreate.getMonth() + 1).padStart(2, '0'); //January is 0!
+      let yyyy = dateCreate.getFullYear();
+      let xtoday = mm + '/' + dd + '/' + yyyy;
+      return xtoday;
+    } else {
+      let dateCreate = new Date(date);
+      let dd = String(dateCreate.getDate()).padStart(2, '0');
+      let mm = String(dateCreate.getMonth() + 1).padStart(2, '0'); //January is 0!
+      let yyyy = dateCreate.getFullYear();
+      let xtoday = mm + '/' + dd + '/' + yyyy;
+      return xtoday;
+    }
+  }
 }

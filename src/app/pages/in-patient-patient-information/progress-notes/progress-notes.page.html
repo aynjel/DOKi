@@ -9,7 +9,11 @@
   <ion-grid class="ion-no-padding">
     <ion-row class="custom-padding">
       <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
-        <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [forMoreOrLess]="false">
+
+        <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [dischargeNotice]="dischargeNotice"
+          [forMoreOrLess]="false" [is_pwd]="is_pwd" [is_senior]="is_senior"
+          [is_philhealth_membership]="is_philhealth_membership" [patientDetailfromApi_from]="patientDetailfromApi_from"
+          [patientDetailfromApi_to]="patientDetailfromApi_to" [admission_status]="admission_status">
         </app-chh-app-patient-header>
       </ion-col>
     </ion-row>
@@ -32,15 +36,19 @@
             <ion-card class="pointer" (click)="gotoPerday(x.event_date,x.day)" *ngIf="!progressNotesIsNotReady">
               <ion-item>
                 Day #<b>{{x.day}} | {{x.dateCreateConverted}}</b>
+
+                <span *ngIf="x.date_approved != null">&nbsp;|&nbsp;</span>
+                <ion-badge *ngIf="x.date_approved != null" style="font-size:10px">{{x.date_approved}}</ion-badge>
               </ion-item>
               <ion-card-content>
                 <ion-grid class="ion-no-padding ion-no-margin">
                   <ion-row>
-                    <ion-col size-md="2" size-xs="4" *ngFor="let y of x.resi_notes">
-                      <p class="fontSize-12">{{y.resi_code}} <ion-icon name="checkmark-circle-outline"
-                          class="icon-center" style="padding-bottom:2px" *ngIf="y.number_of_notes >= 1">
+                    <ion-col size-md="2" size-xs="6" *ngFor="let y of x.resi_notes">
+                      <ion-text class="fontSize-12" [color]="checkNumberofNotes(y.number_of_notes)">{{y.resi_name}}
+                        <ion-icon name="checkmark-circle-outline" class="icon-center" style="padding-bottom:2px"
+                          *ngIf="y.number_of_notes >= 1">
                         </ion-icon>
-                      </p>
+                      </ion-text>
                     </ion-col>
                   </ion-row>
                 </ion-grid>

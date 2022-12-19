@@ -688,6 +688,15 @@
       "purpose": "maskable any"
     }
   ],
+      "capture_links": "existing_client_event",
+    "url_handlers" : [
+        {
+            "origin": "http://10.151.12.120:7223/"
+        },
+        {
+            "origin": "doki.chonghua.com.ph"
+        }
+    ],
   "screenshots": [
     {
       "src": "assets/screenshots/dashboard-screenshot.png",

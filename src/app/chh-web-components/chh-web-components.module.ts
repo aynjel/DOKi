@@ -64,6 +64,10 @@ import { SoapShowHideComponent } from './soap-show-hide/soap-show-hide.component
 import { ApprovePopOverComponent } from './approve-pop-over/approve-pop-over.component';
 import { ViewCommentsPopOverComponent } from './view-comments-pop-over/view-comments-pop-over.component';
 import { ChatNewMessageComponent } from './chat-new-message/chat-new-message.component';
+import { ShowHideComponent } from './show-hide/show-hide.component';
+import { Loading1Component } from './loading1/loading1.component';
+import { ExamResultsModalComponent } from './exam-results-modal/exam-results-modal.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -113,6 +117,9 @@ import { ChatNewMessageComponent } from './chat-new-message/chat-new-message.com
     ApprovePopOverComponent,
     ViewCommentsPopOverComponent,
     ChatNewMessageComponent,
+    ShowHideComponent,
+    Loading1Component,
+    ExamResultsModalComponent,
   ],
   exports: [
     ChhAppLogoComponent,
@@ -161,6 +168,9 @@ import { ChatNewMessageComponent } from './chat-new-message/chat-new-message.com
     ApprovePopOverComponent,
     ViewCommentsPopOverComponent,
     ChatNewMessageComponent,
+    ShowHideComponent,
+    Loading1Component,
+    ExamResultsModalComponent,
   ],
   imports: [
     CommonModule,
@@ -169,6 +179,7 @@ import { ChatNewMessageComponent } from './chat-new-message/chat-new-message.com
     RouterModule,
     FormsModule,
     PinchZoomModule,
+    PdfViewerModule,
   ],
 })
 export class ChhWebComponentsModule {}

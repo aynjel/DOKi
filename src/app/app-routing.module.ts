@@ -28,15 +28,10 @@ const routes: Routes = [
         './pages/in-patient-patient-information/in-patient-detail/in-patient-detail.module'
       ).then((m) => m.InpatientDetailPageModule),
   },
-  {
-    path: 'menu/in-patients/:id/progressnotes',
-    loadChildren: () =>
-      import(
-        './pages/in-patient-patient-information/progress-notes/progress-notes.module'
-      ).then((m) => m.ProgressNotesPageModule),
-  },
+
   {
     path: 'menu/in-patients/:id/progressnotes/:perday',
+    canActivate: [HomeGuard],
     loadChildren: () =>
       import(
         './pages/in-patient-patient-information/progress-notes-per-day/progress-notes-per-day.module'
@@ -44,6 +39,7 @@ const routes: Routes = [
   },
   {
     path: 'menu/in-patients/:admissionNo/view/:dischargeNo',
+    canActivate: [HomeGuard],
     loadChildren: () =>
       import(
         './pages/doctors-information/view-medcert/view-medcert.module'

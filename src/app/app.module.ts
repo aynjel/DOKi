@@ -35,10 +35,6 @@ import { ChhAppTestSerologyComponent } from './chh-web-components/chh-app-test/c
 
 //defineCustomElements(window);
 
-import {
-  NgxGoogleAnalyticsModule,
-  NgxGoogleAnalyticsRouterModule,
-} from 'ngx-google-analytics';
 import { Constants } from '../app/shared/constants';
 import { Variables } from '../app/shared/variables';
 import { Messages } from '../app/shared/messages';
@@ -69,8 +65,7 @@ import { ChhAppTextAvatarModule } from './chh-web-components/chh-app-text-avatar
     ChhAppTermsAndConditionsPageModule,
     ChhAppChangePasswordPageModule,
     ChhAppChangePassPageModule,
-    NgxGoogleAnalyticsModule.forRoot('UA-175566562-1'),
-    NgxGoogleAnalyticsRouterModule,
+
     ChhAppTextAvatarModule,
     //LottieAnimationViewModule,
     //SliderPageModule,

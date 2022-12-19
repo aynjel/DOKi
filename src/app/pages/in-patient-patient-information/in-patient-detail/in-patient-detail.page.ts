@@ -10,7 +10,7 @@ import {
 import { ChhAppFeePage } from '../../../chh-web-components/chh-app-fee/chh-app-fee.page';
 import { PopoverController } from '@ionic/angular';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+//import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 import { FunctionsService } from '../../../shared/functions/functions.service';
@@ -142,7 +142,7 @@ export class InPatientDetailPage {
     public popover: PopoverController,
     private doctorService: DoctorService,
     public alertController: AlertController,
-    protected $gaService: GoogleAnalyticsService,
+
     private authService: AuthService,
     public functionsService: FunctionsService,
     private patientService: PatientService,
@@ -176,7 +176,7 @@ export class InPatientDetailPage {
   patientDetailfromApi_to;
   admission_status;
   ionViewWillEnter() {
-    console.log('ionViewWillEnter');
+    //console.log('ionViewWillEnter');
 
     this.ngUnsubscribe = new Subject();
     this.loginResponseModelv3 = new LoginResponseModelv3();
@@ -217,20 +217,28 @@ export class InPatientDetailPage {
     ppatientdata.doctorCode = this.dr_code;
     this.data = [];
     this.presentLoading();
-    //console.log('123');
+    ////console.log('123');
 
     this.executiveService
       .getPatientDetail(ppatientdata)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
+          //console.log('res.manage_to', res.manage_to);
+
+          localStorage.setItem('doctor_Status_code', res.doctor_Status_code);
           this.admission_status = res.admission_status;
           this.patientDetailfromApi_from = this.functionService.cdateampm(
             res.manage_from
           );
-          this.patientDetailfromApi_to = this.functionService.cdateampm(
-            res.manage_to
-          );
+          if (res.manage_to == null) {
+            this.patientDetailfromApi_to = '';
+          } else {
+            this.patientDetailfromApi_to = this.functionService.cdateampm(
+              res.manage_to
+            );
+          }
+
           localStorage.setItem('admission_status', btoa(this.admission_status));
           localStorage.setItem(
             'Api_from',
@@ -286,12 +294,12 @@ export class InPatientDetailPage {
           } else {
             this.alert('No Data Available', 'Okay');
           }
-          ////console.log(this.data1);
-          ////console.log(this.data[0].philhealth_membership);
+          //////console.log(this.data1);
+          //////console.log(this.data[0].philhealth_membership);
           this.is_philhealth_membership = this.data[0].philhealth_membership;
           this.is_pwd = this.data1[0].is_pwd;
           this.is_senior = this.data1[0].is_senior;
-          ////console.log(this.is_pwd, this.is_senior);
+          //////console.log(this.is_pwd, this.is_senior);
         }
       );
   }
@@ -306,7 +314,7 @@ export class InPatientDetailPage {
     await this.loading.present();
 
     const { role, data } = await this.loading.onDidDismiss();
-    //////////////////console.log('Loading dismissed!');
+    ////////////////////console.log('Loading dismissed!');
   }
   public async dismissLoading(): Promise<void> {
     if (this.loading) {
@@ -334,16 +342,11 @@ export class InPatientDetailPage {
     this.router.navigate(['/menu/in-patients/']);
   }
   operate() {
-    //console.log('operate');
+    ////console.log('operate');
 
     this.dateAdmitted = this.data[0].admission_date;
     this.dischargeNotice = this.data[0].forDischargeDateTime;
 
-    this.$gaService.pageView(
-      '/In-Patient/Patient Details',
-      'Patient Details Modal'
-    );
-    this.$gaService.event('Patient Information', 'User Flow', this.dr_name);
     this.patient_no = this.data[0].patient_no;
     //this.getExamList(this.data[0].patient_no);
     //populate empty feild
@@ -560,7 +563,7 @@ export class InPatientDetailPage {
 
     /*this.doctorService.getProgressNotes('test').subscribe(
       (res: any = []) => {
-        //////console.log(res[0].notes);
+        ////////console.log(res[0].notes);
         this.progNot_InitDisplay = this.functionsService.truncateChar(
           res[0].notes,
           200
@@ -568,10 +571,10 @@ export class InPatientDetailPage {
         this.progNot_account_no = res[0].account_no;
       },
       (error) => {
-        //////console.log(error);
+        ////////console.log(error);
       },
       () => {
-        //////console.log('call done');
+        ////////console.log('call done');
       }
     );*/
     //this.getProgressNotes();
@@ -579,7 +582,7 @@ export class InPatientDetailPage {
   approvedDate;
 
   getApprovalStatus(data) {
-    //console.log('getApprovalStatus');
+    ////console.log('getApprovalStatus');
 
     let approvalStatus = {
       account_no: data,
@@ -590,13 +593,13 @@ export class InPatientDetailPage {
       .subscribe(
         (res: any) => {
           if (res != null) {
-            ////console.log('approvedDate', res);
+            //////console.log('approvedDate', res);
             this.admissionNo = res[0].admission_no;
             this.dischargeNo = res[0].discharge_no;
             this.finalDiagnosisApproval = res;
             this.isCancelFinalDiagnosisApproval = res[0].approval_status;
             this.approvedDate = res[0].approve_date;
-            ////console.log(this.approvedDate);
+            //////console.log(this.approvedDate);
           } else {
             this.isCancelFinalDiagnosisApproval = '';
           }
@@ -614,7 +617,7 @@ export class InPatientDetailPage {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          ////console.log(res);
+          //////console.log(res);
           this.ionViewWillEnter();
         },
         (error) => {},
@@ -630,7 +633,7 @@ export class InPatientDetailPage {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any = []) => {
-          //////console.log(res);
+          ////////console.log(res);
           this.progessNotesTemp = res;
           if (this.progessNotesTemp.length > 0) {
             this.progNot_InitDisplay = this.functionsService.truncateChar(
@@ -672,7 +675,7 @@ export class InPatientDetailPage {
             }
             this.progessNotes.push(el);
           });
-          ////////console.log(this.activeDays);
+          //////////console.log(this.activeDays);
 
           if (this.progessNotes.length <= 0) {
             this.progressNotesIsEmpty = true;
@@ -1124,7 +1127,7 @@ export class InPatientDetailPage {
   }
 
   startDrawing(event: Event) {
-    ////console.log(event);
+    //////console.log(event);
     // works in device not in browser
   }
 
@@ -1139,6 +1142,12 @@ export class InPatientDetailPage {
   savePad() {
     const base64Data = this.signaturePad.toDataURL();
     this.signatureImg = base64Data;
-    ////console.log(base64Data);
+    //////console.log(base64Data);
   }*/
+  gotoDiagnistic() {
+    let patient_id = this.activatedRoute.snapshot.params.id;
+    this.router.navigate([
+      '/menu/in-patients/' + patient_id + '/diagnostic-results/',
+    ]);
+  }
 }

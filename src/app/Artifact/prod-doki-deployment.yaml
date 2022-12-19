@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev-doki
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dev-doki
+  template:
+    metadata:
+      labels:
+        app: dev-doki
+    spec:
+      containers:
+        - name: dev-doki
+          image: chhregistry.azurecr.io/doki:#{Build.BuildId}#
+          env:
+          - name: API_URL
+            value: https://api01.chonghua.com.ph
+          ports:
+          - containerPort: 80
+          volumeMounts:
+          - name: nginx-default-conf
+            mountPath: /etc/nginx/conf.d/default.conf
+            subPath: dev-default.conf
+      volumes:
+        - name: nginx-default-conf
+          configMap:
+            defaultMode: 420
+            name: dev-doki-nginx-default-conf-configmap

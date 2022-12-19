@@ -9,7 +9,7 @@ import { LoginData } from '../models/login-data.model';
 import { ProfileExpiry } from '../models/doctor';
 
 import { BehaviorSubject } from 'rxjs';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+//import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Constants } from '../shared/constants';
 import { FunctionsService } from '../shared/functions/functions.service';
 import {
@@ -100,7 +100,7 @@ export class TabSettingsPage {
     private storageService: StorageService,
     private screensizeService: ScreenSizeService,
     private renderer: Renderer2,
-    protected $gaService: GoogleAnalyticsService,
+
     public constants: Constants,
     public functionsService: FunctionsService,
     private modalController: ModalController,
@@ -202,8 +202,8 @@ export class TabSettingsPage {
 
   ionViewWillEnter() {
     this.ngUnsubscribe = new Subject();
+    console.log('settings');
     localStorage.removeItem('selectedPatient');
-    this.$gaService.pageView('/Settings', 'Settings Tab');
 
     this.logindata = <LoginResponseModelv3>(
       this.authService.userData$.getValue()
@@ -378,7 +378,6 @@ export class TabSettingsPage {
         });
       });*/
 
-    this.$gaService.event('Settings', 'User Flow', this.dr_name);
     this.authService.userData$.subscribe((res: any) => {
       this.account = <LoginResponseModelv3>res;
       this.functionsService.logToConsole(this.account);
@@ -453,18 +452,8 @@ export class TabSettingsPage {
     this.functionsService.logToConsole('onDarkModeEnable');
     if (data == '1') {
       this.renderer.setAttribute(document.body, 'color-theme', 'dark');
-      this.$gaService.event(
-        'Settings - Dark Mode True',
-        'User Flow',
-        this.dr_name
-      );
     } else {
       this.renderer.setAttribute(document.body, 'color-theme', 'light');
-      this.$gaService.event(
-        'Settings - Dark Mode False',
-        'User Flow',
-        this.dr_name
-      );
     }
   }
   checkAppearance() {

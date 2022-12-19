@@ -13,7 +13,7 @@ import { from } from 'rxjs';
 import { PopoverController } from '@ionic/angular';
 import { timeStamp } from 'console';
 import { DoctorService } from 'src/app/services/doctor/doctor.service';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+//import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { LoginData } from '../../models/login-data.model';
 import { FunctionsService } from '../../shared/functions/functions.service';
@@ -26,7 +26,10 @@ import { ScreenSizeService } from '../../services/screen-size/screen-size.servic
 import { ChhAppTestChemistryComponent } from '../chh-app-test/chh-app-test-chemistry/chh-app-test-chemistry.component';
 import { ChhAppTestFecalysisComponent } from '../chh-app-test/chh-app-test-fecalysis/chh-app-test-fecalysis.component';
 import { ChhAppTestSerologyComponent } from '../chh-app-test/chh-app-test-serology/chh-app-test-serology.component';
-import {UserSettingsModelv3,LoginResponseModelv3} from 'src/app/models/doctor';
+import {
+  UserSettingsModelv3,
+  LoginResponseModelv3,
+} from 'src/app/models/doctor';
 @Component({
   selector: 'chh-app-in-patient-modal',
   templateUrl: './chh-app-in-patient-modal.page.html',
@@ -81,7 +84,7 @@ export class ChhAppInPatientModalPage implements OnInit {
     public popover: PopoverController,
     private doctorService: DoctorService,
     public alertController: AlertController,
-    protected $gaService: GoogleAnalyticsService,
+
     private authService: AuthService,
     public functionsService: FunctionsService,
     private patientService: PatientService,
@@ -289,14 +292,11 @@ export class ChhAppInPatientModalPage implements OnInit {
   ngOnInit() {
     let d = new Date(this.data.admission_date);
     this.dateAdmitted = d.toUTCString();
-    this.$gaService.pageView(
-      '/In-Patient/Patient Details',
-      'Patient Details Modal'
-    );
+
     let logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
     let dr_name = logindata.lastName;
     this.postData.DoctorMobileNumber = logindata.mobileNo;
-    this.$gaService.event('Patient Information', 'User Flow', dr_name);
+
     this.getExamList(this.data.patient_no);
 
     /*this.data.admission_date = this.functionsService.explodeDate(
@@ -502,7 +502,8 @@ export class ChhAppInPatientModalPage implements OnInit {
               this.remarks = data.data.remarks;
               this.postData.ProfFee = data.data.professionalFee;
               this.postData.Remarks = data.data.remarks;
-              this.postData.DateCreated = this.functionsService.getSystemDateTime();
+              this.postData.DateCreated =
+                this.functionsService.getSystemDateTime();
               this.data.doctor_prof_fee = data.data.professionalFee;
               this.modalUpdate(
                 'SUCCESS',
@@ -523,7 +524,8 @@ export class ChhAppInPatientModalPage implements OnInit {
               this.remarks = data.data.remarks;
               this.postData.ProfFee = data.data.professionalFee;
               this.postData.Remarks = data.data.remarks;
-              this.postData.DateCreated = this.functionsService.getSystemDateTime();
+              this.postData.DateCreated =
+                this.functionsService.getSystemDateTime();
               this.data.doctor_prof_fee = data.data.professionalFee;
               this.modalUpdate(
                 'SUCCESS',
@@ -552,7 +554,8 @@ export class ChhAppInPatientModalPage implements OnInit {
                 this.remarks = data.data.remarks;
                 this.postData.ProfFee = data.data.professionalFee;
                 this.postData.Remarks = data.data.remarks;
-                this.postData.DateCreated = this.functionsService.getSystemDateTime();
+                this.postData.DateCreated =
+                  this.functionsService.getSystemDateTime();
                 this.data.doctor_prof_fee = data.data.professionalFee;
                 this.modalUpdate(
                   'SUCCESS',

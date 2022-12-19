@@ -7,7 +7,7 @@ import * as HighCharts from 'highcharts';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { FunctionsService } from '../shared/functions/functions.service';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+//import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Constants } from '../shared/constants';
 import { Consta } from '../config/auth-constants';
 import { DoctorHistoryModel, RevokeTokenV3 } from '../models/doctor';
@@ -48,7 +48,7 @@ export class TabDashboardPage implements OnInit {
     private doctorService: DoctorService,
     private router: Router,
     public functionsService: FunctionsService,
-    protected $gaService: GoogleAnalyticsService,
+
     public constants: Constants,
     private renderer: Renderer2,
     private logoutService: LogoutService
@@ -184,9 +184,7 @@ export class TabDashboardPage implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.$gaService.pageView('/Dashboard', 'Dashboard Tab');
-  }
+  ngOnInit() {}
   dateToday;
   dateNow;
   checkInbox() {
@@ -227,6 +225,8 @@ export class TabDashboardPage implements OnInit {
   ionViewWillEnter() {
     this.checkInbox();
     this.ngUnsubscribe = new Subject();
+    console.log('DASHBOARD');
+
     localStorage.removeItem('selectedPatient');
     this.logindata = <LoginResponseModelv3>(
       this.authService.userData$.getValue()
@@ -240,7 +240,7 @@ export class TabDashboardPage implements OnInit {
     this.functionsService.logToConsole(this.logindata);
 
     let dr_name = this.logindata.lastName;
-    this.$gaService.event('Dashboard', 'User Flow', dr_name);
+
     let catego = [];
     let totalPatient = [];
 

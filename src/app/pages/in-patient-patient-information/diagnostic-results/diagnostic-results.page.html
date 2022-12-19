@@ -1,0 +1,132 @@
+<ion-header mode="md" class="ion-no-border">
+  <div>
+    <ion-toolbar color="mango">
+      <ion-title>
+        <ion-icon name="arrow-back-outline" (click)="back()" class="pointer icon-center"></ion-icon> Diagnostic Results
+      </ion-title>
+    </ion-toolbar>
+  </div>
+  <ion-grid class="ion-no-padding " *ngIf="!isDesktop">
+    <ion-row class="">
+      <ion-col size-md="10" offset-md="1" size-lg="4" offset-lg="4" class="ion-no-border">
+
+        <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [dischargeNotice]="dischargeNotice"
+          [forMoreOrLess]="false" [is_pwd]="is_pwd" [is_senior]="is_senior"
+          [is_philhealth_membership]="is_philhealth_membership" [patientDetailfromApi_from]="patientDetailfromApi_from"
+          [patientDetailfromApi_to]="patientDetailfromApi_to" [admission_status]="admission_status">
+        </app-chh-app-patient-header>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-header>
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+      refreshingSpinner="circles" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="10" offset-md="1" size-lg="10" offset-lg="1">
+
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" size-md="4">
+              <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted"
+                [dischargeNotice]="dischargeNotice" [forMoreOrLess]="false" [is_pwd]="is_pwd" [is_senior]="is_senior"
+                [is_philhealth_membership]="is_philhealth_membership"
+                [patientDetailfromApi_from]="patientDetailfromApi_from"
+                [patientDetailfromApi_to]="patientDetailfromApi_to" [admission_status]="admission_status"
+                *ngIf="isDesktop">
+              </app-chh-app-patient-header>
+              <ion-list>
+                <ion-item class="pointHand" [ngClass]="{'my_class': selected === 'laboratory-by-account-no'}"
+                  (click)="Search('laboratory-by-account-no')">
+                  <ion-label class="ion-text-wrap">Laboratory Results</ion-label>
+                </ion-item>
+                <ion-item class="pointHand" [ngClass]="{'my_class': selected === 'pulmonary-by-account-no'}"
+                  (click)="Search('pulmonary-by-account-no')">
+                  <ion-label class="ion-text-wrap">Pulmonary Results</ion-label>
+                </ion-item>
+                <ion-item class="pointHand" [ngClass]="{'my_class': selected === 'endoscopy-by-account-no'}"
+                  (click)="Search('endoscopy-by-account-no')">
+                  <ion-label class="ion-text-wrap">Endoscopy Results</ion-label>
+                </ion-item>
+                <ion-item class="pointHand" [ngClass]="{'my_class': selected === 'cardio-by-account-no'}"
+                  (click)="Search('cardio-by-account-no')">
+                  <ion-label class="ion-text-wrap">Cardiology Results</ion-label>
+                </ion-item>
+                <ion-item class="pointHand" [ngClass]="{'my_class': selected === 'neurophysio-by-account-no'}"
+                  (click)="Search('neurophysio-by-account-no')">
+                  <ion-label class="ion-text-wrap">Neurophysiology Results</ion-label>
+                </ion-item>
+                <ion-item class="pointHand" [ngClass]="{'my_class': selected === 'radiology-by-account-no'}"
+                  (click)="Search('radiology-by-account-no')">
+                  <ion-label class="ion-text-wrap">Special Imaging Results</ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+            <ion-col size="12" size-md="8">
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-list>
+                      <ion-item class="ion-no-padding">
+                        <ion-grid>
+                          <ion-row>
+                            <ion-col size="12"><b>Exam Description</b></ion-col>
+                            <ion-col size="5"><b>Section</b></ion-col>
+                            <ion-col size="4"><b>Exam Date</b></ion-col>
+                            <ion-col size="3"><b>Action</b></ion-col>
+                          </ion-row>
+                        </ion-grid>
+                      </ion-item>
+                    </ion-list>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-list>
+                      <loading1 *ngIf="isLoading"></loading1>
+                      <div *ngIf="!isLoading">
+                        <ion-item class="ion-no-padding" *ngFor="let x of resultList">
+                          <ion-grid>
+                            <ion-row>
+                              <ion-col size="12"><b>{{x.exam_Description}}</b></ion-col>
+                              <ion-col size="6">{{x.exam}}</ion-col>
+                              <ion-col size="4">{{x.date_exam_c}}</ion-col>
+                              <ion-col size="2"><span class="pointHand"
+                                  (click)="openModalWithComponent(x)"><b>View</b></span>
+                              </ion-col>
+                            </ion-row>
+                          </ion-grid>
+                        </ion-item>
+                      </div>
+
+                      <div *ngIf="resultList==null && !isLoading">
+                        <ion-grid>
+                          <ion-row>
+                            <ion-col size="8" offset="2">
+                              <div class="vertical-center">
+                                <div class="center">
+                                  <img src="assets/img/no-data-rafiki.png" />
+                                </div>
+                              </div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-grid>
+                      </div>
+
+                    </ion-list>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,10 @@
+<ion-label class="ion-text-wrap" *ngIf="truncating">
+  <ion-text class="custom-font" [innerHtml]="comment_small"></ion-text>
+  <ion-text color="mango" class="floatRight" (click)="process()" *ngIf="noteslength">show more</ion-text>
+</ion-label>
+
+<ion-label class="ion-text-wrap" *ngIf="!truncating">
+  <ion-text class="custom-font" [innerHtml]="comment"></ion-text>
+  <ion-text color="mango" class="floatRight" (click)="process()" *ngIf="noteslength">show less</ion-text>
+</ion-label>
+<hr />

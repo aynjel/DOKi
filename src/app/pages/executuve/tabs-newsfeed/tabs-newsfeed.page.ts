@@ -18,7 +18,7 @@ import { DoctorInfoGlobal } from '../../../shared/doctor-info-global';
 import { LoginData } from '../../../models/login-data.model';
 import { InPatientData } from '../../../models/in-patient.model';
 import { Location } from '@angular/common';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+//import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { FunctionsService } from '../../../shared/functions/functions.service';
 import { Constants } from '../../../shared/constants';
 import { Messages } from '../../../shared/messages';
