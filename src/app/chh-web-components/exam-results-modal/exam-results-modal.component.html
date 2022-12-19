@@ -1,0 +1,50 @@
+<ion-header mode="md" class="ion-no-border">
+  <ion-toolbar color="mango">
+    <span class="padding-left-10" color="chh-css-primary2" (click)="back()">
+      <ion-icon name="arrow-back-outline" class="my-icon vcenter"></ion-icon>
+    </span>
+    <span class="padding-left-30 font-weight-500 font-size-20">
+      &nbsp;&nbsp;Exam Results PDF
+    </span>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="wrapper" *ngIf="isPDFLoading">
+    <ion-grid class="square">
+      <ion-row>
+        <ion-col>
+          <ion-spinner></ion-spinner>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <pinch-zoom style="background-color: rgb(255, 255, 255)">
+    <pdf-viewer
+      [src]="pdfSrc"
+      [rotation]="0"
+      [original-size]="false"
+      [show-all]="true"
+      [fit-to-page]="false"
+      [zoom]="1"
+      [zoom-scale]="'page-width'"
+      [stick-to-page]="false"
+      [render-text]="true"
+      [external-link-target]="'blank'"
+      [autoresize]="true"
+      [show-borders]="false"
+      style="width: 100vh; height: 100vh">
+    </pdf-viewer>
+  </pinch-zoom>
+</ion-content>
+<ion-footer class="ion-no-border">
+  <ion-toolbar color="mango">
+    <ion-title>
+      <ion-icon
+        name="download-outline"
+        size="large"
+        (click)="downloadpdf()"></ion-icon>
+    </ion-title>
+  </ion-toolbar>
+</ion-footer>
