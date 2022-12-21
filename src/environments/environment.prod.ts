@@ -11,5 +11,5 @@ export const environment = {
   // apiRouterUrl: 'http://10.128.18.112:9091/api/',
   apiResident: "http://10.151.12.120:7230/",
   consoleLog: false,
-  backendBaseUrl: window["env"]["backendBaseUrl"],
+  // backendBaseUrl: window["env"]["backendBaseUrl"],
 };
