@@ -120,3 +120,5 @@ EXPOSE ${PORT_TO_EXPOSE}
 # $ docker run -d -p 8000:80 --name my-running-site iis-site
 # $ docker run -d -p 8000:80 --name docdirproto-linux docdirproto-linux:v0.1.0
 # $ docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" docdirproto-win
+# When the container starts, replace the env.js with values from environment variables
+CMD ["/bin/sh",  "-c",  "envsubst < /usr/share/nginx/html/assets/env.sample.js > /usr/share/nginx/html/assets/env.js && exec nginx -g 'daemon off;'"]
