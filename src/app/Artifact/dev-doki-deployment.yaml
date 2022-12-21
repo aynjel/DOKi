@@ -18,6 +18,8 @@ spec:
           env:
           - name: API_URL
             value: https://api01.chonghua.com.ph
+          - name: STRAPI_URL
+            value: https://strapi.chonghua.com.ph
           ports:
           - containerPort: 80
           volumeMounts:
