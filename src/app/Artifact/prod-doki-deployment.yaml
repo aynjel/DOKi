@@ -1,23 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dev-doki
+  name: prod-doki
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dev-doki
+      app: prod-doki
   template:
     metadata:
       labels:
-        app: dev-doki
+        app: prod-doki
     spec:
       containers:
-        - name: dev-doki
+        - name: prod-doki
           image: chhregistry.azurecr.io/doki:#{Build.BuildId}#
           env:
           - name: API_URL
             value: https://api01.chonghua.com.ph
+          - name: STRAPI_URL
+            value: https://strapi.chonghua.com.ph
           ports:
           - containerPort: 80
           volumeMounts:
@@ -28,4 +30,4 @@ spec:
         - name: nginx-default-conf
           configMap:
             defaultMode: 420
-            name: dev-doki-nginx-default-conf-configmap
+            name: prod-doki-nginx-default-conf-configmap
