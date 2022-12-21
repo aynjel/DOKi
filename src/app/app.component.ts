@@ -1,30 +1,31 @@
-import { Component, HostListener, OnInit, NgZone } from '@angular/core';
-import { MenuController, Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { ScreenSizeService } from './services/screen-size/screen-size.service';
-import { SwUpdate } from '@angular/service-worker';
-import { AlertController } from '@ionic/angular';
-import { FunctionsService } from './shared/functions/functions.service';
-import { Constants } from './shared/constants';
-import { Messages } from '../app/shared/messages';
-import { UserIdleService } from 'angular-user-idle';
-import { Router } from '@angular/router';
+import { Component, HostListener, OnInit, NgZone } from "@angular/core";
+import { MenuController, Platform } from "@ionic/angular";
+import { SplashScreen } from "@ionic-native/splash-screen/ngx";
+import { StatusBar } from "@ionic-native/status-bar/ngx";
+import { ScreenSizeService } from "./services/screen-size/screen-size.service";
+import { SwUpdate } from "@angular/service-worker";
+import { AlertController } from "@ionic/angular";
+import { FunctionsService } from "./shared/functions/functions.service";
+import { Constants } from "./shared/constants";
+import { Messages } from "../app/shared/messages";
+import { UserIdleService } from "angular-user-idle";
+import { Router } from "@angular/router";
 import {
   UserSettingsModelv3,
   LoginResponseModelv3,
   RevokeTokenV3,
-} from 'src/app/models/doctor';
-import { DoctorService } from './services/doctor/doctor.service';
-import { StorageService } from './services/storage/storage.service';
-import { AuthConstants, Consta } from './config/auth-constants';
-import { BehaviorSubject } from 'rxjs';
-import { LogoutService } from './services/logout/logout.service';
+} from "src/app/models/doctor";
+import { DoctorService } from "./services/doctor/doctor.service";
+import { StorageService } from "./services/storage/storage.service";
+import { AuthConstants, Consta } from "./config/auth-constants";
+import { BehaviorSubject } from "rxjs";
+import { LogoutService } from "./services/logout/logout.service";
+import { environment } from "src/environments/environment";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss'],
+  selector: "app-root",
+  templateUrl: "app.component.html",
+  styleUrls: ["app.component.scss"],
 })
 export class AppComponent implements OnInit {
   role_flag: any;
@@ -32,34 +33,34 @@ export class AppComponent implements OnInit {
   isPortrait: boolean;
   public appPages = [
     {
-      title: 'Doctors',
-      url: '/executive/doctors',
-      icon: 'git-network-outline',
-      type: 'exec',
+      title: "Doctors",
+      url: "/executive/doctors",
+      icon: "git-network-outline",
+      type: "exec",
     },
     {
-      title: 'Patients',
-      url: '/executive/allpatients',
-      icon: 'person-circle-outline',
-      type: 'exec',
+      title: "Patients",
+      url: "/executive/allpatients",
+      icon: "person-circle-outline",
+      type: "exec",
     },
     {
-      title: 'Physician Directory',
-      url: '/executive/directory',
-      icon: 'book-outline',
-      type: 'exec',
+      title: "Physician Directory",
+      url: "/executive/directory",
+      icon: "book-outline",
+      type: "exec",
     },
     {
-      title: 'Case Rates',
-      url: '/executive/caserates',
-      icon: 'file-tray-full-outline',
-      type: 'exec',
+      title: "Case Rates",
+      url: "/executive/caserates",
+      icon: "file-tray-full-outline",
+      type: "exec",
     },
     {
-      title: 'Log Out',
-      url: 'logout',
-      icon: 'log-out-outline',
-      type: 'exec',
+      title: "Log Out",
+      url: "logout",
+      icon: "log-out-outline",
+      type: "exec",
     } /*
     {
       title: 'Collectibles',
@@ -80,29 +81,29 @@ export class AppComponent implements OnInit {
       type: 'med',<ion-icon name="mail-open-outline"></ion-icon>
     },*/,
     {
-      title: 'Inbox',
-      url: 'menu/inbox',
-      icon: 'mail-open-outline',
-      type: 'medcons',
+      title: "Inbox",
+      url: "menu/inbox",
+      icon: "mail-open-outline",
+      type: "medcons",
     },
 
     {
-      title: 'Settings',
-      url: 'menu/settings',
-      icon: 'settings-outline',
-      type: 'medcons',
+      title: "Settings",
+      url: "menu/settings",
+      icon: "settings-outline",
+      type: "medcons",
     },
     {
-      title: 'Help',
-      url: 'menu/help',
-      icon: 'help-outline',
-      type: 'medcons',
+      title: "Help",
+      url: "menu/help",
+      icon: "help-outline",
+      type: "medcons",
     },
     {
-      title: 'Log Out',
-      url: 'logout',
-      icon: 'log-out-outline',
-      type: 'medcons',
+      title: "Log Out",
+      url: "logout",
+      icon: "log-out-outline",
+      type: "medcons",
     },
   ];
   logindata;
@@ -131,7 +132,7 @@ export class AppComponent implements OnInit {
   ) {
     this.initializeApp();
     this.updateClient();
-    this.role_flag = localStorage.getItem('role_flag');
+    this.role_flag = localStorage.getItem("role_flag");
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       this.isDesktop = isDesktop;
     });
@@ -156,8 +157,9 @@ export class AppComponent implements OnInit {
     });
   }
   initializeApp() {
+    console.log(environment.API_URL);
     this.revokeTokenV3 = new RevokeTokenV3();
-    this.functionsService.logToConsole('initializeApp');
+    this.functionsService.logToConsole("initializeApp");
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
@@ -217,9 +219,9 @@ export class AppComponent implements OnInit {
 
   updateClient() {
     if (!this.update.isEnabled) {
-      this.functionsService.logToConsole('not enabled');
+      this.functionsService.logToConsole("not enabled");
     } else {
-      this.functionsService.logToConsole('enabled');
+      this.functionsService.logToConsole("enabled");
     }
     this.update.available.subscribe((event) => {
       this.presentAlertConfirm();
@@ -228,23 +230,23 @@ export class AppComponent implements OnInit {
 
   async timerExpired() {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Dok, are you still there?',
+      cssClass: "my-custom-class",
+      header: "Dok, are you still there?",
       animated: true,
       backdropDismiss: false,
       message:
         "We understand you're busy. For you and your patients' security, we'll automatically log you out in a few minutes.",
       buttons: [
         {
-          text: 'Log me out',
+          text: "Log me out",
           // role: 'cancel',
-          cssClass: 'secondary',
+          cssClass: "secondary",
           handler: () => {
             this.logout();
           },
         },
         {
-          text: 'Keep me in',
+          text: "Keep me in",
           handler: () => {
             this.alertController.dismiss();
             this.userIdle.stopTimer();
@@ -257,7 +259,7 @@ export class AppComponent implements OnInit {
 
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+      cssClass: "my-custom-class",
       message: this.messages.UPDATE_AVAILABLE,
       buttons: [
         {
@@ -272,10 +274,10 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-    let dr_username = atob(localStorage.getItem('username'));
+    let dr_username = atob(localStorage.getItem("username"));
     this.revokeTokenV3 = new RevokeTokenV3();
     this.revokeTokenV3.jwt = decodeURIComponent(
-      this.functionsService.getcookie('refreshToken')
+      this.functionsService.getcookie("refreshToken")
     );
     this.doctorService
       .revokeTokenV3(this.revokeTokenV3)
@@ -286,12 +288,12 @@ export class AppComponent implements OnInit {
     this.logoutService.out();
   }
   whattodo(data) {
-    if (data == 'logout') {
+    if (data == "logout") {
       this.logout();
     }
   }
-  @HostListener('window:orientationchange', ['$event'])
-  @HostListener('window:resize', ['$event'])
+  @HostListener("window:orientationchange", ["$event"])
+  @HostListener("window:resize", ["$event"])
   private onResize(event) {
     this.screensizeService.onPortrait(window.orientation);
     /*if (screen.width > screen.height) {
