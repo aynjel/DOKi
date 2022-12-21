@@ -1,40 +1,40 @@
-import { Component, OnInit } from '@angular/core';
-import { StorageService } from 'src/app/services/storage/storage.service';
-import { AuthConstants, Consta } from '../../../config/auth-constants';
-import { Router } from '@angular/router';
-import { Constants } from '../../../shared/constants';
-import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
-import { DoctorService } from 'src/app/services/doctor/doctor.service';
+import { Component, OnInit } from "@angular/core";
+import { StorageService } from "src/app/services/storage/storage.service";
+import { AuthConstants, Consta } from "../../../config/auth-constants";
+import { Router } from "@angular/router";
+import { Constants } from "../../../shared/constants";
+import { ScreenSizeService } from "src/app/services/screen-size/screen-size.service";
+import { DoctorService } from "src/app/services/doctor/doctor.service";
 import {
   UserSettingsModelv3,
   LoginResponseModelv3,
-} from 'src/app/models/doctor';
-import { AuthService } from 'src/app/services/auth/auth.service';
-import { ExecutiveService } from 'src/app/services/executive/executive.service';
-import { throwIfEmpty } from 'rxjs/operators';
-import { runInThisContext } from 'vm';
-import { DashboardgraphComponent } from '../components/dashboardgraph/dashboardgraph.component';
-import * as HighCharts from 'highcharts';
-import More from 'highcharts/highcharts-more';
+} from "src/app/models/doctor";
+import { AuthService } from "src/app/services/auth/auth.service";
+import { ExecutiveService } from "src/app/services/executive/executive.service";
+import { throwIfEmpty } from "rxjs/operators";
+import { runInThisContext } from "vm";
+import { DashboardgraphComponent } from "../components/dashboardgraph/dashboardgraph.component";
+import * as HighCharts from "highcharts";
+import More from "highcharts/highcharts-more";
 More(HighCharts);
-import Tree from 'highcharts/modules/treemap';
+import Tree from "highcharts/modules/treemap";
 Tree(HighCharts);
-import Heatmap from 'highcharts/modules/heatmap';
+import Heatmap from "highcharts/modules/heatmap";
 Heatmap(HighCharts);
 // Load the exporting module.
-import Exporting from 'highcharts/modules/exporting';
-import { ThrowStmt } from '@angular/compiler';
-import { LoadingController, ModalController } from '@ionic/angular';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import Exporting from "highcharts/modules/exporting";
+import { ThrowStmt } from "@angular/compiler";
+import { LoadingController, ModalController } from "@ionic/angular";
+import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 // Initialize exporting module.
 //Exporting(HighCharts);
-import { takeUntil } from 'rxjs/operators';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { Pipe, PipeTransform } from '@angular/core';
+import { takeUntil } from "rxjs/operators";
+import { BehaviorSubject, Subject } from "rxjs";
+import { Pipe, PipeTransform } from "@angular/core";
 @Component({
-  selector: 'app-tabs-historical',
-  templateUrl: './tabs-historical.page.html',
-  styleUrls: ['./tabs-historical.page.scss'],
+  selector: "app-tabs-historical",
+  templateUrl: "./tabs-historical.page.html",
+  styleUrls: ["./tabs-historical.page.scss"],
 })
 export class TabsHistoricalPage implements OnInit {
   isDesktop: boolean;
@@ -70,7 +70,7 @@ export class TabsHistoricalPage implements OnInit {
     this.setDateFromTo();
   }
   settings() {
-    this.router.navigate(['/executive/settings']);
+    this.router.navigate(["/executive/settings"]);
   }
 
   /*
@@ -83,9 +83,9 @@ export class TabsHistoricalPage implements OnInit {
                             __/ |                                                                                
                            |___/                                                                                 
   */
-  monthTrendFrom: any = '01';
-  monthTrendTo: any = '12';
-  yearTreandTO: any = '2022';
+  monthTrendFrom: any = "01";
+  monthTrendTo: any = "12";
+  yearTreandTO: any = "2022";
   MTATotal: any;
   MTA: any;
 
@@ -93,42 +93,42 @@ export class TabsHistoricalPage implements OnInit {
   MTAMan: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   MTACebSet: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   MTAManSet: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  MTACategory: any = ['', '', '', '', '', '', '', '', '', '', '', ''];
+  MTACategory: any = ["", "", "", "", "", "", "", "", "", "", "", ""];
   MTACategorySet: any = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
   populateMontlyTotalAdmissions() {
     if (this.MTA != undefined) {
       this.MTA.destroy();
     }
-    this.MTA = HighCharts.chart('populateMontlyTotalAdmissions', {
+    this.MTA = HighCharts.chart("populateMontlyTotalAdmissions", {
       chart: {
-        type: 'column',
+        type: "column",
       },
       title: {
         //text: 'Total Admissions ' + this.yearTreandTO + ' : ' + this.MTATotal,
-        text: '',
+        text: "",
       },
       xAxis: {
         categories: this.MTACategory,
       },
       yAxis: {
-        title: { text: '' },
+        title: { text: "" },
         stackLabels: {
           enabled: true,
           style: {
-            fontWeight: 'bold',
+            fontWeight: "bold",
           },
         },
       },
@@ -137,13 +137,13 @@ export class TabsHistoricalPage implements OnInit {
         pointFormat: '{series.name}: {point.y}',
       },*/
       tooltip: {
-        headerFormat: '<b>{point.x}</b><br/>',
+        headerFormat: "<b>{point.x}</b><br/>",
         pointFormat:
-          '{series.name}: {point.y}<br/><br/>Total: {point.stackTotal}',
+          "{series.name}: {point.y}<br/><br/>Total: {point.stackTotal}",
       },
       plotOptions: {
         column: {
-          stacking: 'normal',
+          stacking: "normal",
           dataLabels: {
             enabled: true,
           },
@@ -151,15 +151,15 @@ export class TabsHistoricalPage implements OnInit {
       },
       series: [
         {
-          name: 'Cebu',
+          name: "Cebu",
           type: undefined,
-          color: '#275228',
+          color: "#275228",
           data: this.MTACeb,
         },
         {
-          name: 'Mandaue',
+          name: "Mandaue",
           type: undefined,
-          color: '#d12027',
+          color: "#d12027",
           data: this.MTAMan,
         },
       ],
@@ -194,11 +194,11 @@ export class TabsHistoricalPage implements OnInit {
             // this.MTAManSet = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             this.MTAManSet = [];
             tempMTA.forEach((element) => {
-              if (element.site == 'C') {
+              if (element.site == "C") {
                 this.MTATotal += element.totalAdmsMTD;
                 this.MTACebSet[element.month - 1] = element.totalAdmsMTD;
               }
-              if (element.site == 'M') {
+              if (element.site == "M") {
                 this.MTATotal += element.totalAdmsMTD;
                 this.MTAManSet[element.month - 1] = element.totalAdmsMTD;
               }
@@ -285,8 +285,8 @@ export class TabsHistoricalPage implements OnInit {
   loading: any;
   async presentLoading() {
     this.loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Please wait...',
+      cssClass: "my-custom-class",
+      message: "Please wait...",
       duration: 0,
     });
     await this.loading.present();
@@ -301,25 +301,25 @@ export class TabsHistoricalPage implements OnInit {
   }
 
   monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
   dateTodayFrom;
   dateTodayTo;
-  dateValueFrom = '2012-01-15';
-  dateValueTo = '2012-12-15';
-  dateValueYear = '2022-01-15';
+  dateValueFrom = "2012-01-15";
+  dateValueTo = "2012-12-15";
+  dateValueYear = "2022-01-15";
   dateTodayYear;
   setDateFromTo() {
     let date1 = new Date(this.dateValueFrom);
@@ -327,7 +327,7 @@ export class TabsHistoricalPage implements OnInit {
     let month1 = date1.getMonth() + 1;
     let year1 = date1.getFullYear();
     let sendDatedateValue =
-      year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
+      year1 + "-" + ("0" + month1).slice(-2) + "-" + ("0" + day1).slice(-2);
     this.dateValueFrom = sendDatedateValue;
     this.dateTodayFrom = this.monthNames[month1 - 1];
 
@@ -336,7 +336,7 @@ export class TabsHistoricalPage implements OnInit {
     let month2 = date2.getMonth() + 1;
     let year2 = date2.getFullYear();
     let sendDatedateValue2 =
-      year2 + '-' + ('0' + month2).slice(-2) + '-' + ('0' + day2).slice(-2);
+      year2 + "-" + ("0" + month2).slice(-2) + "-" + ("0" + day2).slice(-2);
     this.dateValueTo = sendDatedateValue2;
     this.dateTodayTo = this.monthNames[month2 - 1];
     let date11 = new Date();
@@ -344,8 +344,8 @@ export class TabsHistoricalPage implements OnInit {
     let day11 = date11.getDate();
     let year11 = date11.getFullYear();
     this.dateValueTo =
-      year11 + '-' + ('0' + month11).slice(-2) + '-' + ('0' + day11).slice(-2);
-    this.monthTrendTo = ('0' + month11).slice(-2);
+      year11 + "-" + ("0" + month11).slice(-2) + "-" + ("0" + day11).slice(-2);
+    this.monthTrendTo = ("0" + month11).slice(-2);
 
     let date3 = new Date();
     //console.log(date3);
@@ -355,32 +355,32 @@ export class TabsHistoricalPage implements OnInit {
     let year3 = date3.getFullYear();
     //console.log(year3);
     let sendDatedateValue3 =
-      year3 + '-' + ('0' + month3).slice(-2) + '-' + ('0' + day3).slice(-2);
+      year3 + "-" + ("0" + month3).slice(-2) + "-" + ("0" + day3).slice(-2);
     this.dateValueYear = sendDatedateValue3;
     this.dateTodayYear = year3;
   }
-  formatDate(fromtoyear, value: string) {
-    if (fromtoyear == 'from') {
+  formatDate(fromtoyear, value: any) {
+    if (fromtoyear == "from") {
       let date1 = new Date(value);
       let month1 = date1.getMonth() + 1;
       let day1 = date1.getDate();
       let year1 = date1.getFullYear();
       this.dateValueFrom =
-        year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
-      this.monthTrendFrom = ('0' + month1).slice(-2);
+        year1 + "-" + ("0" + month1).slice(-2) + "-" + ("0" + day1).slice(-2);
+      this.monthTrendFrom = ("0" + month1).slice(-2);
       this.dateTodayFrom = this.monthNames[month1 - 1];
       this.monthTrendFromTo();
-    } else if (fromtoyear == 'to') {
+    } else if (fromtoyear == "to") {
       let date1 = new Date(value);
       let month1 = date1.getMonth() + 1;
       let day1 = date1.getDate();
       let year1 = date1.getFullYear();
       this.dateValueTo =
-        year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
-      this.monthTrendTo = ('0' + month1).slice(-2);
+        year1 + "-" + ("0" + month1).slice(-2) + "-" + ("0" + day1).slice(-2);
+      this.monthTrendTo = ("0" + month1).slice(-2);
       this.dateTodayTo = this.monthNames[month1 - 1];
       this.monthTrendFromTo();
-    } else if (fromtoyear == 'year') {
+    } else if (fromtoyear == "year") {
       let date1 = new Date(value);
       let month1 = date1.getMonth() + 1;
       let day1 = date1.getDate();
@@ -388,7 +388,7 @@ export class TabsHistoricalPage implements OnInit {
       this.yearTreandTO = year1;
       this.dateTodayYear = year1;
       this.dateValueYear =
-        year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
+        year1 + "-" + ("0" + month1).slice(-2) + "-" + ("0" + day1).slice(-2);
       this.monthTrendYear();
     }
   }
@@ -442,8 +442,8 @@ export class TabsHistoricalPage implements OnInit {
             for (let i = 1; i <= 12; i++) {
               if (
                 el.month == i.toString() &&
-                el.patientType == 'Covid' &&
-                el.site == 'C'
+                el.patientType == "Covid" &&
+                el.site == "C"
               ) {
                 ////console.log(el.aveOccupancy);
                 this.cebuCovid.push(el.aveOccupancy);
@@ -451,8 +451,8 @@ export class TabsHistoricalPage implements OnInit {
               }
               if (
                 el.month == i.toString() &&
-                el.patientType == 'Non-Covid' &&
-                el.site == 'C'
+                el.patientType == "Non-Covid" &&
+                el.site == "C"
               ) {
                 // //console.log(el.aveOccupancy);
                 this.cebuNonCovid.push(el.aveOccupancy);
@@ -460,8 +460,8 @@ export class TabsHistoricalPage implements OnInit {
               }
               if (
                 el.month == i.toString() &&
-                el.patientType == 'Covid' &&
-                el.site == 'M'
+                el.patientType == "Covid" &&
+                el.site == "M"
               ) {
                 ////console.log(el.aveOccupancy);
                 this.mandaueCovid.push(el.aveOccupancy);
@@ -469,8 +469,8 @@ export class TabsHistoricalPage implements OnInit {
               }
               if (
                 el.month == i.toString() &&
-                el.patientType == 'Non-Covid' &&
-                el.site == 'M'
+                el.patientType == "Non-Covid" &&
+                el.site == "M"
               ) {
                 // //console.log(el.aveOccupancy);
                 this.mandaueNonCovid.push(el.aveOccupancy);
@@ -490,23 +490,23 @@ export class TabsHistoricalPage implements OnInit {
     if (this.DACpM != undefined) {
       this.DACpM.destroy();
     }
-    this.DACpM = HighCharts.chart('YTDDailyAvgCensusByMonth', {
+    this.DACpM = HighCharts.chart("YTDDailyAvgCensusByMonth", {
       chart: {
-        type: 'column',
+        type: "column",
       },
       title: {
         //text: 'Total Admissions ' + this.yearTreandTO + ' : ' + this.MTATotal,
-        text: '',
+        text: "",
       },
       xAxis: {
         categories: this.MTACategory,
       },
       yAxis: {
-        title: { text: '' },
+        title: { text: "" },
         stackLabels: {
           enabled: true,
           style: {
-            fontWeight: 'bold',
+            fontWeight: "bold",
           },
         },
       },
@@ -515,13 +515,13 @@ export class TabsHistoricalPage implements OnInit {
         pointFormat: '{series.name}: {point.y}',
       },*/
       tooltip: {
-        headerFormat: '<b>{point.x}</b><br/>',
+        headerFormat: "<b>{point.x}</b><br/>",
         pointFormat:
-          '{series.name}: {point.y}<br/><br/>Total: {point.stackTotal}',
+          "{series.name}: {point.y}<br/><br/>Total: {point.stackTotal}",
       },
       plotOptions: {
         column: {
-          stacking: 'normal',
+          stacking: "normal",
           dataLabels: {
             enabled: true,
           },
@@ -529,32 +529,32 @@ export class TabsHistoricalPage implements OnInit {
       },
       series: [
         {
-          name: 'Covid Cebu',
+          name: "Covid Cebu",
           data: this.cebuCovid,
           type: undefined,
-          stack: 'Cebu',
-          color: '#05c75f',
+          stack: "Cebu",
+          color: "#05c75f",
         },
         {
-          name: 'Non-Covid Cebu',
+          name: "Non-Covid Cebu",
           data: this.cebuNonCovid,
           type: undefined,
-          stack: 'Cebu',
-          color: '#275228',
+          stack: "Cebu",
+          color: "#275228",
         },
         {
-          name: 'Covid Mandaue',
+          name: "Covid Mandaue",
           data: this.mandaueCovid,
           type: undefined,
-          stack: 'mandaue',
-          color: '#e78c8f',
+          stack: "mandaue",
+          color: "#e78c8f",
         },
         {
-          name: 'Non-Covid Mandaue',
+          name: "Non-Covid Mandaue",
           data: this.mandaueNonCovid,
           type: undefined,
-          stack: 'mandaue',
-          color: '#d12027',
+          stack: "mandaue",
+          color: "#d12027",
         },
       ],
       credits: { enabled: false },
@@ -603,32 +603,32 @@ export class TabsHistoricalPage implements OnInit {
             for (let i = 1; i <= 12; i++) {
               if (
                 el.month == i.toString() &&
-                el.patientType == 'Critical' &&
-                el.site == 'C'
+                el.patientType == "Critical" &&
+                el.site == "C"
               ) {
                 this.cebuCriticalTmp.push(el.aveLOS);
                 this.cebuCritical.push(el.aveLOS);
               }
               if (
                 el.month == i.toString() &&
-                el.patientType == 'Non-Critical' &&
-                el.site == 'C'
+                el.patientType == "Non-Critical" &&
+                el.site == "C"
               ) {
                 this.cebuNonCriticalTmp.push(el.aveLOS);
                 this.cebuNonCritical.push(el.aveLOS);
               }
               if (
                 el.month == i.toString() &&
-                el.patientType == 'Critical' &&
-                el.site == 'M'
+                el.patientType == "Critical" &&
+                el.site == "M"
               ) {
                 this.mandaueCriticalTmp.push(el.aveLOS);
                 this.mandaueCritical.push(el.aveLOS);
               }
               if (
                 el.month == i.toString() &&
-                el.patientType == 'Non-Critical' &&
-                el.site == 'M'
+                el.patientType == "Non-Critical" &&
+                el.site == "M"
               ) {
                 this.mandaueNonCriticalTmp.push(el.aveLOS);
                 this.mandaueNonCritical.push(el.aveLOS);
@@ -647,7 +647,7 @@ export class TabsHistoricalPage implements OnInit {
     if (this.albm != undefined) {
       this.albm.destroy();
     }
-    this.albm = HighCharts.chart('YTDAverageLOSByMonth', {
+    this.albm = HighCharts.chart("YTDAverageLOSByMonth", {
       /*chart: {
         type: 'column',
       },
@@ -676,10 +676,10 @@ export class TabsHistoricalPage implements OnInit {
         },
       },*/
       chart: {
-        type: 'bar',
+        type: "bar",
       },
       title: {
-        text: '',
+        text: "",
       },
       xAxis: {
         categories: this.MTACategory,
@@ -687,7 +687,7 @@ export class TabsHistoricalPage implements OnInit {
       yAxis: {
         min: 0,
         labels: {
-          overflow: 'justify',
+          overflow: "justify",
         },
       },
       plotOptions: {
@@ -707,28 +707,28 @@ export class TabsHistoricalPage implements OnInit {
 
       series: [
         {
-          name: 'Critical Cebu',
+          name: "Critical Cebu",
           data: this.cebuCritical,
           type: undefined,
-          color: '#05c75f',
+          color: "#05c75f",
         },
         {
-          name: 'Non-Critical Cebu',
+          name: "Non-Critical Cebu",
           data: this.cebuNonCritical,
           type: undefined,
-          color: '#275228',
+          color: "#275228",
         },
         {
-          name: 'Critical Mandaue',
+          name: "Critical Mandaue",
           data: this.mandaueCritical,
           type: undefined,
-          color: '#e78c8f',
+          color: "#e78c8f",
         },
         {
-          name: 'Non-Critical Mandaue',
+          name: "Non-Critical Mandaue",
           data: this.mandaueNonCritical,
           type: undefined,
-          color: '#d12027',
+          color: "#d12027",
         },
       ],
       credits: { enabled: false },

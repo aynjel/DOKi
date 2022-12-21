@@ -1,13 +1,13 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
-import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { DoctorService } from 'src/app/services/doctor/doctor.service';
-import { FunctionsService } from 'src/app/shared/functions/functions.service';
+import { Component, OnInit, Renderer2 } from "@angular/core";
+import { ScreenSizeService } from "src/app/services/screen-size/screen-size.service";
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
+import { DoctorService } from "src/app/services/doctor/doctor.service";
+import { FunctionsService } from "src/app/shared/functions/functions.service";
 @Component({
-  selector: 'app-collectibles',
-  templateUrl: './collectibles.page.html',
-  styleUrls: ['./collectibles.page.scss'],
+  selector: "app-collectibles",
+  templateUrl: "./collectibles.page.html",
+  styleUrls: ["./collectibles.page.scss"],
 })
 export class CollectiblesPage implements OnInit {
   private ngUnsubscribe = new Subject();
@@ -34,8 +34,8 @@ export class CollectiblesPage implements OnInit {
   ngOnInit() {}
   data;
   pdfSrc;
-  drCode = 'MD000047';
-  site = 'M';
+  drCode = "MD000047";
+  site = "M";
   isPDFAvailable: boolean = false;
   isPreviewLoading: boolean = false;
   isPDFLoading: boolean = false;
@@ -63,25 +63,25 @@ export class CollectiblesPage implements OnInit {
       fromDate: this.dateTodayFrom,
       toDate: this.dateTodayTo,
       site: this.site,
-      mode: 'P',
+      mode: "P",
     };
-    this.pdfSrc = '';
+    this.pdfSrc = "";
     this.doctorService
       .getDOKiPFRegularSOA(testJsonPDF)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {
-          let blob = new Blob([data], { type: 'application/pdf' });
+          let blob = new Blob([data], { type: "application/pdf" });
           let downloadURL = window.URL.createObjectURL(data);
           this.pdfSrc = downloadURL;
-          this.link = '';
-          this.link = document.createElement('a');
+          this.link = "";
+          this.link = document.createElement("a");
           this.link.href = downloadURL;
-          this.link.download = 'PFRegular.pdf';
+          this.link.download = "PFRegular.pdf";
         },
         (error) => {
           this.isPDFLoading = false;
-          console.log('error');
+          console.log("error");
           console.log(error);
         },
         () => {
@@ -92,11 +92,11 @@ export class CollectiblesPage implements OnInit {
 
   getRegularPFpdfPreview() {
     this.emptyState = false;
-    console.log('getRegularPFpdfPreview');
+    console.log("getRegularPFpdfPreview");
 
     this.isPreviewLoading = true;
     this.isPDFAvailable = false;
-    let mode = 'P';
+    let mode = "P";
     this.DOKiPFRegularPreview = [];
     this.DOKiPFPHICPreview = [];
     this.doctorService
@@ -115,7 +115,7 @@ export class CollectiblesPage implements OnInit {
         },
         (error) => {
           this.isPreviewLoading = false;
-          console.log('error');
+          console.log("error");
           console.log(error);
         },
         () => {
@@ -137,27 +137,27 @@ export class CollectiblesPage implements OnInit {
       fromDate: this.dateTodayFrom,
       toDate: this.dateTodayTo,
       site: this.site,
-      mode: 'P',
+      mode: "P",
     };
     console.log(JSON.stringify(testJsonPDF));
 
-    this.pdfSrc = '';
+    this.pdfSrc = "";
     this.doctorService
       .getDOKiPFPhicCaseRatesSOA(testJsonPDF)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {
-          let blob = new Blob([data], { type: 'application/pdf' });
+          let blob = new Blob([data], { type: "application/pdf" });
           let downloadURL = window.URL.createObjectURL(data);
           this.pdfSrc = downloadURL;
-          this.link = '';
-          this.link = document.createElement('a');
+          this.link = "";
+          this.link = document.createElement("a");
           this.link.href = downloadURL;
-          this.link.download = 'PHICPFpdf.pdf';
+          this.link.download = "PHICPFpdf.pdf";
         },
         (error) => {
           this.isPDFLoading = false;
-          console.log('error');
+          console.log("error");
           console.log(error);
         },
         () => {
@@ -171,7 +171,7 @@ export class CollectiblesPage implements OnInit {
     this.emptyState = false;
     this.isPreviewLoading = true;
     this.isPDFAvailable = false;
-    let mode = 'P';
+    let mode = "P";
     this.DOKiPFRegularPreview = [];
     this.DOKiPFPHICPreview = [];
     this.doctorService
@@ -190,7 +190,7 @@ export class CollectiblesPage implements OnInit {
         },
         (error) => {
           this.isPreviewLoading = false;
-          console.log('error');
+          console.log("error");
           console.log(error);
         },
         () => {
@@ -212,25 +212,25 @@ export class CollectiblesPage implements OnInit {
       fromDate: this.dateTodayFrom,
       toDate: this.dateTodayTo,
       site: this.site,
-      mode: 'P',
+      mode: "P",
     };
-    this.pdfSrc = '';
+    this.pdfSrc = "";
     this.doctorService
       .getDOKiPFReadersFeeSOA(testJsonPDF)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {
-          let blob = new Blob([data], { type: 'application/pdf' });
+          let blob = new Blob([data], { type: "application/pdf" });
           let downloadURL = window.URL.createObjectURL(data);
           this.pdfSrc = downloadURL;
-          this.link = '';
-          this.link = document.createElement('a');
+          this.link = "";
+          this.link = document.createElement("a");
           this.link.href = downloadURL;
-          this.link.download = 'ReadersFeepdf.pdf';
+          this.link.download = "ReadersFeepdf.pdf";
         },
         (error) => {
           this.isPDFLoading = false;
-          console.log('error');
+          console.log("error");
           console.log(error);
         },
         () => {
@@ -241,12 +241,12 @@ export class CollectiblesPage implements OnInit {
   }
 
   getDOKiPFReadersFeeSOAPreview() {
-    console.log('getDOKiPFReadersFeeSOAPreview');
+    console.log("getDOKiPFReadersFeeSOAPreview");
 
     this.emptyState = false;
     this.isPreviewLoading = true;
     this.isPDFAvailable = false;
-    let mode = 'P';
+    let mode = "P";
     this.DOKiPFRegularPreview = [];
     this.DOKiPFPHICPreview = [];
     this.doctorService
@@ -265,7 +265,7 @@ export class CollectiblesPage implements OnInit {
         },
         (error) => {
           this.isPreviewLoading = false;
-          console.log('error');
+          console.log("error");
           console.log(error);
         },
         () => {
@@ -279,28 +279,28 @@ export class CollectiblesPage implements OnInit {
   }
 
   monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
   dateTodayFrom;
   dateTodayTo;
   yearTreandTO;
-  dateValueFrom = '2022-01-15';
-  dateValueTo = '2022-12-15';
-  dateValueYear = '2022-01-15';
+  dateValueFrom = "2022-01-15";
+  dateValueTo = "2022-12-15";
+  dateValueYear = "2022-01-15";
   dateTodayYear;
-  monthTrendFrom: any = '01';
-  monthTrendTo: any = '12';
+  monthTrendFrom: any = "01";
+  monthTrendTo: any = "12";
   emptyState: boolean = false;
   setDateFromToRegularPF() {
     var date = new Date();
@@ -310,20 +310,20 @@ export class CollectiblesPage implements OnInit {
     let month1 = date1.getMonth() + 1;
     let year1 = date1.getFullYear();
     let sendDatedateValue =
-      year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
+      year1 + "-" + ("0" + month1).slice(-2) + "-" + ("0" + day1).slice(-2);
     this.dateValueFrom = sendDatedateValue;
     this.dateTodayFrom =
-      ('0' + month1).slice(-2) + '/' + ('0' + day1).slice(-2) + '/' + year1;
+      ("0" + month1).slice(-2) + "/" + ("0" + day1).slice(-2) + "/" + year1;
 
     let date2 = new Date();
     let day2 = date2.getDate();
     let month2 = date2.getMonth() + 1;
     let year2 = date2.getFullYear();
     let sendDatedateValue2 =
-      year2 + '-' + ('0' + month2).slice(-2) + '-' + ('0' + day2).slice(-2);
+      year2 + "-" + ("0" + month2).slice(-2) + "-" + ("0" + day2).slice(-2);
     this.dateValueTo = sendDatedateValue2;
     this.dateTodayTo =
-      ('0' + month2).slice(-2) + '/' + ('0' + day2).slice(-2) + '/' + year2;
+      ("0" + month2).slice(-2) + "/" + ("0" + day2).slice(-2) + "/" + year2;
 
     let date3 = new Date();
 
@@ -332,53 +332,53 @@ export class CollectiblesPage implements OnInit {
     let year3 = date3.getFullYear();
 
     let sendDatedateValue3 =
-      year3 + '-' + ('0' + month3).slice(-2) + '-' + ('0' + day3).slice(-2);
+      year3 + "-" + ("0" + month3).slice(-2) + "-" + ("0" + day3).slice(-2);
     this.dateValueYear = sendDatedateValue3;
     this.dateTodayYear = year3;
     // this.callPreview();
   }
-  formatDateRegularPF(fromtoyear, value: string) {
-    if (fromtoyear == 'from') {
-      console.log('from');
+  formatDateRegularPF(fromtoyear, value: any) {
+    if (fromtoyear == "from") {
+      console.log("from");
 
       let date1 = new Date(value);
       let month1 = date1.getMonth() + 1;
       let day1 = date1.getDate();
       let year1 = date1.getFullYear();
       this.dateValueFrom =
-        year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
-      this.monthTrendFrom = ('0' + month1).slice(-2);
+        year1 + "-" + ("0" + month1).slice(-2) + "-" + ("0" + day1).slice(-2);
+      this.monthTrendFrom = ("0" + month1).slice(-2);
       this.dateTodayFrom =
-        ('0' + month1).slice(-2) + '/' + ('0' + day1).slice(-2) + '/' + year1;
+        ("0" + month1).slice(-2) + "/" + ("0" + day1).slice(-2) + "/" + year1;
       this.callPreview();
-    } else if (fromtoyear == 'to') {
-      console.log('to');
+    } else if (fromtoyear == "to") {
+      console.log("to");
       let date1 = new Date(value);
       let month1 = date1.getMonth() + 1;
       let day1 = date1.getDate();
       let year1 = date1.getFullYear();
       this.dateValueTo =
-        year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
-      this.monthTrendTo = ('0' + month1).slice(-2);
+        year1 + "-" + ("0" + month1).slice(-2) + "-" + ("0" + day1).slice(-2);
+      this.monthTrendTo = ("0" + month1).slice(-2);
       this.dateTodayTo =
-        ('0' + month1).slice(-2) + '/' + ('0' + day1).slice(-2) + '/' + year1;
+        ("0" + month1).slice(-2) + "/" + ("0" + day1).slice(-2) + "/" + year1;
       //this.monthTrendFromTo();
       this.callPreview();
     }
   }
   savepdf() {
     if (this.isPDFAvailable) {
-      if (this.mode == 'regpf') {
+      if (this.mode == "regpf") {
         this.getRegularPFpdf();
-      } else if (this.mode == 'phicpf') {
+      } else if (this.mode == "phicpf") {
         this.getPHICPFpdf();
-      } else if (this.mode == 'readersfee') {
+      } else if (this.mode == "readersfee") {
         this.getReadersFeepdf();
       }
     }
   }
   downloadpdf() {
-    if (this.pdfSrc != '') {
+    if (this.pdfSrc != "") {
       this.link.click();
     }
     //
@@ -386,26 +386,26 @@ export class CollectiblesPage implements OnInit {
   callPreview() {
     console.log(this.mode);
 
-    if (this.mode == 'regpf') {
+    if (this.mode == "regpf") {
       this.getRegularPFpdfPreview();
-    } else if (this.mode == 'phicpf') {
+    } else if (this.mode == "phicpf") {
       this.getPHICPFpdfPreview();
-    } else if (this.mode == 'readersfee') {
+    } else if (this.mode == "readersfee") {
       this.getDOKiPFReadersFeeSOAPreview();
     }
   }
   checkAppearance() {
-    this.functionsService.logToConsole('checkAppearance');
+    this.functionsService.logToConsole("checkAppearance");
     var values = JSON.parse(
-      '[' + atob(localStorage.getItem('user_settings')) + ']'
+      "[" + atob(localStorage.getItem("user_settings")) + "]"
     );
-    let dr_username = atob(localStorage.getItem('username'));
+    let dr_username = atob(localStorage.getItem("username"));
     values.forEach((element) => {
       this.functionsService.logToConsole(element.darkmode);
       if (element.darkmode == 1) {
-        this.renderer.setAttribute(document.body, 'color-theme', 'dark');
+        this.renderer.setAttribute(document.body, "color-theme", "dark");
       } else {
-        this.renderer.setAttribute(document.body, 'color-theme', 'light');
+        this.renderer.setAttribute(document.body, "color-theme", "light");
       }
     });
   }

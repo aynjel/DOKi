@@ -1,63 +1,63 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { StorageService } from 'src/app/services/storage/storage.service';
-import { AuthConstants, Consta } from '../../../config/auth-constants';
-import { BehaviorSubject } from 'rxjs';
-import { Router } from '@angular/router';
-import { Constants } from '../../../shared/constants';
-import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
-import { DoctorService } from 'src/app/services/doctor/doctor.service';
+import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
+import { StorageService } from "src/app/services/storage/storage.service";
+import { AuthConstants, Consta } from "../../../config/auth-constants";
+import { BehaviorSubject } from "rxjs";
+import { Router } from "@angular/router";
+import { Constants } from "../../../shared/constants";
+import { ScreenSizeService } from "src/app/services/screen-size/screen-size.service";
+import { DoctorService } from "src/app/services/doctor/doctor.service";
 import {
   UserSettingsModelv3,
   LoginResponseModelv3,
-} from 'src/app/models/doctor';
-import { AuthService } from 'src/app/services/auth/auth.service';
-import { ExecutiveService } from 'src/app/services/executive/executive.service';
-import { throwIfEmpty } from 'rxjs/operators';
-import { runInThisContext } from 'vm';
-import { DashboardgraphComponent } from '../components/dashboardgraph/dashboardgraph.component';
-import * as HighCharts from 'highcharts';
-import More from 'highcharts/highcharts-more';
+} from "src/app/models/doctor";
+import { AuthService } from "src/app/services/auth/auth.service";
+import { ExecutiveService } from "src/app/services/executive/executive.service";
+import { throwIfEmpty } from "rxjs/operators";
+import { runInThisContext } from "vm";
+import { DashboardgraphComponent } from "../components/dashboardgraph/dashboardgraph.component";
+import * as HighCharts from "highcharts";
+import More from "highcharts/highcharts-more";
 More(HighCharts);
-import Tree from 'highcharts/modules/treemap';
+import Tree from "highcharts/modules/treemap";
 Tree(HighCharts);
-import Heatmap from 'highcharts/modules/heatmap';
+import Heatmap from "highcharts/modules/heatmap";
 Heatmap(HighCharts);
 // Load the exporting module.
-import Exporting from 'highcharts/modules/exporting';
-import { ThrowStmt } from '@angular/compiler';
+import Exporting from "highcharts/modules/exporting";
+import { ThrowStmt } from "@angular/compiler";
 import {
   IonDatetime,
   LoadingController,
   ModalController,
-} from '@ionic/angular';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+} from "@ionic/angular";
+import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 // Initialize exporting module.
 //Exporting(HighCharts);
-import { format, parseISO } from 'date-fns';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { NavigationStart } from '@angular/router';
+import { format, parseISO } from "date-fns";
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
+import { NavigationStart } from "@angular/router";
 @Component({
-  selector: 'app-tabs-erlist',
-  templateUrl: './tabs-erlist.page.html',
-  styleUrls: ['./tabs-erlist.page.scss'],
+  selector: "app-tabs-erlist",
+  templateUrl: "./tabs-erlist.page.html",
+  styleUrls: ["./tabs-erlist.page.scss"],
 })
 export class TabsErlistPage implements OnInit {
   private ngUnsubscribe = new Subject();
   isDesktop: boolean;
-  dateToday: any = '12/31/2021';
+  dateToday: any = "12/31/2021";
   listOfPatients: any = [];
   listOfPatientsFinal: any = [];
   listOfPatientsTemp: any;
   listOfPatientsTemp1: any;
   listOfPatientsTemp2: any;
-  searchBar: any = '';
+  searchBar: any = "";
   responseData: any;
-  segmentModel: any = 'Clean ER';
-  segmentModel1: any = 'ALL';
+  segmentModel: any = "Clean ER";
+  segmentModel1: any = "ALL";
   maxTime: any;
   refreshcounter;
-  dateValue = '2021-12-31';
+  dateValue = "2021-12-31";
   constructor(
     private storageService: StorageService,
     private router: Router,
@@ -87,11 +87,11 @@ export class TabsErlistPage implements OnInit {
     this.isCalendar = true;
     const modalState = {
       modal: true,
-      desc: 'fake state for our modal',
+      desc: "fake state for our modal",
     };
     history.pushState(modalState, null);
   }
-  @HostListener('window:popstate', ['$event'])
+  @HostListener("window:popstate", ["$event"])
   dismissModal() {
     if (this.isCalendar) {
       this.modalController.dismiss();
@@ -109,14 +109,14 @@ export class TabsErlistPage implements OnInit {
     let month1 = date1.getMonth() + 1;
     let year1 = date1.getFullYear();
     let sendDatedateToday =
-      ('0' + month1).slice(-2) + '/' + ('0' + day1).slice(-2) + '/' + year1;
+      ("0" + month1).slice(-2) + "/" + ("0" + day1).slice(-2) + "/" + year1;
     let sendDatedateValue =
-      year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
+      year1 + "-" + ("0" + month1).slice(-2) + "-" + ("0" + day1).slice(-2);
     this.dateValue = sendDatedateValue;
     this.dateToday = sendDatedateToday;
     ////console.log(this.dateValue);
   }
-  formatDate(value: string) {
+  formatDate(value: any) {
     if (this.isCalendar) {
       this.closeCalendar();
     }
@@ -127,16 +127,16 @@ export class TabsErlistPage implements OnInit {
     let month1 = date1.getMonth() + 1;
     let year1 = date1.getFullYear();
     let sendDatedateToday =
-      ('0' + month1).slice(-2) + '/' + ('0' + day1).slice(-2) + '/' + year1;
+      ("0" + month1).slice(-2) + "/" + ("0" + day1).slice(-2) + "/" + year1;
     let sendDatedateValue =
-      year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
+      year1 + "-" + ("0" + month1).slice(-2) + "-" + ("0" + day1).slice(-2);
     this.dateValue = sendDatedateValue;
     this.dateToday = sendDatedateToday;
     this.dateChanged();
   }
   /*********************************************/
   settings() {
-    this.router.navigate(['/executive/settings']);
+    this.router.navigate(["/executive/settings"]);
   }
 
   ngOnInit() {
@@ -172,7 +172,7 @@ export class TabsErlistPage implements OnInit {
       );
   }
   doRefresh(event) {
-    this.searchBar = '';
+    this.searchBar = "";
     setTimeout(() => {
       this.ngOnInit();
       event.target.complete();
@@ -181,7 +181,7 @@ export class TabsErlistPage implements OnInit {
   filterList() {
     this.refreshcounter = 1;
     //////console.log(this.searchBar);
-    if (this.searchBar == '') {
+    if (this.searchBar == "") {
       this.listOfPatients = this.listOfPatientsTemp2;
     } else {
       this.listOfPatients = [];
@@ -233,7 +233,7 @@ export class TabsErlistPage implements OnInit {
     } else {
       this.listOfPatientsTemp1 = [];
     }
-    if (this.segmentModel1 == 'ALL') {
+    if (this.segmentModel1 == "ALL") {
       this.listOfPatientsTemp2 = this.listOfPatientsTemp1;
     } else {
       this.listOfPatients = [];
@@ -266,7 +266,7 @@ export class TabsErlistPage implements OnInit {
     let dayMaxDate = getMaxDate.getDate();
     let monthMaxDate = getMaxDate.getMonth() + 1;
     let yearMaxDate = getMaxDate.getFullYear();
-    this.maxTime = yearMaxDate + '-' + monthMaxDate + '-' + dayMaxDate;
+    this.maxTime = yearMaxDate + "-" + monthMaxDate + "-" + dayMaxDate;
 
     let date1 = new Date(this.dateToday);
 
@@ -274,7 +274,7 @@ export class TabsErlistPage implements OnInit {
     let month1 = date1.getMonth() + 1;
     let year1 = date1.getFullYear();
     let sendDate =
-      ('0' + month1).slice(-2) + '/' + ('0' + day1).slice(-2) + '/' + year1;
+      ("0" + month1).slice(-2) + "/" + ("0" + day1).slice(-2) + "/" + year1;
 
     ////console.log(this.maxTime);
     this.listOfPatients = [];
