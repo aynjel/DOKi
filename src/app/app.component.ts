@@ -157,6 +157,7 @@ export class AppComponent implements OnInit {
     });
   }
   initializeApp() {
+    console.log("initializeApp");
     console.log(environment.API_URL);
     this.revokeTokenV3 = new RevokeTokenV3();
     this.functionsService.logToConsole("initializeApp");
