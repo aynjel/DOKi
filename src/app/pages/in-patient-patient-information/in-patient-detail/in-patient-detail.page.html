@@ -32,10 +32,12 @@ ___  ___        _      _  _
 -->
 
 <ion-header mode="md" class="ion-no-border" *ngIf="!isDesktop">
-
-
   <ion-toolbar color="mango">
-    <span class="padding-left-10" routerLink="/menu/in-patients/" routerDirection="backward" color="chh-css-primary2">
+    <span
+      class="padding-left-10"
+      routerLink="/menu/in-patients/"
+      routerDirection="backward"
+      color="chh-css-primary2">
       <ion-icon name="arrow-back-outline" class="my-icon vcenter"></ion-icon>
       <!--ion-icon 
         name="chevron-back-outline" 
@@ -43,13 +45,10 @@ ___  ___        _      _  _
       </ion-icon-->
     </span>
 
-
-    <span class="padding-left-30 font-weight-500 font-size-20"> &nbsp;&nbsp;Patient Information </span>
+    <span class="padding-left-30 font-weight-500 font-size-20">
+      &nbsp;&nbsp;Patient Information
+    </span>
   </ion-toolbar>
-
-
-
-
 
   <!-- <ion-toolbar color="mango">
     <ion-title>
@@ -66,17 +65,27 @@ ___  ___        _      _  _
   </ion-toolbar> -->
 </ion-header>
 <ion-content *ngIf="!isDesktop">
-  <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [dischargeNotice]="dischargeNotice"
-    [forMoreOrLess]="true" [is_pwd]="is_pwd" [is_senior]="is_senior"
-    [is_philhealth_membership]="is_philhealth_membership" [patientDetailfromApi_from]="patientDetailfromApi_from"
-    [patientDetailfromApi_to]="patientDetailfromApi_to" [admission_status]="admission_status">
+  <app-chh-app-patient-header
+    [data]="data"
+    [dateAdmitted]="dateAdmitted"
+    [dischargeNotice]="dischargeNotice"
+    [forMoreOrLess]="true"
+    [is_pwd]="is_pwd"
+    [is_senior]="is_senior"
+    [is_philhealth_membership]="is_philhealth_membership"
+    [patientDetailfromApi_from]="patientDetailfromApi_from"
+    [patientDetailfromApi_to]="patientDetailfromApi_to"
+    [admission_status]="admission_status">
   </app-chh-app-patient-header>
 
-  <app-chh-app-admitting-diagnosis [admittingDiagnosis]="admittingDiagnosis" [admittingDiagnosis1]="admittingDiagnosis1"
-    [admittingDiagnosis2]="admittingDiagnosis2" [truncating1]="truncating1">
+  <app-chh-app-admitting-diagnosis
+    [admittingDiagnosis]="admittingDiagnosis"
+    [admittingDiagnosis1]="admittingDiagnosis1"
+    [admittingDiagnosis2]="admittingDiagnosis2"
+    [truncating1]="truncating1">
   </app-chh-app-admitting-diagnosis>
 
-  <ion-card mode="ios">
+  <!--ion-card mode="ios">
     <ion-list>
       <ion-item style="padding-top: 10px;">
         <div class="ion-text-wrap"><b>Diagnostic Results</b><br /></div>
@@ -85,7 +94,7 @@ ___  ___        _      _  _
         View Results &nbsp;<ion-icon class="icon-center" name="open-outline"></ion-icon>
       </ion-item>
     </ion-list>
-  </ion-card>
+  </ion-card-->
   <resi-progress-notes></resi-progress-notes>
   <!-- progress notes -->
   <!--ion-card mode="ios" *ngIf="progNot_account_no != ''">
@@ -135,11 +144,20 @@ ___  ___        _      _  _
   <img src='{{ signatureImg }}' />
   </ion-card-->
 
-  <app-chh-app-final-diagnosis [data]="admissionstatus" [finalDiagnosis]="finalDiagnosis" [limit]="limit"
-    [truncating]="truncating" [finalDiagnosis1]="finalDiagnosis1" [finalDiagnosis2]="finalDiagnosis2"
-    [finalDiagnosisApproval]="finalDiagnosisApproval" [isCancelFinalDiagnosisApproval]='isCancelFinalDiagnosisApproval'
-    [patientName]="patientName" (cancelApproval)="cancelApproval($event)" [approvedDate]="approvedDate"
-    [admissionNo]="admissionNo" [dischargeNo]="dischargeNo">
+  <app-chh-app-final-diagnosis
+    [data]="admissionstatus"
+    [finalDiagnosis]="finalDiagnosis"
+    [limit]="limit"
+    [truncating]="truncating"
+    [finalDiagnosis1]="finalDiagnosis1"
+    [finalDiagnosis2]="finalDiagnosis2"
+    [finalDiagnosisApproval]="finalDiagnosisApproval"
+    [isCancelFinalDiagnosisApproval]="isCancelFinalDiagnosisApproval"
+    [patientName]="patientName"
+    (cancelApproval)="cancelApproval($event)"
+    [approvedDate]="approvedDate"
+    [admissionNo]="admissionNo"
+    [dischargeNo]="dischargeNo">
   </app-chh-app-final-diagnosis>
   <!-- <ion-card mode="ios"  *ngIf="!isDesktop" >
     <ion-list>
@@ -202,7 +220,10 @@ ___  ___        _      _  _
           </div>
     </ion-list>
   </ion-card> -->
-  <app-chh-app-list-of-doctors [coDoctors]="coDoctors" [objecthandler]="objecthandler" [isFetchDone]="isFetchDone">
+  <app-chh-app-list-of-doctors
+    [coDoctors]="coDoctors"
+    [objecthandler]="objecthandler"
+    [isFetchDone]="isFetchDone">
   </app-chh-app-list-of-doctors>
 </ion-content>
 <ion-footer>
@@ -212,10 +233,18 @@ ___  ___        _      _  _
         <ion-row>
           <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
           <ion-col size-xs="12" size-md="4" size-lg="4">
-
-            <ion-button class="buttonActive" color="mango" size="default" expand="block" shape="round"
-              (click)="redirecttoPF()" *ngIf="data.is_posted == 0 || data.is_posted == null">
-              <ion-icon name="checkmark-done-outline" *ngIf="checkmark"></ion-icon>Professional Fee
+            <ion-button
+              class="buttonActive"
+              color="mango"
+              size="default"
+              expand="block"
+              shape="round"
+              (click)="redirecttoPF()"
+              *ngIf="data.is_posted == 0 || data.is_posted == null">
+              <ion-icon
+                name="checkmark-done-outline"
+                *ngIf="checkmark"></ion-icon
+              >Professional Fee
             </ion-button>
           </ion-col>
           <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
@@ -237,7 +266,8 @@ ______          _    _
                              | |    
                              |_|    
 -->
-<app-chh-app-desktop-navigation *ngIf="isDesktop"></app-chh-app-desktop-navigation>
+<app-chh-app-desktop-navigation
+  *ngIf="isDesktop"></app-chh-app-desktop-navigation>
 <ion-content *ngIf="isDesktop">
   <ul class="breadcrumb">
     <li>
@@ -298,44 +328,67 @@ ______          _    _
         </ion-col> -->
       <ion-col size-lg="4" size-md="6">
         <!--app-chh-app-card-newline></app-chh-app-card-newline-->
-        <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [forMoreOrLess]="true" [is_pwd]="is_pwd"
-          [is_senior]="is_senior" [patientDetailfromApi_from]="patientDetailfromApi_from"
-          [patientDetailfromApi_to]="patientDetailfromApi_to" [admission_status]="admission_status">
+        <app-chh-app-patient-header
+          [data]="data"
+          [dateAdmitted]="dateAdmitted"
+          [forMoreOrLess]="true"
+          [is_pwd]="is_pwd"
+          [is_senior]="is_senior"
+          [patientDetailfromApi_from]="patientDetailfromApi_from"
+          [patientDetailfromApi_to]="patientDetailfromApi_to"
+          [admission_status]="admission_status">
         </app-chh-app-patient-header>
 
         <ion-card mode="ios" class="shadow-remove">
-
           <ion-list>
-
-            <ion-button class="buttonActive" size="default" expand="block" shape="round" (click)="redirecttoPF()"
+            <ion-button
+              class="buttonActive"
+              size="default"
+              expand="block"
+              shape="round"
+              (click)="redirecttoPF()"
               *ngIf="data.is_posted == 0 || data.is_posted == null">
-              <ion-icon name="checkmark-done-outline" *ngIf="checkmark"></ion-icon>Professional Fee
+              <ion-icon
+                name="checkmark-done-outline"
+                *ngIf="checkmark"></ion-icon
+              >Professional Fee
             </ion-button>
-
           </ion-list>
         </ion-card>
 
-
-        <app-chh-app-admitting-diagnosis [admittingDiagnosis]="admittingDiagnosis"
-          [admittingDiagnosis1]="admittingDiagnosis1" [admittingDiagnosis2]="admittingDiagnosis2"
-          [truncating1]="truncating1"></app-chh-app-admitting-diagnosis>
-        <ion-card mode="ios">
+        <app-chh-app-admitting-diagnosis
+          [admittingDiagnosis]="admittingDiagnosis"
+          [admittingDiagnosis1]="admittingDiagnosis1"
+          [admittingDiagnosis2]="admittingDiagnosis2"
+          [truncating1]="truncating1">
+        </app-chh-app-admitting-diagnosis>
+        <!--ion-card mode="ios">
           <ion-list>
-            <ion-item style="padding-top: 10px;">
+            <ion-item style="padding-top: 10px">
               <div class="ion-text-wrap"><b>Diagnostic Results</b><br /></div>
             </ion-item>
             <ion-item class="pointHand" lines="none" (click)="gotoDiagnistic()">
-              View Results &nbsp;<ion-icon class="icon-center" name="open-outline"></ion-icon>
+              View Results &nbsp;<ion-icon
+                class="icon-center"
+                name="open-outline"></ion-icon>
             </ion-item>
           </ion-list>
-        </ion-card>
+        </ion-card-->
         <resi-progress-notes></resi-progress-notes>
 
-        <app-chh-app-final-diagnosis [data]="admissionstatus" [finalDiagnosis]="finalDiagnosis" [limit]="limit"
-          [truncating]="truncating" [finalDiagnosis1]="finalDiagnosis1" [finalDiagnosis2]="finalDiagnosis2"
+        <app-chh-app-final-diagnosis
+          [data]="admissionstatus"
+          [finalDiagnosis]="finalDiagnosis"
+          [limit]="limit"
+          [truncating]="truncating"
+          [finalDiagnosis1]="finalDiagnosis1"
+          [finalDiagnosis2]="finalDiagnosis2"
           [finalDiagnosisApproval]="finalDiagnosisApproval"
-          [isCancelFinalDiagnosisApproval]='isCancelFinalDiagnosisApproval' [patientName]="patientName"
-          (cancelApproval)="cancelApproval($event)" [approvedDate]="approvedDate" [admissionNo]="admissionNo"
+          [isCancelFinalDiagnosisApproval]="isCancelFinalDiagnosisApproval"
+          [patientName]="patientName"
+          (cancelApproval)="cancelApproval($event)"
+          [approvedDate]="approvedDate"
+          [admissionNo]="admissionNo"
           [dischargeNo]="dischargeNo">
         </app-chh-app-final-diagnosis>
       </ion-col>
@@ -362,28 +415,12 @@ ______          _    _
 
       </ion-col-->
 
-      <ion-col size-lg="3" size-md="6" class=" max-height-82vh overflow-scroll">
-        <app-chh-app-list-of-doctors [coDoctors]="coDoctors" [objecthandler]="objecthandler"
+      <ion-col size-lg="3" size-md="6" class="max-height-82vh overflow-scroll">
+        <app-chh-app-list-of-doctors
+          [coDoctors]="coDoctors"
+          [objecthandler]="objecthandler"
           [isFetchDone]="isFetchDone"></app-chh-app-list-of-doctors>
-
       </ion-col>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       <ion-col size-lg="1" size-md="12"></ion-col>
     </ion-row>
