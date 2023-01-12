@@ -85,7 +85,7 @@ export class TabsHistoricalPage implements OnInit {
   */
   monthTrendFrom: any = "01";
   monthTrendTo: any = "12";
-  yearTreandTO: any = "2022";
+  yearTreandTO: any = "2023";
   MTATotal: any;
   MTA: any;
 
