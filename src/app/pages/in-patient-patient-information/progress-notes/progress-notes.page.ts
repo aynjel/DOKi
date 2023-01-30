@@ -104,9 +104,13 @@ export class ProgressNotesPage implements OnInit {
       .getPatientProgressNotesPerAdmission(perAdmission)
       .subscribe(
         (res: any) => {
-          //console.log(res);
+            res.sort(function (a, b) {
+              let dateA: any = new Date(a.event_date),
+                dateB: any = new Date(b.event_date);
+              return dateB - dateA;
+            });
 
-          this.progessNotesTemp = res;
+            this.progessNotesTemp = res;
         },
         (error) => {},
         () => {

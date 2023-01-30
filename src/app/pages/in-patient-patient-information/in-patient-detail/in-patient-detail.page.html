@@ -85,16 +85,18 @@ ___  ___        _      _  _
     [truncating1]="truncating1">
   </app-chh-app-admitting-diagnosis>
 
-  <!--ion-card mode="ios">
+  <ion-card mode="ios">
     <ion-list>
-      <ion-item style="padding-top: 10px;">
+      <ion-item style="padding-top: 10px">
         <div class="ion-text-wrap"><b>Diagnostic Results</b><br /></div>
       </ion-item>
       <ion-item class="pointHand" lines="none" (click)="gotoDiagnistic()">
-        View Results &nbsp;<ion-icon class="icon-center" name="open-outline"></ion-icon>
+        View Results &nbsp;<ion-icon
+          class="icon-center"
+          name="open-outline"></ion-icon>
       </ion-item>
     </ion-list>
-  </ion-card-->
+  </ion-card>
   <resi-progress-notes></resi-progress-notes>
   <!-- progress notes -->
   <!--ion-card mode="ios" *ngIf="progNot_account_no != ''">
@@ -362,7 +364,7 @@ ______          _    _
           [admittingDiagnosis2]="admittingDiagnosis2"
           [truncating1]="truncating1">
         </app-chh-app-admitting-diagnosis>
-        <!--ion-card mode="ios">
+        <ion-card mode="ios">
           <ion-list>
             <ion-item style="padding-top: 10px">
               <div class="ion-text-wrap"><b>Diagnostic Results</b><br /></div>
@@ -373,7 +375,7 @@ ______          _    _
                 name="open-outline"></ion-icon>
             </ion-item>
           </ion-list>
-        </ion-card-->
+        </ion-card>
         <resi-progress-notes></resi-progress-notes>
 
         <app-chh-app-final-diagnosis

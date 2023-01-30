@@ -2,20 +2,34 @@
   <div>
     <ion-toolbar color="mango">
       <ion-title>
-        <ion-icon name="arrow-back-outline" (click)="back()" class="pointer icon-center "></ion-icon> Progress Notes |
-        {{event_date}}
+        <ion-icon
+          name="arrow-back-outline"
+          (click)="back()"
+          class="pointer icon-center"></ion-icon>
+        Progress Notes | {{event_date}}
       </ion-title>
     </ion-toolbar>
   </div>
-  <ion-grid class="ion-no-padding " *ngIf="!isDesktop">
+  <ion-grid class="ion-no-padding" *ngIf="!isDesktop">
     <ion-row class="">
-      <ion-col size-md="10" offset-md="1" size-lg="4" offset-lg="4" class="ion-no-border">
-        <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [dischargeNotice]="dischargeNotice"
-          [forMoreOrLess]="false" [is_pwd]="is_pwd" [is_senior]="is_senior"
-          [is_philhealth_membership]="is_philhealth_membership" [patientDetailfromApi_from]="patientDetailfromApi_from"
-          [patientDetailfromApi_to]="patientDetailfromApi_to" [admission_status]="admission_status">
+      <ion-col
+        size-md="10"
+        offset-md="1"
+        size-lg="4"
+        offset-lg="4"
+        class="ion-no-border">
+        <app-chh-app-patient-header
+          [data]="data"
+          [dateAdmitted]="dateAdmitted"
+          [dischargeNotice]="dischargeNotice"
+          [forMoreOrLess]="false"
+          [is_pwd]="is_pwd"
+          [is_senior]="is_senior"
+          [is_philhealth_membership]="is_philhealth_membership"
+          [patientDetailfromApi_from]="patientDetailfromApi_from"
+          [patientDetailfromApi_to]="patientDetailfromApi_to"
+          [admission_status]="admission_status">
         </app-chh-app-patient-header>
-
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -23,34 +37,62 @@
 
 <ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
-    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
-      refreshingSpinner="circles" refreshingText="Refreshing...">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
     </ion-refresher-content>
   </ion-refresher>
   <ion-grid class="ion-no-padding">
     <ion-row class="custom-padding">
       <ion-col size-lg="1" *ngIf="isDesktop"></ion-col>
       <ion-col size-lg="3" size-md="12" *ngIf="isDesktop">
-
-        <app-chh-app-patient-header [data]="data" [dateAdmitted]="dateAdmitted" [dischargeNotice]="dischargeNotice"
-          [forMoreOrLess]="true" [is_pwd]="is_pwd" [is_senior]="is_senior"
+        <app-chh-app-patient-header
+          [data]="data"
+          [dateAdmitted]="dateAdmitted"
+          [dischargeNotice]="dischargeNotice"
+          [forMoreOrLess]="true"
+          [is_pwd]="is_pwd"
+          [is_senior]="is_senior"
           [is_philhealth_membership]="is_philhealth_membership">
         </app-chh-app-patient-header>
       </ion-col>
-      <ion-col size-md="1" size-xs="12" *ngIf="!isDesktop">
-
-      </ion-col>
-      <ion-col size-md="12" size-lg="6" class="custom-border-bottom ion-no-border ">
-
+      <ion-col size-md="1" size-xs="12" *ngIf="!isDesktop"> </ion-col>
+      <ion-col
+        size-md="12"
+        size-lg="6"
+        class="custom-border-bottom ion-no-border">
         <ng-container>
-
+          <ion-card mode="ios">
+            <ion-item>
+              <ion-label class="ion-text-wrap">
+                <h2>Summary</h2>
+              </ion-label>
+            </ion-item>
+            <ion-item lines="none">
+              <!--ion-text class="ion-text-wrap">{{progressNoteSummary}}</ion-text-->
+              <app-show-hide
+                [comment]="progressNoteSummary"
+                [dataZoom]="progressNoteSummary"></app-show-hide>
+            </ion-item>
+          </ion-card>
+        </ng-container>
+        <ng-container>
           <ion-list>
-            <ion-item><b>{{event_date}}</b>
-              <ion-button slot="end" color="warning" (click)="presentAlert()"
-                *ngIf="isApproved !='1' && summary_status =='FA' && doctor_Status_code=='AP'">Approve?
+            <ion-item
+              ><b>{{event_date}} </b>
+
+              <ion-button
+                slot="end"
+                color="warning"
+                (click)="presentAlert()"
+                *ngIf="isApproved !='1' && summary_status =='FA' && doctor_Status_code=='AP'"
+                >Approve?
               </ion-button>
 
-              <ion-button slot="end" *ngIf="summary_status =='RA'">Approved
+              <ion-button slot="end" *ngIf="summary_status =='RA'"
+                >Approved
               </ion-button>
             </ion-item>
 
@@ -58,77 +100,63 @@
               <ion-card mode="ios">
                 <ion-item>
                   <ion-label class="ion-text-wrap">
-                    <h2 class="icon-center ">{{x.username}} | <ion-text> {{x.event_time_c}}</ion-text>
-                      <!--|
-                      <ion-badge class="icon-center" [color]="x.is_approve == '0' ? 'medium' : 'mango'">
+                    <h2 class="icon-center">
+                      {{x.username}} | <ion-text> {{x.event_time_c}}</ion-text>
+                    </h2>
+                    <h2>
+                      <!--ion-badge
+                        class="icon-center"
+                        [color]="x.is_approve == '0' ? 'medium' : 'mango'">
                         <span *ngIf="x.is_approve == '0'">Uncertain</span>
                         <span *ngIf="x.is_approve != '0'">Approved</span>
-                      </ion-badge>-->
+                      </ion-badge-->
                       <!--ion-icon class="icon-center floatRight" name="ellipsis-vertical-outline"
                         id="trigger-inbox-popover"></ion-icon-->
-                      <!--ion-button color="medium" fill="clear" class="pointer icon-center  floatRight testletter"
-                        (click)="presentPopover($event,x)" *ngIf="x.is_approve == '0'"><b>Comments</b>
-                      </ion-button-->
-                      <ion-button color="mango" fill="clear" class="pointer icon-center  floatRight testletter"
-                        (click)="openModal(x)"><b>Comments <sup>
-                            <app-chat-new-message [toSearch]="x.new_message"></app-chat-new-message>
+
+                      <!-- <ion-button
+                        color="medium"
+                        fill="clear"
+                        class="pointer icon-center floatRight testletter"
+                        (click)="presentAlertConfirmApprove($event)"
+                        *ngIf="x.is_approve == '0'"
+                        ><b>Approve</b>
+                      </ion-button>
+                      -->
+                      <ion-button
+                        color="mango"
+                        fill="clear"
+                        class="pointer icon-center floatRight testletter"
+                        (click)="openModal(x)"
+                        ><b
+                          >Comments
+                          <sup>
+                            <app-chat-new-message
+                              [toSearch]="x.new_message"></app-chat-new-message>
                           </sup>
                         </b>
                       </ion-button>
-
-
                     </h2>
 
                     <div *ngFor="let y of x.soap">
-                      <app-soap-show-hide [SOAP]="y.note_type" [comment]="y.notes" class="padding-top15">
+                      <app-soap-show-hide
+                        [SOAP]="y.note_type"
+                        [comment]="y.notes"
+                        class="padding-top15">
                       </app-soap-show-hide>
                     </div>
-
                   </ion-label>
                 </ion-item>
               </ion-card>
             </div>
-
-
           </ion-list>
-
-
-
         </ng-container>
-
-
-
-        <ng-container>
-          <ion-card mode="ios">
-            <ion-item>
-              <ion-label class="ion-text-wrap">
-                <h2>Summary
-
-                </h2>
-
-              </ion-label>
-
-            </ion-item>
-            <ion-item lines="none">
-              <!--ion-text class="ion-text-wrap">{{progressNoteSummary}}</ion-text-->
-              <app-show-hide [comment]="progressNoteSummary" [dataZoom]="progressNoteSummary"></app-show-hide>
-            </ion-item>
-          </ion-card>
-
-        </ng-container>
-
-
-
-
-
-
 
         <ng-container *ngIf="progressNotesIsNotReady">
           <div class="ion-padding custom-skeleton">
             <ion-card mode="ios" class="pointer">
               <ion-item lines="none">
-                <ion-label style="margin-top: -10px;">
-                  <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                <ion-label style="margin-top: -10px">
+                  <ion-item class="ion-no-padding" style="padding-bottom: 5px">
                     <ion-skeleton-text animated></ion-skeleton-text>
                   </ion-item>
                   <ion-skeleton-text animated></ion-skeleton-text>
@@ -137,8 +165,8 @@
             </ion-card>
             <ion-card mode="ios" class="pointer">
               <ion-item lines="none">
-                <ion-label style="margin-top: -10px;">
-                  <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                <ion-label style="margin-top: -10px">
+                  <ion-item class="ion-no-padding" style="padding-bottom: 5px">
                     <ion-skeleton-text animated></ion-skeleton-text>
                   </ion-item>
                   <ion-skeleton-text animated></ion-skeleton-text>
@@ -147,8 +175,8 @@
             </ion-card>
             <ion-card mode="ios" class="pointer">
               <ion-item lines="none">
-                <ion-label style="margin-top: -10px;">
-                  <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                <ion-label style="margin-top: -10px">
+                  <ion-item class="ion-no-padding" style="padding-bottom: 5px">
                     <ion-skeleton-text animated></ion-skeleton-text>
                   </ion-item>
                   <ion-skeleton-text animated></ion-skeleton-text>
@@ -157,8 +185,8 @@
             </ion-card>
             <ion-card mode="ios" class="pointer">
               <ion-item lines="none">
-                <ion-label style="margin-top: -10px;">
-                  <ion-item class="ion-no-padding" style="padding-bottom: 5px;">
+                <ion-label style="margin-top: -10px">
+                  <ion-item class="ion-no-padding" style="padding-bottom: 5px">
                     <ion-skeleton-text animated></ion-skeleton-text>
                   </ion-item>
                   <ion-skeleton-text animated></ion-skeleton-text>
@@ -167,8 +195,6 @@
             </ion-card>
           </div>
         </ng-container>
-
-
 
         <div *ngIf="progressNotesIsEmpty">
           <ion-grid>
@@ -187,12 +213,13 @@
     </ion-row>
   </ion-grid>
 
-  <ion-modal trigger="trigger-button" cssClass="custom-modal" [swipeToClose]="true"
+  <ion-modal
+    trigger="trigger-button"
+    cssClass="custom-modal"
+    [swipeToClose]="true"
     [presentingElement]="routerOutlet.nativeEl">
     <!-- [breakpoints]="[0, 0.25, 0.5, 0.9, 1]"
       [initialBreakpoint]="0.9" -->
-    <ng-template>
-      test only
-    </ng-template>
+    <ng-template> test only </ng-template>
   </ion-modal>
 </ion-content>

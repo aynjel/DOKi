@@ -36,6 +36,11 @@ export class ExamResultsModalComponent implements OnInit {
     this.pdf.examCode = this.ExamDetails.exam_Code;
     this.pdf.site = this.ExamDetails.site;
     this.pdf.testId = this.ExamDetails.exam_Description;
+    if (this.requestType == "radiology") {
+    }
+    if (this.requestType == "radiology") {
+      this.requestType = this.ExamDetails.exam.toLowerCase();
+    }
     this.getPDF(this.pdf);
     // this.pdf.examNo = this.ExamDetails.
   }

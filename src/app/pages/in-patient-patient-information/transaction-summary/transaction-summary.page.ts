@@ -6,52 +6,52 @@ import {
   ViewContainerRef,
   ComponentFactoryResolver,
   Renderer2,
-} from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+} from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
+import { Location } from "@angular/common";
 import {
   ModalController,
   AlertController,
   NavController,
-} from '@ionic/angular';
-import { ChhAppFeePage } from '../../../chh-web-components/chh-app-fee/chh-app-fee.page';
-import { from } from 'rxjs';
-import { PopoverController } from '@ionic/angular';
-import { timeStamp } from 'console';
-import { DoctorService } from 'src/app/services/doctor/doctor.service';
+} from "@ionic/angular";
+import { ChhAppFeePage } from "../../../chh-web-components/chh-app-fee/chh-app-fee.page";
+import { from } from "rxjs";
+import { PopoverController } from "@ionic/angular";
+import { timeStamp } from "console";
+import { DoctorService } from "src/app/services/doctor/doctor.service";
 //import { GoogleAnalyticsService } from 'ngx-google-analytics';
-import { AuthService } from 'src/app/services/auth/auth.service';
-import { LoginData } from '../../../models/login-data.model';
-import { FunctionsService } from '../../../shared/functions/functions.service';
-import { PatientService } from 'src/app/services/patient/patient.service';
-import { logWarnings } from 'protractor/built/driverProviders';
-import { ChemistryPage } from '../../../chh-web-components/chh-app-test/chh-app-chemistry/chemistry.page';
-import { ChhAppBasePage } from '../../../chh-web-components/chh-app-test/chh-app-base/chh-app-base.page';
-import { Messages } from '../../../shared/messages';
-import { ScreenSizeService } from '../../../services/screen-size/screen-size.service';
-import { ChhAppTestChemistryComponent } from '../../../chh-web-components/chh-app-test/chh-app-test-chemistry/chh-app-test-chemistry.component';
-import { ChhAppTestFecalysisComponent } from '../../../chh-web-components/chh-app-test/chh-app-test-fecalysis/chh-app-test-fecalysis.component';
-import { ChhAppTestSerologyComponent } from '../../../chh-web-components/chh-app-test/chh-app-test-serology/chh-app-test-serology.component';
-import { StorageService } from '../../../services/storage/storage.service';
-import { AuthConstants, Consta } from '../../../config/auth-constants';
-import { executionAsyncResource } from 'async_hooks';
-import { Constants } from 'src/app/shared/constants';
-import { CaseRatesPage } from '../../case-rates/case-rates.page';
+import { AuthService } from "src/app/services/auth/auth.service";
+import { LoginData } from "../../../models/login-data.model";
+import { FunctionsService } from "../../../shared/functions/functions.service";
+import { PatientService } from "src/app/services/patient/patient.service";
+import { logWarnings } from "protractor/built/driverProviders";
+import { ChemistryPage } from "../../../chh-web-components/chh-app-test/chh-app-chemistry/chemistry.page";
+import { ChhAppBasePage } from "../../../chh-web-components/chh-app-test/chh-app-base/chh-app-base.page";
+import { Messages } from "../../../shared/messages";
+import { ScreenSizeService } from "../../../services/screen-size/screen-size.service";
+import { ChhAppTestChemistryComponent } from "../../../chh-web-components/chh-app-test/chh-app-test-chemistry/chh-app-test-chemistry.component";
+import { ChhAppTestFecalysisComponent } from "../../../chh-web-components/chh-app-test/chh-app-test-fecalysis/chh-app-test-fecalysis.component";
+import { ChhAppTestSerologyComponent } from "../../../chh-web-components/chh-app-test/chh-app-test-serology/chh-app-test-serology.component";
+import { StorageService } from "../../../services/storage/storage.service";
+import { AuthConstants, Consta } from "../../../config/auth-constants";
+import { executionAsyncResource } from "async_hooks";
+import { Constants } from "src/app/shared/constants";
+import { CaseRatesPage } from "../../case-rates/case-rates.page";
 
 import {
   UserSettingsModelv3,
   LoginResponseModelv3,
-} from 'src/app/models/doctor';
+} from "src/app/models/doctor";
 import {
   InPatientData,
   ProfessionalFeeModelv3,
-} from 'src/app/models/in-patient.model';
-import { takeUntil } from 'rxjs/operators';
-import { BehaviorSubject, Subject } from 'rxjs';
+} from "src/app/models/in-patient.model";
+import { takeUntil } from "rxjs/operators";
+import { BehaviorSubject, Subject } from "rxjs";
 @Component({
-  selector: 'app-transaction-summary',
-  templateUrl: './transaction-summary.page.html',
-  styleUrls: ['./transaction-summary.page.scss'],
+  selector: "app-transaction-summary",
+  templateUrl: "./transaction-summary.page.html",
+  styleUrls: ["./transaction-summary.page.scss"],
 })
 export class TransactionSummaryPage implements OnInit {
   private ngUnsubscribe = new Subject();
@@ -60,7 +60,7 @@ export class TransactionSummaryPage implements OnInit {
   routerLinkBack1: any;
   routerLinkBack2: any;
   routerLinkBack3: any;
-  method: any = '';
+  method: any = "";
   method1: any;
   id: any;
   dr_name: any;
@@ -72,7 +72,7 @@ export class TransactionSummaryPage implements OnInit {
   data1: any;
   patient_name: any;
   dateAdmitted: any;
-  isPatientSeen: any = 'o';
+  isPatientSeen: any = "o";
   InsurancePF: number;
   InsuranceShowVat: boolean = false;
   InsuranceVat: boolean = false;
@@ -94,7 +94,7 @@ export class TransactionSummaryPage implements OnInit {
   professionalFeeModelv3: ProfessionalFeeModelv3 = new ProfessionalFeeModelv3();
   userSettingsModelv3: UserSettingsModelv3 = new UserSettingsModelv3();
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
-  btnsubmit = 'btnsubmit';
+  btnsubmit = "btnsubmit";
   is_philhealth_membership;
   constructor(
     private router: Router,
@@ -116,7 +116,7 @@ export class TransactionSummaryPage implements OnInit {
     private renderer: Renderer2,
     public nav: NavController
   ) {
-    localStorage.setItem('modaled', '0');
+    localStorage.setItem("modaled", "0");
     this.screensizeService
       .isDesktopView()
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -135,43 +135,43 @@ export class TransactionSummaryPage implements OnInit {
     }
     //this.postData = JSON.parse(atob(localStorage.getItem('postData'))) as InPatientData;
     this.professionalFeeModelv3 = JSON.parse(
-      atob(localStorage.getItem('postData1'))
+      atob(localStorage.getItem("postData1"))
     );
 
     this.data1 = this.professionalFeeModelv3.doctor_prof_fee;
-    this.daysManaged = atob(localStorage.getItem('daysManaged'));
+    this.daysManaged = atob(localStorage.getItem("daysManaged"));
     if (this.daysManaged > 1) {
-      this.day = 'Days';
+      this.day = "Days";
     } else {
-      this.day = 'Day';
+      this.day = "Day";
     }
     this.withVatN = this.professionalFeeModelv3.is_vat;
-    if (this.professionalFeeModelv3.is_vat == 'Y') {
-      this.withVat = '(+ VAT)';
+    if (this.professionalFeeModelv3.is_vat == "Y") {
+      this.withVat = "(+ VAT)";
     } else {
-      this.withVat = '(No VAT)';
+      this.withVat = "(No VAT)";
     }
     this.payvenueN = this.professionalFeeModelv3.payvenue;
 
-    if (this.professionalFeeModelv3.selected_payvenue == 'Charity') {
-      this.payvenueN = 'xyz';
+    if (this.professionalFeeModelv3.selected_payvenue == "Charity") {
+      this.payvenueN = "xyz";
     }
 
     this.functionsService.logToConsole(this.professionalFeeModelv3);
 
-    this.functionsService.logToConsole('data1 :' + this.data1);
-    this.functionsService.logToConsole('withVatN :' + this.withVatN);
-    this.functionsService.logToConsole('payvenueN :' + this.payvenueN);
+    this.functionsService.logToConsole("data1 :" + this.data1);
+    this.functionsService.logToConsole("withVatN :" + this.withVatN);
+    this.functionsService.logToConsole("payvenueN :" + this.payvenueN);
 
-    if (this.professionalFeeModelv3.payvenue == 'W') {
-      this.payvenue = 'Charity / PhilHealth';
-    } else if (this.professionalFeeModelv3.payvenue == 'H') {
-      this.payvenue = 'c/o Insurance';
-    } else if (this.professionalFeeModelv3.payvenue == 'X') {
-      this.payvenue = 'c/o Insurance';
-    } else if (this.professionalFeeModelv3.payvenue == 'N') {
-      this.payvenue = 'Not Seen ';
-    } else if (this.professionalFeeModelv3.payvenue == 'A') {
+    if (this.professionalFeeModelv3.payvenue == "W") {
+      this.payvenue = "Charity / PhilHealth";
+    } else if (this.professionalFeeModelv3.payvenue == "H") {
+      this.payvenue = "c/o Insurance";
+    } else if (this.professionalFeeModelv3.payvenue == "X") {
+      this.payvenue = "c/o Insurance";
+    } else if (this.professionalFeeModelv3.payvenue == "N") {
+      this.payvenue = "Not Seen ";
+    } else if (this.professionalFeeModelv3.payvenue == "A") {
       this.payvenue = "Coordinator's Fee";
     }
     this.payvenue = this.professionalFeeModelv3.selected_payvenue;
@@ -186,24 +186,24 @@ export class TransactionSummaryPage implements OnInit {
       );
       this.summaryHeader =
         this.method +
-        ' - ' +
+        " - " +
         this.functionsService.convertAllFirstLetterToUpperCase(this.summary);
     } else {
-      this.summaryHeader = 'Transaction Summary';
+      this.summaryHeader = "Transaction Summary";
     }
 
-    this.routerLinkBack1 = '/menu/in-patients/' + this.id;
-    this.routerLinkBack2 = '/menu/in-patients/' + this.id + '/professional-fee';
+    this.routerLinkBack1 = "/menu/in-patients/" + this.id;
+    this.routerLinkBack2 = "/menu/in-patients/" + this.id + "/professional-fee";
     this.routerLinkBack3 =
-      '/menu/in-patients/' + this.id + '/professional-fee/' + this.method1;
-    if (this.summary != 'summary') {
+      "/menu/in-patients/" + this.id + "/professional-fee/" + this.method1;
+    if (this.summary != "summary") {
       this.routerLinkBack = this.routerLinkBack2;
     } else {
       this.routerLinkBack = this.routerLinkBack3;
     }
-    this.admission_status = atob(localStorage.getItem('admission_status'));
-    this.patientDetailfromApi_from = atob(localStorage.getItem('Api_from'));
-    this.patientDetailfromApi_to = atob(localStorage.getItem('Api_to'));
+    this.admission_status = atob(localStorage.getItem("admission_status"));
+    this.patientDetailfromApi_from = atob(localStorage.getItem("Api_from"));
+    this.patientDetailfromApi_to = atob(localStorage.getItem("Api_to"));
   }
   admission_status;
   patientDetailfromApi_from;
@@ -219,20 +219,20 @@ export class TransactionSummaryPage implements OnInit {
     let logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
 
     // this.data = JSON.parse(atob(sessionStorage.getItem("patientData")));
-    this.data = JSON.parse(atob(localStorage.getItem('patientData')));
+    this.data = JSON.parse(atob(localStorage.getItem("patientData")));
     console.log(this.data);
     this.payvenueTxt = this.data[0].payvenue;
     this.is_pwd = this.data[0].is_pwd;
     this.is_philhealth_membership = this.data[0].philhealth_membership;
     this.is_senior = this.data[0].is_senior;
-    this.patient_name = this.data[0].first_name + ' ' + this.data[0].last_name;
+    this.patient_name = this.data[0].first_name + " " + this.data[0].last_name;
     this.patient_name = this.functionsService.convertAllFirstLetterToUpperCase(
       this.patient_name
     );
-    if (this.data[0].site == 'C') {
-      this.site = 'Chong Hua Hospital';
+    if (this.data[0].site == "C") {
+      this.site = "Chong Hua Hospital";
     } else {
-      this.site = 'Chong Hua Hospital Mandaue';
+      this.site = "Chong Hua Hospital Mandaue";
     }
     if (this.id != this.data[0].admission_no) {
       this.nav.back();
@@ -245,11 +245,11 @@ export class TransactionSummaryPage implements OnInit {
     this.disableSubmit = true;
     //this.postData.Mode = Consta.mode;
     if (
-      this.data[0].payvenue == 'W' ||
-      this.data[0].payvenue == 'H' ||
-      this.data[0].payvenue == 'X' ||
-      this.data[0].payvenue == 'N' ||
-      this.data[0].payvenue == 'A'
+      this.data[0].payvenue == "W" ||
+      this.data[0].payvenue == "H" ||
+      this.data[0].payvenue == "X" ||
+      this.data[0].payvenue == "N" ||
+      this.data[0].payvenue == "A"
     ) {
       this.professionalFeeModelv3.old_prof_fee = this.data[0].doctor_prof_fee;
 
@@ -263,21 +263,23 @@ export class TransactionSummaryPage implements OnInit {
           (res: any) => {
             if (res == true) {
               this.modalUpdate(
-                'SUCCESS',
-                'Successfully UPDATED your Professional Fee.'
+                "SUCCESS",
+                "Successfully UPDATED your Professional Fee."
               );
             } else {
               this.functionsService.alert(
-                'UPDATING of Professional Fee was unsuccessful. Please try again.',
-                'Okay'
+                "UPDATING of Professional Fee was unsuccessful. Please try again.",
+                "Okay"
               );
               this.disableSubmit = false;
             }
           },
           (error) => {
+            console.log(error);
+
             this.functionsService.alert(
-              'SAVING of Professional Fee was unsuccessful. Please try again.',
-              'Okay'
+              "SAVING of Professional Fee was unsuccessful. Please try again.",
+              "Okay"
             );
             this.disableSubmit = false;
           },
@@ -297,21 +299,21 @@ export class TransactionSummaryPage implements OnInit {
 
             if (res == true) {
               this.modalUpdate(
-                'SUCCESS',
-                'Thank you, Dok! You have successfully SAVED your Professional Fee.'
+                "SUCCESS",
+                "Thank you, Dok! You have successfully SAVED your Professional Fee."
               );
             } else {
               this.functionsService.alert(
-                'SAVING of Professional Fee was unsuccessful. Please try again.',
-                'Okay'
+                "SAVING of Professional Fee was unsuccessful. Please try again.",
+                "Okay"
               );
               this.disableSubmit = false;
             }
           },
           (error) => {
             this.functionsService.alert(
-              'SAVING of Professional Fee was unsuccessful. Please try again.',
-              'Okay'
+              "SAVING of Professional Fee was unsuccessful. Please try again.",
+              "Okay"
             );
             this.disableSubmit = false;
           },
@@ -322,12 +324,12 @@ export class TransactionSummaryPage implements OnInit {
 
   async modalUpdate(header, message) {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+      cssClass: "my-custom-class",
       header: header,
       message: message,
       buttons: [
         {
-          text: 'Okay',
+          text: "Okay",
           handler: () => {
             this.disableSubmit = false;
             this.functionsService.logToConsole(this.isDesktop);
@@ -335,7 +337,7 @@ export class TransactionSummaryPage implements OnInit {
             if (!this.isDesktop) {
               this.alertController.dismiss();
               //this.router.navigate(['menu/in-patients/']);
-              this.router.navigate(['menu/in-patients/']).then(() => {
+              this.router.navigate(["menu/in-patients/"]).then(() => {
                 window.location.reload();
               });
             } else {
@@ -346,7 +348,7 @@ export class TransactionSummaryPage implements OnInit {
                 dismissed: true,
               });
               //this.router.navigate(['menu/in-patients/']);
-              this.router.navigate(['menu/in-patients/']).then(() => {
+              this.router.navigate(["menu/in-patients/"]).then(() => {
                 window.location.reload();
               });
             }
@@ -365,15 +367,15 @@ export class TransactionSummaryPage implements OnInit {
 
   checkAppearance() {
     var values = JSON.parse(
-      '[' + atob(localStorage.getItem('user_settings')) + ']'
+      "[" + atob(localStorage.getItem("user_settings")) + "]"
     );
-    let dr_username = atob(localStorage.getItem('username'));
+    let dr_username = atob(localStorage.getItem("username"));
     values.forEach((element) => {
       this.functionsService.logToConsole(element.darkmode);
       if (element.darkmode == 1) {
-        this.renderer.setAttribute(document.body, 'color-theme', 'dark');
+        this.renderer.setAttribute(document.body, "color-theme", "dark");
       } else {
-        this.renderer.setAttribute(document.body, 'color-theme', 'light');
+        this.renderer.setAttribute(document.body, "color-theme", "light");
       }
     });
   }

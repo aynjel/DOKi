@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { AlertController, ToastController } from '@ionic/angular';
-import { Constants } from '../constants';
-import { ModalController, PopoverController } from '@ionic/angular';
-import { environment } from 'src/environments/environment';
-import * as bcrypt from 'bcryptjs';
-import { Inject, PLATFORM_ID, InjectionToken, Component } from '@angular/core';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Injectable } from "@angular/core";
+import { AlertController, ToastController } from "@ionic/angular";
+import { Constants } from "../constants";
+import { ModalController, PopoverController } from "@ionic/angular";
+import { environment } from "src/environments/environment";
+import * as bcrypt from "bcryptjs";
+import { Inject, PLATFORM_ID, InjectionToken, Component } from "@angular/core";
+import { DOCUMENT, isPlatformBrowser } from "@angular/common";
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class FunctionsService {
   private readonly documentIsAccessible: boolean;
@@ -28,7 +28,7 @@ export class FunctionsService {
    */
   async alert(data1: any, data2: any) {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+      cssClass: "my-custom-class",
       message: data1,
       backdropDismiss: false,
       buttons: [{ text: data2, handler: () => {} }],
@@ -46,9 +46,9 @@ export class FunctionsService {
     var y = now.getFullYear();
     var m = now.getMonth() + 1;
     var d = now.getDate();
-    var mm = m < 10 ? '0' + m : m;
-    var dd = d < 10 ? '0' + d : d;
-    return '' + y + '-' + mm + '-' + dd;
+    var mm = m < 10 ? "0" + m : m;
+    var dd = d < 10 ? "0" + d : d;
+    return "" + y + "-" + mm + "-" + dd;
   }
 
   /**
@@ -62,7 +62,7 @@ export class FunctionsService {
     let i = this.addZeroBefore(xx.getMinutes());
     let s = this.addZeroBefore(xx.getSeconds());
     let v = xx.getMilliseconds();
-    return this.getSystemDate() + 'T' + H + ':' + i + ':' + s + '.' + v + 'Z';
+    return this.getSystemDate() + "T" + H + ":" + i + ":" + s + "." + v + "Z";
   }
 
   /**
@@ -73,7 +73,7 @@ export class FunctionsService {
    * Return: 06
    */
   addZeroBefore(n) {
-    return (n < 10 ? '0' : '') + n;
+    return (n < 10 ? "0" : "") + n;
   }
 
   /**
@@ -84,11 +84,11 @@ export class FunctionsService {
    * Return: 2020-03-16 | 23:26:06
    */
   explodeDate(data: any) {
-    let myarr = data.split('T');
+    let myarr = data.split("T");
     if (myarr[1]) {
-      let myarr2 = myarr[1].split('.');
+      let myarr2 = myarr[1].split(".");
       // //console.log(myarr[0] + " | " + myarr2[0]);
-      return myarr[0] + ' | ' + myarr2[0];
+      return myarr[0] + " | " + myarr2[0];
     }
   }
 
@@ -145,23 +145,23 @@ export class FunctionsService {
    * Return: 2020-09-15
    */
   incrementDate(date_str, incrementor) {
-    var parts = date_str.split('-');
+    var parts = date_str.split("-");
     var dt = new Date(
       parseInt(parts[0], 10), // year
       parseInt(parts[1], 10) - 1, // month (starts with 0)
       parseInt(parts[2], 10) // date
     );
     dt.setTime(dt.getTime() + incrementor * 86400000);
-    parts[0] = '' + dt.getFullYear();
-    parts[1] = '' + (dt.getMonth() + 1);
+    parts[0] = "" + dt.getFullYear();
+    parts[1] = "" + (dt.getMonth() + 1);
     if (parts[1].length < 2) {
-      parts[1] = '0' + parts[1];
+      parts[1] = "0" + parts[1];
     }
-    parts[2] = '' + dt.getDate();
+    parts[2] = "" + dt.getDate();
     if (parts[2].length < 2) {
-      parts[2] = '0' + parts[2];
+      parts[2] = "0" + parts[2];
     }
-    return parts.join('-');
+    return parts.join("-");
   }
 
   /**
@@ -172,12 +172,12 @@ export class FunctionsService {
    * Return: Test Data
    */
   convertToCamelCase(str: string) {
-    var splitStr = str.toLowerCase().split(' ');
+    var splitStr = str.toLowerCase().split(" ");
     for (var i = 0; i < splitStr.length; i++) {
       splitStr[i] =
         splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
     }
-    return splitStr.join(' ');
+    return splitStr.join(" ");
   }
 
   /**
@@ -194,8 +194,8 @@ export class FunctionsService {
     if (!text || text.length <= charlimit) {
       return text;
     }
-    let without_html = text.replace(/<(?:.|\n)*?>/gm, '');
-    let shortened = without_html.substring(0, charlimit) + '...';
+    let without_html = text.replace(/<(?:.|\n)*?>/gm, "");
+    let shortened = without_html.substring(0, charlimit) + "...";
     return shortened;
   }
 
@@ -209,9 +209,9 @@ export class FunctionsService {
    */
   convertAllFirstLetterToUpperCase(stringData: string): string {
     return stringData
-      .split(' ')
+      .split(" ")
       .map((w) => w[0].toUpperCase() + w.substr(1).toLowerCase())
-      .join(' ');
+      .join(" ");
   }
 
   /**
@@ -229,14 +229,14 @@ export class FunctionsService {
 
   sorryDoc() {
     this.alert(
-      'Sorry, Dok. We cannot log you in at the moment. Please try again.',
-      'Okay'
+      "Sorry, Dok. We cannot log you in at the moment. Please try again.",
+      "Okay"
     );
   }
 
   isLocalorLive(data: any) {
-    if (localStorage.getItem('testdb') == '1') {
-      return data + 'Test';
+    if (localStorage.getItem("testdb") == "1") {
+      return data + "Test";
     } else {
       return data;
     }
@@ -270,71 +270,71 @@ export class FunctionsService {
 
       return decodeURIComponent(result[1]);
     } else {
-      return '';
+      return "";
     }
   }
   private getCookieRegExp(name: string): RegExp {
     const escapedName: string = name.replace(
       /([\[\]\{\}\(\)\|\=\;\+\?\,\.\*\^\$])/gi,
-      '\\$1'
+      "\\$1"
     );
 
     return new RegExp(
-      '(?:^' + escapedName + '|;\\s*' + escapedName + ')=(.*?)(?:;|$)',
-      'g'
+      "(?:^" + escapedName + "|;\\s*" + escapedName + ")=(.*?)(?:;|$)",
+      "g"
     );
   }
 
   getAdmissionStatus(data: any) {
-    let x = '';
-    if (data == 'RE') {
-      x = 'Registered';
-    } else if (data == 'AC') {
-      x = 'Admitted';
-    } else if (data == 'DN') {
-      x = 'For Discharge';
-    } else if (data == 'BP') {
-      x = 'Partially Settled';
-    } else if (data == 'PP') {
-      x = 'Ok For Checkout';
-    } else if (data == 'CO') {
-      x = 'Checkout';
-    } else if (data == 'BA') {
-      x = 'Billing Approved';
-    } else if (data == 'CC') {
-      x = 'Checked-out With Balance';
-    } else if (data == 'FP') {
-      x = 'Ok For Checkout';
-    } else if (data == 'CA') {
-      x = 'Cancelled';
-    } else if (data == 'PA') {
-      x = 'Pre-Admitted';
-    } else if (data == 'OP') {
-      x = 'Re-Opened (w/o b)';
-    } else if (data == 'ON') {
-      x = 'Re-Opened (wb)';
-    } else if (data == 'UA') {
-      x = 'Unit Admission';
-    } else if (data == 'BB') {
-      x = 'Fully Settled';
+    let x = "";
+    if (data == "RE") {
+      x = "Registered";
+    } else if (data == "AC") {
+      x = "Admitted";
+    } else if (data == "DN") {
+      x = "For Discharge";
+    } else if (data == "BP") {
+      x = "Partially Settled";
+    } else if (data == "PP") {
+      x = "Ok For Checkout";
+    } else if (data == "CO") {
+      x = "Checkout";
+    } else if (data == "BA") {
+      x = "Billing Approved";
+    } else if (data == "CC") {
+      x = "Checked-out With Balance";
+    } else if (data == "FP") {
+      x = "Ok For Checkout";
+    } else if (data == "CA") {
+      x = "Cancelled";
+    } else if (data == "PA") {
+      x = "Pre-Admitted";
+    } else if (data == "OP") {
+      x = "Re-Opened (w/o b)";
+    } else if (data == "ON") {
+      x = "Re-Opened (wb)";
+    } else if (data == "UA") {
+      x = "Unit Admission";
+    } else if (data == "BB") {
+      x = "Fully Settled";
     }
 
     return x;
   }
   getDateTodayMMDDYYYY() {
     let dateCreate = new Date();
-    let dd = String(dateCreate.getDate()).padStart(2, '0');
-    let mm = String(dateCreate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let dd = String(dateCreate.getDate()).padStart(2, "0");
+    let mm = String(dateCreate.getMonth() + 1).padStart(2, "0"); //January is 0!
     let yyyy = dateCreate.getFullYear();
-    let xtoday = mm + '/' + dd + '/' + yyyy;
+    let xtoday = mm + "/" + dd + "/" + yyyy;
     return xtoday;
   }
   convertDatetoMMDDYYYY(date) {
     let dateCreate = new Date(date);
-    let dd = String(dateCreate.getDate()).padStart(2, '0');
-    let mm = String(dateCreate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let dd = String(dateCreate.getDate()).padStart(2, "0");
+    let mm = String(dateCreate.getMonth() + 1).padStart(2, "0"); //January is 0!
     let yyyy = dateCreate.getFullYear();
-    let xtoday = mm + '/' + dd + '/' + yyyy;
+    let xtoday = mm + "/" + dd + "/" + yyyy;
     return xtoday;
   }
   getTime(date) {
@@ -342,26 +342,26 @@ export class FunctionsService {
     let Hour = d.getHours(); // => 9
     let Min = d.getMinutes(); // =>  30
     let Sec = d.getSeconds(); // => 51
-    let xtime = Hour + ':' + Min + ':' + Sec;
+    let xtime = Hour + ":" + Min + ":" + Sec;
     return xtime;
   }
   imageExists(image_url) {
     var http = new XMLHttpRequest();
 
-    http.open('HEAD', image_url, false);
+    http.open("HEAD", image_url, false);
     http.send();
 
     return http.status != 404;
   }
-  getDateYYYYMMDD(date: any = '') {
+  getDateYYYYMMDD(date: any = "") {
     let dateReturn;
-    if (date == '') {
+    if (date == "") {
       let date1 = new Date();
       let day1 = date1.getDate();
       let month1 = date1.getMonth() + 1;
       let year1 = date1.getFullYear();
       dateReturn =
-        year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
+        year1 + "-" + ("0" + month1).slice(-2) + "-" + ("0" + day1).slice(-2);
     } else {
       let today = new Date();
       let days = 86400000; //number of milliseconds in a day
@@ -371,40 +371,40 @@ export class FunctionsService {
       let year11 = fiveDaysAgo.getFullYear();
       dateReturn =
         year11 +
-        '-' +
-        ('0' + month11).slice(-2) +
-        '-' +
-        ('0' + day11).slice(-2);
+        "-" +
+        ("0" + month11).slice(-2) +
+        "-" +
+        ("0" + day11).slice(-2);
     }
     return dateReturn;
   }
 
   convertDatetoMMDDYYYYHHMMSS(date) {
     let dateCreate = new Date(date);
-    let dd = String(dateCreate.getDate()).padStart(2, '0');
-    let mm = String(dateCreate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let dd = String(dateCreate.getDate()).padStart(2, "0");
+    let mm = String(dateCreate.getMonth() + 1).padStart(2, "0"); //January is 0!
     let yyyy = dateCreate.getFullYear();
-    let xtoday = mm + '/' + dd + '/' + yyyy;
+    let xtoday = mm + "/" + dd + "/" + yyyy;
 
     var hours = dateCreate.getHours();
     var minutes = dateCreate.getMinutes();
-    var ampm = hours >= 12 ? 'pm' : 'am';
+    var ampm = hours >= 12 ? "pm" : "am";
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
-    let minute = minutes < 10 ? '0' + minutes : minutes;
-    var strTime = hours + ':' + minute + ' ' + ampm;
+    let minute = minutes < 10 ? "0" + minutes : minutes;
+    var strTime = hours + ":" + minute + " " + ampm;
 
-    return xtoday + ' ' + strTime;
+    return xtoday + " " + strTime;
   }
   getFormatAMPM(date) {
     let newdate = new Date(date);
     var hours = newdate.getHours();
     var minutes: any = newdate.getMinutes();
-    var ampm = hours >= 12 ? 'pm' : 'am';
+    var ampm = hours >= 12 ? "pm" : "am";
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    var strTime = hours + ':' + minutes + ' ' + ampm;
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    var strTime = hours + ":" + minutes + " " + ampm;
     return strTime;
   }
 
@@ -416,7 +416,7 @@ export class FunctionsService {
     let month11 = fiveDaysAgo.getMonth() + 1;
     let year11 = fiveDaysAgo.getFullYear();
     let sendDatedateValue11 =
-      year11 + '-' + ('0' + month11).slice(-2) + '-' + ('0' + day11).slice(-2);
+      year11 + "-" + ("0" + month11).slice(-2) + "-" + ("0" + day11).slice(-2);
     return sendDatedateValue11;
   }
   async presentToast(data) {
@@ -428,10 +428,10 @@ export class FunctionsService {
   }
   convertDatedash(date) {
     let dateCreate = new Date(date);
-    let dd = String(dateCreate.getDate()).padStart(2, '0');
-    let mm = String(dateCreate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let dd = String(dateCreate.getDate()).padStart(2, "0");
+    let mm = String(dateCreate.getMonth() + 1).padStart(2, "0"); //January is 0!
     let yyyy = dateCreate.getFullYear();
-    let xtoday = mm + '-' + dd + '-' + yyyy;
+    let xtoday = mm + "-" + dd + "-" + yyyy;
     return xtoday;
   }
   countDays(from, to) {
@@ -462,10 +462,10 @@ export class FunctionsService {
       const img = new Image();
       img.src = src;
       img.onload = () => {
-        const elem = document.createElement('canvas');
+        const elem = document.createElement("canvas");
         elem.width = newX;
         elem.height = newY;
-        const ctx = elem.getContext('2d');
+        const ctx = elem.getContext("2d");
         ctx.drawImage(img, 0, 0, newX, newY);
         const data = ctx.canvas.toDataURL();
         res(data);
@@ -478,8 +478,8 @@ export class FunctionsService {
       const img = new Image();
       img.src = src;
       img.onload = () => {
-        var croppedCanvas = document.createElement('canvas'),
-          croppedCtx = croppedCanvas.getContext('2d');
+        var croppedCanvas = document.createElement("canvas"),
+          croppedCtx = croppedCanvas.getContext("2d");
         croppedCanvas.width = img.width;
         croppedCanvas.height = img.height;
         croppedCtx.drawImage(img, 0, 0);
@@ -525,52 +525,79 @@ export class FunctionsService {
     });
   }
   monthNames = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
   cdateampm(date) {
     let dateCreate = new Date(date);
-    let dd = String(dateCreate.getDate()).padStart(2, '0');
-    let mm = String(dateCreate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let dd = String(dateCreate.getDate()).padStart(2, "0");
+    let mm = String(dateCreate.getMonth() + 1).padStart(2, "0"); //January is 0!
     let yyyy = dateCreate.getFullYear();
-    let xtoday = this.monthNames[dateCreate.getMonth()] + ' ' + dd + ' ' + yyyy;
+    let xtoday = this.monthNames[dateCreate.getMonth()] + " " + dd + " " + yyyy;
 
     var hours = dateCreate.getHours();
     var minutes = dateCreate.getMinutes();
-    var ampm = hours >= 12 ? 'pm' : 'am';
+    var ampm = hours >= 12 ? "pm" : "am";
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
-    let minute = minutes < 10 ? '0' + minutes : minutes;
-    var strTime = hours + ':' + minute + ' ' + ampm;
+    let minute = minutes < 10 ? "0" + minutes : minutes;
+    var strTime = hours + ":" + minute + " " + ampm;
 
-    return xtoday + ' ' + strTime;
+    return xtoday + " " + strTime;
   }
-  getMmDdYyyy(date: any = '') {
+  getMmDdYyyy(date: any = "") {
     let dateReturn;
-    if (date == '') {
+    if (date == "") {
       let dateCreate = new Date();
-      let dd = String(dateCreate.getDate()).padStart(2, '0');
-      let mm = String(dateCreate.getMonth() + 1).padStart(2, '0'); //January is 0!
+      let dd = String(dateCreate.getDate()).padStart(2, "0");
+      let mm = String(dateCreate.getMonth() + 1).padStart(2, "0"); //January is 0!
       let yyyy = dateCreate.getFullYear();
-      let xtoday = mm + '/' + dd + '/' + yyyy;
+      let xtoday = mm + "/" + dd + "/" + yyyy;
       return xtoday;
     } else {
       let dateCreate = new Date(date);
-      let dd = String(dateCreate.getDate()).padStart(2, '0');
-      let mm = String(dateCreate.getMonth() + 1).padStart(2, '0'); //January is 0!
+      let dd = String(dateCreate.getDate()).padStart(2, "0");
+      let mm = String(dateCreate.getMonth() + 1).padStart(2, "0"); //January is 0!
       let yyyy = dateCreate.getFullYear();
-      let xtoday = mm + '/' + dd + '/' + yyyy;
+      let xtoday = mm + "/" + dd + "/" + yyyy;
       return xtoday;
     }
+  }
+  getDateFull() {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, "0");
+    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    let yyyy = today.getFullYear();
+    let xtoday = mm + "/" + dd + "/" + yyyy;
+    let time = new Date(); // for now
+    let hour = time.getHours(); // => 9
+    let min = time.getMinutes(); // =>  30
+    let sec = time.getSeconds(); // => 51
+    let xtime = hour + ":" + min + ":" + sec;
+    return xtoday + " " + xtime;
+  }
+  getDateFullData(x: any) {
+    let today;
+    today = new Date(x);
+    let dd = String(today.getDate()).padStart(2, "0");
+    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    let yyyy = today.getFullYear();
+    let xtoday = mm + "/" + dd + "/" + yyyy;
+    let time = new Date(x); // for now
+    let hour = time.getHours(); // => 9
+    let min = time.getMinutes(); // =>  30
+    let sec = time.getSeconds(); // => 51
+    let xtime = hour + ":" + min + ":" + sec;
+    return xtoday + " " + xtime;
   }
 }

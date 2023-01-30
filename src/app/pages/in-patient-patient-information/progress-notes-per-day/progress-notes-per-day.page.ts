@@ -1,5 +1,5 @@
-import { Component, NgZone, OnInit, Renderer2 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, NgZone, OnInit, Renderer2 } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import {
   AlertController,
   IonRouterOutlet,
@@ -7,21 +7,21 @@ import {
   NavController,
   PopoverController,
   ToastController,
-} from '@ionic/angular';
-import { ApprovePopOverComponent } from 'src/app/chh-web-components/approve-pop-over/approve-pop-over.component';
-import { LoginResponseModelv3 } from 'src/app/models/doctor';
-import { AuthService } from 'src/app/services/auth/auth.service';
+} from "@ionic/angular";
+import { ApprovePopOverComponent } from "src/app/chh-web-components/approve-pop-over/approve-pop-over.component";
+import { LoginResponseModelv3 } from "src/app/models/doctor";
+import { AuthService } from "src/app/services/auth/auth.service";
 
-import { ResiService } from 'src/app/services/resi/resi.service';
-import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
-import { FunctionsService } from 'src/app/shared/functions/functions.service';
-import { ViewCommentsPopOverComponent } from 'src/app/chh-web-components/view-comments-pop-over/view-comments-pop-over.component';
+import { ResiService } from "src/app/services/resi/resi.service";
+import { ScreenSizeService } from "src/app/services/screen-size/screen-size.service";
+import { FunctionsService } from "src/app/shared/functions/functions.service";
+import { ViewCommentsPopOverComponent } from "src/app/chh-web-components/view-comments-pop-over/view-comments-pop-over.component";
 
-import { ProgressnotesHistoryComponent } from 'src/app/chh-web-components/progressnotes-history/progressnotes-history.component';
+import { ProgressnotesHistoryComponent } from "src/app/chh-web-components/progressnotes-history/progressnotes-history.component";
 @Component({
-  selector: 'app-progress-notes-per-day',
-  templateUrl: './progress-notes-per-day.page.html',
-  styleUrls: ['./progress-notes-per-day.page.scss'],
+  selector: "app-progress-notes-per-day",
+  templateUrl: "./progress-notes-per-day.page.html",
+  styleUrls: ["./progress-notes-per-day.page.scss"],
 })
 export class ProgressNotesPerDayPage implements OnInit {
   patientId: any;
@@ -34,39 +34,39 @@ export class ProgressNotesPerDayPage implements OnInit {
   dateToday: any;
   dateAdmitted;
   insertPN = {
-    account_no: 'string',
+    account_no: "string",
     notes_id: 2,
-    notes: 'string',
-    user_created: 'string',
-    date_created: 'string',
+    notes: "string",
+    user_created: "string",
+    date_created: "string",
   };
   updatePN = {
-    trans_no: 'string',
-    account_no: 'string',
+    trans_no: "string",
+    account_no: "string",
     notes_id: 2,
-    notes: 'string',
-    user_created: 'string',
+    notes: "string",
+    user_created: "string",
   };
   progressNoteSummaryUpdate = {
     trans_no: 0,
-    summary: 'string',
-    summary_updated_by: 'string',
+    summary: "string",
+    summary_updated_by: "string",
   };
   user_created: any;
   activeDays: any = [];
   birthday: any;
   age: any;
   progressNotesPerDay = {
-    account_no: 'string',
-    event_date: 'string',
+    account_no: "string",
+    event_date: "string",
   };
   progressNoteApproval = {
-    account_no: 'string',
-    event_date: 'string',
-    approved_by: 'string',
-    dr_code: 'string',
-    dr_name: 'string',
-    status: 'string',
+    account_no: "string",
+    event_date: "string",
+    approved_by: "string",
+    dr_code: "string",
+    dr_name: "string",
+    status: "string",
   };
   event_date;
   logindata;
@@ -102,15 +102,15 @@ export class ProgressNotesPerDayPage implements OnInit {
   patient_name;
   dischargeNotice;
   approvePN = {
-    account_no: 'string',
-    event_date: 'string',
-    approved_by: 'string',
-    dr_code: 'string',
-    dr_name: 'string',
+    account_no: "string",
+    event_date: "string",
+    approved_by: "string",
+    dr_code: "string",
+    dr_name: "string",
   };
   ionViewWillEnter() {
     let x = JSON.parse(
-      unescape(atob(localStorage.getItem('_cap_userDataKey')))
+      unescape(atob(localStorage.getItem("_cap_userDataKey")))
     );
     this.logindata = x;
   }
@@ -118,18 +118,18 @@ export class ProgressNotesPerDayPage implements OnInit {
   doctor_Status_code;
 
   ngOnInit() {
-    this.doctor_Status_code = localStorage.getItem('doctor_Status_code');
+    this.doctor_Status_code = localStorage.getItem("doctor_Status_code");
     let x = JSON.parse(
-      unescape(atob(localStorage.getItem('_cap_userDataKey')))
+      unescape(atob(localStorage.getItem("_cap_userDataKey")))
     );
     this.logindata = x;
     this.dateToday = this.funcServ.getDateTodayMMDDYYYY();
-    this.user_created = atob(localStorage.getItem('username'));
+    this.user_created = atob(localStorage.getItem("username"));
     this.progressNoteSummaryUpdate.summary_updated_by = this.user_created;
     this.patientId = this.activatedRoute.snapshot.params.pno;
     this.event_date = this.activatedRoute.snapshot.params.perday;
     this.patientInfo = JSON.parse(
-      atob(localStorage.getItem('selectedPatient'))
+      atob(localStorage.getItem("selectedPatient"))
     );
     this.dateAdmitted = this.patientInfo.date_created;
 
@@ -142,7 +142,7 @@ export class ProgressNotesPerDayPage implements OnInit {
     );
     this.progressNotesPerDay.account_no = this.patientInfo[0].admission_no;
     this.progressNotesPerDay.event_date = this.event_date;
-    this.data = JSON.parse(atob(localStorage.getItem('patientData')));
+    this.data = JSON.parse(atob(localStorage.getItem("patientData")));
     this.insurance_hmo = this.data[0].insurance_hmo;
     this.is_philhealth_membership = this.data[0].philhealth_membership;
     this.is_pwd = this.data[0].is_pwd;
@@ -155,7 +155,7 @@ export class ProgressNotesPerDayPage implements OnInit {
       //this.nav.back();
     }
     this.data1 = this.data[0].doctor_prof_fee;
-    this.patient_name = this.data[0].first_name + ' ' + this.data[0].last_name;
+    this.patient_name = this.data[0].first_name + " " + this.data[0].last_name;
     this.patient_name = this.funcServ.convertAllFirstLetterToUpperCase(
       this.patient_name
     );
@@ -163,9 +163,9 @@ export class ProgressNotesPerDayPage implements OnInit {
 
     this.getProgressNotesPerDay(this.progressNotesPerDay);
     this.getProgressNotesSummary();
-    this.admission_status = atob(localStorage.getItem('admission_status'));
-    this.patientDetailfromApi_from = atob(localStorage.getItem('Api_from'));
-    this.patientDetailfromApi_to = atob(localStorage.getItem('Api_to'));
+    this.admission_status = atob(localStorage.getItem("admission_status"));
+    this.patientDetailfromApi_from = atob(localStorage.getItem("Api_from"));
+    this.patientDetailfromApi_to = atob(localStorage.getItem("Api_to"));
   }
   admission_status;
   patientDetailfromApi_from;
@@ -175,7 +175,7 @@ export class ProgressNotesPerDayPage implements OnInit {
     //this.router.navigate(['menu/patient/' + this.patientId]);
   }
   checkAppearance() {
-    this.renderer.setAttribute(document.body, 'color-theme', 'light');
+    this.renderer.setAttribute(document.body, "color-theme", "light");
   }
   doRefresh(event) {
     this.progressNotesIsNotReady = true;
@@ -199,7 +199,7 @@ export class ProgressNotesPerDayPage implements OnInit {
       () => {
         tempPn.forEach((el) => {
           let getNewComment = {
-            resi_code: '',
+            resi_code: "",
             trans_no: 0,
           };
           getNewComment.resi_code = this.logindata.doctorCode;
@@ -211,10 +211,10 @@ export class ProgressNotesPerDayPage implements OnInit {
         this.isApproved = this.progessNotes[0].is_approve;
         this.approvePN.account_no = this.progessNotes[0].account_no;
         this.approvePN.approved_by =
-          this.logindata.lastName + ', ' + this.logindata.firstName;
+          this.logindata.lastName + ", " + this.logindata.firstName;
         this.approvePN.dr_code = this.logindata.doctorCode;
         this.approvePN.dr_name =
-          this.logindata.lastName + ', ' + this.logindata.firstName;
+          this.logindata.lastName + ", " + this.logindata.firstName;
         this.approvePN.event_date = this.progessNotes[0].event_date;
         this.progressNotesIsNotReady = false;
       }
@@ -242,14 +242,16 @@ export class ProgressNotesPerDayPage implements OnInit {
       },
       (error) => {},
       () => {
-        //console.log('getProgressNoteSummary');
+        console.log("getProgressNoteSummary");
+        console.log(x);
+
         ////////console.log(x[0].trans_no);
 
         if (x.length <= 0) {
         } else {
           this.progressNoteSummary = x[0].summary;
           this.summary_status = x[0].summary_status;
-          localStorage.setItem('summary_status', this.summary_status);
+          localStorage.setItem("summary_status", this.summary_status);
           if (this.progressNoteSummary != null) {
             this.ngZone.run(() => {
               this.isSummaryComplete = true;
@@ -287,16 +289,16 @@ export class ProgressNotesPerDayPage implements OnInit {
   }
   async presentAlertConfirmApprove(dataxs) {
     const alert = await this.alertController.create({
-      header: 'Are you sure to approve this Progress Note?',
-      cssClass: 'custom-alert',
+      header: "Are you sure to approve this Progress Note?",
+      cssClass: "custom-alert",
       buttons: [
         {
-          text: 'No',
-          cssClass: 'alert-button-cancel',
+          text: "No",
+          cssClass: "alert-button-cancel",
         },
         {
-          text: 'Yes',
-          cssClass: 'alert-button-confirm',
+          text: "Yes",
+          cssClass: "alert-button-confirm",
           handler: (data) => {
             this.approveProgressNote(this.progessNotes.trans_no);
           },
@@ -324,21 +326,21 @@ export class ProgressNotesPerDayPage implements OnInit {
   roleMessage;
   async presentAlert() {
     const alert = await this.alertController.create({
-      header: 'Approve Progress Note ' + this.event_date + '?',
+      header: "Approve Progress Note " + this.event_date + "?",
       buttons: [
         {
-          text: 'Cancel',
-          role: 'cancel',
+          text: "Cancel",
+          role: "cancel",
           handler: () => {
-            this.handlerMessage = 'Alert canceled';
+            this.handlerMessage = "Alert canceled";
           },
         },
         {
-          text: 'Approve',
-          role: 'confirm',
+          text: "Approve",
+          role: "confirm",
           handler: () => {
             this.approveProgressNote(this.approvePN);
-            this.handlerMessage = 'Alert confirmed';
+            this.handlerMessage = "Alert confirmed";
           },
         },
       ],

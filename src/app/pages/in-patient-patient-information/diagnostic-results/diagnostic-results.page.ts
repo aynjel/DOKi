@@ -1,17 +1,17 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
-import { ActivatedRoute, NavigationCancel } from '@angular/router';
-import { ModalController, NavController } from '@ionic/angular';
-import { OnlineResultService } from 'src/app/services/onlie-result/online-result.service';
-import { ScreenSizeService } from '../../../services/screen-size/screen-size.service';
-import { FunctionsService } from '../../../shared/functions/functions.service';
-import { takeUntil } from 'rxjs/operators';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { ExamResultsModalComponent } from '../../../chh-web-components/exam-results-modal/exam-results-modal.component';
+import { Component, OnInit, Renderer2 } from "@angular/core";
+import { ActivatedRoute, NavigationCancel } from "@angular/router";
+import { ModalController, NavController } from "@ionic/angular";
+import { OnlineResultService } from "src/app/services/onlie-result/online-result.service";
+import { ScreenSizeService } from "../../../services/screen-size/screen-size.service";
+import { FunctionsService } from "../../../shared/functions/functions.service";
+import { takeUntil } from "rxjs/operators";
+import { BehaviorSubject, Subject } from "rxjs";
+import { ExamResultsModalComponent } from "../../../chh-web-components/exam-results-modal/exam-results-modal.component";
 
 @Component({
-  selector: 'app-diagnostic-results',
-  templateUrl: './diagnostic-results.page.html',
-  styleUrls: ['./diagnostic-results.page.scss'],
+  selector: "app-diagnostic-results",
+  templateUrl: "./diagnostic-results.page.html",
+  styleUrls: ["./diagnostic-results.page.scss"],
 })
 export class DiagnosticResultsPage implements OnInit {
   private ngUnsubscribe = new Subject();
@@ -43,7 +43,7 @@ export class DiagnosticResultsPage implements OnInit {
     this.checkAppearance();
   }
   checkAppearance() {
-    this.renderer.setAttribute(document.body, 'color-theme', 'light');
+    this.renderer.setAttribute(document.body, "color-theme", "light");
   }
   doRefresh(event) {
     setTimeout(() => {
@@ -69,30 +69,30 @@ export class DiagnosticResultsPage implements OnInit {
     this.ngUnsubscribe = new Subject();
     this.patient_id = this.activatedRoute.snapshot.params.id;
 
-    this.data = JSON.parse(atob(localStorage.getItem('selectedPatient')));
-    console.log(this.data);
+    this.data = JSON.parse(atob(localStorage.getItem("selectedPatient")));
+    //console.log(this.data);
 
     this.checkAppearance();
     this.dateAdmitted = this.data[0].admission_date;
-    console.log(this.dateAdmitted);
+    //console.log(this.dateAdmitted);
 
     this.dischargeNotice = this.data[0].forDischargeDateTime;
-    //////console.log(this.data[0].philhealth_membership);
+    ////////console.log(this.data[0].philhealth_membership);
     this.is_philhealth_membership = this.data[0].philhealth_membership;
     this.is_pwd = this.data[0].is_pwd;
     this.is_senior = this.data[0].is_senior;
-    this.admission_status = atob(localStorage.getItem('admission_status'));
-    this.patientDetailfromApi_from = atob(localStorage.getItem('Api_from'));
-    this.patientDetailfromApi_to = atob(localStorage.getItem('Api_to'));
+    this.admission_status = atob(localStorage.getItem("admission_status"));
+    this.patientDetailfromApi_from = atob(localStorage.getItem("Api_from"));
+    this.patientDetailfromApi_to = atob(localStorage.getItem("Api_to"));
 
     this.dateToday = this.funcServ.getDateTodayMMDDYYYY();
-    this.user_created = atob(localStorage.getItem('username'));
+    this.user_created = atob(localStorage.getItem("username"));
     this.patientId = this.activatedRoute.snapshot.params.id;
     this.patientInfo = JSON.parse(
-      atob(localStorage.getItem('selectedPatient'))
+      atob(localStorage.getItem("selectedPatient"))
     );
     this.patientId = this.patientInfo[0].admission_no;
-    console.log(this.patientInfo);
+    //console.log(this.patientInfo);
 
     this.birthday = this.funcServ.convertDatetoMMDDYYYY(
       this.patientInfo[0].birthdate
@@ -101,7 +101,8 @@ export class DiagnosticResultsPage implements OnInit {
       this.birthday,
       this.funcServ.getDateTodayMMDDYYYY()
     );
-    this.Search('laboratory-by-account-no');
+    this.getInterval();
+    this.Search("laboratory-by-account-no");
   }
   back() {
     this.navCtrl.back();
@@ -114,23 +115,23 @@ export class DiagnosticResultsPage implements OnInit {
   resultList;
   apiRequest: any;
   Search(data) {
-    if (data == 'cardio-by-account-no') {
-      this.request_type = 'cardiology';
+    if (data == "cardio-by-account-no") {
+      this.request_type = "cardiology";
     }
-    if (data == 'endoscopy-by-account-no') {
-      this.request_type = 'endoscopy';
+    if (data == "endoscopy-by-account-no") {
+      this.request_type = "endoscopy";
     }
-    if (data == 'neurophysio-by-account-no') {
-      this.request_type = 'neurophysio';
+    if (data == "neurophysio-by-account-no") {
+      this.request_type = "neurophysio";
     }
-    if (data == 'laboratory-by-account-no') {
-      this.request_type = 'lab';
+    if (data == "laboratory-by-account-no") {
+      this.request_type = "lab";
     }
-    if (data == 'pulmonary-by-account-no') {
-      this.request_type = 'pulmonary';
+    if (data == "pulmonary-by-account-no") {
+      this.request_type = "pulmonary";
     }
-    if (data == 'radiology-by-account-no') {
-      this.request_type = 'radiology';
+    if (data == "radiology-by-account-no") {
+      this.request_type = "radiology";
     }
     this.selected = data;
     this.getResults(data);
@@ -142,13 +143,13 @@ export class DiagnosticResultsPage implements OnInit {
 
     this.isLoading = true;
     let result = {
-      accountNo: 'string',
+      accountNo: "string",
     };
     let resultList;
-    console.log(this.patientInfo);
+    //console.log(this.patientInfo);
 
     result.accountNo = this.patientInfo[0].admission_no;
-    console.log(result);
+    //console.log(result);
 
     this.apiRequest = this.orService
       .getAllByAccountNoSet(result, link)
@@ -166,14 +167,43 @@ export class DiagnosticResultsPage implements OnInit {
           this.apiRequest.unsubscribe();
         },
         next: (res: any) => {
-          this.isLoading = false;
           resultList = res.data;
-          this.resultListFull = res;
+          let interval;
+
+          resultList.forEach((element) => {
+            let index = this.intervalData.findIndex(function (item, i) {
+              return item.subclass === element.subclass;
+            });
+
+            if (index <= 0) {
+              element["resultInMinutes"] = 1;
+              element["interval"] = 0;
+            } else {
+              // this.intervalData[index];
+              interval = this.intervalData[index].onlineTimeTrigger;
+
+              let release_Date = new Date(
+                this.funcServ.getDateFullData(element.release_Date)
+              );
+
+              var dateTimeNow = new Date(this.funcServ.getDateFull());
+
+              var difference = dateTimeNow.getTime() - release_Date.getTime(); // This will give difference in milliseconds
+
+              var resultInMinutes = Math.round(difference / 60000);
+
+              element["resultInMinutes"] = resultInMinutes;
+              element["interval"] = parseInt(interval);
+            }
+          });
+          //console.log(resultList);
+
+          this.resultListFull = resultList;
         },
       });
   }
   processResultList(data) {
-    console.log('processResultList');
+    //console.log("processResultList");
 
     this.resultList = [];
     data.forEach((el) => {
@@ -182,13 +212,39 @@ export class DiagnosticResultsPage implements OnInit {
     });
     //this.resultList = this.resultListFull.slice(0, 10);
   }
+  intervalData = [];
+  getInterval() {
+    this.orService
+      .post("/gw/pxi/results/get-subclass", "")
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        complete: () => {},
+        error: (error) => {
+          //////console.log(error);
+        },
+        next: (data: any) => {
+          this.intervalData = data;
+          //////console.log(data);
+        },
+      });
+  }
   async openModalWithComponent(x) {
     let requestType;
-    if (this.request_type == 'lab') {
-      requestType = this.request_type + '-' + x.exam.toLowerCase();
-      if (requestType == 'lab-molecular pathology') {
-        requestType = 'lab-molecular-pathology';
+    if (this.request_type == "lab") {
+      requestType = this.request_type + "-" + x.exam.toLowerCase();
+      if (requestType == "lab-molecular pathology") {
+        requestType = "lab-molecular-pathology";
       }
+      if (requestType == "lab-hematology-others") {
+        requestType = "lab-hematology";
+      }
+      if (requestType == "lab-culture-sensitivity") {
+        requestType = "lab-microbiology";
+      }
+      if (requestType == "lab-clinical microscopy") {
+        requestType = "lab-microscopy";
+      }
+      //console.log(requestType);
     } else {
       requestType = this.request_type;
     }
