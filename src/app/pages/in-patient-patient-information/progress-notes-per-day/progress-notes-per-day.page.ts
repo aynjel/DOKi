@@ -242,11 +242,6 @@ export class ProgressNotesPerDayPage implements OnInit {
       },
       (error) => {},
       () => {
-        console.log("getProgressNoteSummary");
-        console.log(x);
-
-        ////////console.log(x[0].trans_no);
-
         if (x.length <= 0) {
         } else {
           this.progressNoteSummary = x[0].summary;
@@ -258,15 +253,10 @@ export class ProgressNotesPerDayPage implements OnInit {
             });
           }
         }
-        //console.log('getProgressNotesSummary');
-        //console.log(this.isSummaryComplete);
       }
     );
   }
   async presentPopover(e: Event, dataJson) {
-    ////////console.log(dataJson);
-    ////////console.log(this.logindata);
-
     this.progressNoteApproval.account_no = dataJson.account_no;
     this.progressNoteApproval.event_date = dataJson.event_date;
     const popover = await this.popoverController.create({
