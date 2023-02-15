@@ -82,19 +82,21 @@
           <ion-list>
             <ion-item
               ><b>{{event_date}} </b><br />
-
+              <ion-item slot="end" *ngIf="isLoading">
+                <ion-spinner></ion-spinner>
+              </ion-item>
               <ion-button
                 slot="end"
                 color="warning"
                 (click)="presentAlert()"
-                *ngIf="isApproved !='1' && summary_status =='FA' && (doctor_Status_code=='AP' && isAPVerifyTCstatus == false)"
+                *ngIf="(isApproved !='1' && summary_status =='FA' && (doctor_Status_code=='AP' && isAPVerifyTCstatus == false)) && !isLoading"
                 >Approve?
               </ion-button>
               <ion-button
                 slot="end"
                 color="warning"
                 (click)="presentAlert()"
-                *ngIf="isApproved !='1' && summary_status =='FA' && (doctor_Status_code=='TC' && isAPVerifyTCstatus)"
+                *ngIf="(isApproved !='1' && summary_status =='FA' && (doctor_Status_code=='TC' && isAPVerifyTCstatus) ) && !isLoading"
                 >Approve?
               </ion-button>
               <ion-button slot="end" *ngIf="summary_status =='RA'"

@@ -190,7 +190,7 @@ export class ProgressNotesPerDayPage implements OnInit {
   admission_status;
   patientDetailfromApi_from;
   patientDetailfromApi_to;
-  isAPVerifyTCstatus;
+  isAPVerifyTCstatus: boolean = false;
   verifypatient(admission_no, dr_code) {
     let datxyz = { admission_no: "", dr_code: "" };
     datxyz.admission_no = admission_no;
@@ -397,8 +397,9 @@ export class ProgressNotesPerDayPage implements OnInit {
   isTC: boolean = false;
   iHaveTC: boolean = false;
   isVerify;
-
+  isLoading: boolean = false;
   checkCoDoctors() {
+    this.isLoading = true;
     let coDoctors1 = [];
     let coDoctors2 = [];
     let coDoctors3 = [];
@@ -427,8 +428,11 @@ export class ProgressNotesPerDayPage implements OnInit {
           this.coDoctors = coDoctors1.concat(coDoctors2).concat(coDoctors3);
           //this.coDoctors.push(coDoctors2);
         },
-        (error) => {},
+        (error) => {
+          this.isLoading = false;
+        },
         () => {
+          this.isLoading = false;
           this.coDoctors.forEach((element) => {
             if (
               element.dr_code == this.dr_code &&
