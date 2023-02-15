@@ -16,14 +16,22 @@ import { ResiService } from "src/app/services/resi/resi.service";
 import { ScreenSizeService } from "src/app/services/screen-size/screen-size.service";
 import { FunctionsService } from "src/app/shared/functions/functions.service";
 import { ViewCommentsPopOverComponent } from "src/app/chh-web-components/view-comments-pop-over/view-comments-pop-over.component";
-
+import {
+  InpatientModelInpatients,
+  InpatientDetails,
+} from "../../../models/doctor";
 import { ProgressnotesHistoryComponent } from "src/app/chh-web-components/progressnotes-history/progressnotes-history.component";
+import { DoctorService } from "src/app/services/doctor/doctor.service";
+import { takeUntil } from "rxjs/operators";
+import { BehaviorSubject, Subject } from "rxjs";
+
 @Component({
   selector: "app-progress-notes-per-day",
   templateUrl: "./progress-notes-per-day.page.html",
   styleUrls: ["./progress-notes-per-day.page.scss"],
 })
 export class ProgressNotesPerDayPage implements OnInit {
+  private ngUnsubscribe = new Subject();
   patientId: any;
   patientInfo: any;
   isDesktop: boolean;
@@ -85,7 +93,9 @@ export class ProgressNotesPerDayPage implements OnInit {
     public authService: AuthService,
     public nav: NavController,
     private alertController: AlertController,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private resiServ: ResiService,
+    private doctorService: DoctorService
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       this.isDesktop = isDesktop;
@@ -108,16 +118,21 @@ export class ProgressNotesPerDayPage implements OnInit {
     dr_code: "string",
     dr_name: "string",
   };
+  loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
+  dr_code;
+  dr_name;
   ionViewWillEnter() {
     let x = JSON.parse(
       unescape(atob(localStorage.getItem("_cap_userDataKey")))
     );
     this.logindata = x;
+    this.dr_code = x.doctorCode;
   }
   isApproved;
   doctor_Status_code;
-
+  inpatientDetails;
   ngOnInit() {
+    this.inpatientDetails = new InpatientDetails();
     this.doctor_Status_code = localStorage.getItem("doctor_Status_code");
     let x = JSON.parse(
       unescape(atob(localStorage.getItem("_cap_userDataKey")))
@@ -143,6 +158,10 @@ export class ProgressNotesPerDayPage implements OnInit {
     this.progressNotesPerDay.account_no = this.patientInfo[0].admission_no;
     this.progressNotesPerDay.event_date = this.event_date;
     this.data = JSON.parse(atob(localStorage.getItem("patientData")));
+
+    if (this.data[0].doctor_Status_code == "TC") {
+      this.verifypatient(this.data[0].admission_no, this.data[0].dr_code);
+    }
     this.insurance_hmo = this.data[0].insurance_hmo;
     this.is_philhealth_membership = this.data[0].philhealth_membership;
     this.is_pwd = this.data[0].is_pwd;
@@ -166,10 +185,31 @@ export class ProgressNotesPerDayPage implements OnInit {
     this.admission_status = atob(localStorage.getItem("admission_status"));
     this.patientDetailfromApi_from = atob(localStorage.getItem("Api_from"));
     this.patientDetailfromApi_to = atob(localStorage.getItem("Api_to"));
+    this.checkCoDoctors();
   }
   admission_status;
   patientDetailfromApi_from;
   patientDetailfromApi_to;
+  isAPVerifyTCstatus;
+  verifypatient(admission_no, dr_code) {
+    let datxyz = { admission_no: "", dr_code: "" };
+    datxyz.admission_no = admission_no;
+    datxyz.dr_code = dr_code;
+    this.resiServ
+      .post("/gw/doki/inpatients/verifytransfertocover", datxyz)
+      .subscribe({
+        complete: () => {},
+        error: (error) => {
+          console.log(error);
+        },
+        next: (data: any) => {
+          console.log(data);
+          if (data == true) {
+            this.isAPVerifyTCstatus = true;
+          }
+        },
+      });
+  }
   back() {
     this.navCtrl.back();
     //this.router.navigate(['menu/patient/' + this.patientId]);
@@ -351,5 +391,110 @@ export class ProgressNotesPerDayPage implements OnInit {
     modal.present();
 
     const { data, role } = await modal.onWillDismiss();
+  }
+  coDoctors;
+  isAP: boolean = false;
+  isTC: boolean = false;
+  iHaveTC: boolean = false;
+  isVerify;
+
+  checkCoDoctors() {
+    let coDoctors1 = [];
+    let coDoctors2 = [];
+    let coDoctors3 = [];
+
+    this.patient_id = this.activatedRoute.snapshot.params.id;
+
+    this.inpatientDetails.admission_no = this.patient_id;
+    console.log(this.inpatientDetails);
+    this.doctorService
+      .getCoDoctorsV3(this.inpatientDetails)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          console.log(res);
+
+          res.forEach((element) => {
+            if (element.status == "Primary Attending Physician") {
+              coDoctors1.push(element);
+            } else if (element.status == "Co-Manage") {
+              coDoctors2.push(element);
+            } else {
+              coDoctors3.push(element);
+            }
+          });
+
+          this.coDoctors = coDoctors1.concat(coDoctors2).concat(coDoctors3);
+          //this.coDoctors.push(coDoctors2);
+        },
+        (error) => {},
+        () => {
+          this.coDoctors.forEach((element) => {
+            if (
+              element.dr_code == this.dr_code &&
+              element.status_code == "AP" &&
+              this.isAP == false
+            ) {
+              localStorage.setItem("doctor_Status_code", "AP");
+              this.isAP = true;
+            }
+
+            if (
+              element.dr_code == this.dr_code &&
+              element.status_code == "TC" &&
+              this.isTC == false
+            ) {
+              this.isTC = true;
+            }
+            if (
+              element.status_code == "AP" &&
+              element.status_code == "TC" &&
+              this.iHaveTC == false
+            ) {
+              this.iHaveTC = true;
+            }
+            if (element.status_code == "TC") {
+              let datxyz = { admission_no: "", dr_code: "" };
+
+              datxyz.admission_no = element.admission_no;
+              datxyz.dr_code = element.dr_code;
+              this.resiServ
+                .post("/gw/doki/inpatients/verifytransfertocover", datxyz)
+                .subscribe({
+                  complete: () => {},
+                  error: (error) => {},
+                  next: (data: any) => {
+                    console.log(data);
+
+                    if (data == true) {
+                      this.isAPVerifyTCstatus = true;
+                    }
+                  },
+                });
+            }
+          });
+          //console.log(this.isAP, this.isTC, this.iHaveTC);
+
+          if (this.isTC) {
+            console.log("check status");
+            let datxyz = { admission_no: "", dr_code: "" };
+            datxyz.admission_no = this.patient_id;
+            datxyz.dr_code = this.dr_code;
+            this.resiServ
+              .post("/gw/doki/inpatients/verifytransfertocover", datxyz)
+              .subscribe({
+                complete: () => {},
+                error: (error) => {
+                  console.log(error);
+                },
+                next: (data: any) => {
+                  console.log(data);
+                  this.isVerify = data;
+                  //////console.log(data);
+                },
+              });
+          }
+        }
+      );
   }
 }

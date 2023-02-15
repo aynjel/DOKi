@@ -1,17 +1,17 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
-import { DoctorService } from 'src/app/services/doctor/doctor.service';
-import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
-import { FunctionsService } from 'src/app/shared/functions/functions.service';
-import { ProgressnotesHistoryComponent } from 'src/app/chh-web-components/progressnotes-history/progressnotes-history.component';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { ResiService } from 'src/app/services/resi/resi.service';
+import { Component, OnInit, Renderer2, Input } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ModalController } from "@ionic/angular";
+import { DoctorService } from "src/app/services/doctor/doctor.service";
+import { ScreenSizeService } from "src/app/services/screen-size/screen-size.service";
+import { FunctionsService } from "src/app/shared/functions/functions.service";
+import { ProgressnotesHistoryComponent } from "src/app/chh-web-components/progressnotes-history/progressnotes-history.component";
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
+import { ResiService } from "src/app/services/resi/resi.service";
 @Component({
-  selector: 'app-progress-notes',
-  templateUrl: './progress-notes.page.html',
-  styleUrls: ['./progress-notes.page.scss'],
+  selector: "app-progress-notes",
+  templateUrl: "./progress-notes.page.html",
+  styleUrls: ["./progress-notes.page.scss"],
 })
 export class ProgressNotesPage implements OnInit {
   private ngUnsubscribe = new Subject();
@@ -28,6 +28,7 @@ export class ProgressNotesPage implements OnInit {
   patientInfor;
   dateAdmitted;
   data = [];
+  @Input() account_no;
   constructor(
     private screensizeService: ScreenSizeService,
     private activatedRoute: ActivatedRoute,
@@ -62,7 +63,7 @@ export class ProgressNotesPage implements OnInit {
     this.ngUnsubscribe = new Subject();
     this.patient_id = this.activatedRoute.snapshot.params.id;
     this.getProgressNote();
-    this.data = JSON.parse(atob(localStorage.getItem('selectedPatient')));
+    this.data = JSON.parse(atob(localStorage.getItem("selectedPatient")));
     //console.log(this.data);
 
     this.dateAdmitted = this.data[0].admission_date;
@@ -73,22 +74,22 @@ export class ProgressNotesPage implements OnInit {
     this.is_philhealth_membership = this.data[0].philhealth_membership;
     this.is_pwd = this.data[0].is_pwd;
     this.is_senior = this.data[0].is_senior;
-    this.admission_status = atob(localStorage.getItem('admission_status'));
-    this.patientDetailfromApi_from = atob(localStorage.getItem('Api_from'));
-    this.patientDetailfromApi_to = atob(localStorage.getItem('Api_to'));
+    this.admission_status = atob(localStorage.getItem("admission_status"));
+    this.patientDetailfromApi_from = atob(localStorage.getItem("Api_from"));
+    this.patientDetailfromApi_to = atob(localStorage.getItem("Api_to"));
   }
   checkAppearance() {
-    this.functionsService.logToConsole('checkAppearance');
+    this.functionsService.logToConsole("checkAppearance");
     var values = JSON.parse(
-      '[' + atob(localStorage.getItem('user_settings')) + ']'
+      "[" + atob(localStorage.getItem("user_settings")) + "]"
     );
-    let dr_username = atob(localStorage.getItem('username'));
+    let dr_username = atob(localStorage.getItem("username"));
     values.forEach((element) => {
       this.functionsService.logToConsole(element.darkmode);
       if (element.darkmode == 1) {
-        this.renderer.setAttribute(document.body, 'color-theme', 'dark');
+        this.renderer.setAttribute(document.body, "color-theme", "dark");
       } else {
-        this.renderer.setAttribute(document.body, 'color-theme', 'light');
+        this.renderer.setAttribute(document.body, "color-theme", "light");
       }
     });
   }
@@ -97,20 +98,20 @@ export class ProgressNotesPage implements OnInit {
     this.progessNotesTemp = [];
     this.progressNotesIsNotReady = true;
     let perAdmission = {
-      account_no: '',
+      account_no: "",
     };
     perAdmission.account_no = this.patient_id;
     this.residentService
       .getPatientProgressNotesPerAdmission(perAdmission)
       .subscribe(
         (res: any) => {
-            res.sort(function (a, b) {
-              let dateA: any = new Date(a.event_date),
-                dateB: any = new Date(b.event_date);
-              return dateB - dateA;
-            });
+          res.sort(function (a, b) {
+            let dateA: any = new Date(a.event_date),
+              dateB: any = new Date(b.event_date);
+            return dateB - dateA;
+          });
 
-            this.progessNotesTemp = res;
+          this.progessNotesTemp = res;
         },
         (error) => {},
         () => {
@@ -144,8 +145,8 @@ export class ProgressNotesPage implements OnInit {
             el.dateUpdateTimeConverted = this.functionsService.getTime(
               el.date_updated
             );
-            if (el.date_updated == '0001-01-01T00:00:00') {
-              el.dateUpdateConverted = '';
+            if (el.date_updated == "0001-01-01T00:00:00") {
+              el.dateUpdateConverted = "";
             }
             el.notessmall = this.functionsService.truncateChar(el.notes, 300);
             /*if (el.notes.length > 200) {
@@ -176,7 +177,7 @@ export class ProgressNotesPage implements OnInit {
   async options(data) {
     const options = {
       component: ProgressnotesHistoryComponent,
-      cssClass: 'ion5modalviewedithistory',
+      cssClass: "ion5modalviewedithistory",
       swipeToClose: true,
       breakpoints: [0, 0.5, 1],
       initialBreakpoint: 1,
@@ -200,7 +201,7 @@ export class ProgressNotesPage implements OnInit {
     return await modal.present();*/
     const options = {
       component: ProgressnotesHistoryComponent,
-      cssClass: 'ion5modalviewedithistory',
+      cssClass: "ion5modalviewedithistory",
       swipeToClose: true,
       breakpoints: [0, 0.5, 1],
       initialBreakpoint: 1,
@@ -217,19 +218,19 @@ export class ProgressNotesPage implements OnInit {
   }
 
   gotoPerday(date, dayselected) {
-    localStorage.setItem('dayselected', dayselected);
+    localStorage.setItem("dayselected", dayselected);
     //console.log(dayselected);
     let day = this.functionService.convertDatedash(date);
     this.router.navigate([
-      '/menu/in-patients/' + this.patient_id + '/progressnotes/' + day,
+      "/menu/in-patients/" + this.patient_id + "/progressnotes/" + day,
     ]);
   }
 
   checkNumberofNotes(data) {
     if (data >= 1) {
-      return 'mango';
+      return "mango";
     } else {
-      return '';
+      return "";
     }
   }
 }
