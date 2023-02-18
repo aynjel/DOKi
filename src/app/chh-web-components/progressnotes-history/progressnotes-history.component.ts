@@ -5,50 +5,53 @@ import {
   ViewChild,
   ElementRef,
   NgZone,
-} from '@angular/core';
+} from "@angular/core";
 import {
   IonContent,
   IonList,
   IonTextarea,
   ModalController,
-} from '@ionic/angular';
-import { DoctorConstants } from 'src/app/config/auth-constants';
-import { DoctorService } from 'src/app/services/doctor/doctor.service';
-import { FunctionsService } from 'src/app/shared/functions/functions.service';
+} from "@ionic/angular";
+import { DoctorConstants } from "src/app/config/auth-constants";
+import { DoctorService } from "src/app/services/doctor/doctor.service";
+import { FunctionsService } from "src/app/shared/functions/functions.service";
 import {
   HubConnection,
   HubConnectionBuilder,
   LogLevel,
-} from '@microsoft/signalr';
-import * as signalR from '@microsoft/signalr';
-import { HttpClient } from '@angular/common/http';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { ResiService } from 'src/app/services/resi/resi.service';
+} from "@microsoft/signalr";
+import * as signalR from "@microsoft/signalr";
+import { HttpClient } from "@angular/common/http";
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
+import { environment } from "src/environments/environment";
+import { ResiService } from "src/app/services/resi/resi.service";
 @Component({
-  selector: 'app-progressnotes-history',
-  templateUrl: './progressnotes-history.component.html',
-  styleUrls: ['./progressnotes-history.component.scss'],
+  selector: "app-progressnotes-history",
+  templateUrl: "./progressnotes-history.component.html",
+  styleUrls: ["./progressnotes-history.component.scss"],
 })
 export class ProgressnotesHistoryComponent implements OnInit {
   private ngUnsubscribe = new Subject();
   @ViewChild(IonList, { read: ElementRef }) list: ElementRef;
   @ViewChild(IonContent) ionContent: IonContent;
-  @ViewChild('commentDetailWrapper', { static: false }) commentDetailWrapper;
+  @ViewChild("commentDetailWrapper", { static: false }) commentDetailWrapper;
   private _hubConnection: HubConnection;
   @Input() data: any;
   @Input() dataJson: any;
   @Input() day: any;
+  @Input() event_date;
+  @Input() statuscodeeee;
+  @Input() patient_id;
   progessNotes: any;
   progessNotes1: any;
   progessNotesTemp: any;
   isEmpty: boolean = false;
-  comment: any = '';
+  comment: any = "";
   summary: any = {
     pnotes_trans_no: 0,
-    msg: '',
-    user_created: 'string',
+    msg: "",
+    user_created: "string",
   };
   modified: boolean;
   user_;
@@ -62,30 +65,35 @@ export class ProgressnotesHistoryComponent implements OnInit {
   ) {}
   progressNotesComment = {
     pn_trans_no: 0,
-    msg: '',
-    user_created: 'string',
-    username: 'string',
+    msg: "",
+    user_created: "string",
+    username: "string",
+    commenter_type: "",
+    event_date: "string",
+    account_no: "string",
   };
   logindata;
   readComment = {
-    resi_code: 'string',
+    resi_code: "string",
     trans_no: 0,
   };
   summary_status;
   ngOnInit() {
-    this.summary_status = localStorage.getItem('summary_status');
+    this.summary_status = localStorage.getItem("summary_status");
     this.ngUnsubscribe = new Subject();
     let x = JSON.parse(
-      unescape(atob(localStorage.getItem('_cap_userDataKey')))
+      unescape(atob(localStorage.getItem("_cap_userDataKey")))
     );
     this.logindata = x;
     //console.log(this.logindata);
 
     this.progressNotesComment.pn_trans_no = this.dataJson.trans_no;
     this.progressNotesComment.user_created = this.logindata.doctorCode;
-
+    this.progressNotesComment.commenter_type = this.statuscodeeee;
+    this.progressNotesComment.event_date = this.event_date;
+    this.progressNotesComment.account_no = this.patient_id;
     this.progressNotesComment.username =
-      this.logindata.lastName + ', ' + this.logindata.firstName;
+      this.logindata.lastName + ", " + this.logindata.firstName;
     //////console.log(this.progressNotesComment);
     this.day = this.functionService.convertDatetoMMDDYYYY(
       this.dataJson.event_date
@@ -123,10 +131,10 @@ export class ProgressnotesHistoryComponent implements OnInit {
             this.progessNotesTemp = res;
             let counter = 0;
             this.progessNotesTemp.forEach((el) => {
-              if (el.account_no == ' ') {
-                el.type = 'comment';
+              if (el.account_no == " ") {
+                el.type = "comment";
               } else {
-                el.type = 'progressnotes';
+                el.type = "progressnotes";
               }
               this.summary.pnotes_trans_no = el.trans_no;
 
@@ -174,9 +182,9 @@ export class ProgressnotesHistoryComponent implements OnInit {
     });
   }
   sendComment() {
-    if (this.progressNotesComment.msg != '') {
+    if (this.progressNotesComment.msg != "") {
       this.progressNotesComment.msg;
-      //console.log(this.progressNotesComment);
+      console.log(this.progressNotesComment);
 
       this.doctorService
         .addComment(this.progressNotesComment)
@@ -186,14 +194,14 @@ export class ProgressnotesHistoryComponent implements OnInit {
           (error) => {},
           () => {
             this._hubConnection
-              .invoke('BroadCastToResiGroup', this.progressNotesComment)
+              .invoke("BroadCastToResiGroup", this.progressNotesComment)
               .then((res) => {
-                console.log('after sendinng');
-                this.progressNotesComment.msg = '';
+                console.log("after sendinng");
+                this.progressNotesComment.msg = "";
               })
               .catch((err) => {
                 console.error(err);
-                this.progressNotesComment.msg = '';
+                this.progressNotesComment.msg = "";
               });
           }
         );
@@ -217,41 +225,41 @@ export class ProgressnotesHistoryComponent implements OnInit {
   }
 
   public onSendButtonClick(): void {
-    this._hubConnection.send('SendMessage', 'test message').then((r) => {});
+    this._hubConnection.send("SendMessage", "test message").then((r) => {});
   }
 
   private connect(): void {
     this._hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://signalrhub.chonghua.com.ph/broadcasthub', {
+      .withUrl("https://signalrhub.chonghua.com.ph/broadcasthub", {
         transport: signalR.HttpTransportType.LongPolling,
       })
       .build();
     this._hubConnection
       .start()
       .then(() => {
-        console.log('connection started');
+        console.log("connection started");
         this._hubConnection
-          .invoke('AddToResiGroup', this.dataJson.trans_no.toString())
+          .invoke("AddToResiGroup", this.dataJson.trans_no.toString())
           .then((res) => {
-            console.log('connection started : 2');
+            console.log("connection started : 2");
           })
           .catch((err) => console.error(err));
       })
       .catch((err) =>
-        console.log('error while establishing signalr connection: ' + err)
+        console.log("error while establishing signalr connection: " + err)
       );
 
-    this._hubConnection.on('broadcasttoresigroup', (message: any) => {
-      console.log('dawat 3');
+    this._hubConnection.on("broadcasttoresigroup", (message: any) => {
+      console.log("dawat 3");
 
-      let txtMessage = '[' + JSON.stringify(message) + ']';
+      let txtMessage = "[" + JSON.stringify(message) + "]";
       let jsonMessage = JSON.parse(txtMessage);
       let counter = jsonMessage.length;
       jsonMessage.forEach((el) => {
-        if (el.account_no == ' ') {
-          el.type = 'comment';
+        if (el.account_no == " ") {
+          el.type = "comment";
         } else {
-          el.type = 'progressnotes';
+          el.type = "progressnotes";
         }
         this.summary.pnotes_trans_no = el.trans_no;
         el.dateCreateConverted = this.functionService.convertDatetoMMDDYYYY(

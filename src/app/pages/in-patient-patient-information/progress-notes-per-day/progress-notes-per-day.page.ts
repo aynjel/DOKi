@@ -169,6 +169,8 @@ export class ProgressNotesPerDayPage implements OnInit {
     ////////////console.log(this.is_pwd, this.is_senior);
     this.dateAdmitted = this.data[0].admission_date;
     this.patient_id = this.activatedRoute.snapshot.params.id;
+    console.log(this.patient_id);
+
     this.dischargeNotice = this.data[0].forDischargeDateTime;
     if (this.patient_id != this.data[0].admission_no) {
       //this.nav.back();
@@ -386,6 +388,9 @@ export class ProgressNotesPerDayPage implements OnInit {
       component: ProgressnotesHistoryComponent,
       componentProps: {
         dataJson: dataJson,
+        statuscodeeee: this.statuscodeeee,
+        event_date: this.event_date,
+        patient_id: this.patient_id,
       },
     });
     modal.present();
@@ -398,6 +403,7 @@ export class ProgressNotesPerDayPage implements OnInit {
   iHaveTC: boolean = false;
   isVerify;
   isLoading: boolean = false;
+  statuscodeeee;
   checkCoDoctors() {
     this.isLoading = true;
     let coDoctors1 = [];
@@ -413,7 +419,8 @@ export class ProgressNotesPerDayPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          console.log(res);
+          //console.log();
+          this.statuscodeeee = res[0].status_code;
 
           res.forEach((element) => {
             if (element.status == "Primary Attending Physician") {
