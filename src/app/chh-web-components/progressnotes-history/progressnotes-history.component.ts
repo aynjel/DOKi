@@ -85,7 +85,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
       unescape(atob(localStorage.getItem("_cap_userDataKey")))
     );
     this.logindata = x;
-    //console.log(this.logindata);
+    ////console.log(this.logindata);
 
     this.progressNotesComment.pn_trans_no = this.dataJson.trans_no;
     this.progressNotesComment.user_created = this.logindata.doctorCode;
@@ -94,12 +94,12 @@ export class ProgressnotesHistoryComponent implements OnInit {
     this.progressNotesComment.account_no = this.patient_id;
     this.progressNotesComment.username =
       this.logindata.lastName + ", " + this.logindata.firstName;
-    //////console.log(this.progressNotesComment);
+    ////////console.log(this.progressNotesComment);
     this.day = this.functionService.convertDatetoMMDDYYYY(
       this.dataJson.event_date
     );
     this.getProgressNotesHistory();
-    //console.log(this.logindata);
+    ////console.log(this.logindata);
 
     this.readComment.resi_code = this.logindata.doctorCode;
     this.readComment.trans_no = this.dataJson.trans_no;
@@ -118,14 +118,14 @@ export class ProgressnotesHistoryComponent implements OnInit {
     request.trans_no = this.dataJson.trans_no;
     this.progessNotes = [];
     this.progessNotes1 = [];
-    //////console.log(request);
+    ////////console.log(request);
 
     this.doctorService
       .getPatientProgressNotesHistory(request)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          ////console.log(res);
+          //////console.log(res);
           if (res.length > 0) {
             this.isEmpty = false;
             this.progessNotesTemp = res;
@@ -153,7 +153,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
               counter++;
               this.progessNotes1.push(el);
             });
-            //////////console.log(this.progessNotes);
+            ////////////console.log(this.progessNotes);
           } else {
             this.isEmpty = true;
           }
@@ -167,7 +167,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
   }
   upto = 0;
   processJson(x) {
-    //////console.log(this.progessNotes.length);
+    ////////console.log(this.progessNotes.length);
     this.upto += x;
     let i = 0;
     this.progessNotes = [];
@@ -181,22 +181,27 @@ export class ProgressnotesHistoryComponent implements OnInit {
       i++;
     });
   }
+  isLoading;
   sendComment() {
     if (this.progressNotesComment.msg != "") {
+      this.isLoading = true;
       this.progressNotesComment.msg;
-      console.log(this.progressNotesComment);
+      //console.log(this.progressNotesComment);
 
       this.doctorService
         .addComment(this.progressNotesComment)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(
           (res: any) => {},
-          (error) => {},
+          (error) => {
+            this.isLoading = false;
+          },
           () => {
+            this.isLoading = false;
             this._hubConnection
               .invoke("BroadCastToResiGroup", this.progressNotesComment)
               .then((res) => {
-                console.log("after sendinng");
+                //console.log("after sendinng");
                 this.progressNotesComment.msg = "";
               })
               .catch((err) => {
@@ -237,11 +242,11 @@ export class ProgressnotesHistoryComponent implements OnInit {
     this._hubConnection
       .start()
       .then(() => {
-        console.log("connection started");
+        //console.log("connection started");
         this._hubConnection
           .invoke("AddToResiGroup", this.dataJson.trans_no.toString())
           .then((res) => {
-            console.log("connection started : 2");
+            //console.log("connection started : 2");
           })
           .catch((err) => console.error(err));
       })
@@ -250,7 +255,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
       );
 
     this._hubConnection.on("broadcasttoresigroup", (message: any) => {
-      console.log("dawat 3");
+      //console.log("dawat 3");
 
       let txtMessage = "[" + JSON.stringify(message) + "]";
       let jsonMessage = JSON.parse(txtMessage);
@@ -285,7 +290,7 @@ export class ProgressnotesHistoryComponent implements OnInit {
     });
   }
   ngOnDestroy() {
-    //////console.log('ngOnDestroy');
+    ////////console.log('ngOnDestroy');
 
     this._hubConnection.stop();
   }
@@ -303,10 +308,10 @@ export class ProgressnotesHistoryComponent implements OnInit {
     this.ngUnsubscribe.complete();
   }
   read(data) {
-    //console.log(data);
+    ////console.log(data);
 
     this.residentService.readCommentFlag(data).subscribe((res) => {
-      //console.log(res);
+      ////console.log(res);
     });
   }
 }
