@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FunctionsService } from 'src/app/shared/functions/functions.service';
+import { Component, Input, OnInit } from "@angular/core";
+import { FunctionsService } from "src/app/shared/functions/functions.service";
 
 @Component({
-  selector: 'app-soap-show-hide',
-  templateUrl: './soap-show-hide.component.html',
-  styleUrls: ['./soap-show-hide.component.scss'],
+  selector: "app-soap-show-hide",
+  templateUrl: "./soap-show-hide.component.html",
+  styleUrls: ["./soap-show-hide.component.scss"],
 })
 export class SoapShowHideComponent implements OnInit {
   @Input() SOAP: any;
@@ -22,10 +22,13 @@ export class SoapShowHideComponent implements OnInit {
       this.noteslength = true;
       this.truncating = true;
       this.comment_small = this.funcServ.truncateChar(this.comment, 150);
+      this.comment_small = this.comment_small.toUpperCase();
     } else {
       this.noteslength = false;
       this.truncating = false;
     }
+
+    this.comment = this.comment.toUpperCase();
   }
   process() {
     //console.log('asdasd');
