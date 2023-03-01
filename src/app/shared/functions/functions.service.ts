@@ -600,4 +600,23 @@ export class FunctionsService {
     let xtime = hour + ":" + min + ":" + sec;
     return xtoday + " " + xtime;
   }
+  getDateYYYYMMDD1(date: any = "") {
+    let dateReturn;
+    if (date == "") {
+      let date1 = new Date();
+      let day1 = date1.getDate();
+      let month1 = date1.getMonth() + 1;
+      let year1 = date1.getFullYear();
+      dateReturn =
+        year1 + "-" + ("0" + month1).slice(-2) + "-" + ("0" + day1).slice(-2);
+    } else {
+      let today = new Date(date);
+      let day1 = today.getDate();
+      let month1 = today.getMonth() + 1;
+      let year1 = today.getFullYear();
+      dateReturn =
+        year1 + "-" + ("0" + month1).slice(-2) + "-" + ("0" + day1).slice(-2);
+    }
+    return dateReturn;
+  }
 }

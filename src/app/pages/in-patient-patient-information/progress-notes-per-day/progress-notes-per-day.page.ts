@@ -266,15 +266,15 @@ export class ProgressNotesPerDayPage implements OnInit {
   progressNoteSummary;
   summary_status;
   getProgressNotesSummary() {
-    //console.log(this.patientInfo);
+    console.log("111111111111111111");
 
     this.isSummaryComplete = false;
     let data = {
       account_no: this.patientInfo[0].admission_no,
-      event_date: this.event_date,
+      event_date: this.funcServ.getDateYYYYMMDD1(this.event_date),
     };
     let x;
-    //console.log(data);
+    console.log(data);
 
     this.residentService.getProgressNoteSummary(data).subscribe(
       (res: any) => {
