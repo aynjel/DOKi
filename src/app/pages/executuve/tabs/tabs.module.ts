@@ -1,15 +1,15 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
 
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from "@ionic/angular";
 
-import { TabsPageRoutingModule } from './tabs-routing.module';
+import { TabsPageRoutingModule } from "./tabs-routing.module";
 
-import { TabsPage } from './tabs.page';
-import { ChhWebComponentsModule } from '../../../chh-web-components/chh-web-components.module';
-import { BrowserModule } from '@angular/platform-browser';
-import { ChhAppTextAvatarModule } from 'src/app/chh-web-components/chh-app-text-avatar';
+import { TabsPage } from "./tabs.page";
+import { ChhWebComponentsModule } from "../../../chh-web-components/chh-web-components.module";
+import { BrowserModule } from "@angular/platform-browser";
+import { ChhAppTextAvatarModule } from "src/app/chh-web-components/chh-app-text-avatar";
 @NgModule({
   imports: [
     CommonModule,
@@ -17,8 +17,8 @@ import { ChhAppTextAvatarModule } from 'src/app/chh-web-components/chh-app-text-
     IonicModule,
     TabsPageRoutingModule,
     ChhWebComponentsModule,
-    ChhAppTextAvatarModule
+    ChhAppTextAvatarModule,
   ],
-  declarations: [TabsPage]
+  declarations: [TabsPage],
 })
 export class TabsPageModule {}

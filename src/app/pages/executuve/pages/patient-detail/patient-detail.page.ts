@@ -6,59 +6,59 @@ import {
   ViewContainerRef,
   ComponentFactoryResolver,
   Renderer2,
-} from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+} from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
+import { Location } from "@angular/common";
 import {
   ModalController,
   AlertController,
   NavController,
-} from '@ionic/angular';
-import { ChhAppFeePage } from '../../../../chh-web-components/chh-app-fee/chh-app-fee.page';
-import { from } from 'rxjs';
-import { PopoverController } from '@ionic/angular';
-import { timeStamp } from 'console';
-import { DoctorService } from 'src/app/services/doctor/doctor.service';
+} from "@ionic/angular";
+import { ChhAppFeePage } from "../../../../chh-web-components/chh-app-fee/chh-app-fee.page";
+import { from } from "rxjs";
+import { PopoverController } from "@ionic/angular";
+import { timeStamp } from "console";
+import { DoctorService } from "src/app/services/doctor/doctor.service";
 //import { GoogleAnalyticsService } from 'ngx-google-analytics';
-import { AuthService } from 'src/app/services/auth/auth.service';
+import { AuthService } from "src/app/services/auth/auth.service";
 
-import { FunctionsService } from '../../../../shared/functions/functions.service';
-import { PatientService } from 'src/app/services/patient/patient.service';
-import { logWarnings } from 'protractor/built/driverProviders';
+import { FunctionsService } from "../../../../shared/functions/functions.service";
+import { PatientService } from "src/app/services/patient/patient.service";
+import { logWarnings } from "protractor/built/driverProviders";
 //import { ChemistryPage } from "../../../../chh-web-components/chh-app-test/chemistry/chemistry.page";
-import { ChhAppBasePage } from '../../../../chh-web-components/chh-app-test/chh-app-base/chh-app-base.page';
-import { Messages } from '../../../../shared/messages';
-import { ScreenSizeService } from '../../../../services/screen-size/screen-size.service';
-import { ChhAppTestChemistryComponent } from '../../../../chh-web-components/chh-app-test/chh-app-test-chemistry/chh-app-test-chemistry.component';
-import { ChhAppTestFecalysisComponent } from '../../../../chh-web-components/chh-app-test/chh-app-test-fecalysis/chh-app-test-fecalysis.component';
-import { ChhAppTestSerologyComponent } from '../../../../chh-web-components/chh-app-test/chh-app-test-serology/chh-app-test-serology.component';
-import { StorageService } from '../../../../services/storage/storage.service';
-import { AuthConstants, Consta } from '../../../../config/auth-constants';
-import { executionAsyncResource } from 'async_hooks';
-import { Constants } from 'src/app/shared/constants';
+import { ChhAppBasePage } from "../../../../chh-web-components/chh-app-test/chh-app-base/chh-app-base.page";
+import { Messages } from "../../../../shared/messages";
+import { ScreenSizeService } from "../../../../services/screen-size/screen-size.service";
+import { ChhAppTestChemistryComponent } from "../../../../chh-web-components/chh-app-test/chh-app-test-chemistry/chh-app-test-chemistry.component";
+import { ChhAppTestFecalysisComponent } from "../../../../chh-web-components/chh-app-test/chh-app-test-fecalysis/chh-app-test-fecalysis.component";
+import { ChhAppTestSerologyComponent } from "../../../../chh-web-components/chh-app-test/chh-app-test-serology/chh-app-test-serology.component";
+import { StorageService } from "../../../../services/storage/storage.service";
+import { AuthConstants, Consta } from "../../../../config/auth-constants";
+import { executionAsyncResource } from "async_hooks";
+import { Constants } from "src/app/shared/constants";
 
 import {
   InPatientData,
   ProfessionalFeeModelv3,
-} from 'src/app/models/in-patient.model';
+} from "src/app/models/in-patient.model";
 
 import {
   UserSettingsModelv3,
   LoginResponseModelv3,
   PatientDetail,
-} from 'src/app/models/doctor';
+} from "src/app/models/doctor";
 
 import {
   InpatientModelInpatients,
   InpatientDetails,
-} from '../../../../models/doctor';
-import { ExecutiveService } from 'src/app/services/executive/executive.service';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+} from "../../../../models/doctor";
+import { ExecutiveService } from "src/app/services/executive/executive.service";
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
 @Component({
-  selector: 'app-patient-detail',
-  templateUrl: './patient-detail.page.html',
-  styleUrls: ['./patient-detail.page.scss'],
+  selector: "app-patient-detail",
+  templateUrl: "./patient-detail.page.html",
+  styleUrls: ["./patient-detail.page.scss"],
 })
 export class PatientDetailPage implements OnInit {
   private ngUnsubscribe = new Subject();
@@ -93,7 +93,7 @@ export class PatientDetailPage implements OnInit {
   currentExamList_filtered: any = [];
   isDesktop: boolean;
   examListSkeleton: boolean = false;
-  ExamData: any = '';
+  ExamData: any = "";
   hospitalSite: any;
   serology: boolean = false;
   chemistry: boolean = false;
@@ -151,7 +151,7 @@ export class PatientDetailPage implements OnInit {
     public navCtrl: NavController
   ) {
     //this.functionsService.logToConsole('In-patient detail : Constructor');
-    localStorage.setItem('modaled', '0');
+    localStorage.setItem("modaled", "0");
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
         window.location.reload();
@@ -173,7 +173,7 @@ export class PatientDetailPage implements OnInit {
   patientDetailfromApi_to;
   admission_status;
   ngOnInit() {
-    console.log('YAHOO');
+    console.log("YAHOO");
     this.patientDetail = new PatientDetail();
     console.log(this.activatedRoute.snapshot.params.admissionNo);
     let x = this.activatedRoute.snapshot.params.admissionNo;
@@ -191,18 +191,19 @@ export class PatientDetailPage implements OnInit {
       .subscribe(
         (res: any) => {
           responsebe = res;
+
           this.patientDetailfromApi_from = this.functionsService.cdateampm(
             res.manage_from
           );
           this.patientDetailfromApi_to = this.functionsService.cdateampm(
             res.manage_to
           );
-          localStorage.setItem('admission_status', btoa(this.admission_status));
+          localStorage.setItem("admission_status", btoa(this.admission_status));
           localStorage.setItem(
-            'Api_from',
+            "Api_from",
             btoa(this.patientDetailfromApi_from)
           );
-          localStorage.setItem('Api_to', btoa(this.patientDetailfromApi_to));
+          localStorage.setItem("Api_to", btoa(this.patientDetailfromApi_to));
         },
         (error) => {
           this.dismissLoading();
@@ -210,10 +211,17 @@ export class PatientDetailPage implements OnInit {
         () => {
           if (responsebe == null) {
             this.dismissLoading();
-            this.alert('No Data Available', 'Okay');
+            this.alert("No Data Available", "Okay");
           } else {
             let res1 = [];
-            res1 = JSON.parse('[' + JSON.stringify(responsebe) + ']');
+            res1 = JSON.parse("[" + JSON.stringify(responsebe) + "]");
+            res1.forEach((element) => {
+              this.data.push(element);
+            });
+            localStorage.setItem(
+              "selectedPatient",
+              btoa(JSON.stringify(this.data))
+            );
             this.dismissLoading();
             this.patientDetail = res1;
             this.processData(res1);
@@ -387,7 +395,7 @@ export class PatientDetailPage implements OnInit {
           } else {
             this.admittingDiagnosis = res.admitting_diagnosis2.replace(
               /(\r\n|\n|\r)/gm,
-              '<br />'
+              "<br />"
             );
             ////this.functionsService.logToConsole('admittingDiagnosis : ' + this.admittingDiagnosis);
             this.admittingDiagnosis1 = this.functionsService.truncateChar(
@@ -396,11 +404,11 @@ export class PatientDetailPage implements OnInit {
             );
             this.admittingDiagnosis1 = this.admittingDiagnosis1.replace(
               /(\r\n|\n|\r)/gm,
-              '<br />'
+              "<br />"
             );
             this.admittingDiagnosis2 = this.admittingDiagnosis.replace(
               /(,)/gm,
-              ',<br />'
+              ",<br />"
             );
             ////this.functionsService.logToConsole('admittingDiagnosis2 : ' + this.admittingDiagnosis2);
           }
@@ -432,8 +440,8 @@ export class PatientDetailPage implements OnInit {
                 50
               );
               this.finalDiagnosis2 = this.finalDiagnosis
-                .replace(/(\r\n|\n|\r)/gm, '')
-                .split('.)');
+                .replace(/(\r\n|\n|\r)/gm, "")
+                .split(".)");
               this.finalDiagnosis2.shift();
               for (let i = 0; i < this.finalDiagnosis2.length - 1; i++) {
                 this.finalDiagnosis2[i] = this.finalDiagnosis2[i].substring(
@@ -444,7 +452,7 @@ export class PatientDetailPage implements OnInit {
               }
               for (let i = 0; i < this.finalDiagnosis2.length; i++) {
                 this.finalDiagnosis2[i] =
-                  i + 1 + '.) ' + this.finalDiagnosis2[i];
+                  i + 1 + ".) " + this.finalDiagnosis2[i];
               }
             }
           }
@@ -468,7 +476,7 @@ export class PatientDetailPage implements OnInit {
                 this.daysOfManage = element.no_of_days_manage;
               }
               //sessionStorage.setItem('daysManaged', btoa(this.daysOfManage));
-              localStorage.setItem('daysManaged', btoa(this.daysOfManage));
+              localStorage.setItem("daysManaged", btoa(this.daysOfManage));
             }
             //
           });
@@ -479,9 +487,9 @@ export class PatientDetailPage implements OnInit {
           }
           ////this.functionsService.logToConsole(res);
           res.forEach((element) => {
-            if (element.status == 'Primary Attending Physician') {
+            if (element.status == "Primary Attending Physician") {
               coDoctors1.push(element);
-            } else if (element.status == 'Co-Manage') {
+            } else if (element.status == "Co-Manage") {
               coDoctors2.push(element);
             } else {
               coDoctors3.push(element);
@@ -511,7 +519,7 @@ export class PatientDetailPage implements OnInit {
   }
   async alert(data1: any, data2: any) {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+      cssClass: "my-custom-class",
       message: data1,
       backdropDismiss: false,
       buttons: [
@@ -524,5 +532,23 @@ export class PatientDetailPage implements OnInit {
       ],
     });
     await alert.present();
+  }
+  gotoDiagnistic() {
+    let patient_id = this.activatedRoute.snapshot.params.id;
+    console.log(
+      "/executive/allpatients/" +
+        this.activatedRoute.snapshot.params.doctorCode +
+        "/" +
+        this.activatedRoute.snapshot.params.admissionNo +
+        "/diagnostic-results/"
+    );
+
+    this.router.navigate([
+      "/executive/allpatients/" +
+        this.activatedRoute.snapshot.params.doctorCode +
+        "/" +
+        this.activatedRoute.snapshot.params.admissionNo +
+        "/diagnostic-results/",
+    ]);
   }
 }
