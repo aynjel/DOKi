@@ -171,6 +171,16 @@ export class DiagnosticResultsPage implements OnInit {
           let interval;
 
           resultList.forEach((element) => {
+            if (
+              element.exam == "SPECIAL-IMAGING" ||
+              element.exam == "ULTRASOUND "
+            ) {
+              element.exam1 = element.exam_Description;
+            } else if (element.exam == "TVS") {
+              element.exam1 = "ULTRASOUND";
+            } else {
+              element.exam1 = element.exam;
+            }
             let index = this.intervalData.findIndex(function (item, i) {
               return item.subclass === element.subclass;
             });
@@ -255,5 +265,16 @@ export class DiagnosticResultsPage implements OnInit {
     modal.present();
 
     const { data, role } = await modal.onWillDismiss();
+  }
+  searchBar;
+  filterList() {
+    let search = this.searchBar.toLowerCase();
+    this.resultList = [];
+    this.resultList = this.resultListFull.filter(
+      (x) =>
+        x.exam_Description.toLowerCase().includes(search) ||
+        x.exam.toLowerCase().includes(search) ||
+        x.date_exam_c.includes(search)
+    );
   }
 }

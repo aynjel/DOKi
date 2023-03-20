@@ -36,10 +36,28 @@ export class ExamResultsModalComponent implements OnInit {
     this.pdf.examCode = this.ExamDetails.exam_Code;
     this.pdf.site = this.ExamDetails.site;
     this.pdf.testId = this.ExamDetails.exam_Description;
-    if (this.requestType == "radiology") {
+    /*if (this.requestType == "radiology") {
     }
     if (this.requestType == "radiology") {
       this.requestType = this.ExamDetails.exam.toLowerCase();
+    }*/
+    if (this.requestType == "cardio") {
+      this.requestType = "cardiology";
+    }
+    if (this.requestType == "endoscopy") {
+      this.requestType = "endoscopy";
+    }
+    if (this.requestType == "neurophysio") {
+      this.requestType = "neurophysio";
+    }
+    if (this.requestType == "laboratory") {
+      this.requestType = "lab";
+    }
+    if (this.requestType == "pulmonary") {
+      this.requestType = "pulmonary";
+    }
+    if (this.requestType == "radiology") {
+      this.requestType = "radiology";
     }
     this.getPDF(this.pdf);
     // this.pdf.examNo = this.ExamDetails.
