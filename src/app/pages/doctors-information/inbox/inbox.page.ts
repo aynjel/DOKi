@@ -98,6 +98,7 @@ export class InboxPage implements OnInit {
     }
   }
   modeSelected: string = "for Approval";
+  pendingApprovalSearch;
   changeMode() {
     localStorage.setItem("changeMode", this.selected);
     if (this.selected == "FA" || this.selected == "RA") {
@@ -110,19 +111,25 @@ export class InboxPage implements OnInit {
     if (this.selected == "FR" || this.selected == "DA") {
       this.ngZone.run(() => {
         this.pendingApproval = [];
+        this.pendingApprovalSearch = [];
         this.pendingApproval = this.pendingApprovalFullList.filter(
           (element) => element.approval_status == this.selected
         );
+        this.pendingApprovalSearch = this.pendingApproval;
       });
     } else {
       this.ngZone.run(() => {
         this.pendingApproval = [];
+        this.pendingApprovalSearch = [];
         this.pendingApproval = this.pendingApprovalFullList.filter(
           (element) =>
             element.approval_status == "RA" || element.approval_status == "FA"
         );
+        this.pendingApprovalSearch = this.pendingApproval;
       });
     }
+    this.searchData();
+    console.log(this.pendingApproval);
   }
   /*segmentChanged(e) {
     //////console.log(e.detail.value);
@@ -474,4 +481,20 @@ export class InboxPage implements OnInit {
   }
 
   segmentChanged1(e) {}
+  keyData;
+  results;
+  searchData() {
+    console.log(this.keyData);
+
+    this.results = this.pendingApprovalSearch.filter((employee) => {
+      return (
+        employee.patient_name
+          .toLowerCase()
+          .includes(this.keyData.toLowerCase()) ||
+        employee.room_no.toLowerCase().includes(this.keyData.toLowerCase())
+      );
+    });
+    this.pendingApproval = this.results;
+    console.log(this.results);
+  }
 }

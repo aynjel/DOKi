@@ -4,11 +4,18 @@
       <ion-grid class="ion-no-padding">
         <ion-row>
           <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
-            <span class="padding-left-10" (click)="back()" routerDirection="backward" color="chh-css-primary2">
-              <ion-icon name="arrow-back-outline" class="my-icon vcenter pointer"></ion-icon>
+            <span
+              class="padding-left-10"
+              (click)="back()"
+              routerDirection="backward"
+              color="chh-css-primary2">
+              <ion-icon
+                name="arrow-back-outline"
+                class="my-icon vcenter pointer"></ion-icon>
             </span>
-            <span class="padding-left-30 font-weight-500 fontSize-16"> &nbsp;&nbsp;Medical
-              Certificate <span class="fontSize-14">({{modeSelected}}) </span>
+            <span class="padding-left-30 font-weight-500 fontSize-16">
+              &nbsp;&nbsp;Medical Certificate
+              <span class="fontSize-14">({{modeSelected}}) </span>
               <!--<ion-icon style="float:right; padding-right:20px" name="ellipsis-vertical-outline"
                 id="trigger-inbox-popover" class="pointer">
               </ion-icon>-->
@@ -57,35 +64,58 @@
           </ion-modal-->
           <ion-item>
             <ion-segment [(ngModel)]="selected" (ionChange)="changeMode()">
-              <ion-segment-button value="FA" [ngClass]="{'boldMe': selected === 'FA'}" class="pointer">
-                <ion-label>for Approval<sup *ngIf="pendingApprovalCount >= 1">
+              <ion-segment-button
+                value="FA"
+                [ngClass]="{'boldMe': selected === 'FA'}"
+                class="pointer">
+                <ion-label
+                  >for Approval<sup *ngIf="pendingApprovalCount >= 1">
                     ({{pendingApprovalCount}})
-                  </sup></ion-label>
+                  </sup></ion-label
+                >
               </ion-segment-button>
-              <ion-segment-button value="FR" [ngClass]="{'boldMe': selected === 'FR'}" class="pointer">
+              <ion-segment-button
+                value="FR"
+                [ngClass]="{'boldMe': selected === 'FR'}"
+                class="pointer">
                 <ion-label>for Revision</ion-label>
               </ion-segment-button>
-              <ion-segment-button value="DA" [ngClass]="{'boldMe': selected === 'DA'}" class="pointer">
+              <ion-segment-button
+                value="DA"
+                [ngClass]="{'boldMe': selected === 'DA'}"
+                class="pointer">
                 <ion-label>Approved</ion-label>
               </ion-segment-button>
             </ion-segment>
-
           </ion-item>
           <ion-item>
             <ion-label>View Record</ion-label>
-            <ion-select [(ngModel)]="pastdays" value="{{pastdays}}" (ionChange)="viewRecordDays()" okText="Okay"
+            <ion-select
+              [(ngModel)]="pastdays"
+              value="{{pastdays}}"
+              (ionChange)="viewRecordDays()"
+              okText="Okay"
               cancelText="Dismiss">
               <ion-select-option value="9999">All</ion-select-option>
               <ion-select-option value="45">Past 45 days</ion-select-option>
               <ion-select-option value="60">Past 60 days</ion-select-option>
               <ion-select-option value="30">Past 30 days</ion-select-option>
               <ion-select-option value="15">Past 15 days</ion-select-option>
-
-
-
-
             </ion-select>
           </ion-item>
+          <ion-row>
+            <ion-col
+              size-md="8"
+              offset-md="2"
+              size-lg="12"
+              class="custom-border-bottom ion-no-border custom-padding">
+              <ion-searchbar
+                mode="ios"
+                [(ngModel)]="keyData"
+                placeholder="Search Name or Room Number"
+                (ionChange)="searchData()"></ion-searchbar>
+            </ion-col>
+          </ion-row>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -93,21 +123,31 @@
 </ion-header>
 <ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
-    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
-      refreshingSpinner="circles" refreshingText="Refreshing...">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
     </ion-refresher-content>
   </ion-refresher>
   <ion-grid class="ion-no-padding">
     <ion-row>
       <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
-        <ion-button id="trigger-modal-forRevision" style="display:none">Click to open modal</ion-button>
-        <ion-modal trigger="trigger-modal-forRevision" [isOpen]="false" [breakpoints]="[ 0, 0.5]"
+        <ion-button id="trigger-modal-forRevision" style="display: none"
+          >Click to open modal</ion-button
+        >
+        <ion-modal
+          trigger="trigger-modal-forRevision"
+          [isOpen]="false"
+          [breakpoints]="[ 0, 0.5]"
           [initialBreakpoint]="0.5">
           <ng-template>
             <ion-header>
               <ion-toolbar color="mango">
                 <ion-buttons slot="start">
-                  <ion-button (click)="dismissForRevisionModal()">Cancel</ion-button>
+                  <ion-button (click)="dismissForRevisionModal()"
+                    >Cancel</ion-button
+                  >
                 </ion-buttons>
                 <ion-title>Send for Revision</ion-title>
                 <ion-buttons slot="end">
@@ -117,7 +157,10 @@
             </ion-header>
             <ion-content>
               <ion-item style="height: 100%">
-                <ion-textarea rows="12" (keyup)="autoGrowTextZone($event)" [(ngModel)]="forRevisionText"></ion-textarea>
+                <ion-textarea
+                  rows="12"
+                  (keyup)="autoGrowTextZone($event)"
+                  [(ngModel)]="forRevisionText"></ion-textarea>
               </ion-item>
             </ion-content>
           </ng-template>
@@ -126,91 +169,128 @@
           <div *ngFor="let x of pendingApproval">
             <ion-card mode="ios">
               <ion-list>
-                <ion-item class="item-background-color paddingBottom10" lines="none">
+                <ion-item
+                  class="item-background-color paddingBottom10"
+                  lines="none">
                   <div class="ion-text-wrap paddingBottom5">
                     <ion-label>
                       <h2 class="ion-text-wrap paddingTop10">
                         <b>{{ x.patient_name }}</b>
                         <ion-text color="primary">
-                          <p color="primary"><b>{{x.bdayConverted}} <strong>|</strong> {{x.age}} <strong>|</strong>
-                              {{x.gender}}</b>&nbsp;
-                            <ion-badge class="icon" color="danger" mode="ios" *ngIf="x.rework_dx_flg == 'W'">Reworked
+                          <p color="primary">
+                            <b
+                              >{{x.bdayConverted}} <strong>|</strong> {{x.age}}
+                              <strong>|</strong> {{x.gender}}</b
+                            >&nbsp;
+                            <ion-badge
+                              class="icon"
+                              color="danger"
+                              mode="ios"
+                              *ngIf="x.rework_dx_flg == 'W'"
+                              >Reworked
                             </ion-badge>
-                            <ion-badge class="icon" color="warning" mode="ios" *ngIf="x.rework_dx_flg == 'V'">Revised
+                            <ion-badge
+                              class="icon"
+                              color="warning"
+                              mode="ios"
+                              *ngIf="x.rework_dx_flg == 'V'"
+                              >Revised
                             </ion-badge>
-                            <ion-badge class="icon" color="success" mode="ios" *ngIf="x.approval_status == 'FA' ">For
-                              Approval
+                            <ion-badge
+                              class="icon"
+                              color="success"
+                              mode="ios"
+                              *ngIf="x.approval_status == 'FA' "
+                              >For Approval
                             </ion-badge>
-                            <ion-badge class="icon" color="success" mode="ios" *ngIf="x.approval_status == 'FR' ">For
-                              Revision
+                            <ion-badge
+                              class="icon"
+                              color="success"
+                              mode="ios"
+                              *ngIf="x.approval_status == 'FR' "
+                              >For Revision
                             </ion-badge>
-                            <ion-badge class="icon" color="success" mode="ios" *ngIf="x.approval_status == 'DA' ">
+                            <ion-badge
+                              class="icon"
+                              color="success"
+                              mode="ios"
+                              *ngIf="x.approval_status == 'DA' ">
                               Approved
                             </ion-badge>
-                            <ion-badge class="icon" color="mango" mode="ios" *ngIf="x.approval_status == 'RA' ">
+                            <ion-badge
+                              class="icon"
+                              color="mango"
+                              mode="ios"
+                              *ngIf="x.approval_status == 'RA' ">
                               Approved by RES
                             </ion-badge>
-
-
-
                           </p>
                         </ion-text>
                       </h2>
                     </ion-label>
                   </div>
                 </ion-item>
-                <ion-item lines="none" style="padding-bottom: 10px;font-size: 12px;">
+                <ion-item
+                  lines="none"
+                  style="padding-bottom: 10px; font-size: 12px">
                   <div class="ion-text-wrap" style="padding-top: 5px">
-                    <div *ngIf="x.site == 'C'" class=" font-size12">
+                    <div *ngIf="x.site == 'C'" class="font-size12">
                       <ion-icon name="location-outline" slot="start"></ion-icon>
                       Chong Hua Hospital
                     </div>
-                    <div *ngIf="x.site == 'M'" class=" font-size12">
+                    <div *ngIf="x.site == 'M'" class="font-size12">
                       <ion-icon name="location-outline" slot="start"></ion-icon>
                       Chong Hua Hospital Mandaue
                     </div>
-                    <div class=" font-size12">
+                    <div class="font-size12">
                       <ion-icon name="bed-outline" slot="start"></ion-icon>
                       Room {{ x.room_no }}
                     </div>
-                    <div class=" font-size12" style="font-size: 13px;">
+                    <div class="font-size12" style="font-size: 13px">
                       <ion-icon name="calendar-outline" slot="start"></ion-icon>
-                      <span style="font-size: 13px;"> Admission Date &nbsp;&nbsp;: {{ x.dateAdmissionConverted }}</span>
+                      <span style="font-size: 13px">
+                        Admission Date &nbsp;&nbsp;: {{ x.dateAdmissionConverted
+                        }}</span
+                      >
                     </div>
                   </div>
                 </ion-item>
                 <ion-list>
                   <ion-item-divider class="item-divider-color">
-                    <ion-label>
-                      Final Diagnosis
-                    </ion-label>
+                    <ion-label> Final Diagnosis </ion-label>
                   </ion-item-divider>
                   <ion-item lines="none">
                     <!--ion-text [innerHTML]="x.final_diagnosis" class="ion-text-wrap custom-font"
                       style="font-size: 14px;">
                     </ion-text-->
-                    <see-more [final_diagnosis]="x.final_diagnosis" [greaterThan]="200"></see-more>
+                    <see-more
+                      [final_diagnosis]="x.final_diagnosis"
+                      [greaterThan]="200"></see-more>
                   </ion-item>
-
                 </ion-list>
                 <ion-list *ngIf="x.revision_dx_remarks != null">
                   <ion-item-divider class="item-divider-color">
-                    <ion-label>
-                      Revision Note
-                    </ion-label>
+                    <ion-label> Revision Note </ion-label>
                   </ion-item-divider>
                   <ion-item lines="none">
-                    <ion-text [innerHTML]="x.revision_dx_remarks" class="ion-text-wrap custom-font"
-                      style="font-size: 14px;">
+                    <ion-text
+                      [innerHTML]="x.revision_dx_remarks"
+                      class="ion-text-wrap custom-font"
+                      style="font-size: 14px">
                     </ion-text>
                   </ion-item>
                 </ion-list>
-
               </ion-list>
               <ion-footer *ngIf="selected != 'FR'">
                 <ion-row *ngIf="selected == 'DA'">
                   <ion-col size="12">
-                    <ion-button mode="ios" size="small" fill="outline" color="mango" shape="" expand="block"
+                    <ion-button
+                      mode="ios"
+                      size="small"
+                      fill="outline"
+                      color="mango"
+                      shape=""
+                      expand="block"
                       (click)="viewCerticate(x)">
                       <span>View Approved Medical Certificate</span>
                     </ion-button>
@@ -227,19 +307,39 @@
                   <ion-grid>
                     <ion-row>
                       <ion-col size="6">
-                        <ion-button mode="ios" size="small" color="mango" shape="" expand="block"
-                          (click)="viewCerticate(x)" *ngIf="selected == 'FA'">
+                        <ion-button
+                          mode="ios"
+                          size="small"
+                          color="mango"
+                          shape=""
+                          expand="block"
+                          (click)="viewCerticate(x)"
+                          *ngIf="selected == 'FA'">
                           <span>View & Sign</span>
                         </ion-button>
                       </ion-col>
                       <ion-col size="6">
-                        <ion-button mode="ios" size="small" fill="outline" color="default" shape="" expand="block"
-                          (click)="reviseRevokeApproval(x)" *ngIf="selected == 'FA'">
+                        <ion-button
+                          mode="ios"
+                          size="small"
+                          fill="outline"
+                          color="default"
+                          shape=""
+                          expand="block"
+                          (click)="reviseRevokeApproval(x)"
+                          *ngIf="selected == 'FA'">
                           <span>Send for Revision</span>
                         </ion-button>
                         <div>
-                          <ion-button mode="ios" size="small" fill="outline" color="danger" shape="" expand="block"
-                            (click)="reviseRevokeApproval(x)" *ngIf="selected == 'RA'">
+                          <ion-button
+                            mode="ios"
+                            size="small"
+                            fill="outline"
+                            color="danger"
+                            shape=""
+                            expand="block"
+                            (click)="reviseRevokeApproval(x)"
+                            *ngIf="selected == 'RA'">
                             <span>Revoke</span>
                           </ion-button>
                         </div>
@@ -251,11 +351,8 @@
             </ion-card>
           </div>
           <ion-card *ngIf="pendingApproval == ''">
-            <ion-item>
-              No Data
-            </ion-item>
+            <ion-item> No Data </ion-item>
           </ion-card>
-
         </ng-container>
       </ion-col>
     </ion-row>
