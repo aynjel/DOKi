@@ -277,4 +277,9 @@ export class DiagnosticResultsPage implements OnInit {
         x.date_exam_c.includes(search)
     );
   }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    // this.ngUnsubscribe.complete();
+    this.ngUnsubscribe.complete();
+  }
 }

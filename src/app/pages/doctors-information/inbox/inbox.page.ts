@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, NgZone, OnInit, Renderer2, ViewChild } from "@angular/core";
 import {
   ActionSheetController,
   IonModal,
@@ -6,30 +6,30 @@ import {
   NavController,
   PopoverController,
   ToastController,
-} from '@ionic/angular';
-import { DoctorService } from 'src/app/services/doctor/doctor.service';
-import { takeUntil } from 'rxjs/operators';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
-import { Router } from '@angular/router';
-import { LoginResponseModelv3, SignatureApproval } from 'src/app/models/doctor';
-import { Constants } from 'src/app/shared/constants';
-import { FunctionsService } from 'src/app/shared/functions/functions.service';
-import { AuthService } from 'src/app/services/auth/auth.service';
+} from "@ionic/angular";
+import { DoctorService } from "src/app/services/doctor/doctor.service";
+import { takeUntil } from "rxjs/operators";
+import { BehaviorSubject, Subject } from "rxjs";
+import { ScreenSizeService } from "src/app/services/screen-size/screen-size.service";
+import { Router } from "@angular/router";
+import { LoginResponseModelv3, SignatureApproval } from "src/app/models/doctor";
+import { Constants } from "src/app/shared/constants";
+import { FunctionsService } from "src/app/shared/functions/functions.service";
+import { AuthService } from "src/app/services/auth/auth.service";
 @Component({
-  selector: 'app-inbox',
-  templateUrl: './inbox.page.html',
-  styleUrls: ['./inbox.page.scss'],
+  selector: "app-inbox",
+  templateUrl: "./inbox.page.html",
+  styleUrls: ["./inbox.page.scss"],
 })
 export class InboxPage implements OnInit {
   private ngUnsubscribe = new Subject();
   isNotification: boolean;
-  selected = 'FA';
+  selected = "FA";
   pendingApproval;
   pendingApprovalFullList;
   dischargeNo = {
-    discharge_no: '',
-    revision_dx_remarks: '',
+    discharge_no: "",
+    revision_dx_remarks: "",
   };
   isDesktop: boolean;
   empty: boolean = false;
@@ -62,7 +62,7 @@ export class InboxPage implements OnInit {
   }
   ionViewWillEnter() {
     this.setDate();
-    this.selected = localStorage.getItem('changeMode');
+    this.selected = localStorage.getItem("changeMode");
     this.getPendingApproval(this.dateToday, this.dateNow);
     this.logindata = <LoginResponseModelv3>(
       this.authService.userData$.getValue()
@@ -76,14 +76,14 @@ export class InboxPage implements OnInit {
   }
   checkAppearance() {
     var values = JSON.parse(
-      '[' + atob(localStorage.getItem('user_settings')) + ']'
+      "[" + atob(localStorage.getItem("user_settings")) + "]"
     );
-    let dr_username = atob(localStorage.getItem('username'));
+    let dr_username = atob(localStorage.getItem("username"));
     values.forEach((element) => {
       if (element.darkmode == 1) {
-        this.renderer.setAttribute(document.body, 'color-theme', 'dark');
+        this.renderer.setAttribute(document.body, "color-theme", "dark");
       } else {
-        this.renderer.setAttribute(document.body, 'color-theme', 'light');
+        this.renderer.setAttribute(document.body, "color-theme", "light");
       }
     });
   }
@@ -91,39 +91,37 @@ export class InboxPage implements OnInit {
     this.navCtrl.back();
   }
   getType(e) {
-    if (this.selected == 'e') {
-      return 'boldMe';
+    if (this.selected == "e") {
+      return "boldMe";
     } else {
-      return 'unboldMe';
+      return "unboldMe";
     }
   }
-  modeSelected: string = 'for Approval';
+  modeSelected: string = "for Approval";
   changeMode() {
-    localStorage.setItem('changeMode', this.selected);
-    if (this.selected == 'FA' || this.selected == 'RA') {
-      this.modeSelected = 'for Approval';
-    } else if (this.selected == 'FR') {
-      this.modeSelected = 'for Revision';
-    } else if (this.selected == 'DA') {
-      this.modeSelected = 'Approved';
+    localStorage.setItem("changeMode", this.selected);
+    if (this.selected == "FA" || this.selected == "RA") {
+      this.modeSelected = "for Approval";
+    } else if (this.selected == "FR") {
+      this.modeSelected = "for Revision";
+    } else if (this.selected == "DA") {
+      this.modeSelected = "Approved";
     }
-    if (this.selected == 'FR' || this.selected == 'DA') {
+    if (this.selected == "FR" || this.selected == "DA") {
       this.ngZone.run(() => {
         this.pendingApproval = [];
         this.pendingApproval = this.pendingApprovalFullList.filter(
           (element) => element.approval_status == this.selected
         );
       });
-      console.log(this.pendingApproval);
     } else {
       this.ngZone.run(() => {
         this.pendingApproval = [];
         this.pendingApproval = this.pendingApprovalFullList.filter(
           (element) =>
-            element.approval_status == 'RA' || element.approval_status == 'FA'
+            element.approval_status == "RA" || element.approval_status == "FA"
         );
       });
-      console.log(this.pendingApproval);
     }
   }
   /*segmentChanged(e) {
@@ -142,17 +140,22 @@ export class InboxPage implements OnInit {
     this.pendingApproval = [];
     this.pendingApprovalFullList = [];
     let data = {
-      dt_from: dateFrom + 'T00:00:00.000Z',
-      dt_to: dateTo + 'T00:00:00.000Z',
+      dt_from: dateFrom + "T00:00:00.000Z",
+      dt_to: dateTo + "T00:00:00.000Z",
     };
     this.doctorService
       .getPendingApproval(data)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
+          res.sort(
+            (a, b) =>
+              Date.parse(b.admission_date) - Date.parse(a.admission_date)
+          );
+
           if (res != null) {
             this.pendingApprovalCount = res.filter(function (x) {
-              return x.approval_status == 'FA' || x.approval_status == 'RA';
+              return x.approval_status == "FA" || x.approval_status == "RA";
             }).length;
 
             //res.reduce((total, x) => (x == 2 ? total + 1 : total), 0);
@@ -223,23 +226,23 @@ export class InboxPage implements OnInit {
   reviseRevokeApproval(x) {
     //console.log(x);
     this.dischargeNo = x.discharge_no;
-    if (this.selected == 'FA') {
-      document.getElementById('trigger-modal-forRevision').click();
+    if (this.selected == "FA") {
+      document.getElementById("trigger-modal-forRevision").click();
       //this.presentForRevision(x);
     } else {
       this.presentRevokeApproval(x);
     }
   }
   viewCerticate(x) {
-    if (this.selected == 'FA') {
+    if (this.selected == "FA") {
       this.router.navigate([
-        'menu/inbox/sign-medcert/' + x.admission_no + '/' + x.discharge_no,
+        "menu/inbox/sign-medcert/" + x.admission_no + "/" + x.discharge_no,
       ]);
     } else {
       this.router.navigate([
-        'menu/in-patients/' +
+        "menu/in-patients/" +
           x.admission_no +
-          '/viewAndCancel/' +
+          "/viewAndCancel/" +
           x.discharge_no,
       ]);
     }
@@ -249,23 +252,23 @@ export class InboxPage implements OnInit {
     ////console.log(x);
 
     this.router.navigate([
-      'menu/in-patients/' + x.admissionNo + '/view/' + x.dischargeNo,
+      "menu/in-patients/" + x.admissionNo + "/view/" + x.dischargeNo,
     ]);
   }
 
   async presentActionSheet(x) {
     const actionSheet = await this.actionSheetController.create({
-      mode: 'ios',
+      mode: "ios",
       header:
-        'Are you sure to Approve ' + x.patient_name + "'s final diagnosis?",
-      cssClass: 'my-custom-class',
+        "Are you sure to Approve " + x.patient_name + "'s final diagnosis?",
+      cssClass: "my-custom-class",
       buttons: [
         {
-          text: 'Yes, Approve',
-          icon: 'thumbs-up-outline',
-          id: 'delete-button',
+          text: "Yes, Approve",
+          icon: "thumbs-up-outline",
+          id: "delete-button",
           data: {
-            type: 'delete',
+            type: "delete",
           },
           handler: () => {
             this.approvePendingAPproval(x.discharge_no);
@@ -273,9 +276,9 @@ export class InboxPage implements OnInit {
         },
 
         {
-          text: 'Back',
-          icon: 'arrow-back-outline',
-          role: 'cancel',
+          text: "Back",
+          icon: "arrow-back-outline",
+          role: "cancel",
           handler: () => {
             ////console.log('Cancel clicked');
           },
@@ -289,16 +292,16 @@ export class InboxPage implements OnInit {
   }
   async presentForRevision(x) {
     const actionSheet = await this.actionSheetController.create({
-      mode: 'ios',
+      mode: "ios",
       header: "Set patient's final diagnosis for Revision",
-      cssClass: 'my-custom-class',
+      cssClass: "my-custom-class",
       buttons: [
         {
-          text: 'Yes, Send for Revision',
-          icon: 'thumbs-up-outline',
-          id: 'delete-button',
+          text: "Yes, Send for Revision",
+          icon: "thumbs-up-outline",
+          id: "delete-button",
           data: {
-            type: 'delete',
+            type: "delete",
           },
           handler: () => {
             //console.log(x.discharge_no);
@@ -306,9 +309,9 @@ export class InboxPage implements OnInit {
           },
         },
         {
-          text: 'Back',
-          icon: 'arrow-back-outline',
-          role: 'cancel',
+          text: "Back",
+          icon: "arrow-back-outline",
+          role: "cancel",
           handler: () => {
             ////console.log('Cancel clicked');
           },
@@ -320,25 +323,25 @@ export class InboxPage implements OnInit {
   }
   async presentRevokeApproval(x) {
     const actionSheet = await this.actionSheetController.create({
-      mode: 'ios',
+      mode: "ios",
       header: "Are you sure to revoke the patient's final diagnosis?",
-      cssClass: 'my-custom-class',
+      cssClass: "my-custom-class",
       buttons: [
         {
-          text: 'Yes, Revoke',
-          icon: 'thumbs-up-outline',
-          id: 'delete-button',
+          text: "Yes, Revoke",
+          icon: "thumbs-up-outline",
+          id: "delete-button",
           data: {
-            type: 'delete',
+            type: "delete",
           },
           handler: () => {
             this.clearSignature(x);
           },
         },
         {
-          text: 'Back',
-          icon: 'arrow-back-outline',
-          role: 'cancel',
+          text: "Back",
+          icon: "arrow-back-outline",
+          role: "cancel",
           handler: () => {
             ////console.log('Cancel clicked');
           },
@@ -353,7 +356,7 @@ export class InboxPage implements OnInit {
     let revokeApproval: SignatureApproval = new SignatureApproval();
     revokeApproval.mode = this.constants.TestServer;
     revokeApproval.account_no = patientId;
-    revokeApproval.medcert_comment = '';
+    revokeApproval.medcert_comment = "";
     revokeApproval.medcert_approve_by = this.dr_code;
     revokeApproval.medcert_signature = this.constants.blankBase64img;
     this.saveSignature(revokeApproval, x.discharge_no);
@@ -387,16 +390,16 @@ export class InboxPage implements OnInit {
         },
         (error) => {},
         () => {
-          this.functionService.presentToast('Successfully Sent for Revision');
+          this.functionService.presentToast("Successfully Sent for Revision");
           this.ionViewWillEnter();
         }
       );
   }
-  pastdays: any = '9999';
-  dateToday: any = '12/31/2021';
-  dateValue = '2021-12-31';
+  pastdays: any = "9999";
+  dateToday: any = "12/31/2021";
+  dateValue = "2021-12-31";
   isCalendar: boolean;
-  dateNow = '';
+  dateNow = "";
   viewRecordDays() {
     this.dateValue = this.functionService.getDateYYYYMMDD(this.pastdays);
     this.dateToday = this.functionService.getDateYYYYMMDD(this.pastdays);
@@ -407,7 +410,7 @@ export class InboxPage implements OnInit {
     this.isCalendar = true;
     const modalState = {
       modal: true,
-      desc: 'fake state for our modal',
+      desc: "fake state for our modal",
     };
     history.pushState(modalState, null);
   }
@@ -425,7 +428,7 @@ export class InboxPage implements OnInit {
     let dateTwo = new Date(this.dateNow);
     if (dateOne > dateTwo) {
       this.functionService.presentToast(
-        'Date selected is greater than date now'
+        "Date selected is greater than date now"
       );
       return false;
     }
@@ -435,9 +438,9 @@ export class InboxPage implements OnInit {
     let month1 = date1.getMonth() + 1;
     let year1 = date1.getFullYear();
     let sendDatedateToday =
-      ('0' + month1).slice(-2) + '/' + ('0' + day1).slice(-2) + '/' + year1;
+      ("0" + month1).slice(-2) + "/" + ("0" + day1).slice(-2) + "/" + year1;
     let sendDatedateValue =
-      year1 + '-' + ('0' + month1).slice(-2) + '-' + ('0' + day1).slice(-2);
+      year1 + "-" + ("0" + month1).slice(-2) + "-" + ("0" + day1).slice(-2);
     this.dateValue = sendDatedateValue;
     this.dateToday = sendDatedateValue;
     this.getPendingApproval(this.dateToday, this.dateNow);
@@ -451,23 +454,23 @@ export class InboxPage implements OnInit {
 
   autoGrowTextZone(e) {
     if (e.target.scrollHeight + 25 <= 350) {
-      e.target.style.height = '0px';
-      e.target.style.height = e.target.scrollHeight + 25 + 'px';
+      e.target.style.height = "0px";
+      e.target.style.height = e.target.scrollHeight + 25 + "px";
     }
   }
-  forRevisionText = '';
+  forRevisionText = "";
   @ViewChild(IonModal) modal: IonModal;
   dismissForRevisionModal() {
-    this.modalController.dismiss(null, 'cancel');
+    this.modalController.dismiss(null, "cancel");
   }
   saveForRevisionModal() {
     let forRevisionText = this.forRevisionText;
     let dischargeNo = this.dischargeNo;
-    this.forRevisionText = '';
-    this.dischargeNumber = '';
+    this.forRevisionText = "";
+    this.dischargeNumber = "";
     this.cancelApprovedApproval(dischargeNo, forRevisionText);
 
-    this.modalController.dismiss(null, 'cancel');
+    this.modalController.dismiss(null, "cancel");
   }
 
   segmentChanged1(e) {}
