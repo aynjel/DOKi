@@ -14,6 +14,7 @@ export const environment = {
   apiResident: "http://10.151.12.120:7230/",
   consoleLog: true,
   API_URL: window["env"]["API_URL"],
+  callHistory: "https://dev.chonghua.com.ph/api/",
 };
 
 /*

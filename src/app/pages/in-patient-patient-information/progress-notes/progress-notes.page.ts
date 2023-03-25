@@ -1,6 +1,11 @@
 import { Component, OnInit, Renderer2, Input } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ModalController } from "@ionic/angular";
+import {
+  AlertController,
+  LoadingController,
+  ModalController,
+  NavController,
+} from "@ionic/angular";
 import { DoctorService } from "src/app/services/doctor/doctor.service";
 import { ScreenSizeService } from "src/app/services/screen-size/screen-size.service";
 import { FunctionsService } from "src/app/shared/functions/functions.service";
@@ -8,6 +13,20 @@ import { ProgressnotesHistoryComponent } from "src/app/chh-web-components/progre
 import { takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
 import { ResiService } from "src/app/services/resi/resi.service";
+import { Consta } from "src/app/config/auth-constants";
+import {
+  InpatientDetails,
+  InpatientModelInpatients,
+  LoginResponseModelv3,
+  PatientDetail,
+  UserSettingsModelv3,
+} from "src/app/models/doctor";
+import { AuthService } from "src/app/services/auth/auth.service";
+import {
+  InPatientData,
+  ProfessionalFeeModelv3,
+} from "src/app/models/in-patient.model";
+import { ExecutiveService } from "src/app/services/executive/executive.service";
 @Component({
   selector: "app-progress-notes",
   templateUrl: "./progress-notes.page.html",
@@ -38,7 +57,12 @@ export class ProgressNotesPage implements OnInit {
     private functionsService: FunctionsService,
     private renderer: Renderer2,
     private router: Router,
-    private residentService: ResiService
+    private residentService: ResiService,
+    private navCtrl: NavController,
+    private authService: AuthService,
+    private loadingController: LoadingController,
+    private executiveService: ExecutiveService,
+    private alertController: AlertController
   ) {
     this.screensizeService
       .isDesktopView()
@@ -57,9 +81,144 @@ export class ProgressNotesPage implements OnInit {
   admission_status;
   patientDetailfromApi_to;
   patientDetailfromApi_from;
-  ngOnInit() {
-    //console.log('ngOnInit');
 
+  routerLinkBack;
+  data1;
+  dr_name;
+  dr_code;
+  inpatientModelInpatients = new InpatientModelInpatients();
+  postData: InPatientData = new InPatientData();
+  professionalFeeModelv3: ProfessionalFeeModelv3 = new ProfessionalFeeModelv3();
+  userSettingsModelv3: UserSettingsModelv3 = new UserSettingsModelv3();
+  loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
+  patientName;
+  opd_code;
+  admissionstatus;
+  patient_name;
+  checkmark;
+  location;
+  inpatientDetails: InpatientDetails = new InpatientDetails();
+  ngOnInit() {
+    this.ngUnsubscribe = new Subject();
+    this.loginResponseModelv3 = new LoginResponseModelv3();
+    this.inpatientDetails = new InpatientDetails();
+    this.patient_id = this.activatedRoute.snapshot.params.id;
+    this.routerLinkBack = "/menu/in-patients/";
+    this.loginResponseModelv3 = <LoginResponseModelv3>(
+      this.authService.userData$.getValue()
+    );
+    this.userSettingsModelv3 = new UserSettingsModelv3();
+    this.userSettingsModelv3 = JSON.parse(
+      "[" + atob(localStorage.getItem("user_settings")) + "]"
+    );
+
+    this.loginResponseModelv3 = this.authService.userData$.getValue();
+    this.dr_name = this.loginResponseModelv3.lastName;
+    this.dr_code = this.loginResponseModelv3.doctorCode;
+    this.inpatientModelInpatients.drCode = this.dr_code;
+    this.inpatientModelInpatients.mode = Consta.mode;
+    this.postData.DoctorMobileNumber = this.loginResponseModelv3.mobileNo;
+    this.professionalFeeModelv3.doctor_mobile_no =
+      this.loginResponseModelv3.mobileNo;
+    this.professionalFeeModelv3.smsGatewayCHH =
+      this.userSettingsModelv3[0].smsGatewayCHH;
+    this.professionalFeeModelv3.smsGatewaySmart =
+      this.userSettingsModelv3[0].smsGatewaySmart;
+
+    let ppatientdata = new PatientDetail();
+    ppatientdata.admissionNo = this.patient_id;
+    ppatientdata.doctorCode = this.dr_code;
+    this.data = [];
+    this.presentLoading();
+    //////console.log('123');
+
+    this.executiveService
+      .getPatientDetail(ppatientdata)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          ////console.log('res.manage_to', res.manage_to);
+
+          localStorage.setItem("doctor_Status_code", res.doctor_Status_code);
+          this.admission_status = res.admission_status;
+          this.patientDetailfromApi_from = this.functionService.cdateampm(
+            res.manage_from
+          );
+          if (res.manage_to == null) {
+            this.patientDetailfromApi_to = "";
+          } else {
+            this.patientDetailfromApi_to = this.functionService.cdateampm(
+              res.manage_to
+            );
+          }
+
+          localStorage.setItem("admission_status", btoa(this.admission_status));
+          localStorage.setItem(
+            "Api_from",
+            btoa(this.patientDetailfromApi_from)
+          );
+          localStorage.setItem("Api_to", btoa(this.patientDetailfromApi_to));
+          //convertDatetoMMDDYYYYHHMMSS;
+          if (res == null) {
+            this.back();
+          } else {
+            this.patientName = res.last_name + ", " + res.first_name;
+            this.data1 = JSON.parse("[" + JSON.stringify(res) + "]");
+            localStorage.setItem(
+              "patientData",
+              btoa(JSON.stringify(this.data1))
+            );
+          }
+        },
+        (error) => {
+          this.dismissLoading();
+        },
+        () => {
+          this.dismissLoading();
+          if (this.data1 != "") {
+            this.data1.forEach((element) => {
+              this.opd_code = element.admission_no;
+              this.inpatientModelInpatients.accountNo = this.opd_code;
+              this.inpatientDetails.admission_no = this.opd_code;
+              this.data.push(element);
+              localStorage.setItem(
+                "selectedPatient",
+                btoa(JSON.stringify(this.data))
+              );
+              this.admissionstatus = element.admission_status;
+              this.patient_name = element.first_name + " " + element.last_name;
+              this.patient_name =
+                this.functionsService.convertAllFirstLetterToUpperCase(
+                  this.patient_name
+                );
+              if (element.payvenue != null) {
+                this.checkmark = true;
+              }
+            });
+            let n = this.data[0].admission_no.indexOf("IPC");
+            //this.functionsService.logToConsole(n);
+
+            if (n >= 0) {
+              this.location = true;
+            } else {
+              this.location = false;
+            }
+            this.start();
+          } else {
+            this.alert("No Data Available", "Okay");
+          }
+          ////////console.log(this.data1);
+          ////////console.log(this.data[0].philhealth_membership);
+          this.is_philhealth_membership = this.data[0].philhealth_membership;
+          this.is_pwd = this.data1[0].is_pwd;
+          this.is_senior = this.data1[0].is_senior;
+          ////////console.log(this.is_pwd, this.is_senior);
+        }
+      );
+  }
+  start() {
+    //console.log('ngOnInit');
+    this.checkAppearance();
     this.ngUnsubscribe = new Subject();
     this.patient_id = this.activatedRoute.snapshot.params.id;
     this.getProgressNote();
@@ -232,5 +391,45 @@ export class ProgressNotesPage implements OnInit {
     } else {
       return "";
     }
+  }
+  back() {
+    this.navCtrl.back();
+    //this.router.navigate(['menu/patient/' + this.patientId]);
+  }
+  loading;
+  async presentLoading() {
+    this.loading = await this.loadingController.create({
+      cssClass: "my-custom-class",
+      message: "Please wait...",
+      duration: 2000,
+    });
+    await this.loading.present();
+
+    const { role, data } = await this.loading.onDidDismiss();
+    //////////////////////console.log('Loading dismissed!');
+  }
+  public async dismissLoading(): Promise<void> {
+    if (this.loading) {
+      this.loading.dismiss();
+    }
+  }
+  async alert(data1: any, data2: any) {
+    const alert = await this.alertController.create({
+      cssClass: "my-custom-class",
+      message: data1,
+      backdropDismiss: false,
+      buttons: [
+        {
+          text: data2,
+          handler: () => {
+            this.closemodal();
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
+  closemodal() {
+    this.router.navigate(["/menu/patient-history/"]);
   }
 }

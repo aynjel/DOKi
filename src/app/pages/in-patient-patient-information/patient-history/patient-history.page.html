@@ -1,95 +1,104 @@
 <ion-header mode="md" class="ion-no-border">
-  <div *ngIf="!isDesktop">
-    <ion-toolbar color="mango">
-      <ion-title>
-        <ion-icon name="person-circle-outline"></ion-icon>
-        {{this.constants.MENU__VALUE__IN_PATIENTS}}
-        <ion-text style="font-size: 14px">
-          {{admittedOrDischargeLabel}}
-        </ion-text>
-        <ion-icon
-          [name]="isNotification === true ? 'mail-unread-outline' : 'mail-outline'"
-          style="float: right"
-          id="click-trigge"
-          size="large">
-        </ion-icon>
-
-        <ion-popover trigger="click-trigge" dismiss-on-select="true">
-          <ng-template>
-            <ion-content>
-              <ion-list>
-                <ion-item
-                  class="pointer"
-                  routerLink="/menu/inbox"
-                  routerDirection="root">
-                  <ion-label>&nbsp;Medical Certificate </ion-label>
-                </ion-item>
-                <ion-item
-                  class="pointer"
-                  routerLink="/menu/patient-history"
-                  routerDirection="root"
-                  dismiss-on-select="true">
-                  <ion-label>&nbsp;Progress Notes </ion-label>
-                </ion-item>
-              </ion-list>
-            </ion-content>
-          </ng-template>
-        </ion-popover>
-      </ion-title>
+  <div>
+    <!--ion-toolbar [color]="isDesktop?'':'mango'" *ngIf="!isDesktop">
+      <ion-grid class="ion-no-padding">
+        <ion-row>
+          <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
+            <span
+              class="padding-left-10"
+              routerLink="/menu/"
+              routerDirection="backward"
+              color="chh-css-primary2">
+              <ion-icon
+                name="arrow-back-outline"
+                class="my-icon vcenter pointer"></ion-icon>
+            </span>
+            <span class="padding-left-30 font-weight-500 font-size-20">
+              &nbsp;&nbsp;Progress Notes
+            </span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-toolbar-->
+    <ion-toolbar [color]="isDesktop?'':'mango'">
+      <ion-grid class="ion-no-padding">
+        <ion-row>
+          <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
+            <span
+              class="padding-left-10"
+              routerLink="/menu/"
+              routerDirection="backward"
+              color="chh-css-primary2">
+              <ion-icon
+                name="arrow-back-outline"
+                class="my-icon vcenter pointer"></ion-icon>
+            </span>
+            <span class="padding-left-30 font-weight-500 fontSize-16">
+              &nbsp;&nbsp;Progress Notes
+            </span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-toolbar>
+    <ion-grid class="ion-no-padding"> </ion-grid>
+    <ion-grid class="ion-no-padding chh-darkmode">
+      <ion-row>
+        <ion-col
+          size-md="8"
+          offset-md="2"
+          size-lg="4"
+          offset-lg="4"
+          class="custom-border-bottom ion-no-border custom-padding">
+          <!--chh-app-hospital-selector-with-all-and-filter
+            (hospital)="locationAction($event)">
+          </chh-app-hospital-selector-with-all-and-filter-->
+          <chh-app-hospital
+            (hospital)="locationAction($event)"
+            Activator="true"
+            readonlyComp="false"></chh-app-hospital>
+        </ion-col>
+      </ion-row>
+      <ion-row class="">
+        <ion-col
+          size-md="8"
+          offset-md="2"
+          size-lg="4"
+          offset-lg="4"
+          class="ion-no-border">
+          <ion-searchbar
+            [(ngModel)]="searchBar"
+            (ionChange)="filterList()"
+            placeholder="Search Name or Room Number"
+            mode="ios"></ion-searchbar>
+        </ion-col>
+      </ion-row>
+      <ion-row class="">
+        <ion-col
+          size-md="8"
+          offset-md="2"
+          size-lg="4"
+          offset-lg="4"
+          class="ion-no-border">
+          <ion-text
+            color="mango"
+            style="float: right; padding-right: 20px"
+            (click)="up();"
+            ><ion-icon name="arrow-down-outline" size="medium"></ion-icon
+          ></ion-text>
+          <ion-text
+            color="mango"
+            style="float: right; padding-right: 20px"
+            (click)="down();"
+            ><ion-icon name="arrow-up-outline" size="medium"></ion-icon
+          ></ion-text>
+          <ion-text color="mango" style="float: right; padding-right: 20px"
+            >Floor Assignment :
+          </ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class=""></ion-row>
+    </ion-grid>
   </div>
-
-  <ion-grid class="ion-no-padding chh-darkmode">
-    <ion-row>
-      <ion-col
-        size-md="8"
-        offset-md="2"
-        size-lg="4"
-        offset-lg="4"
-        class="custom-border-bottom ion-no-border custom-padding">
-        <chh-app-hospital-selector-with-all-and-filter
-          (hospital)="locationAction($event)">
-        </chh-app-hospital-selector-with-all-and-filter>
-      </ion-col>
-    </ion-row>
-    <ion-row class="">
-      <ion-col
-        size-md="8"
-        offset-md="2"
-        size-lg="4"
-        offset-lg="4"
-        class="ion-no-border">
-        <ion-searchbar
-          [(ngModel)]="searchBar"
-          (ionChange)="filterList()"
-          mode="ios"></ion-searchbar>
-      </ion-col>
-    </ion-row>
-    <ion-row class="">
-      <ion-col
-        size-md="8"
-        offset-md="2"
-        size-lg="4"
-        offset-lg="4"
-        class="ion-no-border">
-        <ion-text
-          color="mango"
-          style="float: right; padding-right: 20px"
-          (click)="up();"
-          ><ion-icon name="arrow-down-outline" size="medium"></ion-icon
-        ></ion-text>
-        <ion-text
-          color="mango"
-          style="float: right; padding-right: 20px"
-          (click)="down();"
-          ><ion-icon name="arrow-up-outline" size="medium"></ion-icon
-        ></ion-text>
-        <ion-text color="mango" style="float: right; padding-right: 20px"
-          >Floor Assignment :
-        </ion-text>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
 </ion-header>
 
 <ion-content>
@@ -260,11 +269,6 @@
                       class="pointer"
                       [attr.data-testid]="x.admission_no">
                       <ion-item lines="none">
-                        <ion-avatar slot="start">
-                          <chh-app-text-avatar
-                            [text]="x.last_name"
-                            [color]=""></chh-app-text-avatar>
-                        </ion-avatar>
                         <ion-label style="margin-top: -5px">
                           <ion-item
                             slot="start"
@@ -272,7 +276,8 @@
                             class="ion-no-padding"
                             style="padding-bottom: 5px">
                             <h2 class="ion-text-wrap" style="padding-top: 20px">
-                              {{ x.last_name }}, {{ x.first_name }} {{
+                              View Progress Notes of Patient : <br />{{
+                              x.last_name }}, {{ x.first_name }} {{
                               x.middle_name }}
                               <ion-text color="primary">
                                 <p color="primary">
@@ -283,54 +288,8 @@
                                 </p>
                               </ion-text>
                             </h2>
-
-                            <ion-badge
-                              color="warning"
-                              slot="end"
-                              *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE && (x.doctor_prof_fee == null || x.doctor_prof_fee == '0') && x.is_posted == this.constants.ANY__VALUE__NULL">
-                              {{this.constants.DOCTOR__CODE__PROFESSIONAL_FEE}}</ion-badge
-                            >
-                            <ion-badge
-                              color="success"
-                              slot="end"
-                              *ngIf="x.doctor_prof_fee != this.constants.ANY__VALUE__NULL && x.is_posted !=this.constants.ANY__VALUE__NULL">
-                              <ion-icon name="checkmark-outline"></ion-icon>
-                            </ion-badge>
                           </ion-item>
-                          <div
-                            *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__ADMITTED">
-                            <!--Patient Admitted-->
-                            <!--Buffer 0.35 -->
-                            <ion-progress-bar
-                              value=".25"
-                              buffer="1"
-                              color="warning"></ion-progress-bar>
-                          </div>
-                          <div
-                            *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE && (x.is_posted == this.constants.ANY__VALUE__NULL || x.is_posted == this.constants.NUMBER__VALUE__ZERO) && x.doctor_prof_fee == this.constants.ANY__VALUE__NULL">
-                            <!--Patient For Discharge-->
-                            <!--Buffer 0.60 -->
-                            <ion-progress-bar
-                              value=".50"
-                              buffer="1"
-                              color="warning"></ion-progress-bar>
-                          </div>
-                          <div
-                            *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE  && (x.is_posted ==this.constants.ANY__VALUE__NULL|| x.is_posted ==this.constants.NUMBER__VALUE__ZERO ) && x.doctor_prof_fee !=this.constants.ANY__VALUE__NULL">
-                            <!--Patient For Discharge-->
-                            <!--Buffer 0.85 -->
-                            <ion-progress-bar
-                              value=".75"
-                              buffer="1"
-                              color="warning"></ion-progress-bar>
-                          </div>
-                          <div
-                            *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE  && x.is_posted == '1' && x.doctor_prof_fee !=this.constants.ANY__VALUE__NULL">
-                            <!--Patient For Discharge-->
-                            <ion-progress-bar
-                              value="1"
-                              color="mango"></ion-progress-bar>
-                          </div>
+
                           <ion-row
                             class="ion-no-padding"
                             lines="none"

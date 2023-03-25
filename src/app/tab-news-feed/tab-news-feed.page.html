@@ -3,26 +3,47 @@
     <ion-toolbar color="mango">
       <ion-title>
         <ion-icon name="newspaper-outline"></ion-icon> News Feed
-        <ion-icon [name]="isNotification === true ? 'mail-unread-outline' : 'mail-outline'" style="float:right"
-          routerLink="/menu/inbox" routerDirection="root">
+        <ion-icon
+          [name]="isNotification === true ? 'mail-unread-outline' : 'mail-outline'"
+          style="float: right"
+          id="click-triggerrr"
+          size="large">
         </ion-icon>
+
+        <ion-popover trigger="click-triggerrr" dismiss-on-select="true">
+          <ng-template>
+            <ion-content>
+              <ion-list>
+                <ion-item
+                  class="pointer"
+                  routerLink="/menu/inbox"
+                  routerDirection="root">
+                  <ion-label>&nbsp;Medical Certificate </ion-label>
+                </ion-item>
+                <ion-item
+                  class="pointer"
+                  routerLink="/menu/patient-history"
+                  routerDirection="root"
+                  dismiss-on-select="true">
+                  <ion-label>&nbsp;Progress Notes </ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
       </ion-title>
     </ion-toolbar>
-
   </div>
-
-
-
 </ion-header>
 <ion-content>
-
-
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
-    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
-      refreshingSpinner="circles" refreshingText="Refreshing...">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
     </ion-refresher-content>
   </ion-refresher>
-
 
   <ion-grid class="ion-no-padding">
     <ion-row>
@@ -34,26 +55,26 @@
             <img class="rect-img" src="{{x.imageUrl}}" alt="">
           </div-->
 
-
-            <div *ngIf="x.imageUrl != ''" class="use-cover-background square"
+            <div
+              *ngIf="x.imageUrl != ''"
+              class="use-cover-background square"
               style="background-image: url({{x.imageUrl}})"></div>
 
             <ion-card-header>
               <ion-card-title class="ion-text-wrap">{{x.title}}</ion-card-title>
             </ion-card-header>
             <ion-card-content>
-
               <p [innerHTML]="x.contentShortDesc"></p>
-
             </ion-card-content>
           </ion-card>
         </div>
-
       </ion-col>
     </ion-row>
   </ion-grid>
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>

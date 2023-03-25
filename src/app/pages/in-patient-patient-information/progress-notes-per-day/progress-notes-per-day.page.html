@@ -28,7 +28,8 @@
           [is_philhealth_membership]="is_philhealth_membership"
           [patientDetailfromApi_from]="patientDetailfromApi_from"
           [patientDetailfromApi_to]="patientDetailfromApi_to"
-          [admission_status]="admission_status">
+          [admission_status]="admission_status"
+          [showPFDetals]="false">
         </app-chh-app-patient-header>
       </ion-col>
     </ion-row>
@@ -108,6 +109,12 @@
               <ion-card mode="ios">
                 <ion-item>
                   <ion-label class="ion-text-wrap">
+                    <!--ion-badge
+                      style="float: right"
+                      color="warning"
+                      (click)="presentActionSheetapprove(x)"
+                      >Approve?</ion-badge
+                    ><br /-->
                     <h2 class="icon-center">
                       {{x.username}} | <ion-text> {{x.event_time_c}}</ion-text>
                     </h2>

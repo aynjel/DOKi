@@ -2,56 +2,95 @@
   <div>
     <ion-toolbar color="mango">
       <ion-title>
-        <ion-icon name="stats-chart-outline"></ion-icon> {{this.constants.MENU__VALUE__DASHBOARD}}
-        <ion-icon *ngIf="isNotification==false" name="mail-outline" style="float:right" routerLink="/menu/inbox"
-          routerDirection="root"> </ion-icon>
-        <ion-icon *ngIf="isNotification==true" name="mail-unread-outline" style="float:right" routerLink="/menu/inbox"
-          routerDirection="root"> </ion-icon>
+        <ion-icon name="stats-chart-outline"></ion-icon>
+        {{this.constants.MENU__VALUE__DASHBOARD}}
+        <ion-icon
+          [name]="isNotification === true ? 'mail-unread-outline' : 'mail-outline'"
+          style="float: right"
+          id="click-triggerr"
+          size="large">
+        </ion-icon>
+
+        <ion-popover trigger="click-triggerr" dismiss-on-select="true">
+          <ng-template>
+            <ion-content>
+              <ion-list>
+                <ion-item
+                  class="pointer"
+                  routerLink="/menu/inbox"
+                  routerDirection="root">
+                  <ion-label>&nbsp;Medical Certificate </ion-label>
+                </ion-item>
+                <ion-item
+                  class="pointer"
+                  routerLink="/menu/patient-history"
+                  routerDirection="root"
+                  dismiss-on-select="true">
+                  <ion-label>&nbsp;Progress Notes </ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
       </ion-title>
     </ion-toolbar>
   </div>
 </ion-header>
 
-
 <ion-content>
-
-
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
-    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
-      refreshingSpinner="circles" refreshingText="Refreshing...">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
     </ion-refresher-content>
   </ion-refresher>
 
-
-
   <ion-grid class="ion-no-padding">
     <ion-row class="custom-padding">
-      <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3" class="custom-border-bottom ion-no-border ">
+      <ion-col
+        size-md="8"
+        offset-md="2"
+        size-lg="6"
+        offset-lg="3"
+        class="custom-border-bottom ion-no-border">
         <ion-item lines="none">
           <h2 class="ion-no-padding">Welcome, Dr. {{first_name}}!</h2>
         </ion-item>
 
-
         <ion-grid>
           <ion-row>
             <ion-col size-xs="6">
-
-
-              <ion-item id="ion-item-ac" lines="none" routerLink='/menu/in-patients/AC' routerDirection="back">
+              <ion-item
+                id="ion-item-ac"
+                lines="none"
+                routerLink="/menu/in-patients/AC"
+                routerDirection="back">
                 <ion-avatar slot="start">
-                  <chh-app-text-avatar [text]='admitted' [color]=""></chh-app-text-avatar>
+                  <chh-app-text-avatar
+                    [text]="admitted"
+                    [color]=""></chh-app-text-avatar>
                 </ion-avatar>
 
                 <ion-label>
                   <h1><b>{{getTotalCount.admitted}}</b></h1>
-                  <p>{{this.functionsService.convertToCamelCase(this.constants.ADMISSION_STATUS__VALUE__ADMITTED)}}</p>
+                  <p>
+                    {{this.functionsService.convertToCamelCase(this.constants.ADMISSION_STATUS__VALUE__ADMITTED)}}
+                  </p>
                 </ion-label>
               </ion-item>
             </ion-col>
             <ion-col size-xs="6">
-              <ion-item id="ion-item-dn" lines="none" routerLink='/menu/in-patients/DN' routerDirection="back">
+              <ion-item
+                id="ion-item-dn"
+                lines="none"
+                routerLink="/menu/in-patients/DN"
+                routerDirection="back">
                 <ion-avatar slot="start">
-                  <chh-app-text-avatar [text]='discharge' [color]=""></chh-app-text-avatar>
+                  <chh-app-text-avatar
+                    [text]="discharge"
+                    [color]=""></chh-app-text-avatar>
                 </ion-avatar>
                 <ion-label>
                   <h1><b>{{getTotalCount.forDischarge}}</b></h1>
@@ -65,11 +104,8 @@
         </ion-grid>
 
         <div id="lineChartForMonth"></div>
-        <div id="lineChartForYear" style="padding-top: 3px;"></div>
-
-
+        <div id="lineChartForYear" style="padding-top: 3px"></div>
       </ion-col>
     </ion-row>
   </ion-grid>
-
 </ion-content>

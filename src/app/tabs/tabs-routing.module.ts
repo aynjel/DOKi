@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { TabsPage } from './tabs.page';
-import { HomeGuard } from '../guards/home.guard';
-import { UserDataResolver } from '../resolvers/userData.resolver';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { TabsPage } from "./tabs.page";
+import { HomeGuard } from "../guards/home.guard";
+import { UserDataResolver } from "../resolvers/userData.resolver";
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: TabsPage,
     canActivate: [HomeGuard],
     resolve: {
@@ -13,23 +13,23 @@ const routes: Routes = [
     },
     children: [
       {
-        path: 'in-patients',
+        path: "in-patients",
         loadChildren: () =>
-          import('../tab-in-patients/tab-in-patients.module').then(
+          import("../tab-in-patients/tab-in-patients.module").then(
             (m) => m.TabInPatientsPageModule
           ),
       },
       {
-        path: 'in-patients/DN',
+        path: "in-patients/DN",
         loadChildren: () =>
-          import('../tab-in-patients/tab-in-patients.module').then(
+          import("../tab-in-patients/tab-in-patients.module").then(
             (m) => m.TabInPatientsPageModule
           ),
       },
       {
-        path: 'in-patients/AC',
+        path: "in-patients/AC",
         loadChildren: () =>
-          import('../tab-in-patients/tab-in-patients.module').then(
+          import("../tab-in-patients/tab-in-patients.module").then(
             (m) => m.TabInPatientsPageModule
           ),
       },
@@ -42,65 +42,79 @@ const routes: Routes = [
           ),
       },*/
       {
-        path: 'settings',
+        path: "settings",
         loadChildren: () =>
-          import('../tab-settings/tab-settings.module').then(
+          import("../tab-settings/tab-settings.module").then(
             (m) => m.TabSettingsPageModule
           ),
       },
       {
-        path: 'dashboard',
+        path: "dashboard",
         loadChildren: () =>
-          import('../tab-dashboard/tab-dashboard.module').then(
+          import("../tab-dashboard/tab-dashboard.module").then(
             (m) => m.TabDashboardPageModule
           ),
       },
       {
-        path: 'news-feed',
+        path: "news-feed",
         loadChildren: () =>
-          import('../tab-news-feed/tab-news-feed.module').then(
+          import("../tab-news-feed/tab-news-feed.module").then(
             (m) => m.TabNewsFeedPageModule
           ),
       },
       {
-        path: 'in-patients/:id/progressnotes',
+        path: "in-patients/:id/progressnotes",
         loadChildren: () =>
           import(
-            '../pages/in-patient-patient-information/progress-notes/progress-notes.module'
+            "../pages/in-patient-patient-information/progress-notes/progress-notes.module"
           ).then((m) => m.ProgressNotesPageModule),
       },
       {
-        path: 'in-patients/:id/diagnostic-results',
+        path: "in-patients/:id/diagnostic-results",
         loadChildren: () =>
           import(
-            '../pages/in-patient-patient-information/diagnostic-results/diagnostic-results.module'
+            "../pages/in-patient-patient-information/diagnostic-results/diagnostic-results.module"
           ).then((m) => m.DiagnosticResultsPageModule),
       },
       {
-        path: 'inbox',
+        path: "inbox",
         loadChildren: () =>
-          import('../pages/doctors-information/inbox/inbox.module').then(
+          import("../pages/doctors-information/inbox/inbox.module").then(
             (m) => m.InboxPageModule
           ),
       },
       {
-        path: 'in-patients/:admissionNo/viewAndCancel/:dischargeNo',
+        path: "patient-history",
         loadChildren: () =>
           import(
-            '../pages/doctors-information/view-medcert1/view-medcert1.module'
+            "../pages/in-patient-patient-information/patient-history/patient-history.module"
+          ).then((m) => m.PatientHistoryPageModule),
+      },
+      {
+        path: "patient-history/patient-details/:id",
+        loadChildren: () =>
+          import(
+            "../pages/in-patient-patient-information/patient-history-patient-detail/patient-history-patient-detail.module"
+          ).then((m) => m.PatientHistoryPatientDetailPageModule),
+      },
+      {
+        path: "in-patients/:admissionNo/viewAndCancel/:dischargeNo",
+        loadChildren: () =>
+          import(
+            "../pages/doctors-information/view-medcert1/view-medcert1.module"
           ).then((m) => m.ViewMedcert1PageModule),
       },
       {
-        path: 'inbox/sign-medcert/:admissionNo/:dischargeNo',
+        path: "inbox/sign-medcert/:admissionNo/:dischargeNo",
         loadChildren: () =>
           import(
-            '../pages/doctors-information/sign-medcert/sign-medcert.module'
+            "../pages/doctors-information/sign-medcert/sign-medcert.module"
           ).then((m) => m.SignMedcertPageModule),
       },
       {
-        path: 'help',
+        path: "help",
         loadChildren: () =>
-          import('../pages/others/help/help.module').then(
+          import("../pages/others/help/help.module").then(
             (m) => m.HelpPageModule
           ),
       },
@@ -128,16 +142,16 @@ const routes: Routes = [
       },*/
 
       {
-        path: '',
-        redirectTo: '/menu/dashboard',
-        pathMatch: 'full',
+        path: "",
+        redirectTo: "/menu/dashboard",
+        pathMatch: "full",
       },
     ],
   },
   {
-    path: 'menu',
-    redirectTo: '/menu/tab-in-patients',
-    pathMatch: 'full',
+    path: "menu",
+    redirectTo: "/menu/tab-in-patients",
+    pathMatch: "full",
   },
 ];
 

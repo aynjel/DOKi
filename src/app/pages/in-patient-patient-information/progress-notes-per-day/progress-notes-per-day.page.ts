@@ -1,6 +1,7 @@
 import { Component, NgZone, OnInit, Renderer2 } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import {
+  ActionSheetController,
   AlertController,
   IonRouterOutlet,
   ModalController,
@@ -95,7 +96,8 @@ export class ProgressNotesPerDayPage implements OnInit {
     private alertController: AlertController,
     private ngZone: NgZone,
     private resiServ: ResiService,
-    private doctorService: DoctorService
+    private doctorService: DoctorService,
+    private actionSheetCtrl: ActionSheetController
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       this.isDesktop = isDesktop;
@@ -248,6 +250,7 @@ export class ProgressNotesPerDayPage implements OnInit {
           getNewComment.trans_no = el.trans_no;
           el.new_message = getNewComment;
           el.event_time_c = this.funcServ.getFormatAMPM(el.event_time);
+
           this.progessNotes.push(el);
         });
         this.isApproved = this.progessNotes[0].is_approve;
@@ -507,5 +510,40 @@ export class ProgressNotesPerDayPage implements OnInit {
           }
         }
       );
+  }
+  result;
+  async presentActionSheetapprove(e) {
+    console.log(e);
+    console.log(this.funcServ.convertDatetoMMDDYYYY(e.event_date));
+
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: "Approve PN of " + e.username + "?",
+      cssClass: "my-custom-classdata",
+      subHeader:
+        this.funcServ.convertDatetoMMDDYYYY(e.event_date) +
+        " " +
+        this.funcServ.getFormatAMPM(e.event_time),
+      buttons: [
+        {
+          text: "Approve",
+
+          data: {
+            action: "delete",
+          },
+        },
+        {
+          text: "Cancel",
+          role: "cancel",
+          data: {
+            action: "cancel",
+          },
+        },
+      ],
+    });
+
+    await actionSheet.present();
+
+    const result = await actionSheet.onDidDismiss();
+    this.result = JSON.stringify(result, null, 2);
   }
 }

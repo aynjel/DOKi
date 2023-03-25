@@ -2,7 +2,7 @@
   <ion-toolbar color="mango">
     <span
       class="padding-left-10"
-      routerLink="/menu/in-patients/{{patient_id}}"
+      (click)="back()"
       routerDirection="backward"
       color="chh-css-primary2">
       <ion-icon name="arrow-back-outline" class="my-icon vcenter"></ion-icon>
@@ -24,7 +24,8 @@
           [is_philhealth_membership]="is_philhealth_membership"
           [patientDetailfromApi_from]="patientDetailfromApi_from"
           [patientDetailfromApi_to]="patientDetailfromApi_to"
-          [admission_status]="admission_status">
+          [admission_status]="admission_status"
+          [showPFDetals]="false">
         </app-chh-app-patient-header>
       </ion-col>
     </ion-row>
