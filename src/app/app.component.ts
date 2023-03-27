@@ -294,8 +294,16 @@ export class AppComponent implements OnInit {
     this.logoutService.out();
   }
   whattodo(data) {
+    console.log(data);
+    /*this.router.navigate(['/menu/dashboard']).then(() => {
+      window.location.reload();
+    });*/
     if (data == "logout") {
       this.logout();
+    } else {
+      this.router.navigate([data]).then(() => {
+        // window.location.reload();
+      });
     }
   }
   @HostListener("window:orientationchange", ["$event"])
