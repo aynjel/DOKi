@@ -81,7 +81,7 @@ export class AppComponent implements OnInit {
       type: 'med',<ion-icon name="mail-open-outline"></ion-icon>
     },*/,
     {
-      title: "Medical Certificate",
+      title: "Final Dx | Med Cert",
       url: "menu/inbox",
       icon: "mail-open-outline",
       type: "medcons",

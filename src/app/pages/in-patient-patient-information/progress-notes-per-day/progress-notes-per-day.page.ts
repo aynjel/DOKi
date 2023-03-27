@@ -260,13 +260,13 @@ export class ProgressNotesPerDayPage implements OnInit {
           getNewComment.trans_no = el.trans_no;
           el.new_message = getNewComment;
           el.event_time_c = this.funcServ.getFormatAMPM(el.event_time);
-          if (el.date_approved == "0001-01-01T00:00:00") {
+          if (el.prog_notes_date_approved == "0001-01-01T00:00:00") {
             el.isPnApproved = false;
           } else {
             el.isPnApproved = true;
           }
           el.pnApprovedDate = this.funcServ.convertDatetoMMDDYYYYHHMMSS(
-            el.date_approved
+            el.prog_notes_date_approved
           );
           this.progessNotes.push(el);
         });
