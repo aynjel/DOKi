@@ -61,6 +61,8 @@ export class InboxPage implements OnInit {
       });
   }
   ionViewWillEnter() {
+    console.log("ionViewWillEnter");
+    
     this.setDate();
     this.selected = localStorage.getItem("changeMode");
     this.getPendingApproval(this.dateToday, this.dateNow);
@@ -73,6 +75,7 @@ export class InboxPage implements OnInit {
   dr_code;
   ngOnInit() {
     this.checkAppearance();
+    //this.changeMode();
   }
   checkAppearance() {
     var values = JSON.parse(
@@ -129,7 +132,6 @@ export class InboxPage implements OnInit {
       });
     }
     this.searchData();
-    console.log(this.pendingApproval);
   }
   /*segmentChanged(e) {
     //////console.log(e.detail.value);
@@ -484,8 +486,6 @@ export class InboxPage implements OnInit {
   keyData;
   results;
   searchData() {
-    console.log(this.keyData);
-
     this.results = this.pendingApprovalSearch.filter((employee) => {
       return (
         employee.patient_name
@@ -495,6 +495,5 @@ export class InboxPage implements OnInit {
       );
     });
     this.pendingApproval = this.results;
-    console.log(this.results);
   }
 }

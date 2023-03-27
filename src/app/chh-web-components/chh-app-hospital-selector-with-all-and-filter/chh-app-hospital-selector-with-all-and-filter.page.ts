@@ -1,17 +1,17 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { ScreenSizeService } from '../../services/screen-size/screen-size.service';
-import { Router } from '@angular/router';
-import { Location } from '@angular/common';
-import { Constants } from '../../shared/constants';
-import { FunctionsService } from '../../shared/functions/functions.service';
-import { Variables } from '../../shared/variables';
-import { throwError } from 'rxjs';
-import { Console } from 'console';
+import { Component, OnInit, EventEmitter, Output, Input } from "@angular/core";
+import { ScreenSizeService } from "../../services/screen-size/screen-size.service";
+import { Router } from "@angular/router";
+import { Location } from "@angular/common";
+import { Constants } from "../../shared/constants";
+import { FunctionsService } from "../../shared/functions/functions.service";
+import { Variables } from "../../shared/variables";
+import { throwError } from "rxjs";
+import { Console } from "console";
 
 @Component({
-  selector: 'chh-app-hospital-selector-with-all-and-filter',
-  templateUrl: './chh-app-hospital-selector-with-all-and-filter.page.html',
-  styleUrls: ['./chh-app-hospital-selector-with-all-and-filter.page.scss'],
+  selector: "chh-app-hospital-selector-with-all-and-filter",
+  templateUrl: "./chh-app-hospital-selector-with-all-and-filter.page.html",
+  styleUrls: ["./chh-app-hospital-selector-with-all-and-filter.page.scss"],
 })
 export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
   active: boolean = true;
@@ -21,7 +21,7 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
   currenturl: any;
   isDesktop: boolean;
 
-  public admittedOrDischarge: string = 'All';
+  public admittedOrDischarge: string = "All";
 
   @Output() hospital: EventEmitter<any> = new EventEmitter();
   constructor(
@@ -42,12 +42,12 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
 
     if (this.isDesktop) {
       router.events.subscribe((val) => {
-        if (location.path().trim() == '/menu/in-patients') {
-          this.admittedOrDischarge = 'All';
-        } else if (location.path().trim() == '/menu/in-patients/AC') {
-          this.admittedOrDischarge = 'AC';
-        } else if (location.path().trim() == '/menu/in-patients/DN') {
-          this.admittedOrDischarge = 'DN';
+        if (location.path().trim() == "/menu/in-patients") {
+          this.admittedOrDischarge = "All";
+        } else if (location.path().trim() == "/menu/in-patients/AC") {
+          this.admittedOrDischarge = "AC";
+        } else if (location.path().trim() == "/menu/in-patients/DN") {
+          this.admittedOrDischarge = "DN";
         }
         this.admittedOrDischarge = this.variables.tempSelection;
       });
@@ -57,17 +57,17 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
   ngOnInit() {}
 
   onSubmit(data1: any, data2: boolean) {
-    if (data1 == 'C') {
+    if (data1 == "C") {
       this.active = true;
       this.active1 = false;
       this.active3 = false;
     }
-    if (data1 == 'M') {
+    if (data1 == "M") {
       this.active = false;
       this.active1 = true;
       this.active3 = false;
     }
-    if (data1 == 'A') {
+    if (data1 == "A") {
       this.active = false;
       this.active1 = false;
       this.active3 = true;
@@ -76,28 +76,40 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
   }
   onSubmit1(data1: any, data2: boolean) {
     if (data1 == this.constants.CHH_SITE__VALUE__ALL /*"ALL"*/) {
-      this.router.navigate(['/menu/in-patients']);
+      this.router.navigate(["/menu/in-patients"]).then(() => {
+        window.location.reload();
+      });
     } else if (
       data1 == this.constants.ADMISSION_STATUS__CODE__ADMITTED /*"AC"*/
     ) {
-      this.router.navigate(['/menu/in-patients/AC']);
+      this.router.navigate(["/menu/in-patients/AC"]).then(() => {
+        window.location.reload();
+      });
     } else if (
       data1 == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE /*"DN"*/
     ) {
-      this.router.navigate(['/menu/in-patients/DN']);
+      this.router.navigate(["/menu/in-patients/DN"]).then(() => {
+        window.location.reload();
+      });
     }
   }
   changeRedirect(event: any) {
-    this.functionsService.logToConsole('1');
+    this.functionsService.logToConsole("1");
 
     this.variables.tempSelection = this.admittedOrDischarge;
 
-    if (this.admittedOrDischarge.trim() == 'All') {
-      this.router.navigate(['/menu/in-patients']);
-    } else if (this.admittedOrDischarge.trim() == 'AC') {
-      this.router.navigate(['/menu/in-patients/AC']);
-    } else if (this.admittedOrDischarge.trim() == 'DN') {
-      this.router.navigate(['/menu/in-patients/DN']);
+    if (this.admittedOrDischarge.trim() == "All") {
+      this.router.navigate(["/menu/in-patients"]).then(() => {
+        window.location.reload();
+      });
+    } else if (this.admittedOrDischarge.trim() == "AC") {
+      this.router.navigate(["/menu/in-patients/AC"]).then(() => {
+        window.location.reload();
+      });
+    } else if (this.admittedOrDischarge.trim() == "DN") {
+      this.router.navigate(["/menu/in-patients/DN"]).then(() => {
+        window.location.reload();
+      });
     }
 
     //this.variables.tempCounter++;

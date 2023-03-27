@@ -64,7 +64,7 @@ export class PatientHistoryPage implements OnInit {
   callPatient(data: any) {
     this.isFetchDone = false;
     this.doctorService
-      .getInPatientV3()
+      .getInPatientHistoryV3()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
@@ -162,7 +162,7 @@ export class PatientHistoryPage implements OnInit {
             .toLowerCase()
             .includes(this.searchBar.toLowerCase()) ||
           e.floor_desc.toLowerCase().includes(this.searchBar.toLowerCase()) ||
-          e.room_no.includes(this.searchBar)
+          e.room_no.toLowerCase().includes(this.searchBar.toLowerCase())
         );
       });
     }
@@ -259,7 +259,8 @@ export class PatientHistoryPage implements OnInit {
     }, 1000);
   }
   data;
-  async detail(data: any) {
+  async detail(data: any, allData: any) {
+    localStorage.setItem("pnSelected", JSON.stringify(allData));
     this.data = [];
     /*
     this.functionsService.logToConsole(data);

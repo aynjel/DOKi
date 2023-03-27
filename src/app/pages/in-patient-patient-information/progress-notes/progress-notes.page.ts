@@ -27,6 +27,7 @@ import {
   ProfessionalFeeModelv3,
 } from "src/app/models/in-patient.model";
 import { ExecutiveService } from "src/app/services/executive/executive.service";
+import { Subscription } from "rxjs";
 @Component({
   selector: "app-progress-notes",
   templateUrl: "./progress-notes.page.html",
@@ -48,6 +49,7 @@ export class ProgressNotesPage implements OnInit {
   dateAdmitted;
   data = [];
   @Input() account_no;
+  paramsSub: Subscription;
   constructor(
     private screensizeService: ScreenSizeService,
     private activatedRoute: ActivatedRoute,
@@ -73,6 +75,9 @@ export class ProgressNotesPage implements OnInit {
         }
         this.isDesktop = isDesktop;
       });
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
   }
   dischargeNotice;
   is_philhealth_membership;
@@ -98,7 +103,13 @@ export class ProgressNotesPage implements OnInit {
   checkmark;
   location;
   inpatientDetails: InpatientDetails = new InpatientDetails();
+  pnSelected;
+
   ngOnInit() {
+    this.paramsSub = this.activatedRoute.params.subscribe((val) => {
+      // Handle param values here
+    });
+
     this.ngUnsubscribe = new Subject();
     this.loginResponseModelv3 = new LoginResponseModelv3();
     this.inpatientDetails = new InpatientDetails();
@@ -112,7 +123,10 @@ export class ProgressNotesPage implements OnInit {
       "[" + atob(localStorage.getItem("user_settings")) + "]"
     );
 
-    this.loginResponseModelv3 = this.authService.userData$.getValue();
+    let x = JSON.parse(
+      unescape(atob(localStorage.getItem("_cap_userDataKey")))
+    );
+    this.loginResponseModelv3 = x;
     this.dr_name = this.loginResponseModelv3.lastName;
     this.dr_code = this.loginResponseModelv3.doctorCode;
     this.inpatientModelInpatients.drCode = this.dr_code;
@@ -130,15 +144,16 @@ export class ProgressNotesPage implements OnInit {
     ppatientdata.doctorCode = this.dr_code;
     this.data = [];
     this.presentLoading();
-    //////console.log('123');
+    ////////console.log('123');
+    this.pnSelected = JSON.parse(localStorage.getItem("pnSelected"));
+    //console.log(this.pnSelected.doctor_Status_code);
+    /*******************************************/
 
-    this.executiveService
+    /*this.executiveService
       .getPatientDetail(ppatientdata)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          ////console.log('res.manage_to', res.manage_to);
-
           localStorage.setItem("doctor_Status_code", res.doctor_Status_code);
           this.admission_status = res.admission_status;
           this.patientDetailfromApi_from = this.functionService.cdateampm(
@@ -207,29 +222,29 @@ export class ProgressNotesPage implements OnInit {
           } else {
             this.alert("No Data Available", "Okay");
           }
-          ////////console.log(this.data1);
-          ////////console.log(this.data[0].philhealth_membership);
+          //////////console.log(this.data1);
+          //////////console.log(this.data[0].philhealth_membership);
           this.is_philhealth_membership = this.data[0].philhealth_membership;
           this.is_pwd = this.data1[0].is_pwd;
           this.is_senior = this.data1[0].is_senior;
-          ////////console.log(this.is_pwd, this.is_senior);
+          //////////console.log(this.is_pwd, this.is_senior);
         }
-      );
+      );*/ this.start();
   }
   start() {
-    //console.log('ngOnInit');
+    ////console.log('ngOnInit');
     this.checkAppearance();
     this.ngUnsubscribe = new Subject();
     this.patient_id = this.activatedRoute.snapshot.params.id;
     this.getProgressNote();
-    this.data = JSON.parse(atob(localStorage.getItem("selectedPatient")));
+    this.data = JSON.parse("[" + localStorage.getItem("pnSelected") + "]");
     //console.log(this.data);
 
     this.dateAdmitted = this.data[0].admission_date;
     this.checkAppearance();
     this.dateAdmitted = this.data[0].admission_date;
     this.dischargeNotice = this.data[0].forDischargeDateTime;
-    //////console.log(this.data[0].philhealth_membership);
+    ////////console.log(this.data[0].philhealth_membership);
     this.is_philhealth_membership = this.data[0].philhealth_membership;
     this.is_pwd = this.data[0].is_pwd;
     this.is_senior = this.data[0].is_senior;
@@ -274,10 +289,20 @@ export class ProgressNotesPage implements OnInit {
         },
         (error) => {},
         () => {
-          //////console.log(this.progessNotesTemp);
+          ////////console.log(this.progessNotesTemp);
 
           this.activeDays = [];
           this.progessNotesTemp.forEach((el) => {
+            //console.log(el.resi_notes);
+            let counter = 0;
+            let approvedCounter = 0;
+            el.resi_notes.forEach((elemensssst) => {
+              counter += elemensssst.number_of_notes;
+              approvedCounter += elemensssst.number_of_approved_notes;
+            });
+            //console.log(counter, approvedCounter);
+            el.pnCounter = counter;
+            el.ApperovedpnCounter = approvedCounter;
             let x = 0;
             let xdateadmitted = this.dateAdmitted.substring(0, 11);
 
@@ -315,7 +340,7 @@ export class ProgressNotesPage implements OnInit {
             }*/
             this.progessNotes.push(el);
           });
-          //////console.log(this.progessNotes);
+          ////////console.log(this.progessNotes);
 
           if (this.progessNotes.length <= 0) {
             this.progressNotesIsEmpty = true;
@@ -355,7 +380,7 @@ export class ProgressNotesPage implements OnInit {
       componentProps: { data: data, day: day },
     });
     modal.onDidDismiss().then((data) => {
-      //console.log(data);
+      ////console.log(data);
     });
     return await modal.present();*/
     const options = {
@@ -371,15 +396,11 @@ export class ProgressNotesPage implements OnInit {
     await modal.present();
     // const {data} = await modal.onWillDismiss();
   }
-  ionViewDidLeave() {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
-  }
 
   gotoPerday(date, dayselected) {
     localStorage.setItem("dayselected", dayselected);
-    //console.log(dayselected);
     let day = this.functionService.convertDatedash(date);
+    this.ngOnDestroy();
     this.router.navigate([
       "/menu/in-patients/" + this.patient_id + "/progressnotes/" + day,
     ]);
@@ -393,8 +414,7 @@ export class ProgressNotesPage implements OnInit {
     }
   }
   back() {
-    this.navCtrl.back();
-    //this.router.navigate(['menu/patient/' + this.patientId]);
+    this.router.navigate(["/menu/patient-history"]);
   }
   loading;
   async presentLoading() {
@@ -406,7 +426,7 @@ export class ProgressNotesPage implements OnInit {
     await this.loading.present();
 
     const { role, data } = await this.loading.onDidDismiss();
-    //////////////////////console.log('Loading dismissed!');
+    ////////////////////////console.log('Loading dismissed!');
   }
   public async dismissLoading(): Promise<void> {
     if (this.loading) {
@@ -431,5 +451,14 @@ export class ProgressNotesPage implements OnInit {
   }
   closemodal() {
     this.router.navigate(["/menu/patient-history/"]);
+  }
+
+  ngOnDestroy() {
+    console.log("ngOnDestroy");
+
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+    // Prevent memory leaks
+    this.paramsSub.unsubscribe();
   }
 }

@@ -381,6 +381,8 @@ export class FunctionsService {
 
   convertDatetoMMDDYYYYHHMMSS(date) {
     let dateCreate = new Date(date);
+    console.log();
+
     let dd = String(dateCreate.getDate()).padStart(2, "0");
     let mm = String(dateCreate.getMonth() + 1).padStart(2, "0"); //January is 0!
     let yyyy = dateCreate.getFullYear();

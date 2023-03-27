@@ -222,7 +222,8 @@ export class TabInPatientsPage {
           )
             .toLowerCase()
             .includes(this.searchBar.toLowerCase()) ||
-          e.floor_desc.toLowerCase().includes(this.searchBar.toLowerCase())
+          e.floor_desc.toLowerCase().includes(this.searchBar.toLowerCase()) ||
+          e.room_no.toLowerCase().includes(this.searchBar.toLowerCase())
       );
     }
 
@@ -436,7 +437,8 @@ export class TabInPatientsPage {
     }, 1000);
   }
 
-  async detail(data: any) {
+  async detail(data: any, allData) {
+    localStorage.setItem("pnSelected", JSON.stringify(allData));
     this.data = [];
     /*
     this.functionsService.logToConsole(data);
