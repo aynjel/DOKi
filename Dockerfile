@@ -34,7 +34,7 @@ COPY package.json ./
 #   -- There were also build errors on dev dependencies installation step. 
 #   -- Thus, RUN npm install is used.
 
-RUN npm install
+RUN npm install -g npm@latest
 RUN npm i ng2-pdf-viewer
 RUN npm i angular2-signaturepad
 # Copy source code from host to build env
