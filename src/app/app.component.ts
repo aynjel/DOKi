@@ -86,12 +86,12 @@ export class AppComponent implements OnInit {
       icon: "mail-open-outline",
       type: "medcons",
     },
-    {
+    /*{
       title: "Progress Notes",
       url: "menu/patient-history",
       icon: "reader-outline",
       type: "medcons",
-    },
+    },*/
     {
       title: "Settings",
       url: "menu/settings",
