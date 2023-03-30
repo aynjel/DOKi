@@ -10,7 +10,7 @@
 #   (2) Pull the target version (using tags or SHA) of the back-end source code from Bitbucket repo.
 #   (3) Pull the Docker images used to build the front-end and back-end source build environments.
 
-FROM node:19-alpine3.16 AS buildEnv
+FROM node:16-alpine3.16 AS buildEnv
 LABEL maintainer="Kristoffer Dominic Amora, IT - Systems Solution & Business Intelligence"
 
 # ENV Variables
