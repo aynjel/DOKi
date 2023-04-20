@@ -22,13 +22,15 @@ export class SoapShowHideComponent implements OnInit {
       this.noteslength = true;
       this.truncating = true;
       this.comment_small = this.funcServ.truncateChar(this.comment, 150);
-      this.comment_small = this.comment_small.toUpperCase();
+      this.comment_small = this.comment_small
+        .toUpperCase()
+        .replace(/\n/g, "<br />");
     } else {
       this.noteslength = false;
       this.truncating = false;
     }
 
-    this.comment = this.comment.toUpperCase();
+    this.comment = this.comment.toUpperCase().replace(/\n/g, "<br />");
   }
   process() {
     //console.log('asdasd');

@@ -3,3 +3,7 @@
 .custom-font {
     font-family: 'Inconsolata', monospace;
 }
+hr {
+    border-top: 1px solid rgba(0, 0, 0, .5) !important;
+    visibility: visible !important;
+}
