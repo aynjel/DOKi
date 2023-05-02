@@ -144,6 +144,7 @@ export class AppComponent implements OnInit {
     this.screensizeService.isPortraitView().subscribe((isPortrait) => {
       this.isPortrait = isPortrait;
     });
+    console.log(environment.API_URL);
   }
   userData$ = new BehaviorSubject<any>([]);
   public revokeTokenV3: RevokeTokenV3;
