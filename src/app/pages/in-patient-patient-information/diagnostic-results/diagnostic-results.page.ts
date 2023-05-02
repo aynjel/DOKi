@@ -225,12 +225,12 @@ export class DiagnosticResultsPage implements OnInit {
   intervalData = [];
   getInterval() {
     this.orService
-      .post("/gw/pxi/results/get-subclass", "")
+      .post("", "gw/pxi/results/get-subclass")
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe({
         complete: () => {},
         error: (error) => {
-          //////console.log(error);
+          ///console.log(error);
         },
         next: (data: any) => {
           this.intervalData = data;
