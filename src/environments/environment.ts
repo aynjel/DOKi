@@ -9,12 +9,12 @@ export const environment = {
   apiRouterUrl: "http://10.151.12.120:7223/api/",
   //apiRouterUrlTest: 'http://localhost:5000',
   apiRouterUrlTest: "https://api.chonghua.com.ph",
-  linkRouterUrl: "http://10.128.18.112:9092/",
+  linkRouterUrl: "https://doki.chonghua.com.ph/",
   //apiRouterUrl: 'http://10.130.21.214:59201/api/',
   apiResident: "http://10.151.12.120:7230/",
   consoleLog: true,
   API_URL: window["env"]["API_URL"],
-  callHistory: "https://doki.chonghua.com.ph/api/",
+  callHistory: window["env"]["API_URL"],
 };
 
 /*

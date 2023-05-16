@@ -51,9 +51,12 @@
               (click)="gotoPerday(x.event_date,x.day)"
               *ngIf="!progressNotesIsNotReady">
               <ion-item>
-                Day #<b>{{x.day}} | {{x.dateCreateConverted}}</b>
-                <!--&nbsp;(Approved {{x.ApperovedpnCounter}} of {{ x.pnCounter}})-->
-
+                Day #<b>{{x.day}} | {{x.dateCreateConverted}}</b> &nbsp;<span
+                  style="font-size: 14px"
+                  slot="end"
+                  [ngClass]="{ my_class: x.ApperovedpnCounter != x.pnCounter }"
+                  >(Approved {{x.ApperovedpnCounter}} of {{ x.pnCounter}})</span
+                >
                 <span *ngIf="x.date_approved != null">&nbsp;|&nbsp;</span>
                 <ion-badge
                   *ngIf="x.date_approved != null"

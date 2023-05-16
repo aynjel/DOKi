@@ -102,6 +102,7 @@ export class DiagnosticResultsPage implements OnInit {
       this.funcServ.getDateTodayMMDDYYYY()
     );
     this.getInterval();
+    this.resultType = "laboratory-by-account-no";
     this.Search("laboratory-by-account-no");
   }
   back() {
@@ -281,5 +282,10 @@ export class DiagnosticResultsPage implements OnInit {
     this.ngUnsubscribe.next();
     // this.ngUnsubscribe.complete();
     this.ngUnsubscribe.complete();
+  }
+  resultType;
+  onResultSelect(event) {
+    this.resultType = event.detail.value;
+    this.Search(this.resultType);
   }
 }

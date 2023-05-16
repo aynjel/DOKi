@@ -40,6 +40,13 @@ export class PatientHistoryPage implements OnInit {
     this.navCtrl.back();
   }
   ngOnInit() {
+    this.site = localStorage.getItem("siteSelected");
+    localStorage.setItem("fromurl", "PatientHistory");
+    if (localStorage.getItem("siteSelected")) {
+    } else {
+      localStorage.setItem("siteSelected", "C");
+    }
+
     this.callPatient("a");
     this.checkAppearance();
   }
@@ -68,6 +75,7 @@ export class PatientHistoryPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
+          //console.log(res);
           if (res == null) {
             res = [];
           }
@@ -116,34 +124,31 @@ export class PatientHistoryPage implements OnInit {
   reverseOrderData;
 
   filterList() {
-    //console.logthis.inPatientsDraft);
+    ////////console.logthis.inPatientsDraft);
 
-    if (this.site == this.constants.CHH_SITE__CODE__ALL /*"A"*/) {
-      this.inPatients = [];
+    this.inPatients = [];
+    this.finalFullData = [];
+    this.site = localStorage.getItem("siteSelected");
+    if (this.site === this.constants.CHH_SITE__CODE__ALL) {
       this.inPatients = this.inPatientsDraft;
-      this.finalFullData = [];
-    } else {
-      this.inPatients = [];
-      this.finalFullData = [];
-
-      if (this.site == this.constants.CHH_SITE__CODE__CEBU) {
-        this.inPatients = this.inPatientsDraft.filter(
-          (x) => x.site == this.constants.CHH_SITE__CODE__CEBU
-        );
-      } else if (this.site == this.constants.CHH_SITE__CODE__MANDAUE) {
-        this.inPatients = this.inPatientsDraft.filter(
-          (x) => x.site == this.constants.CHH_SITE__CODE__MANDAUE
-        );
-      }
+    } else if (this.site === this.constants.CHH_SITE__CODE__CEBU) {
+      this.inPatients = this.inPatientsDraft.filter(
+        (x) => x.site === this.constants.CHH_SITE__CODE__CEBU
+      );
+    } else if (this.site === this.constants.CHH_SITE__CODE__MANDAUE) {
+      this.inPatients = this.inPatientsDraft.filter(
+        (x) => x.site === this.constants.CHH_SITE__CODE__MANDAUE
+      );
     }
-    //console.logthis.inPatients);
+
+    ////////console.logthis.inPatients);
 
     this.inPatientsDraft1 = this.inPatients;
     if (this.searchBar) {
       this.inPatients = [];
 
       this.inPatients = this.inPatientsDraft1.filter((e) => {
-        //console.loge.room_no.toLowerCase(), "|", this.searchBar.toLowerCase());
+        ////////console.loge.room_no.toLowerCase(), "|", this.searchBar.toLowerCase());
 
         return (
           (
@@ -166,13 +171,13 @@ export class PatientHistoryPage implements OnInit {
         );
       });
     }
-    console.log(this.inPatients);
+    //////console.log(this.inPatients);
 
     let floorStack = [];
     let data;
     let xyz;
     let reference;
-    ////console.logthis.reverseOrderData);
+    //////////console.logthis.reverseOrderData);
     if (this.reverseOrderData == "1") {
       if (this.site == "C") {
         reference = this.constants.cebuRooms;
@@ -211,11 +216,13 @@ export class PatientHistoryPage implements OnInit {
       };
       this.finalFullData.push(xyz);
     });
-    //console.logthis.finalFullData);
+    //console.log(this.finalFullData);
   }
   defaultAccordions;
   site = "C";
   locationAction(data: any) {
+    //console.log(data);
+    localStorage.setItem("siteSelected", data);
     this.defaultAccordions = null;
 
     if (
@@ -240,7 +247,7 @@ export class PatientHistoryPage implements OnInit {
     this.isUporDown = true;
     this.reverseOrderData = "1";
     localStorage.setItem("reverseOrder", this.reverseOrderData);
-    ////console.logthis.reverseOrderData);
+    //////////console.logthis.reverseOrderData);
     this.callPatient(this.site);
   }
   down() {
@@ -248,7 +255,7 @@ export class PatientHistoryPage implements OnInit {
     this.isUporDown = true;
     this.reverseOrderData = "0";
     localStorage.setItem("reverseOrder", this.reverseOrderData);
-    ////console.logthis.reverseOrderData);
+    //////////console.logthis.reverseOrderData);
     this.callPatient(this.site);
   }
   doRefresh(event) {
@@ -260,6 +267,8 @@ export class PatientHistoryPage implements OnInit {
   }
   data;
   async detail(data: any, allData: any) {
+    //////console.log(allData.doctor_Status_code);
+    localStorage.setItem("doctor_Status_code", allData.doctor_Status_code);
     localStorage.setItem("pnSelected", JSON.stringify(allData));
     this.data = [];
     /*

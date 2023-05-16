@@ -185,6 +185,7 @@ export class InPatientDetailPage {
     this.inpatientDetails = new InpatientDetails();
     //this.functionsService.logToConsole();
     this.patient_id = this.activatedRoute.snapshot.params.id;
+    localStorage.setItem("fromurl", this.patient_id);
     this.routerLinkBack = "/menu/in-patients/";
     //this.functionsService.logToConsole('In-patient detail : ionViewWillEnter');
     //sessionStorage.removeItem('pfIsPatientSeen');
@@ -440,7 +441,7 @@ export class InPatientDetailPage {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          res.forEach((element) => {
+          /*res.forEach((element) => {
             if (element.dr_code == this.data[0].dr_code) {
               if (element.no_of_days_manage == null) {
                 this.daysOfManage = 0;
@@ -451,14 +452,22 @@ export class InPatientDetailPage {
               localStorage.setItem("daysManaged", btoa(this.daysOfManage));
             }
             //
-          });
+          });*/
+          const matchingElement = res.find(
+            (element) => element.dr_code === this.data[0].dr_code
+          );
+          if (matchingElement) {
+            this.daysOfManage = matchingElement.no_of_days_manage ?? 0;
+            localStorage.setItem("daysManaged", btoa(this.daysOfManage));
+          }
+
           if (res.length) {
             this.objecthandler = true;
           } else {
             this.objecthandler = false;
           }
           //this.functionsService.logToConsole(res);
-          res.forEach((element) => {
+          /*res.forEach((element) => {
             if (element.status == "Primary Attending Physician") {
               coDoctors1.push(element);
             } else if (element.status == "Co-Manage") {
@@ -466,7 +475,18 @@ export class InPatientDetailPage {
             } else {
               coDoctors3.push(element);
             }
-          });
+          });*/
+          const coDoctors1 = res.filter(
+            (element) => element.status === "Primary Attending Physician"
+          );
+          const coDoctors2 = res.filter(
+            (element) => element.status === "Co-Manage"
+          );
+          const coDoctors3 = res.filter(
+            (element) =>
+              element.status !== "Primary Attending Physician" &&
+              element.status !== "Co-Manage"
+          );
 
           this.coDoctors = coDoctors1.concat(coDoctors2).concat(coDoctors3);
           //this.coDoctors.push(coDoctors2);

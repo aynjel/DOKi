@@ -1,30 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthConstants, Consta } from '../../config/auth-constants';
-import { DoctorConstants } from '../../config/auth-constants';
-import { AuthService } from '../../services/auth/auth.service';
-import { DoctorService } from '../../services/doctor/doctor.service';
-import { PatientService } from '../../services/patient/patient.service';
-import { StorageService } from '../../services/storage/storage.service';
-import { ToastService } from '../../services/toast/toast.service';
-import { DoctorInfoGlobal } from '../../shared/doctor-info-global';
-import { LoginData } from '../../models/login-data.model';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { AuthConstants, Consta } from "../../config/auth-constants";
+import { DoctorConstants } from "../../config/auth-constants";
+import { AuthService } from "../../services/auth/auth.service";
+import { DoctorService } from "../../services/doctor/doctor.service";
+import { PatientService } from "../../services/patient/patient.service";
+import { StorageService } from "../../services/storage/storage.service";
+import { ToastService } from "../../services/toast/toast.service";
+import { DoctorInfoGlobal } from "../../shared/doctor-info-global";
+import { LoginData } from "../../models/login-data.model";
 import {
   LoginModel,
   ChangePasswordModel,
   LoginResponseModel,
   InserUSerSettingsModel,
-} from '../../models/patient';
+} from "../../models/patient";
 import {
   LoginModelv3,
   LoginResponseModelv3,
   AppSettingsModelv3,
   UserSettingsModelv3,
-} from '../../models/doctor';
+} from "../../models/doctor";
 
-import { FunctionsService } from '../../shared/functions/functions.service'; //"@ionic/angular";
+import { FunctionsService } from "../../shared/functions/functions.service"; //"@ionic/angular";
 ////import { GoogleAnalyticsService } from 'ngx-google-analytics';
-import { Constants } from '../../shared/constants';
+import { Constants } from "../../shared/constants";
 
 import {
   AfterViewInit,
@@ -32,29 +32,29 @@ import {
   Renderer2,
   Input,
   NgZone,
-} from '@angular/core';
+} from "@angular/core";
 import {
   AlertController,
   GestureController,
   ModalController,
-} from '@ionic/angular';
-import { Gesture, GestureConfig } from '@ionic/core';
-import { ViewChildren, QueryList } from '@angular/core';
-import { IonGrid, IonContent, IonRow } from '@ionic/angular';
-import { ChhAppPrivacyPolicyPage } from './../../chh-web-components/chh-app-privacy-policy/chh-app-privacy-policy.page';
-import * as bcrypt from 'bcryptjs';
-import { ChhAppChangePasswordPage } from '../../chh-web-components/chh-app-change-password/chh-app-change-password.page';
+} from "@ionic/angular";
+import { Gesture, GestureConfig } from "@ionic/core";
+import { ViewChildren, QueryList } from "@angular/core";
+import { IonGrid, IonContent, IonRow } from "@ionic/angular";
+import { ChhAppPrivacyPolicyPage } from "./../../chh-web-components/chh-app-privacy-policy/chh-app-privacy-policy.page";
+import * as bcrypt from "bcryptjs";
+import { ChhAppChangePasswordPage } from "../../chh-web-components/chh-app-change-password/chh-app-change-password.page";
 
-import { ChhAppCaseratesComponent } from '../../chh-web-components/chh-app-caserates/chh-app-caserates.component';
+import { ChhAppCaseratesComponent } from "../../chh-web-components/chh-app-caserates/chh-app-caserates.component";
 
-import { tick } from '@angular/core/testing';
-import { ChhAppForgotPasswordComponent } from '../../chh-web-components/chh-app-forgot-password/chh-app-forgot-password.component';
-import { takeUntil } from 'rxjs/operators';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { tick } from "@angular/core/testing";
+import { ChhAppForgotPasswordComponent } from "../../chh-web-components/chh-app-forgot-password/chh-app-forgot-password.component";
+import { takeUntil } from "rxjs/operators";
+import { BehaviorSubject, Subject } from "rxjs";
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: "app-login",
+  templateUrl: "./login.page.html",
+  styleUrls: ["./login.page.scss"],
 })
 export class LoginPage {
   public logindata: LoginData;
@@ -98,15 +98,15 @@ export class LoginPage {
   isActiveToggleTextPassword: Boolean = true;
   isEyeOnOff: Boolean = true;
   public getType() {
-    return this.isActiveToggleTextPassword ? 'password' : 'text';
+    return this.isActiveToggleTextPassword ? "password" : "text";
   }
   public getName() {
-    return this.isEyeOnOff ? 'eye-off-outline' : 'eye-outline';
+    return this.isEyeOnOff ? "eye-off-outline" : "eye-outline";
   }
 
   public postData = {
-    username: '',
-    password: '',
+    username: "",
+    password: "",
     // username: 'PGALBO',
     // password: '@Dell150790',
   };
@@ -115,14 +115,14 @@ export class LoginPage {
 
   ngOnInit() {
     this.ngUnsubscribe = new Subject();
-    this.postData.username = localStorage.getItem('srnm');
+    this.postData.username = localStorage.getItem("srnm");
     this.loginResponseModel = new LoginResponseModel();
     this.onDarkModeEnable();
     //this.$gaService.pageView('/login', 'Login Page');
-    if (localStorage.getItem('promptLogout') == '1') {
+    if (localStorage.getItem("promptLogout") == "1") {
       this.timerExpired();
     }
-    if (localStorage.getItem('testdb') == '1') {
+    if (localStorage.getItem("testdb") == "1") {
       this.testDB = true;
     } else {
       this.testDB = false;
@@ -131,18 +131,18 @@ export class LoginPage {
   /*V3 App*/
   checkInput() {
     this.btnDisable = true;
-    if (this.postData.username == '' || this.postData.password == '') {
+    if (this.postData.username == "" || this.postData.password == "") {
       this.functionsService.sorryDoc();
       this.btnDisable = false;
     } else {
-      localStorage.setItem('username', btoa(this.postData.username));
+      localStorage.setItem("username", btoa(this.postData.username));
       this.startLoginProcessV3();
     }
   }
 
   /*V3 App*/
   startLoginProcessV3() {
-    localStorage.setItem('tokenExpired', '0');
+    localStorage.setItem("tokenExpired", "0");
     this.loginModelv3 = new LoginModelv3();
     this.loginModelv3.userNameOrEmail = this.postData.username;
     this.loginModelv3.password = this.postData.password;
@@ -161,21 +161,21 @@ export class LoginPage {
           if (this.loginResponseModelv3.isAuthenticated == true) {
             this.loginResponseModelv3.roles.forEach((element) => {
               if (execflag) {
-                if (element == 'Administrator') {
-                  userIndentifier = 'Administrator';
-                } else if (element == 'Executive') {
-                  userIndentifier = 'Executive';
-                  localStorage.setItem('role_flag', 'exec');
+                if (element == "Administrator") {
+                  userIndentifier = "Administrator";
+                } else if (element == "Executive") {
+                  userIndentifier = "Executive";
+                  localStorage.setItem("role_flag", "exec");
                   execflag = false;
                 } else {
-                  localStorage.setItem('role_flag', 'medcons');
+                  localStorage.setItem("role_flag", "medcons");
                 }
               }
 
-              if (element == 'Executive') {
+              if (element == "Executive") {
                 dualFlag1 = true;
               }
-              if (element == 'MedicalConsultant') {
+              if (element == "MedicalConsultant") {
                 dualFlag2 = true;
               }
             });
@@ -192,25 +192,25 @@ export class LoginPage {
             if (dualFlag1 == true && dualFlag2 == true) {
               this.loginAsMedExec();
             } else {
-              if (userIndentifier == 'Administrator') {
-                localStorage.setItem('id_token', this.loginResponseModelv3.jwt);
+              if (userIndentifier == "Administrator") {
+                localStorage.setItem("id_token", this.loginResponseModelv3.jwt);
                 this.storageService.store(
                   AuthConstants.AUTH,
                   this.loginResponseModelv3
                 );
-                this.userRolegetUserSettingsV3('administrator');
-              } else if (userIndentifier == 'Executive') {
-                localStorage.setItem('id_token', this.loginResponseModelv3.jwt);
+                this.userRolegetUserSettingsV3("administrator");
+              } else if (userIndentifier == "Executive") {
+                localStorage.setItem("id_token", this.loginResponseModelv3.jwt);
                 this.storageService.store(
                   AuthConstants.AUTH,
                   this.loginResponseModelv3
                 );
-                this.userRolegetUserSettingsV3('executive');
+                this.userRolegetUserSettingsV3("executive");
               } else {
                 // this.loginResponseModelv3.roles.forEach(element => {
                 if (this.loginResponseModelv3.jwt != null) {
                   localStorage.setItem(
-                    'id_token',
+                    "id_token",
                     this.loginResponseModelv3.jwt
                   );
                 }
@@ -226,7 +226,7 @@ export class LoginPage {
           } else {
             this.functionsService.alert(
               this.loginResponseModelv3.message,
-              'Okay'
+              "Okay"
             );
             this.btnDisable = false;
           }
@@ -256,13 +256,13 @@ export class LoginPage {
           jsonResponse = res;
           jsonResponse = <UserSettingsModelv3>res;
           localStorage.setItem(
-            'user_settings',
+            "user_settings",
             btoa(JSON.stringify(jsonResponse))
           );
         },
         (error) => {},
         () => {
-          Object.keys(jsonResponse).forEach((key) => {
+          /* Object.keys(jsonResponse).forEach((key) => {
             if (jsonResponse[key] == null) {
               settingsIndicator = false;
             } else {
@@ -281,6 +281,20 @@ export class LoginPage {
                 window.location.reload();
               });
             }
+          });*/
+          const hasNonNullValue = (key) => {
+            return jsonResponse[key] !== null;
+          };
+
+          const settingsIndicator =
+            Object.keys(jsonResponse).some(hasNonNullValue);
+
+          if (settingsIndicator) {
+            this.getAppsettingsV3();
+          }
+
+          this.router.navigate(["/" + linkTo]).then(() => {
+            window.location.reload();
           });
         }
       );
@@ -289,18 +303,18 @@ export class LoginPage {
   async loginAsMedExec() {
     this.alertController
       .create({
-        header: 'Confirm Login',
-        message: 'Login As',
+        header: "Confirm Login",
+        message: "Login As",
         buttons: [
           {
-            text: 'Medical Consultant',
+            text: "Medical Consultant",
             handler: () => {
-              localStorage.setItem('role_flag', 'medcons');
+              localStorage.setItem("role_flag", "medcons");
               let xFlag: boolean = false;
               //this.loginResponseModelv3.roles.forEach(element => {
               //////console.log('check flag');
               if (this.loginResponseModelv3.jwt != null) {
-                localStorage.setItem('id_token', this.loginResponseModelv3.jwt);
+                localStorage.setItem("id_token", this.loginResponseModelv3.jwt);
               }
               //if(!xFlag){
               if (this.loginResponseModelv3.isDefaultPasswordChanged) {
@@ -316,15 +330,15 @@ export class LoginPage {
             },
           },
           {
-            text: 'Executive',
+            text: "Executive",
             handler: () => {
-              localStorage.setItem('role_flag', 'exec');
-              localStorage.setItem('id_token', this.loginResponseModelv3.jwt);
+              localStorage.setItem("role_flag", "exec");
+              localStorage.setItem("id_token", this.loginResponseModelv3.jwt);
               this.storageService.store(
                 AuthConstants.AUTH,
                 this.loginResponseModelv3
               );
-              this.userRolegetUserSettingsV3('executive');
+              this.userRolegetUserSettingsV3("executive");
             },
           },
         ],
@@ -347,7 +361,7 @@ export class LoginPage {
           jsonResponse = res;
           this.userSettingsModelv3 = <UserSettingsModelv3>res;
           localStorage.setItem(
-            'user_settings',
+            "user_settings",
             btoa(JSON.stringify(this.userSettingsModelv3))
           );
           //this.functionsService.logToConsole(this.userSettingsModelv3);
@@ -359,7 +373,7 @@ export class LoginPage {
         },
         () => {
           let x = true;
-          Object.keys(jsonResponse).forEach((key) => {
+          /*Object.keys(jsonResponse).forEach((key) => {
             if (x) {
               if (jsonResponse[key] == null) {
                 settingsIndicator = false;
@@ -368,7 +382,14 @@ export class LoginPage {
                 settingsIndicator = true;
               }
             }
-          });
+          });*/
+          const hasNonNullValue = (key) => {
+            return jsonResponse[key] !== null;
+          };
+
+          let settingsIndicator =
+            Object.keys(jsonResponse).some(hasNonNullValue);
+
           if (settingsIndicator) {
             this.checkPrivacyPolicyV3();
           } else {
@@ -380,7 +401,7 @@ export class LoginPage {
                   this.appSettingsModelv3 = <AppSettingsModelv3>resdata;
                   this.userSettingsModelv3 = <UserSettingsModelv3>resdata;
                   localStorage.setItem(
-                    'user_settings',
+                    "user_settings",
                     btoa(JSON.stringify(this.userSettingsModelv3))
                   );
                   //this.functionsService.logToConsole(this.appSettingsModelv3);
@@ -420,7 +441,7 @@ export class LoginPage {
           this.appSettingsModelv3 = <AppSettingsModelv3>resdata;
           this.userSettingsModelv3 = <UserSettingsModelv3>resdata;
           localStorage.setItem(
-            'user_settings',
+            "user_settings",
             btoa(JSON.stringify(this.userSettingsModelv3))
           );
           //this.functionsService.logToConsole(this.appSettingsModelv3);
@@ -466,14 +487,14 @@ export class LoginPage {
   async showPrivacyPolicyV3() {
     const modal = await this.modalController.create({
       component: ChhAppPrivacyPolicyPage,
-      componentProps: { backdropDismiss: true, origin: 'login' },
+      componentProps: { backdropDismiss: true, origin: "login" },
     });
     modal.onDidDismiss().then((data) => {
       //this.functionsService.logToConsole(data);
       this.btnDisable = false;
       if (data.data) {
         //this.loginAction();
-        this.userSettingsModelv3.privacyPolicy = '1';
+        this.userSettingsModelv3.privacyPolicy = "1";
         //this.functionsService.logToConsole(this.userSettingsModelv3);
         this.doctorService
           .updateUserSettingsV3(this.userSettingsModelv3)
@@ -496,24 +517,24 @@ export class LoginPage {
       },
     });
     modal.onDidDismiss().then((data) => {
-      if (data.data == 'Success') {
+      if (data.data == "Success") {
         //this.hashedPassword = data.data;
         // this.postData.password = data.role;
-        this.postData.password = '';
+        this.postData.password = "";
         this.modalUpdateV3(
           this.constants.UI_COMPONENT_TEXT_VALUE_PASSWORD_SUCCESS_TITLE,
           this.constants.UI_COMPONENT_TEXT_VALUE_UPDATE_PASSWORD_SUCCESS_BODY,
           true
         );
         this.btnDisable = false;
-      } else if (data.data == 'False') {
+      } else if (data.data == "False") {
         this.btnDisable = false;
         this.modalUpdateV3(
           this.constants.UI_COMPONENT_TEXT_VALUE_PASSWORD_FAILED_TITLE,
           this.constants.UI_COMPONENT_TEXT_VALUE_UPDATE_PASSWORD_FAILED_BODY,
           false
         );
-      } else if (data.data == 'None') {
+      } else if (data.data == "None") {
         this.btnDisable = false;
         ////console.log('none');
       } else {
@@ -531,12 +552,12 @@ export class LoginPage {
   async modalUpdateV3(header, message, data) {
     this.btnDisable = false;
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+      cssClass: "my-custom-class",
       header: header,
       message: message,
       buttons: [
         {
-          text: 'Okay',
+          text: "Okay",
           handler: () => {
             if (data) {
               this.getUserSettingsV3();
@@ -556,10 +577,10 @@ export class LoginPage {
     //this.functionsService.logToConsole(JSON.stringify(this.loginResponseModel));*/
 
     this.storageService.store(AuthConstants.AUTH, this.loginResponseModelv3);
-    localStorage.setItem('isIdle', '1');
-    localStorage.setItem('username', btoa(this.postData.username));
-    localStorage.setItem('modaled', '0');
-    this.router.navigate(['/menu/in-patients']).then(() => {
+    localStorage.setItem("isIdle", "1");
+    localStorage.setItem("username", btoa(this.postData.username));
+    localStorage.setItem("modaled", "0");
+    this.router.navigate(["/menu/in-patients"]).then(() => {
       window.location.reload();
     });
     /*this.router.navigate(['/menu/dashboard']).then(() => {
@@ -614,7 +635,7 @@ export class LoginPage {
     this.loginModel.appCode = Consta.appCode;
     this.loginModel.username = this.postData.username;
     this.loginModel.password = this.postData.password;
-    localStorage.setItem('username', btoa(this.postData.username));
+    localStorage.setItem("username", btoa(this.postData.username));
 
     this.loginModelv3 = new LoginModelv3();
     this.loginModelv3.userNameOrEmail = this.postData.username;
@@ -630,7 +651,7 @@ export class LoginPage {
           //this.resultJson = res;
 
           if (this.loginResponseModelv3.jwt != null) {
-            localStorage.setItem('id_token', this.loginResponseModelv3.jwt);
+            localStorage.setItem("id_token", this.loginResponseModelv3.jwt);
           }
         },
         (error) => {
@@ -677,21 +698,21 @@ export class LoginPage {
       );
   }
   onDarkModeEnable() {
-    this.renderer.setAttribute(document.body, 'color-theme', 'light');
+    this.renderer.setAttribute(document.body, "color-theme", "light");
   }
   async timerExpired() {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Logged out',
+      cssClass: "my-custom-class",
+      header: "Logged out",
       message:
         "For you and your patients' security, we logged you out. Please log in again.",
       buttons: [
         {
-          text: 'Okay',
-          role: 'cancel',
-          cssClass: 'secondary',
+          text: "Okay",
+          role: "cancel",
+          cssClass: "secondary",
           handler: (blah) => {
-            localStorage.removeItem('promptLogout');
+            localStorage.removeItem("promptLogout");
           },
         },
       ],
@@ -701,21 +722,21 @@ export class LoginPage {
 
   async testdbalert() {
     const alert = await this.alertController.create({
-      header: 'Alert!',
-      message: 'Admins Only',
+      header: "Alert!",
+      message: "Admins Only",
       // inputs: [{type: 'text', placeholder: 'Confirmation code', id: 'code'}],
       inputs: [
         {
-          name: 'password',
-          placeholder: 'Password',
-          type: 'password',
+          name: "password",
+          placeholder: "Password",
+          type: "password",
         },
       ],
       buttons: [
         {
-          text: 'Confirm',
+          text: "Confirm",
           handler: (blah) => {
-            if (blah.password == '0013969') {
+            if (blah.password == "0013969") {
               this.checkTestDB();
             } else {
               this.testDB = !this.testDB;
@@ -723,11 +744,11 @@ export class LoginPage {
           },
         },
         {
-          text: 'Cancel',
+          text: "Cancel",
           handler: (blah) => {
             this.testDB = !this.testDB;
           },
-          role: 'cancel',
+          role: "cancel",
         },
       ],
     });
@@ -735,9 +756,9 @@ export class LoginPage {
   }
   checkTestDB() {
     if (this.testDB) {
-      localStorage.setItem('testdb', '1');
+      localStorage.setItem("testdb", "1");
     } else {
-      localStorage.setItem('testdb', '0');
+      localStorage.setItem("testdb", "0");
     }
     window.location.reload();
   }
@@ -745,12 +766,12 @@ export class LoginPage {
   async modalUpdate(header, message, data) {
     this.btnDisable = false;
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+      cssClass: "my-custom-class",
       header: header,
       message: message,
       buttons: [
         {
-          text: 'Okay',
+          text: "Okay",
           handler: () => {
             if (data) {
               //this.loginAction();
@@ -774,19 +795,19 @@ export class LoginPage {
     });
     modal.onDidDismiss().then((data) => {
       if (
-        typeof data.data !== 'undefined' &&
-        typeof data.role !== 'undefined'
+        typeof data.data !== "undefined" &&
+        typeof data.role !== "undefined"
       ) {
         //this.hashedPassword = data.data;
         // this.postData.password = data.role;
-        this.postData.password = '';
+        this.postData.password = "";
         this.modalUpdate(
           this.constants.UI_COMPONENT_TEXT_VALUE_PASSWORD_SUCCESS_TITLE,
           this.constants.UI_COMPONENT_TEXT_VALUE_UPDATE_PASSWORD_SUCCESS_BODY,
           true
         );
         this.btnDisable = false;
-      } else if (data.data == 'Error') {
+      } else if (data.data == "Error") {
         this.btnDisable = false;
         this.modalUpdate(
           this.constants.UI_COMPONENT_TEXT_VALUE_PASSWORD_FAILED_TITLE,
@@ -930,10 +951,10 @@ export class LoginPage {
         () => {
           if (Object.keys(rsmJson).length >= 1) {
             let data = JSON.stringify(rsmJson);
-            data = '[' + data + ']';
+            data = "[" + data + "]";
             let adat = JSON.parse(data);
             adat.forEach((el) => {
-              if (typeof el.privacyPolicy !== 'undefined') {
+              if (typeof el.privacyPolicy !== "undefined") {
                 if (el.privacyPolicy.accepted == 1) {
                   this.isSetPrivacyPolicy = true;
                   this.isPrivacyPolicy = true;
@@ -965,7 +986,7 @@ export class LoginPage {
   async showPrivacyPolicy() {
     const modal = await this.modalController.create({
       component: ChhAppPrivacyPolicyPage,
-      componentProps: { backdropDismiss: true, origin: 'login' },
+      componentProps: { backdropDismiss: true, origin: "login" },
     });
     modal.onDidDismiss().then((data) => {
       //this.functionsService.logToConsole(data);
@@ -993,11 +1014,11 @@ export class LoginPage {
               var value = res[key];
               Object.keys(value).forEach((lock) => {
                 var valuex = value[lock];
-                if (key != 'appCode') {
-                  if (key == 'privacyPolicy' && lock == 'accepted') {
+                if (key != "appCode") {
+                  if (key == "privacyPolicy" && lock == "accepted") {
                     valuex = 1;
                   }
-                  if (key == 'billingContact') {
+                  if (key == "billingContact") {
                     ////this.functionsService.logToConsole(lock);
                   }
 
@@ -1033,9 +1054,9 @@ export class LoginPage {
       smpJSON1.userReference = this.loginResponseModel.dr_code;
       smpJSON1.appCode = Consta.appCode;
       smpJSON1.mode = Consta.mode;
-      smpJSON1.setting = 'privacyPolicy';
-      smpJSON1.property = 'accepted';
-      smpJSON1.value = '1';
+      smpJSON1.setting = "privacyPolicy";
+      smpJSON1.property = "accepted";
+      smpJSON1.value = "1";
       if (!this.isPrivacyPolicy) {
         this.patientService
           .updateUserSettings(smpJSON1)
@@ -1057,9 +1078,9 @@ export class LoginPage {
     //this.functionsService.logToConsole(JSON.stringify(this.loginResponseModel));*/
 
     this.storageService.store(AuthConstants.AUTH, this.loginResponseModel);
-    localStorage.setItem('isIdle', '1');
-    localStorage.setItem('username', btoa(this.postData.username));
-    this.router.navigate(['/menu/dashboard']).then(() => {
+    localStorage.setItem("isIdle", "1");
+    localStorage.setItem("username", btoa(this.postData.username));
+    this.router.navigate(["/menu/dashboard"]).then(() => {
       window.location.reload();
     });
   }

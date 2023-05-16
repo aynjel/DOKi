@@ -71,7 +71,37 @@
                 [admission_status]="admission_status"
                 *ngIf="isDesktop">
               </app-chh-app-patient-header>
-              <ion-list>
+
+              <ion-list *ngIf="!isDesktop">
+                <ion-item>
+                  <ion-label>Result List</ion-label>
+                  <ion-select
+                    interface="action-sheet"
+                    placeholder="Select Result"
+                    [(ngModel)]="resultType"
+                    (ionChange)="onResultSelect($event)">
+                    <ion-select-option selected value="laboratory-by-account-no"
+                      >Laboratory Results</ion-select-option
+                    >
+                    <ion-select-option value="pulmonary-by-account-no"
+                      >Pulmonary Results</ion-select-option
+                    >
+                    <ion-select-option value="endoscopy-by-account-no"
+                      >Endoscopy Results</ion-select-option
+                    >
+                    <ion-select-option value="cardio-by-account-no"
+                      >Cardiology Results</ion-select-option
+                    >
+                    <ion-select-option value="neurophysio-by-account-no"
+                      >Neurophysiology Results</ion-select-option
+                    >
+                    <ion-select-option value="radiology-by-account-no"
+                      >Special Imaging Results</ion-select-option
+                    >
+                  </ion-select>
+                </ion-item>
+              </ion-list>
+              <ion-list *ngIf="isDesktop">
                 <ion-item
                   class="pointHand"
                   [ngClass]="{'my_class': selected === 'laboratory-by-account-no'}"

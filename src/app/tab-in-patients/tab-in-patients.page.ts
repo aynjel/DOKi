@@ -130,14 +130,14 @@ export class TabInPatientsPage {
           this.isNotification = false;
 
           if (jsonResponse != null) {
-            jsonResponse.forEach((element) => {
-              if (
-                element.approval_status == "FA" ||
-                element.approval_status == "RA"
-              ) {
-                this.isNotification = true;
-              }
-            });
+            const hasApprovedStatus = (element) => {
+              return (
+                element.approval_status === "FA" ||
+                element.approval_status === "RA"
+              );
+            };
+
+            this.isNotification = jsonResponse.some(hasApprovedStatus);
           }
         }
       );
@@ -406,12 +406,27 @@ export class TabInPatientsPage {
             this.objecthandler = false;
           }
           this.inPatientsDraft = [];
-          res.forEach((element) => {
+          /* res.forEach((element) => {
             element.last_name = element.last_name.toUpperCase();
             element.middle_name = this.camelCase(element.middle_name);
             element.first_name = this.camelCase(element.first_name);
             this.inPatientsDraft.push(element);
-          });
+          });*/
+          const formatName = (name) => {
+            return name.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+          };
+
+          const formatPatient = (patient) => {
+            return {
+              ...patient,
+              last_name: patient.last_name.toUpperCase(),
+              middle_name: formatName(patient.middle_name),
+              first_name: formatName(patient.first_name),
+            };
+          };
+
+          this.inPatientsDraft = res.map(formatPatient);
+
           this.filterList();
         },
         (error) => {

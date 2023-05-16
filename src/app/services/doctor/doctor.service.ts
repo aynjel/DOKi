@@ -281,7 +281,7 @@ export class DoctorService {
     });
     const options = { headers: headers, withCredentials: true };
     //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
-    const url = environment.callHistory + "v3/InPatients/PatientHistory";
+    const url = environment.callHistory + "/gw/doki/InPatients/PatientHistory";
     return this.http.get(url, options);
   }
   getCoDoctorsV3(postData1: any) {

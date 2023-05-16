@@ -1,5 +1,17 @@
 <ion-header mode="md" class="ion-no-border">
-  <div>
+  <ion-toolbar color="mango">
+    <span
+      class="padding-left-10"
+      (click)="back()"
+      routerDirection="backward"
+      color="chh-css-primary2">
+      <ion-icon name="arrow-back-outline" class="my-icon vcenter"></ion-icon>
+    </span>
+    <span class="padding-left-30 font-weight-500 font-size-20">
+      &nbsp;&nbsp; Progress Notes | {{event_date}}
+    </span>
+  </ion-toolbar>
+  <!--div>
     <ion-toolbar color="mango">
       <ion-title>
         <ion-icon
@@ -9,7 +21,7 @@
         Progress Notes | {{event_date}}
       </ion-title>
     </ion-toolbar>
-  </div>
+  </div-->
 
   <ion-grid class="ion-no-padding" *ngIf="!isDesktop">
     <ion-row class="">
@@ -71,6 +83,28 @@
               <ion-label class="ion-text-wrap">
                 <h2>Summary</h2>
               </ion-label>
+              <div>
+                <ion-item slot="end" *ngIf="isLoading">
+                  <ion-spinner></ion-spinner>
+                </ion-item>
+                <ion-button
+                  slot="end"
+                  color="warning"
+                  (click)="presentAlert()"
+                  *ngIf="(isApproved !='1' && summary_status =='FA' && (doctor_Status_code=='AP' && isAPVerifyTCstatus == false)) && !isLoading"
+                  >Approve Summary?
+                </ion-button>
+                <ion-button
+                  slot="end"
+                  color="warning"
+                  (click)="presentAlert()"
+                  *ngIf="(isApproved !='1' && summary_status =='FA' && (doctor_Status_code=='TC' && isAPVerifyTCstatus) ) && !isLoading"
+                  >Approve Summary?
+                </ion-button>
+                <ion-button slot="end" *ngIf="summary_status =='RA'"
+                  >Approved
+                </ion-button>
+              </div>
             </ion-item>
             <ion-item lines="none">
               <!--ion-text class="ion-text-wrap">{{progressNoteSummary}}</ion-text-->
@@ -82,30 +116,35 @@
         </ng-container>
         <ng-container>
           <ion-list>
-            <ion-item
-              ><b>{{event_date}} </b><br />
-              <ion-item slot="end" *ngIf="isLoading">
-                <ion-spinner></ion-spinner>
-              </ion-item>
-              <ion-button
-                slot="end"
-                color="warning"
-                (click)="presentAlert()"
-                *ngIf="(isApproved !='1' && summary_status =='FA' && (doctor_Status_code=='AP' && isAPVerifyTCstatus == false)) && !isLoading"
-                >Approve Summary?
-              </ion-button>
-              <ion-button
-                slot="end"
-                color="warning"
-                (click)="presentAlert()"
-                *ngIf="(isApproved !='1' && summary_status =='FA' && (doctor_Status_code=='TC' && isAPVerifyTCstatus) ) && !isLoading"
-                >Approve Summary?
-              </ion-button>
-              <ion-button slot="end" *ngIf="summary_status =='RA'"
-                >Approved
-              </ion-button>
-            </ion-item>
+            <ion-grid>
+              <ion-row>
+                <ion-col
+                  ><ion-item><b>{{event_date}} </b></ion-item></ion-col
+                >
 
+                <ion-col>
+                  <ion-item
+                    *ngIf="doctor_Status_code == 'AP' && pnLength >1 && pnLength!=pnApprovedLength"
+                    ><ion-button
+                      expand="block"
+                      color="secondary"
+                      slot="end"
+                      (click)="AprroveAllNotes(event_date,id,true)"
+                      >Approve All Progress Notes ?</ion-button
+                    ></ion-item
+                  ><ion-item
+                    *ngIf="doctor_Status_code == 'AP' && pnLength >1 && pnLength==pnApprovedLength"
+                    ><ion-button
+                      expand="block"
+                      color="warning"
+                      slot="end"
+                      (click)="AprroveAllNotes(event_date,id,false)"
+                      >Revoke Progress Notes Approval?</ion-button
+                    ></ion-item
+                  ></ion-col
+                >
+              </ion-row>
+            </ion-grid>
             <div *ngFor="let x of progessNotes">
               <ion-card mode="ios">
                 <ion-item>
@@ -117,7 +156,8 @@
                       >Approve?</ion-badge
                     ><br /-->
                     <h2 class="icon-center">
-                      {{x.username}} | <ion-text> {{x.event_time_c}}</ion-text>
+                      {{x.username}} |
+                      <ion-text> {{x.event_time_c}}</ion-text>
                     </h2>
                     <h2>
                       <!--ion-badge
@@ -163,7 +203,36 @@
                   </ion-label>
                 </ion-item>
 
-                <!--ion-grid class="ion-no-padding">
+                <ion-grid
+                  class="ion-no-padding"
+                  *ngIf="doctor_Status_code =='AP'">
+                  <ion-row class="ion-no-padding">
+                    <ion-col>
+                      <ion-button
+                        expand="block"
+                        color="secondary"
+                        *ngIf="x.isPnApproved == false"
+                        (click)="presentActionSheetapproveAP(x)"
+                        >Approve Progress Note - {{x.event_time_c}}
+                        ?</ion-button
+                      >
+                      <ion-button
+                        expand="block"
+                        color="tertiary"
+                        *ngIf="x.isPnApproved"
+                        (click)="presentActionSheetRevokeAP(x)"
+                        >Revoke Approval?</ion-button
+                      >
+                      <ion-item *ngIf="x.isPnApproved"
+                        >Approved on : {{x.pnApprovedDate}}</ion-item
+                      >
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+
+                <ion-grid
+                  class="ion-no-padding"
+                  *ngIf="doctor_Status_code !='AP' && x.isMine">
                   <ion-row class="ion-no-padding">
                     <ion-col>
                       <ion-button
@@ -186,7 +255,7 @@
                       >
                     </ion-col>
                   </ion-row>
-                </ion-grid-->
+                </ion-grid>
               </ion-card>
             </div>
           </ion-list>

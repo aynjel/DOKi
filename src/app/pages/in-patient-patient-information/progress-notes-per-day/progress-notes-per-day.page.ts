@@ -135,18 +135,23 @@ export class ProgressNotesPerDayPage implements OnInit {
   doctor_Status_code;
   inpatientDetails;
   id;
+  mdCode;
   ngOnInit() {
     this.inpatientDetails = new InpatientDetails();
     this.doctor_Status_code = localStorage.getItem("doctor_Status_code");
     let x = JSON.parse(
       unescape(atob(localStorage.getItem("_cap_userDataKey")))
     );
+
+    this.mdCode = x.doctorCode;
     this.logindata = x;
     this.dateToday = this.funcServ.getDateTodayMMDDYYYY();
     this.user_created = atob(localStorage.getItem("username"));
     this.progressNoteSummaryUpdate.summary_updated_by = this.user_created;
     this.patientId = this.activatedRoute.snapshot.params.pno;
     this.id = this.activatedRoute.snapshot.params.id;
+    console.log(this.id);
+
     this.event_date = this.activatedRoute.snapshot.params.perday;
     this.patientInfo = JSON.parse(
       "[" + localStorage.getItem("pnSelected") + "]"
@@ -164,9 +169,9 @@ export class ProgressNotesPerDayPage implements OnInit {
     this.progressNotesPerDay.event_date = this.event_date;
     this.data = JSON.parse("[" + (localStorage.getItem("pnSelected") + "]"));
 
-    if (this.data[0].doctor_Status_code == "TC") {
+    /* if (this.data[0].doctor_Status_code == "TC") {
       this.verifypatient(this.data[0].admission_no, this.data[0].dr_code);
-    }
+    }*/
     this.insurance_hmo = this.data[0].insurance_hmo;
     this.is_philhealth_membership = this.data[0].philhealth_membership;
     this.is_pwd = this.data[0].is_pwd;
@@ -192,13 +197,13 @@ export class ProgressNotesPerDayPage implements OnInit {
     this.admission_status = atob(localStorage.getItem("admission_status"));
     this.patientDetailfromApi_from = atob(localStorage.getItem("Api_from"));
     this.patientDetailfromApi_to = atob(localStorage.getItem("Api_to"));
-    this.checkCoDoctors();
+    // this.checkCoDoctors();
   }
   admission_status;
   patientDetailfromApi_from;
   patientDetailfromApi_to;
   isAPVerifyTCstatus: boolean = false;
-  verifypatient(admission_no, dr_code) {
+  /* verifypatient(admission_no, dr_code) {
     let datxyz = { admission_no: "", dr_code: "" };
     datxyz.admission_no = admission_no;
     datxyz.dr_code = dr_code;
@@ -216,7 +221,7 @@ export class ProgressNotesPerDayPage implements OnInit {
           }
         },
       });
-  }
+  }*/
   back() {
     // this.navCtrl.back();
     this.router
@@ -236,8 +241,11 @@ export class ProgressNotesPerDayPage implements OnInit {
       event.target.complete();
     }, 1000);
   }
-
+  pnLength;
+  pnApprovedLength = 0;
   getProgressNotesPerDay(data) {
+    this.pnApprovedLength = 0;
+    this.pnLength = 0;
     let tempPn;
     this.progessNotes = [];
     this.residentService.getPatientProgressNotesPerDay(data).subscribe(
@@ -251,7 +259,14 @@ export class ProgressNotesPerDayPage implements OnInit {
       },
       (error) => {},
       () => {
+        this.pnLength = tempPn.length;
         tempPn.forEach((el) => {
+          if (el.dr_code == this.mdCode) {
+            el.isMine = true;
+          } else {
+            el.isMine = false;
+          }
+
           let getNewComment = {
             resi_code: "",
             trans_no: 0,
@@ -260,14 +275,26 @@ export class ProgressNotesPerDayPage implements OnInit {
           getNewComment.trans_no = el.trans_no;
           el.new_message = getNewComment;
           el.event_time_c = this.funcServ.getFormatAMPM(el.event_time);
-          if (el.prog_notes_date_approved == "0001-01-01T00:00:00") {
-            el.isPnApproved = false;
+          if (this.doctor_Status_code == "AP") {
+            if (el.ap_prog_notes_date_approved == "0001-01-01T00:00:00") {
+              el.isPnApproved = false;
+            } else {
+              el.isPnApproved = true;
+              this.pnApprovedLength += 1;
+            }
+            el.pnApprovedDate = this.funcServ.convertDatetoMMDDYYYYHHMMSS(
+              el.ap_prog_notes_date_approved
+            );
           } else {
-            el.isPnApproved = true;
+            if (el.prog_notes_date_approved == "0001-01-01T00:00:00") {
+              el.isPnApproved = false;
+            } else {
+              el.isPnApproved = true;
+            }
+            el.pnApprovedDate = this.funcServ.convertDatetoMMDDYYYYHHMMSS(
+              el.prog_notes_date_approved
+            );
           }
-          el.pnApprovedDate = this.funcServ.convertDatetoMMDDYYYYHHMMSS(
-            el.prog_notes_date_approved
-          );
           this.progessNotes.push(el);
         });
         this.isApproved = this.progessNotes[0].is_approve;
@@ -619,6 +646,200 @@ export class ProgressNotesPerDayPage implements OnInit {
     } else {
       this.genServ
         .post("/gw/resi/ProgressNotes/RevokedProgNotes", ApprovePN)
+        .subscribe({
+          complete: () => {},
+          error: (error) => {
+            ////////////////////////console.log(error);
+          },
+          next: (data: any) => {
+            this.ngOnInit();
+          },
+        });
+    }
+  }
+  async presentActionSheetapproveAP(e) {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: "Approve PN of " + e.username + "?",
+      cssClass: "my-custom-classdata",
+      subHeader:
+        this.funcServ.convertDatetoMMDDYYYY(e.event_date) +
+        " " +
+        this.funcServ.getFormatAMPM(e.event_time),
+      buttons: [
+        {
+          text: "Confirm Approval",
+
+          data: {
+            action: "approve",
+          },
+        },
+        {
+          text: "Cancel",
+          role: "cancel",
+          data: {
+            action: "cancel",
+          },
+        },
+      ],
+    });
+    await actionSheet.present();
+    const result = await actionSheet.onDidDismiss();
+    if (result.data.action == "approve") {
+      this.approvePNnewAP(e, true);
+    }
+  }
+  async presentActionSheetRevokeAP(e) {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: "Revoke Approval PN of " + e.username + "?",
+      cssClass: "my-custom-classdata",
+      subHeader:
+        this.funcServ.convertDatetoMMDDYYYY(e.event_date) +
+        " " +
+        this.funcServ.getFormatAMPM(e.event_time),
+      buttons: [
+        {
+          text: "Revoke",
+
+          data: {
+            action: "revoke",
+          },
+        },
+        {
+          text: "Cancel",
+          role: "cancel",
+          data: {
+            action: "cancel",
+          },
+        },
+      ],
+    });
+    await actionSheet.present();
+    const result = await actionSheet.onDidDismiss();
+    if (result.data.action == "revoke") {
+      this.approvePNnewAP(e, false);
+    }
+  }
+  approvePNnewAP(x, mode: boolean) {
+    let ApprovePN = {
+      trans_no: 40,
+      account_no: "IPC100295023",
+      event_date: "2023-03-12",
+      resi_code: "RS005800",
+    };
+    ApprovePN.trans_no = x.trans_no;
+    ApprovePN.account_no = x.account_no;
+    ApprovePN.event_date = this.event_date;
+    ApprovePN.resi_code = x.user_created;
+    //console.log(ApprovePN);https://api01.chonghua.com.ph/gw/resi/ProgressNotes/PrimaryAPRevokedProgNotes
+
+    if (mode) {
+      this.genServ
+        .post("/gw/resi/ProgressNotes/PrimaryAPApprovedProgNotes", ApprovePN)
+        .subscribe({
+          complete: () => {},
+          error: (error) => {
+            ////////////////////////console.log(error);
+          },
+          next: (data: any) => {
+            this.ngOnInit();
+          },
+        });
+    } else {
+      this.genServ
+        .post("/gw/resi/ProgressNotes/PrimaryAPRevokedProgNotes", ApprovePN)
+        .subscribe({
+          complete: () => {},
+          error: (error) => {
+            ////////////////////////console.log(error);
+          },
+          next: (data: any) => {
+            this.ngOnInit();
+          },
+        });
+    }
+  }
+  async AprroveAllNotes(event_date, account_no, mode) {
+    let actionSheet;
+    if (mode) {
+      actionSheet = await this.actionSheetCtrl.create({
+        header: "Approve All Progress Notes?",
+        cssClass: "my-custom-classdata",
+
+        buttons: [
+          {
+            text: "Confirm Approval",
+
+            data: {
+              action: "approve",
+            },
+          },
+          {
+            text: "Cancel",
+            role: "cancel",
+            data: {
+              action: "cancel",
+            },
+          },
+        ],
+      });
+    } else {
+      actionSheet = await this.actionSheetCtrl.create({
+        header: "Revoke All Progress Notes?",
+        cssClass: "my-custom-classdata",
+
+        buttons: [
+          {
+            text: "Confirm Revoke",
+
+            data: {
+              action: "revoke",
+            },
+          },
+          {
+            text: "Cancel",
+            role: "cancel",
+            data: {
+              action: "cancel",
+            },
+          },
+        ],
+      });
+    }
+
+    await actionSheet.present();
+    const result = await actionSheet.onDidDismiss();
+    if (result.data.action == "approve" || result.data.action == "revoke") {
+      this.approveALLPNnewAP(event_date, account_no, mode);
+    }
+  }
+  approveALLPNnewAP(event_date, account_no, mode: boolean) {
+    let ApprovePN = {
+      trans_no: 0,
+      account_no: "",
+      event_date: "",
+      resi_code: "",
+    };
+
+    ApprovePN.account_no = account_no;
+    ApprovePN.event_date = event_date;
+    console.log(ApprovePN);
+    //console.log(ApprovePN);https://api01.chonghua.com.ph/gw/resi/ProgressNotes/PrimaryAPRevokedProgNotes
+
+    if (mode) {
+      this.genServ
+        .post("/gw/resi/ProgressNotes/PrimaryAPApprovedProgNotes", ApprovePN)
+        .subscribe({
+          complete: () => {},
+          error: (error) => {
+            ////////////////////////console.log(error);
+          },
+          next: (data: any) => {
+            this.ngOnInit();
+          },
+        });
+    } else {
+      this.genServ
+        .post("/gw/resi/ProgressNotes/PrimaryAPRevokedProgNotes", ApprovePN)
         .subscribe({
           complete: () => {},
           error: (error) => {
