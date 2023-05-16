@@ -4,7 +4,7 @@
 export const environment = {
   production: true,
   // apiRouterUrl: 'https://doctorsportal.chonghua.com.ph/api/',
-  apiRouterUrl: "https://www.chonghua.com.ph/api/", // For IIS Deployment where Frontend and Backend are deployed in one server.
+  apiRouterUrl: "https://doki.chonghua.com.ph/api/", // For IIS Deployment where Frontend and Backend are deployed in one server.
   linkRouterUrl: "https://doki.chonghua.com.ph/",
   //apiRouterUrlTest: 'http://localhost:5000',
   apiRouterUrlTest: "https://api.chonghua.com.ph",
