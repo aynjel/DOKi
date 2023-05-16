@@ -12,5 +12,5 @@ export const environment = {
   apiResident: "http://10.151.12.120:7230/",
   consoleLog: false,
   API_URL: window["env"]["API_URL"],
-  callHistory: "https://doki.chonghua.com.ph/api/",
+  callHistory: window["env"]["API_URL"],
 };
