@@ -305,4 +305,12 @@ export class PatientHistoryPage implements OnInit {
       this.callPatient(this.site);
     });*/
   }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
 }

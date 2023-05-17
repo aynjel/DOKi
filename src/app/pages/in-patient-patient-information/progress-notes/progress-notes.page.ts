@@ -492,4 +492,8 @@ export class ProgressNotesPage implements OnInit {
     // Prevent memory leaks
     this.paramsSub.unsubscribe();
   }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
 }

@@ -618,4 +618,12 @@ export class PatientHistoryPatientDetailPage implements OnInit {
       "/menu/in-patients/" + patient_id + "/diagnostic-results/",
     ]);
   }
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
 }

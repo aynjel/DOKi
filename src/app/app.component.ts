@@ -144,12 +144,12 @@ export class AppComponent implements OnInit {
     this.screensizeService.isPortraitView().subscribe((isPortrait) => {
       this.isPortrait = isPortrait;
     });
-    console.log(environment.API_URL);
+    //console.log(environment.API_URL);
   }
   userData$ = new BehaviorSubject<any>([]);
   public revokeTokenV3: RevokeTokenV3;
   onSplitPaneVisible(event) {
-    // console.log(event);
+    // //console.log(event);
   }
   ngOnInit() {
     this.storageService.get(AuthConstants.AUTH).then((res) => {
@@ -163,8 +163,8 @@ export class AppComponent implements OnInit {
     });
   }
   initializeApp() {
-    console.log("initializeApp");
-    console.log(environment.API_URL);
+    //console.log("initializeApp");
+    //console.log(environment.API_URL);
     this.revokeTokenV3 = new RevokeTokenV3();
     this.functionsService.logToConsole("initializeApp");
     this.platform.ready().then(() => {
@@ -295,7 +295,7 @@ export class AppComponent implements OnInit {
     this.logoutService.out();
   }
   whattodo(data) {
-    console.log(data);
+    //console.log(data);
     /*this.router.navigate(['/menu/dashboard']).then(() => {
       window.location.reload();
     });*/
