@@ -167,7 +167,7 @@
         </ion-modal>
         <ng-container>
           <div *ngFor="let x of pendingApproval">
-            <ion-card mode="ios">
+            <ion-card mode="ios" class="pointer custom-card">
               <ion-list>
                 <ion-item
                   class="item-background-color paddingBottom10"
@@ -292,7 +292,7 @@
                       shape=""
                       expand="block"
                       (click)="viewCerticate(x)">
-                      <span>View Approved Medical Certificate</span>
+                      <span><b>View Approved Medical Certificate</b></span>
                     </ion-button>
                     <!--div class="center">
                       <ion-item lines="none">
