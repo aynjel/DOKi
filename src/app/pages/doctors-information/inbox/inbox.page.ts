@@ -62,7 +62,7 @@ export class InboxPage implements OnInit {
   }
   ionViewWillEnter() {
     console.log("ionViewWillEnter");
-    
+
     this.setDate();
     this.selected = localStorage.getItem("changeMode");
     this.getPendingApproval(this.dateToday, this.dateNow);
@@ -483,7 +483,7 @@ export class InboxPage implements OnInit {
   }
 
   segmentChanged1(e) {}
-  keyData;
+  keyData = "";
   results;
   searchData() {
     this.results = this.pendingApprovalSearch.filter((employee) => {

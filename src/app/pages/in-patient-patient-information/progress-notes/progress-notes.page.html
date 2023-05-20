@@ -47,7 +47,7 @@
         <ng-container>
           <div *ngFor="let x of progessNotes">
             <ion-card
-              class="pointer"
+              class="pointer custom-card"
               (click)="gotoPerday(x.event_date,x.day)"
               *ngIf="!progressNotesIsNotReady">
               <ion-item>
@@ -55,7 +55,7 @@
                   style="font-size: 14px"
                   slot="end"
                   [ngClass]="{ my_class: x.ApperovedpnCounter != x.pnCounter }"
-                  >(Approved {{x.ApperovedpnCounter}} of {{ x.pnCounter}})</span
+                  >{{x.ApperovedpnCounter}} of {{ x.pnCounter}}</span
                 >
                 <span *ngIf="x.date_approved != null">&nbsp;|&nbsp;</span>
                 <ion-badge

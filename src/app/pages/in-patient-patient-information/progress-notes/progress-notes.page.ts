@@ -241,8 +241,6 @@ export class ProgressNotesPage implements OnInit {
       );*/ this.start();
   }
   start() {
-    ////////console.log('ngOnInit');
-    this.checkAppearance();
     this.ngUnsubscribe = new Subject();
     this.patient_id = this.activatedRoute.snapshot.params.id;
     this.getProgressNote();

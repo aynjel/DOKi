@@ -5,47 +5,17 @@
 ><br />-->
 <br />
 <span
-  ><ion-icon
-    name="information-circle-outline"
-    id="click-approved-{{ account_no }}"></ion-icon>
-  Approved Progress Notes : {{ approvedCounter }} </span
+  ><ion-icon name="information-circle-outline"></ion-icon> Approved Progress
+  Notes : {{ approvedCounter }} </span
 ><br />
 <span
-  ><ion-icon
-    name="information-circle-outline"
-    id="click-forApproval-{{ account_no }}"></ion-icon>
+  ><ion-icon name="information-circle-outline"></ion-icon>
   Progress Notes for Approval :
   <span [ngClass]="counter > 1 ? 'my_class' : 'my_class2'">{{
     counter - approvedCounter
   }}</span></span
 ><br />
 <span
-  ><ion-icon
-    name="information-circle-outline"
-    id="click-total-{{ account_no }}"></ion-icon>
-  Total Progress Notes: {{ totalProgressNotes }}</span
+  ><ion-icon name="information-circle-outline"></ion-icon> Total Progress Notes:
+  {{ totalProgressNotes }}</span
 >
-
-<ion-popover trigger="click-approved-{{ account_no }}" triggerAction="click">
-  <ng-template>
-    <ion-content class="ion-padding"
-      >This is the total number of progress notes that have been
-      approved.</ion-content
-    >
-  </ng-template>
-</ion-popover>
-<ion-popover trigger="click-forApproval-{{ account_no }}" triggerAction="click">
-  <ng-template>
-    <ion-content class="ion-padding"
-      >This is the number of progress notes that require your
-      approval.</ion-content
-    >
-  </ng-template>
-</ion-popover>
-<ion-popover trigger="click-total-{{ account_no }}" triggerAction="click">
-  <ng-template>
-    <ion-content class="ion-padding"
-      >This is the total number of progress notes.</ion-content
-    >
-  </ng-template>
-</ion-popover>

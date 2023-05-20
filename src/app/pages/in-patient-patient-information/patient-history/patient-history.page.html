@@ -277,15 +277,12 @@
                   <div *ngFor="let x of y.data">
                     <ion-card
                       mode="ios"
-                      class="pointer"
-                      [attr.data-testid]="x.admission_no">
+                      class="pointer custom-card"
+                      [attr.data-testid]="x.admission_no"
+                      (click)="detail(x.admission_no,x)">
                       <ion-item lines="none">
-                        <ion-label style="margin-top: -5px">
-                          <ion-item
-                            slot="start"
-                            class="ion-no-padding"
-                            (click)="detail(x.admission_no,x)"
-                            style="padding-bottom: 5px">
+                        <ion-label style="margin-top: -15px">
+                          <ion-item slot="start" class="ion-no-padding">
                             <h2 class="ion-text-wrap" style="padding-top: 20px">
                               <br />{{ x.last_name }}, {{ x.first_name }} {{
                               x.middle_name }}<br />
@@ -359,7 +356,7 @@
                                   *ngIf="x.discharged_date == null"
                                   color="">
                                   Discharged :
-                                  <ion-text color="mango"
+                                  <ion-text color="primary"
                                     >&nbsp;<b>Still Admitted</b></ion-text
                                   ><br />
                                 </ion-text>

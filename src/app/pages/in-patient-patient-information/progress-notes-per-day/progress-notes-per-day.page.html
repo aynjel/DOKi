@@ -122,7 +122,7 @@
                   ><ion-item><b>{{event_date}} </b></ion-item></ion-col
                 >
 
-                <ion-col>
+                <!--ion-col>
                   <ion-item
                     *ngIf="doctor_Status_code == 'AP' && pnLength >1 && pnLength!=pnApprovedLength"
                     ><ion-button
@@ -141,12 +141,11 @@
                       (click)="AprroveAllNotes(event_date,id,false)"
                       >Revoke Progress Notes Approval?</ion-button
                     ></ion-item
-                  ></ion-col
-                >
+                  ></ion-col-->
               </ion-row>
             </ion-grid>
             <div *ngFor="let x of progessNotes">
-              <ion-card mode="ios">
+              <ion-card mode="ios" class="custom-card">
                 <ion-item>
                   <ion-label class="ion-text-wrap">
                     <!--ion-badge
@@ -192,7 +191,33 @@
                         </b>
                       </ion-button>
                     </h2>
-
+                    <ion-grid
+                      class="ion-no-padding"
+                      style="padding-top: 10px; padding-bottom: 10px"
+                      *ngIf="doctor_Status_code =='AP'">
+                      <ion-row class="ion-no-padding">
+                        <ion-col>
+                          <ion-button
+                            expand="block"
+                            color="secondary"
+                            *ngIf="x.isPnApproved == false"
+                            (click)="presentActionSheetapproveAP(x)"
+                            >Approve Progress Note - {{x.event_time_c}}
+                            ?</ion-button
+                          >
+                          <ion-button
+                            expand="block"
+                            color="tertiary"
+                            *ngIf="x.isPnApproved"
+                            (click)="presentActionSheetRevokeAP(x)"
+                            >Revoke Approval?</ion-button
+                          >
+                          <ion-item *ngIf="x.isPnApproved"
+                            >Approved on : {{x.pnApprovedDate}}</ion-item
+                          >
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
                     <div *ngFor="let y of x.soap">
                       <app-soap-show-hide
                         [SOAP]="y.note_type"
@@ -202,60 +227,6 @@
                     </div>
                   </ion-label>
                 </ion-item>
-
-                <ion-grid
-                  class="ion-no-padding"
-                  *ngIf="doctor_Status_code =='AP'">
-                  <ion-row class="ion-no-padding">
-                    <ion-col>
-                      <ion-button
-                        expand="block"
-                        color="secondary"
-                        *ngIf="x.isPnApproved == false"
-                        (click)="presentActionSheetapproveAP(x)"
-                        >Approve Progress Note - {{x.event_time_c}}
-                        ?</ion-button
-                      >
-                      <ion-button
-                        expand="block"
-                        color="tertiary"
-                        *ngIf="x.isPnApproved"
-                        (click)="presentActionSheetRevokeAP(x)"
-                        >Revoke Approval?</ion-button
-                      >
-                      <ion-item *ngIf="x.isPnApproved"
-                        >Approved on : {{x.pnApprovedDate}}</ion-item
-                      >
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-
-                <ion-grid
-                  class="ion-no-padding"
-                  *ngIf="doctor_Status_code !='AP' && x.isMine">
-                  <ion-row class="ion-no-padding">
-                    <ion-col>
-                      <ion-button
-                        expand="block"
-                        color="secondary"
-                        *ngIf="x.isPnApproved == false"
-                        (click)="presentActionSheetapprove(x)"
-                        >Approve Progress Note - {{x.event_time_c}}
-                        ?</ion-button
-                      >
-                      <ion-button
-                        expand="block"
-                        color="tertiary"
-                        *ngIf="x.isPnApproved"
-                        (click)="presentActionSheetRevoke(x)"
-                        >Revoke Approval?</ion-button
-                      >
-                      <ion-item *ngIf="x.isPnApproved"
-                        >Approved on : {{x.pnApprovedDate}}</ion-item
-                      >
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
               </ion-card>
             </div>
           </ion-list>

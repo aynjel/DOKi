@@ -230,9 +230,7 @@ export class ProgressNotesPerDayPage implements OnInit {
         window.location.reload();
       });
   }
-  checkAppearance() {
-    this.renderer.setAttribute(document.body, "color-theme", "light");
-  }
+
   doRefresh(event) {
     this.progressNotesIsNotReady = true;
     setTimeout(() => {
@@ -858,5 +856,18 @@ export class ProgressNotesPerDayPage implements OnInit {
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+  checkAppearance() {
+    var values = JSON.parse(
+      "[" + atob(localStorage.getItem("user_settings")) + "]"
+    );
+    let dr_username = atob(localStorage.getItem("username"));
+    values.forEach((element) => {
+      if (element.darkmode == 1) {
+        this.renderer.setAttribute(document.body, "color-theme", "dark");
+      } else {
+        this.renderer.setAttribute(document.body, "color-theme", "light");
+      }
+    });
   }
 }
