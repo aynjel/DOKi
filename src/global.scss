@@ -711,16 +711,3 @@ ion-action-sheet.my-custom-classdata .action-sheet-title {
   color: #080000;
 }
 
-.custom-card {
-  /* Light mode */
-  //border: 10px solid #dd0f0f !important;
-  /* Default border style for light mode */
-
-  /* Dark mode */
-  @media (prefers-color-scheme: dark) {
-    border: 1px solid #fff;
-    /* Custom border style for dark mode */
-  }body[color-theme='dark'] {
-        border: 1px solid #fff;
-  }
-}
