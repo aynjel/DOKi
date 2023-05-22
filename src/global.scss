@@ -720,5 +720,7 @@ ion-action-sheet.my-custom-classdata .action-sheet-title {
   @media (prefers-color-scheme: dark) {
     border: 1px solid #fff;
     /* Custom border style for dark mode */
+  }body[color-theme='dark'] {
+        border: 1px solid #fff;
   }
 }
