@@ -46,7 +46,8 @@
           *ngIf="
             x.admission_status == 'DN' &&
             (x.doctor_prof_fee == null || x.doctor_prof_fee == '0') &&
-            x.is_posted == null
+            x.is_posted == null &&
+            role_flag != 'exec'
           ">
           PF</ion-badge
         >
@@ -54,7 +55,11 @@
           color="success"
           slot="end"
           class="font-size12"
-          *ngIf="x.doctor_prof_fee != null && x.is_posted != null"
+          *ngIf="
+            x.doctor_prof_fee != null &&
+            x.is_posted != null &&
+            role_flag != 'exec'
+          "
           >PF OK</ion-badge
         >
       </ion-item>
@@ -203,7 +208,8 @@
             x.admission_status == 'DN' &&
             (x.doctor_prof_fee == null || x.doctor_prof_fee == '0') &&
             x.is_posted == null &&
-            showPFDetals
+            showPFDetals &&
+            role_flag != 'exec'
           ">
           PF</ion-badge
         >
@@ -212,7 +218,10 @@
           slot="end"
           class="font-size12"
           *ngIf="
-            x.doctor_prof_fee != null && x.is_posted != null && showPFDetals
+            x.doctor_prof_fee != null &&
+            x.is_posted != null &&
+            showPFDetals &&
+            role_flag != 'exec'
           "
           >PF OK</ion-badge
         >

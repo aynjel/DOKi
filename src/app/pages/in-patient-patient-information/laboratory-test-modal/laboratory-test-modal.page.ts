@@ -6,50 +6,50 @@ import {
   ViewContainerRef,
   ComponentFactoryResolver,
   Renderer2,
-} from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+} from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
+import { Location } from "@angular/common";
 import {
   ModalController,
   AlertController,
   NavController,
-} from '@ionic/angular';
-import { ChhAppFeePage } from '../../../chh-web-components/chh-app-fee/chh-app-fee.page';
-import { from } from 'rxjs';
-import { PopoverController } from '@ionic/angular';
-import { timeStamp } from 'console';
-import { DoctorService } from 'src/app/services/doctor/doctor.service';
+} from "@ionic/angular";
+import { ChhAppFeePage } from "../../../chh-web-components/chh-app-fee/chh-app-fee.page";
+import { from } from "rxjs";
+import { PopoverController } from "@ionic/angular";
+import { timeStamp } from "console";
+import { DoctorService } from "src/app/services/doctor/doctor.service";
 //import { GoogleAnalyticsService } from 'ngx-google-analytics';
-import { AuthService } from 'src/app/services/auth/auth.service';
-import { LoginData } from '../../../models/login-data.model';
-import { FunctionsService } from '../../../shared/functions/functions.service';
-import { PatientService } from 'src/app/services/patient/patient.service';
-import { logWarnings } from 'protractor/built/driverProviders';
-import { ChemistryPage } from '../../../chh-web-components/chh-app-test/chh-app-chemistry/chemistry.page';
-import { ChhAppBasePage } from '../../../chh-web-components/chh-app-test/chh-app-base/chh-app-base.page';
-import { Messages } from '../../../shared/messages';
-import { ScreenSizeService } from '../../../services/screen-size/screen-size.service';
-import { ChhAppTestChemistryComponent } from '../../../chh-web-components/chh-app-test/chh-app-test-chemistry/chh-app-test-chemistry.component';
-import { ChhAppTestFecalysisComponent } from '../../../chh-web-components/chh-app-test/chh-app-test-fecalysis/chh-app-test-fecalysis.component';
-import { ChhAppTestSerologyComponent } from '../../../chh-web-components/chh-app-test/chh-app-test-serology/chh-app-test-serology.component';
-import { StorageService } from '../../../services/storage/storage.service';
-import { AuthConstants } from '../../../config/auth-constants';
-import { executionAsyncResource } from 'async_hooks';
-import { Constants } from 'src/app/shared/constants';
+import { AuthService } from "src/app/services/auth/auth.service";
+import { LoginData } from "../../../models/login-data.model";
+import { FunctionsService } from "../../../shared/functions/functions.service";
+import { PatientService } from "src/app/services/patient/patient.service";
+import { logWarnings } from "protractor/built/driverProviders";
+import { ChemistryPage } from "../../../chh-web-components/chh-app-test/chh-app-chemistry/chemistry.page";
+import { ChhAppBasePage } from "../../../chh-web-components/chh-app-test/chh-app-base/chh-app-base.page";
+import { Messages } from "../../../shared/messages";
+import { ScreenSizeService } from "../../../services/screen-size/screen-size.service";
+import { ChhAppTestChemistryComponent } from "../../../chh-web-components/chh-app-test/chh-app-test-chemistry/chh-app-test-chemistry.component";
+import { ChhAppTestFecalysisComponent } from "../../../chh-web-components/chh-app-test/chh-app-test-fecalysis/chh-app-test-fecalysis.component";
+import { ChhAppTestSerologyComponent } from "../../../chh-web-components/chh-app-test/chh-app-test-serology/chh-app-test-serology.component";
+import { StorageService } from "../../../services/storage/storage.service";
+import { AuthConstants } from "../../../config/auth-constants";
+import { executionAsyncResource } from "async_hooks";
+import { Constants } from "src/app/shared/constants";
 
 import {
   UserSettingsModelv3,
   LoginResponseModelv3,
-} from 'src/app/models/doctor';
+} from "src/app/models/doctor";
 import {
   InPatientData,
   ProfessionalFeeModelv3,
-} from 'src/app/models/in-patient.model';
+} from "src/app/models/in-patient.model";
 
 @Component({
-  selector: 'app-laboratory-test-modal',
-  templateUrl: './laboratory-test-modal.page.html',
-  styleUrls: ['./laboratory-test-modal.page.scss'],
+  selector: "app-laboratory-test-modal",
+  templateUrl: "./laboratory-test-modal.page.html",
+  styleUrls: ["./laboratory-test-modal.page.scss"],
 })
 export class LaboratoryTestModalPage implements OnInit {
   @Input() patient_no: string;
@@ -61,7 +61,7 @@ export class LaboratoryTestModalPage implements OnInit {
   ClickedRow: any;
   currentExamList: any;
   currentExamList_filtered: any = [];
-  ExamData: any = '';
+  ExamData: any = "";
   HighlightRow: number;
   hospitalSite: any;
   serology: boolean = false;
@@ -119,7 +119,7 @@ export class LaboratoryTestModalPage implements OnInit {
         res.forEach((element) => {
           if (element.patient_no == this.patient_no) {
             this.data.push(element);
-            this.patient_name = element.first_name + ' ' + element.last_name;
+            this.patient_name = element.first_name + " " + element.last_name;
           }
         });
       },
@@ -132,37 +132,6 @@ export class LaboratoryTestModalPage implements OnInit {
     );
   }
 
-  checkAppearance() {
-    let dr_username = atob(localStorage.getItem('username'));
-    this.patientService
-      .getUserSettings('DPP', dr_username)
-      .subscribe((res: any) => {
-        if (Object.keys(res).length >= 1) {
-          let data = JSON.stringify(res);
-          data = '[' + data + ']';
-          let adat = JSON.parse(data);
-          adat.forEach((el) => {
-            if (typeof el.appearance !== 'undefined') {
-              if (el.appearance.darkmode == 1) {
-                this.renderer.setAttribute(
-                  document.body,
-                  'color-theme',
-                  'dark'
-                );
-              } else {
-                this.renderer.setAttribute(
-                  document.body,
-                  'color-theme',
-                  'light'
-                );
-              }
-            } else {
-              this.renderer.setAttribute(document.body, 'color-theme', 'light');
-            }
-          });
-        }
-      });
-  }
   filterList() {
     this.currentExamList_filtered = [];
     let temp_testname;
@@ -193,38 +162,38 @@ export class LaboratoryTestModalPage implements OnInit {
       const modal = await this._modalController.create({
         component: ChhAppBasePage,
         componentProps: { ExamDetails: data, Site: site },
-        cssClass: 'my-custom-modal-inpatient-css',
+        cssClass: "my-custom-modal-inpatient-css",
       });
       modal.present();
       return await modal.onDidDismiss().then((data: any) => {});
     } else {
-      if (this.ExamData.Exam == 'Serology') {
+      if (this.ExamData.Exam == "Serology") {
         this.chemistry = false;
         this.serology = true;
         this.fecalysis = false;
         this.urinalysis = false;
         this.cbc = false;
-      } else if (this.ExamData.Exam == 'Chemistry') {
+      } else if (this.ExamData.Exam == "Chemistry") {
         this.chemistry = true;
         this.serology = false;
         this.fecalysis = false;
         this.urinalysis = false;
         this.cbc = false;
-      } else if (this.ExamData.Exam == 'Fecalysis') {
+      } else if (this.ExamData.Exam == "Fecalysis") {
         this.chemistry = false;
         this.serology = false;
         this.fecalysis = true;
         this.urinalysis = false;
         this.cbc = false;
-      } else if (this.ExamData.Exam == 'Urinalysis') {
+      } else if (this.ExamData.Exam == "Urinalysis") {
         this.chemistry = false;
         this.serology = false;
         this.fecalysis = false;
         this.urinalysis = true;
         this.cbc = false;
       } else if (
-        this.ExamData.Exam == 'Hematology' &&
-        this.ExamData.ExamType == 'CBC'
+        this.ExamData.Exam == "Hematology" &&
+        this.ExamData.ExamType == "CBC"
       ) {
         this.chemistry = false;
         this.serology = false;
@@ -280,5 +249,18 @@ export class LaboratoryTestModalPage implements OnInit {
         this.examListSkeleton = false;
       }
     );
+  }
+  checkAppearance() {
+    var values = JSON.parse(
+      "[" + atob(localStorage.getItem("user_settings")) + "]"
+    );
+    let dr_username = atob(localStorage.getItem("username"));
+    values.forEach((element) => {
+      if (element.darkmode == 1) {
+        this.renderer.setAttribute(document.body, "color-theme", "dark");
+      } else {
+        this.renderer.setAttribute(document.body, "color-theme", "light");
+      }
+    });
   }
 }

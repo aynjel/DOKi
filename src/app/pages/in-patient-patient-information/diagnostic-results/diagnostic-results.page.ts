@@ -42,9 +42,7 @@ export class DiagnosticResultsPage implements OnInit {
     });
     this.checkAppearance();
   }
-  checkAppearance() {
-    this.renderer.setAttribute(document.body, "color-theme", "light");
-  }
+
   doRefresh(event) {
     setTimeout(() => {
       this.ngOnInit();
@@ -287,5 +285,18 @@ export class DiagnosticResultsPage implements OnInit {
   onResultSelect(event) {
     this.resultType = event.detail.value;
     this.Search(this.resultType);
+  }
+  checkAppearance() {
+    var values = JSON.parse(
+      "[" + atob(localStorage.getItem("user_settings")) + "]"
+    );
+    let dr_username = atob(localStorage.getItem("username"));
+    values.forEach((element) => {
+      if (element.darkmode == 1) {
+        this.renderer.setAttribute(document.body, "color-theme", "dark");
+      } else {
+        this.renderer.setAttribute(document.body, "color-theme", "light");
+      }
+    });
   }
 }

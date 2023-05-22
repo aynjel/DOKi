@@ -22,7 +22,7 @@ export class ChhAppPatientHeaderComponent {
   @Input() showPFDetals: boolean = true;
   isDesktop: any;
   moreOrLess: boolean = true;
-
+  role_flag;
   constructor(private screensizeService: ScreenSizeService) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
@@ -35,6 +35,7 @@ export class ChhAppPatientHeaderComponent {
   }
   ionViewWillEnter() {}
   ngOnInit() {
+    this.role_flag = localStorage.getItem("role_flag");
     if (this.forMoreOrLess) {
       this.moreOrLess = !this.forMoreOrLess;
     }
