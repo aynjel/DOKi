@@ -6,16 +6,18 @@
 <br />
 <span
   ><ion-icon name="information-circle-outline"></ion-icon> Approved Progress
-  Notes : {{ approvedCounter }} </span
+  Notes : <span *ngIf="!isLoading">{{ approvedCounter }}</span
+  ><span *ngIf="isLoading"><ion-spinner></ion-spinner></span></span
 ><br />
 <span
   ><ion-icon name="information-circle-outline"></ion-icon>
   Progress Notes for Approval :
-  <span [ngClass]="counter > 1 ? 'my_class' : 'my_class2'">{{
-    counter - approvedCounter
-  }}</span></span
+  <span [ngClass]="counter > 1 ? 'my_class' : 'my_class2'"
+    ><span *ngIf="!isLoading">{{ counter - approvedCounter }}</span
+    ><span *ngIf="isLoading"><ion-spinner></ion-spinner></span> </span></span
 ><br />
 <span
   ><ion-icon name="information-circle-outline"></ion-icon> Total Progress Notes:
-  {{ totalProgressNotes }}</span
->
+  <span *ngIf="!isLoading">{{ totalProgressNotes }}</span
+  ><span *ngIf="isLoading"><ion-spinner></ion-spinner></span
+></span>

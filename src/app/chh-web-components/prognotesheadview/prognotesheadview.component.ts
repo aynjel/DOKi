@@ -31,7 +31,9 @@ export class PrognotesheadviewComponent implements OnInit {
   }
   counter: any = 0;
   approvedCounter: any = 0;
+  isLoading: boolean = false;
   getProgressNote() {
+    this.isLoading = true;
     this.progessNotes = [];
     this.progessNotesTemp = [];
     this.progressNotesIsNotReady = true;
@@ -44,6 +46,7 @@ export class PrognotesheadviewComponent implements OnInit {
       .getPatientProgressNotesPerAdmission(perAdmission)
       .subscribe(
         (res: any) => {
+          this.isLoading = false;
           ////console.log(res);
 
           res.sort(function (a, b) {
@@ -54,8 +57,11 @@ export class PrognotesheadviewComponent implements OnInit {
 
           this.progessNotesTemp = res;
         },
-        (error) => {},
+        (error) => {
+          this.isLoading = false;
+        },
         () => {
+          this.isLoading = false;
           this.totalProgressNotes = 0;
           this.progessNotesTemp.forEach((el) => {
             let counter = 0;
