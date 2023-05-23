@@ -278,7 +278,7 @@ export class PatientHistoryPage implements OnInit {
   }
   data;
   async detail(data: any, allData: any) {
-    //////console.log(allData.doctor_Status_code);
+    localStorage.setItem("fromurl", "PatientHistory");
     localStorage.setItem("doctor_Status_code", allData.doctor_Status_code);
     localStorage.setItem("pnSelected", JSON.stringify(allData));
     this.data = [];
