@@ -130,15 +130,15 @@ export class LoginPage {
   }
   /*V3 App*/
   checkInput() {
-    console.log("checkinput");
+    //console.log("checkinput");
 
     this.btnDisable = true;
     if (this.postData.username == "" || this.postData.password == "") {
-      console.log("if");
+      //console.log("if");
       this.functionsService.sorryDoc();
       this.btnDisable = false;
     } else {
-      console.log("else");
+      //console.log("else");
       localStorage.setItem("username", btoa(this.postData.username));
       this.startLoginProcessV3();
     }
@@ -154,7 +154,7 @@ export class LoginPage {
     let userIndentifier;
     let dualFlag1: boolean = false;
     let dualFlag2: boolean = false;
-    console.log(this.loginModelv3);
+    //console.log(this.loginModelv3);
     this.doctorService
       .loginV3(this.loginModelv3)
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -184,11 +184,11 @@ export class LoginPage {
                 dualFlag2 = true;
               }
             });
-            //////console.log("userIndentifier : "+userIndentifier);
+            ////////console.log("userIndentifier : "+userIndentifier);
           }
         },
         (error) => {
-          console.log("error");
+          //console.log("error");
 
           //this.functionsService.logToConsole(error);
           this.functionsService.sorryDoc();
@@ -319,7 +319,7 @@ export class LoginPage {
               localStorage.setItem("role_flag", "medcons");
               let xFlag: boolean = false;
               //this.loginResponseModelv3.roles.forEach(element => {
-              //////console.log('check flag');
+              ////////console.log('check flag');
               if (this.loginResponseModelv3.jwt != null) {
                 localStorage.setItem("id_token", this.loginResponseModelv3.jwt);
               }
@@ -543,7 +543,7 @@ export class LoginPage {
         );
       } else if (data.data == "None") {
         this.btnDisable = false;
-        ////console.log('none');
+        //////console.log('none');
       } else {
         this.btnDisable = false;
         this.modalUpdateV3(
