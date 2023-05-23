@@ -29,6 +29,8 @@ import {
 import { ExecutiveService } from "src/app/services/executive/executive.service";
 import { Subscription } from "rxjs";
 import { Location } from "@angular/common";
+import { NavigationEnd } from "@angular/router";
+import { filter } from "rxjs/operators";
 
 @Component({
   selector: "app-progress-notes",
@@ -82,6 +84,20 @@ export class ProgressNotesPage implements OnInit {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
+    /*this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+   
+        // Perform any necessary actions after navigation, e.g., refresh data
+      });*/
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        if (this.router.routerState.snapshot.url.includes("/progressnotes")) {
+          console.log("/progressnotes");
+          this.start();
+        }
+      });
   }
   dischargeNotice;
   is_philhealth_membership;
@@ -434,7 +450,6 @@ export class ProgressNotesPage implements OnInit {
     }
   }
   back() {
-    console.log(localStorage.getItem("fromurl"));
     if (localStorage.getItem("fromurl") == "PatientHistory") {
       this.router.navigate(["/menu/patient-history"]);
     } else {

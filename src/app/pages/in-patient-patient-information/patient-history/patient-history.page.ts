@@ -8,6 +8,9 @@ import { Messages } from "../../../shared/messages";
 import { Constants } from "../../../shared/constants";
 import { Router } from "@angular/router";
 import { ScreenSizeService } from "src/app/services/screen-size/screen-size.service";
+import { NavigationEnd } from "@angular/router";
+import { filter } from "rxjs/operators";
+
 @Component({
   selector: "app-patient-history",
   templateUrl: "./patient-history.page.html",
@@ -34,6 +37,14 @@ export class PatientHistoryPage implements OnInit {
           window.location.reload();
         }
         this.isDesktop = isDesktop;
+      });
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        if (this.router.routerState.snapshot.url.includes("patient-history")) {
+          this.callPatient("a");
+          console.log("patient-history");
+        }
       });
   }
   back() {

@@ -227,7 +227,7 @@ export class ProgressNotesPerDayPage implements OnInit {
     this.router
       .navigate(["menu/in-patients/" + this.id + "/progressnotes"])
       .then(() => {
-        window.location.reload();
+        //  window.location.reload();
       });
   }
 
