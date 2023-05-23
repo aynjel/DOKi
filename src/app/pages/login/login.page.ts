@@ -130,11 +130,15 @@ export class LoginPage {
   }
   /*V3 App*/
   checkInput() {
+    console.log("checkinput");
+
     this.btnDisable = true;
     if (this.postData.username == "" || this.postData.password == "") {
+      console.log("if");
       this.functionsService.sorryDoc();
       this.btnDisable = false;
     } else {
+      console.log("else");
       localStorage.setItem("username", btoa(this.postData.username));
       this.startLoginProcessV3();
     }
@@ -150,6 +154,7 @@ export class LoginPage {
     let userIndentifier;
     let dualFlag1: boolean = false;
     let dualFlag2: boolean = false;
+    console.log(this.loginModelv3);
     this.doctorService
       .loginV3(this.loginModelv3)
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -183,6 +188,8 @@ export class LoginPage {
           }
         },
         (error) => {
+          console.log("error");
+
           //this.functionsService.logToConsole(error);
           this.functionsService.sorryDoc();
           this.btnDisable = false;
@@ -1173,7 +1180,7 @@ export class LoginPage {
 
         /*For Doctors Portal */
   ionViewDidLeave() {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.unsubscribe();
+    //this.ngUnsubscribe.next();
+    // this.ngUnsubscribe.unsubscribe();
   }
 }
