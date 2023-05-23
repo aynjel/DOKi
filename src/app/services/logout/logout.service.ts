@@ -84,7 +84,7 @@ export class LogoutService {
     localStorage.setItem("srnm", dr_username);
     localStorage.setItem("hasloggedin", "1");
     this.router.navigate(["/login"]).then(() => {
-      window.location.reload();
+      // window.location.reload();
     });
   }
 }
