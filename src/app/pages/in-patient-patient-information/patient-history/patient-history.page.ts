@@ -43,7 +43,10 @@ export class PatientHistoryPage implements OnInit {
       .subscribe(() => {
         if (this.router.routerState.snapshot.url.includes("patient-history")) {
           this.callPatient("a");
-          console.log("patient-history");
+          if (localStorage.getItem("siteSelected")) {
+          } else {
+            localStorage.setItem("siteSelected", "C");
+          }
         }
       });
   }
