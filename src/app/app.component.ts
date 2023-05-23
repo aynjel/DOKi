@@ -21,6 +21,8 @@ import { AuthConstants, Consta } from "./config/auth-constants";
 import { BehaviorSubject } from "rxjs";
 import { LogoutService } from "./services/logout/logout.service";
 import { environment } from "src/environments/environment";
+import { ActivatedRoute, NavigationEnd } from "@angular/router";
+import { filter } from "rxjs/operators";
 
 @Component({
   selector: "app-root",
@@ -144,6 +146,7 @@ export class AppComponent implements OnInit {
     this.screensizeService.isPortraitView().subscribe((isPortrait) => {
       this.isPortrait = isPortrait;
     });
+
     //console.log(environment.API_URL);
   }
   userData$ = new BehaviorSubject<any>([]);
@@ -151,7 +154,7 @@ export class AppComponent implements OnInit {
   onSplitPaneVisible(event) {
     // //console.log(event);
   }
-  ngOnInit() {
+  viewSidebar() {
     this.storageService.get(AuthConstants.AUTH).then((res) => {
       this.ngZone.run(() => {
         this.logindata = res;
@@ -161,6 +164,14 @@ export class AppComponent implements OnInit {
         this.dr_username = this.logindata.userName;
       });
     });
+  }
+  ngOnInit() {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.viewSidebar();
+        // Perform any necessary actions after navigation, e.g., refresh data
+      });
   }
   initializeApp() {
     //console.log("initializeApp");
