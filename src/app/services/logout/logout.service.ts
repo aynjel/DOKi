@@ -67,6 +67,18 @@ export class LogoutService {
     localStorage.removeItem("patientData");
     localStorage.removeItem("postData1");
     localStorage.removeItem("daysManaged");
+    localStorage.removeItem("pnSelected");
+    localStorage.removeItem("fromurl");
+
+    localStorage.removeItem("Api_from");
+    localStorage.removeItem("Api_to");
+    localStorage.removeItem("doctor_Status_code");
+    localStorage.removeItem("changeMode");
+    localStorage.removeItem("admission_status");
+    localStorage.removeItem("dayselected");
+    localStorage.removeItem("siteSelected");
+    localStorage.removeItem("summary_status");
+    localStorage.removeItem("isModal");
     //localStorage.removeItem('selectedPatient');
 
     localStorage.setItem("srnm", dr_username);
