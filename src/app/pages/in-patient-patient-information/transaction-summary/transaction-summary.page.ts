@@ -338,7 +338,7 @@ export class TransactionSummaryPage implements OnInit {
               this.alertController.dismiss();
               //this.router.navigate(['menu/in-patients/']);
               this.router.navigate(["menu/in-patients/"]).then(() => {
-                window.location.reload();
+                // window.location.reload();
               });
             } else {
               this.alertController.dismiss();
@@ -349,7 +349,7 @@ export class TransactionSummaryPage implements OnInit {
               });
               //this.router.navigate(['menu/in-patients/']);
               this.router.navigate(["menu/in-patients/"]).then(() => {
-                window.location.reload();
+                //window.location.reload();
               });
             }
             //this.nav.navigateBack('menu/in-patients' );

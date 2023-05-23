@@ -161,9 +161,6 @@ export class AppComponent implements OnInit {
     this.dr_code = "";
     this.dr_username = "";
     this.storageService.get(AuthConstants.AUTH).then((res) => {
-      console.log("sidebar");
-
-      console.log(res);
       this.role_flag = localStorage.getItem("role_flag");
       this.logindata = res;
       this.lastName = this.logindata.lastName;
@@ -173,15 +170,9 @@ export class AppComponent implements OnInit {
     });
   }
   ngOnInit() {
-    console.log("APP COMPONENT");
-
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
-        console.log("APP COMPONENT - 11");
-
-        console.log(this.router.routerState.snapshot.url);
-
         this.viewSidebar();
         // Perform any necessary actions after navigation, e.g., refresh data
       });

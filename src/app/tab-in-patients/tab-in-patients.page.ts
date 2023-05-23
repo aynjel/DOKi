@@ -24,6 +24,9 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { takeUntil } from "rxjs/operators";
 import { BehaviorSubject, Subject } from "rxjs";
+import { environment } from "src/environments/environment";
+import { ActivatedRoute, NavigationEnd } from "@angular/router";
+import { filter } from "rxjs/operators";
 @Component({
   selector: "app-tab-in-patients",
   templateUrl: "tab-in-patients.page.html",
@@ -93,6 +96,16 @@ export class TabInPatientsPage {
         this.admittedOrDischargeLabel = "(for Discharge)";
       }
     });
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        if (
+          this.router.routerState.snapshot.url.includes("/menu/in-patients")
+        ) {
+          this.callPatient(this.site);
+        }
+        // Perform any necessary actions after navigation, e.g., refresh data
+      });
   }
 
   ngOnInit() {
