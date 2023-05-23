@@ -155,20 +155,33 @@ export class AppComponent implements OnInit {
     // //console.log(event);
   }
   viewSidebar() {
+    this.logindata = "";
+    this.lastName = "";
+    this.firstName = "";
+    this.dr_code = "";
+    this.dr_username = "";
     this.storageService.get(AuthConstants.AUTH).then((res) => {
-      this.ngZone.run(() => {
-        this.logindata = res;
-        this.lastName = this.logindata.lastName;
-        this.firstName = this.logindata.firstName;
-        this.dr_code = this.logindata.doctorCode;
-        this.dr_username = this.logindata.userName;
-      });
+      console.log("sidebar");
+
+      console.log(res);
+      this.role_flag = localStorage.getItem("role_flag");
+      this.logindata = res;
+      this.lastName = this.logindata.lastName;
+      this.firstName = this.logindata.firstName;
+      this.dr_code = this.logindata.doctorCode;
+      this.dr_username = this.logindata.userName;
     });
   }
   ngOnInit() {
+    console.log("APP COMPONENT");
+
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
+        console.log("APP COMPONENT - 11");
+
+        console.log(this.router.routerState.snapshot.url);
+
         this.viewSidebar();
         // Perform any necessary actions after navigation, e.g., refresh data
       });
