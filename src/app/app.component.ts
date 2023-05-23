@@ -281,17 +281,6 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-    let dr_username = atob(localStorage.getItem("username"));
-    this.revokeTokenV3 = new RevokeTokenV3();
-    this.revokeTokenV3.jwt = decodeURIComponent(
-      this.functionsService.getcookie("refreshToken")
-    );
-    this.doctorService
-      .revokeTokenV3(this.revokeTokenV3)
-      .subscribe((res: any) => {
-        this.functionsService.logToConsole(res);
-      });
-
     this.logoutService.out();
   }
   whattodo(data) {

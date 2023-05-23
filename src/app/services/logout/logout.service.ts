@@ -4,6 +4,9 @@ import { AuthConstants, Consta } from "../../config/auth-constants";
 import { StorageService } from "../storage/storage.service";
 import { BehaviorSubject } from "rxjs";
 import { Router } from "@angular/router";
+import { RevokeTokenV3 } from "src/app/models/doctor";
+import { FunctionsService } from "src/app/shared/functions/functions.service";
+import { DoctorService } from "../doctor/doctor.service";
 @Injectable({
   providedIn: "root",
 })
@@ -13,7 +16,9 @@ export class LogoutService {
     public modalController: ModalController,
     private storageService: StorageService,
     public router: Router,
-    private menu: MenuController
+    private menu: MenuController,
+    public functionsService: FunctionsService,
+    private doctorService: DoctorService
   ) {}
 
   closemodal() {
@@ -28,6 +33,7 @@ export class LogoutService {
       await this.menu.close();
     }
   }
+  public revokeTokenV3: RevokeTokenV3;
   out() {
     this.checkSideMenu();
     this.modalController.getTop().then((res) => {
@@ -37,6 +43,17 @@ export class LogoutService {
     });
     let dr_username = atob(localStorage.getItem("username"));
     this.userData$.next("");
+    this.revokeTokenV3 = new RevokeTokenV3();
+
+    this.revokeTokenV3.jwt = decodeURIComponent(
+      this.functionsService.getcookie("refreshToken")
+    );
+
+    this.doctorService
+      .revokeTokenV3(this.revokeTokenV3)
+      .subscribe((res: any) => {
+        this.functionsService.logToConsole(res);
+      });
 
     localStorage.removeItem("tokenExpired");
     localStorage.removeItem("role_flag");

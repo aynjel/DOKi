@@ -203,26 +203,6 @@ export class TabsPage {
       */
   }
   logout() {
-    this.revokeTokenV3 = new RevokeTokenV3();
-
-    //this.revokeTokenV3 = new RevokeTokenV3();
-    //this.revokeTokenV3.jwt = localStorage.getItem("id_token");
-    this.functionsService.logToConsole("Logging out");
-
-    this.functionsService.logToConsole(
-      this.functionsService.getcookie("refreshToken")
-    );
-
-    this.revokeTokenV3.jwt = decodeURIComponent(
-      this.functionsService.getcookie("refreshToken")
-    );
-
-    this.doctorService
-      .revokeTokenV3(this.revokeTokenV3)
-      .subscribe((res: any) => {
-        this.functionsService.logToConsole(res);
-      });
-
     this.logoutService.out();
     /*
     this.storageService.removeStorageItem(AuthConstants.AUTH).then((res) => {
