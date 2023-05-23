@@ -202,6 +202,9 @@ export class TabsPage {
       });
       */
   }
+  goto(a) {
+    this.router.navigate(["/menu/" + a]);
+  }
   logout() {
     this.logoutService.out();
     /*

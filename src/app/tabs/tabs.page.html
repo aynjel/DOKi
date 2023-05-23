@@ -1,27 +1,35 @@
 <ion-tabs *ngIf="!isDesktop">
   <ion-tab-bar slot="bottom">
-    <ion-tab-button id="button-in-patients" tab="in-patients">
+    <ion-tab-button
+      id="button-in-patients"
+      tab="in-patients"
+      (click)="goto('in-patients')">
       <ion-icon name="person-circle-outline"></ion-icon>
-      <ion-label class="tab-font-family">{{this.constants.MENU__VALUE__IN_PATIENTS}}</ion-label>
+      <ion-label class="tab-font-family"
+        >{{this.constants.MENU__VALUE__IN_PATIENTS}}</ion-label
+      >
     </ion-tab-button>
-    <ion-tab-button id="button-dashboard" tab="dashboard">
+    <ion-tab-button
+      id="button-dashboard"
+      tab="dashboard"
+      (click)="goto('dashboard')">
       <ion-icon name="stats-chart-outline"></ion-icon>
-      <ion-label class="tab-font-family">{{this.constants.MENU__VALUE__DASHBOARD}}</ion-label>
+      <ion-label class="tab-font-family"
+        >{{this.constants.MENU__VALUE__DASHBOARD}}</ion-label
+      >
     </ion-tab-button>
-
 
     <!--ion-tab-button id="button-appointments" tab="appointments">
       <ion-icon name="calendar-outline"></ion-icon>
       <ion-label class="tab-font-family">{{this.constants.MENU__VALUE__APPOINTMENTS}}</ion-label>
     </ion-tab-button-->
-    <ion-tab-button id="button-news-feed" tab="news-feed">
+    <ion-tab-button
+      id="button-news-feed"
+      tab="news-feed"
+      (click)="goto('news-feed')">
       <ion-icon name="newspaper-outline"></ion-icon>
       <ion-label class="tab-font-family">News Feed</ion-label>
     </ion-tab-button>
-
-
-
-
 
     <!--ion-tab-button id="button-settings" tab="settings">
       <ion-icon name="settings-outline"></ion-icon>
@@ -32,7 +40,6 @@
       <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
       <ion-label class="tab-font-family">More</ion-label>
     </ion-tab-button>
-
   </ion-tab-bar>
 </ion-tabs>
 
@@ -45,12 +52,22 @@
         </ion-col>
         <ion-col size="10">
           <div class="navbar" class="ion-text-center chh-bg">
-            <ion-button id="button-dashboard" fill="clear" routerLink="/menu/dashboard" routerDirection="root"
-              routerLinkActive="active-link" class="link">
+            <ion-button
+              id="button-dashboard"
+              fill="clear"
+              routerLink="/menu/dashboard"
+              routerDirection="root"
+              routerLinkActive="active-link"
+              class="link">
               {{this.constants.MENU__VALUE__DASHBOARD}}
             </ion-button>
-            <ion-button id="button-in-patients" fill="clear" routerLink="/menu/in-patients" routerDirection="root"
-              routerLinkActive="active-link" class="link">
+            <ion-button
+              id="button-in-patients"
+              fill="clear"
+              routerLink="/menu/in-patients"
+              routerDirection="root"
+              routerLinkActive="active-link"
+              class="link">
               {{this.constants.MENU__VALUE__IN_PATIENTS}}
             </ion-button>
             <!--ion-button
@@ -64,14 +81,21 @@
               {{this.constants.MENU__VALUE__APPOINTMENTS}}
             </ion-button-->
 
-
-            <ion-button id="button-appointments" fill="clear" routerLink="/menu/news-feed" routerDirection="root"
-              routerLinkActive="active-link" class="link">
+            <ion-button
+              id="button-appointments"
+              fill="clear"
+              routerLink="/menu/news-feed"
+              routerDirection="root"
+              routerLinkActive="active-link"
+              class="link">
               News Feed
             </ion-button>
 
-
-            <ion-button id="button-settings" fill="clear" routerLinkActive="active-link" class="link"
+            <ion-button
+              id="button-settings"
+              fill="clear"
+              routerLinkActive="active-link"
+              class="link"
               (click)="toggleMenu()">
               More
             </ion-button>
@@ -80,8 +104,13 @@
               routerLinkActive="active-link" class="link">
               {{this.constants.MENU__VALUE__SETTINGS}}
             </ion-button-->
-            <ion-button id="button-logout" fill="clear" routerDirection="root" routerLinkActive="active-link"
-              class="link" (click)="logout()">
+            <ion-button
+              id="button-logout"
+              fill="clear"
+              routerDirection="root"
+              routerLinkActive="active-link"
+              class="link"
+              (click)="logout()">
               {{this.constants.MENU__VALUE__LOG_OUT}}
             </ion-button>
           </div>
