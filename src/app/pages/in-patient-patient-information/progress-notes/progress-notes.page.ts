@@ -118,8 +118,8 @@ export class ProgressNotesPage implements OnInit {
   pnSelected;
   mdCode;
   ngOnInit() {
-    //console.log("ngOnInit");
-    //console.log(localStorage.getItem("doctor_Status_code"));
+    ////console.log("ngOnInit");
+    ////console.log(localStorage.getItem("doctor_Status_code"));
     this.paramsSub = this.activatedRoute.params.subscribe((val) => {
       // Handle param values here
     });
@@ -161,9 +161,9 @@ export class ProgressNotesPage implements OnInit {
 
     this.data = [];
     //this.presentLoading();
-    ////////////console.log('123');
+    //////////////console.log('123');
     this.pnSelected = JSON.parse(localStorage.getItem("pnSelected"));
-    //////console.log(this.pnSelected.doctor_Status_code);
+    ////////console.log(this.pnSelected.doctor_Status_code);
     /*******************************************/
 
     /*this.executiveService
@@ -239,19 +239,17 @@ export class ProgressNotesPage implements OnInit {
           } else {
             this.alert("No Data Available", "Okay");
           }
-          //////////////console.log(this.data1);
-          //////////////console.log(this.data[0].philhealth_membership);
+          ////////////////console.log(this.data1);
+          ////////////////console.log(this.data[0].philhealth_membership);
           this.is_philhealth_membership = this.data[0].philhealth_membership;
           this.is_pwd = this.data1[0].is_pwd;
           this.is_senior = this.data1[0].is_senior;
-          //////////////console.log(this.is_pwd, this.is_senior);
+          ////////////////console.log(this.is_pwd, this.is_senior);
         }
       );*/ //this.start();
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
-        console.log("Visit", "progressnotes Page");
-
         if (
           this.router.routerState.snapshot.url.includes("/progressnotes") &&
           this.router.routerState.snapshot.url.length == 44
@@ -265,13 +263,13 @@ export class ProgressNotesPage implements OnInit {
     this.patient_id = this.activatedRoute.snapshot.params.id;
     this.getProgressNote();
     this.data = JSON.parse("[" + localStorage.getItem("pnSelected") + "]");
-    //////console.log(this.data);
+    ////////console.log(this.data);
 
     this.dateAdmitted = this.data[0].admission_date;
     this.checkAppearance();
     this.dateAdmitted = this.data[0].admission_date;
     this.dischargeNotice = this.data[0].forDischargeDateTime;
-    ////////////console.log(this.data[0].philhealth_membership);
+    //////////////console.log(this.data[0].philhealth_membership);
     this.is_philhealth_membership = this.data[0].philhealth_membership;
     this.is_pwd = this.data[0].is_pwd;
     this.is_senior = this.data[0].is_senior;
@@ -316,11 +314,11 @@ export class ProgressNotesPage implements OnInit {
         },
         (error) => {},
         () => {
-          ////////////console.log(this.progessNotesTemp);
+          //////////////console.log(this.progessNotesTemp);
 
           this.activeDays = [];
           this.progessNotesTemp.forEach((el) => {
-            //////console.log(el.resi_notes);
+            ////////console.log(el.resi_notes);
             let counter = 0;
             let approvedCounter = 0;
 
@@ -340,7 +338,7 @@ export class ProgressNotesPage implements OnInit {
               });
             }
 
-            //////console.log(counter, approvedCounter);
+            ////////console.log(counter, approvedCounter);
             el.pnCounter = counter;
             el.ApperovedpnCounter = approvedCounter;
             let x = 0;
@@ -380,7 +378,7 @@ export class ProgressNotesPage implements OnInit {
             }*/
             this.progessNotes.push(el);
           });
-          ////////////console.log(this.progessNotes);
+          //////////////console.log(this.progessNotes);
 
           if (this.progessNotes.length <= 0) {
             this.progressNotesIsEmpty = true;
@@ -420,7 +418,7 @@ export class ProgressNotesPage implements OnInit {
       componentProps: { data: data, day: day },
     });
     modal.onDidDismiss().then((data) => {
-      ////////console.log(data);
+      //////////console.log(data);
     });
     return await modal.present();*/
     const options = {
@@ -474,7 +472,7 @@ export class ProgressNotesPage implements OnInit {
     await this.loading.present();
 
     const { role, data } = await this.loading.onDidDismiss();
-    ////////////////////////////console.log('Loading dismissed!');
+    //////////////////////////////console.log('Loading dismissed!');
   }
   public async dismissLoading(): Promise<void> {
     if (this.loading) {
@@ -502,7 +500,7 @@ export class ProgressNotesPage implements OnInit {
   }
 
   ngOnDestroy() {
-    ////console.log("ngOnDestroy");
+    //////console.log("ngOnDestroy");
 
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();

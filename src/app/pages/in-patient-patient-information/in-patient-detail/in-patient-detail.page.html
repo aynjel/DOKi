@@ -230,7 +230,8 @@ ___  ___        _      _  _
     [isTC]="isTC"
     [iHaveTC]="iHaveTC"
     [isVerify]="isVerify"
-    [isAPVerifyTCstatus]="isAPVerifyTCstatus">
+    [isAPVerifyTCstatus]="isAPVerifyTCstatus"
+    (triggerRefresh)="testtrigger($event)">
   </app-chh-app-list-of-doctors>
 </ion-content>
 <ion-footer>
@@ -431,7 +432,8 @@ ______          _    _
           [isTC]="isTC"
           [iHaveTC]="iHaveTC"
           [isVerify]="isVerify"
-          [isAPVerifyTCstatus]="isAPVerifyTCstatus"></app-chh-app-list-of-doctors>
+          [isAPVerifyTCstatus]="isAPVerifyTCstatus"
+          (triggerRefresh)="testtrigger($event)"></app-chh-app-list-of-doctors>
       </ion-col>
 
       <ion-col size-lg="1" size-md="12"></ion-col>

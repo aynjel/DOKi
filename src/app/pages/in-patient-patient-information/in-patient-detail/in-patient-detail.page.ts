@@ -178,7 +178,7 @@ export class InPatientDetailPage {
   patientDetailfromApi_to;
   admission_status;
   ionViewWillEnter() {
-    ////console.log('ionViewWillEnter');
+    ////////console.log('ionViewWillEnter');
 
     this.ngUnsubscribe = new Subject();
     this.loginResponseModelv3 = new LoginResponseModelv3();
@@ -220,14 +220,14 @@ export class InPatientDetailPage {
     ppatientdata.doctorCode = this.dr_code;
     this.data = [];
     this.presentLoading();
-    //////console.log('123');
+    //////////console.log('123');
 
     this.executiveService
       .getPatientDetail(ppatientdata)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          ////console.log('res.manage_to', res.manage_to);
+          ////////console.log('res.manage_to', res.manage_to);
 
           localStorage.setItem("doctor_Status_code", res.doctor_Status_code);
           this.admission_status = res.admission_status;
@@ -297,12 +297,12 @@ export class InPatientDetailPage {
           } else {
             this.alert("No Data Available", "Okay");
           }
-          ////////console.log(this.data1);
-          ////////console.log(this.data[0].philhealth_membership);
+          ////////////console.log(this.data1);
+          ////////////console.log(this.data[0].philhealth_membership);
           this.is_philhealth_membership = this.data[0].philhealth_membership;
           this.is_pwd = this.data1[0].is_pwd;
           this.is_senior = this.data1[0].is_senior;
-          ////////console.log(this.is_pwd, this.is_senior);
+          ////////////console.log(this.is_pwd, this.is_senior);
         }
       );
   }
@@ -317,7 +317,7 @@ export class InPatientDetailPage {
     await this.loading.present();
 
     const { role, data } = await this.loading.onDidDismiss();
-    //////////////////////console.log('Loading dismissed!');
+    //////////////////////////console.log('Loading dismissed!');
   }
   public async dismissLoading(): Promise<void> {
     if (this.loading) {
@@ -350,7 +350,7 @@ export class InPatientDetailPage {
   isVerify;
   isAPVerifyTCstatus: boolean = false;
   operate() {
-    //////console.log('operate');
+    //////////console.log('operate');
 
     this.dateAdmitted = this.data[0].admission_date;
     this.dischargeNotice = this.data[0].forDischargeDateTime;
@@ -434,7 +434,7 @@ export class InPatientDetailPage {
     //  | |  _  |  __|    | |        | |     | | | |      | | | | | | | | | |       | |   | | | | |  _  /
     //  | |_| | | |___    | |        | |___  | |_| |      | |_| | | |_| | | |___    | |   | |_| | | | \ \
     //  \_____/ |_____|   |_|        \_____| \_____/      |_____/ \_____/ \_____|   |_|   \_____/ |_|  \_\
-    //console.log(this.inpatientDetails);
+    //////console.log(this.inpatientDetails);
 
     this.doctorService
       .getCoDoctorsV3(this.inpatientDetails)
@@ -523,7 +523,7 @@ export class InPatientDetailPage {
             }
             if (element.status_code == "TC") {
               let datxyz = { admission_no: "", dr_code: "" };
-              console.log(element);
+              ////console.log(element);
               datxyz.admission_no = element.admission_no;
               datxyz.dr_code = element.dr_code;
               this.resiServ
@@ -532,7 +532,7 @@ export class InPatientDetailPage {
                   complete: () => {},
                   error: (error) => {},
                   next: (data: any) => {
-                    console.log(data);
+                    //console.log(data);
 
                     if (data == true) {
                       this.isAPVerifyTCstatus = true;
@@ -541,10 +541,10 @@ export class InPatientDetailPage {
                 });
             }
           });
-          //console.log(this.isAP, this.isTC, this.iHaveTC);
+          //////console.log(this.isAP, this.isTC, this.iHaveTC);
 
           if (this.isTC) {
-            console.log("check status");
+            ////console.log("check status");
             let datxyz = { admission_no: "", dr_code: "" };
             datxyz.admission_no = this.patient_id;
             datxyz.dr_code = this.dr_code;
@@ -553,12 +553,12 @@ export class InPatientDetailPage {
               .subscribe({
                 complete: () => {},
                 error: (error) => {
-                  console.log(error);
+                  ////console.log(error);
                 },
                 next: (data: any) => {
-                  console.log(data);
+                  ////console.log(data);
                   this.isVerify = data;
-                  //////console.log(data);
+                  //////////console.log(data);
                 },
               });
           }
@@ -657,7 +657,7 @@ export class InPatientDetailPage {
 
     /*this.doctorService.getProgressNotes('test').subscribe(
       (res: any = []) => {
-        //////////console.log(res[0].notes);
+        //////////////console.log(res[0].notes);
         this.progNot_InitDisplay = this.functionsService.truncateChar(
           res[0].notes,
           200
@@ -665,10 +665,10 @@ export class InPatientDetailPage {
         this.progNot_account_no = res[0].account_no;
       },
       (error) => {
-        //////////console.log(error);
+        //////////////console.log(error);
       },
       () => {
-        //////////console.log('call done');
+        //////////////console.log('call done');
       }
     );*/
     //this.getProgressNotes();
@@ -676,7 +676,7 @@ export class InPatientDetailPage {
   approvedDate;
 
   getApprovalStatus(data) {
-    //////console.log('getApprovalStatus');
+    //////////console.log('getApprovalStatus');
 
     let approvalStatus = {
       account_no: data,
@@ -687,13 +687,13 @@ export class InPatientDetailPage {
       .subscribe(
         (res: any) => {
           if (res != null) {
-            ////////console.log('approvedDate', res);
+            ////////////console.log('approvedDate', res);
             this.admissionNo = res[0].admission_no;
             this.dischargeNo = res[0].discharge_no;
             this.finalDiagnosisApproval = res;
             this.isCancelFinalDiagnosisApproval = res[0].approval_status;
             this.approvedDate = res[0].approve_date;
-            ////////console.log(this.approvedDate);
+            ////////////console.log(this.approvedDate);
           } else {
             this.isCancelFinalDiagnosisApproval = "";
           }
@@ -711,7 +711,7 @@ export class InPatientDetailPage {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          ////////console.log(res);
+          ////////////console.log(res);
           this.ionViewWillEnter();
         },
         (error) => {},
@@ -727,7 +727,7 @@ export class InPatientDetailPage {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any = []) => {
-          //////////console.log(res);
+          //////////////console.log(res);
           this.progessNotesTemp = res;
           if (this.progessNotesTemp.length > 0) {
             this.progNot_InitDisplay = this.functionsService.truncateChar(
@@ -769,7 +769,7 @@ export class InPatientDetailPage {
             }
             this.progessNotes.push(el);
           });
-          ////////////console.log(this.activeDays);
+          ////////////////console.log(this.activeDays);
 
           if (this.progessNotes.length <= 0) {
             this.progressNotesIsEmpty = true;
@@ -1221,7 +1221,7 @@ export class InPatientDetailPage {
   }
 
   startDrawing(event: Event) {
-    ////////console.log(event);
+    ////////////console.log(event);
     // works in device not in browser
   }
 
@@ -1236,12 +1236,15 @@ export class InPatientDetailPage {
   savePad() {
     const base64Data = this.signaturePad.toDataURL();
     this.signatureImg = base64Data;
-    ////////console.log(base64Data);
+    ////////////console.log(base64Data);
   }*/
   gotoDiagnistic() {
     let patient_id = this.activatedRoute.snapshot.params.id;
     this.router.navigate([
       "/menu/in-patients/" + patient_id + "/diagnostic-results/",
     ]);
+  }
+  testtrigger(data) {
+    this.ionViewWillEnter();
   }
 }

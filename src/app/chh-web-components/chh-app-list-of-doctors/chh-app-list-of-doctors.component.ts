@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, EventEmitter, Input, Output } from "@angular/core";
 import { Router } from "@angular/router";
 import { ActionSheetController } from "@ionic/angular";
 import { ResiService } from "src/app/services/resi/resi.service";
@@ -19,6 +19,7 @@ export class ChhAppListOfDoctorsComponent implements OnInit {
   @Input() iHaveTC: any = false;
   @Input() isVerify: any = false;
   @Input() isAPVerifyTCstatus: any = false;
+  @Output() triggerRefresh = new EventEmitter<any>();
   isDesktop: any;
   constructor(
     private screensizeService: ScreenSizeService,
@@ -36,12 +37,12 @@ export class ChhAppListOfDoctorsComponent implements OnInit {
 
   ngOnInit() {}
   onClick(dr) {
-    //console.log(':'+this.drCode+':'+dr.dr_code+':');
+    ////console.log(':'+this.drCode+':'+dr.dr_code+':');
 
     if (this.drCode != dr.dr_code) {
-      // console.log(dr.dr_code);
+      // //console.log(dr.dr_code);
       // this.router.navigate(['executive/doctors/'+dr.dr_code]);
-      // console.log( localStorage.getItem('listOfDoctors'));
+      // //console.log( localStorage.getItem('listOfDoctors'));
     }
 
     //
@@ -53,11 +54,11 @@ export class ChhAppListOfDoctorsComponent implements OnInit {
     transfer_flg: "N",
   };
   async presentActionSheet(data) {
-    console.log(data);
+    //console.log(data);
     this.transfer.admission_no = data.admission_no;
     this.transfer.dr_code = data.dr_code;
     this.transfer.transfer_flg = "Y";
-    console.log(this.transfer);
+    //console.log(this.transfer);
 
     const actionSheet = await this.actionSheetCtrl.create({
       header: "Transfer Approval",
@@ -85,32 +86,28 @@ export class ChhAppListOfDoctorsComponent implements OnInit {
     });
 
     await actionSheet.present();
-
     const result = await actionSheet.onDidDismiss();
     this.result = JSON.stringify(result, null, 2);
-    console.log(result);
-
-    console.log(result.data.action);
     if (result.data.action == "yes") {
       this.resiService
         .post("/gw/doki/inpatients/transfertocover", this.transfer)
         .subscribe({
           complete: () => {
-            window.location.reload();
+            // window.location.reload();
+            //console.log("trigger emit");
+            this.triggerRefresh.emit("TEST DATA");
           },
           error: (error) => {
-            console.log(error);
+            //console.log(error);
           },
           next: (data: any) => {
-            console.log(data);
-
-            ////console.log(data);
+            //////console.log(data);
           },
         });
     }
   }
   async unassign(data) {
-    console.log(data);
+    //console.log(data);
     this.transfer.admission_no = data.admission_no;
     this.transfer.dr_code = data.dr_code;
     this.transfer.transfer_flg = "N";
@@ -139,21 +136,22 @@ export class ChhAppListOfDoctorsComponent implements OnInit {
 
     const result = await actionSheet.onDidDismiss();
     this.result = JSON.stringify(result, null, 2);
-    console.log(result);
 
-    console.log(result.data.action);
     if (result.data.action == "yes") {
       this.resiService
         .post("/gw/doki/inpatients/transfertocover", this.transfer)
         .subscribe({
           complete: () => {
-            window.location.reload();
+            // window.location.reload();
+            //console.log("trigger emit");
+
+            this.triggerRefresh.emit("TEST DATA");
           },
           error: (error) => {
-            console.log(error);
+            //console.log(error);
           },
           next: (data: any) => {
-            ////console.log(data);
+            //////console.log(data);
           },
         });
     }
