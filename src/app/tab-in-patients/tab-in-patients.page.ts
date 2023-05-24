@@ -96,16 +96,6 @@ export class TabInPatientsPage {
         this.admittedOrDischargeLabel = "(for Discharge)";
       }
     });
-    this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe(() => {
-        if (
-          this.router.routerState.snapshot.url.includes("/menu/in-patients")
-        ) {
-          this.callPatient(this.site);
-        }
-        // Perform any necessary actions after navigation, e.g., refresh data
-      });
   }
 
   ngOnInit() {
@@ -117,6 +107,18 @@ export class TabInPatientsPage {
     }
     this.reverseOrderData = localStorage.getItem("reverseOrder");
     this.checkAppearance();
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        if (
+          (this.router.routerState.snapshot.url.includes("/menu/in-patients") &&
+            this.router.routerState.snapshot.url.length == 17) ||
+          this.router.routerState.snapshot.url.length == 20
+        ) {
+          this.callPatient(this.site);
+        }
+        // Perform any necessary actions after navigation, e.g., refresh data
+      });
   }
   dateToday;
   dateNow;
@@ -394,7 +396,7 @@ export class TabInPatientsPage {
     });*/
     this.functionsService.logToConsole("call patient");
 
-    this.callPatient(this.site);
+    //this.callPatient(this.site);
   }
   hasId(data, id) {
     return data.some(function (el) {
@@ -403,6 +405,7 @@ export class TabInPatientsPage {
   }
   //Get using Doctors API
   callPatient(data: any) {
+    console.log("call Inpatient");
     this.checkInbox();
     this.isFetchDone = false;
     this.doctorService

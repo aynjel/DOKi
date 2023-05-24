@@ -90,14 +90,6 @@ export class ProgressNotesPage implements OnInit {
    
         // Perform any necessary actions after navigation, e.g., refresh data
       });*/
-    this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe(() => {
-        if (this.router.routerState.snapshot.url.includes("/progressnotes")) {
-          console.log("/progressnotes");
-          this.start();
-        }
-      });
   }
   dischargeNotice;
   is_philhealth_membership;
@@ -254,7 +246,19 @@ export class ProgressNotesPage implements OnInit {
           this.is_senior = this.data1[0].is_senior;
           //////////////console.log(this.is_pwd, this.is_senior);
         }
-      );*/ this.start();
+      );*/ //this.start();
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        console.log("Visit", "progressnotes Page");
+
+        if (
+          this.router.routerState.snapshot.url.includes("/progressnotes") &&
+          this.router.routerState.snapshot.url.length == 44
+        ) {
+          this.start();
+        }
+      });
   }
   start() {
     this.ngUnsubscribe = new Subject();

@@ -64,7 +64,11 @@ export class InboxPage implements OnInit {
     console.log("ionViewWillEnter");
 
     this.setDate();
-    this.selected = localStorage.getItem("changeMode");
+    if (localStorage.getItem("changeMode") == null) {
+      this.selected = "FA";
+    } else {
+    }
+
     this.getPendingApproval(this.dateToday, this.dateNow);
     this.logindata = <LoginResponseModelv3>(
       this.authService.userData$.getValue()

@@ -38,17 +38,6 @@ export class PatientHistoryPage implements OnInit {
         }
         this.isDesktop = isDesktop;
       });
-    this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe(() => {
-        if (this.router.routerState.snapshot.url.includes("patient-history")) {
-          this.callPatient("a");
-          if (localStorage.getItem("siteSelected")) {
-          } else {
-            localStorage.setItem("siteSelected", "C");
-          }
-        }
-      });
   }
   back() {
     this.navCtrl.back();
@@ -61,8 +50,18 @@ export class PatientHistoryPage implements OnInit {
       localStorage.setItem("siteSelected", "C");
     }
 
-    this.callPatient("a");
     this.checkAppearance();
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        if (this.router.routerState.snapshot.url.includes("patient-history")) {
+          this.callPatient("a");
+          if (localStorage.getItem("siteSelected")) {
+          } else {
+            localStorage.setItem("siteSelected", "C");
+          }
+        }
+      });
   }
   checkAppearance() {
     var values = JSON.parse(
