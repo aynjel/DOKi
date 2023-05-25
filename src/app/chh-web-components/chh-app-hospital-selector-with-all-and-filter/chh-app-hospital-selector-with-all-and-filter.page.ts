@@ -24,6 +24,7 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
   public admittedOrDischarge: string = "All";
 
   @Output() hospital: EventEmitter<any> = new EventEmitter();
+  @Output() inPatientMode: EventEmitter<any> = new EventEmitter();
   constructor(
     private router: Router,
     private screensizeService: ScreenSizeService,
@@ -34,7 +35,6 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
   ) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       if (this.isDesktop && !isDesktop) {
-        window.location.reload();
         window.location.reload();
       }
       this.isDesktop = isDesktop;
@@ -76,21 +76,27 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
   }
   onSubmit1(data1: any, data2: boolean) {
     if (data1 == this.constants.CHH_SITE__VALUE__ALL /*"ALL"*/) {
-      this.router.navigate(["/menu/in-patients"]).then(() => {
+      //localStorage.setItem("navigateInpatient", "ALL");
+      this.inPatientMode.emit("ALL");
+      /*this.router.navigate(["/menu/in-patients"]).then(() => {
         window.location.reload();
-      });
+      });*/
     } else if (
       data1 == this.constants.ADMISSION_STATUS__CODE__ADMITTED /*"AC"*/
     ) {
-      this.router.navigate(["/menu/in-patients/AC"]).then(() => {
+      this.inPatientMode.emit("AC");
+      //localStorage.setItem("navigateInpatient", "AC");
+      /*this.router.navigate(["/menu/in-patients/AC"]).then(() => {
         window.location.reload();
-      });
+      });*/
     } else if (
       data1 == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE /*"DN"*/
     ) {
-      this.router.navigate(["/menu/in-patients/DN"]).then(() => {
+      this.inPatientMode.emit("DN");
+      //localStorage.setItem("navigateInpatient", "DN");
+      /*this.router.navigate(["/menu/in-patients/DN"]).then(() => {
         window.location.reload();
-      });
+      });*/
     }
   }
   changeRedirect(event: any) {
@@ -99,17 +105,20 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
     this.variables.tempSelection = this.admittedOrDischarge;
 
     if (this.admittedOrDischarge.trim() == "All") {
-      this.router.navigate(["/menu/in-patients"]).then(() => {
+      this.inPatientMode.emit("ALL");
+      /*this.router.navigate(["/menu/in-patients"]).then(() => {
         window.location.reload();
-      });
+      });*/
     } else if (this.admittedOrDischarge.trim() == "AC") {
-      this.router.navigate(["/menu/in-patients/AC"]).then(() => {
+      this.inPatientMode.emit("AC");
+      /*this.router.navigate(["/menu/in-patients/AC"]).then(() => {
         window.location.reload();
-      });
+      });*/
     } else if (this.admittedOrDischarge.trim() == "DN") {
-      this.router.navigate(["/menu/in-patients/DN"]).then(() => {
+      this.inPatientMode.emit("DN");
+      /*this.router.navigate(["/menu/in-patients/DN"]).then(() => {
         window.location.reload();
-      });
+      });*/
     }
 
     //this.variables.tempCounter++;

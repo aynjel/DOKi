@@ -48,7 +48,8 @@
         offset-lg="4"
         class="custom-border-bottom ion-no-border custom-padding">
         <chh-app-hospital-selector-with-all-and-filter
-          (hospital)="locationAction($event)">
+          (hospital)="locationAction($event)"
+          (inPatientMode)="changeInpatientMode($event)">
         </chh-app-hospital-selector-with-all-and-filter>
       </ion-col>
     </ion-row>

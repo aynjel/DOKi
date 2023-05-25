@@ -155,89 +155,96 @@ export class LoginPage {
     let dualFlag1: boolean = false;
     let dualFlag2: boolean = false;
     //console.log(this.loginModelv3);
-    this.doctorService
-      .loginV3(this.loginModelv3)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(
-        (res: any) => {
-          this.loginResponseModelv3 = <LoginResponseModelv3>res;
-          let execflag: boolean = true;
+    try {
+      this.doctorService
+        .loginV3(this.loginModelv3)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(
+          (res: any) => {
+            this.loginResponseModelv3 = <LoginResponseModelv3>res;
+            let execflag: boolean = true;
 
-          if (this.loginResponseModelv3.isAuthenticated == true) {
-            this.loginResponseModelv3.roles.forEach((element) => {
-              if (execflag) {
-                if (element == "Administrator") {
-                  userIndentifier = "Administrator";
-                } else if (element == "Executive") {
-                  userIndentifier = "Executive";
-                  localStorage.setItem("role_flag", "exec");
-                  execflag = false;
-                } else {
-                  localStorage.setItem("role_flag", "medcons");
+            if (this.loginResponseModelv3.isAuthenticated == true) {
+              this.loginResponseModelv3.roles.forEach((element) => {
+                if (execflag) {
+                  if (element == "Administrator") {
+                    userIndentifier = "Administrator";
+                  } else if (element == "Executive") {
+                    userIndentifier = "Executive";
+                    localStorage.setItem("role_flag", "exec");
+                    execflag = false;
+                  } else {
+                    localStorage.setItem("role_flag", "medcons");
+                  }
                 }
-              }
 
-              if (element == "Executive") {
-                dualFlag1 = true;
-              }
-              if (element == "MedicalConsultant") {
-                dualFlag2 = true;
-              }
-            });
-            ////////console.log("userIndentifier : "+userIndentifier);
-          }
-        },
-        (error) => {
-          //console.log("error");
+                if (element == "Executive") {
+                  dualFlag1 = true;
+                }
+                if (element == "MedicalConsultant") {
+                  dualFlag2 = true;
+                }
+              });
+              ////////console.log("userIndentifier : "+userIndentifier);
+            }
+          },
+          (error) => {
+            //console.log("error");
 
-          //this.functionsService.logToConsole(error);
-          this.functionsService.sorryDoc();
-          this.btnDisable = false;
-        },
-        () => {
-          if (this.loginResponseModelv3.isAuthenticated == true) {
-            if (dualFlag1 == true && dualFlag2 == true) {
-              this.loginAsMedExec();
-            } else {
-              if (userIndentifier == "Administrator") {
-                localStorage.setItem("id_token", this.loginResponseModelv3.jwt);
-                this.storageService.store(
-                  AuthConstants.AUTH,
-                  this.loginResponseModelv3
-                );
-                this.userRolegetUserSettingsV3("administrator");
-              } else if (userIndentifier == "Executive") {
-                localStorage.setItem("id_token", this.loginResponseModelv3.jwt);
-                this.storageService.store(
-                  AuthConstants.AUTH,
-                  this.loginResponseModelv3
-                );
-                this.userRolegetUserSettingsV3("executive");
+            //this.functionsService.logToConsole(error);
+            this.functionsService.sorryDoc();
+            this.btnDisable = false;
+          },
+          () => {
+            if (this.loginResponseModelv3.isAuthenticated == true) {
+              if (dualFlag1 == true && dualFlag2 == true) {
+                this.loginAsMedExec();
               } else {
-                // this.loginResponseModelv3.roles.forEach(element => {
-                if (this.loginResponseModelv3.jwt != null) {
+                if (userIndentifier == "Administrator") {
                   localStorage.setItem(
                     "id_token",
                     this.loginResponseModelv3.jwt
                   );
-                }
-                if (this.loginResponseModelv3.isDefaultPasswordChanged) {
-                  this.getUserSettingsV3();
+                  this.storageService.store(
+                    AuthConstants.AUTH,
+                    this.loginResponseModelv3
+                  );
+                  this.userRolegetUserSettingsV3("administrator");
+                } else if (userIndentifier == "Executive") {
+                  localStorage.setItem(
+                    "id_token",
+                    this.loginResponseModelv3.jwt
+                  );
+                  this.storageService.store(
+                    AuthConstants.AUTH,
+                    this.loginResponseModelv3
+                  );
+                  this.userRolegetUserSettingsV3("executive");
                 } else {
-                  this.updatePasswordV3();
-                }
+                  // this.loginResponseModelv3.roles.forEach(element => {
+                  if (this.loginResponseModelv3.jwt != null) {
+                    localStorage.setItem(
+                      "id_token",
+                      this.loginResponseModelv3.jwt
+                    );
+                  }
+                  if (this.loginResponseModelv3.isDefaultPasswordChanged) {
+                    this.getUserSettingsV3();
+                  } else {
+                    this.updatePasswordV3();
+                  }
 
-                // });
+                  // });
+                }
               }
+            } else {
+              this.functionsService.alert(
+                this.loginResponseModelv3.message,
+                "Okay"
+              );
+              this.btnDisable = false;
             }
-          } else {
-            this.functionsService.alert(
-              this.loginResponseModelv3.message,
-              "Okay"
-            );
-            this.btnDisable = false;
-          }
-          /*
+            /*
         if(this.loginResponseModelv3.jwt != null){
           localStorage.setItem("id_token",this.loginResponseModelv3.jwt);
         }
@@ -247,8 +254,12 @@ export class LoginPage {
           this.getUserSettingsV3();
           //this.updatePasswordV3();
         }*/
-        }
-      );
+          }
+        );
+    } catch (error) {
+      window.location.reload();
+      // ...
+    }
   }
   /*V3 App*/
 

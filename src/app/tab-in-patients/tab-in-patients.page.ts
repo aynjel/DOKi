@@ -615,4 +615,26 @@ export class TabInPatientsPage {
     //console.log(this.reverseOrderData);
     this.callPatient(this.site);
   }
+  changeInpatientMode(a) {
+    console.log(a);
+    localStorage.setItem("navigateInpatient", a);
+    if (a == "ALL") {
+      this.admittedOrDischarge = this.constants.CHH_SITE__VALUE__ALL; //"ALL";
+      this.admittedOrDischargeLabel = "";
+    } else if (a == "AC") {
+      this.admittedOrDischarge =
+        this.constants.ADMISSION_STATUS__CODE__ADMITTED; //"AC";
+      this.admittedOrDischargeLabel =
+        "(" +
+        this.functionsService.convertAllFirstLetterToUpperCase(
+          this.constants.ADMISSION_STATUS__VALUE__ADMITTED
+        ) +
+        ")"; //"(Admitted)";
+    } else if (a == "DN") {
+      this.admittedOrDischarge =
+        this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE; //"DN";
+      this.admittedOrDischargeLabel = "(for Discharge)";
+    }
+    this.callPatient(this.site);
+  }
 }
