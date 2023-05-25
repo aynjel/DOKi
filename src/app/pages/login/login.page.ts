@@ -257,6 +257,7 @@ export class LoginPage {
           }
         );
     } catch (error) {
+      this.functionsService.sorryDoc();
       window.location.reload();
       // ...
     }
