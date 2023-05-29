@@ -1,42 +1,42 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
-import { AuthService } from 'src/app/services/auth/auth.service';
-import { ScreenSizeService } from '../services/screen-size/screen-size.service';
-import { StorageService } from '../services/storage/storage.service';
-import { DoctorService } from '../services/doctor/doctor.service';
-import * as HighCharts from 'highcharts';
-import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
-import { FunctionsService } from '../shared/functions/functions.service';
+import { Component, OnInit, Renderer2 } from "@angular/core";
+import { AuthService } from "src/app/services/auth/auth.service";
+import { ScreenSizeService } from "../services/screen-size/screen-size.service";
+import { StorageService } from "../services/storage/storage.service";
+import { DoctorService } from "../services/doctor/doctor.service";
+import * as HighCharts from "highcharts";
+import { Router } from "@angular/router";
+import { BehaviorSubject } from "rxjs";
+import { FunctionsService } from "../shared/functions/functions.service";
 //import { GoogleAnalyticsService } from 'ngx-google-analytics';
-import { Constants } from '../shared/constants';
-import { Consta } from '../config/auth-constants';
-import { DoctorHistoryModel, RevokeTokenV3 } from '../models/doctor';
-import { PatientService } from '../services/patient/patient.service';
-import { LoginResponseModelv3 } from 'src/app/models/doctor';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { LogoutService } from '../services/logout/logout.service';
+import { Constants } from "../shared/constants";
+import { Consta } from "../config/auth-constants";
+import { DoctorHistoryModel, RevokeTokenV3 } from "../models/doctor";
+import { PatientService } from "../services/patient/patient.service";
+import { LoginResponseModelv3 } from "src/app/models/doctor";
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
+import { LogoutService } from "../services/logout/logout.service";
 @Component({
-  selector: 'app-tab-dashboard',
-  templateUrl: './tab-dashboard.page.html',
-  styleUrls: ['./tab-dashboard.page.scss'],
+  selector: "app-tab-dashboard",
+  templateUrl: "./tab-dashboard.page.html",
+  styleUrls: ["./tab-dashboard.page.scss"],
 })
 export class TabDashboardPage implements OnInit {
   userData$ = new BehaviorSubject<any>([]);
   public doctorHistoryModel = new DoctorHistoryModel();
   displayUserData: any;
   isDesktop: boolean;
-  dr_code = '';
-  first_name = '';
+  dr_code = "";
+  first_name = "";
   lineChartxAxisForYear: any;
   lineChartyAxisForYear: any;
   lineChartxAxisForMonth: any;
   lineChartyAxisForMonth: any;
   totalAdmitted: any = 0;
   totalForDischarge: any = 0;
-  admitted = 'A';
-  discharge = 'D';
-  getTotalCount = { admitted: '0', forDischarge: '0', total: '0' };
+  admitted = "A";
+  discharge = "D";
+  getTotalCount = { admitted: "0", forDischarge: "0", total: "0" };
 
   public logindata: LoginResponseModelv3;
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
@@ -75,26 +75,26 @@ export class TabDashboardPage implements OnInit {
     HighCharts.setOptions({
       chart: {
         style: {
-          fontFamily: 'Nunito', // fontFamily: 'Inter'
+          fontFamily: "Nunito", // fontFamily: 'Inter'
         },
       },
     });
 
-    HighCharts.chart('lineChartForYear', {
+    HighCharts.chart("lineChartForYear", {
       chart: {
-        renderTo: 'container',
+        renderTo: "container",
         height: 300,
-        type: 'column',
+        type: "column",
         styledMode: true,
       },
-      title: { text: '12-Month Trend' },
+      title: { text: "12-Month Trend" },
       xAxis: {
         categories: this.lineChartxAxisForYear,
         labels: {
           enabled: false,
         },
       },
-      yAxis: { title: { text: '' } },
+      yAxis: { title: { text: "" } },
       plotOptions: {
         line: { dataLabels: { enabled: true }, enableMouseTracking: false },
         column: {
@@ -104,7 +104,7 @@ export class TabDashboardPage implements OnInit {
       series: [
         {
           type: undefined,
-          name: 'Patients',
+          name: "Patients",
           data: this.lineChartyAxisForYear,
           label: { enabled: false },
         },
@@ -117,9 +117,9 @@ export class TabDashboardPage implements OnInit {
             },
             chartOptions: {
               legend: {
-                layout: 'horizontal',
-                align: 'center',
-                verticalAlign: 'bottom',
+                layout: "horizontal",
+                align: "center",
+                verticalAlign: "bottom",
               },
             },
           },
@@ -133,26 +133,26 @@ export class TabDashboardPage implements OnInit {
     HighCharts.setOptions({
       chart: {
         style: {
-          fontFamily: 'Nunito', // fontFamily: 'Inter'
+          fontFamily: "Nunito", // fontFamily: 'Inter'
         },
       },
     });
 
-    HighCharts.chart('lineChartForMonth', {
+    HighCharts.chart("lineChartForMonth", {
       chart: {
-        renderTo: 'container',
+        renderTo: "container",
         height: 300,
-        type: 'column',
+        type: "column",
         styledMode: true,
       },
-      title: { text: '30-Day Trend' },
+      title: { text: "30-Day Trend" },
       xAxis: {
         categories: this.lineChartxAxisForMonth,
         labels: {
           enabled: false,
         },
       },
-      yAxis: { title: { text: '' } },
+      yAxis: { title: { text: "" } },
       plotOptions: {
         line: { dataLabels: { enabled: true }, enableMouseTracking: false },
         column: {
@@ -162,7 +162,7 @@ export class TabDashboardPage implements OnInit {
       series: [
         {
           type: undefined,
-          name: 'Patients',
+          name: "Patients",
           data: this.lineChartyAxisForMonth,
         },
       ],
@@ -172,9 +172,9 @@ export class TabDashboardPage implements OnInit {
             condition: { minWidth: 300 },
             chartOptions: {
               legend: {
-                layout: 'horizontal',
-                align: 'center',
-                verticalAlign: 'bottom',
+                layout: "horizontal",
+                align: "center",
+                verticalAlign: "bottom",
               },
             },
           },
@@ -189,8 +189,8 @@ export class TabDashboardPage implements OnInit {
   dateNow;
   checkInbox() {
     let data = {
-      dt_from: this.functionsService.getDateYYYYMMDD(9999) + 'T00:00:00.000Z',
-      dt_to: this.functionsService.getDateYYYYMMDD() + 'T00:00:00.000Z',
+      dt_from: this.functionsService.getDateYYYYMMDD(9999) + "T00:00:00.000Z",
+      dt_to: this.functionsService.getDateYYYYMMDD() + "T00:00:00.000Z",
     };
     //console.log(data);
 
@@ -208,8 +208,8 @@ export class TabDashboardPage implements OnInit {
           if (jsonResponse != null) {
             jsonResponse.forEach((element) => {
               if (
-                element.approval_status == 'FA' ||
-                element.approval_status == 'RA'
+                element.approval_status == "FA" ||
+                element.approval_status == "RA"
               ) {
                 this.isNotification = true;
               }
@@ -219,21 +219,21 @@ export class TabDashboardPage implements OnInit {
       );
   }
   goto(data) {
-    this.router.navigate(['/menu/in-patients' + data]);
+    this.router.navigate(["/menu/in-patients" + data]);
   }
 
   ionViewWillEnter() {
     this.checkInbox();
     this.ngUnsubscribe = new Subject();
-    console.log('DASHBOARD');
+    console.log("DASHBOARD");
 
-    localStorage.removeItem('selectedPatient');
+    localStorage.removeItem("selectedPatient");
     this.logindata = <LoginResponseModelv3>(
       this.authService.userData$.getValue()
     );
     this.dr_code = this.logindata.doctorCode;
     this.functionsService.logToConsole(this.dr_code);
-    this.doctorHistoryModel.accountNo = 'none';
+    this.doctorHistoryModel.accountNo = "none";
     this.doctorHistoryModel.drCode = this.logindata.doctorCode;
     this.doctorHistoryModel.mode = Consta.mode;
     this.first_name = this.logindata.firstName; //this.camelCase(this.logindata[0].first_name);
@@ -253,8 +253,8 @@ export class TabDashboardPage implements OnInit {
           let month: any;
           let monthValue: any;
           for (let i = 1; i <= count; i++) {
-            month = 'month' + i;
-            monthValue = 'month' + i + 'Value';
+            month = "month" + i;
+            monthValue = "month" + i + "Value";
             catego.push(res[month]);
             totalPatient.push(Number(res[monthValue]));
           }
@@ -277,14 +277,14 @@ export class TabDashboardPage implements OnInit {
 
           if (res != null) {
             let x = JSON.stringify(res);
-            x = x.replace('[', '').replace(']', '');
+            x = x.replace("[", "").replace("]", "");
             x = JSON.parse(x);
             var count = Object.keys(x).length / 2;
-            let month: any = '';
-            let monthValue: any = '';
+            let month: any = "";
+            let monthValue: any = "";
             for (let i = 1; i <= count; i++) {
-              month = 'day' + i;
-              monthValue = 'day' + i + 'Value';
+              month = "day" + i;
+              monthValue = "day" + i + "Value";
               Day.push(x[month]);
               DayValue.push(Number(x[monthValue]));
             }
@@ -315,7 +315,7 @@ export class TabDashboardPage implements OnInit {
   }
 
   camelCase(str) {
-    var splitStr = str.toLowerCase().split(' ');
+    var splitStr = str.toLowerCase().split(" ");
     for (var i = 0; i < splitStr.length; i++) {
       // You do not need to check if i is larger than splitStr length, as your for does that for you
       // Assign it back to the array
@@ -323,20 +323,20 @@ export class TabDashboardPage implements OnInit {
         splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
     }
     // Directly return the joined string
-    return splitStr.join(' ');
+    return splitStr.join(" ");
   }
   checkAppearance() {
-    this.functionsService.logToConsole('checkAppearance');
+    this.functionsService.logToConsole("checkAppearance");
     var values = JSON.parse(
-      '[' + atob(localStorage.getItem('user_settings')) + ']'
+      "[" + atob(localStorage.getItem("user_settings")) + "]"
     );
-    let dr_username = atob(localStorage.getItem('username'));
+    let dr_username = atob(localStorage.getItem("username"));
     values.forEach((element) => {
       this.functionsService.logToConsole(element.darkmode);
       if (element.darkmode == 1) {
-        this.renderer.setAttribute(document.body, 'color-theme', 'dark');
+        this.renderer.setAttribute(document.body, "color-theme", "dark");
       } else {
-        this.renderer.setAttribute(document.body, 'color-theme', 'light');
+        this.renderer.setAttribute(document.body, "color-theme", "light");
       }
     });
   }
@@ -346,10 +346,10 @@ export class TabDashboardPage implements OnInit {
   }
   revokeTokenV3;
   logout() {
-    let dr_username = atob(localStorage.getItem('username'));
+    let dr_username = atob(localStorage.getItem("username"));
     this.revokeTokenV3 = new RevokeTokenV3();
     this.revokeTokenV3.jwt = decodeURIComponent(
-      this.functionsService.getcookie('refreshToken')
+      this.functionsService.getcookie("refreshToken")
     );
     //console.log(this.revokeTokenV3);
 
@@ -361,5 +361,9 @@ export class TabDashboardPage implements OnInit {
       });
 
     this.logoutService.out();
+  }
+  redirectToInpatient(type) {
+    localStorage.setItem("navigateInpatient", type);
+    this.router.navigate(["/menu/in-patients/" + type]);
   }
 }

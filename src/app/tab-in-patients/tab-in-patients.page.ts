@@ -77,6 +77,7 @@ export class TabInPatientsPage {
         }
         this.isDesktop = isDesktop;
       });
+    let navigateInpatient = localStorage.getItem("navigateInpatient");
     router.events.pipe(takeUntil(this.ngUnsubscribe)).subscribe((val) => {
       if (location.path() == "/menu/in-patients") {
         this.admittedOrDischarge = this.constants.CHH_SITE__VALUE__ALL; //"ALL";

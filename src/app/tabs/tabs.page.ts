@@ -26,6 +26,8 @@ import { UserIdleService } from "angular-user-idle";
 import { AlertController, MenuController } from "@ionic/angular";
 import { merge } from "highcharts";
 import { LogoutService } from "../services/logout/logout.service";
+import { ActivatedRoute, NavigationEnd } from "@angular/router";
+import { filter } from "rxjs/operators";
 
 @Component({
   selector: "app-tabs",
@@ -122,6 +124,17 @@ export class TabsPage {
       this.logout();
       this.alert = [];
     });
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        if (this.router.routerState.snapshot.url.includes("/login")) {
+          this.userIdle.stopTimer();
+          this.userIdle.stopWatching();
+          this.alertController.dismiss();
+          window.location.reload();
+        }
+        // Perform any necessary actions after navigation, e.g., refresh data
+      });
   }
   alert: any = [];
   async timerExpired() {

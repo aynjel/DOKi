@@ -392,7 +392,7 @@ export class ProgressNotesPage implements OnInit {
   }
   doRefresh(event) {
     setTimeout(() => {
-      this.ngOnInit();
+      this.start();
       event.target.complete();
     }, 1000);
   }
