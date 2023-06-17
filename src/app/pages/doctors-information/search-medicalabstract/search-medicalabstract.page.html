@@ -1,0 +1,156 @@
+<ion-header mode="md" class="ion-no-border">
+  <ion-toolbar color="mango">
+    <span
+      class="padding-left-10"
+      routerLink="/menu/"
+      routerDirection="backward"
+      color="chh-css-primary2">
+      <ion-icon name="arrow-back-outline" class="my-icon vcenter"></ion-icon>
+    </span>
+    <span class="padding-left-30 font-weight-500 font-size-20">
+      &nbsp;&nbsp;Search Medical Abstract
+    </span>
+  </ion-toolbar>
+  <div>
+    <ion-grid class="ion-no-padding"> </ion-grid>
+    <ion-grid class="ion-no-padding chh-darkmode">
+      <ion-row>
+        <ion-col
+          size-md="8"
+          offset-md="2"
+          size-lg="4"
+          offset-lg="4"
+          class="custom-border-bottom ion-no-border custom-padding">
+          <chh-app-hospital
+            (hospital)="locationAction($event)"
+            [Activator]="site"
+            readonlyComp="false"></chh-app-hospital>
+        </ion-col>
+      </ion-row>
+      <ion-row class="">
+        <ion-col
+          size-md="8"
+          offset-md="2"
+          size-lg="4"
+          offset-lg="4"
+          class="ion-no-border">
+          <ion-searchbar
+            [(ngModel)]="searchBar"
+            (ionChange)="filterList()"
+            placeholder="Search Name or Room Number"
+            mode="ios"></ion-searchbar>
+        </ion-col>
+      </ion-row>
+      <ion-row class=""></ion-row>
+    </ion-grid>
+  </div>
+</ion-header>
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngFor="let x of medicalAbstractList">
+    <ion-card
+      mode="ios"
+      class="pointer custom-card"
+      [attr.data-testid]="x.admission_no"
+      (click)="detail(x.patient_No,x.account_No)">
+      <ion-item lines="none">
+        <ion-label style="margin-top: -15px">
+          <ion-item slot="start" class="ion-no-padding">
+            <h2 class="ion-text-wrap" style="padding-top: 20px">
+              {{ x.name }} <br />
+
+              <ion-text color="primary" style="padding-top: 20px">
+                <p color="primary">
+                  <!-- prettier-ignore -->
+                  <b
+                    >Date Admitted : {{x.date_Admitted | date : "MMM, dd yyyy HH:mm:ss"}}
+                  </b>
+                  <!-- prettier-ignore -->
+                </p>
+              </ion-text>
+              <ion-text color="primary">
+                <p color="primary">
+                  <b>Room No . : {{x.room_No}} </b>
+                </p>
+              </ion-text>
+              <ion-text color="primary">
+                <p color="primary">
+                  <b>Patient No. : {{x.patient_No}} </b>
+                </p>
+              </ion-text>
+              <ion-text color="primary">
+                <p color="primary">
+                  <b>Account No. : {{x.account_No}} </b>
+                </p>
+              </ion-text>
+              <ion-text
+                *ngIf="x.abstract_Approve_By == null"
+                style="color: RED">
+                <ion-icon name="pencil-outline"></ion-icon> Requires
+                Signature</ion-text
+              >
+              <ion-text *ngIf="x.abstract_Approve_By != null" color="mango">
+                <ion-icon name="checkmark-done-outline"></ion-icon>
+                Signed</ion-text
+              >
+            </h2>
+          </ion-item>
+
+          <!--ion-row
+            class="ion-no-padding"
+            lines="none"
+            style="padding-top: 10px !important">
+            <div class="ion-text-wrap">
+              <div class="ion-text-wrap" (click)="detail(x.admission_no,x)">
+                <span *ngIf="x.site == this.constants.CHH_SITE__CODE__CEBU">
+                  <ion-icon name="location-outline" slot="start"></ion-icon>
+                  {{this.constants.CHH_NAME__VALUE__CEBU}}
+                </span>
+                <span *ngIf="x.site == this.constants.CHH_SITE__CODE__MANDAUE">
+                  <ion-icon name="location-outline" slot="start"></ion-icon>
+                  {{this.constants.CHH_NAME__VALUE__MANDAUE}} </span
+                ><br />
+                <ion-icon name="bed-outline" slot="start"></ion-icon>
+                Room {{x.room_no}}<br />
+
+                <ion-icon name="clipboard-outline" slot="start"></ion-icon>
+                as {{x.doctor_Status}}<br />
+                <ion-icon name="alarm-outline" slot="start" color="">
+                </ion-icon>
+                <ion-text color="">
+                  Admitted : {{x.admission_date}}<br />
+                </ion-text>
+                <ion-icon name="alarm-outline" slot="start" color="">
+                </ion-icon>
+                <ion-text color="" *ngIf="x.discharged_date != null">
+                  Discharged : {{x.discharged_date}}<br />
+                </ion-text>
+                <ion-text *ngIf="x.discharged_date == null" color="">
+                  Discharged :
+                  <ion-text color="primary"
+                    >&nbsp;<b>Still Admitted</b></ion-text
+                  ><br />
+                </ion-text>
+              </div>
+
+              <div style="border-top: 1px solid rgb(134, 134, 134)">
+                <app-prognotesheadview
+                  [account_no]="x.admission_no"
+                  [doctor_Status_code]="x.doctor_Status_code"
+                  [mdCode]="x.dr_code"></app-prognotesheadview>
+              </div>
+            </div>
+          </ion-row-->
+        </ion-label>
+      </ion-item>
+    </ion-card>
+  </div>
+</ion-content>

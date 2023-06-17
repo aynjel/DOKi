@@ -91,6 +91,20 @@ const routes: Routes = [
           ).then((m) => m.PatientHistoryPageModule),
       },
       {
+        path: "search-Medical-Abstract",
+        loadChildren: () =>
+          import(
+            "../pages/doctors-information/search-medicalabstract/search-medicalabstract.module"
+          ).then((m) => m.SearchMedicalabstractPageModule),
+      },
+      {
+        path: "inbox/sign-medabs/:pNo/:admissionNo",
+        loadChildren: () =>
+          import(
+            "../pages/doctors-information/sign-medicalabstract/sign-medicalabstract.module"
+          ).then((m) => m.SignMedicalabstractPageModule),
+      },
+      {
         path: "patient-history/patient-details/:id",
         loadChildren: () =>
           import(

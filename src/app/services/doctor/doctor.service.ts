@@ -545,6 +545,14 @@ export class DoctorService {
     const url = environment.apiRouterUrlTest + "/gw/doki/medcert/pdf";
     return this.http.post(url, data, { responseType: "blob" });
   }
+  getMedicalAbstractPOST(data) {
+    //console.log(data);
+
+    //const url = environment.apiRouterUrlTest + "/gw/doki/medcert/pdf";
+    const url = "https://api.chonghua.com.ph/gw/doki/medicalabstract/pdf";
+    return this.http.post(url, data, { responseType: "blob" });
+  }
+
   //save medcert
   approveMedicalCertificate(data) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
@@ -553,7 +561,16 @@ export class DoctorService {
     //return this.http.put(url, JSON.stringify(data), options);
     return this.http.put(url, data, options);
   }
+  approveMedicalAbstract(data) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredentials: false };
+    //const url = environment.apiRouterUrlTest + "/gw/doki/medcert/approve";
+    const url =
+      "http://10.151.12.120:7237/api/MedicalAbstract/ApproveRevokedMedAbstractDOKi";
+    console.log(url);
 
+    return this.http.post(url, data, options);
+  }
   getPendingApproval(data) {
     /*const headers = new HttpHeaders({
       'Content-Type': 'application/json;charset=utf-8',
@@ -595,5 +612,18 @@ export class DoctorService {
     const url =
       environment.apiRouterUrlTest + "/gw/doki/DischargeDiagnosis/Approve";
     return this.http.put(url, data, options);
+  }
+
+  getMedicalAbstractList() {
+    //const headers = new HttpHeaders();
+
+    const headers = new HttpHeaders({
+      "Content-Type": "application/json;charset=utf-8",
+    });
+    const options = { headers: headers, withCredentials: true };
+    // const url = environment.apiRouterUrl + "v3/UserSettings";
+    const url =
+      "http://10.151.12.120:7224/api/v3/MedicalAbstract/MedicalAbstractList";
+    return this.http.get(url, options);
   }
 }
