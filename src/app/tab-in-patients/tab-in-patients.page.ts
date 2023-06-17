@@ -5,7 +5,7 @@ import { StorageService } from "../services/storage/storage.service";
 import { Consta } from "../config/auth-constants";
 
 import { DoctorService } from "../services/doctor/doctor.service";
-import { ModalController, NavController } from "@ionic/angular";
+import { MenuController, ModalController, NavController } from "@ionic/angular";
 import { ScreenSizeService } from "../services/screen-size/screen-size.service";
 import { PopoverController } from "@ionic/angular";
 import { InPatientData } from "../models/in-patient.model";
@@ -66,7 +66,8 @@ export class TabInPatientsPage {
 
     public constants: Constants,
     public messages: Messages,
-    public nav: NavController
+    public nav: NavController,
+    private menu: MenuController
   ) {
     this.screensizeService
       .isDesktopView()
@@ -99,7 +100,9 @@ export class TabInPatientsPage {
       }
     });*/
   }
-
+  toggleMenu() {
+    this.menu.toggle(); //Add this method to your button click function
+  }
   ngOnInit() {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))

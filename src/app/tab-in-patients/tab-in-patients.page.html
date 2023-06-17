@@ -10,7 +10,7 @@
         <ion-icon
           [name]="isNotification === true ? 'mail-unread-outline' : 'mail-outline'"
           style="float: right"
-          id="click-trigge"
+          (click)="toggleMenu()"
           size="large">
         </ion-icon>
 

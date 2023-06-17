@@ -88,6 +88,18 @@ export class AppComponent implements OnInit {
       icon: "mail-open-outline",
       type: "medcons",
     },
+    {
+      title: "Progress Notes History",
+      url: "menu/inbox",
+      icon: "mail-open-outline",
+      type: "medcons",
+    },
+    {
+      title: "Medical Abstract",
+      url: "menu/inbox",
+      icon: "mail-open-outline",
+      type: "medcons",
+    },
     /*{
       title: "Progress Notes",
       url: "menu/patient-history",
@@ -153,6 +165,9 @@ export class AppComponent implements OnInit {
   public revokeTokenV3: RevokeTokenV3;
   onSplitPaneVisible(event) {
     // //console.log(event);
+  }
+  toggleMenu() {
+    this.menu.toggle(); //Add this method to your button click function
   }
   viewSidebar() {
     this.logindata = "";
