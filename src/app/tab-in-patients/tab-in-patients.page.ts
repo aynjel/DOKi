@@ -78,8 +78,9 @@ export class TabInPatientsPage {
         this.isDesktop = isDesktop;
       });
     let navigateInpatient = localStorage.getItem("navigateInpatient");
-    router.events.pipe(takeUntil(this.ngUnsubscribe)).subscribe((val) => {
+    /*router.events.pipe(takeUntil(this.ngUnsubscribe)).subscribe((val) => {
       if (location.path() == "/menu/in-patients") {
+        console.log(location.path());
         this.admittedOrDischarge = this.constants.CHH_SITE__VALUE__ALL; //"ALL";
         this.admittedOrDischargeLabel = "";
       } else if (location.path() == "/menu/in-patients/AC") {
@@ -96,11 +97,34 @@ export class TabInPatientsPage {
           this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE; //"DN";
         this.admittedOrDischargeLabel = "(for Discharge)";
       }
-    });
+    });*/
   }
 
   ngOnInit() {
-    //////console.log('ngOnInit');
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        // Handle URL change here
+        console.log("URL changed:", event.url);
+        if (event.url == "/menu/in-patients") {
+          console.log(event.url);
+          this.admittedOrDischarge = this.constants.CHH_SITE__VALUE__ALL; //"ALL";
+          this.admittedOrDischargeLabel = "";
+        } else if (event.url == "/menu/in-patients/AC") {
+          this.admittedOrDischarge =
+            this.constants.ADMISSION_STATUS__CODE__ADMITTED; //"AC";
+          this.admittedOrDischargeLabel =
+            "(" +
+            this.functionsService.convertAllFirstLetterToUpperCase(
+              this.constants.ADMISSION_STATUS__VALUE__ADMITTED
+            ) +
+            ")"; //"(Admitted)";
+        } else if (event.url == "/menu/in-patients/DN") {
+          this.admittedOrDischarge =
+            this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE; //"DN";
+          this.admittedOrDischargeLabel = "(for Discharge)";
+        }
+      });
 
     let xdata = localStorage.getItem("reverseOrder");
     if (xdata == null) {

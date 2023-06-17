@@ -207,7 +207,7 @@ export class SignMedicalabstractPage implements OnInit {
   medicalAbstractList;
   getMEdicalAbstractList() {
     //     path: "inbox/sign-medabs/:pNo/:admissionNo",
-    this.doctorService
+    /*this.doctorService
       .getMedicalAbstractList()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe({
@@ -225,7 +225,7 @@ export class SignMedicalabstractPage implements OnInit {
           console.log(this.medicalAbstractList);
           console.log(this.logindata);
         },
-      });
+      });*/
   }
   //id=""
   activateIsSignatureModal() {

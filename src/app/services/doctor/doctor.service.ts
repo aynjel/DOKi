@@ -614,16 +614,21 @@ export class DoctorService {
     return this.http.put(url, data, options);
   }
 
-  getMedicalAbstractList() {
+  getMedicalAbstractList(drCode: any) {
     //const headers = new HttpHeaders();
 
     const headers = new HttpHeaders({
       "Content-Type": "application/json;charset=utf-8",
     });
     const options = { headers: headers, withCredentials: true };
-    // const url = environment.apiRouterUrl + "v3/UserSettings";
     const url =
-      "http://10.151.12.120:7224/api/v3/MedicalAbstract/MedicalAbstractList";
+      environment.apiRouterUrlTest +
+      "/gw/MedicalAbstract/MedicalAbstractDOKiList?drCode=" +
+      drCode;
+    console.log(url);
+
+    ///
+    // const url =      "http://10.151.12.120:7224/api/v3/MedicalAbstract/MedicalAbstractList";
     return this.http.get(url, options);
   }
 }

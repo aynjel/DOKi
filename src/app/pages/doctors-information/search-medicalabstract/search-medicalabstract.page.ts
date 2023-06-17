@@ -5,6 +5,8 @@ import { takeUntil } from "rxjs/operators";
 import { BehaviorSubject, Subject } from "rxjs";
 import { DatePipe } from "@angular/common";
 import { Router } from "@angular/router";
+import { AuthService } from "src/app/services/auth/auth.service";
+import { LoginResponseModelv3 } from "src/app/models/doctor";
 @Component({
   selector: "app-search-medicalabstract",
   templateUrl: "./search-medicalabstract.page.html",
@@ -14,7 +16,8 @@ export class SearchMedicalabstractPage implements OnInit {
   constructor(
     public constants: Constants,
     private doctorService: DoctorService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
   defaultAccordions;
   site = "C";
@@ -23,7 +26,13 @@ export class SearchMedicalabstractPage implements OnInit {
   inPatientsDraft;
   inPatientsDraft1;
   searchBar;
-  ngOnInit() {
+  ngOnInit() {}
+  loginResponseModelv3;
+  ionViewWillEnter() {
+    this.loginResponseModelv3 = <LoginResponseModelv3>(
+      this.authService.userData$.getValue()
+    );
+    console.log(this.loginResponseModelv3.doctorCode);
     this.getMEdicalAbstractList();
   }
   private ngUnsubscribe = new Subject();
@@ -57,16 +66,21 @@ export class SearchMedicalabstractPage implements OnInit {
     }, 1000);
   }
   getMEdicalAbstractList() {
+    console.log(this.loginResponseModelv3.doctorCode);
     //http://10.151.12.120:7224/api/v3/MedicalAbstract/MedicalAbstractList
     this.doctorService
-      .getMedicalAbstractList()
+      .getMedicalAbstractList(this.loginResponseModelv3.doctorCode)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe({
-        complete: () => {},
+        complete: () => {
+          console.log("asdasd");
+        },
         error: (error) => {
           console.log(error);
         },
         next: (data: any) => {
+          console.log("asdasd");
+
           console.log(data);
           this.medicalAbstractList = data;
         },

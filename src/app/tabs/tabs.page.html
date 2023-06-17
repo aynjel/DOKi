@@ -1,9 +1,6 @@
 <ion-tabs *ngIf="!isDesktop">
   <ion-tab-bar slot="bottom">
-    <ion-tab-button
-      id="button-in-patients"
-      tab="in-patients"
-      (click)="goto('in-patients')">
+    <ion-tab-button id="button-in-patients" tab="in-patients">
       <ion-icon name="person-circle-outline"></ion-icon>
       <ion-label class="tab-font-family"
         >{{this.constants.MENU__VALUE__IN_PATIENTS}}</ion-label
