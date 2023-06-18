@@ -2,7 +2,7 @@
   <ion-toolbar color="mango">
     <span
       class="padding-left-10"
-      routerLink="/menu/"
+      (click)="backToSearch()"
       routerDirection="backward"
       color="chh-css-primary2">
       <ion-icon name="arrow-back-outline" class="my-icon vcenter"></ion-icon>
@@ -81,6 +81,7 @@
                 <ion-col size="6">
                   <ion-button
                     (click)="openConsent()"
+                    *ngIf="medicalAbstractList.abstract_Approve_By ==''"
                     mode="ios"
                     size="small"
                     color="mango"
@@ -88,6 +89,13 @@
                     expand="block"
                     >Sign and Approve
                   </ion-button>
+                </ion-col>
+                <ion-col
+                  *ngIf="medicalAbstractList.abstract_Approve_By !=''"
+                  size="12">
+                  <ion-text
+                    ><h2 style="color: mango">Signed and Approved</h2></ion-text
+                  >
                 </ion-col>
               </ion-row>
               <ion-row *ngIf="isUploaded">

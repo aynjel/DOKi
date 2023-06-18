@@ -546,10 +546,10 @@ export class DoctorService {
     return this.http.post(url, data, { responseType: "blob" });
   }
   getMedicalAbstractPOST(data) {
-    //console.log(data);
+    console.log(data);
 
-    //const url = environment.apiRouterUrlTest + "/gw/doki/medcert/pdf";
-    const url = "https://api.chonghua.com.ph/gw/doki/medicalabstract/pdf";
+    const url = environment.apiRouterUrlTest + "/gw/doki/medicalabstract/pdf";
+    //const url = "https://api.chonghua.com.ph/gw/doki/medicalabstract/pdf";
     return this.http.post(url, data, { responseType: "blob" });
   }
 
@@ -564,9 +564,10 @@ export class DoctorService {
   approveMedicalAbstract(data) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredentials: false };
-    //const url = environment.apiRouterUrlTest + "/gw/doki/medcert/approve";
     const url =
-      "http://10.151.12.120:7237/api/MedicalAbstract/ApproveRevokedMedAbstractDOKi";
+      environment.apiRouterUrlTest +
+      "/gw/MedicalAbstract/ApproveRevokedMedAbstractDOKi";
+    //const url =      "http://10.151.12.120:7237/api/MedicalAbstract/ApproveRevokedMedAbstractDOKi";
     console.log(url);
 
     return this.http.put(url, data, options);
@@ -621,15 +622,13 @@ export class DoctorService {
       "Content-Type": "application/json;charset=utf-8",
     });
     const options = { headers: headers, withCredentials: true };
-    /*  const url =
+    const url =
       environment.apiRouterUrlTest +
       "/gw/MedicalAbstract/MedicalAbstractDOKiList?drCode=" +
       drCode;
-=
-*/
+
     ///
-    const url =
-      "http://10.151.12.120:7224/api/v3/MedicalAbstract/MedicalAbstractList";
+    //const url =    ("http://10.151.12.120:7224/api/v3/MedicalAbstract/MedicalAbstractList");
     return this.http.get(url, options);
   }
 }

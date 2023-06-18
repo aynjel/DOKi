@@ -117,6 +117,7 @@ export class SignMedicalabstractPage implements OnInit {
     this.functionsService.logToConsole(this.logindata);
     this.dr_code = this.logindata.doctorCode;
     this.getSignaturefromIndexedDB(this.dr_code);
+    this.getMEdicalAbstractList();
   }
   isApproved;
   logindata;
@@ -204,12 +205,28 @@ export class SignMedicalabstractPage implements OnInit {
       penColor: "rgb(0, 0, 0)",
     };
     //console.log(this.signaturePadOptions);
-    this.getMEdicalAbstractList();
   }
-  medicalAbstractList;
+  medicalAbstractList = {
+    patient_No: "",
+    account_No: "",
+    name: "",
+    room_No: "",
+    date_Admitted: "",
+    aP_Dr_Code: "",
+    abstract_Approve_By: "",
+    abstract_Approve_By_Name: "",
+    abstract_Approve_Date: "",
+    resi_Dr_Code: null,
+    resi_Abstract_Approved_By: null,
+    resi_Abstract_Approve_By_Name: null,
+    resi_Abstract_Approve_Date: null,
+  };
+
   getMEdicalAbstractList() {
     //     path: "inbox/sign-medabs/:pNo/:admissionNo",
-    this.doctorService
+    console.log(this.dr_code);
+
+    /*this.doctorService
       .getMedicalAbstractList(this.dr_code)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe({
@@ -224,8 +241,9 @@ export class SignMedicalabstractPage implements OnInit {
           this.medicalAbstractList = data.find(
             (obj) => obj.account_No === admissionNo && obj.patient_No === pNo
           );
+          console.log(this.medicalAbstractList);
         },
-      });
+      });*/
   }
   //id=""
   activateIsSignatureModal() {
@@ -598,4 +616,11 @@ export class SignMedicalabstractPage implements OnInit {
   leaveAnimation = (baseEl: HTMLElement) => {
     return this.enterAnimation(baseEl).direction("reverse");
   };
+  backToSearch() {
+    //
+    let data = "/menu/search-Medical-Abstract";
+    this.router.navigate([data]).then(() => {
+      // window.location.reload();
+    });
+  }
 }
