@@ -112,6 +112,8 @@ export class SignMedicalabstractPage implements OnInit {
     this.logindata = <LoginResponseModelv3>(
       this.authService.userData$.getValue()
     );
+    console.log(this.logindata);
+
     this.functionsService.logToConsole(this.logindata);
     this.dr_code = this.logindata.doctorCode;
     this.getSignaturefromIndexedDB(this.dr_code);
@@ -207,8 +209,8 @@ export class SignMedicalabstractPage implements OnInit {
   medicalAbstractList;
   getMEdicalAbstractList() {
     //     path: "inbox/sign-medabs/:pNo/:admissionNo",
-    /*this.doctorService
-      .getMedicalAbstractList()
+    this.doctorService
+      .getMedicalAbstractList(this.dr_code)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe({
         complete: () => {},
@@ -222,10 +224,8 @@ export class SignMedicalabstractPage implements OnInit {
           this.medicalAbstractList = data.find(
             (obj) => obj.account_No === admissionNo && obj.patient_No === pNo
           );
-          console.log(this.medicalAbstractList);
-          console.log(this.logindata);
         },
-      });*/
+      });
   }
   //id=""
   activateIsSignatureModal() {
@@ -274,25 +274,23 @@ export class SignMedicalabstractPage implements OnInit {
     let admissionNo = this.activatedRoute.snapshot.params.admissionNo;
 
     let testApprove1 = {
-      patientNo: "string",
-      accountNo: "string",
-      approveBy: "string",
-      approveByName: "string",
-      signature: "string",
-      drCode: "string",
-      isApproval: true,
+      account_no: "string",
+      abstract_approve_by: "string",
+      abstract_approve_by_name: "string",
+      doki_signature: "string",
+      is_approve: true,
     };
-    testApprove1.patientNo = pNo;
-    testApprove1.accountNo = admissionNo;
-    testApprove1.approveBy = this.logindata.userCode;
-    testApprove1.drCode = this.logindata.userCode;
-    testApprove1.approveByName =
+
+    testApprove1.account_no = admissionNo;
+    testApprove1.abstract_approve_by = this.dr_code;
+
+    testApprove1.abstract_approve_by_name =
       this.logindata.lastName +
       ", " +
       this.logindata.firstName +
       " " +
       this.logindata.middleName;
-    testApprove1.signature = this.signatureBase64;
+    testApprove1.doki_signature = this.signatureBase64;
 
     this.saveSignature(testApprove1);
   }
@@ -391,25 +389,23 @@ export class SignMedicalabstractPage implements OnInit {
               const myArray = croppedImag.split(",");
 
               let testApprove1 = {
-                patientNo: "string",
-                accountNo: "string",
-                approveBy: "string",
-                approveByName: "string",
-                signature: "string",
-                drCode: "string",
-                isApproval: true,
+                account_no: "string",
+                abstract_approve_by: "string",
+                abstract_approve_by_name: "string",
+                doki_signature: "string",
+                is_approve: true,
               };
-              testApprove1.patientNo = pNo;
-              testApprove1.accountNo = admissionNo;
-              testApprove1.approveBy = this.logindata.doctorCode;
-              testApprove1.drCode = this.logindata.doctorCode;
-              testApprove1.approveByName =
+              console.log(this.logindata);
+
+              testApprove1.account_no = admissionNo;
+              testApprove1.abstract_approve_by = this.dr_code;
+              testApprove1.abstract_approve_by_name =
                 this.logindata.lastName +
                 ", " +
                 this.logindata.firstName +
                 " " +
                 this.logindata.middleName;
-              testApprove1.signature = myArray[1];
+              testApprove1.doki_signature = myArray[1];
 
               this.signaturePad.clear();
               this.saveSignature(testApprove1);

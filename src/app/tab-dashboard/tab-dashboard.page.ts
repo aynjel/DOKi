@@ -16,6 +16,7 @@ import { LoginResponseModelv3 } from "src/app/models/doctor";
 import { takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
 import { LogoutService } from "../services/logout/logout.service";
+import { MenuController } from "@ionic/angular";
 @Component({
   selector: "app-tab-dashboard",
   templateUrl: "./tab-dashboard.page.html",
@@ -51,7 +52,8 @@ export class TabDashboardPage implements OnInit {
 
     public constants: Constants,
     private renderer: Renderer2,
-    private logoutService: LogoutService
+    private logoutService: LogoutService,
+    public menu: MenuController
   ) {
     this.screensizeService
       .isDesktopView()
@@ -221,7 +223,9 @@ export class TabDashboardPage implements OnInit {
   goto(data) {
     this.router.navigate(["/menu/in-patients" + data]);
   }
-
+  toggleMenu() {
+    this.menu.toggle(); //Add this method to your button click function
+  }
   ionViewWillEnter() {
     this.checkInbox();
     this.ngUnsubscribe = new Subject();

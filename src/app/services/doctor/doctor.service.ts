@@ -569,7 +569,7 @@ export class DoctorService {
       "http://10.151.12.120:7237/api/MedicalAbstract/ApproveRevokedMedAbstractDOKi";
     console.log(url);
 
-    return this.http.post(url, data, options);
+    return this.http.put(url, data, options);
   }
   getPendingApproval(data) {
     /*const headers = new HttpHeaders({
@@ -621,14 +621,15 @@ export class DoctorService {
       "Content-Type": "application/json;charset=utf-8",
     });
     const options = { headers: headers, withCredentials: true };
-    const url =
+    /*  const url =
       environment.apiRouterUrlTest +
       "/gw/MedicalAbstract/MedicalAbstractDOKiList?drCode=" +
       drCode;
-    console.log(url);
-
+=
+*/
     ///
-    // const url =      "http://10.151.12.120:7224/api/v3/MedicalAbstract/MedicalAbstractList";
+    const url =
+      "http://10.151.12.120:7224/api/v3/MedicalAbstract/MedicalAbstractList";
     return this.http.get(url, options);
   }
 }

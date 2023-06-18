@@ -90,13 +90,13 @@ export class AppComponent implements OnInit {
     },
     {
       title: "Progress Notes History",
-      url: "menu/inbox",
+      url: "menu/patient-history",
       icon: "mail-open-outline",
       type: "medcons",
     },
     {
       title: "Medical Abstract",
-      url: "menu/inbox",
+      url: "menu/search-Medical-Abstract",
       icon: "mail-open-outline",
       type: "medcons",
     },
