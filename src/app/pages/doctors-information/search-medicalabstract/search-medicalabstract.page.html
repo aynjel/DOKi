@@ -153,7 +153,7 @@
       </ion-item>
     </ion-card>
   </div>
-  <ng-container>
+  <ng-container *ngIf="isSearching">
     <div class="ion-padding custom-skeleton">
       <ion-card mode="ios" class="pointer">
         <ion-item lines="none">
