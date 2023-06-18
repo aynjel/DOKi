@@ -12,6 +12,7 @@ import {
   IonModal,
   ModalController,
   NavController,
+  ToastController,
 } from "@ionic/angular";
 import { DoctorService } from "src/app/services/doctor/doctor.service";
 import { ScreenSizeService } from "src/app/services/screen-size/screen-size.service";
@@ -68,7 +69,8 @@ export class SignMedicalabstractPage implements OnInit {
     private authService: AuthService,
     public functionsService: FunctionsService,
     private animationCtrl: AnimationController,
-    private constant: Constants
+    private constant: Constants,
+    private toastController: ToastController
   ) {
     this.isNotification = true;
     this.screensizeService
@@ -434,6 +436,13 @@ export class SignMedicalabstractPage implements OnInit {
     }
   }
   errorMessage;
+  doRefresh(event) {
+    setTimeout(() => {
+      this.getpdf();
+      //location.reload();
+      event.target.complete();
+    }, 1000);
+  }
   saveSignature(testAprrove) {
     let dischargeNo = this.activatedRoute.snapshot.params.dischargeNo;
     this.isPDFLoading = false;
@@ -446,7 +455,9 @@ export class SignMedicalabstractPage implements OnInit {
         (data: any) => {
           // ////////////console.log(data);
         },
-        (error) => {},
+        (error) => {
+          this.presentToast("Error in saving");
+        },
         () => {
           if (this.isSignature) {
             if (!this.isOldSignature) {
@@ -467,8 +478,6 @@ export class SignMedicalabstractPage implements OnInit {
           //this.approvePendingAPproval(dischargeNo);
         }
       );
-
-    this.isPDFLoading = false;
   }
   isUploaded: boolean = false;
   approvePendingAPproval(discharge_no) {
@@ -493,6 +502,14 @@ export class SignMedicalabstractPage implements OnInit {
           this.ngOnInit();
         }
       );
+  }
+  async presentToast(data) {
+    const toast = await this.toastController.create({
+      message: data,
+      duration: 6000, // Duration in milliseconds
+      position: "bottom", // Toast position: 'top', 'bottom', 'middle'
+    });
+    toast.present();
   }
   getpdf() {
     this.isPDFLoading = false;
