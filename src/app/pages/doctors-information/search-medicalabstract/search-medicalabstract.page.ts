@@ -65,7 +65,9 @@ export class SearchMedicalabstractPage implements OnInit {
       event.target.complete();
     }, 1000);
   }
+  isSearching: boolean = false;
   getMEdicalAbstractList() {
+    this.isSearching = true;
     console.log(this.loginResponseModelv3.doctorCode);
     //http://10.151.12.120:7224/api/v3/MedicalAbstract/MedicalAbstractList
     this.doctorService
@@ -73,12 +75,15 @@ export class SearchMedicalabstractPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe({
         complete: () => {
+          this.isSearching = false;
           console.log("asdasd");
         },
         error: (error) => {
+          this.isSearching = false;
           console.log(error);
         },
         next: (data: any) => {
+          this.isSearching = false;
           console.log("asdasd");
 
           console.log(data);
