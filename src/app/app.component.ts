@@ -85,19 +85,19 @@ export class AppComponent implements OnInit {
     {
       title: "Final Dx | Med Cert",
       url: "menu/inbox",
-      icon: "mail-open-outline",
+      icon: "document-outline",
       type: "medcons",
     },
     {
       title: "Progress Notes History",
       url: "menu/patient-history",
-      icon: "mail-open-outline",
+      icon: "document-text-outline",
       type: "medcons",
     },
     {
       title: "Medical Abstract",
       url: "menu/search-Medical-Abstract",
-      icon: "mail-open-outline",
+      icon: "documents-outline",
       type: "medcons",
     },
     /*{

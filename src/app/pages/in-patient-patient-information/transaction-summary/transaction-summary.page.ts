@@ -261,6 +261,7 @@ export class TransactionSummaryPage implements OnInit {
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(
           (res: any) => {
+            this.disableSubmit = false;
             if (res == true) {
               this.modalUpdate(
                 "SUCCESS",
@@ -275,6 +276,7 @@ export class TransactionSummaryPage implements OnInit {
             }
           },
           (error) => {
+            this.disableSubmit = false;
             console.log(error);
 
             this.functionsService.alert(
@@ -296,7 +298,7 @@ export class TransactionSummaryPage implements OnInit {
         .subscribe(
           (res: any) => {
             this.functionsService.logToConsole(res);
-
+            this.disableSubmit = false;
             if (res == true) {
               this.modalUpdate(
                 "SUCCESS",
