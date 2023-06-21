@@ -42,6 +42,10 @@ export class PatientHistoryPage implements OnInit {
   back() {
     this.navCtrl.back();
   }
+
+  ionViewWillEnter() {
+    this.callPatient("a");
+  }
   ngOnInit() {
     this.site = localStorage.getItem("siteSelected");
     localStorage.setItem("fromurl", "PatientHistory");
@@ -49,7 +53,7 @@ export class PatientHistoryPage implements OnInit {
     } else {
       localStorage.setItem("siteSelected", "C");
     }
-
+    this.callPatient("a");
     this.checkAppearance();
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -81,8 +85,12 @@ export class PatientHistoryPage implements OnInit {
   inPatientsDraft;
   isUporDown;
   inPatients;
+  apiRequest: any = "";
   callPatient(data: any) {
-    this.isFetchDone = false;
+    if (this.apiRequest != "") {
+      this.apiRequest.unsubscribe();
+    }
+    this.apiRequest = this.isFetchDone = false;
     this.doctorService
       .getInPatientHistoryV3()
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -135,12 +143,13 @@ export class PatientHistoryPage implements OnInit {
   inPatientsDraft1;
   admittedOrDischarge;
   reverseOrderData;
-
+  sortedData;
   filterList() {
     ////////console.logthis.inPatientsDraft);
 
     this.inPatients = [];
     this.finalFullData = [];
+    this.sortedData = [];
     this.site = localStorage.getItem("siteSelected");
     if (this.site === this.constants.CHH_SITE__CODE__ALL) {
       this.inPatients = this.inPatientsDraft;
@@ -205,7 +214,7 @@ export class PatientHistoryPage implements OnInit {
       }
     }
 
-    let stack = [...new Set(this.inPatients.map((d) => d.floor_desc))];
+    /*let stack = [...new Set(this.inPatients.map((d) => d.floor_desc))];
     stack = this.sortOrder(reference, stack);
     stack.forEach((element) => {
       if (this.defaultAccordions == null) {
@@ -228,9 +237,47 @@ export class PatientHistoryPage implements OnInit {
         data: data,
       };
       this.finalFullData.push(xyz);
+    });*/ console.log(this.inPatients);
+    this.sortedData = this.inPatients.sort((a, b) => {
+      if (!a.discharged_date && !b.discharged_date) {
+        return 0; // Both dates are blank, so they are considered equal
+      } else if (!a.discharged_date) {
+        return -1; // a has a blank discharged_date, so it should come before b
+      } else if (!b.discharged_date) {
+        return 1; // b has a blank discharged_date, so it should come before a
+      } else {
+        // Sort by discharged_date in descending order
+        return (
+          new Date(b.discharged_date).getTime() -
+          new Date(a.discharged_date).getTime()
+        );
+      }
     });
-    //console.log(this.finalFullData);
+
+    this.inPatients = this.sortedData.slice(0, 5);
+
+    console.log(this.inPatients);
   }
+  refreshcounter: any = 1;
+  loadData(event) {
+    this.refreshcounter++;
+    setTimeout(() => {
+      this.inPatients = this.inPatients.concat(
+        this.sortedData.slice(
+          this.refreshcounter * 5 - 5,
+          this.refreshcounter * 5
+        )
+      );
+      console.log(this.refreshcounter * 5 - 5, this.refreshcounter * 5);
+
+      //Hide Infinite List Loader on Complete
+      event.target.complete();
+
+      // App logic to determine if all data is loaded
+      // and disable the infinite scroll
+    }, 400);
+  }
+  onIonInfinite(data) {}
   defaultAccordions;
   site = "C";
   locationAction(data: any) {
@@ -272,6 +319,7 @@ export class PatientHistoryPage implements OnInit {
     this.callPatient(this.site);
   }
   doRefresh(event) {
+    this.refreshcounter = 1;
     setTimeout(() => {
       this.callPatient(this.site);
       //location.reload();

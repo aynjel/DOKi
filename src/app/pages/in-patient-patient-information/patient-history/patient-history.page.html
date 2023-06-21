@@ -268,118 +268,111 @@
         </ng-container>
         <ng-container>
           <ion-accordion-group [value]="defaultAccordions">
-            <div *ngFor="let y of finalFullData">
-              <div toggleIcon="arrow-down">
-                <ion-item slot="header">
-                  <ion-label>{{y.floor}} </ion-label>
-                </ion-item>
-                <ion-list slot="content">
-                  <div *ngFor="let x of y.data">
-                    <ion-card
-                      mode="ios"
-                      class="pointer custom-card"
-                      [attr.data-testid]="x.admission_no"
-                      (click)="detail(x.admission_no,x)">
-                      <ion-item lines="none">
-                        <ion-label style="margin-top: -15px">
-                          <ion-item slot="start" class="ion-no-padding">
-                            <h2 class="ion-text-wrap" style="padding-top: 20px">
-                              <br />{{ x.last_name }}, {{ x.first_name }} {{
-                              x.middle_name }}<br />
+            <div toggleIcon="arrow-down">
+              <ion-list slot="content">
+                <div *ngFor="let x of inPatients">
+                  <ion-card
+                    mode="ios"
+                    class="pointer custom-card"
+                    [attr.data-testid]="x.admission_no"
+                    (click)="detail(x.admission_no,x)">
+                    <ion-item lines="none">
+                      <ion-label style="margin-top: -15px">
+                        <ion-item slot="start" class="ion-no-padding">
+                          <h2 class="ion-text-wrap" style="padding-top: 20px">
+                            <br />{{ x.last_name }}, {{ x.first_name }} {{
+                            x.middle_name }}<br />
 
-                              <ion-text color="primary">
-                                <p color="primary">
-                                  <b
-                                    >{{x.dob}} <strong>|</strong> {{x.age}}
-                                    <strong>|</strong> {{x.gender}}</b
-                                  >
-                                </p>
-                              </ion-text>
-                              <ion-text color="primary">
-                                <p color="primary">
-                                  <b>{{x.admission_no}} </b>
-                                </p>
-                              </ion-text>
-                            </h2>
-                          </ion-item>
+                            <ion-text color="primary">
+                              <p color="primary">
+                                <b
+                                  >{{x.dob}} <strong>|</strong> {{x.age}}
+                                  <strong>|</strong> {{x.gender}}</b
+                                >
+                              </p>
+                            </ion-text>
+                            <ion-text color="primary">
+                              <p color="primary">
+                                <b>{{x.admission_no}} </b>
+                              </p>
+                            </ion-text>
+                          </h2>
+                        </ion-item>
 
-                          <ion-row
-                            class="ion-no-padding"
-                            lines="none"
-                            style="padding-top: 10px !important">
-                            <div class="ion-text-wrap">
-                              <div
-                                class="ion-text-wrap"
-                                (click)="detail(x.admission_no,x)">
-                                <span
-                                  *ngIf="x.site == this.constants.CHH_SITE__CODE__CEBU">
-                                  <ion-icon
-                                    name="location-outline"
-                                    slot="start"></ion-icon>
-                                  {{this.constants.CHH_NAME__VALUE__CEBU}}
-                                </span>
-                                <span
-                                  *ngIf="x.site == this.constants.CHH_SITE__CODE__MANDAUE">
-                                  <ion-icon
-                                    name="location-outline"
-                                    slot="start"></ion-icon>
-                                  {{this.constants.CHH_NAME__VALUE__MANDAUE}} </span
+                        <ion-row
+                          class="ion-no-padding"
+                          lines="none"
+                          style="padding-top: 10px !important">
+                          <div class="ion-text-wrap">
+                            <div
+                              class="ion-text-wrap"
+                              (click)="detail(x.admission_no,x)">
+                              <span
+                                *ngIf="x.site == this.constants.CHH_SITE__CODE__CEBU">
+                                <ion-icon
+                                  name="location-outline"
+                                  slot="start"></ion-icon>
+                                {{this.constants.CHH_NAME__VALUE__CEBU}}
+                              </span>
+                              <span
+                                *ngIf="x.site == this.constants.CHH_SITE__CODE__MANDAUE">
+                                <ion-icon
+                                  name="location-outline"
+                                  slot="start"></ion-icon>
+                                {{this.constants.CHH_NAME__VALUE__MANDAUE}} </span
+                              ><br />
+                              <ion-icon
+                                name="bed-outline"
+                                slot="start"></ion-icon>
+                              Room {{x.room_no}}<br />
+
+                              <ion-icon
+                                name="clipboard-outline"
+                                slot="start"></ion-icon>
+                              as {{x.doctor_Status}}<br />
+                              <ion-icon
+                                name="alarm-outline"
+                                slot="start"
+                                color="">
+                              </ion-icon>
+                              <ion-text color="">
+                                Admitted : {{x.admission_date}}<br />
+                              </ion-text>
+                              <ion-icon
+                                name="alarm-outline"
+                                slot="start"
+                                color="">
+                              </ion-icon>
+                              <ion-text
+                                color=""
+                                *ngIf="x.discharged_date != null">
+                                Discharged : {{x.discharged_date}}<br />
+                              </ion-text>
+                              <ion-text
+                                *ngIf="x.discharged_date == null"
+                                color="">
+                                Discharged :
+                                <ion-text color="primary"
+                                  >&nbsp;<b>Still Admitted</b></ion-text
                                 ><br />
-                                <ion-icon
-                                  name="bed-outline"
-                                  slot="start"></ion-icon>
-                                Room {{x.room_no}}<br />
-
-                                <ion-icon
-                                  name="clipboard-outline"
-                                  slot="start"></ion-icon>
-                                as {{x.doctor_Status}}<br />
-                                <ion-icon
-                                  name="alarm-outline"
-                                  slot="start"
-                                  color="">
-                                </ion-icon>
-                                <ion-text color="">
-                                  Admitted : {{x.admission_date}}<br />
-                                </ion-text>
-                                <ion-icon
-                                  name="alarm-outline"
-                                  slot="start"
-                                  color="">
-                                </ion-icon>
-                                <ion-text
-                                  color=""
-                                  *ngIf="x.discharged_date != null">
-                                  Discharged : {{x.discharged_date}}<br />
-                                </ion-text>
-                                <ion-text
-                                  *ngIf="x.discharged_date == null"
-                                  color="">
-                                  Discharged :
-                                  <ion-text color="primary"
-                                    >&nbsp;<b>Still Admitted</b></ion-text
-                                  ><br />
-                                </ion-text>
-                              </div>
-
-                              <div
-                                style="
-                                  border-top: 1px solid rgb(134, 134, 134);
-                                ">
-                                <app-prognotesheadview
-                                  [account_no]="x.admission_no"
-                                  [doctor_Status_code]="x.doctor_Status_code"
-                                  [mdCode]="x.dr_code"></app-prognotesheadview>
-                              </div>
-                              <!--ion-icon name="body-outline"></ion-icon>Patient Journey<br /-->
+                              </ion-text>
                             </div>
-                          </ion-row>
-                        </ion-label>
-                      </ion-item>
-                    </ion-card>
-                  </div>
-                </ion-list>
-              </div>
+
+                            <div
+                              style="border-top: 1px solid rgb(134, 134, 134)">
+                              <app-prognotesheadview
+                                [account_no]="x.admission_no"
+                                [doctor_Status_code]="x.doctor_Status_code"
+                                [mdCode]="x.dr_code"></app-prognotesheadview>
+                            </div>
+                            <!--ion-icon name="body-outline"></ion-icon>Patient Journey<br /-->
+                          </div>
+                        </ion-row>
+                      </ion-label>
+                    </ion-item>
+                  </ion-card>
+                </div>
+              </ion-list>
             </div>
           </ion-accordion-group>
 
@@ -623,4 +616,10 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
