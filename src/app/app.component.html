@@ -36,27 +36,29 @@
         </ion-item>
       </div>
 
-      <ion-list *ngFor="let p of appPages">
-        <ion-menu-toggle
-          auto-hide="false"
-          *ngIf="role_flag == p.type && lastName != null"
-          (click)="whattodo(p.url)">
-          <ion-item
-            [routerDirection]="'root'"
-            [routerLink]="[p.url]"
-            *ngIf="p.url != 'logout'">
-            <ion-icon color="primary" slot="start" [name]="p.icon"></ion-icon>
-            <ion-label>
-              {{ p.title }}
-            </ion-label>
-          </ion-item>
-          <ion-item *ngIf="p.url == 'logout'">
-            <ion-icon color="primary" slot="start" [name]="p.icon"></ion-icon>
-            <ion-label>
-              {{ p.title }}
-            </ion-label>
-          </ion-item>
-        </ion-menu-toggle>
+      <ion-list>
+        <ng-container *ngFor="let p of appPages">
+          <ion-menu-toggle
+            auto-hide="false"
+            *ngIf="role_flag == p.type && lastName != null"
+            (click)="whattodo(p.url)">
+            <ion-item
+              [routerDirection]="'root'"
+              [routerLink]="[p.url]"
+              *ngIf="p.url != 'logout'">
+              <ion-icon color="primary" slot="start" [name]="p.icon"></ion-icon>
+              <ion-label>
+                {{ p.title }}
+              </ion-label>
+            </ion-item>
+            <ion-item *ngIf="p.url == 'logout'">
+              <ion-icon color="primary" slot="start" [name]="p.icon"></ion-icon>
+              <ion-label>
+                {{ p.title }}
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle></ng-container
+        >
       </ion-list>
     </ion-content>
   </ion-menu>
