@@ -84,7 +84,7 @@
             mode="ios"></ion-searchbar>
         </ion-col>
       </ion-row>
-      <ion-row class="">
+      <!--ion-row class="">
         <ion-col
           size-md="8"
           offset-md="2"
@@ -107,13 +107,17 @@
             >Floor Assignment :
           </ion-text>
         </ion-col>
-      </ion-row>
+      </ion-row-->
       <ion-row class=""></ion-row>
     </ion-grid>
   </div>
 </ion-header>
 
-<ion-content>
+<ion-content
+  [scrollEvents]="true"
+  (ionScrollStart)="handleScrollStart()"
+  (ionScroll)="handleScroll($any($event))"
+  (ionScrollEnd)="handleScrollEnd()">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
     <ion-refresher-content
       pullingIcon="chevron-down-circle-outline"

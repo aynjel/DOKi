@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthConstants, Consta } from "../../config/auth-constants";
 import { DoctorConstants } from "../../config/auth-constants";
@@ -36,6 +36,7 @@ import {
 import {
   AlertController,
   GestureController,
+  IonInput,
   ModalController,
 } from "@ionic/angular";
 import { Gesture, GestureConfig } from "@ionic/core";
@@ -51,12 +52,15 @@ import { tick } from "@angular/core/testing";
 import { ChhAppForgotPasswordComponent } from "../../chh-web-components/chh-app-forgot-password/chh-app-forgot-password.component";
 import { takeUntil } from "rxjs/operators";
 import { BehaviorSubject, Subject } from "rxjs";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+
 @Component({
   selector: "app-login",
   templateUrl: "./login.page.html",
   styleUrls: ["./login.page.scss"],
 })
 export class LoginPage {
+  loginForm: FormGroup;
   public logindata: LoginData;
   public loginModel: LoginModel;
   public loginModelv3: LoginModelv3;
@@ -84,8 +88,28 @@ export class LoginPage {
     private zone: NgZone,
     private modalController: ModalController,
     private patientService: PatientService,
-    public alertController: AlertController
-  ) {}
+    public alertController: AlertController,
+    private formBuilder: FormBuilder
+  ) {
+    this.loginForm = this.formBuilder.group({
+      userNameOrEmail: ["", Validators.required],
+      password: ["", Validators.required],
+    });
+  }
+
+  onSubmit() {
+    if (this.loginForm.valid) {
+      // Perform actions on form submission
+      this.checkInput();
+    } else {
+      // Handle invalid form
+      alert("Please fill in all the required fields.");
+    }
+  }
+  ngAfterViewChecked() {
+    console.log("ngAfterViewChecked");
+    this.loginForm.markAllAsTouched();
+  }
   isSetPrivacyPolicy: boolean = false;
   isPrivacyPolicy: boolean = false;
   loginresponse: any;
@@ -130,10 +154,10 @@ export class LoginPage {
   }
   /*V3 App*/
   checkInput() {
-    //console.log("checkinput");
+    console.log(this.loginForm.value);
 
     this.btnDisable = true;
-    if (this.postData.username == "" || this.postData.password == "") {
+    if (this.loginForm.invalid) {
       //console.log("if");
       this.functionsService.sorryDoc();
       this.btnDisable = false;
@@ -157,7 +181,7 @@ export class LoginPage {
     //console.log(this.loginModelv3);
     try {
       this.doctorService
-        .loginV3(this.loginModelv3)
+        .loginV3(this.loginForm.value)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(
           (res: any) => {
@@ -1001,6 +1025,10 @@ export class LoginPage {
   }
   ionViewWillLeave() {
     this.btnDisable = false;
+  }
+  ionViewDidEnter() {
+    console.log("ionViewDidEnter");
+    this.loginForm.markAllAsTouched();
   }
   async showPrivacyPolicy() {
     const modal = await this.modalController.create({

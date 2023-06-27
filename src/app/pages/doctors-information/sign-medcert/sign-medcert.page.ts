@@ -4,38 +4,38 @@ import {
   OnInit,
   Renderer2,
   ViewChild,
-} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+} from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import {
   ActionSheetController,
   AnimationController,
   IonModal,
   ModalController,
   NavController,
-} from '@ionic/angular';
-import { DoctorService } from 'src/app/services/doctor/doctor.service';
-import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { SignaturePad } from 'angular2-signaturepad';
-import { FunctionsService } from 'src/app/shared/functions/functions.service';
-import { NgxIndexedDBService } from 'ngx-indexed-db';
-import { AuthService } from 'src/app/services/auth/auth.service';
-import { LoginResponseModelv3, SignatureApproval } from 'src/app/models/doctor';
-import { Constants } from 'src/app/shared/constants';
+} from "@ionic/angular";
+import { DoctorService } from "src/app/services/doctor/doctor.service";
+import { ScreenSizeService } from "src/app/services/screen-size/screen-size.service";
+import { BehaviorSubject, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
+import { SignaturePad } from "angular2-signaturepad";
+import { FunctionsService } from "src/app/shared/functions/functions.service";
+import { NgxIndexedDBService } from "ngx-indexed-db";
+import { AuthService } from "src/app/services/auth/auth.service";
+import { LoginResponseModelv3, SignatureApproval } from "src/app/models/doctor";
+import { Constants } from "src/app/shared/constants";
 @Component({
-  selector: 'app-sign-medcert',
-  templateUrl: './sign-medcert.page.html',
-  styleUrls: ['./sign-medcert.page.scss'],
+  selector: "app-sign-medcert",
+  templateUrl: "./sign-medcert.page.html",
+  styleUrls: ["./sign-medcert.page.scss"],
 })
 export class SignMedcertPage implements OnInit {
   private ngUnsubscribe = new Subject();
   isNotification: boolean;
   isPortrait: boolean;
-  selected = 'Final Diagnosis';
+  selected = "Final Diagnosis";
   pendingApproval;
   dischargeNo = {
-    discharge_no: '',
+    discharge_no: "",
   };
   isDesktop: boolean;
   pdfSrc;
@@ -124,18 +124,18 @@ export class SignMedcertPage implements OnInit {
   isSignature: boolean = false;
   getSignaturefromIndexedDB(data) {
     this.dbService
-      .getByIndex('people', 'drCode', data)
+      .getByIndex("people", "drCode", data)
       .subscribe((signature: any) => {
         if (signature == undefined) {
           this.isSignature = false;
         } else {
           let myArray: any;
           let compressedSignature =
-            'data:image/png;base64,' + signature.base64image;
+            "data:image/png;base64," + signature.base64image;
           this.functionService
             .cropImage(compressedSignature)
             .then((compressed: any) => {
-              myArray = compressed.split(',');
+              myArray = compressed.split(",");
               this.signatureID = signature.id;
               this.signatureBase64 = myArray[1];
               this.signatureBase64Full = compressed;
@@ -146,7 +146,7 @@ export class SignMedcertPage implements OnInit {
   }
   saveSignaturetoIndexdb(drCode, base64image, base64imageFull) {
     this.dbService
-      .add('people', {
+      .add("people", {
         drCode: drCode,
         base64image: base64image,
         base64imageFull: base64imageFull,
@@ -157,7 +157,7 @@ export class SignMedcertPage implements OnInit {
   }
   updateSignatureonIndexedDB(drCode, base64image, base64imageFull) {
     this.dbService
-      .update('people', {
+      .update("people", {
         id: this.signatureID,
         drCode: drCode,
         base64image: base64image,
@@ -197,8 +197,8 @@ export class SignMedcertPage implements OnInit {
       canvasWidth: this.screenWidth,
       canvasHeight: this.screenHeight,
       //backgroundColor: 'rgba(0, 0, 0, 1)',
-      backgroundColor: 'rgba(255, 255, 255, 0)',
-      penColor: 'rgb(0, 0, 0)',
+      backgroundColor: "rgba(255, 255, 255, 0)",
+      penColor: "rgb(0, 0, 0)",
     };
     //console.log(this.signaturePadOptions);
   }
@@ -209,12 +209,12 @@ export class SignMedcertPage implements OnInit {
     if (!this.idModal) {
       const modalState = {
         modal: true,
-        desc: 'fake state for our modal',
+        desc: "fake state for our modal",
       };
       history.pushState(modalState, null);
     }
   }
-  @HostListener('window:popstate', ['$event'])
+  @HostListener("window:popstate", ["$event"])
   dismissModal() {
     if (this.idModal) {
       this.manualBack();
@@ -223,7 +223,7 @@ export class SignMedcertPage implements OnInit {
 
   signatureConsent: boolean = false;
   setidModalTrue() {
-    localStorage.setItem('isModal', '1');
+    localStorage.setItem("isModal", "1");
     this.idModal = true;
   }
   isConsent: boolean = true;
@@ -234,9 +234,9 @@ export class SignMedcertPage implements OnInit {
     this.setidModalTrue();
 
     if (this.isConsent) {
-      document.getElementById('trigger-button-consent-signmedcert').click();
+      document.getElementById("trigger-button-consent-signmedcert").click();
     } else {
-      document.getElementById('trigger-button-show-signature').click();
+      document.getElementById("trigger-button-show-signature").click();
     }
   }
   isOldSignature: boolean = false;
@@ -247,7 +247,7 @@ export class SignMedcertPage implements OnInit {
     let testAprrove: SignatureApproval = new SignatureApproval();
     testAprrove.mode = this.mode;
     testAprrove.account_no = patientId;
-    testAprrove.medcert_comment = '';
+    testAprrove.medcert_comment = "";
     testAprrove.medcert_approve_by = this.dr_code;
     testAprrove.medcert_signature = this.signatureBase64;
     this.saveSignature(testAprrove);
@@ -256,7 +256,7 @@ export class SignMedcertPage implements OnInit {
     if (this.signatureConsent) {
       this.modalController.dismiss();
       if (this.isSignature) {
-        document.getElementById('trigger-button-show-signature').click();
+        document.getElementById("trigger-button-show-signature").click();
       } else {
         this.openSignaturePad();
       }
@@ -272,17 +272,17 @@ export class SignMedcertPage implements OnInit {
       this.setidModalTrue();
     }
 
-    document.getElementById('trigger-button-certificate-signmedcert').click();
+    document.getElementById("trigger-button-certificate-signmedcert").click();
   }
   manualBack() {
     this.idModal = false;
-    localStorage.setItem('isModal', '0');
+    localStorage.setItem("isModal", "0");
     this.modalController.dismiss({
       dismissed: true,
     });
   }
   closeModal() {
-    localStorage.setItem('isModal', '0');
+    localStorage.setItem("isModal", "0");
     if (this.idModal) {
       this.modalController.dismiss();
     }
@@ -294,7 +294,7 @@ export class SignMedcertPage implements OnInit {
     this.isModalOpen = true;
     const modalState = {
       modal: true,
-      desc: 'fake state for our modal',
+      desc: "fake state for our modal",
     };
     history.pushState(modalState, null);
   }
@@ -325,7 +325,7 @@ export class SignMedcertPage implements OnInit {
     if (!this.signaturePad.isEmpty()) {
       this.closeModal();
       this.isbutton = true;
-      const base64Data = this.signaturePad.toDataURL('image/png');
+      const base64Data = this.signaturePad.toDataURL("image/png");
       let compressedImage;
       this.signatureBase64Full = base64Data;
       this.functionService
@@ -341,18 +341,18 @@ export class SignMedcertPage implements OnInit {
               this.signatureBase64Full = croppedImag;
 
               let patientId = this.activatedRoute.snapshot.params.admissionNo;
-              const myArray = croppedImag.split(',');
+              const myArray = croppedImag.split(",");
 
               let testAprrove = {
-                mode: 'string',
-                account_no: 'string',
-                medcert_comment: 'string',
-                medcert_approve_by: 'string',
-                medcert_signature: 'string',
+                mode: "string",
+                account_no: "string",
+                medcert_comment: "string",
+                medcert_approve_by: "string",
+                medcert_signature: "string",
               };
               testAprrove.mode = this.mode;
               testAprrove.account_no = patientId;
-              testAprrove.medcert_comment = '';
+              testAprrove.medcert_comment = "";
               testAprrove.medcert_approve_by = this.dr_code;
               testAprrove.medcert_signature = myArray[1];
               this.signaturePad.clear();
@@ -360,7 +360,7 @@ export class SignMedcertPage implements OnInit {
             });
         });
     } else {
-      this.functionService.presentToast('Please sign Signature Pad');
+      this.functionService.presentToast("Please sign Signature Pad");
     }
   }
   errorMessage;
@@ -416,7 +416,7 @@ export class SignMedcertPage implements OnInit {
         () => {
           this.isUploaded = true;
           this.functionService.presentToast(
-            'Approving and Uploading of Signature Completed.'
+            "Approving and Uploading of Signature Completed."
           );
           this.ngOnInit();
         }
@@ -424,7 +424,7 @@ export class SignMedcertPage implements OnInit {
   }
   getpdf() {
     this.isPDFLoading = false;
-    this.pdfSrc = '';
+    this.pdfSrc = "";
     let patientId = this.activatedRoute.snapshot.params.admissionNo;
     let testJsonPDF = {
       account_no: patientId,
@@ -438,7 +438,7 @@ export class SignMedcertPage implements OnInit {
         (data: any) => {
           ////console.log(data);
 
-          let blob = new Blob([data], { type: 'application/pdf' });
+          let blob = new Blob([data], { type: "application/pdf" });
           let downloadURL = window.URL.createObjectURL(data);
           this.pdfSrc = downloadURL;
         },
@@ -454,14 +454,14 @@ export class SignMedcertPage implements OnInit {
   }
   checkAppearance() {
     var values = JSON.parse(
-      '[' + atob(localStorage.getItem('user_settings')) + ']'
+      "[" + atob(localStorage.getItem("user_settings")) + "]"
     );
-    let dr_username = atob(localStorage.getItem('username'));
+    let dr_username = atob(localStorage.getItem("username"));
     values.forEach((element) => {
       if (element.darkmode == 1) {
-        this.renderer.setAttribute(document.body, 'color-theme', 'dark');
+        this.renderer.setAttribute(document.body, "color-theme", "dark");
       } else {
-        this.renderer.setAttribute(document.body, 'color-theme', 'light');
+        this.renderer.setAttribute(document.body, "color-theme", "light");
       }
     });
   }
@@ -471,21 +471,21 @@ export class SignMedcertPage implements OnInit {
   }
   autoGrowTextZone(e) {
     if (e.target.scrollHeight + 25 <= 350) {
-      e.target.style.height = '0px';
-      e.target.style.height = e.target.scrollHeight + 25 + 'px';
+      e.target.style.height = "0px";
+      e.target.style.height = e.target.scrollHeight + 25 + "px";
     }
   }
-  forRevisionText = '';
+  forRevisionText = "";
   @ViewChild(IonModal) modal: IonModal;
   dismissForRevisionModal() {
-    this.modalController.dismiss(null, 'cancel');
+    this.modalController.dismiss(null, "cancel");
   }
   saveForRevisionModal() {
     let forRevisionText = this.forRevisionText;
     let dischargeNo = this.activatedRoute.snapshot.params.dischargeNo;
-    this.forRevisionText = '';
+    this.forRevisionText = "";
     this.cancelApprovedApproval(dischargeNo, forRevisionText);
-    this.modalController.dismiss(null, 'cancel');
+    this.modalController.dismiss(null, "cancel");
   }
   cancelApprovedApproval(discharge_no: any, revision_dx_remarks: any) {
     let dischargeNo = {
@@ -503,13 +503,13 @@ export class SignMedcertPage implements OnInit {
         },
         (error) => {},
         () => {
-          this.functionService.presentToast('Successfully Sent for Revision');
+          this.functionService.presentToast("Successfully Sent for Revision");
           this.ionViewWillEnter();
         }
       );
   }
   reviseRevokeApproval() {
-    document.getElementById('trigger-modal-forRevision-signmedcert').click();
+    document.getElementById("trigger-modal-forRevision-signmedcert").click();
   }
 
   enterAnimation = (baseEl: HTMLElement) => {
@@ -517,26 +517,26 @@ export class SignMedcertPage implements OnInit {
 
     const backdropAnimation = this.animationCtrl
       .create()
-      .addElement(root.querySelector('ion-backdrop')!)
-      .fromTo('opacity', '0.01', 'var(--backdrop-opacity)');
+      .addElement(root.querySelector("ion-backdrop")!)
+      .fromTo("opacity", "0.01", "var(--backdrop-opacity)");
 
     const wrapperAnimation = this.animationCtrl
       .create()
-      .addElement(root.querySelector('.modal-wrapper')!)
+      .addElement(root.querySelector(".modal-wrapper")!)
       .keyframes([
-        { offset: 0, opacity: '0', transform: 'scale(0)' },
-        { offset: 1, opacity: '0.99', transform: 'scale(1)' },
+        { offset: 0, opacity: "0", transform: "scale(0)" },
+        { offset: 1, opacity: "0.99", transform: "scale(1)" },
       ]);
 
     return this.animationCtrl
       .create()
       .addElement(baseEl)
-      .easing('ease-out')
+      .easing("ease-out")
       .duration(500)
       .addAnimation([backdropAnimation, wrapperAnimation]);
   };
 
   leaveAnimation = (baseEl: HTMLElement) => {
-    return this.enterAnimation(baseEl).direction('reverse');
+    return this.enterAnimation(baseEl).direction("reverse");
   };
 }

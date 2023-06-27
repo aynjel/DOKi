@@ -1,5 +1,5 @@
-import { Component, OnInit, Renderer2 } from "@angular/core";
-import { NavController } from "@ionic/angular";
+import { Component, OnInit, Renderer2, ViewChild } from "@angular/core";
+import { IonContent, NavController } from "@ionic/angular";
 import { DoctorService } from "src/app/services/doctor/doctor.service";
 import { takeUntil } from "rxjs/operators";
 import { BehaviorSubject, Subject } from "rxjs";
@@ -238,7 +238,21 @@ export class PatientHistoryPage implements OnInit {
       };
       this.finalFullData.push(xyz);
     });*/ console.log(this.inPatients);
+
     this.sortedData = this.inPatients.sort((a, b) => {
+      const lastNameA = a.last_name.toUpperCase();
+      const firstNameA = a.first_name.toUpperCase();
+      const lastNameB = b.last_name.toUpperCase();
+      const firstNameB = b.first_name.toUpperCase();
+
+      if (lastNameA !== lastNameB) {
+        return lastNameA < lastNameB ? -1 : 1;
+      } else {
+        return firstNameA < firstNameB ? -1 : 1;
+      }
+    });
+
+    /*  this.sortedData = this.inPatients.sort((a, b) => {
       if (!a.discharged_date && !b.discharged_date) {
         return 0; // Both dates are blank, so they are considered equal
       } else if (!a.discharged_date) {
@@ -252,11 +266,11 @@ export class PatientHistoryPage implements OnInit {
           new Date(a.discharged_date).getTime()
         );
       }
-    });
+    });*/
 
     this.inPatients = this.sortedData.slice(0, 5);
 
-    console.log(this.inPatients);
+    this.scrollToTop();
   }
   refreshcounter: any = 1;
   loadData(event) {
@@ -374,4 +388,13 @@ export class PatientHistoryPage implements OnInit {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
+  @ViewChild(IonContent) content: IonContent;
+  scrollToTop() {
+    // Passing a duration to the method makes it so the scroll slowly
+    // goes to the top instead of instantly
+    this.content.scrollToTop(500);
+  }
+  handleScrollStart() {}
+  handleScroll(event) {}
+  handleScrollEnd() {}
 }
