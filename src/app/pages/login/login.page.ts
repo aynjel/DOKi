@@ -108,7 +108,7 @@ export class LoginPage {
   }
   ngAfterViewChecked() {
     console.log("ngAfterViewChecked");
-    this.loginForm.markAllAsTouched();
+    //this.loginForm.markAllAsTouched();
   }
   isSetPrivacyPolicy: boolean = false;
   isPrivacyPolicy: boolean = false;
@@ -139,7 +139,17 @@ export class LoginPage {
 
   ngOnInit() {
     this.ngUnsubscribe = new Subject();
-    this.postData.username = localStorage.getItem("srnm");
+    this.postData.username = localStorage.getItem("username");
+    console.log(localStorage.getItem("username"));
+
+    if (
+      this.loginForm.get("userNameOrEmail").value == "" ||
+      this.loginForm.get("userNameOrEmail").value == null
+    ) {
+      this.loginForm
+        .get("userNameOrEmail")
+        .patchValue(atob(localStorage.getItem("username")));
+    }
     this.loginResponseModel = new LoginResponseModel();
     this.onDarkModeEnable();
     //this.$gaService.pageView('/login', 'Login Page');
@@ -163,7 +173,10 @@ export class LoginPage {
       this.btnDisable = false;
     } else {
       //console.log("else");
-      localStorage.setItem("username", btoa(this.postData.username));
+      localStorage.setItem(
+        "username",
+        btoa(this.loginForm.get("userNameOrEmail").value)
+      );
       this.startLoginProcessV3();
     }
   }
@@ -621,7 +634,10 @@ export class LoginPage {
 
     this.storageService.store(AuthConstants.AUTH, this.loginResponseModelv3);
     localStorage.setItem("isIdle", "1");
-    localStorage.setItem("username", btoa(this.postData.username));
+    localStorage.setItem(
+      "username",
+      btoa(this.loginForm.get("userNameOrEmail").value)
+    );
     localStorage.setItem("modaled", "0");
     this.router.navigate(["/menu/in-patients"]).then(() => {
       // window.location.reload();
@@ -678,7 +694,10 @@ export class LoginPage {
     this.loginModel.appCode = Consta.appCode;
     this.loginModel.username = this.postData.username;
     this.loginModel.password = this.postData.password;
-    localStorage.setItem("username", btoa(this.postData.username));
+    localStorage.setItem(
+      "username",
+      btoa(this.loginForm.get("userNameOrEmail").value)
+    );
 
     this.loginModelv3 = new LoginModelv3();
     this.loginModelv3.userNameOrEmail = this.postData.username;
@@ -1028,7 +1047,7 @@ export class LoginPage {
   }
   ionViewDidEnter() {
     console.log("ionViewDidEnter");
-    this.loginForm.markAllAsTouched();
+    //this.loginForm.markAllAsTouched();
   }
   async showPrivacyPolicy() {
     const modal = await this.modalController.create({
