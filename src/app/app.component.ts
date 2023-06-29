@@ -313,7 +313,9 @@ export class AppComponent implements OnInit {
   logout() {
     this.logoutService.out();
   }
+  isLoading: Boolean = false;
   whattodo(data) {
+    this.isLoading = true;
     //console.log(data);
     /*this.router.navigate(['/menu/dashboard']).then(() => {
       window.location.reload();
