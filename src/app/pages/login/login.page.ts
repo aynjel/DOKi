@@ -640,7 +640,7 @@ export class LoginPage {
     );
     localStorage.setItem("modaled", "0");
     this.router.navigate(["/menu/in-patients"]).then(() => {
-      // window.location.reload();
+      window.location.reload();
     });
     /*this.router.navigate(['/menu/dashboard']).then(() => {
       window.location.reload();
