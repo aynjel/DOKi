@@ -9,6 +9,7 @@ import { StorageService } from "../../services/storage/storage.service";
 import { ToastService } from "../../services/toast/toast.service";
 import { DoctorInfoGlobal } from "../../shared/doctor-info-global";
 import { LoginData } from "../../models/login-data.model";
+import { Messages } from "src/app/shared/messages";
 import {
   LoginModel,
   ChangePasswordModel,
@@ -53,6 +54,7 @@ import { ChhAppForgotPasswordComponent } from "../../chh-web-components/chh-app-
 import { takeUntil } from "rxjs/operators";
 import { BehaviorSubject, Subject } from "rxjs";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { SwUpdate } from "@angular/service-worker";
 
 @Component({
   selector: "app-login",
@@ -89,14 +91,42 @@ export class LoginPage {
     private modalController: ModalController,
     private patientService: PatientService,
     public alertController: AlertController,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private update: SwUpdate,
+    public messages: Messages
   ) {
     this.loginForm = this.formBuilder.group({
       userNameOrEmail: ["", Validators.required],
       password: ["", Validators.required],
     });
   }
+  updateClient() {
+    console.log(this.update.isEnabled);
 
+    if (!this.update.isEnabled) {
+      this.functionsService.logToConsole("not enabled");
+    } else {
+      this.functionsService.logToConsole("enabled");
+    }
+    this.update.available.subscribe((event) => {
+      this.presentAlertConfirm();
+    });
+  }
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      cssClass: "my-custom-class",
+      message: this.messages.UPDATE_AVAILABLE,
+      buttons: [
+        {
+          text: this.constants.UI_COMPONENT_TEXT__VALUE__UPDATE,
+          handler: () => {
+            this.update.activateUpdate().then(() => location.reload());
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
   onSubmit() {
     if (this.loginForm.valid) {
       // Perform actions on form submission
@@ -107,7 +137,7 @@ export class LoginPage {
     }
   }
   ngAfterViewChecked() {
-    console.log("ngAfterViewChecked");
+    //console.log("ngAfterViewChecked");
     //this.loginForm.markAllAsTouched();
   }
   isSetPrivacyPolicy: boolean = false;
@@ -138,9 +168,10 @@ export class LoginPage {
   btnDisable: boolean = false;
 
   ngOnInit() {
+    this.updateClient();
     this.ngUnsubscribe = new Subject();
     this.postData.username = localStorage.getItem("username");
-    console.log(localStorage.getItem("username"));
+    //console.log(localStorage.getItem("username"));
 
     if (
       this.loginForm.get("userNameOrEmail").value == "" ||
@@ -164,15 +195,15 @@ export class LoginPage {
   }
   /*V3 App*/
   checkInput() {
-    console.log(this.loginForm.value);
+    //console.log(this.loginForm.value);
 
     this.btnDisable = true;
     if (this.loginForm.invalid) {
-      //console.log("if");
+      ////console.log("if");
       this.functionsService.sorryDoc();
       this.btnDisable = false;
     } else {
-      //console.log("else");
+      ////console.log("else");
       localStorage.setItem(
         "username",
         btoa(this.loginForm.get("userNameOrEmail").value)
@@ -191,7 +222,7 @@ export class LoginPage {
     let userIndentifier;
     let dualFlag1: boolean = false;
     let dualFlag2: boolean = false;
-    //console.log(this.loginModelv3);
+    ////console.log(this.loginModelv3);
     try {
       this.doctorService
         .loginV3(this.loginForm.value)
@@ -222,11 +253,11 @@ export class LoginPage {
                   dualFlag2 = true;
                 }
               });
-              ////////console.log("userIndentifier : "+userIndentifier);
+              //////////console.log("userIndentifier : "+userIndentifier);
             }
           },
           (error) => {
-            //console.log("error");
+            ////console.log("error");
 
             //this.functionsService.logToConsole(error);
             this.functionsService.sorryDoc();
@@ -368,7 +399,7 @@ export class LoginPage {
               localStorage.setItem("role_flag", "medcons");
               let xFlag: boolean = false;
               //this.loginResponseModelv3.roles.forEach(element => {
-              ////////console.log('check flag');
+              //////////console.log('check flag');
               if (this.loginResponseModelv3.jwt != null) {
                 localStorage.setItem("id_token", this.loginResponseModelv3.jwt);
               }
@@ -592,7 +623,7 @@ export class LoginPage {
         );
       } else if (data.data == "None") {
         this.btnDisable = false;
-        //////console.log('none');
+        ////////console.log('none');
       } else {
         this.btnDisable = false;
         this.modalUpdateV3(
@@ -640,7 +671,7 @@ export class LoginPage {
     );
     localStorage.setItem("modaled", "0");
     this.router.navigate(["/menu/in-patients"]).then(() => {
-      window.location.reload();
+      //window.location.reload();
     });
     /*this.router.navigate(['/menu/dashboard']).then(() => {
       window.location.reload();
@@ -1046,7 +1077,7 @@ export class LoginPage {
     this.btnDisable = false;
   }
   ionViewDidEnter() {
-    console.log("ionViewDidEnter");
+    //console.log("ionViewDidEnter");
     //this.loginForm.markAllAsTouched();
   }
   async showPrivacyPolicy() {
