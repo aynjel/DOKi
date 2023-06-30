@@ -54,11 +54,11 @@
             <ion-item *ngIf="p.url == 'logout'">
               <ion-icon color="primary" slot="start" [name]="p.icon"></ion-icon>
               <ion-label>
-                <span *ngIf="!isLoading">{{ p.title }}</span>
-                <ion-spinner *ngIf="isLoading"></ion-spinner>
+                <span>{{ p.title }}</span>
               </ion-label>
-            </ion-item> </ion-menu-toggle
-        ></ng-container>
+            </ion-item>
+          </ion-menu-toggle></ng-container
+        >
       </ion-list>
     </ion-content>
   </ion-menu>

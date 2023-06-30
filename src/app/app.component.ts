@@ -94,12 +94,12 @@ export class AppComponent implements OnInit {
       icon: "document-text-outline",
       type: "medcons",
     },
-    {
+    /* {
       title: "Medical Abstract",
       url: "menu/search-Medical-Abstract",
       icon: "documents-outline",
       type: "medcons",
-    },
+    },*/
     /*{
       title: "Progress Notes",
       url: "menu/patient-history",
