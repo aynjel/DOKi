@@ -106,10 +106,7 @@ export class LoginPage {
       alert("Please fill in all the required fields.");
     }
   }
-  ngAfterViewChecked() {
-    console.log("ngAfterViewChecked");
-    //this.loginForm.markAllAsTouched();
-  }
+
   isSetPrivacyPolicy: boolean = false;
   isPrivacyPolicy: boolean = false;
   loginresponse: any;
@@ -1034,10 +1031,6 @@ export class LoginPage {
   ionViewWillLeave() {
     this.btnDisable = false;
   }
-  ionViewDidEnter() {
-    console.log("ionViewDidEnter");
-    //this.loginForm.markAllAsTouched();
-  }
   async showPrivacyPolicy() {
     const modal = await this.modalController.create({
       component: ChhAppPrivacyPolicyPage,
@@ -1227,8 +1220,4 @@ export class LoginPage {
   /*For Doctors Portal
 
         /*For Doctors Portal */
-  ionViewDidLeave() {
-    //this.ngUnsubscribe.next();
-    // this.ngUnsubscribe.unsubscribe();
-  }
 }
