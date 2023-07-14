@@ -172,8 +172,9 @@ export class SearchMedicalabstractPage implements OnInit {
     });
     //console.log(this.finalFullData);
   }
-  detail(x, y) {
-    let data = "menu/inbox/sign-medabs/" + x + "/" + y;
+  detail(x, y, z) {
+    let zctr = z.ctr;
+    let data = "menu/inbox/sign-medabs/" + x + "/" + y + "/" + zctr;
     this.router.navigate([data]).then(() => {
       // window.location.reload();
     });

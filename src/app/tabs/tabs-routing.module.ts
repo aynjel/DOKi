@@ -98,7 +98,7 @@ const routes: Routes = [
           ).then((m) => m.SearchMedicalabstractPageModule),
       },
       {
-        path: "inbox/sign-medabs/:pNo/:admissionNo",
+        path: "inbox/sign-medabs/:pNo/:admissionNo/:ctr",
         loadChildren: () =>
           import(
             "../pages/doctors-information/sign-medicalabstract/sign-medicalabstract.module"
@@ -130,6 +130,13 @@ const routes: Routes = [
         loadChildren: () =>
           import("../pages/others/help/help.module").then(
             (m) => m.HelpPageModule
+          ),
+      },
+      {
+        path: "case-rates",
+        loadChildren: () =>
+          import("../pages/executuve/tab-caserates/tab-caserates.module").then(
+            (m) => m.TabCaseratesPageModule
           ),
       },
       /*

@@ -54,11 +54,13 @@
           <div class="rect-img-container"  *ngIf="x.imageUrl != ''">
             <img class="rect-img" src="{{x.imageUrl}}" alt="">
           </div-->
-
+            {{x.imageUrl}}
             <div
               *ngIf="x.imageUrl != ''"
               class="use-cover-background square"
-              style="background-image: url({{x.imageUrl}})"></div>
+              style="background-image: url({{x.imageUrl}})">
+              111
+            </div>
 
             <ion-card-header>
               <ion-card-title class="ion-text-wrap">{{x.title}}</ion-card-title>

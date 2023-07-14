@@ -1,24 +1,24 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
-import { CaseRates } from '../../../models/case-rates-search';
-import { AuthConstants, Consta } from '../../../config/auth-constants';
-import { ScreenSizeService } from 'src/app/services/screen-size/screen-size.service';
-import { AuthService } from 'src/app/services/auth/auth.service';
-import { LoginData } from '../../../models/login-data.model';
-import { DoctorService } from 'src/app/services/doctor/doctor.service';
-import { FunctionsService } from 'src/app/shared/functions/functions.service';
-import { PatientService } from 'src/app/services/patient/patient.service';
-import { ModalController } from '@ionic/angular';
+import { Component, OnInit, Renderer2 } from "@angular/core";
+import { CaseRates } from "../../../models/case-rates-search";
+import { AuthConstants, Consta } from "../../../config/auth-constants";
+import { ScreenSizeService } from "src/app/services/screen-size/screen-size.service";
+import { AuthService } from "src/app/services/auth/auth.service";
+import { LoginData } from "../../../models/login-data.model";
+import { DoctorService } from "src/app/services/doctor/doctor.service";
+import { FunctionsService } from "src/app/shared/functions/functions.service";
+import { PatientService } from "src/app/services/patient/patient.service";
+import { ModalController } from "@ionic/angular";
 import {
   UserSettingsModelv3,
   LoginResponseModelv3,
-} from 'src/app/models/doctor';
-import { Router } from '@angular/router';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+} from "src/app/models/doctor";
+import { Router } from "@angular/router";
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
 @Component({
-  selector: 'app-tab-caserates',
-  templateUrl: './tab-caserates.page.html',
-  styleUrls: ['./tab-caserates.page.scss'],
+  selector: "app-tab-caserates",
+  templateUrl: "./tab-caserates.page.html",
+  styleUrls: ["./tab-caserates.page.scss"],
 })
 export class TabCaseratesPage implements OnInit {
   private ngUnsubscribe = new Subject();
@@ -43,7 +43,7 @@ export class TabCaseratesPage implements OnInit {
   case_search_desc: any;
   activedescription: boolean = false;
   activedescription1: boolean = false;
-  case: any = '(first)';
+  case: any = "(first)";
   ionStart: boolean = true;
   ionStart1: boolean = true;
   CaseSearchDesc: any;
@@ -79,15 +79,15 @@ export class TabCaseratesPage implements OnInit {
 
     this.caseRateResponse_first = [];
     this.caseRateResponse_second = [];
-    this.ccCase = 'first';
+    this.ccCase = "first";
   }
 
   ngOnInit() {
     this.ngUnsubscribe = new Subject();
     this.caseRateData = new CaseRates();
-    this.caseRateData.case_class = 'first';
-    this.caseRateData.case_code = '';
-    this.caseRateData.case_desc = '';
+    this.caseRateData.case_class = "first";
+    this.caseRateData.case_code = "";
+    this.caseRateData.case_desc = "";
 
     // this.caseRateData  = new CaseRates();
     ////console.log(this.caseRateData);
@@ -105,18 +105,20 @@ export class TabCaseratesPage implements OnInit {
     this.ccCase = e.detail.value;
     this.caseSelect = !this.caseSelect;
     this.caseRateData.case_class = e.detail.value;
-    this.case = '(' + e.detail.value + ')';
+    this.case = "(" + e.detail.value + ")";
     this.search();
   }
   settings() {
-    this.router.navigate(['/executive/settings']);
+    this.router.navigate(["/executive/settings"]);
   }
+  isLoading: boolean = false;
   search() {
+    this.isLoading = true;
     this.refreshcounter = 1;
     //console.log(this.caseRateData);
 
-    if (this.caseRateData.case_desc != '') {
-      if (this.ccCase == 'first') {
+    if (this.caseRateData.case_desc != "") {
+      if (this.ccCase == "first") {
         //console.log(this.ccCase);
 
         this.ionStart = false;
@@ -132,9 +134,11 @@ export class TabCaseratesPage implements OnInit {
               this.caseRateFullList = res;
             },
             (error) => {
+              this.isLoading = false;
               this.ionNoData = true;
             },
             () => {
+              this.isLoading = false;
               this.ionSkeleton = false;
               if (
                 this.functionsService.isEmptyObject(this.caseRateResponse_first)
@@ -212,7 +216,7 @@ export class TabCaseratesPage implements OnInit {
   checkAppearance() {
     let logindata = <LoginResponseModelv3>this.authService.userData$.getValue();
     this.dr_code = logindata.doctorCode;
-    let dr_username = atob(localStorage.getItem('username'));
+    let dr_username = atob(localStorage.getItem("username"));
     /*this.patientService.getUserSettingsV2(dr_username).subscribe(
        (res: any) => {       
          if(Object.keys(res).length >= 1){

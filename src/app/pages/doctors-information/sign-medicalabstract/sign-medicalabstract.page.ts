@@ -515,6 +515,7 @@ export class SignMedicalabstractPage implements OnInit {
     this.isPDFLoading = false;
     this.pdfSrc = "";
     let accountNo = this.activatedRoute.snapshot.params.admissionNo;
+    let ctr = this.activatedRoute.snapshot.params.ctr;
     let testJsonPDF = {
       account_no: accountNo,
       mode: this.mode,
@@ -524,6 +525,7 @@ export class SignMedicalabstractPage implements OnInit {
     let testtt = {
       account_no: accountNo,
       mode: "T",
+      ctr: ctr,
     };
     let medabstract = this.doctorService
       .getMedicalAbstractPOST(testtt)
