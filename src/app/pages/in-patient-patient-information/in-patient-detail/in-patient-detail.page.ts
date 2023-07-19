@@ -44,7 +44,7 @@ import { ExecutiveService } from "src/app/services/executive/executive.service";
 import { takeUntil } from "rxjs/operators";
 import { BehaviorSubject, Subject } from "rxjs";
 import { AfterViewInit, ElementRef, ViewChild } from "@angular/core";
-import SignaturePad from "signature_pad";
+
 import { ResiService } from "src/app/services/resi/resi.service";
 @Component({
   selector: "app-in-patient-detail",
