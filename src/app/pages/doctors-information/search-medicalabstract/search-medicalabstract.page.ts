@@ -88,18 +88,16 @@ export class SearchMedicalabstractPage implements OnInit {
 
           console.log(data);
           this.medicalAbstractList = data;
-          this.inPatientsDraft = data;
-          this.inPatientsDraft1 = data;
         },
       });
   }
   filterList() {
-    console.log(this.inPatientsDraft);
+    ////////console.logthis.inPatientsDraft);
 
     this.inPatients = [];
     this.finalFullData = [];
     this.site = localStorage.getItem("siteSelected");
-    /*if (this.site === this.constants.CHH_SITE__CODE__ALL) {
+    if (this.site === this.constants.CHH_SITE__CODE__ALL) {
       this.inPatients = this.inPatientsDraft;
     } else if (this.site === this.constants.CHH_SITE__CODE__CEBU) {
       this.inPatients = this.inPatientsDraft.filter(
@@ -109,21 +107,18 @@ export class SearchMedicalabstractPage implements OnInit {
       this.inPatients = this.inPatientsDraft.filter(
         (x) => x.site === this.constants.CHH_SITE__CODE__MANDAUE
       );
-    }*/
+    }
 
     ////////console.logthis.inPatients);
 
+    this.inPatientsDraft1 = this.inPatients;
     if (this.searchBar) {
-      console.log(this.searchBar);
-      console.log(this.inPatientsDraft1);
+      this.inPatients = [];
 
-      this.medicalAbstractList = [];
-
-      this.medicalAbstractList = this.inPatientsDraft1.filter((e) => {
+      this.inPatients = this.inPatientsDraft1.filter((e) => {
         ////////console.loge.room_no.toLowerCase(), "|", this.searchBar.toLowerCase());
-        console.log(e.name);
-        return e.name.toLowerCase().includes(this.searchBar.toLowerCase());
-        /* return (
+
+        return (
           (
             e.last_name +
             ", " +
@@ -141,11 +136,8 @@ export class SearchMedicalabstractPage implements OnInit {
             .includes(this.searchBar.toLowerCase()) ||
           e.floor_desc.toLowerCase().includes(this.searchBar.toLowerCase()) ||
           e.room_no.toLowerCase().includes(this.searchBar.toLowerCase())
-        );*/
+        );
       });
-      console.log(this.inPatients);
-    } else {
-      this.medicalAbstractList = this.inPatientsDraft1;
     }
     //////console.log(this.inPatients);
 
@@ -154,7 +146,7 @@ export class SearchMedicalabstractPage implements OnInit {
     let xyz;
     let reference;
 
-    /*let stack = [...new Set(this.inPatients.map((d) => d.floor_desc))];
+    let stack = [...new Set(this.inPatients.map((d) => d.floor_desc))];
     stack = this.sortOrder(reference, stack);
     stack.forEach((element) => {
       if (this.defaultAccordions == null) {
@@ -177,7 +169,7 @@ export class SearchMedicalabstractPage implements OnInit {
         data: data,
       };
       this.finalFullData.push(xyz);
-    });*/
+    });
     //console.log(this.finalFullData);
   }
   detail(x, y, z) {
