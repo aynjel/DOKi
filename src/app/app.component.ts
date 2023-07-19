@@ -113,6 +113,12 @@ export class AppComponent implements OnInit {
       type: "medcons",
     },
     {
+      title: "Case Rates",
+      url: "menu/case-rates",
+      icon: "newspaper-outline",
+      type: "medcons",
+    },
+    {
       title: "Help",
       url: "menu/help",
       icon: "help-outline",
