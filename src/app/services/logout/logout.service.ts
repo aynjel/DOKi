@@ -38,8 +38,7 @@ export class LogoutService {
     await Promise.all(
       keys.map((key) => {
         console.log(key);
-
-        // caches.delete(key);
+        caches.delete(key);
       })
     );
   }
