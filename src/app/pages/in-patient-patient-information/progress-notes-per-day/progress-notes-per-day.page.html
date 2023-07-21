@@ -218,6 +218,33 @@
                         </ion-col>
                       </ion-row>
                     </ion-grid>
+                    <ion-grid
+                      class="ion-no-padding"
+                      style="padding-top: 10px; padding-bottom: 10px"
+                      *ngIf="doctor_Status_code !='AP' && x.isMine">
+                      <ion-row class="ion-no-padding">
+                        <ion-col>
+                          <ion-button
+                            expand="block"
+                            color="secondary"
+                            *ngIf="x.isPnApproved == false"
+                            (click)="presentActionSheetapproveAP(x)"
+                            >Approve Progress Note - {{x.event_time_c}}
+                            ?</ion-button
+                          >
+                          <ion-button
+                            expand="block"
+                            color="tertiary"
+                            *ngIf="x.isPnApproved"
+                            (click)="presentActionSheetRevokeAP(x)"
+                            >Revoke Approval?</ion-button
+                          >
+                          <ion-item *ngIf="x.isPnApproved"
+                            >Approved on : {{x.pnApprovedDate}}</ion-item
+                          >
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
                     <div *ngFor="let y of x.soap">
                       <app-soap-show-hide
                         [SOAP]="y.note_type"

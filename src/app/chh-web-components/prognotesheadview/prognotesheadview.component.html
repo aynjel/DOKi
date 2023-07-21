@@ -10,9 +10,9 @@
   ><span *ngIf="isLoading"><ion-spinner></ion-spinner></span></span
 ><br />
 <span
-  ><ion-icon name="information-circle-outline"></ion-icon>
-  Progress Notes for Approval :
-  <span [ngClass]="counter > 1 ? 'my_class' : 'my_class2'"
+  ><ion-icon name="information-circle-outline"></ion-icon> Progress Notes for
+  Approval :
+  <span [ngClass]="counter - approvedCounter >= 1 ? 'my_class' : 'my_class2'"
     ><span *ngIf="!isLoading">{{ counter - approvedCounter }}</span
     ><span *ngIf="isLoading"><ion-spinner></ion-spinner></span> </span></span
 ><br />
