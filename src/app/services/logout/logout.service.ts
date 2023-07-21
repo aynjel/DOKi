@@ -33,8 +33,19 @@ export class LogoutService {
       await this.menu.close();
     }
   }
+  async clearCache() {
+    const keys = await window.caches.keys();
+    await Promise.all(
+      keys.map((key) => {
+        console.log(key);
+
+        // caches.delete(key);
+      })
+    );
+  }
   public revokeTokenV3: RevokeTokenV3;
   out() {
+    this.clearCache();
     this.checkSideMenu();
     this.modalController.getTop().then((res) => {
       if (res) {
