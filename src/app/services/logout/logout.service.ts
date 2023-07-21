@@ -37,6 +37,8 @@ export class LogoutService {
     const keys = await window.caches.keys();
     await Promise.all(
       keys.map((key) => {
+        console.log("--tes--");
+
         console.log(key);
         caches.delete(key);
         console.log(key);
