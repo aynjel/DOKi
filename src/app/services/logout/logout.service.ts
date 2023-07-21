@@ -39,12 +39,13 @@ export class LogoutService {
       keys.map((key) => {
         console.log(key);
         caches.delete(key);
+        console.log(key);
       })
     );
   }
   public revokeTokenV3: RevokeTokenV3;
   out() {
-    // this.clearCache();
+    this.clearCache();
     this.checkSideMenu();
     this.modalController.getTop().then((res) => {
       if (res) {
