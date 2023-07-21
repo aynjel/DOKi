@@ -44,7 +44,7 @@ export class LogoutService {
   }
   public revokeTokenV3: RevokeTokenV3;
   out() {
-    this.clearCache();
+    // this.clearCache();
     this.checkSideMenu();
     this.modalController.getTop().then((res) => {
       if (res) {
