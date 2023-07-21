@@ -1129,7 +1129,7 @@ export class LoginPage {
     localStorage.setItem("isIdle", "1");
     localStorage.setItem("username", btoa(this.postData.username));
     this.router.navigate(["/menu/dashboard"]).then(() => {
-      window.location.reload();
+      //window.location.reload();
     });
   }
   /*
