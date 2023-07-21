@@ -41,7 +41,7 @@ RUN npm i angular2-signaturepad --legacy-peer-deps
 COPY . .
 # RUN npm run-script build:prod
 #   -- ionic build --prod is used which calls angular production build under the hood.
-RUN ionic build --prod
+RUN ionic build --prod --output-hashing=all
 
 #  ______   ______     ______     _____     __  __     ______     ______   __     ______     __   __   
 # /\  == \ /\  == \   /\  __ \   /\  __-.  /\ \/\ \   /\  ___\   /\__  _\ /\ \   /\  __ \   /\ "-.\ \  
