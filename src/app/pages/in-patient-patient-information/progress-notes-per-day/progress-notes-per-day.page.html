@@ -228,7 +228,7 @@
                             expand="block"
                             color="secondary"
                             *ngIf="x.isPnApproved == false"
-                            (click)="presentActionSheetapproveAP(x)"
+                            (click)="presentActionSheetapprove(x)"
                             >Approve Progress Note - {{x.event_time_c}}
                             ?</ion-button
                           >
@@ -236,7 +236,7 @@
                             expand="block"
                             color="tertiary"
                             *ngIf="x.isPnApproved"
-                            (click)="presentActionSheetRevokeAP(x)"
+                            (click)="presentActionSheetRevoke(x)"
                             >Revoke Approval?</ion-button
                           >
                           <ion-item *ngIf="x.isPnApproved"
