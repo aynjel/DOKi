@@ -1,48 +1,48 @@
-import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { IndexGuard } from './guards/index.guard';
-import { HomeGuard } from './guards/home.guard';
-import { ChhAppError404PageModule } from '../app/chh-web-components/chh-app-error-404/chh-app-error-404.module';
-import { UserDataResolver } from './resolvers/userData.resolver';
+import { NgModule } from "@angular/core";
+import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { IndexGuard } from "./guards/index.guard";
+import { HomeGuard } from "./guards/home.guard";
+import { ChhAppError404PageModule } from "../app/chh-web-components/chh-app-error-404/chh-app-error-404.module";
+import { UserDataResolver } from "./resolvers/userData.resolver";
 const routes: Routes = [
   /*{
     path: '',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },*/ {
-    path: 'menu',
+    path: "menu",
     canActivate: [HomeGuard],
     loadChildren: () =>
-      import('./tabs/tabs.module').then((m) => m.TabsPageModule),
+      import("./tabs/tabs.module").then((m) => m.TabsPageModule),
   },
   {
-    path: 'login',
+    path: "login",
 
     canActivate: [IndexGuard],
     loadChildren: () =>
-      import('./pages/login/login.module').then((m) => m.LoginPageModule),
+      import("./pages/login/login.module").then((m) => m.LoginPageModule),
   },
   {
-    path: 'menu/in-patients/:id',
+    path: "menu/in-patients/:id",
     loadChildren: () =>
       import(
-        './pages/in-patient-patient-information/in-patient-detail/in-patient-detail.module'
+        "./pages/in-patient-patient-information/in-patient-detail/in-patient-detail.module"
       ).then((m) => m.InpatientDetailPageModule),
   },
 
   {
-    path: 'menu/in-patients/:id/progressnotes/:perday',
+    path: "menu/in-patients/:id/progressnotes/:perday",
     canActivate: [HomeGuard],
     loadChildren: () =>
       import(
-        './pages/in-patient-patient-information/progress-notes-per-day/progress-notes-per-day.module'
+        "./pages/in-patient-patient-information/progress-notes-per-day/progress-notes-per-day.module"
       ).then((m) => m.ProgressNotesPerDayPageModule),
   },
   {
-    path: 'menu/in-patients/:admissionNo/view/:dischargeNo',
+    path: "menu/in-patients/:admissionNo/view/:dischargeNo",
     canActivate: [HomeGuard],
     loadChildren: () =>
       import(
-        './pages/doctors-information/view-medcert/view-medcert.module'
+        "./pages/doctors-information/view-medcert/view-medcert.module"
       ).then((m) => m.ViewMedcertPageModule),
   },
 
@@ -55,31 +55,31 @@ const routes: Routes = [
   },*/
 
   {
-    path: 'menu/in-patients/:id/professional-fee',
+    path: "menu/in-patients/:id/professional-fee",
     loadChildren: () =>
       import(
-        './pages/in-patient-patient-information/chh-app-professional-fee/chh-app-professional-fee.module'
+        "./pages/in-patient-patient-information/chh-app-professional-fee/chh-app-professional-fee.module"
       ).then((m) => m.ChhAppProfessionalFeePageModule),
   },
   {
-    path: 'menu/in-patients/:id/professional-fee-transaction-summary',
+    path: "menu/in-patients/:id/professional-fee-transaction-summary",
     loadChildren: () =>
       import(
-        './pages/in-patient-patient-information/transaction-summary/transaction-summary.module'
+        "./pages/in-patient-patient-information/transaction-summary/transaction-summary.module"
       ).then((m) => m.TransactionSummaryPageModule),
   },
   {
-    path: 'menu/in-patients/:id/professional-fee/:method',
+    path: "menu/in-patients/:id/professional-fee/:method",
     loadChildren: () =>
       import(
-        './pages/in-patient-patient-information/chh-app-professional-fee-summary/chh-app-professional-fee-summary.module'
+        "./pages/in-patient-patient-information/chh-app-professional-fee-summary/chh-app-professional-fee-summary.module"
       ).then((m) => m.ChhAppProfessionalFeeSummaryPageModule),
   },
   {
-    path: 'menu/in-patients/:id/professional-fee/:method/:summary',
+    path: "menu/in-patients/:id/professional-fee/:method/:summary",
     loadChildren: () =>
       import(
-        './pages/in-patient-patient-information/transaction-summary/transaction-summary.module'
+        "./pages/in-patient-patient-information/transaction-summary/transaction-summary.module"
       ).then((m) => m.TransactionSummaryPageModule),
   },
   /*{
@@ -104,9 +104,9 @@ const routes: Routes = [
       ).then((m) => m.LaboratoryTestModalPageModule),
   },*/
   {
-    path: 'resetpassword',
+    path: "resetpassword",
     loadChildren: () =>
-      import('./pages/resetpassword/resetpassword.module').then(
+      import("./pages/resetpassword/resetpassword.module").then(
         (m) => m.ResetpasswordPageModule
       ),
   },
@@ -116,31 +116,31 @@ const routes: Routes = [
       import('./pages/admin/tabs/tabs.module').then((m) => m.TabsPageModule),
   },*/
   {
-    path: 'executive',
+    path: "executive",
     loadChildren: () =>
-      import('./pages/executuve/tabs/tabs.module').then(
+      import("./pages/executuve/tabs/tabs.module").then(
         (m) => m.TabsPageModule
       ),
   },
   {
-    path: '',
+    path: "",
     canActivate: [IndexGuard],
     loadChildren: () =>
-      import('./pages/index/index.module').then((m) => m.IndexPageModule),
+      import("./pages/index/index.module").then((m) => m.IndexPageModule),
   },
   {
-    path: 'error404',
+    path: "error404",
     loadChildren: () =>
       import(
-        '../app/chh-web-components/chh-app-error-404/chh-app-error-404.module'
+        "../app/chh-web-components/chh-app-error-404/chh-app-error-404.module"
       ).then((m) => m.ChhAppError404PageModule),
   },
   {
-    path: '**',
-    pathMatch: 'full',
+    path: "**",
+    pathMatch: "full",
     loadChildren: () =>
       import(
-        '../app/chh-web-components/chh-app-error-404/chh-app-error-404.module'
+        "../app/chh-web-components/chh-app-error-404/chh-app-error-404.module"
       ).then((m) => m.ChhAppError404PageModule),
   } /*  
 *  {
@@ -205,7 +205,7 @@ const routes: Routes = [
 */,
 ];
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: "legacy" })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

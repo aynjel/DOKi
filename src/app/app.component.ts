@@ -89,6 +89,12 @@ export class AppComponent implements OnInit {
       type: "medcons",
     },
     {
+      title: "Discharge Instruction",
+      url: "menu/discharge-instruction-search",
+      icon: "receipt-outline",
+      type: "medcons",
+    },
+    {
       title: "Progress Notes History",
       url: "menu/patient-history",
       icon: "document-text-outline",

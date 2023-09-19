@@ -13,4 +13,5 @@ export const environment = {
   consoleLog: false,
   API_URL: window["env"]["API_URL"],
   callHistory: window["env"]["API_URL"],
+  dischargeInstruction: "https://dev-api02.chonghua.com.ph/",
 };

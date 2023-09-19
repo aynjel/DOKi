@@ -91,6 +91,20 @@ const routes: Routes = [
           ).then((m) => m.PatientHistoryPageModule),
       },
       {
+        path: "discharge-instruction-search",
+        loadChildren: () =>
+          import(
+            "../pages/doctors-information/discharge-instruction-search/discharge-instruction-search.module"
+          ).then((m) => m.DischargeInstructionSearchPageModule),
+      },
+      {
+        path: "inbox/discharge-instruction/:pNo/:admissionNo",
+        loadChildren: () =>
+          import(
+            "../pages/doctors-information/discharge-instruction/discharge-instruction.module"
+          ).then((m) => m.DischargeInstructionPageModule),
+      },
+      {
         path: "search-Medical-Abstract",
         loadChildren: () =>
           import(

@@ -546,11 +546,24 @@ export class DoctorService {
     return this.http.post(url, data, { responseType: "blob" });
   }
   getMedicalAbstractPOST(data) {
-    console.log(data);
-
     const url = environment.apiRouterUrlTest + "/gw/doki/medicalabstract/pdf";
     //const url = "https://api.chonghua.com.ph/gw/doki/medicalabstract/pdf";
     return this.http.post(url, data, { responseType: "blob" });
+  }
+  //IPM000046433&patientno=180100052974
+  getDischargeInstruction(pno, admissionno) {
+    const httpOptions = {
+      responseType: "blob" as "json",
+    };
+    const url =
+      environment.API_URL +
+      "/gw/DischargeInstruction/pdf?mode=T&accountno=" +
+      admissionno +
+      "&patientno=" +
+      pno;
+    return this.http.get(url, httpOptions);
+
+    //   return this.http.post(url, "", { responseType: "blob" });
   }
 
   //save medcert
@@ -616,8 +629,6 @@ export class DoctorService {
   }
 
   getMedicalAbstractList(drCode: any) {
-    //const headers = new HttpHeaders();
-
     const headers = new HttpHeaders({
       "Content-Type": "application/json;charset=utf-8",
     });
@@ -627,8 +638,18 @@ export class DoctorService {
       "/gw/MedicalAbstract/MedicalAbstractDOKiList?drCode=" +
       drCode;
 
-    ///
-    //const url =    ("http://10.151.12.120:7224/api/v3/MedicalAbstract/MedicalAbstractList");
     return this.http.get(url, options);
+  }
+  postDI(endPoint, data) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredentials: false };
+    const url = environment.dischargeInstruction + endPoint;
+    return this.http.post(url, data, options);
+  }
+  putDI(endPoint, data) {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    const options = { headers: headers, withCredentials: false };
+    const url = environment.dischargeInstruction + endPoint;
+    return this.http.put(url, data, options);
   }
 }
