@@ -7,6 +7,7 @@ import { DatePipe } from "@angular/common";
 import { Router } from "@angular/router";
 import { AuthService } from "src/app/services/auth/auth.service";
 import { LoginResponseModelv3 } from "src/app/models/doctor";
+import { ParamService } from "./service/param.service";
 
 @Component({
   selector: "app-discharge-instruction-search",
@@ -18,7 +19,8 @@ export class DischargeInstructionSearchPage implements OnInit {
     public constants: Constants,
     private doctorService: DoctorService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private param: ParamService
   ) {}
   defaultAccordions;
   site = "C";
@@ -27,6 +29,16 @@ export class DischargeInstructionSearchPage implements OnInit {
   inPatientsDraft;
   inPatientsDraft1;
   searchBar;
+  selected = "F";
+  pendingApprovalCount;
+  changeMode() {
+    console.log(this.selected);
+
+    this.medicalAbstractList = this.inPatientsDraft1.filter(
+      (element) => element.ds_status == this.selected
+    );
+  }
+  prelim;
   ngOnInit() {}
   loginResponseModelv3;
   ionViewWillEnter() {
@@ -67,7 +79,11 @@ export class DischargeInstructionSearchPage implements OnInit {
     }, 1000);
   }
   isSearching: boolean = false;
+  prelimCount;
   getMEdicalAbstractList() {
+    this.medicalAbstractList = [];
+    this.inPatientsDraft = [];
+    this.inPatientsDraft1 = [];
     // this.loginResponseModelv3.doctorCode = "MD000243";
     this.isSearching = true;
     this.doctorService
@@ -81,6 +97,7 @@ export class DischargeInstructionSearchPage implements OnInit {
         complete: () => {
           this.isSearching = false;
           console.log("asdasd");
+          this.changeMode();
         },
         error: (error) => {
           this.isSearching = false;
@@ -91,12 +108,24 @@ export class DischargeInstructionSearchPage implements OnInit {
           this.medicalAbstractList = data.data;
           this.inPatientsDraft = data.data;
           this.inPatientsDraft1 = data.data;
+          this.pendingApprovalCount = this.countPF(data.data, "F");
+          this.prelimCount = this.countPF(data.data, "P");
         },
       });
     this.doctorService.getMedicalAbstractList(
       this.loginResponseModelv3.doctorCode
     );
   }
+  countPF(data, ss) {
+    let count = 0;
+    for (const item of data) {
+      if (item.ds_status === ss) {
+        count++;
+      }
+    }
+    return count;
+  }
+
   filterList() {
     console.log(this.inPatientsDraft);
 
@@ -185,6 +214,7 @@ export class DischargeInstructionSearchPage implements OnInit {
     //console.log(this.finalFullData);
   }
   detail(x, y, z) {
+    this.param.change_ds_status(z.ds_status);
     let zctr = z.ctr;
     let data = "menu/inbox/discharge-instruction/" + x + "/" + y;
     this.router.navigate([data]).then(() => {

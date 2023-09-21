@@ -78,19 +78,20 @@
               Notice is saved in HIS.</ion-text
             >
           </ion-item>
-
-          <ion-button
-            expand="block"
-            (click)="approveButton()"
-            *ngIf="!isApprovedDI && !isUpdating"
-            >Approve Discharge Instruction</ion-button
-          >
-          <ion-button
-            color="warning"
-            expand="block"
-            (click)="revokeButton()"
-            *ngIf="isApprovedDI && !isUpdating"
-            >Revoke Discharge Instruction</ion-button
+          <ng-container *ngIf="ds_status == 'F' || ds_status == 'A'">
+            <ion-button
+              expand="block"
+              (click)="approveButton()"
+              *ngIf="!isApprovedDI && !isUpdating"
+              >Approve Discharge Instruction</ion-button
+            >
+            <ion-button
+              color="warning"
+              expand="block"
+              (click)="revokeButton()"
+              *ngIf="isApprovedDI && !isUpdating"
+              >Revoke Discharge Instruction</ion-button
+            ></ng-container
           >
           <ion-button expand="block" *ngIf="isUpdating"
             ><ion-spinner></ion-spinner

@@ -25,6 +25,7 @@ import { NgxIndexedDBService } from "ngx-indexed-db";
 import { AuthService } from "src/app/services/auth/auth.service";
 import { LoginResponseModelv3, SignatureApproval } from "src/app/models/doctor";
 import { Constants } from "src/app/shared/constants";
+import { ParamService } from "../discharge-instruction-search/service/param.service";
 
 @Component({
   selector: "app-discharge-instruction",
@@ -72,7 +73,8 @@ export class DischargeInstructionPage implements OnInit {
     private animationCtrl: AnimationController,
     private constant: Constants,
     private toastController: ToastController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    public param: ParamService
   ) {
     this.isNotification = true;
     this.screensizeService
@@ -175,6 +177,7 @@ export class DischargeInstructionPage implements OnInit {
         this.getSignaturefromIndexedDB(this.dr_code);
       });
   }
+  ds_status;
   ngOnInit() {
     this.getDIstatus();
     if (this.idModal) {
@@ -209,7 +212,12 @@ export class DischargeInstructionPage implements OnInit {
       backgroundColor: "rgba(255, 255, 255, 0)",
       penColor: "rgb(0, 0, 0)",
     };
-    //console.log(this.signaturePadOptions);
+    this.param.ds_status.subscribe((res) => {
+      console.log("ds_status", res);
+      if (res.length >= 1) {
+        this.ds_status = res;
+      }
+    });
   }
   medicalAbstractList = {
     patient_No: "",

@@ -11,6 +11,39 @@
       &nbsp;&nbsp;Search Discharge Instruction
     </span>
   </ion-toolbar>
+  <ion-item>
+    <ion-segment
+      [(ngModel)]="selected"
+      (ionChange)="changeMode()"
+      [disabled]="isSearching">
+      <ion-segment-button
+        value="F"
+        [ngClass]="{'boldMe': selected === 'F'}"
+        class="pointer test">
+        <ion-label
+          >for Approval<sup *ngIf="pendingApprovalCount >= 1">
+            ({{pendingApprovalCount}})
+          </sup></ion-label
+        >
+      </ion-segment-button>
+      <ion-segment-button
+        value="P"
+        [ngClass]="{'boldMe': selected === 'P'}"
+        class="pointer test">
+        <ion-label
+          >Prelim<sup *ngIf="prelimCount >= 1">
+            ({{prelimCount}})
+          </sup></ion-label
+        >
+      </ion-segment-button>
+      <ion-segment-button
+        value="A"
+        [ngClass]="{'boldMe': selected === 'A'}"
+        class="pointer test">
+        <ion-label>Approved</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-item>
   <div>
     <ion-grid class="ion-no-padding"> </ion-grid>
     <ion-grid class="ion-no-padding chh-darkmode">
@@ -37,6 +70,7 @@
           <ion-searchbar
             [(ngModel)]="searchBar"
             (ionChange)="filterList()"
+            [disabled]="isSearching"
             placeholder="Search Name or Room Number"
             mode="ios"></ion-searchbar>
         </ion-col>
@@ -93,7 +127,7 @@
                   <b>Account No. : {{x.account_No}} </b>
                 </p>
               </ion-text>
-              <ion-text *ngIf="x.ds_status != 'A'" style="color: RED">
+              <ion-text *ngIf="x.ds_status == 'F'" style="color: RED">
                 <ion-icon name="pencil-outline"></ion-icon> Requires
                 Approval</ion-text
               >
