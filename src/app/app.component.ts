@@ -82,18 +82,7 @@ export class AppComponent implements OnInit {
       icon: 'document-text-outline',
       type: 'med',<ion-icon name="mail-open-outline"></ion-icon>
     },*/,
-    {
-      title: "Final Dx | Med Cert",
-      url: "menu/inbox",
-      icon: "document-outline",
-      type: "medcons",
-    },
-    {
-      title: "Discharge Instruction",
-      url: "menu/discharge-instruction-search",
-      icon: "receipt-outline",
-      type: "medcons",
-    },
+
     {
       title: "Progress Notes History",
       url: "menu/patient-history",
@@ -104,6 +93,19 @@ export class AppComponent implements OnInit {
       title: "Medical Abstract",
       url: "menu/search-Medical-Abstract",
       icon: "documents-outline",
+      type: "medcons",
+    },
+
+    {
+      title: "Discharge Instruction",
+      url: "menu/discharge-instruction-search",
+      icon: "receipt-outline",
+      type: "medcons",
+    },
+    {
+      title: "Final Dx | Med Cert",
+      url: "menu/inbox",
+      icon: "document-outline",
       type: "medcons",
     },
     /*{

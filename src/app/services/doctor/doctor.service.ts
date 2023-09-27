@@ -634,10 +634,18 @@ export class DoctorService {
     });
     const options = { headers: headers, withCredentials: true };
     const url =
-      environment.apiRouterUrlTest +
-      "/gw/MedicalAbstract/MedicalAbstractDOKiList?drCode=" +
+      environment.dischargeInstruction +
+      "gw/MedicalAbstract/MedicalAbstractDOKiList?drCode=" +
       drCode;
 
+    return this.http.get(url, options);
+  }
+  getDI(endPoint) {
+    const headers = new HttpHeaders({
+      "Content-Type": "application/json;charset=utf-8",
+    });
+    const options = { headers: headers, withCredentials: true };
+    const url = environment.dischargeInstruction + endPoint;
     return this.http.get(url, options);
   }
   postDI(endPoint, data) {

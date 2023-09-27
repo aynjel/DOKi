@@ -174,6 +174,7 @@ export class SignMedicalabstractPage implements OnInit {
       });
   }
   ngOnInit() {
+    this.getDIstatus();
     if (this.idModal) {
       this.closeModal();
     }
@@ -439,6 +440,7 @@ export class SignMedicalabstractPage implements OnInit {
   doRefresh(event) {
     setTimeout(() => {
       this.getpdf();
+      this.getDIstatus();
       //location.reload();
       event.target.complete();
     }, 1000);
@@ -641,5 +643,119 @@ export class SignMedicalabstractPage implements OnInit {
     this.router.navigate([data]).then(() => {
       // window.location.reload();
     });
+  }
+  isMaStatusSearching: boolean = false;
+  ma_status;
+  getDIstatus() {
+    this.isMaStatusSearching = true;
+    let accountNo = this.activatedRoute.snapshot.params.admissionNo;
+    /*   this.doctorService
+      .getDI(
+        "gw/MedicalAbstract/RetrieveApprovedMedicalAbstract?accountNo=" +
+          accountNo
+      )
+      .subscribe({
+        complete: () => {
+          this.isMaStatusSearching = false;
+        },
+        error: (error) => {},
+        next: (data: any) => {
+          this.isMaStatusSearching = false;
+          console.log(data);
+          this.ma_status = data[0].abstract_Status;
+        },
+      }); */
+
+    let myList = {
+      account_no: accountNo,
+    };
+
+    this.doctorService.postDI("gw/MedicalAbstract/Adult", myList).subscribe({
+      complete: () => {
+        this.isMaStatusSearching = false;
+      },
+      error: (error) => {
+        this.isMaStatusSearching = false;
+      },
+      next: (data: any) => {
+        this.isMaStatusSearching = false;
+        this.ma_status = data.data.abstract_status;
+      },
+    });
+  }
+  testApprove1 = {
+    account_no: "string",
+    abstract_approve_by: "string",
+    abstract_approve_by_name: "string",
+    doki_signature: "string",
+    is_approve: true,
+    abstract_status: "string",
+  };
+  isSaving: boolean = false;
+  approveMedicalAbstract() {
+    this.isSaving = true;
+    let patientId = this.activatedRoute.snapshot.params.admissionNo;
+    let pNo = this.activatedRoute.snapshot.params.pNo;
+    let admissionNo = this.activatedRoute.snapshot.params.admissionNo;
+    this.testApprove1.abstract_status = "A";
+    this.testApprove1.is_approve = true;
+    this.testApprove1.account_no = admissionNo;
+    this.testApprove1.abstract_approve_by = this.dr_code;
+
+    this.testApprove1.abstract_approve_by_name =
+      this.logindata.lastName +
+      ", " +
+      this.logindata.firstName +
+      " " +
+      this.logindata.middleName;
+    this.testApprove1.doki_signature = "";
+    this.putMA(this.testApprove1);
+  }
+  revokeMedicalAbstract() {
+    let patientId = this.activatedRoute.snapshot.params.admissionNo;
+    let pNo = this.activatedRoute.snapshot.params.pNo;
+    let admissionNo = this.activatedRoute.snapshot.params.admissionNo;
+    this.testApprove1.abstract_status = "F";
+    this.testApprove1.is_approve = false;
+    this.testApprove1.account_no = admissionNo;
+    this.testApprove1.abstract_approve_by = this.dr_code;
+
+    this.testApprove1.abstract_approve_by_name =
+      this.logindata.lastName +
+      ", " +
+      this.logindata.firstName +
+      " " +
+      this.logindata.middleName;
+    this.testApprove1.doki_signature = "";
+
+    this.putMA(this.testApprove1);
+  }
+  contextText = "";
+  putMA(data) {
+    this.isSaving = true;
+    this.doctorService
+      .putDI("gw/MedicalAbstract/ApproveRevokedMedAbstractDOKi", data)
+      .subscribe({
+        complete: () => {
+          this.contextText = "";
+          if (data.is_approve) {
+            this.ma_status = "A";
+          } else {
+            this.ma_status = "F";
+          }
+          this.isSaving = false;
+        },
+        error: (error) => {
+          console.log(error);
+
+          this.contextText =
+            "Apologies, there was an error fetching the data. Please swipe down to refresh and try again.";
+          this.isSaving = false;
+        },
+        next: (data: any) => {
+          this.isSaving = false;
+          console.log(data);
+        },
+      });
   }
 }

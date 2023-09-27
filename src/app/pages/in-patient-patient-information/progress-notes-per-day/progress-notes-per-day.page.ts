@@ -658,7 +658,7 @@ export class ProgressNotesPerDayPage implements OnInit {
   async presentActionSheetapproveAP(e) {
     const actionSheet = await this.actionSheetCtrl.create({
       header: "Approve PN of " + e.username + "?",
-      cssClass: "my-custom-classdata",
+      cssClass: "my-custom-classAction",
       subHeader:
         this.funcServ.convertDatetoMMDDYYYY(e.event_date) +
         " " +

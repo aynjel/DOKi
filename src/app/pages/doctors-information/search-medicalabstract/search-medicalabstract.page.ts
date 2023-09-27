@@ -60,6 +60,9 @@ export class SearchMedicalabstractPage implements OnInit {
   medicalAbstractList;
   doRefresh(event) {
     setTimeout(() => {
+      this.medicalAbstractList = [];
+      this.inPatientsDraft = [];
+      this.inPatientsDraft1 = [];
       this.getMEdicalAbstractList();
       //location.reload();
       event.target.complete();
@@ -67,16 +70,21 @@ export class SearchMedicalabstractPage implements OnInit {
   }
   isSearching: boolean = false;
   getMEdicalAbstractList() {
+    let xxyyzz = {
+      account_no: "string",
+    };
+    xxyyzz.account_no = this.loginResponseModelv3.doctorCode;
     this.isSearching = true;
     console.log(this.loginResponseModelv3.doctorCode);
     //http://10.151.12.120:7224/api/v3/MedicalAbstract/MedicalAbstractList
     this.doctorService
-      .getMedicalAbstractList(this.loginResponseModelv3.doctorCode)
+      .postDI("gw/MedicalAbstract/MedicalAbstractDOKiList", xxyyzz)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe({
         complete: () => {
           this.isSearching = false;
           console.log("asdasd");
+          this.changeMode();
         },
         error: (error) => {
           this.isSearching = false;
@@ -186,5 +194,15 @@ export class SearchMedicalabstractPage implements OnInit {
     this.router.navigate([data]).then(() => {
       // window.location.reload();
     });
+  }
+  selected = "F";
+  pendingApprovalCount;
+  prelimCount;
+  changeMode() {
+    console.log(this.inPatientsDraft1);
+
+    this.medicalAbstractList = this.inPatientsDraft1.filter(
+      (element) => element.abstract_Status == this.selected
+    );
   }
 }

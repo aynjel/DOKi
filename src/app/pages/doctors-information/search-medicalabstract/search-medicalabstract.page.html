@@ -9,8 +9,40 @@
     </span>
     <span class="padding-left-30 font-weight-500 font-size-20">
       &nbsp;&nbsp;Search Medical Abstract
-    </span>
-  </ion-toolbar>
+    </span> </ion-toolbar
+  ><ion-item>
+    <ion-segment
+      [(ngModel)]="selected"
+      (ionChange)="changeMode()"
+      [disabled]="isSearching">
+      <ion-segment-button
+        value="F"
+        [ngClass]="{'boldMe': selected === 'F'}"
+        class="pointer test">
+        <ion-label
+          >for Approval<sup *ngIf="pendingApprovalCount >= 1">
+            ({{pendingApprovalCount}})
+          </sup></ion-label
+        >
+      </ion-segment-button>
+      <!--ion-segment-button
+        value="P"
+        [ngClass]="{'boldMe': selected === 'P'}"
+        class="pointer test">
+        <ion-label
+          >Prelim<sup *ngIf="prelimCount >= 1">
+            ({{prelimCount}})
+          </sup></ion-label
+        >
+      </ion-segment-button-->
+      <ion-segment-button
+        value="A"
+        [ngClass]="{'boldMe': selected === 'A'}"
+        class="pointer test">
+        <ion-label>Approved</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-item>
   <div>
     <ion-grid class="ion-no-padding"> </ion-grid>
     <ion-grid class="ion-no-padding chh-darkmode">
@@ -38,6 +70,7 @@
             [(ngModel)]="searchBar"
             (ionChange)="filterList()"
             placeholder="Search Name or Room Number"
+            [disabled]="isSearching"
             mode="ios"></ion-searchbar>
         </ion-col>
       </ion-row>
@@ -93,15 +126,13 @@
                   <b>Account No. : {{x.account_No}} </b>
                 </p>
               </ion-text>
-              <ion-text
-                *ngIf="x.abstract_Approve_By == null"
-                style="color: RED">
+              <ion-text *ngIf="x.abstract_Status == 'F'" style="color: RED">
                 <ion-icon name="pencil-outline"></ion-icon> Requires
-                Signature</ion-text
+                Approval</ion-text
               >
-              <ion-text *ngIf="x.abstract_Approve_By != null" color="mango">
+              <ion-text *ngIf="x.abstract_Status =='A'" color="mango">
                 <ion-icon name="checkmark-done-outline"></ion-icon>
-                Signed</ion-text
+                Approved</ion-text
               >
             </h2>
           </ion-item>

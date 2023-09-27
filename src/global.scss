@@ -711,3 +711,14 @@ ion-action-sheet.my-custom-classdata .action-sheet-title {
   color: #080000;
 }
 
+
+/* Note: These styles should be located in your global stylesheet */
+ion-action-sheet.my-custom-classAction {
+  --background: #ffffff;
+  --backdrop-opacity: 0.6;
+  --button-background-selected: #ffffff;
+  --button-color: #000000;
+  --color: #000000;
+  /* role: "destructive" button iOS styling override */
+  --ion-color-danger: #000000;
+}

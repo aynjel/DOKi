@@ -350,7 +350,59 @@
               </ion-footer>
             </ion-card>
           </div>
-          <ion-card *ngIf="pendingApproval == ''">
+          <ng-container *ngIf="isLoading">
+            <div class="ion-padding custom-skeleton">
+              <ion-card mode="ios" class="pointer">
+                <ion-item lines="none">
+                  <ion-label style="margin-top: -10px">
+                    <ion-item
+                      class="ion-no-padding"
+                      style="padding-bottom: 5px">
+                      <ion-skeleton-text animated></ion-skeleton-text>
+                    </ion-item>
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </ion-label>
+                </ion-item>
+              </ion-card>
+              <ion-card mode="ios" class="pointer">
+                <ion-item lines="none">
+                  <ion-label style="margin-top: -10px">
+                    <ion-item
+                      class="ion-no-padding"
+                      style="padding-bottom: 5px">
+                      <ion-skeleton-text animated></ion-skeleton-text>
+                    </ion-item>
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </ion-label>
+                </ion-item>
+              </ion-card>
+              <ion-card mode="ios" class="pointer">
+                <ion-item lines="none">
+                  <ion-label style="margin-top: -10px">
+                    <ion-item
+                      class="ion-no-padding"
+                      style="padding-bottom: 5px">
+                      <ion-skeleton-text animated></ion-skeleton-text>
+                    </ion-item>
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </ion-label>
+                </ion-item>
+              </ion-card>
+              <ion-card mode="ios" class="pointer">
+                <ion-item lines="none">
+                  <ion-label style="margin-top: -10px">
+                    <ion-item
+                      class="ion-no-padding"
+                      style="padding-bottom: 5px">
+                      <ion-skeleton-text animated></ion-skeleton-text>
+                    </ion-item>
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </ion-label>
+                </ion-item>
+              </ion-card>
+            </div>
+          </ng-container>
+          <ion-card *ngIf="pendingApproval == '' && !isLoading">
             <ion-item> No Data </ion-item>
           </ion-card>
         </ng-container>

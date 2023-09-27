@@ -147,7 +147,9 @@ export class InboxPage implements OnInit {
     );
   }*/
   pendingApprovalCount = 0;
+  isLoading: boolean = false;
   getPendingApproval(dateFrom, dateTo) {
+    this.isLoading = true;
     this.pendingApprovalCount = 0;
     //console.log(this.selected);
     this.pendingApproval = [];
@@ -181,9 +183,11 @@ export class InboxPage implements OnInit {
           }
         },
         (error) => {
+          this.isLoading = false;
           ////console.log(error);
         },
         () => {
+          this.isLoading = false;
           let testPending = [];
           this.pendingApprovalFullList.forEach((element) => {
             element.bdayConverted = this.functionService.convertDatetoMMDDYYYY(
