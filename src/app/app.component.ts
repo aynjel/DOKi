@@ -90,6 +90,12 @@ export class AppComponent implements OnInit {
       type: "medcons",
     },
     {
+      title: "Final Dx | Med Cert",
+      url: "menu/inbox",
+      icon: "document-outline",
+      type: "medcons",
+    },
+    {
       title: "Medical Abstract",
       url: "menu/search-Medical-Abstract",
       icon: "documents-outline",
@@ -102,12 +108,7 @@ export class AppComponent implements OnInit {
       icon: "receipt-outline",
       type: "medcons",
     },
-    {
-      title: "Final Dx | Med Cert",
-      url: "menu/inbox",
-      icon: "document-outline",
-      type: "medcons",
-    },
+
     /*{
       title: "Progress Notes",
       url: "menu/patient-history",
