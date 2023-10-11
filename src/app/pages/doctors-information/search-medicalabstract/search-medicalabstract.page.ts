@@ -201,8 +201,8 @@ export class SearchMedicalabstractPage implements OnInit {
   changeMode() {
     console.log(this.inPatientsDraft1);
 
-    this.medicalAbstractList = this.inPatientsDraft1.filter(
+  /*   this.medicalAbstractList = this.inPatientsDraft1.filter(
       (element) => element.abstract_Status == this.selected
-    );
+    ); */
   }
 }

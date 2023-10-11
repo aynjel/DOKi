@@ -692,7 +692,7 @@ export class DischargeInstructionPage implements OnInit {
       this.logindata.firstName +
       " " +
       this.logindata.middleName;
-    testApprove1.doki_signature = "";
+    testApprove1.doki_signature = null;
 
     console.log(testApprove1);
     this.doctorService
@@ -735,7 +735,7 @@ export class DischargeInstructionPage implements OnInit {
       this.logindata.firstName +
       " " +
       this.logindata.middleName;
-    testApprove1.doki_signature = "";
+    testApprove1.doki_signature = null;
 
     console.log(testApprove1);
     this.doctorService

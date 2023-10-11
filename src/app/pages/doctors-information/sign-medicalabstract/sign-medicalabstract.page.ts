@@ -708,7 +708,7 @@ export class SignMedicalabstractPage implements OnInit {
       this.logindata.firstName +
       " " +
       this.logindata.middleName;
-    this.testApprove1.doki_signature = "";
+    this.testApprove1.doki_signature = null;
     this.putMA(this.testApprove1);
   }
   revokeMedicalAbstract() {
@@ -726,7 +726,7 @@ export class SignMedicalabstractPage implements OnInit {
       this.logindata.firstName +
       " " +
       this.logindata.middleName;
-    this.testApprove1.doki_signature = "";
+    this.testApprove1.doki_signature = null;
 
     this.putMA(this.testApprove1);
   }
