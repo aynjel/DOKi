@@ -11,7 +11,7 @@
       &nbsp;&nbsp;Search Discharge Instruction
     </span>
   </ion-toolbar>
-  <ion-item>
+  <!--ion-item>
     <ion-segment
       [(ngModel)]="selected"
       (ionChange)="changeMode()"
@@ -26,16 +26,6 @@
           </sup></ion-label
         >
       </ion-segment-button>
-      <!--ion-segment-button
-        value="P"
-        [ngClass]="{'boldMe': selected === 'P'}"
-        class="pointer test">
-        <ion-label
-          >Prelim<sup *ngIf="prelimCount >= 1">
-            ({{prelimCount}})
-          </sup></ion-label
-        >
-      </ion-segment-button-->
       <ion-segment-button
         value="A"
         [ngClass]="{'boldMe': selected === 'A'}"
@@ -43,7 +33,7 @@
         <ion-label>Approved</ion-label>
       </ion-segment-button>
     </ion-segment>
-  </ion-item>
+  </ion-item-->
   <div>
     <ion-grid class="ion-no-padding"> </ion-grid>
     <ion-grid class="ion-no-padding chh-darkmode">
@@ -124,17 +114,17 @@
               </ion-text>
               <ion-text color="primary">
                 <p color="primary">
-                  <b>Account No. : {{x.account_No}} </b>
+                  <b>Account No. : {{x.account_no}} </b>
                 </p>
               </ion-text>
-              <ion-text *ngIf="x.ds_status == 'F'" style="color: RED">
+              <!--ion-text *ngIf="x.ds_status == 'F'" style="color: RED">
                 <ion-icon name="pencil-outline"></ion-icon> Requires
                 Approval</ion-text
               >
               <ion-text *ngIf="x.ds_status == 'A'" color="mango">
                 <ion-icon name="checkmark-done-outline"></ion-icon>
                 Approved</ion-text
-              >
+              -->
             </h2>
           </ion-item>
 
