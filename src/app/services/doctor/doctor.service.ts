@@ -557,7 +557,7 @@ export class DoctorService {
     };
     const url =
       environment.API_URL +
-      "/gw/DischargeInstruction/pdf?mode=T&accountno=" +
+      "/gw/DischargeInstruction/pdf?mode=P&accountno=" +
       admissionno +
       "&patientno=" +
       pno;
@@ -634,8 +634,8 @@ export class DoctorService {
     });
     const options = { headers: headers, withCredentials: true };
     const url =
-      environment.dischargeInstruction +
-      "gw/MedicalAbstract/MedicalAbstractDOKiList?drCode=" +
+      environment.API_URL +
+      "/gw/MedicalAbstract/MedicalAbstractDOKiList?drCode=" +
       drCode;
 
     return this.http.get(url, options);
@@ -645,19 +645,19 @@ export class DoctorService {
       "Content-Type": "application/json;charset=utf-8",
     });
     const options = { headers: headers, withCredentials: true };
-    const url = environment.dischargeInstruction + endPoint;
+    const url = environment.API_URL + "/" + endPoint;
     return this.http.get(url, options);
   }
   postDI(endPoint, data) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredentials: false };
-    const url = environment.dischargeInstruction + endPoint;
+    const url = environment.API_URL + "/" + endPoint;
     return this.http.post(url, data, options);
   }
   putDI(endPoint, data) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredentials: false };
-    const url = environment.dischargeInstruction + endPoint;
+    const url = environment.API_URL + "/" + endPoint;
     return this.http.put(url, data, options);
   }
 }

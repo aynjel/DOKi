@@ -32,12 +32,12 @@ export class SearchMedicalabstractPage implements OnInit {
     this.loginResponseModelv3 = <LoginResponseModelv3>(
       this.authService.userData$.getValue()
     );
-    console.log(this.loginResponseModelv3.doctorCode);
+    //console.log(this.loginResponseModelv3.doctorCode);
     this.getMEdicalAbstractList();
   }
   private ngUnsubscribe = new Subject();
   locationAction(data: any) {
-    //console.log(data);
+    ////console.log(data);
     localStorage.setItem("siteSelected", data);
     this.defaultAccordions = null;
 
@@ -75,7 +75,7 @@ export class SearchMedicalabstractPage implements OnInit {
     };
     xxyyzz.account_no = this.loginResponseModelv3.doctorCode;
     this.isSearching = true;
-    console.log(this.loginResponseModelv3.doctorCode);
+    //console.log(this.loginResponseModelv3.doctorCode);
     //http://10.151.12.120:7224/api/v3/MedicalAbstract/MedicalAbstractList
     this.doctorService
       .postDI("gw/MedicalAbstract/MedicalAbstractDOKiList", xxyyzz)
@@ -83,18 +83,18 @@ export class SearchMedicalabstractPage implements OnInit {
       .subscribe({
         complete: () => {
           this.isSearching = false;
-          console.log("asdasd");
+          //console.log("asdasd");
           this.changeMode();
         },
         error: (error) => {
           this.isSearching = false;
-          console.log(error);
+          //console.log(error);
         },
         next: (data: any) => {
           this.isSearching = false;
-          console.log("asdasd");
+          //console.log("asdasd");
 
-          console.log(data);
+          //console.log(data);
           this.medicalAbstractList = data;
           this.inPatientsDraft = data;
           this.inPatientsDraft1 = data;
@@ -102,7 +102,7 @@ export class SearchMedicalabstractPage implements OnInit {
       });
   }
   filterList() {
-    console.log(this.inPatientsDraft);
+    //console.log(this.inPatientsDraft);
 
     this.inPatients = [];
     this.finalFullData = [];
@@ -122,14 +122,14 @@ export class SearchMedicalabstractPage implements OnInit {
     ////////console.logthis.inPatients);
 
     if (this.searchBar) {
-      console.log(this.searchBar);
-      console.log(this.inPatientsDraft1);
+      //console.log(this.searchBar);
+      //console.log(this.inPatientsDraft1);
 
       this.medicalAbstractList = [];
 
       this.medicalAbstractList = this.inPatientsDraft1.filter((e) => {
         ////////console.loge.room_no.toLowerCase(), "|", this.searchBar.toLowerCase());
-        console.log(e.name);
+        //console.log(e.name);
         return e.name.toLowerCase().includes(this.searchBar.toLowerCase());
         /* return (
           (
@@ -151,11 +151,11 @@ export class SearchMedicalabstractPage implements OnInit {
           e.room_no.toLowerCase().includes(this.searchBar.toLowerCase())
         );*/
       });
-      console.log(this.inPatients);
+      //console.log(this.inPatients);
     } else {
       this.medicalAbstractList = this.inPatientsDraft1;
     }
-    //////console.log(this.inPatients);
+    ////////console.log(this.inPatients);
 
     let floorStack = [];
     let data;
@@ -186,7 +186,7 @@ export class SearchMedicalabstractPage implements OnInit {
       };
       this.finalFullData.push(xyz);
     });*/
-    //console.log(this.finalFullData);
+    ////console.log(this.finalFullData);
   }
   detail(x, y, z) {
     let zctr = z.ctr;
@@ -199,9 +199,8 @@ export class SearchMedicalabstractPage implements OnInit {
   pendingApprovalCount;
   prelimCount;
   changeMode() {
-    console.log(this.inPatientsDraft1);
-
-  /*   this.medicalAbstractList = this.inPatientsDraft1.filter(
+    //console.log(this.inPatientsDraft1);
+    /*   this.medicalAbstractList = this.inPatientsDraft1.filter(
       (element) => element.abstract_Status == this.selected
     ); */
   }
