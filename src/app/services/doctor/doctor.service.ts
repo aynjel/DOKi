@@ -281,7 +281,8 @@ export class DoctorService {
     });
     const options = { headers: headers, withCredentials: true };
     //const url = environment.apiRouterUrl + 'v2/AppSetting/User/'+Consta.appCode+'/'+data1+'/'+Consta.mode;
-    const url = environment.callHistory + "/gw/doki/InPatients/PatientHistory";
+    const url =
+      environment.apiRouterUrlTest + "/gw/doki/InPatients/PatientHistory";
     return this.http.get(url, options);
   }
   getCoDoctorsV3(postData1: any) {
@@ -556,7 +557,7 @@ export class DoctorService {
       responseType: "blob" as "json",
     };
     const url =
-      environment.API_URL +
+      environment.apiRouterUrlTest +
       "/gw/DischargeInstruction/pdf?mode=P&accountno=" +
       admissionno +
       "&patientno=" +
@@ -651,7 +652,7 @@ export class DoctorService {
   postDI(endPoint, data) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredentials: false };
-    const url = environment.API_URL + "/" + endPoint;
+    const url = environment.apiRouterUrlTest + "/" + endPoint;
     return this.http.post(url, data, options);
   }
   putDI(endPoint, data) {
