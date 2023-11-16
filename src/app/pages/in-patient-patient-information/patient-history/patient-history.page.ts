@@ -96,7 +96,7 @@ export class PatientHistoryPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          //console.log(res);
+          ////console.log(res);
           if (res == null) {
             res = [];
           }
@@ -145,7 +145,7 @@ export class PatientHistoryPage implements OnInit {
   reverseOrderData;
   sortedData;
   filterList() {
-    ////////console.logthis.inPatientsDraft);
+    //////////console.logthis.inPatientsDraft);
 
     this.inPatients = [];
     this.finalFullData = [];
@@ -163,14 +163,14 @@ export class PatientHistoryPage implements OnInit {
       );
     }
 
-    ////////console.logthis.inPatients);
+    //////////console.logthis.inPatients);
 
     this.inPatientsDraft1 = this.inPatients;
     if (this.searchBar) {
       this.inPatients = [];
 
       this.inPatients = this.inPatientsDraft1.filter((e) => {
-        ////////console.loge.room_no.toLowerCase(), "|", this.searchBar.toLowerCase());
+        //////////console.loge.room_no.toLowerCase(), "|", this.searchBar.toLowerCase());
 
         return (
           (
@@ -193,13 +193,13 @@ export class PatientHistoryPage implements OnInit {
         );
       });
     }
-    //////console.log(this.inPatients);
+    ////////console.log(this.inPatients);
 
     let floorStack = [];
     let data;
     let xyz;
     let reference;
-    //////////console.logthis.reverseOrderData);
+    ////////////console.logthis.reverseOrderData);
     if (this.reverseOrderData == "1") {
       if (this.site == "C") {
         reference = this.constants.cebuRooms;
@@ -237,7 +237,7 @@ export class PatientHistoryPage implements OnInit {
         data: data,
       };
       this.finalFullData.push(xyz);
-    });*/ console.log(this.inPatients);
+    });*/ //console.log(this.inPatients);
 
     this.sortedData = this.inPatients.sort((a, b) => {
       const lastNameA = a.last_name.toUpperCase();
@@ -282,7 +282,7 @@ export class PatientHistoryPage implements OnInit {
           this.refreshcounter * 5
         )
       );
-      console.log(this.refreshcounter * 5 - 5, this.refreshcounter * 5);
+      //console.log(this.refreshcounter * 5 - 5, this.refreshcounter * 5);
 
       //Hide Infinite List Loader on Complete
       event.target.complete();
@@ -295,7 +295,7 @@ export class PatientHistoryPage implements OnInit {
   defaultAccordions;
   site = "C";
   locationAction(data: any) {
-    //console.log(data);
+    ////console.log(data);
     localStorage.setItem("siteSelected", data);
     this.defaultAccordions = null;
 
@@ -321,7 +321,7 @@ export class PatientHistoryPage implements OnInit {
     this.isUporDown = true;
     this.reverseOrderData = "1";
     localStorage.setItem("reverseOrder", this.reverseOrderData);
-    //////////console.logthis.reverseOrderData);
+    ////////////console.logthis.reverseOrderData);
     this.callPatient(this.site);
   }
   down() {
@@ -329,7 +329,7 @@ export class PatientHistoryPage implements OnInit {
     this.isUporDown = true;
     this.reverseOrderData = "0";
     localStorage.setItem("reverseOrder", this.reverseOrderData);
-    //////////console.logthis.reverseOrderData);
+    ////////////console.logthis.reverseOrderData);
     this.callPatient(this.site);
   }
   doRefresh(event) {

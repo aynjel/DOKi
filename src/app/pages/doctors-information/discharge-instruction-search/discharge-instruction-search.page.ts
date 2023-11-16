@@ -32,7 +32,7 @@ export class DischargeInstructionSearchPage implements OnInit {
   selected = "F";
   pendingApprovalCount;
   changeMode() {
-    console.log(this.selected);
+    //console.log(this.selected);
 
     this.medicalAbstractList = this.inPatientsDraft1.filter(
       (element) => element.ds_status == this.selected
@@ -45,12 +45,12 @@ export class DischargeInstructionSearchPage implements OnInit {
     this.loginResponseModelv3 = <LoginResponseModelv3>(
       this.authService.userData$.getValue()
     );
-    console.log(this.loginResponseModelv3.doctorCode);
+    //console.log(this.loginResponseModelv3.doctorCode);
     this.getMEdicalAbstractList();
   }
   private ngUnsubscribe = new Subject();
   locationAction(data: any) {
-    //console.log(data);
+    ////console.log(data);
     localStorage.setItem("siteSelected", data);
     this.defaultAccordions = null;
 
@@ -96,12 +96,12 @@ export class DischargeInstructionSearchPage implements OnInit {
       .subscribe({
         complete: () => {
           this.isSearching = false;
-          console.log("asdasd");
+          //console.log("asdasd");
           this.changeMode();
         },
         error: (error) => {
           this.isSearching = false;
-          console.log(error);
+          //console.log(error);
         },
         next: (data: any) => {
           this.isSearching = false;
@@ -127,7 +127,7 @@ export class DischargeInstructionSearchPage implements OnInit {
   }
 
   filterList() {
-    console.log(this.inPatientsDraft);
+    //console.log(this.inPatientsDraft);
 
     this.inPatients = [];
     this.finalFullData = [];
@@ -147,14 +147,14 @@ export class DischargeInstructionSearchPage implements OnInit {
     ////////console.logthis.inPatients);
 
     if (this.searchBar) {
-      console.log(this.searchBar);
-      console.log(this.inPatientsDraft1);
+      //console.log(this.searchBar);
+      //console.log(this.inPatientsDraft1);
 
       this.medicalAbstractList = [];
 
       this.medicalAbstractList = this.inPatientsDraft1.filter((e) => {
         ////////console.loge.room_no.toLowerCase(), "|", this.searchBar.toLowerCase());
-        console.log(e.name);
+        //console.log(e.name);
         return e.name.toLowerCase().includes(this.searchBar.toLowerCase());
         /* return (
           (
@@ -176,11 +176,11 @@ export class DischargeInstructionSearchPage implements OnInit {
           e.room_no.toLowerCase().includes(this.searchBar.toLowerCase())
         );*/
       });
-      console.log(this.inPatients);
+      //console.log(this.inPatients);
     } else {
       this.medicalAbstractList = this.inPatientsDraft1;
     }
-    //////console.log(this.inPatients);
+    ////////console.log(this.inPatients);
 
     let floorStack = [];
     let data;
@@ -211,7 +211,7 @@ export class DischargeInstructionSearchPage implements OnInit {
       };
       this.finalFullData.push(xyz);
     });*/
-    //console.log(this.finalFullData);
+    ////console.log(this.finalFullData);
   }
   detail(x, y, z) {
     this.param.change_ds_status(z.ds_status);

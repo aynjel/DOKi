@@ -1,0 +1,44 @@
+<!--div *ngIf="truncating">
+  <ion-text>
+    <b>{{SOAP}} : </b>
+  </ion-text>
+  <ion-text class="custom-font" [innerHtml]="comment_small"></ion-text>
+
+  <ion-text color="mango" class="floatRight" (click)="process()" *ngIf="noteslength">show more</ion-text>
+
+</div>
+<div *ngIf="!truncating">
+  <ion-text>
+    <b>{{SOAP}} : </b>
+  </ion-text>
+  <ion-text class="custom-font" [innerHtml]="comment"></ion-text>
+
+  <button ion-button class="floatRight" (click)="process();" *ngIf="noteslength">show less</button>
+</div-->
+<ng-container *ngIf="SOAP == 'S'">
+  <ion-label class="ion-text-wrap" *ngIf="truncating">
+    <ion-text class="fontSize-18"> <b>SOAP</b>&nbsp; </ion-text><br />
+    <ion-text class="custom-font" [innerHtml]="comment_small"></ion-text>
+    <ion-text
+      color="mango"
+      class="floatRight"
+      (click)="process()"
+      *ngIf="noteslength"
+      >show more</ion-text
+    >
+  </ion-label>
+
+  <ion-label class="ion-text-wrap" *ngIf="!truncating">
+    <ion-text> <b class="fontSize-18">SOAP</b>&nbsp; </ion-text><br />
+    <ion-text class="custom-font" [innerHtml]="comment"></ion-text>
+    <ion-text
+      color="mango"
+      class="floatRight"
+      (click)="process()"
+      *ngIf="noteslength"
+      >show less</ion-text
+    >
+  </ion-label>
+
+  <hr />
+</ng-container>

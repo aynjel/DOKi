@@ -1,0 +1,19 @@
+<ng-container *ngIf="!isOAPEmpty">
+  <div *ngFor="let y of SOAPdata">
+    <app-soap-show-hide
+      [SOAP]="y.note_type"
+      [comment]="y.notes"
+      class="padding-top15">
+    </app-soap-show-hide>
+  </div>
+</ng-container>
+<ng-container *ngIf="isOAPEmpty">
+  <div *ngFor="let y of SOAPdata">
+    <app-soap-show-hide2
+      *ngIf="y.notes != ''"
+      [SOAP]="y.note_type"
+      [comment]="y.notes"
+      class="padding-top15">
+    </app-soap-show-hide2>
+  </div>
+</ng-container>

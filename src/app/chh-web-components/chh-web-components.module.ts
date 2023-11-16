@@ -69,6 +69,8 @@ import { Loading1Component } from "./loading1/loading1.component";
 import { ExamResultsModalComponent } from "./exam-results-modal/exam-results-modal.component";
 import { PdfViewerModule } from "ng2-pdf-viewer";
 import { PrognotesheadviewComponent } from "./prognotesheadview/prognotesheadview.component";
+import { SoapHandlerComponent } from "./soap-handler/soap-handler.component";
+import { SoapShowHide2Component } from "./soap-show-hide2/soap-show-hide2.component";
 
 @NgModule({
   declarations: [
@@ -122,6 +124,8 @@ import { PrognotesheadviewComponent } from "./prognotesheadview/prognotesheadvie
     Loading1Component,
     ExamResultsModalComponent,
     PrognotesheadviewComponent,
+    SoapHandlerComponent,
+    SoapShowHide2Component,
   ],
   exports: [
     ChhAppLogoComponent,
@@ -174,6 +178,8 @@ import { PrognotesheadviewComponent } from "./prognotesheadview/prognotesheadvie
     Loading1Component,
     ExamResultsModalComponent,
     PrognotesheadviewComponent,
+    SoapHandlerComponent,
+    SoapShowHide2Component,
   ],
   imports: [
     CommonModule,

@@ -245,13 +245,14 @@
                         </ion-col>
                       </ion-row>
                     </ion-grid>
-                    <div *ngFor="let y of x.soap">
+                    <!--div *ngFor="let y of x.soap">
                       <app-soap-show-hide
                         [SOAP]="y.note_type"
                         [comment]="y.notes"
                         class="padding-top15">
                       </app-soap-show-hide>
-                    </div>
+                    </div-->
+                    <app-soap-handler [SOAPdata]="x.soap"> </app-soap-handler>
                   </ion-label>
                 </ion-item>
               </ion-card>

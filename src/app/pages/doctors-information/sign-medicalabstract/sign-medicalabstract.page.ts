@@ -106,7 +106,7 @@ export class SignMedicalabstractPage implements OnInit {
       });
   }
   back() {
-    //////////console.log(this.idModal);
+    ////////////console.log(this.idModal);
 
     this.closeModal();
   }
@@ -114,7 +114,7 @@ export class SignMedicalabstractPage implements OnInit {
     this.logindata = <LoginResponseModelv3>(
       this.authService.userData$.getValue()
     );
-    console.log(this.logindata);
+    //console.log(this.logindata);
 
     this.functionsService.logToConsole(this.logindata);
     this.dr_code = this.logindata.doctorCode;
@@ -179,7 +179,7 @@ export class SignMedicalabstractPage implements OnInit {
       this.closeModal();
     }
     this.checkAppearance();
-    ////////////console.log('ngOnInit');     path: "inbox/sign-medabs/:pNo/:admissionNo",
+    //////////////console.log('ngOnInit');     path: "inbox/sign-medabs/:pNo/:admissionNo",
     let pNo = this.getpdf();
     this.idModal = false;
     let scWidth = window.innerWidth;
@@ -198,7 +198,7 @@ export class SignMedicalabstractPage implements OnInit {
     if (scHeight >= 1180) {
       this.screenHeight = scHeight - scHeight * 0.6;
     }
-    //console.log('LOGGGGGGGGGGGGG');
+    ////console.log('LOGGGGGGGGGGGGG');
     this.signaturePadOptions = {
       minWidth: 5,
       canvasWidth: this.screenWidth,
@@ -207,7 +207,7 @@ export class SignMedicalabstractPage implements OnInit {
       backgroundColor: "rgba(255, 255, 255, 0)",
       penColor: "rgb(0, 0, 0)",
     };
-    //console.log(this.signaturePadOptions);
+    ////console.log(this.signaturePadOptions);
   }
   medicalAbstractList = {
     patient_No: "",
@@ -227,15 +227,14 @@ export class SignMedicalabstractPage implements OnInit {
 
   getMEdicalAbstractList() {
     //     path: "inbox/sign-medabs/:pNo/:admissionNo",
-    console.log(this.dr_code);
-
+    //console.log(this.dr_code);
     /*this.doctorService
       .getMedicalAbstractList(this.dr_code)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe({
         complete: () => {},
         error: (error) => {
-          console.log(error);
+          //console.log(error);
         },
         next: (data: any) => {
           this.medicalAbstractList = data;
@@ -244,7 +243,7 @@ export class SignMedicalabstractPage implements OnInit {
           this.medicalAbstractList = data.find(
             (obj) => obj.account_No === admissionNo && obj.patient_No === pNo
           );
-          console.log(this.medicalAbstractList);
+          //console.log(this.medicalAbstractList);
         },
       });*/
   }
@@ -273,7 +272,7 @@ export class SignMedicalabstractPage implements OnInit {
   }
   isConsent: boolean = true;
   openConsent() {
-    ////////////console.log(history);
+    //////////////console.log(history);
 
     this.activateIsSignatureModal();
     this.setidModalTrue();
@@ -373,12 +372,12 @@ export class SignMedicalabstractPage implements OnInit {
 
   drawComplete() {
     // will be notified of szimek/signature_pad's onEnd event
-    //////////////console.log(this.signaturePad.toDataURL());
+    ////////////////console.log(this.signaturePad.toDataURL());
   }
 
   drawStart() {
     // will be notified of szimek/signature_pad's onBegin event
-    //////////////console.log('begin drawing');
+    ////////////////console.log('begin drawing');
   }
 
   clearPad() {
@@ -416,7 +415,7 @@ export class SignMedicalabstractPage implements OnInit {
                 doki_signature: "string",
                 is_approve: true,
               };
-              console.log(this.logindata);
+              //console.log(this.logindata);
 
               testApprove1.account_no = admissionNo;
               testApprove1.abstract_approve_by = this.dr_code;
@@ -448,14 +447,14 @@ export class SignMedicalabstractPage implements OnInit {
   saveSignature(testAprrove) {
     let dischargeNo = this.activatedRoute.snapshot.params.dischargeNo;
     this.isPDFLoading = false;
-    console.log(testAprrove);
+    //console.log(testAprrove);
 
     this.doctorService
       .approveMedicalAbstract(testAprrove)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {
-          // ////////////console.log(data);
+          // //////////////console.log(data);
         },
         (error) => {
           this.presentToast("Error in saving");
@@ -489,12 +488,12 @@ export class SignMedicalabstractPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          //////console.log('approvePendingAPproval', res);
-          ////////////console.log(res);
+          ////////console.log('approvePendingAPproval', res);
+          //////////////console.log(res);
         },
         (error) => {
-          //////console.log(error);
-          ////////////console.log(error);
+          ////////console.log(error);
+          //////////////console.log(error);
         },
         () => {
           this.isUploaded = true;
@@ -526,7 +525,7 @@ export class SignMedicalabstractPage implements OnInit {
 
     let testtt = {
       account_no: accountNo,
-      mode: "T",
+      mode: this.mode,
       ctr: ctr,
     };
     let medabstract = this.doctorService
@@ -534,14 +533,14 @@ export class SignMedicalabstractPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {
-          ////console.log(data);
+          //////console.log(data);
 
           let blob = new Blob([data], { type: "application/pdf" });
           let downloadURL = window.URL.createObjectURL(data);
           this.pdfSrc = downloadURL;
         },
         (error) => {
-          ////console.log(error);
+          //////console.log(error);
 
           this.isPDFLoading = true;
         },
@@ -590,14 +589,14 @@ export class SignMedicalabstractPage implements OnInit {
       discharge_no: discharge_no,
       revision_dx_remarks: revision_dx_remarks,
     };
-    ////console.log(dischargeNo);
+    //////console.log(dischargeNo);
 
     this.doctorService
       .cancelApprovedFinalDiagnosis(dischargeNo)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          //////console.log(res);
+          ////////console.log(res);
         },
         (error) => {},
         () => {
@@ -661,7 +660,7 @@ export class SignMedicalabstractPage implements OnInit {
         error: (error) => {},
         next: (data: any) => {
           this.isMaStatusSearching = false;
-          console.log(data);
+          //console.log(data);
           this.ma_status = data[0].abstract_Status;
         },
       }); */
@@ -746,7 +745,7 @@ export class SignMedicalabstractPage implements OnInit {
           this.isSaving = false;
         },
         error: (error) => {
-          console.log(error);
+          //console.log(error);
 
           this.contextText =
             "Apologies, there was an error fetching the data. Please swipe down to refresh and try again.";
@@ -754,7 +753,7 @@ export class SignMedicalabstractPage implements OnInit {
         },
         next: (data: any) => {
           this.isSaving = false;
-          console.log(data);
+          //console.log(data);
         },
       });
   }

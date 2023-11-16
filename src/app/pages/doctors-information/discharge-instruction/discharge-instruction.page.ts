@@ -110,7 +110,7 @@ export class DischargeInstructionPage implements OnInit {
       });
   }
   back() {
-    //////////console.log(this.idModal);
+    ////////////console.log(this.idModal);
 
     this.closeModal();
   }
@@ -118,7 +118,7 @@ export class DischargeInstructionPage implements OnInit {
     this.logindata = <LoginResponseModelv3>(
       this.authService.userData$.getValue()
     );
-    console.log(this.logindata);
+    //console.log(this.logindata);
 
     this.functionsService.logToConsole(this.logindata);
     this.dr_code = this.logindata.doctorCode;
@@ -184,7 +184,7 @@ export class DischargeInstructionPage implements OnInit {
       this.closeModal();
     }
     this.checkAppearance();
-    ////////////console.log('ngOnInit');     path: "inbox/sign-medabs/:pNo/:admissionNo",
+    //////////////console.log('ngOnInit');     path: "inbox/sign-medabs/:pNo/:admissionNo",
     let pNo = this.getpdf();
     this.idModal = false;
     let scWidth = window.innerWidth;
@@ -203,7 +203,7 @@ export class DischargeInstructionPage implements OnInit {
     if (scHeight >= 1180) {
       this.screenHeight = scHeight - scHeight * 0.6;
     }
-    //console.log('LOGGGGGGGGGGGGG');
+    ////console.log('LOGGGGGGGGGGGGG');
     this.signaturePadOptions = {
       minWidth: 5,
       canvasWidth: this.screenWidth,
@@ -213,7 +213,7 @@ export class DischargeInstructionPage implements OnInit {
       penColor: "rgb(0, 0, 0)",
     };
     this.param.ds_status.subscribe((res) => {
-      console.log("ds_status", res);
+      //console.log("ds_status", res);
       if (res.length >= 1) {
         this.ds_status = res;
       }
@@ -237,7 +237,7 @@ export class DischargeInstructionPage implements OnInit {
 
   getMEdicalAbstractList() {
     //     path: "inbox/sign-medabs/:pNo/:admissionNo",
-    console.log(this.dr_code);
+    //console.log(this.dr_code);
 
     /*this.doctorService
       .getMedicalAbstractList(this.dr_code)
@@ -245,7 +245,7 @@ export class DischargeInstructionPage implements OnInit {
       .subscribe({
         complete: () => {},
         error: (error) => {
-          console.log(error);
+          //console.log(error);
         },
         next: (data: any) => {
           this.medicalAbstractList = data;
@@ -254,7 +254,7 @@ export class DischargeInstructionPage implements OnInit {
           this.medicalAbstractList = data.find(
             (obj) => obj.account_No === admissionNo && obj.patient_No === pNo
           );
-          console.log(this.medicalAbstractList);
+          //console.log(this.medicalAbstractList);
         },
       });*/
   }
@@ -283,7 +283,7 @@ export class DischargeInstructionPage implements OnInit {
   }
   isConsent: boolean = true;
   openConsent() {
-    ////////////console.log(history);
+    //////////////console.log(history);
 
     this.activateIsSignatureModal();
     this.setidModalTrue();
@@ -383,12 +383,12 @@ export class DischargeInstructionPage implements OnInit {
 
   drawComplete() {
     // will be notified of szimek/signature_pad's onEnd event
-    //////////////console.log(this.signaturePad.toDataURL());
+    ////////////////console.log(this.signaturePad.toDataURL());
   }
 
   drawStart() {
     // will be notified of szimek/signature_pad's onBegin event
-    //////////////console.log('begin drawing');
+    ////////////////console.log('begin drawing');
   }
 
   clearPad() {
@@ -426,7 +426,7 @@ export class DischargeInstructionPage implements OnInit {
                 doki_signature: "string",
                 is_approve: true,
               };
-              console.log(this.logindata);
+              //console.log(this.logindata);
 
               testApprove1.account_no = admissionNo;
               testApprove1.abstract_approve_by = this.dr_code;
@@ -449,7 +449,7 @@ export class DischargeInstructionPage implements OnInit {
   errorMessage;
   doRefresh(event) {
     setTimeout(() => {
-      this.getpdf();
+      this.ngOnInit();
       //location.reload();
       event.target.complete();
     }, 1000);
@@ -457,14 +457,14 @@ export class DischargeInstructionPage implements OnInit {
   saveSignature(testAprrove) {
     let dischargeNo = this.activatedRoute.snapshot.params.dischargeNo;
     this.isPDFLoading = false;
-    console.log(testAprrove);
+    //console.log(testAprrove);
 
     this.doctorService
       .approveMedicalAbstract(testAprrove)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {
-          // ////////////console.log(data);
+          // //////////////console.log(data);
         },
         (error) => {
           this.presentToast("Error in saving");
@@ -498,12 +498,12 @@ export class DischargeInstructionPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          //////console.log('approvePendingAPproval', res);
-          ////////////console.log(res);
+          ////////console.log('approvePendingAPproval', res);
+          //////////////console.log(res);
         },
         (error) => {
-          //////console.log(error);
-          ////////////console.log(error);
+          ////////console.log(error);
+          //////////////console.log(error);
         },
         () => {
           this.isUploaded = true;
@@ -596,14 +596,14 @@ export class DischargeInstructionPage implements OnInit {
       discharge_no: discharge_no,
       revision_dx_remarks: revision_dx_remarks,
     };
-    ////console.log(dischargeNo);
+    //////console.log(dischargeNo);
 
     this.doctorService
       .cancelApprovedFinalDiagnosis(dischargeNo)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          //////console.log(res);
+          ////////console.log(res);
         },
         (error) => {},
         () => {
@@ -694,7 +694,7 @@ export class DischargeInstructionPage implements OnInit {
       this.logindata.middleName;
     testApprove1.doki_signature = null;
 
-    console.log(testApprove1);
+    //console.log(testApprove1);
     this.doctorService
       .putDI(
         "gw/resi/DischargeInstruction/ApproveRevokedDisInstructionDOKi",
@@ -709,7 +709,7 @@ export class DischargeInstructionPage implements OnInit {
         error: (error) => {},
         next: (data: any) => {
           this.isUpdating = false;
-          console.log(data);
+          //console.log(data);
         },
       });
   }
@@ -737,7 +737,7 @@ export class DischargeInstructionPage implements OnInit {
       this.logindata.middleName;
     testApprove1.doki_signature = null;
 
-    console.log(testApprove1);
+    //console.log(testApprove1);
     this.doctorService
       .putDI(
         "gw/resi/DischargeInstruction/ApproveRevokedDisInstructionDOKi",
@@ -752,7 +752,7 @@ export class DischargeInstructionPage implements OnInit {
         error: (error) => {},
         next: (data: any) => {
           this.isUpdating = false;
-          console.log(data);
+          //console.log(data);
         },
       });
   }
@@ -769,9 +769,10 @@ export class DischargeInstructionPage implements OnInit {
         complete: () => {},
         error: (error) => {},
         next: (data: any) => {
-          console.log(data.data.length);
+          //console.log(data.data.length);
           if (data.data.length >= 1) {
-            console.log(data.data[0].ds_approve_date);
+            //console.log(data.data[0].ds_approve_date);
+            this.ds_status = data.data[0].ds_status;
             if (data.data[0].ds_status == "A") {
               this.isApprovedDI = true;
             } else {

@@ -250,8 +250,6 @@ export class ProgressNotesPage implements OnInit {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
-        console.log("asdasd");
-
         if (
           this.router.routerState.snapshot.url.includes("/progressnotes") &&
           this.router.routerState.snapshot.url.length == 44
