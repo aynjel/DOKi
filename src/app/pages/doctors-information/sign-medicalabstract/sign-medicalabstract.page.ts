@@ -24,6 +24,8 @@ import { NgxIndexedDBService } from "ngx-indexed-db";
 import { AuthService } from "src/app/services/auth/auth.service";
 import { LoginResponseModelv3, SignatureApproval } from "src/app/models/doctor";
 import { Constants } from "src/app/shared/constants";
+import { RevisionComponent } from "./components/revision/revision.component";
+import { Revision1HistoryComponent } from "../discharge-instruction/components/revision1-history/revision1-history.component";
 
 @Component({
   selector: "app-sign-medicalabstract",
@@ -70,7 +72,8 @@ export class SignMedicalabstractPage implements OnInit {
     public functionsService: FunctionsService,
     private animationCtrl: AnimationController,
     private constant: Constants,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private actionSheetCtrl: ActionSheetController
   ) {
     this.isNotification = true;
     this.screensizeService
@@ -174,6 +177,7 @@ export class SignMedicalabstractPage implements OnInit {
       });
   }
   ngOnInit() {
+    this.getRevision();
     this.getDIstatus();
     if (this.idModal) {
       this.closeModal();
@@ -438,6 +442,7 @@ export class SignMedicalabstractPage implements OnInit {
   errorMessage;
   doRefresh(event) {
     setTimeout(() => {
+      this.ngOnInit();
       this.getpdf();
       this.getDIstatus();
       //location.reload();
@@ -677,11 +682,14 @@ export class SignMedicalabstractPage implements OnInit {
         this.isMaStatusSearching = false;
       },
       next: (data: any) => {
+        console.log(data.data.resi_dr_code);
+        this.resi_dr_code = data.data.resi_dr_code;
         this.isMaStatusSearching = false;
         this.ma_status = data.data.abstract_status;
       },
     });
   }
+  resi_dr_code;
   testApprove1 = {
     account_no: "string",
     abstract_approve_by: "string",
@@ -756,5 +764,120 @@ export class SignMedicalabstractPage implements OnInit {
           //console.log(data);
         },
       });
+  }
+  message;
+  async returnForRevision() {
+    let admissionNo = this.activatedRoute.snapshot.params.admissionNo;
+    let x = {
+      trans_type: "MA",
+      account_no: "IPM000287346",
+      msg: "testiiiiinnggggg",
+      dr_code: "MD100001",
+      resi_code: "string",
+    };
+    const modal = await this.modalController.create({
+      component: RevisionComponent,
+      cssClass: "ion-modal-112",
+    });
+    modal.onDidDismiss().then((data) => {
+      //console.log(data);
+
+      if (data.role == "confirm") {
+        //console.log(data.data);
+        let trimmedString = data.data.trim();
+        //console.log(trimmedString);
+
+        if (trimmedString == "") {
+        } else {
+          x.account_no = admissionNo;
+          x.msg = trimmedString;
+          x.dr_code = this.dr_code;
+          x.resi_code = this.resi_dr_code;
+          this.doctorService
+            .postDI(
+              "gw/resi/DischargeInstructionAbstractRevision/InsertRevisionRemarks",
+              x
+            )
+            .subscribe({
+              complete: () => {
+                this.AfterRevision();
+              },
+              error: (error) => {},
+              next: (data: any) => {
+                //  this.ngOnInit();
+              },
+            });
+        }
+      }
+    });
+
+    return await modal.present();
+  }
+  result;
+  async AfterRevision() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: "The revision was successfully saved.",
+      buttons: [
+        {
+          text: "Ok",
+          data: {
+            action: "share",
+          },
+          handler: () => {
+            this.ngOnInit();
+          },
+        },
+      ],
+    });
+
+    await actionSheet.present();
+
+    const result = await actionSheet.onDidDismiss();
+    this.result = JSON.stringify(result, null, 2);
+  }
+  admissionNo;
+  sortedJsonData;
+  getRevision() {
+    this.admissionNo = this.activatedRoute.snapshot.params.admissionNo;
+    let x = "";
+    this.doctorService
+      .postDI(
+        "gw/resi/DischargeInstructionAbstractRevision/RetrieveRevisionRemarks?accountNo=" +
+          this.admissionNo +
+          "&transType=MA",
+        x
+      )
+      .subscribe({
+        complete: () => {},
+        error: (error) => {},
+        next: (data: any) => {
+          data.data.sort((a, b) => b.trans_no - a.trans_no);
+
+          // Convert back to JSON
+          var sortedJsonData = JSON.stringify(data, null, 2);
+
+          // Print the sorted JSON
+          let sortedJsonData1;
+          sortedJsonData1 = JSON.parse(sortedJsonData);
+          this.sortedJsonData = sortedJsonData1.data;
+          //console.log(this.sortedJsonData);
+        },
+      });
+  }
+  async viewRevisionNoteHistory() {
+    //  json: this.sortedJsonData,
+
+    const modal = await this.modalController.create({
+      component: Revision1HistoryComponent,
+      cssClass: "ion-modal-112",
+      componentProps: {
+        json: this.sortedJsonData,
+      },
+    });
+    modal.onDidDismiss().then((data) => {
+      //console.log(data);
+    });
+
+    return await modal.present();
   }
 }

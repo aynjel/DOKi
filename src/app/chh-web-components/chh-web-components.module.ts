@@ -71,9 +71,13 @@ import { PdfViewerModule } from "ng2-pdf-viewer";
 import { PrognotesheadviewComponent } from "./prognotesheadview/prognotesheadview.component";
 import { SoapHandlerComponent } from "./soap-handler/soap-handler.component";
 import { SoapShowHide2Component } from "./soap-show-hide2/soap-show-hide2.component";
+import { RevisionComponent } from "../pages/doctors-information/sign-medicalabstract/components/revision/revision.component";
+import { Revision1Component } from "../pages/doctors-information/discharge-instruction/components/revision1/revision1.component";
+import { Revision1HistoryComponent } from "../pages/doctors-information/discharge-instruction/components/revision1-history/revision1-history.component";
 
 @NgModule({
   declarations: [
+    Revision1Component,
     ChhAppLogoComponent,
     ChhAppSlidesComponent,
     ChhAppStartComponent,
@@ -126,9 +130,14 @@ import { SoapShowHide2Component } from "./soap-show-hide2/soap-show-hide2.compon
     PrognotesheadviewComponent,
     SoapHandlerComponent,
     SoapShowHide2Component,
+    RevisionComponent,
+    Revision1HistoryComponent,
   ],
   exports: [
+    Revision1HistoryComponent,
     ChhAppLogoComponent,
+    RevisionComponent,
+    Revision1Component,
     ChhAppSlidesComponent,
     ChhAppStartComponent,
     ChhAppHospitalComponent,

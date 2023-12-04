@@ -722,3 +722,18 @@ ion-action-sheet.my-custom-classAction {
   /* role: "destructive" button iOS styling override */
   --ion-color-danger: #000000;
 }
+ion-modal.ion-modal-112::part(backdrop) {
+  background: #275228;
+  opacity: 1;
+}
+
+ion-modal.ion-modal-112 ion-toolbar {
+  --background: #275228;
+  --color: rgb(255, 255, 255);
+}
+
+.ion-modal-112 {
+  --height: 50%;
+  --border-radius: 16px;
+  --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}

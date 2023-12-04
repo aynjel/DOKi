@@ -26,7 +26,9 @@ import { AuthService } from "src/app/services/auth/auth.service";
 import { LoginResponseModelv3, SignatureApproval } from "src/app/models/doctor";
 import { Constants } from "src/app/shared/constants";
 import { ParamService } from "../discharge-instruction-search/service/param.service";
-
+import { OverlayEventDetail } from "@ionic/core/components";
+import { Revision1Component } from "./components/revision1/revision1.component";
+import { Revision1HistoryComponent } from "./components/revision1-history/revision1-history.component";
 @Component({
   selector: "app-discharge-instruction",
   templateUrl: "./discharge-instruction.page.html",
@@ -74,7 +76,8 @@ export class DischargeInstructionPage implements OnInit {
     private constant: Constants,
     private toastController: ToastController,
     private alertController: AlertController,
-    public param: ParamService
+    public param: ParamService,
+    private actionSheetCtrl: ActionSheetController
   ) {
     this.isNotification = true;
     this.screensizeService
@@ -110,7 +113,7 @@ export class DischargeInstructionPage implements OnInit {
       });
   }
   back() {
-    ////////////console.log(this.idModal);
+    //////////////console.log(this.idModal);
 
     this.closeModal();
   }
@@ -118,7 +121,7 @@ export class DischargeInstructionPage implements OnInit {
     this.logindata = <LoginResponseModelv3>(
       this.authService.userData$.getValue()
     );
-    //console.log(this.logindata);
+    ////console.log(this.logindata);
 
     this.functionsService.logToConsole(this.logindata);
     this.dr_code = this.logindata.doctorCode;
@@ -179,12 +182,14 @@ export class DischargeInstructionPage implements OnInit {
   }
   ds_status;
   ngOnInit() {
+    this.getRevision();
     this.getDIstatus();
+    this.getDIstatusRsCode();
     if (this.idModal) {
       this.closeModal();
     }
     this.checkAppearance();
-    //////////////console.log('ngOnInit');     path: "inbox/sign-medabs/:pNo/:admissionNo",
+    ////////////////console.log('ngOnInit');     path: "inbox/sign-medabs/:pNo/:admissionNo",
     let pNo = this.getpdf();
     this.idModal = false;
     let scWidth = window.innerWidth;
@@ -203,7 +208,7 @@ export class DischargeInstructionPage implements OnInit {
     if (scHeight >= 1180) {
       this.screenHeight = scHeight - scHeight * 0.6;
     }
-    ////console.log('LOGGGGGGGGGGGGG');
+    //////console.log('LOGGGGGGGGGGGGG');
     this.signaturePadOptions = {
       minWidth: 5,
       canvasWidth: this.screenWidth,
@@ -213,7 +218,7 @@ export class DischargeInstructionPage implements OnInit {
       penColor: "rgb(0, 0, 0)",
     };
     this.param.ds_status.subscribe((res) => {
-      //console.log("ds_status", res);
+      ////console.log("ds_status", res);
       if (res.length >= 1) {
         this.ds_status = res;
       }
@@ -237,15 +242,14 @@ export class DischargeInstructionPage implements OnInit {
 
   getMEdicalAbstractList() {
     //     path: "inbox/sign-medabs/:pNo/:admissionNo",
-    //console.log(this.dr_code);
-
+    ////console.log(this.dr_code);
     /*this.doctorService
       .getMedicalAbstractList(this.dr_code)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe({
         complete: () => {},
         error: (error) => {
-          //console.log(error);
+          ////console.log(error);
         },
         next: (data: any) => {
           this.medicalAbstractList = data;
@@ -254,7 +258,7 @@ export class DischargeInstructionPage implements OnInit {
           this.medicalAbstractList = data.find(
             (obj) => obj.account_No === admissionNo && obj.patient_No === pNo
           );
-          //console.log(this.medicalAbstractList);
+          ////console.log(this.medicalAbstractList);
         },
       });*/
   }
@@ -283,7 +287,7 @@ export class DischargeInstructionPage implements OnInit {
   }
   isConsent: boolean = true;
   openConsent() {
-    //////////////console.log(history);
+    ////////////////console.log(history);
 
     this.activateIsSignatureModal();
     this.setidModalTrue();
@@ -383,12 +387,12 @@ export class DischargeInstructionPage implements OnInit {
 
   drawComplete() {
     // will be notified of szimek/signature_pad's onEnd event
-    ////////////////console.log(this.signaturePad.toDataURL());
+    //////////////////console.log(this.signaturePad.toDataURL());
   }
 
   drawStart() {
     // will be notified of szimek/signature_pad's onBegin event
-    ////////////////console.log('begin drawing');
+    //////////////////console.log('begin drawing');
   }
 
   clearPad() {
@@ -426,7 +430,7 @@ export class DischargeInstructionPage implements OnInit {
                 doki_signature: "string",
                 is_approve: true,
               };
-              //console.log(this.logindata);
+              ////console.log(this.logindata);
 
               testApprove1.account_no = admissionNo;
               testApprove1.abstract_approve_by = this.dr_code;
@@ -457,14 +461,14 @@ export class DischargeInstructionPage implements OnInit {
   saveSignature(testAprrove) {
     let dischargeNo = this.activatedRoute.snapshot.params.dischargeNo;
     this.isPDFLoading = false;
-    //console.log(testAprrove);
+    ////console.log(testAprrove);
 
     this.doctorService
       .approveMedicalAbstract(testAprrove)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (data: any) => {
-          // //////////////console.log(data);
+          // ////////////////console.log(data);
         },
         (error) => {
           this.presentToast("Error in saving");
@@ -498,12 +502,12 @@ export class DischargeInstructionPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          ////////console.log('approvePendingAPproval', res);
-          //////////////console.log(res);
+          //////////console.log('approvePendingAPproval', res);
+          ////////////////console.log(res);
         },
         (error) => {
-          ////////console.log(error);
-          //////////////console.log(error);
+          //////////console.log(error);
+          ////////////////console.log(error);
         },
         () => {
           this.isUploaded = true;
@@ -596,14 +600,14 @@ export class DischargeInstructionPage implements OnInit {
       discharge_no: discharge_no,
       revision_dx_remarks: revision_dx_remarks,
     };
-    //////console.log(dischargeNo);
+    ////////console.log(dischargeNo);
 
     this.doctorService
       .cancelApprovedFinalDiagnosis(dischargeNo)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
-          ////////console.log(res);
+          //////////console.log(res);
         },
         (error) => {},
         () => {
@@ -694,7 +698,7 @@ export class DischargeInstructionPage implements OnInit {
       this.logindata.middleName;
     testApprove1.doki_signature = null;
 
-    //console.log(testApprove1);
+    ////console.log(testApprove1);
     this.doctorService
       .putDI(
         "gw/resi/DischargeInstruction/ApproveRevokedDisInstructionDOKi",
@@ -709,7 +713,7 @@ export class DischargeInstructionPage implements OnInit {
         error: (error) => {},
         next: (data: any) => {
           this.isUpdating = false;
-          //console.log(data);
+          ////console.log(data);
         },
       });
   }
@@ -737,7 +741,7 @@ export class DischargeInstructionPage implements OnInit {
       this.logindata.middleName;
     testApprove1.doki_signature = null;
 
-    //console.log(testApprove1);
+    ////console.log(testApprove1);
     this.doctorService
       .putDI(
         "gw/resi/DischargeInstruction/ApproveRevokedDisInstructionDOKi",
@@ -752,7 +756,7 @@ export class DischargeInstructionPage implements OnInit {
         error: (error) => {},
         next: (data: any) => {
           this.isUpdating = false;
-          //console.log(data);
+          ////console.log(data);
         },
       });
   }
@@ -769,9 +773,9 @@ export class DischargeInstructionPage implements OnInit {
         complete: () => {},
         error: (error) => {},
         next: (data: any) => {
-          //console.log(data.data.length);
+          ////console.log(data.data.length);
           if (data.data.length >= 1) {
-            //console.log(data.data[0].ds_approve_date);
+            console.log(data);
             this.ds_status = data.data[0].ds_status;
             if (data.data[0].ds_status == "A") {
               this.isApprovedDI = true;
@@ -779,6 +783,224 @@ export class DischargeInstructionPage implements OnInit {
               this.isApprovedDI = false;
             }
           }
+        },
+      });
+  }
+  result;
+  async ApproveActionSheet() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: "Approve Discharge Instruction?",
+      buttons: [
+        {
+          text: "Yes, Approve",
+          data: {
+            action: "share",
+          },
+          handler: () => {
+            this.approveButton();
+          },
+        },
+        {
+          text: "Cancel",
+          role: "cancel",
+          data: {
+            action: "cancel",
+          },
+        },
+      ],
+    });
+
+    await actionSheet.present();
+
+    const result = await actionSheet.onDidDismiss();
+    this.result = JSON.stringify(result, null, 2);
+  }
+  @ViewChild(IonModal) modals: IonModal;
+
+  message =
+    "This modal example uses triggers to automatically open a modal when the button is clicked.";
+  name: string;
+
+  cancel() {
+    this.modals.dismiss(null, "cancel");
+  }
+
+  confirm() {
+    this.modals.dismiss(this.name, "confirm");
+  }
+  admissionNo;
+  msg;
+  onWillDismiss(event: Event) {
+    this.admissionNo = this.activatedRoute.snapshot.params.admissionNo;
+    let x = {
+      trans_type: "DI",
+      account_no: "IPM000287346",
+      msg: "testiiiiinnggggg",
+      dr_code: "MD100001",
+      resi_code: this.RSuser_updated,
+    };
+    const ev = event as CustomEvent<OverlayEventDetail<string>>;
+    if (ev.detail.role === "confirm") {
+      let trimmedString = this.msg.trim();
+      if (trimmedString == "") {
+      } else {
+        x.account_no = this.admissionNo;
+        x.msg = this.msg;
+        x.dr_code = this.dr_code;
+        this.msg = "";
+        this.doctorService
+          .postDI(
+            "gw/resi/DischargeInstructionAbstractRevision/InsertRevisionRemarks",
+            x
+          )
+          .subscribe({
+            complete: () => {
+              this.AfterRevision();
+            },
+            error: (error) => {},
+            next: (data: any) => {
+              //  this.ngOnInit();
+            },
+          });
+      }
+    }
+  }
+  returnForRevision() {
+    document.getElementById("trigger-for-return-for-revision-DI").click();
+  }
+  sortedJsonData;
+  getRevision() {
+    this.admissionNo = this.activatedRoute.snapshot.params.admissionNo;
+    let x = "";
+    this.doctorService
+      .postDI(
+        "gw/resi/DischargeInstructionAbstractRevision/RetrieveRevisionRemarks?accountNo=" +
+          this.admissionNo +
+          "&transType=DI",
+        x
+      )
+      .subscribe({
+        complete: () => {},
+        error: (error) => {},
+        next: (data: any) => {
+          data.data.sort((a, b) => b.trans_no - a.trans_no);
+
+          // Convert back to JSON
+          var sortedJsonData = JSON.stringify(data, null, 2);
+
+          // Print the sorted JSON
+          let sortedJsonData1;
+          sortedJsonData1 = JSON.parse(sortedJsonData);
+          this.sortedJsonData = sortedJsonData1.data;
+          //console.log(this.sortedJsonData);
+        },
+      });
+  }
+  ViewRevision() {
+    document.getElementById("open-modal-for-revision-history-di").click();
+  }
+  async AfterRevision() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: "The revision note was successfully saved.",
+      buttons: [
+        {
+          text: "Ok",
+          data: {
+            action: "share",
+          },
+          handler: () => {
+            this.ngOnInit();
+          },
+        },
+      ],
+    });
+
+    await actionSheet.present();
+
+    const result = await actionSheet.onDidDismiss();
+    this.result = JSON.stringify(result, null, 2);
+  }
+
+  async returnForRevision123() {
+    let x = {
+      trans_type: "DI",
+      account_no: "IPM000287346",
+      msg: "testiiiiinnggggg",
+      dr_code: "MD100001",
+      resi_code: "",
+    };
+    const modal = await this.modalController.create({
+      component: Revision1Component,
+      cssClass: "ion-modal-112",
+    });
+    modal.onDidDismiss().then((data) => {
+      //console.log(data);
+
+      if (data.role == "confirm") {
+        //console.log(data.data);
+        let trimmedString = data.data.trim();
+        //console.log(trimmedString);
+
+        if (trimmedString == "") {
+        } else {
+          x.account_no = this.admissionNo;
+          x.msg = trimmedString;
+          x.dr_code = this.dr_code;
+          (x.resi_code = this.RSuser_updated),
+            this.doctorService
+              .postDI(
+                "gw/resi/DischargeInstructionAbstractRevision/InsertRevisionRemarks",
+                x
+              )
+              .subscribe({
+                complete: () => {
+                  this.AfterRevision();
+                },
+                error: (error) => {},
+                next: (data: any) => {
+                  //  this.ngOnInit();
+                },
+              });
+        }
+      }
+    });
+
+    return await modal.present();
+  }
+  async viewRevisionNoteHistory() {
+    //  json: this.sortedJsonData,
+
+    const modal = await this.modalController.create({
+      component: Revision1HistoryComponent,
+      cssClass: "ion-modal-112",
+      componentProps: {
+        json: this.sortedJsonData,
+      },
+    });
+    modal.onDidDismiss().then((data) => {
+      //console.log(data);
+    });
+
+    return await modal.present();
+  }
+  RSuser_updated;
+  getDIstatusRsCode() {
+    let patientId = this.activatedRoute.snapshot.params.admissionNo;
+    let x = {
+      account_no: patientId,
+    };
+
+    ////////console.log(x);
+
+    this.doctorService
+      .postDI("gw/resi/DischargeInstruction/Retrieve", x)
+      .subscribe({
+        complete: () => {},
+        error: (error) => {},
+        next: (data: any) => {
+          console.log(data.data.user_updated);
+          this.RSuser_updated = data.data.user_updated;
+          ////////console.log(this.paramS.getDIStatus());
         },
       });
   }

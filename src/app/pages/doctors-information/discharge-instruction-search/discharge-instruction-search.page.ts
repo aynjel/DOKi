@@ -84,7 +84,7 @@ export class DischargeInstructionSearchPage implements OnInit {
     this.medicalAbstractList = [];
     this.inPatientsDraft = [];
     this.inPatientsDraft1 = [];
-    // this.loginResponseModelv3.doctorCode = "MD000243";
+    //this.loginResponseModelv3.doctorCode = "MD000243";
     this.isSearching = true;
     this.doctorService
       .postDI(

@@ -652,7 +652,7 @@ export class DoctorService {
   postDI(endPoint, data) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredentials: false };
-    const url = environment.apiRouterUrlTest + "/" + endPoint;
+    const url = environment.API_URL + "/" + endPoint;
     return this.http.post(url, data, options);
   }
   putDI(endPoint, data) {

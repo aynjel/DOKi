@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()"
+        ><ion-text style="color: white !important">Cancel</ion-text></ion-button
+      >
+    </ion-buttons>
+    <ion-title>Return for Revision</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true"
+        ><ion-text style="color: white !important"
+          >Confirm</ion-text
+        ></ion-button
+      >
+    </ion-buttons>
+  </ion-toolbar></ion-header
+>
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-label position="stacked">Enter your Revision Details</ion-label>
+    <ion-textarea
+      [(ngModel)]="data"
+      autoGrow="true"
+      class="custom-font"
+      placeholder="Type here"
+      id="s"></ion-textarea>
+  </ion-item>
+</ion-content>

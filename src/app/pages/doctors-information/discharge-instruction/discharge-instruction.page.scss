@@ -1,0 +1,21 @@
+ion-modal {
+    --height: 50%;
+    --border-radius: 16px;
+    --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+ion-modal::part(backdrop) {
+    background: #275228;
+    opacity: 1;
+}
+
+ion-modal ion-toolbar {
+    --background: #275228;
+    --color: rgb(255, 255, 255);
+}
+
+.ion-modal-11 {
+    --height: 80%;
+    --border-radius: 16px;
+    --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
