@@ -143,9 +143,12 @@ export class LoginPage {
       this.loginForm.get("userNameOrEmail").value == "" ||
       this.loginForm.get("userNameOrEmail").value == null
     ) {
-      this.loginForm
-        .get("userNameOrEmail")
-        .patchValue(atob(localStorage.getItem("username")));
+      let xyzabc = localStorage.getItem("username");
+      if (xyzabc){
+        this.loginForm
+          .get("userNameOrEmail")
+          .patchValue(atob(localStorage.getItem("username")));
+      }
     }
     this.loginResponseModel = new LoginResponseModel();
     this.onDarkModeEnable();
