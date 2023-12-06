@@ -105,16 +105,27 @@ export class DischargeInstructionSearchPage implements OnInit {
         },
         next: (data: any) => {
           this.isSearching = false;
-          this.medicalAbstractList = data.data;
-          this.inPatientsDraft = data.data;
-          this.inPatientsDraft1 = data.data;
-          this.pendingApprovalCount = this.countPF(data.data, "F");
-          this.prelimCount = this.countPF(data.data, "P");
+          this.medicalAbstractList = this.getsortedPatients(data.data);
+          this.inPatientsDraft = this.getsortedPatients(data.data);
+          this.inPatientsDraft1 = this.getsortedPatients(data.data);
+          this.pendingApprovalCount = this.countPF(
+            this.getsortedPatients(data.data),
+            "F"
+          );
+          this.prelimCount = this.countPF(
+            this.getsortedPatients(data.data),
+            "P"
+          );
         },
       });
     this.doctorService.getMedicalAbstractList(
       this.loginResponseModelv3.doctorCode
     );
+  }
+  getsortedPatients(data) {
+    return data
+      ? data.slice().sort((a, b) => a.name.localeCompare(b.name))
+      : [];
   }
   countPF(data, ss) {
     let count = 0;

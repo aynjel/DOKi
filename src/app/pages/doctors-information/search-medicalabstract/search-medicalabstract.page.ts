@@ -95,11 +95,16 @@ export class SearchMedicalabstractPage implements OnInit {
           //console.log("asdasd");
 
           //console.log(data);
-          this.medicalAbstractList = data;
-          this.inPatientsDraft = data;
-          this.inPatientsDraft1 = data;
+          this.medicalAbstractList = this.getsortedPatients(data);
+          this.inPatientsDraft = this.getsortedPatients(data);
+          this.inPatientsDraft1 = this.getsortedPatients(data);
         },
       });
+  }
+  getsortedPatients(data) {
+    return data
+      ? data.slice().sort((a, b) => a.name.localeCompare(b.name))
+      : [];
   }
   filterList() {
     //console.log(this.inPatientsDraft);
