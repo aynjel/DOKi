@@ -635,7 +635,7 @@ export class DoctorService {
     });
     const options = { headers: headers, withCredentials: true };
     const url =
-      environment.API_URL +
+      environment.apiRouterUrlTest +
       "/gw/MedicalAbstract/MedicalAbstractDOKiList?drCode=" +
       drCode;
 
@@ -646,19 +646,19 @@ export class DoctorService {
       "Content-Type": "application/json;charset=utf-8",
     });
     const options = { headers: headers, withCredentials: true };
-    const url = environment.API_URL + "/" + endPoint;
+    const url = environment.apiRouterUrlTest + "/" + endPoint;
     return this.http.get(url, options);
   }
   postDI(endPoint, data) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredentials: false };
-    const url = environment.API_URL + "/" + endPoint;
+    const url = environment.apiRouterUrlTest + "/" + endPoint;
     return this.http.post(url, data, options);
   }
   putDI(endPoint, data) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     const options = { headers: headers, withCredentials: false };
-    const url = environment.API_URL + "/" + endPoint;
+    const url = environment.apiRouterUrlTest + "/" + endPoint;
     return this.http.put(url, data, options);
   }
 }
