@@ -101,7 +101,12 @@ export class SearchMedicalabstractPage implements OnInit {
         },
       });
   }
-  getsortedPatients(data) {
+  getsortedPatients(response) {
+    let data;
+    if (Array.isArray(response) && response.length > 0) {
+      // Filter data based on "abstract_Status": "F"
+      data = response.filter((item) => item.abstract_Status === "F");
+    }
     return data
       ? data.slice().sort((a, b) => a.name.localeCompare(b.name))
       : [];

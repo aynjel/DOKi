@@ -122,7 +122,12 @@ export class DischargeInstructionSearchPage implements OnInit {
       this.loginResponseModelv3.doctorCode
     );
   }
-  getsortedPatients(data) {
+  getsortedPatients(response) {
+    let data;
+    if (Array.isArray(response) && response.length > 0) {
+      // Filter data based on "ds_status": "F"
+      data = response.filter((item) => item.ds_status === "F");
+    }
     return data
       ? data.slice().sort((a, b) => a.name.localeCompare(b.name))
       : [];
