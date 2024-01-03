@@ -35,7 +35,8 @@ export class DischargeInstructionSearchPage implements OnInit {
     //console.log(this.selected);
 
     this.medicalAbstractList = this.inPatientsDraft1.filter(
-      (element) => element.ds_status == this.selected
+      (element) =>
+        element.ds_status == this.selected && element.account_no.includes("IP")
     );
   }
   prelim;
