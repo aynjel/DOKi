@@ -63,7 +63,7 @@ export class TabsHistoricalPage implements OnInit {
       });
   }
   ngOnInit() {
-    this.yearTreandTO = "2023";
+    this.yearTreandTO = "2024";
     this.ngUnsubscribe = new Subject();
     this.generateMonthlyTotalAdmissions();
     this.generateYTDDailyAvgCensusByMonth();
