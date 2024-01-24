@@ -1,0 +1,331 @@
+<ion-card mode="ios" *ngIf="isDesktop">
+  <div *ngFor="let x of data">
+    <ion-list *ngIf="moreOrLess == true">
+      <ion-item style="padding-bottom: 10px">
+        <div class="ion-text-wrap">
+          <ion-label>
+            <h2 class="ion-text-wrap" style="padding-top: 10px">
+              <b>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</b>
+              <ion-text color="primary">
+                <p color="primary">
+                  <b
+                    >{{ x.dob }} <strong>|</strong> {{ x.age }}
+                    <strong>|</strong> {{ x.gender }}</b
+                  >
+                </p>
+              </ion-text>
+            </h2>
+          </ion-label>
+        </div>
+        <ion-badge color="warning" slot="end" (click)="moreorless(false)">
+          <ion-icon name="chevron-down-outline"></ion-icon>
+        </ion-badge>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf="moreOrLess == false">
+      <ion-item style="padding-bottom: 10px">
+        <div class="ion-text-wrap">
+          <ion-label>
+            <h2 class="ion-text-wrap" style="padding-top: 10px">
+              <b>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</b>
+              <ion-text color="primary">
+                <p color="primary">
+                  <b
+                    >{{ x.dob }} <strong>|</strong> {{ x.age }}
+                    <strong>|</strong> {{ x.gender }}</b
+                  >
+                </p>
+              </ion-text>
+            </h2>
+          </ion-label>
+        </div>
+        <ion-badge
+          color="warning"
+          slot="end"
+          class="font-size12"
+          *ngIf="
+            x.admission_status == 'DN' &&
+            (x.doctor_prof_fee == null || x.doctor_prof_fee == '0') &&
+            x.is_posted == null &&
+            role_flag != 'exec'
+          ">
+          PF</ion-badge
+        >
+        <ion-badge
+          color="success"
+          slot="end"
+          class="font-size12"
+          *ngIf="
+            x.doctor_prof_fee != null &&
+            x.is_posted != null &&
+            role_flag != 'exec'
+          "
+          >PF OK</ion-badge
+        >
+      </ion-item>
+      <ion-item lines="none" style="padding-bottom: 10px">
+        <div class="ion-text-wrap" style="padding-top: 5px">
+          <div *ngIf="x.site == 'C'" class="font-size12">
+            <ion-icon name="location-outline" slot="start"></ion-icon>
+            Chong Hua Hospital
+          </div>
+          <div *ngIf="x.site == 'M'" class="font-size12">
+            <ion-icon name="location-outline" slot="start"></ion-icon>
+            Chong Hua Hospital Mandaue
+          </div>
+          <div class="font-size12">
+            <ion-icon name="bed-outline" slot="start"></ion-icon>
+            Bed No. {{ x.er_bed_text }}
+          </div>
+          <div class="font-size12">
+            <ion-icon name="clipboard-outline" slot="start"></ion-icon>
+            as {{ x.doctor_Status }}&nbsp;
+          </div>
+          <div class="font-size12" style="font-size: 13px">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <span style="font-size: 13px">
+              Admission Date &nbsp;&nbsp;: {{ dateAdmitted }}</span
+            >
+          </div>
+
+          <div
+            class="font-size12"
+            *ngIf="x.forDischargeDateTime != null"
+            style="font-size: 13px">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <span style="font-size: 13px">
+              Discharge Notice : {{ x.forDischargeDateTime }}</span
+            >
+          </div>
+
+          <ion-chip *ngIf="x.admission_status == 'AC'">
+            <ion-label color="primary" class="font-12">
+              <b>
+                {{ erStatus }}
+              </b>
+            </ion-label>
+          </ion-chip>
+
+          <ion-chip *ngIf="x.admission_status == 'DN'">
+            <ion-label color="primary" class="font-12"
+              ><b>For Discharge</b></ion-label
+            >
+          </ion-chip>
+          <ion-chip *ngIf="is_philhealth_membership == 'M'">
+            <ion-label color="primary" class="font-12"
+              ><b>PHIC Member</b></ion-label
+            >
+          </ion-chip>
+          <ion-chip *ngIf="is_philhealth_membership == 'D'">
+            <ion-label color="primary" class="font-12"
+              ><b>PHIC Dependent</b></ion-label
+            >
+          </ion-chip>
+          <ion-chip *ngIf="is_senior == 'Y'">
+            <ion-label color="primary" class="font-12"><b>Senior</b></ion-label>
+          </ion-chip>
+          <ion-chip *ngIf="is_pwd == 'Y'">
+            <ion-label color="primary" class="font-12"><b>PWD</b></ion-label>
+          </ion-chip>
+
+          <div *ngFor="let x of data">
+            <div *ngIf="x.insurance_hmo != null">
+              <ion-icon name="shield-checkmark-outline"></ion-icon>
+              <span class="font-size12"> {{ x.insurance_hmo }}</span>
+            </div>
+          </div>
+
+          <!-- <div class="font-size12" style="font-size: 13px" *ngIf="patientDetailfromApi_from != 'undefined'">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <span style="font-size: 13px">
+              Managed from &nbsp;&nbsp;: {{ patientDetailfromApi_from }}</span
+            >
+          </div> -->
+          <!-- <div
+            class="font-size12"
+            style="font-size: 13px"
+            *ngIf="admission_status == 'DN'">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <span style="font-size: 13px">
+              Managed to &nbsp;&nbsp;: {{ patientDetailfromApi_to }}</span
+            >
+          </div> -->
+        </div>
+      </ion-item>
+      <ion-item lines="none" style="padding-bottom: 10px">
+        <ion-badge color="warning" slot="end" (click)="moreorless(true)">
+          <ion-icon name="chevron-up-outline"></ion-icon>
+        </ion-badge>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-card>
+
+<ion-card mode="ios" *ngIf="!isDesktop">
+  <div *ngFor="let x of data">
+    <ion-list *ngIf="moreOrLess == true">
+      <ion-item style="padding-bottom: 10px">
+        <div class="ion-text-wrap">
+          <ion-label>
+            <h2 class="ion-text-wrap" style="padding-top: 10px">
+              <b>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</b>
+              <ion-text color="primary">
+                <p color="primary">
+                  <b
+                    >{{ x.dob }} <strong>|</strong> {{ x.age }}
+                    <strong>|</strong> {{ x.gender }}</b
+                  >
+                </p>
+              </ion-text>
+            </h2>
+          </ion-label>
+        </div>
+        <ion-badge color="warning" slot="end" (click)="moreorless(false)">
+          <ion-icon name="chevron-down-outline"></ion-icon>
+        </ion-badge>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf="moreOrLess == false">
+      <ion-item style="padding-bottom: 10px">
+        <div class="ion-text-wrap">
+          <ion-label>
+            <h2 class="ion-text-wrap" style="padding-top: 10px">
+              <b>{{ x.last_name }}, {{ x.first_name }} {{ x.middle_name }}</b>
+              <ion-text color="primary">
+                <p color="primary">
+                  <b
+                    >{{ x.dob }} <strong>|</strong> {{ x.age }}
+                    <strong>|</strong> {{ x.gender }}</b
+                  >
+                </p>
+              </ion-text>
+            </h2>
+          </ion-label>
+        </div>
+        <ion-badge
+          color="warning"
+          slot="end"
+          class="font-size12"
+          *ngIf="
+            x.admission_status == 'DN' &&
+            (x.doctor_prof_fee == null || x.doctor_prof_fee == '0') &&
+            x.is_posted == null &&
+            showPFDetals &&
+            role_flag != 'exec'
+          ">
+          PF</ion-badge
+        >
+        <ion-badge
+          color="success"
+          slot="end"
+          class="font-size12"
+          *ngIf="
+            x.doctor_prof_fee != null &&
+            x.is_posted != null &&
+            showPFDetals &&
+            role_flag != 'exec'
+          "
+          >PF OK</ion-badge
+        >
+      </ion-item>
+      <ion-item lines="none" style="padding-bottom: 10px">
+        <div class="ion-text-wrap" style="padding-top: 5px">
+          <div *ngIf="x.site == 'C'" class="font-size12">
+            <ion-icon name="location-outline" slot="start"></ion-icon>
+            Chong Hua Hospital
+          </div>
+          <div *ngIf="x.site == 'M'" class="font-size12">
+            <ion-icon name="location-outline" slot="start"></ion-icon>
+            Chong Hua Hospital Mandaue
+          </div>
+          <div class="font-size12">
+            <ion-icon name="bed-outline" slot="start"></ion-icon>
+            Bed No. {{ x.er_bed == 'OTHC' || x.er_bed == 'OTHM' ? x.er_bed_text : x.er_bed }}
+          </div>
+
+          <div class="font-size12">
+            <ion-icon name="clipboard-outline" slot="start"></ion-icon>
+            as {{ x.doctor_Status }}&nbsp;
+          </div>
+          <div class="font-size12" style="font-size: 13px">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <span style="font-size: 13px">
+              Admission Date &nbsp;&nbsp;: {{ dateAdmitted }}</span
+            >
+          </div>
+
+          <div
+            class="font-size12"
+            *ngIf="x.forDischargeDateTime != null"
+            style="font-size: 13px">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <span style="font-size: 13px">
+              Discharge Notice : {{ x.forDischargeDateTime }}</span
+            >
+          </div>
+
+          <ion-chip *ngIf="x.admission_status == 'AC'">
+            <ion-label color="primary" class="font-12"
+              ><b>
+                {{ erStatus }}
+              </b></ion-label
+            >
+          </ion-chip>
+          <ion-chip *ngIf="x.admission_status == 'DN'">
+            <ion-label color="primary" class="font-12"
+              ><b>For Discharge</b></ion-label
+            >
+          </ion-chip>
+          <ion-chip *ngIf="is_philhealth_membership == 'M'">
+            <ion-label color="primary" class="font-12"
+              ><b>PHIC Member</b></ion-label
+            >
+          </ion-chip>
+          <ion-chip *ngIf="is_philhealth_membership == 'D'">
+            <ion-label color="primary" class="font-12"
+              ><b>PHIC Dependent</b></ion-label
+            >
+          </ion-chip>
+          <ion-chip *ngIf="is_senior == 'Y'">
+            <ion-label color="primary" class="font-12"><b>Senior</b></ion-label>
+          </ion-chip>
+          <ion-chip *ngIf="is_pwd == 'Y'">
+            <ion-label color="primary" class="font-12"><b>PWD</b></ion-label>
+          </ion-chip>
+
+          <div *ngFor="let x of data">
+            <div *ngIf="x.insurance_hmo != null">
+              <ion-icon name="shield-checkmark-outline"></ion-icon>
+              <span class="font-size12"> {{ x.insurance_hmo }}</span>
+            </div>
+          </div>
+
+          <!-- <div class="font-size12" style="font-size: 13px" *ngIf="showPFDetals && patientDetailfromApi_from != 'undefined' && patientDetailfromApi_from != null">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <span style="font-size: 13px">
+              Managed from &nbsp;&nbsp;: {{ patientDetailfromApi_from }}</span
+            >
+          </div> -->
+          <div
+            class="font-size12"
+            style="font-size: 13px"
+            *ngIf="admission_status == 'DN' && showPFDetals">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <span style="font-size: 13px">
+              Managed to &nbsp;&nbsp;: {{ patientDetailfromApi_to }}</span
+            >
+          </div>
+        </div>
+        <ion-badge color="warning" slot="end" (click)="moreorless(true)">
+          <ion-icon name="chevron-up-outline"></ion-icon>
+        </ion-badge>
+      </ion-item>
+
+      <!--ion-item lines="none" class="ion-no-margin ion-no-padding">
+        <ion-badge color="warning" slot="end" (click)="moreorless(true)">
+          <ion-icon name="chevron-up-outline"></ion-icon>
+        </ion-badge>
+      </ion-item-->
+    </ion-list>
+  </div>
+</ion-card>

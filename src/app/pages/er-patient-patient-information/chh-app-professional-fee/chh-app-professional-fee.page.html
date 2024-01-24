@@ -1,0 +1,379 @@
+<!--
+___  ___        _      _  _              _   _                   _             
+|  \/  |       | |    (_)| |            | | | |                 | |            
+| .  . |  ___  | |__   _ | |  ___       | |_| |  ___   __ _   __| |  ___  _ __ 
+| |\/| | / _ \ | '_ \ | || | / _ \      |  _  | / _ \ / _` | / _` | / _ \| '__|
+| |  | || (_) || |_) || || ||  __/      | | | ||  __/| (_| || (_| ||  __/| |   
+\_|  |_/ \___/ |_.__/ |_||_| \___|      \_| |_/ \___| \__,_| \__,_| \___||_|   
+                                                                               
+    -->
+    <ion-header mode="md" class="ion-no-border" *ngIf="!isDesktop">
+      <ion-toolbar color="mango">
+        <span class="padding-left-10" routerLink="{{routerLinkBack}}" routerDirection="backwards" color="chh-css-primary2"
+          *ngIf="btnclose">
+          <ion-icon name="arrow-back-outline" class="my-icon vcenter"></ion-icon>
+        </span>
+        <span class="padding-left-10 buttonActive" routerDirection="backwards" color="chh-css-primary2" *ngIf="!btnclose"
+          (click)="modifyProfFeeClose()">
+          <ion-icon name="arrow-back-outline" class="my-icon vcenter"></ion-icon>
+        </span>
+        <span class="padding-left-30 font-weight-500 font-size-20"> &nbsp;&nbsp;Professional Fee </span>
+      </ion-toolbar>
+    </ion-header>
+    
+    <!--
+    ______             _     _                        _   _                   _             
+    |  _  \           | |   | |                      | | | |                 | |            
+    | | | |  ___  ___ | | __| |_   ___   _ __        | |_| |  ___   __ _   __| |  ___  _ __ 
+    | | | | / _ \/ __|| |/ /| __| / _ \ | '_ \       |  _  | / _ \ / _` | / _` | / _ \| '__|
+    | |/ / |  __/\__ \|   < | |_ | (_) || |_) |      | | | ||  __/| (_| || (_| ||  __/| |   
+    |___/   \___||___/|_|\_\ \__| \___/ | .__/       \_| |_/ \___| \__,_| \__,_| \___||_|   
+                                        | |                                                 
+                                        |_|                                                 
+    -->
+    <app-chh-app-desktop-navigation *ngIf="isDesktop"></app-chh-app-desktop-navigation>
+
+    <ion-content *ngIf="!isDesktop">
+      <div *ngIf="ifShowSummary == true">
+    
+    
+    
+        <ion-grid>
+          <ion-row>
+            <ion-col size="8" offset="2">
+              <div class="vertical-center">
+                <div class="center">
+                  <img src="assets/img/online-transactions.png" />
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+    
+    
+    
+    
+    
+        <app-professional-fee-er-summary-patient-info [data]="data" [site]="site" [is_pwd]="is_pwd" [is_senior]="is_senior" [dateAdmitted]="dateAdmitted"
+          [data1]="data1" [withVat]="withVat" [payvenueTxt]="payvenueTxt"
+          [is_philhealth_membership]="is_philhealth_membership" [patientDetailfromApi_from]="patientDetailfromApi_from"
+          [patientDetailfromApi_to]="patientDetailfromApi_to">
+        </app-professional-fee-er-summary-patient-info>
+    
+        <pfsummary [payvenueN]="payvenueN" [data1]="data1" [withVatN]="withVatN"></pfsummary>
+    
+      </div>
+      <!--
+    
+    
+      ______           _    _____ _                      _____                                            
+     |  ____|         | |  / ____| |                    / ____|                                           
+     | |__   _ __   __| | | (___ | |__   _____      __ | (___  _   _ _ __ ___  _ __ ___   __ _ _ __ _   _ 
+     |  __| | '_ \ / _` |  \___ \| '_ \ / _ \ \ /\ / /  \___ \| | | | '_ ` _ \| '_ ` _ \ / _` | '__| | | |
+     | |____| | | | (_| |  ____) | | | | (_) \ V  V /   ____) | |_| | | | | | | | | | | | (_| | |  | |_| |
+     |______|_| |_|\__,_| |_____/|_| |_|\___/ \_/\_/   |_____/ \__,_|_| |_| |_|_| |_| |_|\__,_|_|   \__, |
+                                                                                                     __/ |
+                                                                                                    |___/ 
+    
+    
+    
+    -->
+      <div *ngIf="ifShowSummary == false">
+        <app-chh-app-patient-emos-header [data]="data" [dateAdmitted]="dateAdmitted" [forMoreOrLess]="true" [is_pwd]="is_pwd"
+          [is_senior]="is_senior" [is_philhealth_membership]="is_philhealth_membership"
+          [patientDetailfromApi_from]="patientDetailfromApi_from" [patientDetailfromApi_to]="patientDetailfromApi_to"
+          [admission_status]="admission_status">
+        </app-chh-app-patient-emos-header>
+        <ion-card mode="ios" [disabled]="!areyouaninsurancecoordinator">
+          <ion-item lines="none">
+            <ion-label class="ion-text-wrap">Are you an Insurance Coordinator?</ion-label>
+            <ion-checkbox color="primary" checked="false" [(ngModel)]="isCoordinator"></ion-checkbox>
+          </ion-item>
+        </ion-card>
+        <ion-card mode="ios">
+          <ion-item lines="none">
+            <ion-label class="ion-text-wrap">Have you seen this Patient?</ion-label>
+            <ion-checkbox color="primary" value="isPatientSeen" (click)="isPatientSeenf('isPatientSeen',isPatientSeen)"
+              [(ngModel)]="isPatientSeen"></ion-checkbox>
+          </ion-item>
+        </ion-card>
+        <ion-card mode="ios">
+          <ion-list [class.disabled]="disabledselection">
+            <ion-list-header>Select Pay Venue
+              <ion-icon slot="end" name="wallet-outline"></ion-icon>
+            </ion-list-header>
+            <ion-item lines="none">
+              <ion-label class="ion-text-wrap">Insurance + PhilHealth</ion-label>
+              <ion-checkbox color="primary" slot="end" value="insurance" [(ngModel)]="insurance"
+                (click)="buttonclick('insurance',insurance)"></ion-checkbox>
+            </ion-item>
+            <div class="insurance_hmo ion-text-wrap" *ngIf="insurance_hmo!=null">
+              <ion-icon name="shield-checkmark-outline"></ion-icon> {{insurance_hmo}}
+            </div>
+            <ion-item lines="none">
+              <ion-label class="ion-text-wrap">Personal + PhilHealth</ion-label>
+              <ion-checkbox color="primary" slot="end" value="philhealth" [(ngModel)]="personalphilhealth"
+                (click)="buttonclick('Personalphilhealth',personalphilhealth)"></ion-checkbox>
+            </ion-item>
+    
+            <ion-item lines="none">
+              <ion-label class="ion-text-wrap">PhilHealth Only</ion-label>
+              <ion-checkbox color="primary" slot="end" value="philhealth" [(ngModel)]="philhealth"
+                (click)="buttonclick('philhealth',philhealth)"></ion-checkbox>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label class="ion-text-wrap">Charity</ion-label>
+              <ion-checkbox color="primary" slot="end" value="charity" [(ngModel)]="charity"
+                (click)="buttonclick('charity',charity)"></ion-checkbox>
+            </ion-item>
+          </ion-list>
+        </ion-card>
+      </div>
+    
+      <!-- <ion-card  mode="ios" class="card-nb">
+        <ion-button color="mango" size="default" expand="block" shape="round" [disabled]="toPFMbtn" (click)="redirecto()">Next</ion-button>
+      </ion-card>
+         
+       -->
+    
+      <!-- 
+    
+    
+    
+    <ion-grid  *ngIf="!isDesktop"  class="ion-no-padding " aria-disabled="true">
+      <ion-row >
+        <ion-col size="12"  >
+    
+    
+    
+          <ion-card >
+    
+    
+            <app-chh-app-insurance-coordinator-inquiry
+              [pfInsCoor]="pfInsCoor"
+              (showSeenPatientEventEmitter)="isInsuranceCoordinatorEventEmitter($event)"
+            ></app-chh-app-insurance-coordinator-inquiry>
+            <app-chh-app-is-patient-seen *ngIf="showSeenPatient"
+            [pfIsPatientSeen]="pfIsPatientSeen"
+              (showIsPatientSeenEventEmitter)="isPatientSeenEventEmitter($event)"
+            ></app-chh-app-is-patient-seen>
+    
+    
+    
+    
+      </ion-card>
+      </ion-col>
+      </ion-row>
+    </ion-grid> -->
+    
+      <!-- 
+    <ion-grid  *ngIf="!isDesktop && showSelection"  class="ion-no-padding " >
+      <ion-row >
+        <ion-col size="12"  >
+          <ion-card >
+      <ion-list>
+        <ion-list-header>
+          How do you want to....
+        </ion-list-header>
+    
+        <ion-item (click)="redirecto('insurance')">
+          <ion-avatar slot="start">
+            <img src="../../../../assets/img/insurance.jpg">
+          </ion-avatar>
+          <ion-label>
+            <h2>Care of Insurance</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p>
+          </ion-label>
+        </ion-item>
+    
+        <ion-item (click)="redirecto('charity')">
+          <ion-avatar slot="start">
+            <img src="../../../../assets/img/charity.jpg">
+          </ion-avatar>
+          <ion-label>
+            <h2>Charity</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p>
+          </ion-label>
+        </ion-item>
+    
+        <ion-item (click)="redirecto('philhealth')">
+          <ion-avatar slot="start">
+            <img src="../../../../assets/img/philhealth.jpg">
+          </ion-avatar>
+          <ion-label>
+            <h2>PhilHealth</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+      </ion-card>
+      </ion-col>
+      </ion-row>
+    </ion-grid>
+     -->
+    </ion-content>
+    <ion-footer *ngIf="!isDesktop">
+      <ion-toolbar>
+        <ion-item lines="none">
+          <ion-grid class="ion-no-padding">
+            <ion-row>
+              <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+              <ion-col size-xs="12" size-md="4" size-lg="4">
+                <ion-progress-bar value="0.5" color="warning" *ngIf="ifShowSummary == false"></ion-progress-bar>
+              </ion-col>
+              <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+              <ion-col size-xs="12" size-md="4" size-lg="4">
+                <ion-button color="mango" size="default" expand="block" shape="round" class="buttonActive"
+                  [disabled]="toPFMbtn" (click)="redirecto()" *ngIf="ifShowSummary == false">Next</ion-button>
+    
+                <ion-button class="buttonActive" color="mango" size="default" expand="block" shape="round"
+                  (click)="modifyProfFee()" *ngIf="ifShowSummary" [disabled]="modifybtn">Modify</ion-button>
+              </ion-col>
+              <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-toolbar>
+    </ion-footer>
+    
+    <!--
+    ______             _     _                       ______             _        
+    |  _  \           | |   | |                      | ___ \           | |       
+    | | | |  ___  ___ | | __| |_   ___   _ __        | |_/ /  ___    __| | _   _ 
+    | | | | / _ \/ __|| |/ /| __| / _ \ | '_ \       | ___ \ / _ \  / _` || | | |
+    | |/ / |  __/\__ \|   < | |_ | (_) || |_) |      | |_/ /| (_) || (_| || |_| |
+    |___/   \___||___/|_|\_\ \__| \___/ | .__/       \____/  \___/  \__,_| \__, |
+                                        | |                                 __/ |
+                                        |_|                                |___/ 
+    -->
+    <ion-content *ngIf="isDesktop">
+      <ul class="breadcrumb">
+        <li>
+          <a routerLink="{{routerLinkBack}}">In-Patients</a>
+          <ion-icon name="chevron-forward-outline" class="icon-center"></ion-icon>
+        </li>
+        <li>
+          <a>{{patient_name}}</a>
+          <ion-icon name="chevron-forward-outline" class="icon-center"></ion-icon>
+        </li>
+        <li>
+          <a>Professional Fee</a>
+          <ion-icon name="chevron-forward-outline" class="icon-center"></ion-icon>
+        </li>
+    
+      </ul>
+    
+      <ion-grid class="ion-no-padding">
+        <ion-row>
+          <ion-col size-lg="1" size-md="12"></ion-col>
+          <ion-col size-lg="3" size-md="6">
+            <app-chh-app-patient-emos-header [forMoreOrLess]="true" [data]="data" [dischargeNotice]="dischargeNotice"
+              [dateAdmitted]="dateAdmitted" *ngIf="!ifShowSummary" [is_pwd]="is_pwd" [is_senior]="is_senior"
+              [patientDetailfromApi_from]="patientDetailfromApi_from" [patientDetailfromApi_to]="patientDetailfromApi_to"
+              [admission_status]="admission_status">
+            </app-chh-app-patient-emos-header>
+            <div *ngIf="ifShowSummary == true">
+    
+              <ion-grid class="ion-no-padding">
+                <ion-row>
+                  <ion-col size="8" offset="2">
+                    <div class="vertical-center">
+                      <div class="center">
+                        <img src="assets/img/online-transactions.png" />
+                      </div>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </ion-col>
+          <ion-col size-lg="4" size-md="6">
+    
+            <div *ngIf="ifShowSummary == true">
+    
+    
+              <app-professional-fee-er-summary-patient-info [data]="data" [site]="site" [is_pwd]="is_pwd" [is_senior]="is_senior"
+                [dateAdmitted]="dateAdmitted" [data1]="data1" [withVat]="withVat" [payvenueTxt]="payvenueTxt"
+                [patientDetailfromApi_from]="patientDetailfromApi_from" [patientDetailfromApi_to]="patientDetailfromApi_to" [display]="false">
+              </app-professional-fee-er-summary-patient-info>
+              <pfsummary [payvenueN]="payvenueN" [data1]="data1" [withVatN]="withVatN"></pfsummary>
+              <ion-button color="mango" size="default" expand="block" shape="round" class="buttonActive"
+                (click)="modifyProfFee()" *ngIf="ifShowSummary" [disabled]="modifybtn">Modify</ion-button>
+            </div>
+            <!--
+    
+    
+      ______           _    _____ _                      _____                                            
+     |  ____|         | |  / ____| |                    / ____|                                           
+     | |__   _ __   __| | | (___ | |__   _____      __ | (___  _   _ _ __ ___  _ __ ___   __ _ _ __ _   _ 
+     |  __| | '_ \ / _` |  \___ \| '_ \ / _ \ \ /\ / /  \___ \| | | | '_ ` _ \| '_ ` _ \ / _` | '__| | | |
+     | |____| | | | (_| |  ____) | | | | (_) \ V  V /   ____) | |_| | | | | | | | | | | | (_| | |  | |_| |
+     |______|_| |_|\__,_| |_____/|_| |_|\___/ \_/\_/   |_____/ \__,_|_| |_| |_|_| |_| |_|\__,_|_|   \__, |
+                                                                                                     __/ |
+                                                                                                    |___/ 
+    
+    
+    -->
+        <div *ngIf="ifShowSummary == false">
+          <ion-card mode="ios">
+            <ion-item lines="none">
+              <ion-label class="ion-text-wrap">Are you an Insurance Coordinator?</ion-label>
+              <ion-checkbox color="primary" checked="false" [(ngModel)]="isCoordinator"></ion-checkbox>
+            </ion-item>
+          </ion-card>
+          <ion-card mode="ios">
+            <ion-item lines="none">
+              <ion-label class="ion-text-wrap">Have you seen this Patient?</ion-label>
+              <ion-checkbox color="primary" value="isPatientSeen"
+                (click)="isPatientSeenf('isPatientSeen',isPatientSeen)" [(ngModel)]="isPatientSeen"></ion-checkbox>
+            </ion-item>
+          </ion-card>
+          <ion-card mode="ios">
+            <ion-list [class.disabled]="disabledselection">
+              <ion-list-header>Select Pay Venue
+                <ion-icon slot="end" name="wallet-outline"></ion-icon>
+              </ion-list-header>
+              <ion-item lines="none">
+                <ion-label class="ion-text-wrap">Insurance + PhilHealth</ion-label>
+                <ion-checkbox color="primary" slot="end" value="insurance" [(ngModel)]="insurance"
+                  (click)="buttonclick('insurance',insurance)"></ion-checkbox>
+              </ion-item>
+              <div class="insurance_hmo ion-text-wrap" *ngIf="insurance_hmo!=null">{{insurance_hmo}}</div>
+              <ion-item lines="none">
+                <ion-label class="ion-text-wrap">Personal + PhilHealth</ion-label>
+                <ion-checkbox color="primary" slot="end" value="philhealth" [(ngModel)]="personalphilhealth"
+                  (click)="buttonclick('Personalphilhealth',personalphilhealth)"></ion-checkbox>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-label class="ion-text-wrap">PhilHealth Only</ion-label>
+                <ion-checkbox color="primary" slot="end" value="philhealth" [(ngModel)]="philhealth"
+                  (click)="buttonclick('philhealth',philhealth)"></ion-checkbox>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-label class="ion-text-wrap">Charity</ion-label>
+                <ion-checkbox color="primary" slot="end" value="charity" [(ngModel)]="charity"
+                  (click)="buttonclick('charity',charity)"></ion-checkbox>
+              </ion-item>
+            </ion-list>
+          </ion-card>
+
+          <ion-button color="mango" size="default" expand="block" shape="round" [disabled]="toPFMbtn"
+            (click)="redirecto()" *ngIf="ifShowSummary == false">Next</ion-button>
+        </div>
+      </ion-col>
+
+      <ion-col size-lg="3" size-md="6">
+
+      </ion-col>
+      <ion-col size-lg="1" size-md="12"></ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-footer class="ion-no-border" *ngIf="isDesktop">
+  <div class="footer tab-font-family" *ngIf="isDesktop">
+    <span>{{this.constants.CHH_NAME__VALUE__CEBU}}</span>
+  </div>
+</ion-footer>

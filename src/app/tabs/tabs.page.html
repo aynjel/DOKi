@@ -6,6 +6,12 @@
         >{{this.constants.MENU__VALUE__IN_PATIENTS}}</ion-label
       >
     </ion-tab-button>
+    <ion-tab-button id="button-er-patients" tab="er-patients">
+      <ion-icon name="medkit-outline"></ion-icon>
+      <ion-label class="tab-font-family"
+        >{{this.constants.MENU__VALUE__ER_PATIENTS}}</ion-label
+      >
+    </ion-tab-button>
     <ion-tab-button
       id="button-dashboard"
       tab="dashboard"
@@ -66,6 +72,15 @@
               routerLinkActive="active-link"
               class="link">
               {{this.constants.MENU__VALUE__IN_PATIENTS}}
+            </ion-button>
+            <ion-button
+              id="button-er-patients"
+              fill="clear"
+              routerLink="/menu/er-patients"
+              routerDirection="root"
+              routerLinkActive="active-link"
+              class="link">
+              {{this.constants.MENU__VALUE__ER_PATIENTS}}
             </ion-button>
             <!--ion-button
               id="button-appointments"

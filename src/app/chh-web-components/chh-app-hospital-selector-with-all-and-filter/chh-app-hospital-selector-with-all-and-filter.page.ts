@@ -14,6 +14,7 @@ import { Console } from "console";
   styleUrls: ["./chh-app-hospital-selector-with-all-and-filter.page.scss"],
 })
 export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
+  @Input() ER: boolean = false;
   active: boolean = true;
   active1: boolean = false;
   active2: boolean = false;
@@ -41,16 +42,29 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
     });
 
     if (this.isDesktop) {
-      router.events.subscribe((val) => {
-        if (location.path().trim() == "/menu/in-patients") {
-          this.admittedOrDischarge = "All";
-        } else if (location.path().trim() == "/menu/in-patients/AC") {
-          this.admittedOrDischarge = "AC";
-        } else if (location.path().trim() == "/menu/in-patients/DN") {
-          this.admittedOrDischarge = "DN";
-        }
-        this.admittedOrDischarge = this.variables.tempSelection;
-      });
+      if(this.ER){
+        router.events.subscribe((val) => {
+          if (location.path().trim() == "/menu/in-patients") {
+            this.admittedOrDischarge = "All";
+          } else if (location.path().trim() == "/menu/in-patients/RE") {
+            this.admittedOrDischarge = "RE";
+          } else if (location.path().trim() == "/menu/in-patients/ED") {
+            this.admittedOrDischarge = "ED";
+          }
+          this.admittedOrDischarge = this.variables.tempSelection;
+        });
+      }else{
+        router.events.subscribe((val) => {
+          if (location.path().trim() == "/menu/in-patients") {
+            this.admittedOrDischarge = "All";
+          } else if (location.path().trim() == "/menu/in-patients/AC") {
+            this.admittedOrDischarge = "AC";
+          } else if (location.path().trim() == "/menu/in-patients/DN") {
+            this.admittedOrDischarge = "DN";
+          }
+          this.admittedOrDischarge = this.variables.tempSelection;
+        });
+      }
     }
   }
 
@@ -75,28 +89,54 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
     this.hospital.emit(data1);
   }
   onSubmit1(data1: any, data2: boolean) {
-    if (data1 == this.constants.CHH_SITE__VALUE__ALL /*"ALL"*/) {
-      //localStorage.setItem("navigateInpatient", "ALL");
-      this.inPatientMode.emit("ALL");
-      /*this.router.navigate(["/menu/in-patients"]).then(() => {
-        window.location.reload();
-      });*/
-    } else if (
-      data1 == this.constants.ADMISSION_STATUS__CODE__ADMITTED /*"AC"*/
-    ) {
-      this.inPatientMode.emit("AC");
-      //localStorage.setItem("navigateInpatient", "AC");
-      /*this.router.navigate(["/menu/in-patients/AC"]).then(() => {
-        window.location.reload();
-      });*/
-    } else if (
-      data1 == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE /*"DN"*/
-    ) {
-      this.inPatientMode.emit("DN");
-      //localStorage.setItem("navigateInpatient", "DN");
-      /*this.router.navigate(["/menu/in-patients/DN"]).then(() => {
-        window.location.reload();
-      });*/
+    if(this.ER){
+      if (data1 == this.constants.CHH_SITE__VALUE__ALL /*"ALL"*/) {
+        //localStorage.setItem("navigateInpatient", "ALL");
+        this.inPatientMode.emit("ALL");
+        /*this.router.navigate(["/menu/in-patients"]).then(() => {
+          window.location.reload();
+        });*/
+      } else if (
+        data1 == this.constants.ADMISSION_STATUS__CODE__FOR_REGISTERED /*"RE"*/
+      ) {
+        this.inPatientMode.emit("RE");
+        //localStorage.setItem("navigateInpatient", "AC");
+        /*this.router.navigate(["/menu/in-patients/RE"]).then(() => {
+          window.location.reload();
+        });*/
+      } else if (
+        data1 == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE_ED /*"ED"*/
+      ) {
+        this.inPatientMode.emit("ED");
+        //localStorage.setItem("navigateInpatient", "DN");
+        /*this.router.navigate(["/menu/in-patients/ED"]).then(() => {
+          window.location.reload();
+        });*/
+      }
+    }else{
+      if (data1 == this.constants.CHH_SITE__VALUE__ALL /*"ALL"*/) {
+        //localStorage.setItem("navigateInpatient", "ALL");
+        this.inPatientMode.emit("ALL");
+        /*this.router.navigate(["/menu/in-patients"]).then(() => {
+          window.location.reload();
+        });*/
+      } else if (
+        data1 == this.constants.ADMISSION_STATUS__CODE__ADMITTED /*"AC"*/
+      ) {
+        this.inPatientMode.emit("AC");
+        //localStorage.setItem("navigateInpatient", "AC");
+        /*this.router.navigate(["/menu/in-patients/AC"]).then(() => {
+          window.location.reload();
+        });*/
+      } else if (
+        data1 == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE /*"DN"*/
+      ) {
+        this.inPatientMode.emit("DN");
+        //localStorage.setItem("navigateInpatient", "DN");
+        /*this.router.navigate(["/menu/in-patients/DN"]).then(() => {
+          window.location.reload();
+        });*/
+      }
     }
   }
   changeRedirect(event: any) {
@@ -104,21 +144,40 @@ export class ChhAppHospitalSelectorWithAllAndFilterPage implements OnInit {
 
     this.variables.tempSelection = this.admittedOrDischarge;
 
-    if (this.admittedOrDischarge.trim() == "All") {
-      this.inPatientMode.emit("ALL");
-      /*this.router.navigate(["/menu/in-patients"]).then(() => {
-        window.location.reload();
-      });*/
-    } else if (this.admittedOrDischarge.trim() == "AC") {
-      this.inPatientMode.emit("AC");
-      /*this.router.navigate(["/menu/in-patients/AC"]).then(() => {
-        window.location.reload();
-      });*/
-    } else if (this.admittedOrDischarge.trim() == "DN") {
-      this.inPatientMode.emit("DN");
-      /*this.router.navigate(["/menu/in-patients/DN"]).then(() => {
-        window.location.reload();
-      });*/
+    if(this.ER){
+      if (this.admittedOrDischarge.trim() == "All") {
+        this.inPatientMode.emit("ALL");
+        /*this.router.navigate(["/menu/in-patients"]).then(() => {
+          window.location.reload();
+        });*/
+      } else if (this.admittedOrDischarge.trim() == "RE") {
+        this.inPatientMode.emit("RE");
+        /*this.router.navigate(["/menu/in-patients/RE"]).then(() => {
+          window.location.reload();
+        });*/
+      } else if (this.admittedOrDischarge.trim() == "ED") {
+        this.inPatientMode.emit("ED");
+        /*this.router.navigate(["/menu/in-patients/ED"]).then(() => {
+          window.location.reload();
+        });*/
+      }
+    }else{
+      if (this.admittedOrDischarge.trim() == "All") {
+        this.inPatientMode.emit("ALL");
+        /*this.router.navigate(["/menu/in-patients"]).then(() => {
+          window.location.reload();
+        });*/
+      } else if (this.admittedOrDischarge.trim() == "AC") {
+        this.inPatientMode.emit("AC");
+        /*this.router.navigate(["/menu/in-patients/AC"]).then(() => {
+          window.location.reload();
+        });*/
+      } else if (this.admittedOrDischarge.trim() == "DN") {
+        this.inPatientMode.emit("DN");
+        /*this.router.navigate(["/menu/in-patients/DN"]).then(() => {
+          window.location.reload();
+        });*/
+      }
     }
 
     //this.variables.tempCounter++;

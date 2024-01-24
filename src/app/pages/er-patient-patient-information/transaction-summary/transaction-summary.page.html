@@ -1,0 +1,164 @@
+<ion-header mode="md" class="ion-no-border" *ngIf="!isDesktop">
+
+  <ion-toolbar color="mango">
+    <span class="padding-left-10" routerLink="{{routerLinkBack}}" routerDirection="backwards" color="chh-css-primary2">
+      <!-- <ion-icon 
+        name="chevron-back-outline" 
+        class="my-icon vcenter">
+      </ion-icon> -->
+      <ion-icon name="arrow-back-outline" class="my-icon vcenter"></ion-icon>
+    </span>
+    <span class="padding-left-30 font-weight-500 font-size-20"> &nbsp;&nbsp;Review </span>
+  </ion-toolbar>
+
+
+
+  <!-- <ion-toolbar color="mango">
+    <ion-title>
+      Review
+    </ion-title>
+    <ion-buttons slot="end" class="buttons-last-slot sc-ion-buttons-ios-h sc-ion-buttons-ios-s ios hydrated">
+      <ion-button routerLink="{{routerLinkBack}}" routerDirection="backwards" color="chh-css-primary2">Back
+        <ion-icon slot="start" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar> -->
+</ion-header>
+
+<!-- <ion-content>
+  <app-chh-app-patient-header
+  [data]="data"
+  [dateAdmitted]="dateAdmitted"
+  [forMoreOrLess]="true"
+  >
+</app-chh-app-patient-header>
+<ion-card mode="ios"   >
+  <ion-list>
+    <ion-item style="padding-top: 10px;">
+      Transaction Summary<br />
+      Professional Fee :  {{postData.ProfFee}}  <br />
+      With Vat :      {{withVat}}<br />
+      Pay Venue :     {{payvenue}}
+
+  </ion-item>
+  </ion-list>
+  </ion-card>
+  
+</ion-content> -->
+
+
+<ion-content *ngIf="!isDesktop">
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="8" offset="2">
+        <div class="vertical-center">
+          <div class="center">
+            <img src="assets/img/online-transactions.png" />
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <app-professional-fee-er-summary-patient-info [data]="data" [site]="site" [is_pwd]="is_pwd" [is_senior]="is_senior" [dateAdmitted]="dateAdmitted"
+    [data1]="data1" [withVat]="withVat" [payvenueTxt]="payvenue" [is_philhealth_membership]="is_philhealth_membership"
+    [patientDetailfromApi_from]="patientDetailfromApi_from" [patientDetailfromApi_to]="patientDetailfromApi_to"
+    [patientDetailfromApi_from]="patientDetailfromApi_from" [patientDetailfromApi_to]="patientDetailfromApi_to"
+    [admission_status]="admission_status">
+  </app-professional-fee-er-summary-patient-info>
+
+  <pfsummary [payvenueN]="payvenueN" [data1]="data1" [withVatN]="withVatN"></pfsummary>
+
+</ion-content>
+
+
+<ion-footer *ngIf="!isDesktop">
+  <ion-toolbar>
+    <ion-item lines="none">
+      <ion-grid class="ion-no-padding">
+        <ion-row>
+          <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+          <ion-col size-xs="12" size-md="4" size-lg="4">
+            <ion-progress-bar value=".9" color="warning"></ion-progress-bar>
+          </ion-col>
+          <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+          <ion-col size-xs="12" size-md="4" size-lg="4">
+            <ion-button color="mango" size="default" expand="block" shape="round" class="buttonActive"
+              (click)="postSummary()" [disabled]="disableSubmit" [attr.data-testid]='btnsubmit'><span
+                *ngIf="!disableSubmit">Submit</span>
+              <ion-spinner *ngIf="disableSubmit"></ion-spinner>
+            </ion-button>
+          </ion-col>
+          <ion-col size-xs="12" size-md="4" size-lg="4"></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>
+
+
+
+
+
+
+
+
+
+<app-chh-app-desktop-navigation *ngIf="isDesktop"></app-chh-app-desktop-navigation>
+
+<ion-content *ngIf="isDesktop">
+
+  <ul class="breadcrumb">
+    <li>
+      <a routerLink="{{routerLinkBack}}">In-Patients</a>
+      <ion-icon name="chevron-forward-outline" class="icon-center"></ion-icon>
+    </li>
+    <li>
+      <a routerLink="{{routerLinkBack1}}">{{patient_name}}</a>
+      <ion-icon name="chevron-forward-outline" class="icon-center"></ion-icon>
+    </li>
+    <li>
+      <a routerLink="{{routerLinkBack2}}">Professional Fee</a>
+      <ion-icon name="chevron-forward-outline" class="icon-center"></ion-icon>
+    </li>
+    <li>
+      <a>{{method}}</a>
+    </li>
+  </ul>
+
+
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col size-lg="4" offset-lg="4" size-md="6" offset-md="3">
+
+        <ion-grid>
+          <ion-row>
+            <ion-col size="8" offset="2">
+              <div class="vertical-center">
+                <div class="center">
+                  <img src="assets/img/online-transactions.png" />
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <app-professional-fee-er-summary-patient-info [data]="data" [site]="site" [is_pwd]="is_pwd" [is_senior]="is_senior"
+          [dateAdmitted]="dateAdmitted" [data1]="data1" [withVat]="withVat" [payvenueTxt]="payvenue"
+          [patientDetailfromApi_from]="patientDetailfromApi_from" [patientDetailfromApi_to]="patientDetailfromApi_to">
+        </app-professional-fee-er-summary-patient-info>
+        <pfsummary [payvenueN]="payvenueN" [data1]="data1" [withVatN]="withVatN"></pfsummary>
+        <ion-button *ngIf="isDesktop" color="mango" class="buttonActive" size="default" expand="block" shape="round"
+          (click)="postSummary()" [attr.data-testid]='btnsubmit'>
+          Submit</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+<div class="footer tab-font-family">
+  <span>{{this.constants.CHH_NAME__VALUE__CEBU}}</span>
+</div>

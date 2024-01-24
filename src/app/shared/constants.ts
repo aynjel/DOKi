@@ -9,6 +9,9 @@ export class Constants {
   public ADMISSION_STATUS__CODE__ADMITTED: string = "AC";
   public ADMISSION_STATUS__VALUE__ADMITTED: string = "ADMITTED";
   public ADMISSION_STATUS__CODE__FOR_DISCHARGE: string = "DN";
+  public ADMISSION_STATUS__CODE__FOR_REGISTERED: string = "RE";
+  public ADMISSION_STATUS__VALUE__FOR_REGISTERED: string = "REGISTERED";
+  public ADMISSION_STATUS__CODE__FOR_DISCHARGE_ED: string = "ED";
   public ADMISSION_STATUS__VALUE__FOR_DISCHARGE: string = "FOR DISCHARGE";
   public ADMISSION_STATUS_SELECTION__VALUE__ALL: string = "ALL";
 
@@ -76,6 +79,7 @@ export class Constants {
    */
   public MENU__VALUE__DASHBOARD: string = "Dashboard";
   public MENU__VALUE__IN_PATIENTS: string = "In-Patients";
+  public MENU__VALUE__ER_PATIENTS: string = "Er-Patients";
   public MENU__VALUE__APPOINTMENTS: string = "Appointments";
   public MENU__VALUE__SETTINGS: string = "Settings";
   public MENU__VALUE__LOG_OUT: string = "Log Out";

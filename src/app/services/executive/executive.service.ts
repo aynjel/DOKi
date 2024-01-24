@@ -8,10 +8,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { FunctionsService } from 'src/app/shared/functions/functions.service';
+import { delay, tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
 export class ExecutiveService {
+  dokiErList$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   constructor(
     private httpService: HttpService,
     private storageService: StorageService,
@@ -209,6 +211,20 @@ export class ExecutiveService {
       'v3/Dashboard/Admin/ERListing?startDate=' +
       data;
     return this.http.get(url, options);
+  }
+  getErPatientDetail(data: any) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers: headers, withCredentials: true };
+    //const url = environment.apiRouterUrl + "v2/ProfFee";
+    // const url = environment.apiRouterUrl + 'v3/InPatients/Admin/PatientDetail';
+    const url = environment.dischargeInstruction + "gw/DokiER/DokiErList";
+    return this.http.post(url, data, options)
+      .pipe(
+        delay(1000),
+        tap((res: any) => {
+          this.dokiErList$.next(res);
+        })
+      )
   }
   getDoctorsDirectory() {
     const headers = new HttpHeaders({

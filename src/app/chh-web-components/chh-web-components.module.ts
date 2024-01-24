@@ -74,6 +74,10 @@ import { SoapShowHide2Component } from "./soap-show-hide2/soap-show-hide2.compon
 import { RevisionComponent } from "../pages/doctors-information/sign-medicalabstract/components/revision/revision.component";
 import { Revision1Component } from "../pages/doctors-information/discharge-instruction/components/revision1/revision1.component";
 import { Revision1HistoryComponent } from "../pages/doctors-information/discharge-instruction/components/revision1-history/revision1-history.component";
+import { ChhAppChiefComplaintComponent } from "./chh-app-chief-complaint/chh-app-chief-complaint.component";
+import { ChhAppPatientEmosHeaderComponent } from "./chh-app-patient-emos-header/chh-app-patient-emos-header.component";
+import { ProfessionalFeeErSummaryPatientInfoComponent } from "./professional-fee-er-summary-patient-info/professional-fee-er-summary-patient-info.component";
+import { ChhAppHospitalSelectorWithAllAndFilterEdComponent } from "./chh-app-hospital-selector-with-all-and-filter-ed/chh-app-hospital-selector-with-all-and-filter-ed.component";
 
 @NgModule({
   declarations: [
@@ -132,6 +136,10 @@ import { Revision1HistoryComponent } from "../pages/doctors-information/discharg
     SoapShowHide2Component,
     RevisionComponent,
     Revision1HistoryComponent,
+    ChhAppChiefComplaintComponent,
+    ChhAppPatientEmosHeaderComponent,
+    ProfessionalFeeErSummaryPatientInfoComponent,
+    ChhAppHospitalSelectorWithAllAndFilterEdComponent
   ],
   exports: [
     Revision1HistoryComponent,
@@ -189,6 +197,10 @@ import { Revision1HistoryComponent } from "../pages/doctors-information/discharg
     PrognotesheadviewComponent,
     SoapHandlerComponent,
     SoapShowHide2Component,
+    ChhAppChiefComplaintComponent,
+    ChhAppPatientEmosHeaderComponent,
+    ProfessionalFeeErSummaryPatientInfoComponent,
+    ChhAppHospitalSelectorWithAllAndFilterEdComponent
   ],
   imports: [
     CommonModule,

@@ -175,8 +175,13 @@ const routes: Routes = [
             '../pages/doctors-information/medical-certificate/medical-certificate.module'
           ).then((m) => m.MedicalCertificatePageModule),
       },*/
-
       {
+        path: "er-patients",
+        loadChildren: () =>
+          import("../tab-er-patients/tab-er-patients.module").then(
+            (m) => m.TabErPatientsPageModule
+          ),
+      },{
         path: "",
         redirectTo: "/menu/dashboard",
         pathMatch: "full",

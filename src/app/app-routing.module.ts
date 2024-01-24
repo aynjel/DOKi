@@ -104,6 +104,42 @@ const routes: Routes = [
       ).then((m) => m.LaboratoryTestModalPageModule),
   },*/
   {
+    path: 'menu/er-patients',
+    loadChildren: () => import('./tab-er-patients/tab-er-patients.module').then( m => m.TabErPatientsPageModule)
+  },
+  {
+    path: 'menu/er-patients/:id',
+    loadChildren: () => import('./pages/er-patient-patient-information/er-patient-detail/er-patient-detail.module').then( m => m.ErPatientDetailPageModule)
+  },
+  {
+    path: "menu/er-patients/:id/professional-fee",
+    loadChildren: () =>
+      import(
+        "./pages/er-patient-patient-information/chh-app-professional-fee/chh-app-professional-fee.module"
+      ).then((m) => m.ChhAppProfessionalFeePageModule),
+  },
+  {
+    path: "menu/er-patients/:id/professional-fee-transaction-summary",
+    loadChildren: () =>
+      import(
+        "./pages/er-patient-patient-information/transaction-summary/transaction-summary.module"
+      ).then((m) => m.TransactionSummaryPageModule),
+  },
+  {
+    path: "menu/er-patients/:id/professional-fee/:method",
+    loadChildren: () =>
+      import(
+        "./pages/er-patient-patient-information/chh-app-professional-fee-summary/chh-app-professional-fee-summary.module"
+      ).then((m) => m.ChhAppProfessionalFeeSummaryPageModule),
+  },
+  {
+    path: "menu/er-patients/:id/professional-fee/:method/:summary",
+    loadChildren: () =>
+      import(
+        "./pages/er-patient-patient-information/transaction-summary/transaction-summary.module"
+      ).then((m) => m.TransactionSummaryPageModule),
+  },
+  {
     path: "resetpassword",
     loadChildren: () =>
       import("./pages/resetpassword/resetpassword.module").then(
@@ -202,7 +238,23 @@ const routes: Routes = [
     loadChildren: () => import('./pages/executuve/tabs-settings/tabs-settings.module').then( m => m.TabsSettingsPageModule)
   }
 
-*/,
+*/,  {
+    path: 'er-patient-detail',
+    loadChildren: () => import('./pages/er-patient-patient-information/er-patient-detail/er-patient-detail.module').then( m => m.ErPatientDetailPageModule)
+  },
+  {
+    path: 'chh-app-professional-fee',
+    loadChildren: () => import('./pages/er-patient-patient-information/chh-app-professional-fee/chh-app-professional-fee.module').then( m => m.ChhAppProfessionalFeePageModule)
+  },
+  {
+    path: 'transaction-summary',
+    loadChildren: () => import('./pages/er-patient-patient-information/transaction-summary/transaction-summary.module').then( m => m.TransactionSummaryPageModule)
+  },
+  {
+    path: 'chh-app-professional-fee-summary',
+    loadChildren: () => import('./pages/er-patient-patient-information/chh-app-professional-fee-summary/chh-app-professional-fee-summary.module').then( m => m.ChhAppProfessionalFeeSummaryPageModule)
+  },
+
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes, { relativeLinkResolution: "legacy" })],

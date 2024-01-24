@@ -1,0 +1,618 @@
+<ion-header mode="md" class="ion-no-border">
+  <div *ngIf="!isDesktop">
+    <ion-toolbar color="mango">
+      <ion-title>
+        <ion-icon name="medkit-outline"></ion-icon>
+        {{this.constants.MENU__VALUE__ER_PATIENTS}}
+        <ion-text style="font-size: 14px">
+          {{admittedOrDischargeLabel}}
+        </ion-text>
+        <ion-icon
+          [name]="isNotification === true ? 'mail-unread-outline' : 'mail-outline'"
+          style="float: right"
+          (click)="toggleMenu()"
+          size="large">
+        </ion-icon>
+
+        <ion-popover trigger="click-trigge" dismiss-on-select="true">
+          <ng-template>
+            <ion-content>
+              <ion-list>
+                <ion-item
+                  class="pointer"
+                  routerLink="/menu/inbox"
+                  routerDirection="root">
+                  <ion-label>&nbsp;Final Dx | Med Cert</ion-label>
+                </ion-item>
+                <ion-item
+                  class="pointer"
+                  routerLink="/menu/patient-history"
+                  routerDirection="root"
+                  dismiss-on-select="true">
+                  <ion-label>&nbsp;Progress Notes </ion-label>
+                </ion-item>
+                <ion-item
+                  class="pointer"
+                  routerLink="/menu/search-Medical-Abstract"
+                  routerDirection="root"
+                  dismiss-on-select="true">
+                  <ion-label>&nbsp;Medical Abstract </ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
+      </ion-title>
+    </ion-toolbar>
+  </div>
+
+  <ion-grid class="ion-no-padding chh-darkmode">
+    <ion-row>
+      <ion-col
+        size-md="8"
+        offset-md="2"
+        size-lg="4"
+        offset-lg="4"
+        class="custom-border-bottom ion-no-border custom-padding">
+        <app-chh-app-hospital-selector-with-all-and-filter-ed
+          (hospital)="locationAction($event)"
+          (inPatientMode)="changeErpatientMode($event)">
+        </app-chh-app-hospital-selector-with-all-and-filter-ed>
+      </ion-col>
+    </ion-row>
+    <ion-row class="">
+      <ion-col
+        size-md="8"
+        offset-md="2"
+        size-lg="4"
+        offset-lg="4"
+        class="ion-no-border">
+        <ion-searchbar
+          [(ngModel)]="searchBar"
+          (ionChange)="filterList()"
+          placeholder="Search Name"
+          mode="ios"></ion-searchbar>
+      </ion-col>
+    </ion-row>
+    <ion-row class="">
+      <ion-col
+        size-md="8"
+        offset-md="2"
+        size-lg="4"
+        offset-lg="4"
+        class="ion-no-border">
+        <ion-text
+          color="mango"
+          style="float: right; padding-right: 20px"
+          (click)="up();"
+          ><ion-icon name="arrow-down-outline" size="medium"></ion-icon
+        ></ion-text>
+        <ion-text
+          color="mango"
+          style="float: right; padding-right: 20px"
+          (click)="down();"
+          ><ion-icon name="arrow-up-outline" size="medium"></ion-icon
+        ></ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col size-md="8" offset-md="2" size-lg="4" offset-lg="4">
+        <!-- Skeleton  -->
+        <ng-container *ngIf="isUporDown">
+          <div class="ion-padding custom-skeleton">
+            <ion-card mode="ios">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="margin-top: -5px">
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="padding-bottom: 5px">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 70%"></ion-skeleton-text>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 50%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+
+            <ion-card mode="ios">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="margin-top: -5px">
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="padding-bottom: 5px">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 70%"></ion-skeleton-text>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 50%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+
+            <ion-card mode="ios">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="margin-top: -5px">
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="padding-bottom: 5px">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 70%"></ion-skeleton-text>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 50%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+
+            <ion-card mode="ios">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="margin-top: -5px">
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="padding-bottom: 5px">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 70%"></ion-skeleton-text>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 50%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+
+            <ion-card mode="ios">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="margin-top: -5px">
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="padding-bottom: 5px">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 70%"></ion-skeleton-text>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 50%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+
+            <ion-card mode="ios">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="margin-top: -5px">
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="padding-bottom: 5px">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 70%"></ion-skeleton-text>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 50%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+
+            <ion-card mode="ios">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="margin-top: -5px">
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="padding-bottom: 5px">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 70%"></ion-skeleton-text>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 50%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+          </div>
+        </ng-container>
+
+        <ng-container>
+          <ion-accordion-group [value]="defaultAccordions">
+            <div *ngFor="let y of finalFullData">
+              <div toggleIcon="arrow-down" class="custom-accordion" *ngIf="y.data.length > 0">
+                <ion-item slot="header">
+                  <ion-label>{{y.room_no}} </ion-label>
+                </ion-item>
+                <ion-list slot="content" lines="none">
+                  <div *ngFor="let x of y.data">
+                    <ion-card
+                      (click)="detail(x.admission_no,x)"
+                      mode="ios"
+                      class="pointer custom-card"
+                      [attr.data-testid]="x.admission_no">
+                      <ion-item lines="none" style="--background: transparent;">
+                        <ion-avatar slot="start">
+                          <chh-app-text-avatar
+                            [text]="x.last_name"
+                            [color]=""></chh-app-text-avatar>
+                        </ion-avatar>
+                        <ion-label style="margin-top: -5px">
+                          <ion-item
+                            slot="start"
+                            lines="none"
+                            class="ion-no-padding"
+                            style="padding-bottom: 5px; --background: transparent;">
+                            <h2 class="ion-text-wrap" style="padding-top: 20px">
+                              {{ x.last_name }}, {{ x.first_name }} {{
+                              x.middle_name }}
+                              <ion-text color="primary">
+                                <p color="primary">
+                                  <b
+                                    >{{x.dob}} <strong>|</strong> {{x.age}}
+                                    <strong>|</strong> {{x.gender}}</b
+                                  >
+                                </p>
+                              </ion-text>
+                            </h2>
+
+                            <ion-badge
+                              color="warning"
+                              slot="end"
+                              *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE_ED && (x.doctor_prof_fee == null || x.doctor_prof_fee == '0') && x.is_posted == this.constants.ANY__VALUE__NULL">
+                              {{this.constants.DOCTOR__CODE__PROFESSIONAL_FEE}}</ion-badge
+                            >
+                            <ion-badge
+                              color="success"
+                              slot="end"
+                              *ngIf="x.doctor_prof_fee != this.constants.ANY__VALUE__NULL && x.is_posted !=this.constants.ANY__VALUE__NULL">
+                              <ion-icon name="checkmark-outline"></ion-icon>
+                            </ion-badge>
+                          </ion-item>
+                          <div
+                            *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_REGISTERED">
+                            <ion-progress-bar
+                              value=".25"
+                              buffer="1"
+                              color="warning"></ion-progress-bar>
+                          </div>
+                          <div
+                            *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE_ED && (x.is_posted == this.constants.ANY__VALUE__NULL || x.is_posted == this.constants.NUMBER__VALUE__ZERO) && x.doctor_prof_fee == this.constants.ANY__VALUE__NULL">
+                            <ion-progress-bar
+                              value=".50"
+                              buffer="1"
+                              color="warning"></ion-progress-bar>
+                          </div>
+                          <div
+                            *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE_ED  && (x.is_posted ==this.constants.ANY__VALUE__NULL|| x.is_posted ==this.constants.NUMBER__VALUE__ZERO ) && x.doctor_prof_fee !=this.constants.ANY__VALUE__NULL">
+                            <ion-progress-bar
+                              value=".75"
+                              buffer="1"
+                              color="warning"></ion-progress-bar>
+                          </div>
+                          <div
+                            *ngIf="x.admission_status == this.constants.ADMISSION_STATUS__CODE__FOR_DISCHARGE_ED  && x.is_posted == '1' && x.doctor_prof_fee !=this.constants.ANY__VALUE__NULL">
+                            <ion-progress-bar
+                              value="1"
+                              color="mango"></ion-progress-bar>
+                          </div>
+                          <ion-row
+                            class="ion-no-padding"
+                            lines="none"
+                            style="padding-top: 10px !important">
+                            <p>
+                              <span
+                                *ngIf="x.site == this.constants.CHH_SITE__CODE__CEBU">
+                                <ion-icon
+                                  name="location-outline"
+                                  slot="start"></ion-icon>
+                                {{this.constants.CHH_NAME__VALUE__CEBU}}
+                              </span>
+                              <span
+                                *ngIf="x.site == this.constants.CHH_SITE__CODE__MANDAUE">
+                                <ion-icon
+                                  name="location-outline"
+                                  slot="start"></ion-icon>
+                                {{this.constants.CHH_NAME__VALUE__MANDAUE}} </span
+                              ><br />
+                              <ion-icon
+                                name="bed-outline"
+                                slot="start"></ion-icon>
+                              Bed No. {{x.er_bed}}<br />
+
+                              <ion-icon
+                                name="clipboard-outline"
+                                slot="start"></ion-icon>
+                              as {{x.doctor_Status}}<br />
+                              <!-- <span *ngIf="x.ip_no != null">
+                                <ion-badge color="success">
+                                  TRANSFERRED
+                                </ion-badge>
+                              </span> -->
+                              <ion-icon
+                                name="alarm-outline"
+                                slot="start"
+                                color=""
+                                *ngIf="x.forDischargeDateTime != null">
+                              </ion-icon>
+                              <!--status-->
+                              <ion-text
+                                *ngIf="x.forDischargeDateTime != null"
+                                color="">
+                                DN : {{x.forDischargeDateTime}}<br />
+                              </ion-text>
+                            </p>
+                          </ion-row>
+                        </ion-label>
+                      </ion-item>
+                    </ion-card>
+                  </div>
+                </ion-list>
+              </div>
+              <!-- No Data  -->
+              <!-- <ng-container *ngIf="y.data.length == 0">
+                <ion-item
+                  lines="none"
+                  class="ion-padding">
+                  <ion-label>
+                    <ion-text color="mango" class="ion-text-center ion-text-wrap">
+                      <h2>
+                        No Data Available
+                      </h2>
+                    </ion-text>
+                  </ion-label>
+                </ion-item>
+              </ng-container> -->
+            </div>
+          </ion-accordion-group>
+        </ng-container>
+
+        <!-- Skeleton  -->
+        <ng-container>
+          <div
+            *ngIf="!objecthandler && !isFetchDone else noDataAvailable"
+            class="ion-padding custom-skeleton">
+            <ion-card mode="ios">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="margin-top: -5px">
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="padding-bottom: 5px">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 60%"></ion-skeleton-text>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 40%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+
+            <ion-card mode="ios">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="margin-top: -5px">
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="padding-bottom: 5px">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 60%"></ion-skeleton-text>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 40%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+
+            <ion-card mode="ios">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="margin-top: -5px">
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="padding-bottom: 5px">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 60%"></ion-skeleton-text>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 40%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+
+            <ion-card mode="ios">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="margin-top: -5px">
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="padding-bottom: 5px">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 60%"></ion-skeleton-text>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 40%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+
+            <ion-card mode="ios">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar>
+                <ion-label style="margin-top: -5px">
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="padding-bottom: 5px">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-skeleton-text
+                    animated
+                    style="width: 60%"></ion-skeleton-text>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 40%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card>
+          </div>
+        </ng-container>
+
+        <ng-template #noDataAvailable>
+          <div *ngIf="!objecthandler && isFetchDone">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="8" offset="2">
+                  <div class="vertical-center">
+                    <div class="center">
+                      <img src="assets/img/no-data-rafiki.png" />
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </ng-template>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

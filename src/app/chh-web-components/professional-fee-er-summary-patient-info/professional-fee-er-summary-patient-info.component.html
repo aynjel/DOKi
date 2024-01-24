@@ -1,0 +1,119 @@
+<ion-item lines="none" class="ion-no-margin"><b>Patient Details</b>
+
+  <ion-badge color="warning" slot="end" (click)="moreorless(true)" *ngIf="moreOrLess">
+    <ion-icon name="chevron-down-outline"></ion-icon>
+  </ion-badge>
+  <ion-badge color="warning" slot="end" (click)="moreorless(false)" *ngIf="!moreOrLess">
+    <ion-icon name="chevron-up-outline"></ion-icon>
+  </ion-badge>
+</ion-item>
+<ion-item class="ion-no-margin" *ngIf="!moreOrLess" style="font-size: 14px !important;">
+  <ion-grid *ngFor="let x of data">
+    <ion-row>
+      <ion-col size="5"><b>Name:</b> </ion-col>
+      <ion-col size="7"><b>{{x.first_name}} {{x.middle_name}}. {{x.last_name}}</b></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="5">Hospital Site:</ion-col>
+      <ion-col size="7">{{site}}</ion-col>
+    </ion-row>
+    <ion-row *ngIf="is_pwd !='N' && is_senior!='N'">
+      <ion-col>
+        <span *ngIf="is_pwd !='N'">PWD</span>
+        <span *ngIf="is_pwd !='N' && is_senior!='N'">,</span>
+        <span *ngIf="is_senior !='N'">Senior</span>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="5">Bed No.</ion-col>
+      <ion-col size="7">{{ x.er_bed == 'OTHC' || x.er_bed == 'OTHM' ? x.er_bed_text : x.er_bed }}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="5">Admission Date:</ion-col>
+      <ion-col size="7">{{dateAdmitted}}</ion-col>
+    </ion-row>
+
+
+
+
+    <!--ion-row *ngIf="x.philhealth_membership =='M' || x.philhealth_membership == 'D'">
+      <ion-col size="5">PhilHealth:</ion-col>
+      <ion-col size="7" *ngIf="x.philhealth_membership =='M'">Member</ion-col>
+      <ion-col size="7" *ngIf="x.philhealth_membership =='D'">Dependent</ion-col>
+    </ion-row-->
+    <ion-row *ngIf="x.insurance_hmo !=null">
+      <ion-col size="5">Insurance:</ion-col>
+      <ion-col size="7">{{x.insurance_hmo}}</ion-col>
+    </ion-row>
+    
+    <ion-row *ngIf="display == true">
+      <ion-col size="5">Managed From:</ion-col>
+      <ion-col size="7">{{patientDetailfromApi_from}}</ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="display == true">
+      <ion-col size="5">Managed To:</ion-col>
+      <ion-col size="7">{{patientDetailfromApi_to}}</ion-col>
+    </ion-row>
+
+
+    <ion-chip *ngIf="is_philhealth_membership =='M'">
+      <ion-label color="primary" class="font-12"><b>PHIC Member</b></ion-label>
+    </ion-chip>
+    <ion-chip *ngIf="is_philhealth_membership =='D'">
+      <ion-label color="primary" class="font-12"><b>PHIC Dependent</b></ion-label>
+    </ion-chip>
+    <ion-chip *ngIf="is_senior=='Y'">
+      <ion-label color="primary" class="font-12"><b>Senior</b></ion-label>
+    </ion-chip>
+    <ion-chip *ngIf="is_pwd=='Y'">
+      <ion-label color="primary" class="font-12"><b>PWD</b></ion-label>
+    </ion-chip>
+
+
+
+
+
+
+
+
+
+  </ion-grid>
+</ion-item>
+<ion-item class="ion-no-margin" *ngIf="moreOrLess" style="font-size: 14px !important;">
+  <ion-grid *ngFor="let x of data">
+    <ion-row>
+      <ion-col size="5"><b>Name:</b> </ion-col>
+      <ion-col size="7"><b>{{x.first_name}} {{x.middle_name}}. {{x.last_name}}</b></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">{{site}} | {{x.room_no}}</ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>
+<ion-item class="ion-no-margin">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="5">
+        <b>
+          <ion-text color="danger">Amount:</ion-text>
+        </b>
+      </ion-col>
+      <ion-col size="7">
+        <b>
+          <ion-text color="danger">&#8369; {{data1 | number}} {{withVat}}</ion-text>
+        </b>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="5">Pay Venue: </ion-col>
+      <ion-col size="7">
+        <ion-badge>{{payvenueTxt}}</ion-badge>
+      </ion-col>
+    </ion-row>
+    <!-- <ion-row>
+          <ion-col size="5">Add VAT?: </ion-col>
+          <ion-col size="7">{{withVat}}</ion-col>
+        </ion-row> -->
+  </ion-grid>
+</ion-item>

@@ -7,6 +7,12 @@ export class DoctorHistoryModel {
   mode: any;
 }
 
+export class ErpatientModelErpatients {
+  drCode: any;
+  accountNo: any;
+  mode: any;
+}
+
 export class InpatientModelInpatients {
   drCode: any;
   accountNo: any;
@@ -16,6 +22,14 @@ export class InpatientDetails {
   admission_no: any;
 }
 
+export class ErpatientModelInpatients {
+  drCode: any;
+  accountNo: any;
+  mode: any;
+}
+export class ErpatientDetails {
+  admission_no: any;
+}
 export class DoctorDetails {
   doctorCode: any;
 }

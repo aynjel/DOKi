@@ -268,6 +268,33 @@ export class LoginPage {
                 // });
               }
             }
+
+            // if(
+            //   location.protocol === 'https:' &&
+            //   navigator.serviceWorker
+            // ){
+            //   if (
+            //     localStorage.getItem("userId") &&
+            //     this.loginResponseModelv3.doctorCode != atob(localStorage.getItem("userId"))
+            //   ) {
+            //     console.log("User is logged in but different user");
+            //     localStorage.setItem('userId', btoa(this.loginResponseModelv3.doctorCode));
+            //     localStorage.setItem('isSubscribed', '0');
+            //     localStorage.removeItem('pushSubscription');
+            //     this.swPush.unsubscribe().then(() => {
+            //       this.notificationService.subscribeToNotifications();
+            //     });
+            //   }else if(
+            //     !localStorage.getItem('isSubscribed') ||
+            //     localStorage.getItem('isSubscribed') == '0'
+            //   ){
+            //     console.log("User is logged in but not subscribed");
+            //     this.notificationService.subscribeToNotifications();
+            //   }else{
+            //     console.log("User is logged in and subscribed");
+            //   }
+            // }
+            localStorage.setItem("userId", btoa(this.loginResponseModelv3.doctorCode));
           } else {
             this.functionsService.alert(
               this.loginResponseModelv3.message,
@@ -628,12 +655,27 @@ export class LoginPage {
       btoa(this.loginForm.get("userNameOrEmail").value)
     );
     localStorage.setItem("modaled", "0");
-    this.router.navigate(["/menu/in-patients"]).then(() => {
+    // this.router.navigate(["/menu/in-patients"]).then(() => {
       //window.location.reload();
-    });
+    // });
     /*this.router.navigate(['/menu/dashboard']).then(() => {
       window.location.reload();
     });*/
+    if (localStorage.getItem("notificationClicks")) {
+      const result = JSON.parse(localStorage.getItem("notificationClicks"));
+      const urlRedirect = result.notification.data.onActionClick.redirect.url;
+      const defaultRedirect = result.notification.data.onActionClick.default.url;
+      // this.router.navigate([urlRedirect || defaultRedirect]).then(() => {
+        //   window.location.reload();
+        // });
+      localStorage.removeItem("notificationClicks");
+      window.location.href = urlRedirect || defaultRedirect;
+    }else{
+      this.router.navigate(["/menu/in-patients"]).then(() => {
+        localStorage.removeItem("notificationClicks");
+        // window.location.reload();
+      });
+    }
   }
 
   async forgotpassword() {

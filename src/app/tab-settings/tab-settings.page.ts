@@ -124,6 +124,17 @@ export class TabSettingsPage {
       });
   }
 
+  // togglePushNotification(ev: any){
+  //   if(ev.detail.checked === true){
+  //     this.tooglePN = true;
+  //     this.notificationService.subscribeToNotifications();
+  //   }
+  //   else{
+  //     this.tooglePN = false;
+  //     this.notificationService.setUnsubscribeToNotifications();
+  //   }
+  // }
+
   async modalUpdate(header, message, data) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
