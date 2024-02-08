@@ -53,6 +53,8 @@ import { ChhAppForgotPasswordComponent } from "../../chh-web-components/chh-app-
 import { takeUntil } from "rxjs/operators";
 import { BehaviorSubject, Subject } from "rxjs";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { NotificationService } from "src/app/services/notification/notification.service";
+import { SwPush } from "@angular/service-worker";
 
 @Component({
   selector: "app-login",
@@ -89,7 +91,9 @@ export class LoginPage {
     private modalController: ModalController,
     private patientService: PatientService,
     public alertController: AlertController,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private notificationService: NotificationService,
+    private swPush: SwPush
   ) {
     this.loginForm = this.formBuilder.group({
       userNameOrEmail: ["", Validators.required],
@@ -269,31 +273,31 @@ export class LoginPage {
               }
             }
 
-            // if(
-            //   location.protocol === 'https:' &&
-            //   navigator.serviceWorker
-            // ){
-            //   if (
-            //     localStorage.getItem("userId") &&
-            //     this.loginResponseModelv3.doctorCode != atob(localStorage.getItem("userId"))
-            //   ) {
-            //     console.log("User is logged in but different user");
-            //     localStorage.setItem('userId', btoa(this.loginResponseModelv3.doctorCode));
-            //     localStorage.setItem('isSubscribed', '0');
-            //     localStorage.removeItem('pushSubscription');
-            //     this.swPush.unsubscribe().then(() => {
-            //       this.notificationService.subscribeToNotifications();
-            //     });
-            //   }else if(
-            //     !localStorage.getItem('isSubscribed') ||
-            //     localStorage.getItem('isSubscribed') == '0'
-            //   ){
-            //     console.log("User is logged in but not subscribed");
-            //     this.notificationService.subscribeToNotifications();
-            //   }else{
-            //     console.log("User is logged in and subscribed");
-            //   }
-            // }
+            if(
+              location.protocol === 'https:' &&
+              navigator.serviceWorker
+            ){
+              if (
+                localStorage.getItem("userId") &&
+                this.loginResponseModelv3.doctorCode != atob(localStorage.getItem("userId"))
+              ) {
+                console.log("User is logged in but different user");
+                localStorage.setItem('userId', btoa(this.loginResponseModelv3.doctorCode));
+                localStorage.setItem('isSubscribed', '0');
+                localStorage.removeItem('pushSubscription');
+                this.swPush.unsubscribe().then(() => {
+                  this.notificationService.subscribeToNotifications();
+                });
+              }else if(
+                !localStorage.getItem('isSubscribed') ||
+                localStorage.getItem('isSubscribed') == '0'
+              ){
+                console.log("User is logged in but not subscribed");
+                this.notificationService.subscribeToNotifications();
+              }else{
+                console.log("User is logged in and subscribed");
+              }
+            }
             localStorage.setItem("userId", btoa(this.loginResponseModelv3.doctorCode));
           } else {
             this.functionsService.alert(

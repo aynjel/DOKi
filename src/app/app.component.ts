@@ -3,7 +3,7 @@ import { MenuController, Platform } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { ScreenSizeService } from "./services/screen-size/screen-size.service";
-import { SwUpdate } from "@angular/service-worker";
+import { SwPush, SwUpdate } from "@angular/service-worker";
 import { AlertController } from "@ionic/angular";
 import { FunctionsService } from "./shared/functions/functions.service";
 import { Constants } from "./shared/constants";
@@ -23,6 +23,7 @@ import { LogoutService } from "./services/logout/logout.service";
 import { environment } from "src/environments/environment";
 import { ActivatedRoute, NavigationEnd } from "@angular/router";
 import { filter } from "rxjs/operators";
+import { NotificationService } from "./services/notification/notification.service";
 
 @Component({
   selector: "app-root",
@@ -82,7 +83,12 @@ export class AppComponent implements OnInit {
       icon: 'document-text-outline',
       type: 'med',<ion-icon name="mail-open-outline"></ion-icon>
     },*/,
-
+    {
+      title: "Notification Center",
+      url: "menu/notification",
+      icon: "notifications-outline",
+      type: "medcons",
+    },
     {
       title: "Progress Notes History",
       url: "menu/patient-history",
@@ -162,7 +168,9 @@ export class AppComponent implements OnInit {
     private storageService: StorageService,
     private logoutService: LogoutService,
     private menu: MenuController,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private swPush: SwPush,
+    private notificationService: NotificationService
   ) {
     this.initializeApp();
     this.updateClient();
@@ -206,6 +214,27 @@ export class AppComponent implements OnInit {
         this.viewSidebar();
         // Perform any necessary actions after navigation, e.g., refresh data
       });
+
+    if(this.swPush.isEnabled
+      && localStorage.getItem('isSubscribed') === null
+      && localStorage.getItem('isSubscribed') === '0'){
+      this.notificationService.allowNotification();
+    }
+
+    this.swPush.notificationClicks.subscribe(result => {
+      console.log("notificationClicks", result);
+      localStorage.setItem('notificationClicks', JSON.stringify(result));
+      const { onActionClick } = result.notification.data;
+      if (onActionClick && onActionClick.redirect) {
+        if (localStorage.getItem('_cap_' + AuthConstants.AUTH) === null) {
+          return this.router.navigate(['/login']);
+        }
+
+        if (onActionClick.redirect.url === '' || onActionClick.redirect.url === null) {
+          return this.router.navigate(['/menu/notifications']);
+        }
+      }
+    });
   }
   initializeApp() {
     //console.log("initializeApp");

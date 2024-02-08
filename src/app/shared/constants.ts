@@ -80,6 +80,7 @@ export class Constants {
   public MENU__VALUE__DASHBOARD: string = "Dashboard";
   public MENU__VALUE__IN_PATIENTS: string = "In-Patients";
   public MENU__VALUE__ER_PATIENTS: string = "Er-Patients";
+  public MENU__VALUE__NOTIFICATION: string = "Notification";
   public MENU__VALUE__APPOINTMENTS: string = "Appointments";
   public MENU__VALUE__SETTINGS: string = "Settings";
   public MENU__VALUE__LOG_OUT: string = "Log Out";

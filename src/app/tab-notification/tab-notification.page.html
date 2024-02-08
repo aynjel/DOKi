@@ -1,0 +1,564 @@
+<ion-header mode="md" class="ion-no-border">
+  <ion-toolbar color="mango">
+    <ion-title>
+      <ion-icon name="notifications-outline" class="icon-center" size="large"></ion-icon>
+      Notification Center
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="/menu/dashboard" text="Back" icon="chevron-back-outline"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-grid *ngIf="!isDesktop" class="ion-no-padding chh-darkmode">
+    <ion-row>
+      <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3">
+        <div>
+          <ion-searchbar
+            [(ngModel)]="searchNotif"
+            (ionInput)="searchFilter($event)"
+            placeholder="Search"
+            mode="ios"></ion-searchbar>
+
+          <ion-fab
+            horizontal="end"
+            vertical="top"
+            slot="fixed"
+            [edge]="true"
+            style="margin-top: 72px;"
+            *ngIf="!isDesktop">
+            <ion-fab-button color="light" class="" size="small" style="--box-shadow: none;">
+              <ion-icon name="options-outline" size="large" color="mango"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-list side="bottom" class="ion-no-padding">
+              <ion-fab-button
+                *ngFor="let f of filterLists"
+                (click)="selectFilter(f.title, f.title)"
+                color="light"
+                size="small"
+                attr.data-desc="{{f.title === 'latest' ? 'Latest' : f.title === 'earliest' ? 'Earliest' : f.title }}">
+                <ion-icon name="time-outline" size="large" color="mango"></ion-icon>
+              </ion-fab-button>
+            </ion-fab-list>
+          </ion-fab>
+        </div>
+        <ion-badge style="padding: 5px 10px; text-transform: uppercase;" color="mango" *ngIf="filterTitle">
+          {{ filterTitle }}
+        </ion-badge>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid *ngIf="isDesktop" class="ion-no-padding chh-darkmode">
+    <ion-row>
+      <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3">
+        <ion-searchbar
+          [(ngModel)]="searchNotif"
+          (ionInput)="searchFilter($event)"
+          placeholder="Search"
+          mode="ios"
+          style="width: 100%; padding: 0;"></ion-searchbar>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3">
+        <ion-button
+          *ngIf="isDesktop"
+          size="small"
+          style="--color: #fff; --background: #275228; --border-radius: 0px; --box-shadow: none;"
+          >
+          <ion-select
+            [(ngModel)]="selectedFilter"
+            (ionChange)="selectFilterLg($event)"
+            interface="popover"
+            mode="ios"
+            style="width: 100%; --color: #fff; --background: #275228; --border-radius: 0px; --box-shadow: none;">
+            <ion-select-option style="text-transform: capitalize;" *ngFor="let f of filterLists" [value]="f.title">
+              {{ f.title === 'latest' ? 'Latest' : f.title === 'earliest' ? 'Earliest' : f.title }}
+            </ion-select-option>
+          </ion-select>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-grid class="ion-no-padding ion-no-margin">
+    <ion-row>
+      <ion-col size-md="8" offset-md="2" size-lg="6" offset-lg="3">
+        
+        <!-- Skeleton  -->
+        <ng-container *ngIf="isUporDown">
+          <ion-card mode="ios" class="ion-no-margin ion-no-padding">
+            <ion-card-content style="padding-top: 0; padding-bottom: 0;">
+              <ion-item lines="none">
+                <!-- <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar> -->
+                <ion-label>
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="display: flex; justify-content: space-between;">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+          <ion-card mode="ios" class="ion-no-margin ion-no-padding">
+            <ion-card-content style="padding-top: 0; padding-bottom: 0;">
+              <ion-item lines="none">
+                <!-- <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar> -->
+                <ion-label>
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="display: flex; justify-content: space-between;">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+          <ion-card mode="ios" class="ion-no-margin ion-no-padding">
+            <ion-card-content style="padding-top: 0; padding-bottom: 0;">
+              <ion-item lines="none">
+                <!-- <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar> -->
+                <ion-label>
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="display: flex; justify-content: space-between;">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+          <ion-card mode="ios" class="ion-no-margin ion-no-padding">
+            <ion-card-content style="padding-top: 0; padding-bottom: 0;">
+              <ion-item lines="none">
+                <!-- <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar> -->
+                <ion-label>
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="display: flex; justify-content: space-between;">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+          <ion-card mode="ios" class="ion-no-margin ion-no-padding">
+            <ion-card-content style="padding-top: 0; padding-bottom: 0;">
+              <ion-item lines="none">
+                <!-- <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar> -->
+                <ion-label>
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="display: flex; justify-content: space-between;">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+          <ion-card mode="ios" class="ion-no-margin ion-no-padding">
+            <ion-card-content style="padding-top: 0; padding-bottom: 0;">
+              <ion-item lines="none">
+                <!-- <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar> -->
+                <ion-label>
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="display: flex; justify-content: space-between;">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+          <ion-card mode="ios" class="ion-no-margin ion-no-padding">
+            <ion-card-content style="padding-top: 0; padding-bottom: 0;">
+              <ion-item lines="none">
+                <!-- <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar> -->
+                <ion-label>
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="display: flex; justify-content: space-between;">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+          <ion-card mode="ios" class="ion-no-margin ion-no-padding">
+            <ion-card-content style="padding-top: 0; padding-bottom: 0;">
+              <ion-item lines="none">
+                <!-- <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar> -->
+                <ion-label>
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="display: flex; justify-content: space-between;">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+          <ion-card mode="ios" class="ion-no-margin ion-no-padding">
+            <ion-card-content style="padding-top: 0; padding-bottom: 0;">
+              <ion-item lines="none">
+                <!-- <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar> -->
+                <ion-label>
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="display: flex; justify-content: space-between;">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+          <ion-card mode="ios" class="ion-no-margin ion-no-padding">
+            <ion-card-content style="padding-top: 0; padding-bottom: 0;">
+              <ion-item lines="none">
+                <!-- <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar> -->
+                <ion-label>
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="display: flex; justify-content: space-between;">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+          <ion-card mode="ios" class="ion-no-margin ion-no-padding">
+            <ion-card-content style="padding-top: 0; padding-bottom: 0;">
+              <ion-item lines="none">
+                <!-- <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar> -->
+                <ion-label>
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="display: flex; justify-content: space-between;">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+          <ion-card mode="ios" class="ion-no-margin ion-no-padding">
+            <ion-card-content style="padding-top: 0; padding-bottom: 0;">
+              <ion-item lines="none">
+                <!-- <ion-avatar slot="start">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-avatar> -->
+                <ion-label>
+                  <ion-item
+                    slot="start"
+                    lines="none"
+                    class="ion-no-padding"
+                    style="display: flex; justify-content: space-between;">
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-item>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                  <ion-row>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 100%"></ion-skeleton-text>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+        </ng-container>
+        <!-- End Skeleton  -->
+
+       <ng-container *ngIf="!isUporDown">
+          <ng-container *ngFor="let date of notificationDates">
+            <ion-item lines="none" color="clear">
+              <ion-badge color="mango" style="margin: 0 auto;">
+                {{ date === currentDate ? 'Today' : date === yesterdayDateFormatted ? 'Yesterday' : date | date: 'MMM d, y' }}
+              </ion-badge>
+            </ion-item>
+            
+            <ng-container>
+              <ion-accordion-group (ionChange)="expandAndUpdateStatus($event)" [value]="selectedAccordion" mode="md">
+                <ion-accordion class="ion-padding-vertical notification-card" *ngFor="let n of groupedNotificationList[date]" [style]="n.status === 3 ? 'background: transparent;' : 'background: #e2e2e2;'" [value]="n._id">
+                  <ion-item lines="none" slot="header" color="clear" [class]="n.status === 3 ? '' : 'unread'" style="border: none;">
+                    <ion-label color="mango">
+                      <ion-text style="font-size: 18px; font-weight: 700;">
+                        <span>{{ n.messageType }}</span>
+                      </ion-text>
+                      <span [class]="selectedAccordion === n._id ? 'short-msg' : ''" style="font-size: 14px; font-weight: 700;">
+                        <br>
+                        {{ n.message }}
+                      </span>
+                    </ion-label>
+                    <ion-label slot="end" style="color: #585858; font-size: 14px;">
+                      <ion-icon name="time-outline"></ion-icon>
+                      {{n.dateTimeSend | date: 'h:mm a'}}
+                    </ion-label>
+                  </ion-item>
+                  <ion-item lines="none" slot="content" color="clear">
+                    <ion-grid>
+                      <ion-row class="ion-no-padding ion-no-margin">
+                        <ion-col size="12">
+                          <ion-label color="mango" style="font-size: 18px; font-weight: 600; text-align: justify;" class="ion-text-wrap ion-text-justify">
+                            {{n.message}}
+                          </ion-label>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col size="12">
+                          <ion-item lines="none" color="clear" style="border: none;">
+                            <ion-button
+                              slot="end"
+                              fill="outline"
+                              color="mango"
+                              size="default"
+                              (click)="openUrl(n.urlRedirect)"
+                              style="text-transform: capitalize;">
+                              Goto Link
+                            </ion-button>
+                          </ion-item>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </ion-item>
+                </ion-accordion>
+              </ion-accordion-group>
+            </ng-container>
+          </ng-container>
+
+          <div *ngIf="isFetchDone && notificationDates.length === 0">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="8" offset="2">
+                  <div class="vertical-center">
+                    <div class="center">
+                      <img src="assets/img/no-data-rafiki.png" />
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </ng-container>
+        
+        <!-- No Data Available -->
+        <ng-template #noDataAvailable>
+          <div *ngIf="isFetchDone">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="8" offset="2">
+                  <div class="vertical-center">
+                    <div class="center">
+                      <img src="assets/img/no-data-rafiki.png" />
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </ng-template>
+        <!-- End No Data Available -->
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

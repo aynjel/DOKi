@@ -181,7 +181,15 @@ const routes: Routes = [
           import("../tab-er-patients/tab-er-patients.module").then(
             (m) => m.TabErPatientsPageModule
           ),
-      },{
+      },
+      {
+        path: "notification",
+        loadChildren: () =>
+          import("../tab-notification/tab-notification.module").then(
+            (m) => m.TabNotificationPageModule
+          ),
+      },
+      {
         path: "",
         redirectTo: "/menu/dashboard",
         pathMatch: "full",

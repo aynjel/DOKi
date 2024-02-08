@@ -40,6 +40,8 @@ import { catchError } from 'rxjs/operators';
 import { LogoutService } from '../services/logout/logout.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { NotificationService } from '../services/notification/notification.service';
+import { SwPush } from '@angular/service-worker';
 
 @Component({
   selector: 'app-tab-settings',
@@ -109,7 +111,9 @@ export class TabSettingsPage {
     public alertController: AlertController,
     private doctorService: DoctorService,
     private logoutService: LogoutService,
-    private menu: MenuController
+    private menu: MenuController,
+    private notificationService: NotificationService,
+    private swPush: SwPush
   ) {
     this.privacyPolicy = true;
 
@@ -124,16 +128,17 @@ export class TabSettingsPage {
       });
   }
 
-  // togglePushNotification(ev: any){
-  //   if(ev.detail.checked === true){
-  //     this.tooglePN = true;
-  //     this.notificationService.subscribeToNotifications();
-  //   }
-  //   else{
-  //     this.tooglePN = false;
-  //     this.notificationService.setUnsubscribeToNotifications();
-  //   }
-  // }
+  togglePN = false;
+  togglePushNotification(ev: any){
+    if(ev.detail.checked === true){
+      this.togglePN = true;
+      this.notificationService.subscribeToNotifications();
+    }
+    else{
+      this.togglePN = false;
+      this.notificationService.setUnsubscribeToNotifications();
+    }
+  }
 
   async modalUpdate(header, message, data) {
     const alert = await this.alertController.create({
@@ -206,9 +211,27 @@ export class TabSettingsPage {
     });
     await actionSheet.present();
   }
+  isSWAvailable = false;
   ngOnInit() {
     //this.checkAppearance();
     //http://10.151.12.120:7229/res/profile/MD100001.jpg
+    if (
+      this.swPush.isEnabled &&
+      this.swPush.subscription &&
+      localStorage.getItem("isSubscribed") == "1" &&
+      localStorage.getItem("pushSubscription") != ""
+    ) {
+      this.togglePN = true;
+    } else {
+      this.togglePN = false;
+    }
+    if(
+      location.protocol === 'https:' &&
+      navigator.serviceWorker &&
+      navigator.serviceWorker.controller
+    ){
+      this.isSWAvailable = true;
+    }
   }
 
   ionViewWillEnter() {
