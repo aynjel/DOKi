@@ -280,10 +280,10 @@ export class DoctorService {
       "Content-Type": "application/json;charset=utf-8",
     });
     const options = { headers: headers, withCredentials: true };
-    const url = environment.dischargeInstruction + "gw/DokiER/DokiErList";
+    const url = environment.apiRouterUrlTest + "/gw/DokiER/DokiErList";
     const payload = {
-      dr_code: atob(localStorage.getItem("userId"))
-    }
+      dr_code: atob(localStorage.getItem("userId")),
+    };
     return this.http.post(url, payload, options);
   }
   getInPatientHistoryV3() {
@@ -309,7 +309,7 @@ export class DoctorService {
     // const url = environment.apiRouterUrl + "v2/Inpatients/CoDoctors";
     const url = environment.apiRouterUrl + "v3/InPatients/CoDoctors";
     const payload = {
-      admission_no: postData1
+      admission_no: postData1,
     };
     console.log(url, payload);
     return this.http.post(url, payload, options);
