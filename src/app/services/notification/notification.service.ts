@@ -25,8 +25,13 @@ export class NotificationService {
     if(!isSubscribed){
       const publicKey = await this.getPublicKey().toPromise();
       const sub = await this.requestSubscription(publicKey.data.publicKey);
-      const subscription = await this.subscribeNotification(sub);
-      console.log('subscription: ', subscription);
+      this.subscribeNotification(sub).subscribe({
+        next: (res) => {
+          localStorage.setItem('isSubscribed', '1');
+          localStorage.setItem('pushSubscription', JSON.stringify(res.data));
+        },
+        error: (err) => console.error(err)
+      });
     }
   }
 

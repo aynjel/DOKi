@@ -90,9 +90,13 @@ export class TabNotificationPage implements OnInit {
     this.loadNotifications();
   }
 
-  openUrl(url: string) {
-    const path = url.split('/').slice(3).join('/');
-    this.router.navigateByUrl(path);
+  openUrl(url: string): void {
+    const checkUrl = url.includes('http') || url.includes('https');
+    if (checkUrl) {
+      window.open(url, '_blank');
+    } else {
+      this.router.navigate([url]);
+    }
   }
 
   async loadMessageTypes(): Promise<void> {

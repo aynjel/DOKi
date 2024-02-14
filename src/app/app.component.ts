@@ -215,18 +215,22 @@ export class AppComponent implements OnInit {
         // Perform any necessary actions after navigation, e.g., refresh data
       });
 
-    if(this.swPush.isEnabled
-      && localStorage.getItem('isSubscribed') === null
-      && localStorage.getItem('isSubscribed') === '0'){
+    if(
+      this.swPush.isEnabled && 
+      !localStorage.getItem('isSubscribed') &&
+      !localStorage.getItem('pushSubscription') &&
+      localStorage.getItem('_cap_' + AuthConstants.AUTH) !== null
+    ){
       this.notificationService.allowNotification();
     }
 
     this.swPush.notificationClicks.subscribe(result => {
-      console.log("notificationClicks", result);
-      localStorage.setItem('notificationClicks', JSON.stringify(result));
       const { onActionClick } = result.notification.data;
       if (onActionClick && onActionClick.redirect) {
+        const notifId = onActionClick.read.url;
+        this.notificationService.updateNotificationStatus(notifId).subscribe();
         if (localStorage.getItem('_cap_' + AuthConstants.AUTH) === null) {
+          localStorage.setItem('notificationClicks', JSON.stringify(result));
           return this.router.navigate(['/login']);
         }
 

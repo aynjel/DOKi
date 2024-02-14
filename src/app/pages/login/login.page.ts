@@ -667,19 +667,23 @@ export class LoginPage {
     });*/
     if (localStorage.getItem("notificationClicks")) {
       const result = JSON.parse(localStorage.getItem("notificationClicks"));
-      const urlRedirect = result.notification.data.onActionClick.redirect.url;
-      const defaultRedirect = result.notification.data.onActionClick.default.url;
-      // this.router.navigate([urlRedirect || defaultRedirect]).then(() => {
-        //   window.location.reload();
-        // });
-      localStorage.removeItem("notificationClicks");
-      window.location.href = urlRedirect || defaultRedirect;
-    }else{
-      this.router.navigate(["/menu/in-patients"]).then(() => {
-        localStorage.removeItem("notificationClicks");
-        // window.location.reload();
-      });
+      const { onActionClick } = result.notification.data;
+      const notifId = onActionClick.read.url;
+      this.notificationService.updateNotificationStatus(notifId).subscribe();
+      const url = onActionClick.redirect.url;
+
+      if (url === "" || url === null) {
+        this.router.navigate(["/menu/notification"]);
+      } else {
+        // https://localhost:8100/menu/:somepage
+        const urlArray = url.split("/");
+        const page = urlArray[urlArray.length - 1];
+        this.router.navigate(["/menu/" + page]);
+      }
+    } else {
+      this.router.navigate(["/menu/in-patients"]);
     }
+    localStorage.removeItem("notificationClicks");
   }
 
   async forgotpassword() {
