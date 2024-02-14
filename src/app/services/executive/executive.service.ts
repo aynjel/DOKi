@@ -218,13 +218,7 @@ export class ExecutiveService {
     //const url = environment.apiRouterUrl + "v2/ProfFee";
     // const url = environment.apiRouterUrl + 'v3/InPatients/Admin/PatientDetail';
     const url = environment.dischargeInstruction + "gw/DokiER/DokiErList";
-    return this.http.post(url, data, options)
-      .pipe(
-        delay(1000),
-        tap((res: any) => {
-          this.dokiErList$.next(res);
-        })
-      )
+    return this.http.post(url, data, options);
   }
   getDoctorsDirectory() {
     const headers = new HttpHeaders({

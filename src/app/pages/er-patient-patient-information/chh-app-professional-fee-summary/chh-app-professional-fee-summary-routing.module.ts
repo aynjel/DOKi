@@ -2,10 +2,16 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { ChhAppProfessionalFeeSummaryPage } from './chh-app-professional-fee-summary.page';
+import { HomeGuard } from 'src/app/guards/home.guard';
+import { UserDataResolver } from 'src/app/resolvers/userData.resolver';
 
 const routes: Routes = [
   {
     path: '',
+    canActivate:[HomeGuard], 
+    resolve:{
+      userData: UserDataResolver
+    },
     component: ChhAppProfessionalFeeSummaryPage
   }
 ];

@@ -9,6 +9,7 @@ export const environment = {
   apiRouterUrl: "https://doki.chonghua.com.ph/api/",
   //apiRouterUrlTest: 'http://localhost:5000',
   apiRouterUrlTest: "https://api.chonghua.com.ph",
+  apiRouterDev: "https://dev-api02.chonghua.com.ph",
   linkRouterUrl: "https://doki.chonghua.com.ph/",
   //apiRouterUrl: 'http://10.130.21.214:59201/api/',
   apiResident: "http://10.151.12.120:7230/",

@@ -1,17 +1,21 @@
-import { Component, Renderer2, OnInit } from "@angular/core";
+import { Component, Renderer2 } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
+import { Location } from "@angular/common";
 import {
   ModalController,
   AlertController,
   NavController,
   LoadingController,
 } from "@ionic/angular";
+import { ChhAppFeePage } from "../../../chh-web-components/chh-app-fee/chh-app-fee.page";
 import { PopoverController } from "@ionic/angular";
 import { DoctorService } from "src/app/services/doctor/doctor.service";
+//import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { AuthService } from "src/app/services/auth/auth.service";
 
 import { FunctionsService } from "../../../shared/functions/functions.service";
 import { PatientService } from "src/app/services/patient/patient.service";
+import { ChhAppBasePage } from "../../../chh-web-components/chh-app-test/chh-app-base/chh-app-base.page";
 import { Messages } from "../../../shared/messages";
 import { ScreenSizeService } from "../../../services/screen-size/screen-size.service";
 import { StorageService } from "../../../services/storage/storage.service";
@@ -20,38 +24,32 @@ import { Consta } from "../../../config/auth-constants";
 import { Constants } from "src/app/shared/constants";
 
 import {
-  ErPatientData,
+  InPatientData,
   ProfessionalFeeModelv3,
-} from "src/app/models/er-patient.model";
+} from "src/app/models/in-patient.model";
 
 import {
   UserSettingsModelv3,
   LoginResponseModelv3,
   PatientDetail,
+  ErpatientDetails,
+  ErpatientModelInpatients,
 } from "src/app/models/doctor";
 
-import {
-  ErpatientModelInpatients,
-  ErpatientDetails,
-} from "../../../models/doctor";
 import { AESEncryptDecryptServiceService } from "src/app/services/encryption/aesencrypt-decrypt-service.service";
 import { ExecutiveService } from "src/app/services/executive/executive.service";
-import { takeUntil } from "rxjs/operators";
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from "rxjs";
+
 import { ResiService } from "src/app/services/resi/resi.service";
-
-
 @Component({
-  selector: 'app-er-patient-detail',
-  templateUrl: './er-patient-detail.page.html',
-  styleUrls: ['./er-patient-detail.page.scss'],
+  selector: "app-er-patient-detail",
+  templateUrl: "./er-patient-detail.page.html",
+  styleUrls: ["./er-patient-detail.page.scss"],
 })
-export class ErPatientDetailPage implements OnInit {
-  erpatientModelInpatients = new ErpatientModelInpatients();
+export class ErPatientDetailPage {
+  inpatientModelInpatients = new ErpatientModelInpatients();
   private ngUnsubscribe = new Subject();
-
-  submitted = "Registered";
-
   data: any = [];
   data1: any;
   site: any;
@@ -79,7 +77,7 @@ export class ErPatientDetailPage implements OnInit {
   ionSkeleton = false;
   currentExamList: any;
   currentExamList_filtered: any = [];
-  isDesktop: boolean;
+  isDesktop;
   examListSkeleton = false;
   ExamData: any = "";
   hospitalSite: any;
@@ -97,14 +95,13 @@ export class ErPatientDetailPage implements OnInit {
   dr_name: any;
   patient_name: any;
   patient_no: any;
-
-  postData: ErPatientData = new ErPatientData();
+  postData: InPatientData = new InPatientData();
   professionalFeeModelv3: ProfessionalFeeModelv3 = new ProfessionalFeeModelv3();
   userSettingsModelv3: UserSettingsModelv3 = new UserSettingsModelv3();
   loginResponseModelv3: LoginResponseModelv3 = new LoginResponseModelv3();
 
-  erpatientDetails: ErpatientDetails = new ErpatientDetails();
-  location: boolean;
+  inpatientDetails: ErpatientDetails = new ErpatientDetails();
+  location;
   patient_id: any;
   opd_code: any;
   admissionstatus: any;
@@ -130,27 +127,14 @@ export class ErPatientDetailPage implements OnInit {
   isCancelFinalDiagnosisApproval;
   finalDiagnosisApproval;
   patientName;
-  patient_n;
   is_philhealth_membership;
   admissionNo;
   dischargeNo;
-
-  patientDetailfromApi_from;
-  patientDetailfromApi_to;
-  admission_status;
-
-  isAP = false;
-  isTC = false;
-  iHaveTC = false;
-  isVerify;
-  isAPVerifyTCstatus = false;
-
-  approvedDate: any;
-  chiefComplaint: any;
-
+chiefComplaint: any;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private _location: Location,
     public modalController: ModalController,
     public _modalController: ModalController,
     public popover: PopoverController,
@@ -186,18 +170,18 @@ export class ErPatientDetailPage implements OnInit {
       this.HighlightRow = index;
     };
   }
-
-  ngOnInit() {
-    //
-  }
-
-  ionViewWillEnter(): void {
+  patientDetailfromApi_from;
+  patientDetailfromApi_to;
+  admission_status;
+  admission_no = this.activatedRoute.snapshot.params.id;
+  ionViewWillEnter() {
     this.ngUnsubscribe = new Subject();
     this.loginResponseModelv3 = new LoginResponseModelv3();
-    this.erpatientDetails = new ErpatientDetails();
+    this.inpatientDetails = new ErpatientDetails();
     this.patient_id = this.activatedRoute.snapshot.params.id;
     localStorage.setItem("fromurl", this.patient_id);
     this.routerLinkBack = "/menu/er-patients/";
+    
     this.loginResponseModelv3 = <LoginResponseModelv3>(
       this.authService.userData$.getValue()
     );
@@ -209,8 +193,8 @@ export class ErPatientDetailPage implements OnInit {
     this.loginResponseModelv3 = this.authService.userData$.getValue();
     this.dr_name = this.loginResponseModelv3.lastName;
     this.dr_code = this.loginResponseModelv3.doctorCode;
-    this.erpatientModelInpatients.drCode = this.dr_code;
-    this.erpatientModelInpatients.mode = Consta.mode;
+    this.inpatientModelInpatients.drCode = this.dr_code;
+    this.inpatientModelInpatients.mode = Consta.mode;
     this.postData.DoctorMobileNumber = this.loginResponseModelv3.mobileNo;
     this.professionalFeeModelv3.doctor_mobile_no =
       this.loginResponseModelv3.mobileNo;
@@ -219,59 +203,48 @@ export class ErPatientDetailPage implements OnInit {
     this.professionalFeeModelv3.smsGatewaySmart =
       this.userSettingsModelv3[0].smsGatewaySmart;
 
-    const ppatientdata = {
-      dr_code: atob(localStorage.getItem("userId"))
-    }
-    console.log('ER List ppatientdata', ppatientdata);
+    const ppatientdata = new PatientDetail();
+    ppatientdata.admissionNo = this.patient_id;
     this.data = [];
     this.presentLoading();
-    this.executiveService
-      .getErPatientDetail(ppatientdata)
+    
+    this.doctorService
+      .getErPatientV3()
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(() => {
-        this.executiveService.dokiErList$.subscribe({
-          next: (data) => {
-            this.data = data.filter(
-              (e) => e.admission_no === this.patient_id
-            );
-            this.data1 = data.filter(
-              (e) => e.admission_no === this.patient_id
-            );
-            console.log('ER List data details', this.data);
-            localStorage.setItem(
-              "selectedPatient",
-              btoa(JSON.stringify(this.data))
-            );
-            localStorage.setItem("admission_status", btoa(this.admission_status));
-            localStorage.setItem(
-              "Api_from",
-              btoa(this.patientDetailfromApi_from)
-            );
-            localStorage.setItem("Api_to", btoa(this.patientDetailfromApi_to));
-            if (this.data == null || this.data == undefined) {
-              this.back();
-            } else {
-              this.patientName = this.data[0].last_name + ", " + this.data[0].first_name;
-              this.patient_n = this.data[0].last_name + ", " + this.data[0].first_name;
-              // this.room 
-              this.data1 = JSON.parse("[" + JSON.stringify(this.data[0]) + "]");
-              localStorage.setItem(
-                "patientData",
-                btoa(JSON.stringify(this.data1))
-              );
-            }
-            this.operate();
-            this.dismissLoading();
-          },
-          error: (error) => {
-            console.log(error);
-            this.dismissLoading();
-          },
-        });
+      .subscribe({
+        next: (data: any) => {
+          this.data = data.filter((element) => element.admission_no == this.admission_no);
+          this.patient_name = this.data[0].first_name + " " + this.data[0].last_name;
+          localStorage.setItem("selectedPatient", btoa(JSON.stringify(this.data)));
+          localStorage.setItem("patientData", btoa(JSON.stringify(this.data)));
+        },
+        error: (error) => {
+          this.dismissLoading();
+        },
+        complete: () => {
+          this.operate();
+        }
       });
   }
 
-  async alert(data1: any, data2: any): Promise<void> {
+  loading: any;
+  async presentLoading() {
+    this.loading = await this.loadingController.create({
+      cssClass: "my-custom-class",
+      message: "Please wait...",
+      duration: 2000,
+    });
+    await this.loading.present();
+
+    const { role, data } = await this.loading.onDidDismiss();
+    //////////////////////////console.log('Loading dismissed!');
+  }
+  public async dismissLoading(): Promise<void> {
+    if (this.loading) {
+      this.loading.dismiss();
+    }
+  }
+  async alert(data1: any, data2: any) {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
       message: data1,
@@ -280,7 +253,7 @@ export class ErPatientDetailPage implements OnInit {
         {
           text: data2,
           handler: () => {
-            this.closemodal();
+            this.router.navigate(["/menu/er-patients/"]);
           },
         },
       ],
@@ -288,29 +261,19 @@ export class ErPatientDetailPage implements OnInit {
     await alert.present();
   }
 
-  closemodal(): void {
-    this.router.navigate(["/menu/er-patients/"]);
-  }
-
-  redirecttoPF(): void {
-    this.nav.navigateForward(
-      "menu/er-patients/" +
-        this.activatedRoute.snapshot.params.id +
-        "/professional-fee",
-      {
-        state: {},
-      }
-    );
-  }
-
-  operate(): void {
+  isAP = false;
+  isTC = false;
+  iHaveTC = false;
+  isVerify;
+  isAPVerifyTCstatus = false;
+  operate() {
+    console.log(this.data);
+    this.chiefComplaint = this.data[0].chief_complaint;
+    this.inpatientDetails.admission_no = this.data[0].admission_no;
     this.dateAdmitted = this.data[0].admission_date;
     this.dischargeNotice = this.data[0].forDischargeDateTime;
-    this.chiefComplaint = this.data[0].chief_complaint;
 
     this.patient_no = this.data[0].patient_no;
-    //this.getExamList(this.data[0].patient_no);
-    //populate empty feild
     this.postData.IsVAT = "";
     this.postData.PayVenue = "";
     this.postData.Remarks = "";
@@ -325,13 +288,11 @@ export class ErPatientDetailPage implements OnInit {
 
     if (this.data[0].site == "C") {
       this.site = "CHHC";
-      //this.postData.PatientSite = "CEBU";
       this.postData.BillingMobileNumber = atob(localStorage.getItem("C"));
       this.professionalFeeModelv3.billing_mobile_no =
         this.userSettingsModelv3[0].billingContactCebu;
     } else {
       this.site = "CHHM";
-      //this.postData.PatientSite = "MANDAUE";
       this.postData.BillingMobileNumber = atob(localStorage.getItem("M"));
       this.professionalFeeModelv3.billing_mobile_no =
         this.userSettingsModelv3[0].billingContactMandaue;
@@ -351,7 +312,6 @@ export class ErPatientDetailPage implements OnInit {
     this.professionalFeeModelv3.admission_no = this.data[0].admission_no;
     this.postData.DoctorCode = this.data[0].dr_code;
 
-    //this.postData.DoctorCode = this.data.dr_code;
     this.postData.DoctorStatusCode = this.data[0].Doctor_Status_code;
     this.professionalFeeModelv3.doctor_status_code =
       this.data[0].doctor_Status_code;
@@ -361,8 +321,9 @@ export class ErPatientDetailPage implements OnInit {
 
     this.postData.CreatedBy = this.data[0].dr_code;
     this.isFetchDone = false;
+
     this.doctorService
-      .getErCoDoctorsV3(this.patient_id)
+      .getCoDoctorsV3(this.inpatientDetails)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (res: any) => {
@@ -395,7 +356,6 @@ export class ErPatientDetailPage implements OnInit {
         },
         (error) => {
           this.isFetchDone = true;
-          console.log(error);
         },
         () => {
           this.isFetchDone = true;
@@ -431,10 +391,10 @@ export class ErPatientDetailPage implements OnInit {
                 .post("/gw/doki/inpatients/verifytransfertocover", datxyz)
                 .subscribe({
                   complete: () => {
-                    console.log("complete");
+                    //
                   },
                   error: (error) => {
-                    console.log(error);
+                    //
                   },
                   next: (data: any) => {
                     if (data == true) {
@@ -453,93 +413,18 @@ export class ErPatientDetailPage implements OnInit {
               .post("/gw/doki/inpatients/verifytransfertocover", datxyz)
               .subscribe({
                 complete: () => {
-                  console.log("complete");
+                  //
                 },
                 error: (error) => {
-                  console.log(error);
+                  //
                 },
                 next: (data: any) => {
-                  console.log(data);
                   this.isVerify = data;
                 },
               });
           }
         }
       );
-
-      this.doctorService
-      .getAdmittingDiagnosisV3(this.erpatientDetails)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((res: any) => {
-        if(res === null || res === undefined){
-          return console.log("no admitting diagnosis found");
-        }
-        this.admittingDiagnosis = res.admitting_diagnosis2.replace(
-          /(\r\n|\n|\r)/gm,
-          "<br />"
-        );
-        this.admittingDiagnosis1 = this.functionsService.truncateChar(
-          res.admitting_diagnosis2,
-          100
-        );
-        this.admittingDiagnosis1 = this.admittingDiagnosis1.replace(
-          /(\r\n|\n|\r)/gm,
-          "<br />"
-        );
-        this.admittingDiagnosis2 = this.admittingDiagnosis.replace(
-          /(,)/gm,
-          ",<br />"
-        );
-      },
-      (error) => {
-        this.isFetchDone = true;
-        this.functionsService.logToConsole(error);
-      },
-      () => {
-        this.isFetchDone = true;
-      }
-    );
-    if (this.data[0].admission_status == "DN") {
-      this.doctorService
-        .getFinalDiagnosisV3(this.erpatientDetails)
-        .pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe(
-          (res: any) => {
-            if (!Object.keys(res).length) {
-              console.log("no data found");
-            } else {
-              this.finalDiagnosis = res.final_diagnosis;
-              this.finalDiagnosis1 = this.functionsService.truncateChar(
-                this.finalDiagnosis,
-                50
-              );
-              this.finalDiagnosis2 = this.finalDiagnosis
-                .replace(/(\r\n|\n|\r)/gm, "")
-                .split(".)");
-              this.finalDiagnosis2.shift();
-              for (let i = 0; i < this.finalDiagnosis2.length - 1; i++) {
-                this.finalDiagnosis2[i] = this.finalDiagnosis2[i].substring(
-                  0,
-                  this.finalDiagnosis2[i].length - 1
-                );
-                this.functionsService.logToConsole(this.finalDiagnosis2[i]);
-              }
-              for (let i = 0; i < this.finalDiagnosis2.length; i++) {
-                this.finalDiagnosis2[i] =
-                  i + 1 + ".) " + this.finalDiagnosis2[i];
-              }
-            }
-          },
-          (error) => {
-            this.isFetchDone = true;
-            console.log(error);
-          },
-          () => {
-            this.isFetchDone = true;
-          }
-        );
-    }
-
     this.postData.DateCreated = this.functionsService.getSystemDateTime();
     localStorage.setItem(
       "postData1",
@@ -547,58 +432,277 @@ export class ErPatientDetailPage implements OnInit {
     );
   }
 
-  back(): void {
-    this.nav.back();
+  ngOnInit() {
+    this.checkAppearance();
   }
 
-  public async dismissLoading(): Promise<void> {
-    if (this.loading) {
-      this.loading.dismiss();
+  updateDisplay(data) {
+    if (data) {
+      this.refresher = !this.refresher;
+    } else {
+      setTimeout(() => (this.refresher = true), 50);
     }
   }
 
-  gotoDiagnistic(): void {
+  async modalUpdate(header, message) {
+    const alert = await this.alertController.create({
+      cssClass: "my-custom-class",
+      header: header,
+      message: message,
+      buttons: [
+        {
+          text: "Okay",
+          handler: () => {
+            this.modalController.dismiss();
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
+
+  async examDetails(data: any, site: any, i) {
+    this.HighlightRow = i;
+    this.ExamData = data;
+    this.hospitalSite = site;
+
+    if (!this.isDesktop) {
+      const modal = await this._modalController.create({
+        component: ChhAppBasePage,
+        componentProps: { ExamDetails: data, Site: this.hospitalSite },
+        cssClass: "my-custom-modal-inpatient-css",
+      });
+      modal.present();
+      return await modal.onDidDismiss();
+    } else {
+      if (this.ExamData.Exam == "Serology") {
+        this.chemistry = false;
+        this.serology = true;
+        this.fecalysis = false;
+        this.urinalysis = false;
+        this.cbc = false;
+      } else if (this.ExamData.Exam == "Chemistry") {
+        this.chemistry = true;
+        this.serology = false;
+        this.fecalysis = false;
+        this.urinalysis = false;
+        this.cbc = false;
+      } else if (this.ExamData.Exam == "Fecalysis") {
+        this.chemistry = false;
+        this.serology = false;
+        this.fecalysis = true;
+        this.urinalysis = false;
+        this.cbc = false;
+      } else if (this.ExamData.Exam == "Urinalysis") {
+        this.chemistry = false;
+        this.serology = false;
+        this.fecalysis = false;
+        this.urinalysis = true;
+        this.cbc = false;
+      } else if (
+        this.ExamData.Exam == "Hematology" &&
+        this.ExamData.ExamType == "CBC"
+      ) {
+        this.chemistry = false;
+        this.serology = false;
+        this.fecalysis = false;
+        this.urinalysis = false;
+        this.cbc = true;
+      }
+
+      this.updateDisplay(true);
+      this.updateDisplay(false);
+      // this.loadComponents();
+    }
+  }
+
+  getExamList(data) {
+    //this.functionsService.logToConsole(this.data[0].admission_no);
+
+    this.ionSkeleton = true;
+    const date1 = new Date(this.data[0].admission_date);
+    const seconds1 = date1.getTime() / 1000; //1440516958
+    this.currentExamList = [];
+    this.examListSkeleton = true;
+
+    this.patientService
+      .getExamList(this.location, data)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: any) => {
+          res.forEach((element) => {
+            const date = new Date(element.RequestDateTime);
+            const seconds = date.getTime() / 1000; //1440516958
+            if (seconds >= seconds1) {
+              element.RequestDateTime = new Date(
+                element.RequestDateTime
+              ).toLocaleDateString();
+              element.Exam = this.functionsService.convertToCamelCase(
+                element.Exam
+              );
+              this.currentExamList.push(element);
+              this.currentExamList_filtered.push(element);
+            }
+          });
+        },
+        (error) => {
+          this.examListSkeleton = false;
+        },
+        () => {
+          this.examListSkeleton = false;
+        }
+      );
+  }
+
+  // Prof Fee Pop Over
+  async detail(data: any) {
+    if (this.data[0].doctor_prof_fee == null) {
+      this.method = "POST";
+    } else {
+      this.method = "";
+    }
+    const popover = await this.popover.create({
+      component: ChhAppFeePage,
+      showBackdrop: true,
+      translucent: true,
+      componentProps: {
+        professionalFee: this.professionalFee,
+        remarks: this.remarks,
+        method: this.method,
+      },
+    });
+    popover.present();
+    return popover.onDidDismiss().then((data: any) => {
+      if (data) {
+        this.professionalFee = data.data.professionalFee;
+        this.remarks = data.data.remarks;
+        this.postData.Remarks = data.data.remarks;
+        this.postData.DateCreated = this.functionsService.getSystemDateTime();
+        const x = data.data.method;
+        this.postData.ProfFee = data.data.professionalFee;
+        if (x == "POST") {
+          this.doctorService
+            .insertPF(this.postData)
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe((res: any) => {
+              if (res == true) {
+                this.professionalFee = data.data.professionalFee;
+                this.remarks = data.data.remarks;
+                this.postData.ProfFee = data.data.professionalFee;
+                this.postData.Remarks = data.data.remarks;
+                this.postData.DateCreated =
+                  this.functionsService.getSystemDateTime();
+                this.data[0].doctor_prof_fee = data.data.professionalFee;
+                this.modalUpdate(
+                  "SUCCESS",
+                  "Thank you, Dok! You have successfully SAVED your Professional Fee."
+                );
+              } else {
+                this.functionsService.alert(
+                  "SAVING of Professional Fee was unsuccessful. Please try again.",
+                  "Okay"
+                );
+              }
+            });
+        } else if (x == "PUT") {
+          this.postData.OldProfFee = this.data[0].doctor_prof_fee;
+          this.doctorService
+            .updatePF(this.postData)
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe((res: any) => {
+              if (res == true) {
+                this.professionalFee = data.data.professionalFee;
+                this.remarks = data.data.remarks;
+                this.postData.ProfFee = data.data.professionalFee;
+                this.postData.Remarks = data.data.remarks;
+                this.postData.DateCreated =
+                  this.functionsService.getSystemDateTime();
+                this.data[0].doctor_prof_fee = data.data.professionalFee;
+                this.modalUpdate(
+                  "SUCCESS",
+                  "Successfully UPDATED your Professional Fee."
+                );
+              } else {
+                this.functionsService.alert(
+                  "UPDATING of Professional Fee was Unsuccessful",
+                  "Okay"
+                );
+              }
+            });
+        } else if (x == "DELETE") {
+          this.functionsService.logToConsole("DELETE: " + this.postData);
+          this.doctorService
+            .DeletePf(
+              this.postData.AdmisisonNo,
+              this.postData.DoctorStatusCode,
+              this.postData.DoctorCode
+            )
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe((res: any) => {
+              if (res == true) {
+                this.professionalFee = data.data.professionalFee;
+                this.remarks = data.data.remarks;
+                this.professionalFee = data.data.professionalFee;
+                this.remarks = data.data.remarks;
+                this.postData.ProfFee = data.data.professionalFee;
+                this.postData.Remarks = data.data.remarks;
+                this.postData.DateCreated =
+                  this.functionsService.getSystemDateTime();
+                this.data[0].doctor_prof_fee = data.data.professionalFee;
+                this.modalUpdate(
+                  "SUCCESS",
+                  "Successfully DELETED your Professional Fee."
+                );
+              } else {
+                this.functionsService.alert(
+                  "DELETING of Professional Fee was Unsuccessful",
+                  "Okay"
+                );
+              }
+            });
+        }
+      }
+    });
+  }
+
+  redirecttoPF() {
+    this.nav.navigateForward(
+      "menu/er-patients/" +
+        this.activatedRoute.snapshot.params.id +
+        "/professional-fee",
+      {
+        state: {},
+      }
+    );
+  }
+
+  checkAppearance() {
+    this.functionsService.logToConsole("checkAppearance");
+    const values = JSON.parse(
+      "[" + atob(localStorage.getItem("user_settings")) + "]"
+    );
+    const dr_username = atob(localStorage.getItem("username"));
+    values.forEach((element) => {
+      this.functionsService.logToConsole(element.darkmode);
+      if (element.darkmode == 1) {
+        this.renderer.setAttribute(document.body, "color-theme", "dark");
+      } else {
+        this.renderer.setAttribute(document.body, "color-theme", "light");
+      }
+    });
+  }
+
+  ionViewDidLeave() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+  gotoDiagnistic() {
     const patient_id = this.activatedRoute.snapshot.params.id;
     this.router.navigate([
       "/menu/er-patients/" + patient_id + "/diagnostic-results/",
     ]);
   }
-
-  loading: any;
-  async presentLoading(): Promise<void> {
-    this.loading = await this.loadingController.create({
-      cssClass: "my-custom-class",
-      message: "Please wait...",
-      duration: 2000,
-    });
-    await this.loading.present();
-
-    const { role, data } = await this.loading.onDidDismiss();
-  }
-
-  testtrigger(): void {
+  testtrigger(data) {
     this.ionViewWillEnter();
   }
-
-  cancelApproval(data1: any): void {
-    const cancel = {
-      discharge_no: data1,
-    };
-    this.doctorService
-      .cancelApprovedFinalDiagnosis(cancel)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(
-        (res: any) => {
-          console.log(res);
-          this.ionViewWillEnter();
-        },
-        (error) => {
-          console.log(error);
-        },
-        () => {
-          this.ionViewWillEnter();
-        }
-      );
-  }
-
 }

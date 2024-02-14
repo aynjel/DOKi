@@ -280,7 +280,8 @@ export class DoctorService {
       "Content-Type": "application/json;charset=utf-8",
     });
     const options = { headers: headers, withCredentials: true };
-    const url = environment.apiRouterUrlTest + "/gw/DokiER/DokiErList";
+    const url = environment.apiRouterDev + "/gw/DokiER/DokiErList";
+    // const url = environment.apiRouterUrlTest + "/gw/DokiER/DokiErList";
     const payload = {
       dr_code: atob(localStorage.getItem("userId")),
     };
@@ -302,17 +303,6 @@ export class DoctorService {
     // const url = environment.apiRouterUrl + "v2/Inpatients/CoDoctors";
     const url = environment.apiRouterUrl + "v3/InPatients/CoDoctors";
     return this.http.post(url, postData1, options);
-  }
-  getErCoDoctorsV3(postData1: any) {
-    const headers = new HttpHeaders({ "Content-Type": "application/json" });
-    const options = { headers: headers, withCredentials: true };
-    // const url = environment.apiRouterUrl + "v2/Inpatients/CoDoctors";
-    const url = environment.apiRouterUrl + "v3/InPatients/CoDoctors";
-    const payload = {
-      admission_no: postData1,
-    };
-    console.log(url, payload);
-    return this.http.post(url, payload, options);
   }
   getAdmittingDiagnosisV3(postData1: any) {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });

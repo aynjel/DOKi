@@ -129,7 +129,6 @@ export class TabErPatientsPage implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe({
         next: (res: any) => {
-          console.log('ER List: ', res);
           if (res == null) return res = [];
           if (res.length) {
             this.objecthandler = true;
@@ -243,8 +242,6 @@ export class TabErPatientsPage implements OnInit {
       });
     }
 
-    console.log('this.admittedOrDischarge', this.admittedOrDischarge);
-    // filter by admission status
     if (this.admittedOrDischarge != this.constants.CHH_SITE__VALUE__ALL /*"ALL"*/) {
       roomNoListWithPatientData.forEach((room) => {
         room.data = room.data.filter((patient) => {
@@ -254,7 +251,6 @@ export class TabErPatientsPage implements OnInit {
     }
 
     this.finalFullData = roomNoListWithPatientData;
-    console.log("this.finalFullData",this.finalFullData);
     /*check if ALL - ADMITTED - FOR DISCHARGE*/
     // if (
     //   this.admittedOrDischarge != this.constants.CHH_SITE__VALUE__ALL /*"ALL"*/

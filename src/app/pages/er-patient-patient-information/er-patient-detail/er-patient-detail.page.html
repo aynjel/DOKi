@@ -9,13 +9,13 @@
     </span>
 
     <span class="padding-left-30 font-weight-500 font-size-20">
-      &nbsp;&nbsp;ER Patient Information
+      &nbsp;&nbsp;Patient Information
     </span>
   </ion-toolbar>
+  
 </ion-header>
 <ion-content *ngIf="!isDesktop">
   <app-chh-app-patient-emos-header
-    [erStatus]="submitted"
     [data]="data"
     [dateAdmitted]="dateAdmitted"
     [dischargeNotice]="dischargeNotice"
@@ -30,45 +30,7 @@
 
   <app-chh-app-chief-complaint
     [chiefComplaint]="chiefComplaint"
-    ></app-chh-app-chief-complaint>
-
-  <!-- <app-chh-app-admitting-diagnosis
-    [admittingDiagnosis]="admittingDiagnosis"
-    [admittingDiagnosis1]="admittingDiagnosis1"
-    [admittingDiagnosis2]="admittingDiagnosis2"
-    [truncating1]="truncating1">
-  </app-chh-app-admitting-diagnosis> -->
-
-  <!-- <ion-card mode="ios">
-    <ion-list>
-      <ion-item style="padding-top: 10px">
-        <div class="ion-text-wrap"><b>Diagnostic Results</b><br /></div>
-      </ion-item>
-      <ion-item class="pointHand" lines="none" (click)="gotoDiagnistic()">
-        View Results &nbsp;<ion-icon
-          class="icon-center"
-          name="open-outline"></ion-icon>
-      </ion-item>
-    </ion-list>
-  </ion-card> -->
-
-  <!-- <resi-progress-notes></resi-progress-notes> -->
-
-  <!-- <app-chh-app-final-diagnosis
-    [data]="admissionstatus"
-    [finalDiagnosis]="finalDiagnosis"
-    [limit]="limit"
-    [truncating]="truncating"
-    [finalDiagnosis1]="finalDiagnosis1"
-    [finalDiagnosis2]="finalDiagnosis2"
-    [finalDiagnosisApproval]="finalDiagnosisApproval"
-    [isCancelFinalDiagnosisApproval]="isCancelFinalDiagnosisApproval"
-    [patientName]="patientName"
-    (cancelApproval)="cancelApproval($event)"
-    [approvedDate]="approvedDate"
-    [admissionNo]="admissionNo"
-    [dischargeNo]="dischargeNo">
-  </app-chh-app-final-diagnosis> -->
+  ></app-chh-app-chief-complaint>
   
   <app-chh-app-list-of-doctors
     [coDoctors]="coDoctors"
@@ -79,7 +41,7 @@
     [iHaveTC]="iHaveTC"
     [isVerify]="isVerify"
     [isAPVerifyTCstatus]="isAPVerifyTCstatus"
-    (triggerRefresh)="testtrigger()">
+    (triggerRefresh)="testtrigger($event)">
   </app-chh-app-list-of-doctors>
 </ion-content>
 
@@ -109,11 +71,11 @@
       </ion-grid>
     </ion-item>
   </ion-toolbar>
+
   <div class="footer tab-font-family" *ngIf="isDesktop">
     <span>{{this.constants.CHH_NAME__VALUE__CEBU}}</span>
   </div>
 </ion-footer>
-
 
 <app-chh-app-desktop-navigation *ngIf="isDesktop"></app-chh-app-desktop-navigation>
 
@@ -124,11 +86,10 @@
       <ion-icon name="chevron-forward-outline" class="icon-center"></ion-icon>
     </li>
     <li>
-      <a>{{patient_n}}</a>
+      <a>{{patient_name | titlecase}}</a>
       <ion-icon name="chevron-forward-outline" class="icon-center"></ion-icon>
     </li>
   </ul>
-
   <ion-grid class="ion-no-padding">
     <ion-row>
       <ion-col size-lg="2" size-md="12"></ion-col>
@@ -161,42 +122,6 @@
           </ion-list>
         </ion-card>
 
-        <!-- <app-chh-app-admitting-diagnosis
-          [admittingDiagnosis]="admittingDiagnosis"
-          [admittingDiagnosis1]="admittingDiagnosis1"
-          [admittingDiagnosis2]="admittingDiagnosis2"
-          [truncating1]="truncating1">
-        </app-chh-app-admitting-diagnosis> -->
-        <!-- <ion-card mode="ios">
-          <ion-list>
-            <ion-item style="padding-top: 10px">
-              <div class="ion-text-wrap"><b>Diagnostic Results</b><br /></div>
-            </ion-item>
-            <ion-item class="pointHand" lines="none" (click)="gotoDiagnistic()">
-              View Results &nbsp;<ion-icon
-                class="icon-center"
-                name="open-outline"></ion-icon>
-            </ion-item>
-          </ion-list>
-        </ion-card>
-        <resi-progress-notes></resi-progress-notes> -->
-
-        <!-- <app-chh-app-final-diagnosis
-          [data]="admissionstatus"
-          [finalDiagnosis]="finalDiagnosis"
-          [limit]="limit"
-          [truncating]="truncating"
-          [finalDiagnosis1]="finalDiagnosis1"
-          [finalDiagnosis2]="finalDiagnosis2"
-          [finalDiagnosisApproval]="finalDiagnosisApproval"
-          [isCancelFinalDiagnosisApproval]="isCancelFinalDiagnosisApproval"
-          [patientName]="patientName"
-          (cancelApproval)="cancelApproval($event)"
-          [approvedDate]="approvedDate"
-          [admissionNo]="admissionNo"
-          [dischargeNo]="dischargeNo">
-        </app-chh-app-final-diagnosis> -->
-
         <app-chh-app-chief-complaint
         [chiefComplaint]="chiefComplaint"
         ></app-chh-app-chief-complaint>
@@ -212,7 +137,7 @@
           [iHaveTC]="iHaveTC"
           [isVerify]="isVerify"
           [isAPVerifyTCstatus]="isAPVerifyTCstatus"
-          (triggerRefresh)="testtrigger()"></app-chh-app-list-of-doctors>
+          (triggerRefresh)="testtrigger($event)"></app-chh-app-list-of-doctors>
       </ion-col>
 
       <ion-col size-lg="1" size-md="12"></ion-col>
